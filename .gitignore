@@ -1,0 +1,15 @@
+nbproject
+*~
+*.pfx
+*.pem
+config.json
+vendor
+local
+/.DS_Store
+/.idea
+/.project
+/.buildpath
+/.settings/
+/build
+/phpunit.xml
+/tests/folder
