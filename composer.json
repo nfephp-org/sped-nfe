@@ -1,0 +1,64 @@
+{
+    "name": "nfephp-org/sped-nfe",
+    "type": "library",
+    "description": "API para geração e comunicação da NFe e NFCe com as SEFAZ autorizadoras.",
+    "keywords": [
+        "nfe",
+        "nfce",
+        "sped",
+        "nfephp"
+    ],
+    "homepage": "https://github.com/nfephp-org/sped-nfe",
+    "license": [
+        "GPL-3.0+",
+        "LGPL-3.0+"
+    ],
+    "authors": [
+        {
+            "name": "Roberto L. Machado",
+            "email": "linux.rlm@gmail.com.br",
+            "homepage": "http://www.nfephp.org",
+            "role": "Developer"
+        },
+        {
+            "name": "Comunidade NFePHP",
+            "homepage": "https://github.com/nfephp-org/nfephp/graphs/contributors"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "ext-dom": "*",
+        "ext-xml": "*",
+        "ext-libxml": "*",
+        "ext-xmlreader": "*",
+        "ext-curl": "*",
+        "ext-soap": "*",
+        "ext-openssl": "*",
+        "ext-zip": "*",
+        "ext-fileinfo": "*",
+        "ext-iconv": "*",
+        "ext-mbstring": "*",
+        "nfephp-org/sped-common": "^4.1" 
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.7.7"
+    },
+    "autoload": {
+        "psr-4": {
+          "Sped\\NFe\\": "src/" 
+        } 
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "4.1-dev",
+            "dev-develop": "4.2-dev"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload-dev": {
+        "psr-4": {
+            "SpedTest\\NFe\\": "test"
+        }
+    }
+}
