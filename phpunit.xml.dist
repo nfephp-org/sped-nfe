@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="./test/bootstrap.php"
+         colors="true">
+    <testsuites>
+        <testsuite name="NFePHP NFe Test Suite">
+            <directory>./test/</directory>
+        </testsuite>
+    </testsuites>
+    <groups>
+        <exclude>
+            <group>disable</group>
+        </exclude>
+    </groups>
+    <filter>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./src</directory>
+        </whitelist>
+    </filter>
+</phpunit>
