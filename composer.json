@@ -38,7 +38,8 @@
         "ext-fileinfo": "*",
         "ext-iconv": "*",
         "ext-mbstring": "*",
-        "nfephp-org/sped-common": "^4.1" 
+        "nfephp-org/sped-common": "^4.1",
+        "easyframework/collections": "^4.1"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.7.7"
