@@ -22,7 +22,7 @@ namespace NFePHP\NFe;
  */
 
 use NFePHP\NFe\Tags\Builder;
-use NFePHP\NFe\Tags\Collection;
+use Collections\ArrayList;
 
 class Make
 {
@@ -80,7 +80,7 @@ class Make
     {
         $this->properties = $this->getClassVars();
         //estabelecer as propriedades que serão coleções
-        $this->refNFe = new Collection();
+        $this->refNFe = new ArrayList();;
     }
     
     /**
@@ -118,7 +118,11 @@ class Make
     private function set($property, $value) {
         foreach ($this->properties as $propertyName) {
             if ($propertyName == $property) {
-                $this->{$property} = $value;
+                if (method_exists($this->{$property}, 'add')) {
+                    $this->{$property}->add($value);
+                } else {
+                    $this->{$property} = $value;    
+                }
                 break;
             }
         }
