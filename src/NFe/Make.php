@@ -153,7 +153,7 @@ class Make
         if (is_array($params)) {
             $params = $params[0];
         }
-        return $this->builder($method, $params);
+        return self::builder($method, $params);
     }
     
     /**

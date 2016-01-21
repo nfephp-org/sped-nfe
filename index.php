@@ -1,6 +1,6 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 'On');
+//error_reporting(E_ALL);
+//ini_set('display_errors', 'On');
 include 'vendor/autoload.php';
 
 $nfe = new NFePHP\NFe\Make();
@@ -55,8 +55,8 @@ $param = [
 ];
 $return = $nfe->infAdic($param);
 
-//header('Content-type: text/xml; charset=UTF-8');
-var_dump($nfe);
+
+//var_dump($nfe);
 echo "<BR><BR><BR>";
 echo $nfe->infNFe->chave;
 
