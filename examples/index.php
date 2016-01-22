@@ -1,7 +1,7 @@
 <?php
-//error_reporting(E_ALL);
-//ini_set('display_errors', 'On');
-include 'vendor/autoload.php';
+error_reporting(E_ALL);
+ini_set('display_errors', 'On');
+include '../bootstrap.php';
 
 $nfe = new NFePHP\NFe\Make();
 
@@ -61,7 +61,7 @@ $param = [
 $return = $nfe->infAdic($param);
 
 
-//var_dump($nfe);
+var_dump($nfe);
 echo "<BR><BR><BR>";
 echo $nfe->infNFe->chave;
 
