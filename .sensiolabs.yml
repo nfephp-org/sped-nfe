@@ -19,7 +19,7 @@ rules:
     composer.warning:
         enabled: true
     git.user_specific_ignored_file:
-        enabled: true
+        enabled: false
     php.absolute_path_present:
         enabled: true
         allowed_paths: [/dev, /etc, /proc]

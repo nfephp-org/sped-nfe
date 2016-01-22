@@ -111,7 +111,6 @@ class Make
     /**
      * Carrega a TAG (Objeto) em uma propriedade da classe 
      * para montagem e uso posterior
-     * TODO: como tratar no caso de COLEÇÕES de Objetos !!!
      * @param string $property
      * @param Object $value
      */
