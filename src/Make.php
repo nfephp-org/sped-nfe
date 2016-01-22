@@ -80,7 +80,7 @@ class Make
     {
         $this->properties = $this->getClassVars();
         //estabelecer as propriedades que serão coleções
-        $this->refNFe = new ArrayList();;
+        $this->refNFe = new ArrayList();
     }
     
     /**
@@ -118,7 +118,8 @@ class Make
     private function set($property, $value) {
         foreach ($this->properties as $propertyName) {
             if ($propertyName == $property) {
-                if (method_exists($this->{$property}, 'add')) {
+                $nome = get_class($this->{$property});
+                if ($nome == 'Collections\ArrayList') {
                     $this->{$property}->add($value);
                 } else {
                     $this->{$property} = $value;    

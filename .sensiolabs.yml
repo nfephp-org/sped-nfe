@@ -1,0 +1,183 @@
+global_exclude_dirs:
+    - vendor
+    - examples
+    - test
+
+exclude_patterns:
+
+rules:
+    composer.apc_class_loader_should_be_enabled:
+        enabled: true
+    composer.dependencies_not_installable:
+        enabled: true
+    composer.invalid_file:
+        enabled: true
+    composer.security_issue_in_composer:
+        enabled: true
+    composer.unfixed_dependency_version:
+        enabled: true
+    composer.warning:
+        enabled: true
+    git.user_specific_ignored_file:
+        enabled: true
+    php.absolute_path_present:
+        enabled: true
+        allowed_paths: [/dev, /etc, /proc]
+    php.bad_mutator_method_name_for_boolean_property:
+        enabled: true
+    php.class_too_long:
+        enabled: true
+        max_length: 500
+        threshold: 5
+    php.commented_out_code:
+        enabled: true
+    php.contaminant_third_party_component_license:
+        enabled: true
+    php.debug_statements:
+        enabled: true
+    php.dynamically_change_configuration:
+        enabled: true
+    php.file_contains_more_than_one_class:
+        enabled: true
+    php.for_loop_uses_test_function:
+        enabled: true
+    php.method_too_long:
+        enabled: true
+        max_length: 50
+        threshold: 5
+    php.missing_use_statement:
+        enabled: true
+    php.neglected_tests:
+        enabled: true
+    php.object_parameter_not_type_hinted:
+        enabled: true
+    php.php_magic_methods:
+        enabled: true
+    php.php_syntax_error:
+        enabled: true
+    php.too_many_files_per_folder_for_performance:
+        enabled: true
+        max_count: 10000
+    php.too_permissive_file_permissions:
+        enabled: true
+        allowed_dirs: [bin, scripts]
+    php.unreachable_code:
+        enabled: true
+    php.unused_local_variable_or_private_member:
+        enabled: true
+    php.unused_use_statement:
+        enabled: true
+    php.use_deprecated_function:
+        enabled: true
+    php.use_exit_function:
+        enabled: true
+    php.use_global_variable_or_function:
+        enabled: true
+    php.use_php_ereg_function:
+        enabled: true
+    php.use_php_eval_function:
+        enabled: true
+    php.use_php_sleep_function:
+        enabled: true
+    symfony.acme_bundle_found:
+        enabled: true
+    symfony.app.cache_or_log_file_in_repository:
+        enabled: true
+    symfony.app.confidential_parameters_file_present_in_repository:
+        enabled: true
+    symfony.app.first_level_service:
+        enabled: true
+    symfony.app.sensitive_data_found_in_application_configuration:
+        enabled: true
+    symfony.application_not_bootable:
+        enabled: true
+    symfony.configuration.yaml_syntax_error:
+        enabled: true
+    symfony.controller.action_method_too_long:
+        enabled: true
+        max_length: 20
+        threshold: 10
+    symfony.controller.get_action_mutates_resource:
+        enabled: true
+    symfony.controller.missing_redirect_after_post:
+        enabled: true
+    symfony.controller.non_action_public_method_in_controller_class:
+        enabled: true
+    symfony.controller.too_many_actions_per_controller:
+        enabled: true
+        max_count: 10
+        threshold: 5
+    symfony.controller.too_many_template_variables:
+        enabled: true
+        max_count: 6
+        threshold: 5
+    symfony.dependency_injection.no_container_as_parameter:
+        enabled: true
+    symfony.dependency_injection.no_entity_manager_as_parameter:
+        enabled: true
+    symfony.dependency_injection.use_dir_file_constant:
+        enabled: true
+    symfony.exceptions_enabled_in_production:
+        enabled: true
+    symfony.form.form_type_not_in_type_form_folder:
+        enabled: true
+    symfony.include_statement_used:
+        enabled: true
+    symfony.inject_request_service:
+        enabled: true
+    symfony.obvious_csrf_key:
+        enabled: true
+    symfony.print_statements:
+        enabled: true
+    symfony.request.session_cookie_default_name:
+        enabled: true
+    symfony.request.use_create_from_globals:
+        enabled: true
+    symfony.routing.action_not_restricted_by_method:
+        enabled: true
+    symfony.routing.route_references_non_existent_action:
+        enabled: true
+    symfony.routing.route_resource_not_loadable:
+        enabled: true
+    symfony.security.insecure_password_hashing_algorithm:
+        enabled: true
+    symfony.security.throw_access_denied_http_exception:
+        enabled: true
+    symfony.templating.too_many_esi_inclusions:
+        enabled: true
+    symfony.twig_not_bootable:
+        enabled: true
+    symfony.use_php_database_function:
+        enabled: true
+    symfony.use_php_response_function:
+        enabled: true
+    symfony.use_php_session_function:
+        enabled: true
+    symfony.use_super_globals:
+        enabled: true
+    symfony.verbose_logging_in_production:
+        enabled: true
+    symfony.version.end_of_life:
+        enabled: true
+    symfony.version.latest_stable:
+        enabled: true
+    symfony.version.out_of_maintenance:
+        enabled: true
+    symfony.web.contains_php_files:
+        enabled: true
+    symfony.web.web_bundle_folder_present_in_repository:
+        enabled: true
+    symfony.web_config_should_not_be_present:
+        enabled: true
+    task_fixme_comment:
+        enabled: true
+    task_todo_comment:
+        enabled: true
+    task_xxx_comment:
+        enabled: true
+    third_party.use_deprecated_class:
+        enabled: true
+    third_party.use_deprecated_service:
+        enabled: true
+    xml.syntax_error:
+        enabled: true
