@@ -49,6 +49,11 @@ $emitente = [
 ];
 $return = $nfe->emit($emitente);
 
+$refNFe = [
+  'refNFe' => '35150300822602000124550010009923461099234656'  
+];
+$nfe->refNFe($refNFe);
+
 $param = [
     'infAdFisco'=>'Teste infAdFisco',
     'infCpl'=>'Teste infCpl'
