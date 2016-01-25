@@ -7,6 +7,7 @@ namespace NFePHP\NFe\Tags;
  * Podem haver muitos desses objetos em uma NFe
  */
 use NFePHP\NFe\Tags\Tag;
+use Collections\ArrayList;
 
 class RefNFe extends Tag
 {

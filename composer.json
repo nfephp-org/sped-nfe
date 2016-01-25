@@ -38,8 +38,8 @@
         "ext-fileinfo": "*",
         "ext-iconv": "*",
         "ext-mbstring": "*",
-        "nfephp-org/sped-common": "^4.1",
-        "easyframework/collections": "^4.1"
+        "easyframework/collections": "^4.1",
+        "zendframework/zend-servicemanager": "^3.0"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.7.7"

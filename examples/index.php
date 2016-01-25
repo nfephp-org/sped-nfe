@@ -5,11 +5,14 @@ include '../bootstrap.php';
 
 $nfe = new NFePHP\NFe\Make();
 
-$param = [
+/*
+  $param = [
+ 
     'chave' => '35160271805063000163550010000203101013350023',
     'versao' => '3.10'
 ];
 $return = $nfe->infNFe($param);
+*/
 
 $dadosDaNFe = [
     'cUF' => '35',
@@ -36,6 +39,7 @@ $dadosDaNFe = [
 ];
 $return = $nfe->ide($dadosDaNFe);
 
+/*
 $emitente = [
     'CNPJ' => '58716523000119',
     'CPF' => '',
@@ -60,8 +64,9 @@ $param = [
 ];
 $return = $nfe->infAdic($param);
 
-
+*/
 var_dump($nfe);
 echo "<BR><BR><BR>";
-echo $nfe->infNFe->chave;
+//echo $nfe->infNFe->chave;
+//var_dump($nfe->refNFe->toArray()[0]->refNFe);
 

@@ -18,7 +18,7 @@ class Builder
      * @param array $params
      * @return \NFePHP\Common\Dom\Builder
      */
-    public function params($params)
+    public function params($params = null)
     {
         $this->params = $params;
         return $this;
@@ -32,7 +32,7 @@ class Builder
      */
     public function call($method)
     {
-        $class = 'NFePHP\NFe\Tags\\'.ucfirst($method);
-        return call_user_func_array([new $class, 'get'], [$this->params]);
+        $object = 'NFePHP\NFe\Tags\\'.ucfirst($method);
+        return call_user_func_array([new $object, 'get'], [$this->params]);
     }
 }
