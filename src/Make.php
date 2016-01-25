@@ -34,34 +34,34 @@ class Make
      * 
      * @var array
      */
-    protected $errors;
+    protected $errors = null;
     /**
      * Objeto InfNFe
      * @var Tags\InfNFe
      */
-    public $infNFe;
+    public $infNFe = null;
     /**
      * Objeto InfAdic
      * @var Tags\InfAdic
      */
-    public $infAdic;
+    public $infAdic = null;
     /**
      * Objeto Ide
      * @var Tags\Ide
      */
-    public $ide;
+    public $ide = null;
     /**
      * Objeto Emit
      * @var Tags\Emit
      */
-    public $emit;
+    public $emit = null;
     
     /**
      * Coleção de Objetos RefNFe
      * Pode haver nenhum ou até 500 objetos nessa TAG
-     * @var type
+     * @var Tags\RefNFe
      */
-    public $refNFe;
+    public $refNFe = null;
 
 
     /**
@@ -89,7 +89,7 @@ class Make
      * @param array $params
      * @return Object
      */
-    public function builder($method, $params)
+    public function builder($method, $params = null)
     {
         $tag = (new Builder)
             ->params($params)
@@ -117,8 +117,7 @@ class Make
     private function set($property, $value) {
         foreach ($this->properties as $propertyName) {
             if ($propertyName == $property) {
-                $nome = get_class($this->{$property});
-                if ($nome == 'Collections\ArrayList') {
+                if (get_class($this->{$property}) === 'Collections\ArrayList') {
                     $this->{$property}->add($value);
                 } else {
                     $this->{$property} = $value;    
@@ -146,7 +145,7 @@ class Make
      * Método mágico chamador
      * @param string $method
      * @param array $params
-     * @return type
+     * @return Object
      */
     public static function __callStatic($method, $params = null)
     {
