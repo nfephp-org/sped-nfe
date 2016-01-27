@@ -32,7 +32,7 @@ class ReferenceType
     private $transforms = null;
 
     /**
-     * @property \NFePHP\NFe\NFe\ReferenceType\DigestMethodAType $digestMethod
+     * @property \NFePHP\NFe\NFe\ReferenceType\DigestMethod $digestMethod
      */
     private $digestMethod = null;
 
@@ -166,7 +166,7 @@ class ReferenceType
     /**
      * Gets as digestMethod
      *
-     * @return \NFePHP\NFe\NFe\ReferenceType\DigestMethodAType
+     * @return \NFePHP\NFe\NFe\ReferenceType\DigestMethod
      */
     public function getDigestMethod()
     {
@@ -176,10 +176,10 @@ class ReferenceType
     /**
      * Sets a new digestMethod
      *
-     * @param \NFePHP\NFe\NFe\ReferenceType\DigestMethodAType $digestMethod
+     * @param \NFePHP\NFe\NFe\ReferenceType\DigestMethod $digestMethod
      * @return self
      */
-    public function setDigestMethod(\NFePHP\NFe\NFe\ReferenceType\DigestMethodAType $digestMethod)
+    public function setDigestMethod(\NFePHP\NFe\NFe\ReferenceType\DigestMethod $digestMethod)
     {
         $this->digestMethod = $digestMethod;
         return $this;

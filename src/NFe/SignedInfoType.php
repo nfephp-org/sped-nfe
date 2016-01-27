@@ -17,13 +17,13 @@ class SignedInfoType
     private $id = null;
 
     /**
-     * @property \NFePHP\NFe\NFe\SignedInfoType\CanonicalizationMethodAType
+     * @property \NFePHP\NFe\NFe\SignedInfoType\CanonicalizationMethod
      * $canonicalizationMethod
      */
     private $canonicalizationMethod = null;
 
     /**
-     * @property \NFePHP\NFe\NFe\SignedInfoType\SignatureMethodAType $signatureMethod
+     * @property \NFePHP\NFe\NFe\SignedInfoType\SignatureMethod $signatureMethod
      */
     private $signatureMethod = null;
 
@@ -57,7 +57,7 @@ class SignedInfoType
     /**
      * Gets as canonicalizationMethod
      *
-     * @return \NFePHP\NFe\NFe\SignedInfoType\CanonicalizationMethodAType
+     * @return \NFePHP\NFe\NFe\SignedInfoType\CanonicalizationMethod
      */
     public function getCanonicalizationMethod()
     {
@@ -67,11 +67,11 @@ class SignedInfoType
     /**
      * Sets a new canonicalizationMethod
      *
-     * @param \NFePHP\NFe\NFe\SignedInfoType\CanonicalizationMethodAType
+     * @param \NFePHP\NFe\NFe\SignedInfoType\CanonicalizationMethod
      * $canonicalizationMethod
      * @return self
      */
-    public function setCanonicalizationMethod(\NFePHP\NFe\NFe\SignedInfoType\CanonicalizationMethodAType $canonicalizationMethod)
+    public function setCanonicalizationMethod(\NFePHP\NFe\NFe\SignedInfoType\CanonicalizationMethod $canonicalizationMethod)
     {
         $this->canonicalizationMethod = $canonicalizationMethod;
         return $this;
@@ -80,7 +80,7 @@ class SignedInfoType
     /**
      * Gets as signatureMethod
      *
-     * @return \NFePHP\NFe\NFe\SignedInfoType\SignatureMethodAType
+     * @return \NFePHP\NFe\NFe\SignedInfoType\SignatureMethod
      */
     public function getSignatureMethod()
     {
@@ -90,10 +90,10 @@ class SignedInfoType
     /**
      * Sets a new signatureMethod
      *
-     * @param \NFePHP\NFe\NFe\SignedInfoType\SignatureMethodAType $signatureMethod
+     * @param \NFePHP\NFe\NFe\SignedInfoType\SignatureMethod $signatureMethod
      * @return self
      */
-    public function setSignatureMethod(\NFePHP\NFe\NFe\SignedInfoType\SignatureMethodAType $signatureMethod)
+    public function setSignatureMethod(\NFePHP\NFe\NFe\SignedInfoType\SignatureMethod $signatureMethod)
     {
         $this->signatureMethod = $signatureMethod;
         return $this;
