@@ -5,7 +5,7 @@ namespace NFePHP\NFe\NFe;
 /**
  * Class representing NFe
  */
-class NFe extends TNFeType
+class NFe extends TNFe
 {
 
 
