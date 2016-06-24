@@ -1102,8 +1102,14 @@ class Tools extends BaseTools
      * @throws   Exception\InvalidArgumentException
      * @internal function zLoadServico (Common\Base\BaseTools)
      */
-    public function sefazCadastro($siglaUF = '', $tpAmb = '2', $cnpj = '', $iest = '', $cpf = '', &$aRetorno = array())
-    {
+    public function sefazCadastro(
+        $siglaUF = '',
+        $tpAmb = '2',
+        $cnpj = '',
+        $iest = '',
+        $cpf = '',
+        &$aRetorno = array()
+    ) {
         $cnpj = preg_replace('/[^0-9]/', '', $cnpj);
         $cpf = preg_replace('/[^0-9]/', '', $cpf);
         $iest = trim($iest);
@@ -1241,15 +1247,13 @@ class Tools extends BaseTools
      * Serviço destinado à distribuição de informações
      * resumidas e documentos fiscais eletrônicos de interesse de um ator.
      *
-     * @param    string  $fonte        sigla da fonte dos dados 'AN' e para alguns casos pode ser 'RS' e para alguns casos pode ser 'RS'
-     *                      e para alguns casos pode ser 'RS'
-     * @param    string  $tpAmb        tiupo de ambiente
+     * @param    string  $fonte   sigla da fonte dos dados 'AN' e para alguns casos pode ser 'RS' e
+     *                            para alguns casos pode ser 'RS'
+     * @param    string  $tpAmb   tipo de ambiente
      * @param    string  $cnpj
-     * @param    integer $ultNSU       ultimo numero NSU que foi consultado
-     * @param    integer $numNSU       numero de NSU que se quer consultar
-     * @param    array   $aRetorno     array com os dados do retorno
-     * @param    boolean $descompactar se true irá descompactar os dados retornados,
-     *        se não os dados serão retornados da forma que foram recebidos
+     * @param    integer $ultNSU  ultimo numero NSU que foi consultado
+     * @param    integer $numNSU  numero de NSU que se quer consultar
+     * @param    array   $aRetorno array com os dados do retorno
      * @return   string contento o xml retornado pela SEFAZ
      * @internal function zLoadServico (Common\Base\BaseTools)
      */
@@ -1811,8 +1815,15 @@ class Tools extends BaseTools
      * @throws   Exception\RuntimeException
      * @internal function zLoadServico (Common\Base\BaseTools)
      */
-    public function sefazManutencaoCsc($indOp = '', $tpAmb = '2', $raizCNPJ = '', $idCsc = '', $codigoCsc = '', $saveXml = false, &$aRetorno = array())
-    {
+    public function sefazManutencaoCsc(
+        $indOp = '',
+        $tpAmb = '2',
+        $raizCNPJ = '',
+        $idCsc = '',
+        $codigoCsc = '',
+        $saveXml = false,
+        &$aRetorno = array()
+    ) {
         if ($codigoCsc == '') {
             $codigoCsc = $this->aConfig['tokenNFCe'];
         }
@@ -1849,7 +1860,8 @@ class Tools extends BaseTools
             $tpAmb
         );
         if ($this->urlService == '') {
-            $msg = "A manutenção do código de segurança do contribuinte de NFC-e não está disponível na SEFAZ $siglaUF!!!";
+            $msg = "A manutenção do código de segurança do contribuinte de NFC-e não está"
+                . " disponível na SEFAZ $siglaUF!!!";
             throw new Exception\RuntimeException($msg);
         }
         
