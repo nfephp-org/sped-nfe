@@ -2,17 +2,9 @@
     "name": "nfephp-org/sped-nfe",
     "type": "library",
     "description": "API para geração e comunicação da NFe e NFCe com as SEFAZ autorizadoras.",
-    "keywords": [
-        "nfe",
-        "nfce",
-        "sped",
-        "nfephp"
-    ],
+    "keywords": ["nfe","nfce","sped","nfephp"],
     "homepage": "https://github.com/nfephp-org/sped-nfe",
-    "license": [
-        "GPL-3.0+",
-        "LGPL-3.0+"
-    ],
+    "license": ["GPL-3.0+","LGPL-3.0+", "MIT"],
     "authors": [
         {
             "name": "Roberto L. Machado",
@@ -22,43 +14,39 @@
         },
         {
             "name": "Comunidade NFePHP",
-            "homepage": "https://github.com/nfephp-org/nfephp/graphs/contributors"
+            "homepage": "https://github.com/nfephp-org/sped-nfe/graphs/contributors"
         }
     ],
     "require": {
-        "php": ">=5.6.0",
-        "ext-dom": "*",
-        "ext-xml": "*",
-        "ext-libxml": "*",
-        "ext-xmlreader": "*",
-        "ext-curl": "*",
-        "ext-soap": "*",
-        "ext-openssl": "*",
-        "ext-zip": "*",
-        "ext-fileinfo": "*",
-        "ext-iconv": "*",
-        "ext-mbstring": "*",
-        "easyframework/collections": "^4.1",
-        "zendframework/zend-servicemanager": "^3.0"
+        "php" : "~5.5|~7.0",
+        "nfephp-org/sped-common" : "^4.1",
+        "easyframework/collections": "^5.0",
+        "zendframework/zend-servicemanager": "^2.5",
+        "zendframework/zend-mail": "^2.5",
+        "html2text/html2text": "^4.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.7.7"
+        "phpunit/phpunit": "4.*",
+        "scrutinizer/ocular": "~1.1",
+        "squizlabs/php_codesniffer": "~2.3"
     },
     "autoload": {
         "psr-4": {
           "NFePHP\\NFe\\": "src/"
         } 
     },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "4.1-dev"
-        }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "autoload-dev": {
         "psr-4": {
-            "NFePHPTest\\NFe\\": "test"
+            "NFePHP\\NFe\\Tests\\": "tests/"
         }
-    }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "4.1.0-dev"
+        }
+    },
+    "minimum-stability": "dev"
 }
