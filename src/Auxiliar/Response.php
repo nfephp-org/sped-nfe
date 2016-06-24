@@ -4,7 +4,7 @@ namespace NFePHP\NFe\Auxiliar;
 
 /**
  * Classe para extrair os dados retornados das consultas e envios a SEFAZ
- * 
+ *
  * @category  NFePHP
  * @package   NFePHP\NFe\Auxiliar\Response
  * @copyright Copyright (c) 2008
