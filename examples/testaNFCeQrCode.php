@@ -4,12 +4,12 @@ error_reporting(E_ALL);
 ini_set('display_errors', 'On');
 require_once '../bootstrap.php';
 
-use NFePHP\NFe\MakeNFe;
-use NFePHP\NFe\ToolsNFe;
+use NFePHP\NFe\Make;
+use NFePHP\NFe\Tools;
 
-$nfe = new MakeNFe();
+$nfe = new Make();
 
-$nfeTools = new ToolsNFe('../config/config.json');
+$nfeTools = new Tools('../config/config.json');
 
 //Dados da NFCe - infNFe
 $cUF = '52';

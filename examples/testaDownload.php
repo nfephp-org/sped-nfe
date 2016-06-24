@@ -3,9 +3,9 @@ error_reporting(E_ALL);
 ini_set('display_errors', 'On');
 require_once '../bootstrap.php';
 
-use NFePHP\NFe\ToolsNFe;
+use NFePHP\NFe\Tools;
 
-$nfe = new ToolsNFe('../config/config.json');
+$nfe = new Tools('../config/config.json');
 $nfe->setModelo('55');
 
 $chNFe = '35150458716523000119550010000000131000000139';

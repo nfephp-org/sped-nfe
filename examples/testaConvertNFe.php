@@ -3,9 +3,9 @@ error_reporting(E_ALL);
 ini_set('display_errors', 'On');
 require_once '../bootstrap.php';
 
-use NFePHP\NFe\ConvertNFe;
+use NFePHP\NFe\Convert;
 
-$convert = new ConvertNFe();
+$convert = new Convert();
 
 $txtfile = 'xml/NOTAFISCAL310.txt';
 
