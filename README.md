@@ -8,7 +8,7 @@ Este pacote está em desenvolvimento, não é funcional e não deve ser utilizad
 [![Coverage Status][ico-scrutinizer]][link-scrutinizer]
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Latest Version on Packagist][ico-version]][link-packagist]
-[![Software License][ico-license]](LICENSE.md)
+[![License][ico-license]][link-packagist]
 [![Total Downloads][ico-downloads]][link-downloads]
 
 [![Issues][ico-issues]][link-issues]
@@ -57,7 +57,7 @@ Este pacote está diponibilizado sob LGPLv3 ou MIT License (MIT). Leia  [Arquivo
 [ico-code-quality]: https://img.shields.io/scrutinizer/g/nfephp-org/sped-nfe.svg?style=flat-square
 [ico-downloads]: https://img.shields.io/packagist/dt/nfephp-org/sped-nfe.svg?style=flat-square
 [ico-version]: https://img.shields.io/packagist/v/nfephp-org/sped-nfe.svg?style=flat-square
-[ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
+[ico-license]: https://poser.pugx.org/nfephp-org/nfephp/license.svg?style=flat-square
 
 [link-packagist]: https://packagist.org/packages/nfephp-org/sped-nfe
 [link-travis]: https://travis-ci.org/nfephp-org/sped-nfe
