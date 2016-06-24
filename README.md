@@ -6,9 +6,9 @@ Este pacote está em desenvolvimento, não é funcional e não deve ser utilizad
 
 [![Build Status][ico-travis]][link-travis]
 
-[![Issues][ico-issues]]
-[![Forks][ico-forks]]
-[![Stars][ico-stars]]
+[![Issues][ico-issues]][link-issues]
+[![Forks][ico-forks]][link-forks]
+[![Stars][ico-stars]]()
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/cf4adec6-0cc8-431e-9f53-b7a4750a7db9/mini.png)](https://insight.sensiolabs.com/projects/cf4adec6-0cc8-431e-9f53-b7a4750a7db9)
 
@@ -45,8 +45,11 @@ Caso você encontre algum problema relativo a segurança, por favor envie um ema
 Este patote está diponibilizado sob LGPLv3 ou MIT License (MIT). Leia  [Arquivo de Licença](LICENSE.md) para maiores informações.
 
 
-[ico-stars]: https://img.shields.io/github/stars/nfephp-org/sped-nfe.svg
-[ico-forks]: https://img.shields.io/github/forks/nfephp-org/sped-nfe.svg
-[ico-issues]: https://img.shields.io/github/issues/nfephp-org/sped-nfe.svg
+[ico-stars]: https://img.shields.io/github/stars/nfephp-org/sped-nfe.svg?style=flat-square
+[ico-forks]: https://img.shields.io/github/forks/nfephp-org/sped-nfe.svg?style=flat-square
+[ico-issues]: https://img.shields.io/github/issues/nfephp-org/sped-nfe.svg?style=flat-square
 [ico-travis]: https://img.shields.io/travis/nfephp-org/sped-nfe/master.svg?style=flat-square
+
 [link-travis]: https://travis-ci.org/nfephp-org/sped-nfe
+[link-issues]: https://github.com/nfephp-org/sped-nfe/issues
+[link-forks]: https://github.com/nfephp-org/sped-nfe/network
