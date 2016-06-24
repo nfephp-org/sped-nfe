@@ -3,9 +3,9 @@ error_reporting(E_ALL);
 ini_set('display_errors', 'On');
 require_once '../bootstrap.php';
 
-use NFePHP\NFe\ToolsNFe;
+use NFePHP\NFe\Tools;
 
-$nfe = new ToolsNFe('../config/config.json');
+$nfe = new Tools('../config/config.json');
 
 $chave = '52160500067985000172550010000000101000000100';
 // $filename = "/var/www/nfe/homologacao/entradas/{$chave}-nfe.xml"; // Ambiente Linux

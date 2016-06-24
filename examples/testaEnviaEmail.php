@@ -7,9 +7,9 @@ require_once '../bootstrap.php';
 //NOTA: o envio de email com o DANFE somente funciona para modelo 55
 //      o modelo 65 nunca requer o envio do DANFCE por email
 
-use NFePHP\NFe\ToolsNFe;
+use NFePHP\NFe\Tools;
 
-$nfe = new ToolsNFe('../config/config.json');
+$nfe = new Tools('../config/config.json');
 $nfe->setModelo('55');
 
 $chave = '52160500067985000172550010000000101000000100';
