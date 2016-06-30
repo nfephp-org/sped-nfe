@@ -1042,7 +1042,6 @@ class Convert
             $aCampos[3], //nCano
             $aCampos[4] //descr
         );
-        
     }
     
     /**
@@ -2333,7 +2332,6 @@ class Convert
             $aCampos[1], //pDevol
             $aCampos[2] //vIPIDevol
         );
-        
     }
     
     /**
@@ -2402,7 +2400,6 @@ class Convert
             $aCampos[11], //$vISSRet
             $aCampos[12] //$cRegTrib
         );
-        
     }
     
     /**
@@ -2435,7 +2432,6 @@ class Convert
     {
         //X|modFrete|
         $this->make->tagtransp($aCampos[1]);
-        
     }
     
     /**
