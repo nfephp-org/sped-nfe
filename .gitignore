@@ -6,6 +6,7 @@ limpaTAB.php
 config.json
 local
 vendor
+docs
 nbproject
 build
 composer.lock
