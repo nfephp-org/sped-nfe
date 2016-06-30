@@ -22,7 +22,7 @@ use NFePHP\Common\Exception;
 use NFePHP\Common\Dom\Dom;
 use NFePHP\NFe\Auxiliar\Response;
 use NFePHP\NFe\Mail;
-use NFePHP\NFe\Auxiliar\Identify;
+use NFePHP\NFe\Auxiliar\IdentifyNFe;
 use NFePHP\Common\Dom\ValidXsd;
 
 if (!defined('NFEPHP_ROOT')) {

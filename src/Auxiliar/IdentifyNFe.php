@@ -6,7 +6,7 @@ namespace NFePHP\NFe\Auxiliar;
  * Classe para a identificação do documento eletrônico da NFe
  *
  * @category  NFePHP
- * @package   NFePHP\NFe\Auxiliar\Identify
+ * @package   NFePHP\NFe\Auxiliar\IdentifyNFe
  * @copyright Copyright (c) 2008
  * @license   http://www.gnu.org/licenses/lesser.html LGPL v3
  * @author    Roberto L. Machado <linux.rlm at gmail dot com>
@@ -16,7 +16,7 @@ namespace NFePHP\NFe\Auxiliar;
 use \DOMDocument;
 use NFePHP\Common\Identify\Identify;
 
-class Identify
+class IdentifyNFe
 {
     
     public static function identificar($xml = '', &$aResp = array())
