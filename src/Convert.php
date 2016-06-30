@@ -933,7 +933,6 @@ class Convert
         $this->linhaI50[2] = '';
         $this->linhaI50[3] = '';
         $this->zLinhaI50Entity($this->linhaI50);
-
     }
     
     /**
