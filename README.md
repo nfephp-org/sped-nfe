@@ -1,5 +1,7 @@
 # SPED-NFE
 
+[![Join the chat at https://gitter.im/nfephp-org/sped-nfe](https://badges.gitter.im/nfephp-org/sped-nfe.svg)](https://gitter.im/nfephp-org/sped-nfe?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 API para geração e comunicação das NFe com as SEFAZ autorizadoras. APENAS EM DESENVOLVIMENTO !!
 
 Este pacote está em desenvolvimento, não é funcional e não deve ser utilizado para nada além de testes. 
