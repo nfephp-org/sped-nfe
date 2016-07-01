@@ -1,7 +1,5 @@
 # SPED-NFE
 
-[![Join the chat at https://gitter.im/nfephp-org/sped-nfe](https://badges.gitter.im/nfephp-org/sped-nfe.svg)](https://gitter.im/nfephp-org/sped-nfe?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 API para geração e comunicação das NFe com as SEFAZ autorizadoras. APENAS EM DESENVOLVIMENTO !!
 
 Este pacote está em desenvolvimento, não é funcional e não deve ser utilizado para nada além de testes. 
@@ -16,7 +14,7 @@ Este pacote está em desenvolvimento, não é funcional e não deve ser utilizad
 [![Issues][ico-issues]][link-issues]
 [![Forks][ico-forks]][link-forks]
 [![Stars][ico-stars]][link-stars]
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/cf4adec6-0cc8-431e-9f53-b7a4750a7db9/mini.png)](https://insight.sensiolabs.com/projects/cf4adec6-0cc8-431e-9f53-b7a4750a7db9)
+['[Chat][ico-gitter]][link-gitter]
 
 Este pacote visa fornecer os meios para gerar, assinar e anviar os dados relativos ao projeto Sped NFe.
 
@@ -60,6 +58,7 @@ Este pacote está diponibilizado sob LGPLv3 ou MIT License (MIT). Leia  [Arquivo
 [ico-downloads]: https://img.shields.io/packagist/dt/nfephp-org/sped-nfe.svg?style=flat-square
 [ico-version]: https://img.shields.io/packagist/v/nfephp-org/sped-nfe.svg?style=flat-square
 [ico-license]: https://poser.pugx.org/nfephp-org/nfephp/license.svg?style=flat-square
+[ico-gitter]: https://img.shields.io/badge/GITTER-4%20users%20online-green.svg?style=flat-square
 
 [link-packagist]: https://packagist.org/packages/nfephp-org/sped-nfe
 [link-travis]: https://travis-ci.org/nfephp-org/sped-nfe
@@ -70,3 +69,4 @@ Este pacote está diponibilizado sob LGPLv3 ou MIT License (MIT). Leia  [Arquivo
 [link-issues]: https://github.com/nfephp-org/sped-nfe/issues
 [link-forks]: https://github.com/nfephp-org/sped-nfe/network
 [link-stars]: https://github.com/nfephp-org/sped-nfe/stargazers
+[link-gitter]: https://gitter.im/nfephp-org/sped-nfe?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
