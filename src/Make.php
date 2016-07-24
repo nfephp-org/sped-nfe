@@ -4801,7 +4801,7 @@ class Make extends BaseMake
         $vISSRet = '',
         $cRegTrib = ''
     ) {
-        $this->ztagtotal();
+        $this->zTagtotal();
         $ISSQNTot = $this->dom->createElement("ISSQNtot");
         $this->dom->addChild(
             $ISSQNTot,
