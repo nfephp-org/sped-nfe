@@ -25,21 +25,22 @@ namespace NFePHP\NFe;
 
 use NFePHP\Common\DateTime\DateTime;
 use NFePHP\Common\Base\BaseMake;
+use NFePHP\Common\Dom\Dom;
 use NFePHP\Common\Exception\RuntimeException;
 use \DOMDocument;
 use \DOMElement;
+use \DOMNode;
 
 class Make extends BaseMake
 {
     /**
-     * versao
      * numero da versão do xml da NFe
      *
      * @var string
      */
     public $versao = '3.10';
+
     /**
-     * mod
      * modelo da nfe por ser 55-NFe ou 65-NFCe
      *
      * @var integer
@@ -52,61 +53,268 @@ class Make extends BaseMake
      */
     public $chNFe = '';
 
-    //propriedades privadas utilizadas internamente pela classe
-    private $NFe = ''; //DOMNode
-    private $infNFe = ''; //DOMNode
-    private $ide = ''; //DOMNode
-    private $emit = ''; //DOMNode
-    private $enderEmit = ''; //DOMNode
-    private $dest = ''; //DOMNode
-    private $enderDest = ''; //DOMNode
-    private $retirada = ''; //DOMNode
-    private $entrega = ''; //DOMNode
-    private $total = ''; //DOMNode
-    private $cobr = ''; //DOMNode
-    private $transp = ''; //DOMNode
-    private $infAdic = ''; //DOMNode
-    private $exporta = ''; //DOMNode
-    private $compra = ''; //DOMNode
-    private $cana = ''; //DOMNode
+    /**
+     * @var DOMNode
+     */
+    private $NFe = '';
+
+    /**
+     * @var DOMNode
+     */
+    private $infNFe = '';
+
+    /**
+     * @var DOMNode
+     */
+    private $ide = '';
+
+    /**
+     * @var DOMElement
+     */
+    private $emit = '';
+
+    /**
+     * @var DOMNode
+     */
+    private $enderEmit = '';
+
+    /**
+     * @var DOMElement
+     */
+    private $dest = '';
+
+    /**
+     * @var DOMNode
+     */
+    private $enderDest = '';
+
+    /**
+     * @var DOMNode
+     */
+    private $retirada = '';
+
+    /**
+     * @var DOMNode
+     */
+    private $entrega = '';
+
+    /**
+     * @var DOMNode
+     */
+    private $total = '';
+
+    /**
+     * @var DOMNode
+     */
+    private $cobr = '';
+
+    /**
+     * @var DOMNode
+     */
+    private $transp = '';
+
+    /**
+     * @var DOMElement
+     */
+    private $infAdic = '';
+
+    /**
+     * @var DOMElement
+     */
+    private $exporta = '';
+
+    /**
+     * @var DOMNode
+     */
+    private $compra = '';
+
+    /**
+     * @var DOMNode
+     */
+    private $cana = '';
+
     // Arrays
     private $aTotICMSUFDest = array('vFCPUFDest' => '', 'vICMSUFDest' => '', 'vICMSUFRemet' => '');
-    private $aNFref = array(); //array de DOMNode
-    private $aDup = array(); //array de DOMNodes
-    private $aPag = array(); //array de DOMNodes
-    private $aReboque = array(); //array de DOMNodes
-    private $aVol = array(); //array de DOMNodes
-    private $aAutXML = array(); //array de DOMNodes
-    private $aDet = array(); //array de DOMNodes
-    private $aProd = array(); //array de DOMNodes
-    private $aNVE = array(); //array de DOMNodes
-    private $aCest = array(); //array de DOMNodes
-    private $aRECOPI = array(); //array de DOMNodes
-    private $aDetExport = array(); //array de DOMNodes
-    private $aDI = array(); //array de DOMNodes
-    private $aAdi = array(); //array de DOMNodes
-    private $aVeicProd = array(); //array de DOMNodes
-    private $aMed = array(); //array de DOMNodes
-    private $aArma = array(); //array de DOMNodes
-    private $aComb = array(); //array de DOMNodes
-    private $aEncerrante = array(); //array de DOMNodes
-    private $aImposto = array(); //array de DOMNodes
-    private $aICMS = array(); //array de DOMNodes
-    private $aICMSUFDest = array(); //array de DOMNodes
-    private $aIPI = array(); //array de DOMNodes
-    private $aII = array(); //array de DOMNodes
-    private $aISSQN = array(); //array de DOMNodes
-    private $aPIS = array(); //array de DOMNodes
-    private $aPISST = array(); //array de DOMNodes
-    private $aCOFINS = array(); //array de DOMNodes
-    private $aCOFINSST = array(); //array de DOMNodes
-    private $aImpostoDevol = array(); //array de DOMNodes
-    private $aInfAdProd = array(); //array de DOMNodes
-    private $aObsCont = array(); //array de DOMNodes
-    private $aObsFisco = array(); //array de DOMNodes
-    private $aProcRef = array(); //array de DOMNodes
-    private $aForDia = array(); //array de DOMNodes
-    private $aDeduc = array(); //array de DOMNodes
+
+    /**
+     * @var DOMNode[]
+     */
+    private $aNFref = array();
+
+    /**
+     * @var DOMNode[]
+     */
+    private $aDup = array();
+
+    /**
+     * @var DOMElement[]
+     */
+    private $aPag = array();
+
+    /**
+     * @var DOMNode[]
+     */
+    private $aReboque = array();
+
+    /**
+     * @var DOMNode[]
+     */
+    private $aVol = array();
+
+    /**
+     * @var DOMNode[]
+     */
+    private $aAutXML = array();
+
+    /**
+     * @var DOMNode[]
+     */
+    private $aDet = array();
+
+    /**
+     * @var DOMElement[]
+     */
+    private $aProd = array();
+
+    /**
+     * @var DOMElement[]
+     */
+    private $aNVE = array();
+
+    /**
+     * @var DOMElement[]
+     */
+    private $aCest = array();
+
+    /**
+     * @var DOMNode[]
+     */
+    private $aRECOPI = array();
+
+    /**
+     * @var DOMNode[]
+     */
+    private $aDetExport = array();
+
+    /**
+     * @var DOMElement[]
+     */
+    private $aDI = array();
+
+    /**
+     * @var DOMNode[]
+     */
+    private $aAdi = array();
+
+    /**
+     * @var DOMNode[]
+     */
+    private $aVeicProd = array();
+
+    /**
+     * @var DOMNode[]
+     */
+    private $aMed = array();
+
+    /**
+     * @var DOMNode[]
+     */
+    private $aArma = array();
+
+    /**
+     * @var DOMNode[]
+     */
+    private $aComb = array();
+
+    /**
+     * @var DOMNode[]
+     */
+    private $aEncerrante = array();
+
+    /**
+     * @var DOMNode[]
+     */
+    private $aImposto = array();
+
+    /**
+     * @var DOMNode[]
+     */
+    private $aICMS = array();
+
+    /**
+     * @var DOMNode[]
+     */
+    private $aICMSUFDest = array();
+
+    /**
+     * @var DOMNode[]
+     */
+    private $aIPI = array();
+
+    /**
+     * @var DOMNode[]
+     */
+    private $aII = array();
+
+    /**
+     * @var DOMNode[]
+     */
+    private $aISSQN = array();
+
+    /**
+     * @var DOMNode[]
+     */
+    private $aPIS = array();
+
+    /**
+     * @var DOMNode[]
+     */
+    private $aPISST = array();
+
+    /**
+     * @var DOMNode[]
+     */
+    private $aCOFINS = array();
+
+    /**
+     * @var DOMNode[]
+     */
+    private $aCOFINSST = array();
+
+    /**
+     * @var DOMNode[]
+     */
+    private $aImpostoDevol = array();
+
+    /**
+     * @var DOMNode[]
+     */
+    private $aInfAdProd = array();
+
+    /**
+     * @var DOMNode[]
+     */
+    private $aObsCont = array();
+
+    /**
+     * @var DOMNode[]
+     */
+    private $aObsFisco = array();
+
+    /**
+     * @var DOMNode[]
+     */
+    private $aProcRef = array();
+
+    /**
+     * @var DOMNode[]
+     */
+    private $aForDia = array();
+
+    /**
+     * @var DOMNode[]
+     */
+    private $aDeduc = array();
 
     /**
      * montaNFe
@@ -1936,14 +2144,14 @@ class Make extends BaseMake
         $nSerie = '',
         $tpComb = '',
         $nMotor = '',
-        $cmt = '',
+        $CMT = '',
         $dist = '',
         $anoMod = '',
         $anoFab = '',
         $tpPint = '',
         $tpVeic = '',
         $espVeic = '',
-        $vIn = '',
+        $VIN = '',
         $condVeic = '',
         $cMod = '',
         $cCorDENATRAN = '',
@@ -2032,7 +2240,7 @@ class Make extends BaseMake
         $this->dom->addChild(
             $veicProd,
             "CMT",
-            $cmt,
+            $CMT,
             true,
             "$identificador [item $nItem] Capacidade Máxima de Tração do veículo"
         );
@@ -2081,7 +2289,7 @@ class Make extends BaseMake
         $this->dom->addChild(
             $veicProd,
             "VIN",
-            $vIn,
+            $VIN,
             true,
             "$identificador [item $nItem] Condição do VIN do veículo"
         );
@@ -2192,11 +2400,11 @@ class Make extends BaseMake
      * Detalhamento de armas L01 pai I90
      * tag NFe/infNFe/det[]/prod/arma (opcional)
      *
-     * @param  type $nItem
-     * @param  type $tpArma
-     * @param  type $nSerie
-     * @param  type $nCano
-     * @param  type $descr
+     * @param  string $nItem
+     * @param  string $tpArma
+     * @param  string $nSerie
+     * @param  string $nCano
+     * @param  string $descr
      * @return DOMElement
      */
     public function tagarma(
@@ -2420,6 +2628,7 @@ class Make extends BaseMake
      * @param  string $orig
      * @param  string $CST
      * @param  string $modBC
+     * @param  string $pRedBC
      * @param  string $vBC
      * @param  string $pICMS
      * @param  string $vICMS
@@ -2441,7 +2650,7 @@ class Make extends BaseMake
     public function tagICMS(
         $nItem = '',
         $orig = '',
-        $cst = '',
+        $CST = '',
         $modBC = '',
         $pRedBC = '',
         $vBC = '',
@@ -2462,7 +2671,7 @@ class Make extends BaseMake
         $vICMSSTRet = ''
     ) {
         $identificador = 'N01 <ICMSxx> - ';
-        switch ($cst) {
+        switch ($CST) {
             case '00':
                 $icms = $this->dom->createElement("ICMS00");
                 $this->dom->addChild(
@@ -2475,7 +2684,7 @@ class Make extends BaseMake
                 $this->dom->addChild(
                     $icms,
                     'CST',
-                    $cst,
+                    $CST,
                     true,
                     "$identificador [item $nItem] Tributação do ICMS = 00"
                 );
@@ -2520,7 +2729,7 @@ class Make extends BaseMake
                 $this->dom->addChild(
                     $icms,
                     'CST',
-                    $cst,
+                    $CST,
                     true,
                     "$identificador [item $nItem] Tributação do ICMS = 10"
                 );
@@ -2607,7 +2816,7 @@ class Make extends BaseMake
                 $this->dom->addChild(
                     $icms,
                     'CST',
-                    $cst,
+                    $CST,
                     true,
                     "$identificador [item $nItem] Tributação do ICMS = 20"
                 );
@@ -2673,7 +2882,7 @@ class Make extends BaseMake
                 $this->dom->addChild(
                     $icms,
                     'CST',
-                    $cst,
+                    $CST,
                     true,
                     "$identificador [item $nItem] Tributação do ICMS = 30"
                 );
@@ -2748,9 +2957,9 @@ class Make extends BaseMake
                 $this->dom->addChild(
                     $icms,
                     'CST',
-                    $cst,
+                    $CST,
                     true,
-                    "$identificador [item $nItem] Tributação do ICMS $cst"
+                    "$identificador [item $nItem] Tributação do ICMS $CST"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -2779,7 +2988,7 @@ class Make extends BaseMake
                 $this->dom->addChild(
                     $icms,
                     'CST',
-                    $cst,
+                    $CST,
                     true,
                     "$identificador [item $nItem] Tributação do ICMS = 51"
                 );
@@ -2852,7 +3061,7 @@ class Make extends BaseMake
                 $this->dom->addChild(
                     $icms,
                     'CST',
-                    $cst,
+                    $CST,
                     true,
                     "$identificador [item $nItem] Tributação do ICMS = 60"
                 );
@@ -2883,7 +3092,7 @@ class Make extends BaseMake
                 $this->dom->addChild(
                     $icms,
                     'CST',
-                    $cst,
+                    $CST,
                     true,
                     "$identificador [item $nItem] Tributação do ICMS = 70"
                 );
@@ -2991,7 +3200,7 @@ class Make extends BaseMake
                 $this->dom->addChild(
                     $icms,
                     'CST',
-                    $cst,
+                    $CST,
                     true,
                     "$identificador [item $nItem] Tributação do ICMS = 90"
                 );
@@ -3336,24 +3545,24 @@ class Make extends BaseMake
      * tagICMSSN
      * Tributação ICMS pelo Simples Nacional N10c pai N01
      *
-     * @param  type $nItem
-     * @param  type $orig
-     * @param  type $csosn
-     * @param  type $modBC
-     * @param  type $vBC
-     * @param  type $pRedBC
-     * @param  type $pICMS
-     * @param  type $vICMS
-     * @param  type $pCredSN
-     * @param  type $vCredICMSSN
-     * @param  type $modBCST
-     * @param  type $pMVAST
-     * @param  type $pRedBCST
-     * @param  type $vBCST
-     * @param  type $pICMSST
-     * @param  type $vICMSST
-     * @param  type $vBCSTRet
-     * @param  type $vICMSSTRet
+     * @param  string $nItem
+     * @param  string $orig
+     * @param  string $csosn
+     * @param  string $modBC
+     * @param  string $vBC
+     * @param  string $pRedBC
+     * @param  string $pICMS
+     * @param  string $vICMS
+     * @param  string $pCredSN
+     * @param  string $vCredICMSSN
+     * @param  string $modBCST
+     * @param  string $pMVAST
+     * @param  string $pRedBCST
+     * @param  string $vBCST
+     * @param  string $pICMSST
+     * @param  string $vICMSST
+     * @param  string $vBCSTRet
+     * @param  string $vICMSSTRet
      * @return DOMElement
      */
     public function tagICMSSN(
@@ -3993,7 +4202,7 @@ class Make extends BaseMake
      * Grupo PIS Q01 pai M01
      * tag NFe/infNFe/det[]/imposto/PIS
      *
-     * @param  type   $nItem
+     * @param  string $nItem
      * @param  string $cst
      * @param  string $vBC
      * @param  string $pPIS
@@ -4556,6 +4765,7 @@ class Make extends BaseMake
      * Informação do Imposto devolvido U50 pai H01
      * tag NFe/infNFe/det[]/impostoDevol (opcional)
      *
+     * @param string $nItem
      * @param  string $pDevol
      * @param  string $vIPIDevol
      * @return DOMElement
@@ -5425,10 +5635,10 @@ class Make extends BaseMake
      * Grupo de Cartões YA04 pai YA01
      * tag NFe/infNFe/pag/card
      *
-     * @param  string $tpintrega
      * @param  string $cnpj
      * @param  string $tBand
      * @param  string $cAut
+     * @param  string $tpIntegra
      * @return DOMElement
      */
     public function tagcard(
@@ -5822,7 +6032,7 @@ class Make extends BaseMake
      * Podem ser criados até 100 desses Nodes por NFe
      * Função chamada pelo método [tagPag]
      *
-     * @return total registros
+     * @return int Total registros
      */
     private function zTagPag()
     {
@@ -6192,7 +6402,7 @@ class Make extends BaseMake
      * Isso é útil no caso da chave informada estar errada
      * se a chave estiver errada a mesma é substituida
      *
-     * @param object $dom
+     * @param Dom $dom
      */
     private function zTestaChaveXML($dom)
     {
