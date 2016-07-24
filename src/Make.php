@@ -905,8 +905,10 @@ class Make extends BaseMake
     ) {
         $identificador = 'E01 <dest> - ';
         $flagNome = true;//marca se xNome é ou não obrigatório
+        $temIE = $numIE != '' && $numIE != 'ISENTO'; // Tem inscrição municipal
+
         $this->dest = $this->dom->createElement("dest");
-        if (($numIE == 'ISENTO' || $numIE == '') && $indIEDest == '1') {
+        if (!$temIE && $indIEDest == '1') {
             $indIEDest = '2';
         }
         if ($this->mod == '65') {
@@ -959,7 +961,7 @@ class Make extends BaseMake
             true,
             $identificador . "Indicador da IE do Destinatário"
         );
-        if ($numIE != '' && $numIE != 'ISENTO') {
+        if ($temIE) {
             $this->dom->addChild(
                 $this->dest,
                 "IE",
