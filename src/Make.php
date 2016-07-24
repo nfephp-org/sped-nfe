@@ -1875,7 +1875,7 @@ class Make extends BaseMake
      * @param  string $CNPJ
      * @param  string $UFTerceiro
      * @param  string $cExportador
-     * @return DOMELEment
+     * @return DOMElement
      */
     public function tagDI(
         $nItem = '',
@@ -5864,7 +5864,7 @@ class Make extends BaseMake
      *
      * @param  string $safra
      * @param  string $ref
-     * @return DOMELEment
+     * @return DOMElement
      */
     public function tagcana(
         $safra = '',
