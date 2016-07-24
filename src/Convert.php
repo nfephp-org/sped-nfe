@@ -188,7 +188,7 @@ class Convert
     {
         $this->limparString = $limparString;
     }
-    
+
     /**
      * txt2xml
      * Converte uma ou multiplas NF em formato txt em xml
@@ -227,7 +227,7 @@ class Convert
         }
         return $aNF;
     }
-    
+
     /**
      * notafiscalEntity
      * Cria a entidade nota fiscal
@@ -240,7 +240,7 @@ class Convert
         $this->make = new MakeNFe();
         $aCampos = array();
     }
-    
+
     /**
      * aEntity
      * Cria a tag infNFe
@@ -258,7 +258,7 @@ class Convert
         $chave = preg_replace('/[^0-9]/', '', $aCampos[2]);
         $this->make->taginfNFe($chave, $aCampos[1]);
     }
-    
+
     /**
      * bEntity
      * Cria a tag ide
@@ -297,7 +297,7 @@ class Convert
             $aCampos[23] //xJust
         );
     }
-    
+
     /**
      * baEntity
      *
@@ -321,7 +321,7 @@ class Convert
         //BA02|refNFe|
         $this->make->tagrefNFe($aCampos[1]);
     }
-    
+
     /**
      * ba03Entity
      * Cria a tag refNF
@@ -340,7 +340,7 @@ class Convert
             $aCampos[6] //nNF
         );
     }
-    
+
     /**
      * ba10Entity
      * Cria a tag refNFP
@@ -360,7 +360,7 @@ class Convert
         $this->linhaBA10[7] = '';
         $this->linhaBA10[8] = '';
     }
-    
+
     /**
      * ba13Entity
      *
@@ -372,7 +372,7 @@ class Convert
         $this->linhaBA10[7] = $aCampos[1];
         $this->zLinhaBA10Entity($this->linhaBA10);
     }
-    
+
     /**
      * ba14Entity
      *
@@ -384,7 +384,7 @@ class Convert
         $this->linhaBA10[8] = $aCampos[1];
         $this->zLinhaBA10Entity($this->linhaBA10);
     }
-    
+
     /**
      * zLinhaB10Entity
      * Cria a tag refNFP
@@ -405,7 +405,7 @@ class Convert
             $aCampos[6] //nNF
         );
     }
-    
+
     /**
      * ba19Entity
      * Cria a tag refCTe
@@ -417,7 +417,7 @@ class Convert
         //B19|refCTe|
         $this->make->tagrefCTe($aCampos[1]);
     }
-    
+
     /**
      * b20Entity
      * Cria a tag refECF
@@ -433,7 +433,7 @@ class Convert
             $aCampos[3] //nCOO
         );
     }
-    
+
     /**
      * cEntity
      *
@@ -453,7 +453,7 @@ class Convert
         $this->linhaC[8] = ''; //CNPJ
         $this->linhaC[9] = ''; //CPF
     }
-    
+
     /**
      * c02Entity
      *
@@ -465,7 +465,7 @@ class Convert
         $this->linhaC[8] = $aCampos[1]; //CNPJ
         $this->zLinhaCEntity($this->linhaC);
     }
-    
+
     /**
      * c02aEntity
      *
@@ -477,7 +477,7 @@ class Convert
         $this->linhaC[9] = $aCampos[1];//CPF
         $this->linhaCEntity($this->linhaC);
     }
-    
+
     /**
      * zLinhaCEntity
      * Cria a tag emit
@@ -499,7 +499,7 @@ class Convert
             $aCampos[7] //crt
         );
     }
-    
+
     /**
      * c05Entity
      * Cria a tag enderEmit
@@ -523,7 +523,7 @@ class Convert
             $aCampos[11] //fone
         );
     }
-    
+
     /**
      * eEntity
      *
@@ -543,7 +543,7 @@ class Convert
         $this->linhaE[8] = '';
         $this->linhaE[9] = '';
     }
-    
+
     /**
      * e02Entity
      *
@@ -555,7 +555,7 @@ class Convert
         $this->linhaE[7] = $aCampos[1];
         $this->zLinhaEEntity($this->linhaE);
     }
-    
+
     /**
      * e03Entity
      *
@@ -567,7 +567,7 @@ class Convert
         $this->linhaE[8] = $aCampos[1];
         $this->zLinhaEEntity($this->linhaE);
     }
-    
+
     /**
      * e03aEntity
      *
@@ -579,7 +579,7 @@ class Convert
         $this->linhaE[9] = $aCampos[1];
         $this->zLinhaEEntity($this->linhaE);
     }
-    
+
     /**
      * zLinhaEEntity
      * Cria a tag dest
@@ -601,7 +601,7 @@ class Convert
             $aCampos[6] //email
         );
     }
-    
+
     /**
      * e05Entity
      * Cria a tag enderDest
@@ -625,7 +625,7 @@ class Convert
             $aCampos[11] //fone
         );
     }
-    
+
     /**
      * fEntity
      * Local de retirada
@@ -646,7 +646,7 @@ class Convert
         $this->linhaF[8] = '';
         $this->linhaF[9] = '';
     }
-    
+
     /**
      * f02Entity
      *
@@ -658,7 +658,7 @@ class Convert
         $this->linhaF[8] = $aCampos[1];
         $this->zLinhaFEntity($this->linhaF);
     }
-    
+
     /**
      * f02aEntity
      *
@@ -670,7 +670,7 @@ class Convert
         $this->linhaF[9] = $aCampos[1];
         $this->zLinhaFEntity($this->linhaF);
     }
-    
+
     /**
      * zLinhaFEntity
      * Cria a tag retirada
@@ -692,7 +692,7 @@ class Convert
             $aCampos[7] //siglaUF
         );
     }
-    
+
     /**
      * gEntity
      * Local de entrega
@@ -713,7 +713,7 @@ class Convert
         $this->linhaG[8] = '';
         $this->linhaG[9] = '';
     }
-        
+
     /**
      * g02Entity
      *
@@ -725,7 +725,7 @@ class Convert
         $this->linhaG[8] = $aCampos[1];
         $this->zLinhaGEntity($this->linhaG);
     }
-    
+
     /**
      * g02aEntity
      *
@@ -737,7 +737,7 @@ class Convert
         $this->linhaG[9] = $aCampos[1];
         $this->zLinhaGEntity($this->linhaG);
     }
-    
+
     /**
      * zLinhaGEntity
      * Cria tag entrega
@@ -759,7 +759,7 @@ class Convert
             $aCampos[7] //siglaUF
         );
     }
-    
+
     /**
      * gaEntity
      *
@@ -783,7 +783,7 @@ class Convert
         //GA02|CNPJ|
         $this->make->tagautXML($aCampos[1], '');
     }
-    
+
     /**
      * ga03Entity
      * Cria a tag autXML com CPF
@@ -795,7 +795,7 @@ class Convert
         //GA03|CPF|
         $this->make->tagautXML('', $aCampos[1]);
     }
-    
+
     /**
      * hEntity
      * Cria tag infAdProd
@@ -810,7 +810,7 @@ class Convert
         }
         $this->nItem = (integer) $aCampos[1];
     }
-    
+
     /**
      * iEntity
      * Cria tag prod
@@ -848,7 +848,7 @@ class Convert
             $aCampos[22] //nFCI
         );
     }
-    
+
     /**
      * i05aEntity
      * Cria a tag NVE
@@ -860,7 +860,7 @@ class Convert
         //I05A|NVE
         $this->make->tagNVE($this->nItem, $aCampos[1]);
     }
-    
+
     /**
      * i05cEntity
      * Cria a tag CEST
@@ -899,7 +899,7 @@ class Convert
         );
         $this->nDI = $aCampos[1];
     }
-    
+
     /**
      * i25Entity
      * Cria tag adi
@@ -919,7 +919,7 @@ class Convert
             $aCampos[5] //nDraw
         );
     }
-    
+
     /**
      * i50Entity
      *
@@ -934,7 +934,7 @@ class Convert
         $this->linhaI50[3] = '';
         $this->zLinhaI50Entity($this->linhaI50);
     }
-    
+
     /**
      * i52Entity
      *
@@ -948,7 +948,7 @@ class Convert
         $this->linhaI50[3] = $aCampos[3];
         $this->zLinhaI50Entity($this->linhaI50);
     }
-    
+
     /**
      * zLinhaI50Entity
      * Cria a tag detExport
@@ -1006,7 +1006,7 @@ class Convert
             $aCampos[24] //tpRest
         );
     }
-        
+
     /**
      * kEntity
      * Cria tag med
@@ -1025,7 +1025,7 @@ class Convert
             $aCampos[5] //vPMC
         );
     }
-    
+
     /**
      * lEntity
      * Cria a tag arma
@@ -1043,7 +1043,7 @@ class Convert
             $aCampos[4] //descr
         );
     }
-    
+
     /**
      * laEntity
      *
@@ -1052,13 +1052,13 @@ class Convert
     protected function laEntity($aCampos)
     {
         //LA|cProdANP|pMixGN|CODIF|qTemp|UFCons|
-        $this->LinhaLA = $aCampos;
-        $this->LinhaLA[6] = '';
-        $this->LinhaLA[7] = '';
-        $this->LinhaLA[8] = '';
-        $this->zLinhaLAEntity($this->LinhaLA);
+        $this->linhaLA = $aCampos;
+        $this->linhaLA[6] = '';
+        $this->linhaLA[7] = '';
+        $this->linhaLA[8] = '';
+        $this->zLinhaLAEntity($this->linhaLA);
     }
-        
+
     /**
      * la07Entity
      *
@@ -1067,12 +1067,12 @@ class Convert
     protected function la07Entity($aCampos)
     {
         //LA07|qBCProd|vAliqProd|vCIDE|
-        $this->LinhaLA[6] = $aCampos[1];
-        $this->LinhaLA[7] = $aCampos[2];
-        $this->LinhaLA[8] = $aCampos[3];
-        $this->zLinhaLAEntity($this->LinhaLA);
+        $this->linhaLA[6] = $aCampos[1];
+        $this->linhaLA[7] = $aCampos[2];
+        $this->linhaLA[8] = $aCampos[3];
+        $this->zLinhaLAEntity($this->linhaLA);
     }
-    
+
     /**
      * zLinhaLAEntity
      * Cria a tag comb
@@ -1094,7 +1094,7 @@ class Convert
             $aCampos[8] //vCIDE
         );
     }
-    
+
     /**
      * lbEntity
      * Cria a tag RECOPI
@@ -1106,7 +1106,7 @@ class Convert
         //LB|nRECOPI|
         $this->make->tagRECOPI($this->nItem, $aCampos[1]);
     }
-    
+
     /**
      * mEntity
      * Cria a tag imposto
@@ -1118,7 +1118,7 @@ class Convert
         //M|vTotTrib|
         $this->make->tagimposto($this->nItem, $aCampos[1]);
     }
-    
+
     /**
      * nEntity
      *
@@ -1130,7 +1130,7 @@ class Convert
         //fake não faz nada
         $aCampos = array();
     }
-    
+
     /**
      * n02Entity
      *
@@ -1168,7 +1168,7 @@ class Convert
         );
         $this->zLinhaNEntity($aFields);
     }
-    
+
     /**
      * n03Entity
      *
@@ -1206,7 +1206,7 @@ class Convert
         );
         $this->zLinhaNEntity($aFields);
     }
-    
+
     /**
      * n04Entity
      *
@@ -1244,7 +1244,7 @@ class Convert
         );
         $this->zLinhaNEntity($aFields);
     }
-    
+
     /**
      * n05Entity
      *
@@ -1282,7 +1282,7 @@ class Convert
         );
         $this->zLinhaNEntity($aFields);
     }
-    
+
     /**
      * n06Entity
      *
@@ -1320,7 +1320,7 @@ class Convert
         );
         $this->zLinhaNEntity($aFields);
     }
-    
+
     /**
      * n07Entity
      *
@@ -1358,7 +1358,7 @@ class Convert
         );
         $this->zLinhaNEntity($aFields);
     }
-    
+
     /**
      * n08Entity
      *
@@ -1396,7 +1396,7 @@ class Convert
         );
         $this->zLinhaNEntity($aFields);
     }
-    
+
     /**
      * n09Entity
      *
@@ -1434,7 +1434,7 @@ class Convert
         );
         $this->zLinhaNEntity($aFields);
     }
-    
+
     /**
      * n10Entity
      *
@@ -1472,7 +1472,7 @@ class Convert
         );
         $this->zLinhaNEntity($aFields);
     }
-    
+
     /**
      * n10aEntity
      * Cria a tag ICMSPart
@@ -1521,7 +1521,7 @@ class Convert
             $aCampos[6] //vICMSSTDest = ''
         );
     }
-    
+
     /**
      * n10cEntity
      *
@@ -1552,7 +1552,7 @@ class Convert
         );
         $this->zLinhaNSNEntity($aFields);
     }
-    
+
     /**
      * n10dEntity
      *
@@ -1583,7 +1583,7 @@ class Convert
         );
         $this->zLinhaNSNEntity($aFields);
     }
-    
+
     /**
      * n10eEntity
      *
@@ -1614,7 +1614,7 @@ class Convert
         );
         $this->zLinhaNSNEntity($aFields);
     }
-    
+
     /**
      * n10fEntity
      *
@@ -1645,7 +1645,7 @@ class Convert
         );
         $this->zLinhaNSNEntity($aFields);
     }
-    
+
     /**
      * n10gEntity
      *
@@ -1676,7 +1676,7 @@ class Convert
         );
         $this->zLinhaNSNEntity($aFields);
     }
-    
+
     /**
      * n10hEntity
      *
@@ -1708,7 +1708,7 @@ class Convert
         );
         $this->zLinhaNSNEntity($aFields);
     }
-    
+
     /**
      * naEntity
      * Cria a tag ICMSUFDest
@@ -1768,7 +1768,7 @@ class Convert
             $aCampos[20] //vICMSSTRet
         );
     }
-    
+
     /**
      * zLinhaNSNEntity
      * Cria a tag ICMSSN
@@ -1801,7 +1801,7 @@ class Convert
             $aCampos[17] //vICMSSTRet
         );
     }
-    
+
     /**
      * oEntity
      *
@@ -1823,7 +1823,7 @@ class Convert
         $this->linhaO[10] = ''; //vUnid
         $this->linhaO[11] = ''; //vIPI
     }
-    
+
     /**
      * o07Entity
      *
@@ -1835,7 +1835,7 @@ class Convert
         $this->linhaO[1] = $aCampos[1];
         $this->linhaO[11] = $aCampos[2];
     }
-    
+
     /**
      * o10Entity
      *
@@ -1848,7 +1848,7 @@ class Convert
         $this->linhaO[8] = $aCampos[2]; //pIPI
         $this->zLinhaOEntity($this->linhaO);
     }
-    
+
     /**
      * o11Entity
      *
@@ -1861,7 +1861,7 @@ class Convert
         $this->linhaO[10] = $aCampos[2]; //vUnid
         $this->zLinhaOEntity($this->linhaO);
     }
-    
+
     /**
      * o08Entity
      *
@@ -1873,7 +1873,7 @@ class Convert
         $this->linhaO[1] = $aCampos[1];
         $this->zLinhaOEntity($this->linhaO);
     }
-    
+
     /**
      * zLinhaOEntity
      * Cria a tag IPI
@@ -1916,7 +1916,7 @@ class Convert
             $aCampos[4] //vIOF
         );
     }
-    
+
     /**
      * qEntity
      *
@@ -1935,7 +1935,7 @@ class Convert
         $this->linhaQ[5] = ''; //qBCProd
         $this->linhaQ[6] = ''; //vAliqProd
     }
-    
+
     /**
      * q02Entity
      *
@@ -1950,7 +1950,7 @@ class Convert
         $this->linhaQ[4] = $aCampos[4]; //vPIS
         $this->zLinhaQEntity($this->linhaQ);
     }
-    
+
     /**
      * q03Entity
      *
@@ -1965,7 +1965,7 @@ class Convert
         $this->linhaQ[6] = $aCampos[3]; //vAliqProd
         $this->zLinhaQEntity($this->linhaQ);
     }
-    
+
     /**
      * q04Entity
      *
@@ -1977,7 +1977,7 @@ class Convert
         $this->linhaQ[1] = $aCampos[1]; //cst
         $this->zLinhaQEntity($this->linhaQ);
     }
-    
+
     /**
      * q05Entity
      *
@@ -1994,7 +1994,7 @@ class Convert
         $this->linhaQ[6] = ''; //vAliqProd
         $this->zLinhaQEntity($this->linhaQ);
     }
-    
+
     /**
      * q07Entity
      *
@@ -2008,7 +2008,7 @@ class Convert
         $this->linhaQ[4] = $aCampos[3]; //vPIS
         $this->zLinhaQEntity($this->linhaQ);
     }
-    
+
     /**
      * q10Entity
      *
@@ -2021,7 +2021,7 @@ class Convert
         $this->linhaQ[6] = $aCampos[2]; //vAliqProd
         $this->zLinhaQEntity($this->linhaQ);
     }
-    
+
     /**
      * zLinhaQEntity
      * Cria a tag PIS
@@ -2041,7 +2041,7 @@ class Convert
             $aCampos[6] //vAliqProd
         );
     }
-    
+
     /**
      * rEntity
      *
@@ -2057,7 +2057,7 @@ class Convert
         $this->linhaR[4] = ''; //vAliqProd
         $this->linhaR[5] = $aCampos[1]; //vPIS
     }
-    
+
     /**
      * r02Entity
      *
@@ -2070,7 +2070,7 @@ class Convert
         $this->linhaR[2] = $aCampos[1]; //pPIS
         $this->zLinhaREntity($this->linhaR);
     }
-    
+
     /**
      * r04Entity
      *
@@ -2084,7 +2084,7 @@ class Convert
         $this->linhaR[5] = $aCampos[3]; //vPIS
         $this->zLinhaREntity($this->linhaR);
     }
-    
+
     /**
      * zLinhaREntity
      * Cria a tag PISST
@@ -2122,7 +2122,7 @@ class Convert
         $this->linhaS[5] = '';
         $this->linhaS[6] = '';
     }
-    
+
     /**
      * s02Entity
      *
@@ -2140,7 +2140,7 @@ class Convert
         $this->linhaS[6] = ''; //vAliqProd
         $this->zLinhaSEntity($this->linhaS);
     }
-        
+
     /**
      * s03Entity
      *
@@ -2155,7 +2155,7 @@ class Convert
         $this->linhaS[6] = $aCampos[3]; //vAliqProd
         $this->zLinhaSEntity($this->linhaS);
     }
-    
+
     /**
      * s04Entity
      *
@@ -2167,7 +2167,7 @@ class Convert
         $this->linhaS[1] = $aCampos[1]; //cst
         $this->zLinhaSEntity($this->linhaS);
     }
-    
+
     /**
      * s05Entity
      *
@@ -2179,7 +2179,7 @@ class Convert
         $this->linhaS[1] = $aCampos[1]; //cst
         $this->linhaS[4] = $aCampos[2]; //vCOFINS
     }
-    
+
     /**
      * s07Entity
      *
@@ -2192,7 +2192,7 @@ class Convert
         $this->linhaS[3] = $aCampos[2]; //pCOFINS
         $this->zLinhaSEntity($this->linhaS);
     }
-    
+
     /**
      * s09Entity
      *
@@ -2205,7 +2205,7 @@ class Convert
         $this->linhaS[6] = $aCampos[2]; //vAliqProd
         $this->zLinhaSEntity($this->linhaS);
     }
-    
+
     /**
      * zLinhaSEntity
      * Cria a tag COFINS
@@ -2241,7 +2241,7 @@ class Convert
         $this->linhaT[4] = ''; //$vAliqProd
         $this->linhaT[5] = $aCampos[1]; //$vCOFINS
     }
-    
+
     /**
      * t02Entity
      *
@@ -2254,7 +2254,7 @@ class Convert
         $this->linhaT[2] = $aCampos[2]; //$pCOFINS
         $this->zLinhaTEntity($this->linhaT);
     }
-    
+
     /**
      * t04Entity
      *
@@ -2267,7 +2267,7 @@ class Convert
         $this->linhaT[4] = $aCampos[2]; //$vAliqProd
         $this->zLinhaTEntity($this->linhaT);
     }
-    
+
     /**
      * zLinhaTEntity
      * Cria a tag COFINSST
@@ -2317,7 +2317,7 @@ class Convert
             $aCampos[16] //$indIncentivo
         );
     }
-    
+
     /**
      * uaEntity
      * Cria a tag tagimpostoDevol
@@ -2333,7 +2333,7 @@ class Convert
             $aCampos[2] //vIPIDevol
         );
     }
-    
+
     /**
      * wEntity
      *
@@ -2345,7 +2345,7 @@ class Convert
         //fake não faz nada
         $aCampos = array();
     }
-    
+
     /**
      * w02Entity
      * Cria tag ICMSTot
@@ -2375,7 +2375,7 @@ class Convert
             $aCampos[16] //$vTotTrib
         );
     }
-    
+
     /**
      * w17Entity
      * Cria a tag ISSQNTot
@@ -2401,7 +2401,7 @@ class Convert
             $aCampos[12] //$cRegTrib
         );
     }
-    
+
     /**
      * w23Entity
      * Cria a tag retTrib
@@ -2421,7 +2421,7 @@ class Convert
             $aCampos[7] //$vRetPrev
         );
     }
-    
+
     /**
      * xEntity
      * Cria a tag transp
@@ -2433,7 +2433,7 @@ class Convert
         //X|modFrete|
         $this->make->tagtransp($aCampos[1]);
     }
-    
+
     /**
      * x03Entity
      *
@@ -2462,7 +2462,7 @@ class Convert
         $this->linhaX[1] = $aCampos[1]; //$numCNPJ
         $this->zLinhaXEntity($this->linhaX);
     }
-    
+
     /**
      * x05Entity
      *
@@ -2474,7 +2474,7 @@ class Convert
         $this->linhaX[2] = $aCampos[1]; //$numCPF
         $this->zLinhaXEntity($this->linhaX);
     }
-    
+
     /**
      * zLinhaXEntity
      * Cria a tag transporta
@@ -2494,7 +2494,7 @@ class Convert
             $aCampos[7] //$siglaUF
         );
     }
-    
+
     /**
      * x11Entity
      *
@@ -2512,7 +2512,7 @@ class Convert
             $aCampos[6] //$cMunFG
         );
     }
-    
+
     /**
      * x18Entity
      * Cria a tag veicTransp
@@ -2546,7 +2546,7 @@ class Convert
             $aCampos[6] //$balsa
         );
     }
-    
+
     /**
      * x26Entity
      *
@@ -2564,7 +2564,7 @@ class Convert
         $this->linhaX26[$this->volId][5] = $aCampos[5]; //$pesoL = '',
         $this->linhaX26[$this->volId][6] = $aCampos[6]; //$pesoB = '',
     }
-    
+
     /**
      * x33Entity
      *
@@ -2575,7 +2575,7 @@ class Convert
         //X33|nLacre|
         $this->aLacres[$this->volId][] = $aCampos[1];
     }
-    
+
     /**
      * zLinhaXVolEntity
      * Cria a tag vol
@@ -2598,7 +2598,7 @@ class Convert
             $lacres
         );
     }
-    
+
     /**
      * yEntity
      *
@@ -2610,7 +2610,7 @@ class Convert
         //fake não faz nada
         $aCampos = array();
     }
-    
+
     /**
      * y02Entity
      * Cria a tag fat
@@ -2627,7 +2627,7 @@ class Convert
             $aCampos[4] //$vLiq
         );
     }
-    
+
     /**
      * y07Entity
      * Cria a tag dup
@@ -2643,7 +2643,7 @@ class Convert
             $aCampos[3] //$vDup
         );
     }
-    
+
     /**
      * yaEntity
      * Cria as tags pag e card
@@ -2666,7 +2666,7 @@ class Convert
             );
         }
     }
-    
+
     /**
      * zEntity
      * Cria a a tag infAdic
@@ -2681,7 +2681,7 @@ class Convert
             $aCampos[2] //$infCpl
         );
     }
-    
+
     /**
      * z04Entity
      * Cria a tag obsCont
@@ -2696,7 +2696,7 @@ class Convert
             $aCampos[2] //$xTexto
         );
     }
-    
+
     /**
      * z07Entity
      * Cria a tag obsFisco
@@ -2711,7 +2711,7 @@ class Convert
             $aCampos[2] //$xTexto
         );
     }
-    
+
     /**
      * z10Entity
      * Cria a tag prcRef
@@ -2726,7 +2726,7 @@ class Convert
             $aCampos[2] //$indProc
         );
     }
-    
+
     /**
      * zaEntity
      * Cria a tag exporta
@@ -2742,7 +2742,7 @@ class Convert
             $aCampos[3] //$xLocDespacho
         );
     }
-    
+
     /**
      * zbEntity
      * Cria a tag compra
@@ -2758,7 +2758,7 @@ class Convert
             $aCampos[3] //$xCont
         );
     }
-    
+
     /**
      * zc01Entity
      * Cria a tag cana
@@ -2779,7 +2779,7 @@ class Convert
         $this->linhaZC[5] = $aCampos[7]; //vTotDed
         $this->linhaZC[6] = $aCampos[8]; //vLiqFor
     }
-    
+
     /**
      * zc04Entity
      * Cria a tag forDia
@@ -2797,7 +2797,7 @@ class Convert
             $this->linhaZC[3] //$qTotGer
         );
     }
-    
+
     /**
      * zc10Entity
      * Cria a tag deduc
@@ -2815,7 +2815,7 @@ class Convert
             $this->linhaZC[6] //$vLiqFor
         );
     }
-    
+
     /**
      * zx01Entity
      * Cria a tag infNFeSupl com o qrCode para impressão da DANFCE
@@ -2827,7 +2827,7 @@ class Convert
         //ZX01|qrcode
         $this->make->taginfNFeSupl($aCampos[1]);
     }
-    
+
     /**
      * zClearParam
      * Limpar os parametros da classe para a conversão de nova NFe
@@ -2855,7 +2855,7 @@ class Convert
         $this->aLacres = array();
         $this->linhaZC = array();
     }
-    
+
     /**
      * zSliceNotas
      * Separa as notas em um array
@@ -2885,7 +2885,7 @@ class Convert
         }
         return $aNotas;
     }
-    
+
     /**
      * zArray2xml
      * Converte uma Nota Fiscal em um array de txt em um xml
@@ -2906,7 +2906,7 @@ class Convert
             $this->$metodo($aCampos);
         }
     }
-    
+
     /**
      * zClean
      * Efetua limpeza dos campos
