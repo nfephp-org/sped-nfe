@@ -1,6 +1,8 @@
 # SPED-NFE
 
-API para geração e comunicação das NFe com as SEFAZ autorizadoras. APENAS EM DESENVOLVIMENTO !!
+API para geração e comunicação das NFe com as SEFAZ autorizadoras.
+
+## APENAS EM DESENVOLVIMENTO !!
 
 Este pacote está em desenvolvimento, não é funcional e não deve ser utilizado para nada além de testes. 
 

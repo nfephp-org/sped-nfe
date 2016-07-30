@@ -7,7 +7,7 @@ use NFePHP\NFe\Convert;
 
 $convert = new Convert();
 
-$txtfile = 'xml/NOTAFISCAL310.txt';
+$txtfile = '../tests/fixtures/NFe.txt';
 
 $aNFe = $convert->txt2xml($txtfile);
 

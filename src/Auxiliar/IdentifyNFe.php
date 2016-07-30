@@ -7,16 +7,18 @@ namespace NFePHP\NFe\Auxiliar;
  *
  * @category  NFePHP
  * @package   NFePHP\NFe\Auxiliar\IdentifyNFe
- * @copyright Copyright (c) 2008
- * @license   http://www.gnu.org/licenses/lesser.html LGPL v3
+ * @copyright NFePHP Copyright (c) 2008
+ * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
+ * @license   https://opensource.org/licenses/MIT MIT
+ * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
  * @author    Roberto L. Machado <linux.rlm at gmail dot com>
- * @link      http://github.com/nfephp-org/nfephp for the canonical source repository
+ * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
 
 use \DOMDocument;
 use NFePHP\Common\Identify\Identify;
 
-class IdentifyNFe
+class IdentifyNFe extends Identify
 {
     
     public static function identificar($xml = '', &$aResp = array())
