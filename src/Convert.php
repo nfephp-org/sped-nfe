@@ -8,10 +8,12 @@ namespace NFePHP\NFe;
  *
  * @category  NFePHP
  * @package   NFePHP\NFe\ConvertNFe
- * @copyright Copyright (c) 2008
- * @license   http://www.gnu.org/licenses/lesser.html LGPL v3
+ * @copyright NFePHP Copyright (c) 2008
+ * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
+ * @license   https://opensource.org/licenses/MIT MIT
+ * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
  * @author    Roberto L. Machado <linux.rlm at gmail dot com>
- * @link      http://github.com/nfephp-org/nfephp for the canonical source repository
+ * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
 
 use NFePHP\Common\Strings\Strings;
@@ -39,9 +41,9 @@ class Convert
     protected $version = '3.10';
     /**
      * $make
-     * Instancia da classe MakeNFe
+     * Instancia da classe Make
      *
-     * @var NFePHP\NFe\MakeNFe
+     * @var NFePHP\NFe\Make
      */
     protected $make;
     /**
@@ -216,6 +218,7 @@ class Convert
         //verificar se existem mais de uma NF
         $aNotas = $this->zSliceNotas($aDados);
         foreach ($aNotas as $nota) {
+            $this->notafiscalEntity();
             $this->zArray2xml($nota);
             //carrega os volumes, movido de yEntity
             foreach ($this->linhaX26 as $vol) {
@@ -231,13 +234,11 @@ class Convert
     /**
      * notafiscalEntity
      * Cria a entidade nota fiscal
-     *
-     * @param array $aCampos
      */
-    protected function notafiscalEntity($aCampos)
+    protected function notafiscalEntity()
     {
         $this->zClearParam();
-        $this->make = new MakeNFe();
+        $this->make = new Make();
         $aCampos = array();
     }
 
@@ -256,7 +257,7 @@ class Convert
             throw new Exception\RuntimeException($msg);
         }
         $chave = preg_replace('/[^0-9]/', '', $aCampos[2]);
-        $this->make->taginfNFe($chave, $aCampos[1]);
+        $this->make->taginfNFe($chave, $this->version);
     }
 
     /**
@@ -2865,11 +2866,18 @@ class Convert
      */
     protected function zSliceNotas($array)
     {
+        $annu = explode('|', $array[0]);
+        $numnotas = $annu[1];
+        unset($array[0]);
+        if ($numnotas == 1) {
+            $aNotas[] = $array;
+            return $aNotas;
+        }
         $iCount = 0;
         $xCount = 0;
         $resp = array();
         foreach ($array as $linha) {
-            if (substr($linha, 0, 4) == 'NOTA') {
+            if (substr($linha, 0, 2) == 'A|') {
                 $resp[$xCount]['init'] = $iCount;
                 if ($xCount > 0) {
                     $resp[$xCount -1]['fim'] = $iCount;

@@ -7,10 +7,12 @@ namespace NFePHP\NFe;
  *
  * @category  NFePHP
  * @package   NFePHP\NFe\ToolsNFe
- * @copyright Copyright (c) 2008-2015
- * @license   http://www.gnu.org/licenses/lesser.html LGPL v3
+ * @copyright NFePHP Copyright (c) 2008
+ * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
+ * @license   https://opensource.org/licenses/MIT MIT
+ * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
  * @author    Roberto L. Machado <linux.rlm at gmail dot com>
- * @link      http://github.com/nfephp-org/nfephp for the canonical source repository
+ * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
 
 use NFePHP\Common\Base\BaseTools;

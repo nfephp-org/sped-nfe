@@ -8,19 +8,12 @@ namespace NFePHP\NFe;
  * @category  NFePHP
  * @package   NFePHP\NFe\MakeNFe
  * @copyright Copyright (c) 2008
- * @license   http://www.gnu.org/licenses/lesser.html LGPL v3
+ * @copyright NFePHP Copyright (c) 2008
+ * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
+ * @license   https://opensource.org/licenses/MIT MIT
+ * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
  * @author    Roberto L. Machado <linux.rlm at gmail dot com>
- * @link      http://github.com/nfephp-org/nfephp for the canonical source repository
- *
- *        CONTRIBUIDORES (em ordem alfabetica):
- *
- *              Cleiton Perin <cperin20 at gmail dot com>
- *              Elias Müller <elias at oxigennio dot com dot br>
- *              Marcos Vinicios Balbi <marcusbalbi at hotmail dot com>
- *
- * NOTA: Esta classe atende os padrões estabelecidos pela
- * NOTA TÉCNICA 2013.005 Versão 1.22 de Março 2015
- * E pelas NT 2015.001, 2015.002, 2015.003
+ * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
 
 use NFePHP\Common\DateTime\DateTime;
@@ -1595,8 +1588,6 @@ class Make extends BaseMake
         $cEAN = '',
         $xProd = '',
         $NCM = '',
-        $NVE = '',
-        $CEST = '',
         $EXTIPI = '',
         $CFOP = '',
         $uCom = '',
@@ -1647,20 +1638,6 @@ class Make extends BaseMake
             $NCM,
             true,
             $identificador . "[item $nItem] Código NCM com 8 dígitos ou 2 dígitos (gênero)"
-        );
-        $this->dom->addChild(
-            $prod,
-            "NVE",
-            $NVE,
-            false,
-            $identificador . "[item $nItem] Código NVE com 2 letras maiúsculas e 4 dígitos"
-        );
-        $this->dom->addChild(
-            $prod,
-            "CEST",
-            $CEST,
-            false,
-            $identificador . "[item $nItem] Código CEST com 7 dígitos"
         );
         $this->dom->addChild(
             $prod,

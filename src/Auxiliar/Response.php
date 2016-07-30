@@ -5,12 +5,14 @@ namespace NFePHP\NFe\Auxiliar;
 /**
  * Classe para extrair os dados retornados das consultas e envios a SEFAZ
  *
- * @category  NFePHP
+ * @category  Library
  * @package   NFePHP\NFe\Auxiliar\Response
- * @copyright Copyright (c) 2008
- * @license   http://www.gnu.org/licenses/lesser.html LGPL v3
+ * @copyright NFePHP Copyright (c) 2008
+ * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
+ * @license   https://opensource.org/licenses/MIT MIT
+ * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
  * @author    Roberto L. Machado <linux.rlm at gmail dot com>
- * @link      http://github.com/nfephp-org/nfephp for the canonical source repository
+ * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
 
 use NFePHP\Common\Dom\Dom;
@@ -584,7 +586,7 @@ class Response
      * @param  DOMDocument $tag
      * @return array
      */
-    private static function zGetProt($dom, $tag)
+    protected static function zGetProt($dom, $tag)
     {
         $aProt = array();
         $infProt = $tag->getElementsByTagName('infProt')->item(0);
@@ -607,7 +609,7 @@ class Response
      * @param  DOMDocument $tag
      * @return array
      */
-    private static function zGetEvent($dom, $tag)
+    protected static function zGetEvent($dom, $tag)
     {
         $aEvent = array();
         $aEv = array();
@@ -653,7 +655,7 @@ class Response
      * @param  DOMDocument $tag
      * @return array
      */
-    private static function zGetCanc($dom, $tag)
+    protected static function zGetCanc($dom, $tag)
     {
         $aCanc = array();
         $infCanc = $tag->getElementsByTagName('infCanc')->item(0);
