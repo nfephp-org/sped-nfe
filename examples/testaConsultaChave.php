@@ -8,7 +8,7 @@ use NFePHP\NFe\Tools;
 $nfe = new Tools('../config/config.json');
 $nfe->setModelo('55');
 
-$chave = '52160500067985000172550010000000101000000100';
+$chave = '41160709942747000133550010000005041768326514';
 $tpAmb = '2';
 $aResposta = array();
 $xml = $nfe->sefazConsultaChave($chave, $tpAmb, $aResposta);
