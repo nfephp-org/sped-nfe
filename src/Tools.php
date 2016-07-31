@@ -28,7 +28,7 @@ use NFePHP\NFe\Auxiliar\IdentifyNFe;
 use NFePHP\Common\Dom\ValidXsd;
 
 if (!defined('NFEPHP_ROOT')) {
-    define('NFEPHP_ROOT', dirname(dirname(dirname(__FILE__))));
+    define('NFEPHP_ROOT', dirname(dirname(__FILE__)));
 }
 
 class Tools extends BaseTools
@@ -900,7 +900,7 @@ class Tools extends BaseTools
             $this->zGravaFile('nfe', $tpAmb, $filename, $retorno);
         }
         //tratar dados de retorno
-        $aRetorno = ReturnNFe::readResponseSefaz($servico, $retorno);
+        $aRetorno = Response::readResponseSefaz($servico, $retorno);
         return (string) $retorno;
     }
 
