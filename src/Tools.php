@@ -758,7 +758,7 @@ class Tools extends BaseTools
         }
         
         //tratar dados de retorno
-        $aRetorno = ReturnNFe::readResponseSefaz($servico, $retorno);
+        $aRetorno = Response::readResponseSefaz($servico, $retorno);
         //caso o envio seja recebido com sucesso mover a NFe da pasta
         //das assinadas para a pasta das enviadas
         return (string) $retorno;
@@ -827,7 +827,7 @@ class Tools extends BaseTools
             $this->zGravaFile('nfe', $tpAmb, $filename, $retorno);
         }
         //tratar dados de retorno
-        $aRetorno = ReturnNFe::readResponseSefaz($servico, $retorno);
+        $aRetorno = Response::readResponseSefaz($servico, $retorno);
         //podem ser retornados nenhum, um ou vários protocolos
         //caso existam protocolos protocolar as NFe e movelas-las para a
         //pasta enviadas/aprovadas/anomes
@@ -1001,7 +1001,7 @@ class Tools extends BaseTools
         }
         
         //tratar dados de retorno
-        $aRetorno = ReturnNFe::readResponseSefaz($servico, $retorno);
+        $aRetorno = Response::readResponseSefaz($servico, $retorno);
         if ($aRetorno['cStat'] == '102') {
             $retorno = $this->zAddProtMsg('ProcInutNFe', 'inutNFe', $signedMsg, 'retInutNFe', $retorno);
             if ($salvarMensagens) {
@@ -1176,7 +1176,7 @@ class Tools extends BaseTools
         $filename = "$txtFile-retConsCad.xml";
         $this->zGravaFile('nfe', $tpAmb, $filename, $retorno);
         //tratar dados de retorno
-        $aRetorno = ReturnNFe::readResponseSefaz($servico, $retorno);
+        $aRetorno = Response::readResponseSefaz($servico, $retorno);
         return (string) $retorno;
     }
 
@@ -1240,7 +1240,7 @@ class Tools extends BaseTools
         $filename = $siglaUF."_"."$datahora-retConsStatServ.xml";
         $this->zGravaFile('nfe', $tpAmb, $filename, $retorno);
         //tratar dados de retorno
-        $aRetorno = ReturnNFe::readResponseSefaz($servico, $retorno);
+        $aRetorno = Response::readResponseSefaz($servico, $retorno);
         return (string) $retorno;
     }
 
@@ -1326,7 +1326,7 @@ class Tools extends BaseTools
         $filename = "$tipoNSU-$datahora-retDistDFeInt.xml";
         $this->zGravaFile('nfe', $tpAmb, $filename, $retorno);
         //tratar dados de retorno
-        $aRetorno = ReturnNFe::readResponseSefaz($servico, $retorno);
+        $aRetorno = Response::readResponseSefaz($servico, $retorno);
         return (string) $retorno;
     }
 
@@ -1609,7 +1609,7 @@ class Tools extends BaseTools
         $this->zGravaFile('nfe', $tpAmb, $filename, $retorno);
         //tratar dados de retorno
         //TODO : incluir nos xml das NF o protocolo EPEC
-        $aRetorno = ReturnNFe::readResponseSefaz($servico, $retorno);
+        $aRetorno = Response::readResponseSefaz($servico, $retorno);
         return $retorno;
     }
     
@@ -1798,7 +1798,7 @@ class Tools extends BaseTools
         $filename = "$chNFe-retDownnfe.xml";
         $this->zGravaFile('nfe', $tpAmb, $filename, $retorno);
         //tratar dados de retorno
-        $aRetorno = ReturnNFe::readResponseSefaz($servico, $retorno);
+        $aRetorno = Response::readResponseSefaz($servico, $retorno);
         return (string) $retorno;
     }
     
@@ -1908,7 +1908,7 @@ class Tools extends BaseTools
         }
         
         //tratar dados de retorno
-        $aRetorno = ReturnNFe::readResponseSefaz($servico, $retorno);
+        $aRetorno = Response::readResponseSefaz($servico, $retorno);
         return (string) $retorno;
     }
     
@@ -2038,7 +2038,7 @@ class Tools extends BaseTools
         $this->soapDebug = $this->oSoap->soapDebug;
         //salva mensagens
         //tratar dados de retorno
-        $this->aLastRetEvent = ReturnNFe::readResponseSefaz($servico, $retorno);
+        $this->aLastRetEvent = Response::readResponseSefaz($servico, $retorno);
         if ($this->getSalvarMensagensEvento()) {
             $filename = "$chNFe-$aliasEvento-envEvento.xml";
             $this->zGravaFile('nfe', $tpAmb, $filename, $lastMsg);
