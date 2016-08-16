@@ -57,7 +57,7 @@ $xJust = ''; //Justificativa da entrada em contingência
 $ano = date('y', strtotime($dhEmi));
 $mes = date('m', strtotime($dhEmi));
 $cnpj = '99999999999999';
-$chave = $nfe->montaChave(...[$cUF, $ano, $mes, $cnpj, $mod, $serie, $nNF, $tpEmis, $cNF]);
+$chave = $nfe->montaChave($cUF, $ano, $mes, $cnpj, $mod, $serie, $nNF, $tpEmis, $cNF);
 $versao = '3.10';
 $resp = $nfe->taginfNFe($chave, $versao);
 
