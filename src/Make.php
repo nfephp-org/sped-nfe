@@ -893,23 +893,20 @@ class Make extends BaseMake
     ) {
         $identificador = 'C01 <emit> - ';
         $this->emit = $this->dom->createElement("emit");
-        if ($cnpj != '') {
-            $this->dom->addChild(
-                $this->emit,
-                "CNPJ",
-                $cnpj,
-                true,
-                $identificador . "CNPJ do emitente"
-            );
-        } else {
-            $this->dom->addChild(
-                $this->emit,
-                "CPF",
-                $cpf,
-                true,
-                $identificador . "CPF do remetente"
-            );
-        }
+        $this->dom->addChild(
+            $this->emit,
+            "CNPJ",
+            $cnpj,
+            false,
+            $identificador . "CNPJ do emitente"
+        );
+        $this->dom->addChild(
+            $this->emit,
+            "CPF",
+            $cpf,
+            false,
+            $identificador . "CPF do remetente"
+        );
         $this->dom->addChild(
             $this->emit,
             "xNome",
@@ -1122,30 +1119,28 @@ class Make extends BaseMake
             $xNome = 'NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
             //a exigência do CNPJ 99999999000191 não existe mais
         }
-        if ($cnpj != '') {
-            $this->dom->addChild(
-                $this->dest,
-                "CNPJ",
-                $cnpj,
-                true,
-                $identificador . "CNPJ do destinatário"
-            );
-        } elseif ($cpf != '') {
-            $this->dom->addChild(
-                $this->dest,
-                "CPF",
-                $cpf,
-                true,
-                $identificador . "CPF do destinatário"
-            );
-        } else {
-            $this->dom->addChild(
-                $this->dest,
-                "idEstrangeiro",
-                $idEstrangeiro,
-                true,
-                $identificador . "Identificação do destinatário no caso de comprador estrangeiro"
-            );
+        $this->dom->addChild(
+            $this->dest,
+            "CNPJ",
+            $cnpj,
+            false,
+            $identificador . "CNPJ do destinatário"
+        );
+        $this->dom->addChild(
+            $this->dest,
+            "CPF",
+            $cpf,
+            false,
+            $identificador . "CPF do destinatário"
+        );
+        $this->dom->addChild(
+            $this->dest,
+            "idEstrangeiro",
+            $idEstrangeiro,
+            false,
+            $identificador . "Identificação do destinatário no caso de comprador estrangeiro"
+        );
+        if ($idEstrangeiro != '') {
             $indIEDest = '9';
         }
         $this->dom->addChild(
@@ -1346,23 +1341,20 @@ class Make extends BaseMake
     ) {
         $identificador = 'F01 <retirada> - ';
         $this->retirada = $this->dom->createElement("retirada");
-        if ($cnpj != '') {
-            $this->dom->addChild(
-                $this->retirada,
-                "CNPJ",
-                $cnpj,
-                true,
-                $identificador . "CNPJ do Cliente da Retirada"
-            );
-        } else {
-            $this->dom->addChild(
-                $this->retirada,
-                "CPF",
-                $cpf,
-                true,
-                $identificador . "CPF do Cliente da Retirada"
-            );
-        }
+        $this->dom->addChild(
+            $this->retirada,
+            "CNPJ",
+            $cnpj,
+            false,
+            $identificador . "CNPJ do Cliente da Retirada"
+        );
+        $this->dom->addChild(
+            $this->retirada,
+            "CPF",
+            $cpf,
+            false,
+            $identificador . "CPF do Cliente da Retirada"
+        );
         $this->dom->addChild(
             $this->retirada,
             "xLgr",
@@ -1444,23 +1436,20 @@ class Make extends BaseMake
     ) {
         $identificador = 'G01 <entrega> - ';
         $this->entrega = $this->dom->createElement("entrega");
-        if ($cnpj != '') {
-            $this->dom->addChild(
-                $this->entrega,
-                "CNPJ",
-                $cnpj,
-                true,
-                $identificador . "CNPJ do Cliente da Entrega"
-            );
-        } else {
-            $this->dom->addChild(
-                $this->entrega,
-                "CPF",
-                $cpf,
-                true,
-                $identificador . "CPF do Cliente da Entrega"
-            );
-        }
+        $this->dom->addChild(
+            $this->entrega,
+            "CNPJ",
+            $cnpj,
+            false,
+            $identificador . "CNPJ do Cliente da Entrega"
+        );
+        $this->dom->addChild(
+            $this->entrega,
+            "CPF",
+            $cpf,
+            false,
+            $identificador . "CPF do Cliente da Entrega"
+        );
         $this->dom->addChild(
             $this->entrega,
             "xLgr",
@@ -1527,23 +1516,20 @@ class Make extends BaseMake
         $identificador = 'G50 <autXML> - ';
         if (intval($this->versao, 10) > 2) {
             $autXML = $this->dom->createElement("autXML");
-            if ($cnpj != '') {
-                $this->dom->addChild(
-                    $autXML,
-                    "CNPJ",
-                    $cnpj,
-                    true,
-                    $identificador . "CNPJ do Cliente Autorizado"
-                );
-            } else {
-                $this->dom->addChild(
-                    $autXML,
-                    "CPF",
-                    $cpf,
-                    true,
-                    $identificador . "CPF do Cliente Autorizado"
-                );
-            }
+            $this->dom->addChild(
+                $autXML,
+                "CNPJ",
+                $cnpj,
+                false,
+                $identificador . "CNPJ do Cliente Autorizado"
+            );
+            $this->dom->addChild(
+                $autXML,
+                "CPF",
+                $cpf,
+                false,
+                $identificador . "CPF do Cliente Autorizado"
+            );
             $this->aAutXML[] = $autXML;
             return $autXML;
         } else {
@@ -1782,6 +1768,9 @@ class Make extends BaseMake
      */
     public function tagNVE($nItem = '', $texto = '')
     {
+        if ($texto == '') {
+            return '';
+        }
         $nve = $this->dom->createElement("NVE", $texto);
         $this->aNVE[$nItem][] = $nve;
         return $nve;
@@ -1800,6 +1789,9 @@ class Make extends BaseMake
      */
     public function tagCEST($nItem = '', $texto = '')
     {
+        if ($texto == '') {
+            return '';
+        }
         $cest = $this->dom->createElement("CEST", $texto);
         $this->aCest[$nItem][] = $cest;
         return $cest;
@@ -1814,6 +1806,9 @@ class Make extends BaseMake
      */
     public function tagRECOPI($nItem = '', $texto = '')
     {
+        if ($texto == '') {
+            return '';
+        }
         $recopi = $this->dom->createElement("RECOPI", $texto);
         $this->aRECOPI[$nItem] = $recopi;
         return $recopi;
@@ -1830,6 +1825,9 @@ class Make extends BaseMake
      */
     public function taginfAdProd($nItem = '', $texto = '')
     {
+        if ($texto == '') {
+            return '';
+        }
         $infAdProd = $this->dom->createElement("infAdProd", $texto);
         $this->aInfAdProd[$nItem] = $infAdProd;
         return $infAdProd;
