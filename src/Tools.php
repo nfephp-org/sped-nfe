@@ -228,7 +228,7 @@ class Tools extends BaseTools
      */
     public function enviaMail($pathXml = '', $aMails = array(), $templateFile = '', $comPdf = false, $pathPdf = '')
     {
-        $mail = new MailNFe($this->aMailConf);
+        $mail = new Mail($this->aMailConf);
         // Se não for informado o caminho do PDF, monta um através do XML
         /*
         if ($comPdf && $this->modelo == '55' && $pathPdf == '') {
