@@ -1611,6 +1611,11 @@ class Make extends BaseMake
             . "código EAN ou código de barras",
             true
         );
+
+        if ($this->tpAmb == '2' && $this->mod == '65') {
+            $xProd = 'NOTA FISCAL EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
+        }
+
         $this->dom->addChild(
             $prod,
             "xProd",
