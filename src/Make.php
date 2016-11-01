@@ -1115,7 +1115,7 @@ class Make extends BaseMake
                 $flagNome = false;//marca se xNome é ou não obrigatório
             }
         }
-        if ($this->tpAmb == '2' && $this->mod == '55') {
+        if ($this->tpAmb == '2') {
             $xNome = 'NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
             //a exigência do CNPJ 99999999000191 não existe mais
         }
