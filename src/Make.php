@@ -16,321 +16,318 @@ namespace NFePHP\NFe;
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
 
-use NFePHP\Common\DateTime\DateTime;
-use NFePHP\Common\Base\BaseMake;
-use NFePHP\Common\Dom\Dom;
-use NFePHP\Common\Exception\RuntimeException;
+
+use Brazanation\Documents\NFeAccessKey;
+use Brazanation\Documents\Exception\InvalidDocument as  InvalidDocumentException;
+
+use NFePHP\Common\SpedDOM;
 use \DOMDocument;
 use \DOMElement;
 use \DOMNode;
 
-class Make extends BaseMake
+class Make
 {
     /**
-     * numero da versão do xml da NFe
-     *
+     * @var array
+     */
+    public $erros = [];
+    /**
      * @var string
      */
-    public $versao = '3.10';
-
+    public $chNFe;
     /**
-     * modelo da nfe por ser 55-NFe ou 65-NFCe
-     *
+     * @var string
+     */
+    public $xml = '';
+    /**
+     * @var string
+     */
+    private $versao = '3.10';
+    /**
      * @var integer
      */
-    public $mod = 55;
+    private $mod = 55;
     /**
-     * chave da NFe
-     *
+     * @var \NFePHP\Common\Dom\Dom
+     */
+    private $dom;
+    /**
      * @var string
      */
-    public $chNFe = '';
-
-    /**
-     * @var DOMNode
-     */
-    private $NFe = '';
-
-    /**
-     * @var DOMNode
-     */
-    private $infNFe = '';
-
-    /**
-     * @var DOMNode
-     */
-    private $ide = '';
-
+    private $tpAmb = '2';
     /**
      * @var DOMElement
      */
-    private $emit = '';
-
-    /**
-     * @var DOMNode
-     */
-    private $enderEmit = '';
-
+    private $NFe;
     /**
      * @var DOMElement
      */
-    private $dest = '';
-
-    /**
-     * @var DOMNode
-     */
-    private $enderDest = '';
-
-    /**
-     * @var DOMNode
-     */
-    private $retirada = '';
-
-    /**
-     * @var DOMNode
-     */
-    private $entrega = '';
-
-    /**
-     * @var DOMNode
-     */
-    private $total = '';
-
-    /**
-     * @var DOMNode
-     */
-    private $cobr = '';
-
-    /**
-     * @var DOMNode
-     */
-    private $transp = '';
-
+    private $infNFe;
     /**
      * @var DOMElement
      */
-    private $infAdic = '';
-
+    private $ide;
     /**
      * @var DOMElement
      */
-    private $exporta = '';
+    private $emit;
+    /**
+     * @var DOMElement
+     */
+    private $enderEmit;
+    /**
+     * @var DOMElement
+     */
+    private $dest;
+    /**
+     * @var DOMElement
+     */
+    private $enderDest;
+    /**
+     * @var DOMElement
+     */
+    private $retirada;
+    /**
+     * @var DOMElement
+     */
+    private $entrega;
+    /**
+     * @var DOMElement
+     */
+    private $total;
+    /**
+     * @var DOMElement
+     */
+    private $cobr;
+    /**
+     * @var DOMElement
+     */
+    private $transp;
+    /**
+     * @var DOMElement
+     */
+    private $infAdic;
+    /**
+     * @var DOMElement
+     */
+    private $exporta;
+    /**
+     * @var DOMElement
+     */
+    private $compra;
+    /**
+     * @var DOMElement
+     */
+    private $cana;
+    /**
+     * @var array
+     */
+    private $aTotICMSUFDest = ['vFCPUFDest' => '', 'vICMSUFDest' => '', 'vICMSUFRemet' => ''];
+    /**
+     * @var array
+     */
+    private $aNFref = [];
+    /**
+     * @var array
+     */
+    private $aDup = [];
+    /**
+     * @var array
+     */
+    private $aPag = [];
+    /**
+     * @var array
+     */
+    private $aReboque = [];
+    /**
+     * @var array
+     */
+    private $aVol = [];
+    /**
+     * @var array
+     */
+    private $aAutXML = [];
+    /**
+     * @var array
+     */
+    private $aDet = [];
+    /**
+     * @var array
+     */
+    private $aProd = [];
+    /**
+     * @var array
+     */
+    private $aNVE = [];
+    /**
+     * @var array
+     */
+    private $aCest = [];
+    /**
+     * @var array
+     */
+    private $aRECOPI = [];
+    /**
+     * @var array
+     */
+    private $aDetExport = [];
+    /**
+     * @var array
+     */
+    private $aDI = [];
+    /**
+     * @var array
+     */
+    private $aAdi = [];
+    /**
+     * @var array
+     */
+    private $aVeicProd = [];
+    /**
+     * @var array
+     */
+    private $aMed = [];
+    /**
+     * @var array
+     */
+    private $aArma = [];
+    /**
+     * @var array
+     */
+    private $aComb = [];
+    /**
+     * @var array
+     */
+    private $aEncerrante = [];
+    /**
+     * @var array
+     */
+    private $aImposto = [];
+    /**
+     * @var array
+     */
+    private $aICMS = [];
+    /**
+     * @var array
+     */
+    private $aICMSUFDest = [];
+    /**
+     * @var array
+     */
+    private $aIPI = [];
+    /**
+     * @var array
+     */
+    private $aII = [];
+    /**
+     * @var array
+     */
+    private $aISSQN = [];
+    /**
+     * @var array
+     */
+    private $aPIS = [];
+    /**
+     * @var array
+     */
+    private $aPISST = [];
+    /**
+     * @var array
+     */
+    private $aCOFINS = [];
+    /**
+     * @var array
+     */
+    private $aCOFINSST = [];
+    /**
+     * @var array
+     */
+    private $aImpostoDevol = [];
+    /**
+     * @var array
+     */
+    private $aInfAdProd = [];
+    /**
+     * @var array
+     */
+    private $aObsCont = [];
+    /**
+     * @var array
+     */
+    private $aObsFisco = [];
+    /**
+     * @var array
+     */
+    private $aProcRef = [];
+    /**
+     * @var array
+     */
+    private $aForDia = [];
+    /**
+     * @var array
+     */
+    private $aDeduc = [];
 
     /**
-     * @var DOMNode
+     * Função construtora cria um objeto DOMDocument
+     * que será carregado com o documento fiscal
      */
-    private $compra = '';
-
+    public function __construct()
+    {
+        $this->dom = new Dom('1.0', 'UTF-8');
+        $this->dom->preserveWhiteSpace = false;
+        $this->dom->formatOutput = false;
+    }
+    
     /**
-     * @var DOMNode
+     * Retorna o xml que foi montado
+     * @return string
      */
-    private $cana = '';
-
-    // Arrays
-    private $aTotICMSUFDest = array('vFCPUFDest' => '', 'vICMSUFDest' => '', 'vICMSUFRemet' => '');
-
+    public function __toString()
+    {
+        return $this->xml;
+    }
+    
     /**
-     * @var DOMNode[]
+     * Retorna o numero da chave da NFe
+     * @return type
      */
-    private $aNFref = array();
-
+    public function chave()
+    {
+        return $this->chNFe;
+    }
+    
     /**
-     * @var DOMNode[]
+     * Retrona o modelo de NFe 55 ou 65
+     * @return int
      */
-    private $aDup = array();
-
-    /**
-     * @var DOMElement[]
-     */
-    private $aPag = array();
-
-    /**
-     * @var DOMNode[]
-     */
-    private $aReboque = array();
-
-    /**
-     * @var DOMNode[]
-     */
-    private $aVol = array();
-
-    /**
-     * @var DOMNode[]
-     */
-    private $aAutXML = array();
-
-    /**
-     * @var DOMNode[]
-     */
-    private $aDet = array();
-
-    /**
-     * @var DOMElement[]
-     */
-    private $aProd = array();
-
-    /**
-     * @var DOMElement[]
-     */
-    private $aNVE = array();
-
-    /**
-     * @var DOMElement[]
-     */
-    private $aCest = array();
-
-    /**
-     * @var DOMNode[]
-     */
-    private $aRECOPI = array();
-
-    /**
-     * @var DOMNode[]
-     */
-    private $aDetExport = array();
-
-    /**
-     * @var DOMElement[]
-     */
-    private $aDI = array();
-
-    /**
-     * @var DOMNode[]
-     */
-    private $aAdi = array();
-
-    /**
-     * @var DOMNode[]
-     */
-    private $aVeicProd = array();
-
-    /**
-     * @var DOMNode[]
-     */
-    private $aMed = array();
-
-    /**
-     * @var DOMNode[]
-     */
-    private $aArma = array();
-
-    /**
-     * @var DOMNode[]
-     */
-    private $aComb = array();
-
-    /**
-     * @var DOMNode[]
-     */
-    private $aEncerrante = array();
-
-    /**
-     * @var DOMNode[]
-     */
-    private $aImposto = array();
-
-    /**
-     * @var DOMNode[]
-     */
-    private $aICMS = array();
-
-    /**
-     * @var DOMNode[]
-     */
-    private $aICMSUFDest = array();
-
-    /**
-     * @var DOMNode[]
-     */
-    private $aIPI = array();
-
-    /**
-     * @var DOMNode[]
-     */
-    private $aII = array();
-
-    /**
-     * @var DOMNode[]
-     */
-    private $aISSQN = array();
-
-    /**
-     * @var DOMNode[]
-     */
-    private $aPIS = array();
-
-    /**
-     * @var DOMNode[]
-     */
-    private $aPISST = array();
-
-    /**
-     * @var DOMNode[]
-     */
-    private $aCOFINS = array();
-
-    /**
-     * @var DOMNode[]
-     */
-    private $aCOFINSST = array();
-
-    /**
-     * @var DOMNode[]
-     */
-    private $aImpostoDevol = array();
-
-    /**
-     * @var DOMNode[]
-     */
-    private $aInfAdProd = array();
-
-    /**
-     * @var DOMNode[]
-     */
-    private $aObsCont = array();
-
-    /**
-     * @var DOMNode[]
-     */
-    private $aObsFisco = array();
-
-    /**
-     * @var DOMNode[]
-     */
-    private $aProcRef = array();
-
-    /**
-     * @var DOMNode[]
-     */
-    private $aForDia = array();
-
-    /**
-     * @var DOMNode[]
-     */
-    private $aDeduc = array();
-
+    public function modelo()
+    {
+        return $this->mod;
+    }
+    
     /**
      * montaNFe
      * Método de montagem do xml da NFe
      * essa função retorna TRUE em caso de sucesso ou FALSE se houve erro
-     * O xml da NFe deve ser recuperado pela funçao getXML() ou diretamente pela
+     * O xml da NFe deve ser recuperado pela funçao __toString() ou diretamente pela
      * propriedade publica $xml
-     *
      * @return boolean
      */
     public function montaNFe()
     {
-        if (count($this->erros) > 0) {
-            return false;
-        }
         //cria a tag raiz da Nfe
-        $this->zTagNFe();
+        $this->buildNFe();
+        //cria a tagInfNFe se ainda não existir
+        if (empty($this->infNFe)) {
+            $this->taginfNFe('11', $this->versao);
+        }
         //processa nfeRef e coloca as tags na tag ide
         foreach ($this->aNFref as $nfeRef) {
             $this->dom->appChild($this->ide, $nfeRef, 'Falta tag "ide"');
         }
         //monta as tags det com os detalhes dos produtos
-        $this->zTagdet();
+        $this->buildDet();
         //[2] tag ide (5 B01)
         $this->dom->appChild($this->infNFe, $this->ide, 'Falta tag "infNFe"');
         //[8] tag emit (30 C01)
@@ -372,61 +369,59 @@ class Make extends BaseMake
         $this->dom->appChild($this->NFe, $this->infNFe, 'Falta tag "NFe"');
         //[0] tag NFe
         $this->dom->appChild($this->dom, $this->NFe, 'Falta DOMDocument');
-        // testa da chave
-        $this->zTestaChaveXML($this->dom);
-        //convert DOMDocument para string
+        //testa da chave e a refaz se necessário
+        $this->checkNFeKey($this->dom);
+        
+        if (count($this->dom->erros) > 0) {
+            return false;
+        }
         $this->xml = $this->dom->saveXML();
         return true;
     }
 
     /**
-     * taginfNFe
      * Informações da NF-e A01 pai NFe
      * tag NFe/infNFe
-     *
-     * @param  string $chave
-     * @param  string $versao
+     * @param string $chave
+     * @param string $versao
      * @return DOMElement
      */
-    public function taginfNFe($chave = '', $versao = '')
+    public function taginfNFe($chave, $versao)
     {
         $this->infNFe = $this->dom->createElement("infNFe");
-        $this->infNFe->setAttribute("Id", 'NFe'.$chave);
+        $this->infNFe->setAttribute("Id", 'NFe' . $chave);
         $this->infNFe->setAttribute("versao", $versao);
-        //$this->infNFe->setAttribute("pk_nItem",'');
         $this->versao = $versao;
         $this->chNFe = $chave;
         return $this->infNFe;
     }
 
     /**
-     * tgaide
      * Informações de identificação da NF-e B01 pai A01
      * tag NFe/infNFe/ide
-     *
-     * @param  string $cUF
-     * @param  string $cNF
-     * @param  string $natOp
-     * @param  string $indPag
-     * @param  string $mod
-     * @param  string $serie
-     * @param  string $nNF
-     * @param  string $dhEmi
-     * @param  string $dhSaiEnt
-     * @param  string $tpNF
-     * @param  string $idDest
-     * @param  string $cMunFG
-     * @param  string $tpImp
-     * @param  string $tpEmis
-     * @param  string $cDV
-     * @param  string $tpAmb
-     * @param  string $finNFe
-     * @param  string $indFinal
-     * @param  string $indPres
-     * @param  string $procEmi
-     * @param  string $verProc
-     * @param  string $dhCont
-     * @param  string $xJust
+     * @param string $cUF
+     * @param string $cNF
+     * @param string $natOp
+     * @param string $indPag
+     * @param string $mod
+     * @param string $serie
+     * @param string $nNF
+     * @param string $dhEmi
+     * @param string $dhSaiEnt
+     * @param string $tpNF
+     * @param string $idDest
+     * @param string $cMunFG
+     * @param string $tpImp
+     * @param string $tpEmis
+     * @param string $cDV
+     * @param string $tpAmb
+     * @param string $finNFe
+     * @param string $indFinal
+     * @param string $indPres
+     * @param string $procEmi
+     * @param string $verProc
+     * @param string $dhCont
+     * @param string $xJust
      * @return DOMElement
      */
     public function tagide(
@@ -630,34 +625,29 @@ class Make extends BaseMake
         return $ide;
     }
 
-
     /**
-     * tagrefNFe
      * Chave de acesso da NF-e referenciada BA02 pai BA01
      * tag NFe/infNFe/ide/NFref/refNFe
-     *
-     * @param  string $refNFe
+     * @param string $refNFe
      * @return DOMElement
      */
     public function tagrefNFe($refNFe = '')
     {
-        $num = $this->zTagNFref();
+        $num = $this->builtNFref();
         $refNFe = $this->dom->createElement("refNFe", $refNFe);
         $this->dom->appChild($this->aNFref[$num-1], $refNFe);
         return $refNFe;
     }
 
     /**
-     * tagrefNF
      * Informação da NF modelo 1/1A referenciada BA03 pai BA01
      * tag NFe/infNFe/ide/NFref/NF DOMNode
-     *
-     * @param  string $cUF
-     * @param  string $aamm
-     * @param  string $cnpj
-     * @param  string $mod
-     * @param  string $serie
-     * @param  string $nNF
+     * @param string $cUF
+     * @param string $aamm
+     * @param string $cnpj
+     * @param string $mod
+     * @param string $serie
+     * @param string $nNF
      * @return DOMElement
      */
     public function tagrefNF(
@@ -669,7 +659,7 @@ class Make extends BaseMake
         $nNF = ''
     ) {
         $identificador = 'BA03 <refNF> - ';
-        $num = $this->zTagNFref();
+        $num = $this->builtNFref();
         $refNF = $this->dom->createElement("refNF");
         $this->dom->addChild(
             $refNF,
@@ -718,32 +708,30 @@ class Make extends BaseMake
     }
 
     /**
-     * tagrefNFP
      * Informações da NF de produtor rural referenciada BA10 pai BA01
      * tag NFe/infNFe/ide/NFref/refNFP
-     *
-     * @param  string $cUF
-     * @param  string $aamm
-     * @param  string $cnpj
-     * @param  string $cpf
-     * @param  string $numIE
-     * @param  string $mod
-     * @param  string $serie
-     * @param  string $nNF
+     * @param string $cUF
+     * @param string $aamm
+     * @param string $cnpj
+     * @param string $cpf
+     * @param string $numIE
+     * @param string $mod
+     * @param string $serie
+     * @param string $nNF
      * @return DOMElement
      */
     public function tagrefNFP(
-        $cUF = '',
-        $aamm = '',
-        $cnpj = '',
-        $cpf = '',
-        $numIE = '',
-        $mod = '',
-        $serie = '',
-        $nNF = ''
+        $cUF,
+        $aamm,
+        $cnpj,
+        $cpf,
+        $numIE,
+        $mod,
+        $serie,
+        $nNF
     ) {
         $identificador = 'BA10 <refNFP> - ';
-        $num = $this->zTagNFref();
+        $num = $this->buildNFref();
         $refNFP = $this->dom->createElement("refNFP");
         $this->dom->addChild(
             $refNFP,
@@ -806,29 +794,25 @@ class Make extends BaseMake
     }
 
     /**
-     * tagrefCTe
      * Chave de acesso do CT-e referenciada BA19 pai BA01
      * tag NFe/infNFe/ide/NFref/refCTe
-     *
-     * @param  string $refCTe
+     * @param string $refCTe
      * @return DOMElement
      */
-    public function tagrefCTe($refCTe = '')
+    public function tagrefCTe($refCTe)
     {
-        $num = $this->zTagNFref();
+        $num = $this->buildNFref();
         $refCTe = $this->dom->createElement("refCTe", $refCTe);
         $this->dom->appChild($this->aNFref[$num-1], $refCTe);
         return $refCTe;
     }
 
     /**
-     * tagrefECF
      * Informações do Cupom Fiscal referenciado BA20 pai BA01
      * tag NFe/infNFe/ide/NFref/refECF
-     *
-     * @param  string $mod
-     * @param  string $nECF
-     * @param  string $nCOO
+     * @param string $mod
+     * @param string $nECF
+     * @param string $nCOO
      * @return DOMElement
      */
     public function tagrefECF(
@@ -837,7 +821,7 @@ class Make extends BaseMake
         $nCOO = ''
     ) {
         $identificador = 'BA20 <refECF> - ';
-        $num = $this->zTagNFref();
+        $num = $this->buildNFref();
         $refECF = $this->dom->createElement("refECF");
         $this->dom->addChild(
             $refECF,
@@ -865,19 +849,17 @@ class Make extends BaseMake
     }
 
     /**
-     * tagemit
      * Identificação do emitente da NF-e C01 pai A01
      * tag NFe/infNFe/emit
-     *
-     * @param  string $cnpj
-     * @param  string $cpf
-     * @param  string $xNome
-     * @param  string $xFant
-     * @param  string $numIE
-     * @param  string $numIEST
-     * @param  string $numIM
-     * @param  string $cnae
-     * @param  string $crt
+     * @param string $cnpj
+     * @param string $cpf
+     * @param string $xNome
+     * @param string $xFant
+     * @param string $numIE
+     * @param string $numIEST
+     * @param string $numIM
+     * @param string $cnae
+     * @param string $crt
      * @return DOMElement
      */
     public function tagemit(
@@ -960,21 +942,19 @@ class Make extends BaseMake
     }
 
     /**
-     * tagenderEmit
      * Endereço do emitente C05 pai C01
      * tag NFe/infNFe/emit/endEmit
-     *
-     * @param  string $xLgr
-     * @param  string $nro
-     * @param  string $xCpl
-     * @param  string $xBairro
-     * @param  string $cMun
-     * @param  string $xMun
-     * @param  string $siglaUF
-     * @param  string $cep
-     * @param  string $cPais
-     * @param  string $xPais
-     * @param  string $fone
+     * @param string $xLgr
+     * @param string $nro
+     * @param string $xCpl
+     * @param string $xBairro
+     * @param string $cMun
+     * @param string $xMun
+     * @param string $siglaUF
+     * @param string $cep
+     * @param string $cPais
+     * @param string $xPais
+     * @param string $fone
      * @return DOMElement
      */
     public function tagenderEmit(
@@ -1075,19 +1055,17 @@ class Make extends BaseMake
     }
 
     /**
-     * tagdest
      * Identificação do Destinatário da NF-e E01 pai A01
      * tag NFe/infNFe/dest (opcional para modelo 65)
-     *
-     * @param  string $cnpj
-     * @param  string $cpf
-     * @param  string $idEstrangeiro
-     * @param  string $xNome
-     * @param  string $indIEDest
-     * @param  string $numIE
-     * @param  string $isUF
-     * @param  string $numIM
-     * @param  string $email
+     * @param string $cnpj
+     * @param string $cpf
+     * @param string $idEstrangeiro
+     * @param string $xNome
+     * @param string $indIEDest
+     * @param string $numIE
+     * @param string $isUF
+     * @param string $numIM
+     * @param string $email
      * @return DOMElement
      */
     public function tagdest(
@@ -1115,7 +1093,7 @@ class Make extends BaseMake
                 $flagNome = false;//marca se xNome é ou não obrigatório
             }
         }
-        if ($this->tpAmb == '2') {
+        if ($this->tpAmb == '2' && $this->mod == '55') {
             $xNome = 'NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
             //a exigência do CNPJ 99999999000191 não existe mais
         }
@@ -1191,22 +1169,20 @@ class Make extends BaseMake
     }
 
     /**
-     * tagenderDest
      * Endereço do Destinatário da NF-e E05 pai E01
      * tag NFe/infNFe/dest/enderDest  (opcional para modelo 65)
      * Os dados do destinatário devem ser inseridos antes deste método
-     *
-     * @param  string $xLgr
-     * @param  string $nro
-     * @param  string $xCpl
-     * @param  string $xBairro
-     * @param  string $cMun
-     * @param  string $xMun
-     * @param  string $siglaUF
-     * @param  string $cep
-     * @param  string $cPais
-     * @param  string $xPais
-     * @param  string $fone
+     * @param string $xLgr
+     * @param string $nro
+     * @param string $xCpl
+     * @param string $xBairro
+     * @param string $cMun
+     * @param string $xMun
+     * @param string $siglaUF
+     * @param string $cep
+     * @param string $cPais
+     * @param string $xPais
+     * @param string $fone
      * @return DOMElement
      */
     public function tagenderDest(
@@ -1313,19 +1289,17 @@ class Make extends BaseMake
     }
 
     /**
-     * tagretirada
      * Identificação do Local de retirada F01 pai A01
      * tag NFe/infNFe/retirada (opcional)
-     *
-     * @param  string $cnpj
-     * @param  string $cpf
-     * @param  string $xLgr
-     * @param  string $nro
-     * @param  string $xCpl
-     * @param  string $xBairro
-     * @param  string $cMun
-     * @param  string $xMun
-     * @param  string $siglaUF
+     * @param string $cnpj
+     * @param string $cpf
+     * @param string $xLgr
+     * @param string $nro
+     * @param string $xCpl
+     * @param string $xBairro
+     * @param string $cMun
+     * @param string $xMun
+     * @param string $siglaUF
      * @return DOMElement
      */
     public function tagretirada(
@@ -1408,19 +1382,17 @@ class Make extends BaseMake
     }
 
     /**
-     * tagentrega
      * Identificação do Local de entrega G01 pai A01
      * tag NFe/infNFe/entrega (opcional)
-     *
-     * @param  string $cnpj
-     * @param  string $cpf
-     * @param  string $xLgr
-     * @param  string $nro
-     * @param  string $xCpl
-     * @param  string $xBairro
-     * @param  string $cMun
-     * @param  string $xMun
-     * @param  string $siglaUF
+     * @param string $cnpj
+     * @param string $cpf
+     * @param string $xLgr
+     * @param string $nro
+     * @param string $xCpl
+     * @param string $xBairro
+     * @param string $cMun
+     * @param string $xMun
+     * @param string $siglaUF
      * @return DOMElement
      */
     public function tagentrega(
@@ -1503,12 +1475,10 @@ class Make extends BaseMake
     }
 
     /**
-     * tagautXML
      * Pessoas autorizadas para o download do XML da NF-e G50 pai A01
      * tag NFe/infNFe/autXML (somente versão 3.1)
-     *
-     * @param  string $cnpj
-     * @param  string $cpf
+     * @param string $cnpj
+     * @param string $cpf
      * @return array
      */
     public function tagautXML($cnpj = '', $cpf = '')
@@ -1533,39 +1503,37 @@ class Make extends BaseMake
             $this->aAutXML[] = $autXML;
             return $autXML;
         } else {
-            return array();
+            return [];
         }
     }
 
     /**
-     * tagprod
      * Detalhamento de Produtos e Serviços I01 pai H01
      * tag NFe/infNFe/det[]/prod
-     *
-     * @param  string $nItem
-     * @param  string $cProd
-     * @param  string $cEAN
-     * @param  string $xProd
-     * @param  string $NCM
-     * @param  string $EXTIPI
-     * @param  string $CFOP
-     * @param  string $uCom
-     * @param  string $qCom
-     * @param  string $vUnCom
-     * @param  string $vProd
-     * @param  string $cEANTrib
-     * @param  string $uTrib
-     * @param  string $qTrib
-     * @param  string $vUnTrib
-     * @param  string $vFrete
-     * @param  string $vSeg
-     * @param  string $vDesc
-     * @param  string $vOutro
-     * @param  string $indTot
-     * @param  string $xPed
-     * @param  string $nItemPed
-     * @param  string $nFCI
-     * @param  string $nRECOPI
+     * @param string $nItem
+     * @param string $cProd
+     * @param string $cEAN
+     * @param string $xProd
+     * @param string $NCM
+     * @param string $EXTIPI
+     * @param string $CFOP
+     * @param string $uCom
+     * @param string $qCom
+     * @param string $vUnCom
+     * @param string $vProd
+     * @param string $cEANTrib
+     * @param string $uTrib
+     * @param string $qTrib
+     * @param string $vUnTrib
+     * @param string $vFrete
+     * @param string $vSeg
+     * @param string $vDesc
+     * @param string $vOutro
+     * @param string $indTot
+     * @param string $xPed
+     * @param string $nItemPed
+     * @param string $nFCI
+     * @param string $nRECOPI
      * @return DOMElement
      */
     public function tagprod(
@@ -1611,11 +1579,6 @@ class Make extends BaseMake
             . "código EAN ou código de barras",
             true
         );
-
-        if ($this->tpAmb == '2' && $this->mod == '65') {
-            $xProd = 'NOTA FISCAL EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
-        }
-
         $this->dom->addChild(
             $prod,
             "xProd",
@@ -1763,12 +1726,10 @@ class Make extends BaseMake
     }
 
     /**
-     * tagNVE
      * NVE NOMENCLATURA DE VALOR ADUANEIRO E ESTATÍSTICA
      * Podem ser até 8 NVE's por item
-     *
-     * @param  string $nItem
-     * @param  string $texto
+     * @param string $nItem
+     * @param string $texto
      * @return DOMElement
      */
     public function tagNVE($nItem = '', $texto = '')
@@ -1782,14 +1743,12 @@ class Make extends BaseMake
     }
 
     /**
-     * tagCEST
      * Código Especificador da Substituição Tributária – CEST,
      * que identifica a mercadoria sujeita aos regimes de substituição
      * tributária e de antecipação do recolhimento do imposto.
      * vide NT2015.003
-     *
-     * @param  string $nItem
-     * @param  string $texto
+     * @param string $nItem
+     * @param string $texto
      * @return DOMElement
      */
     public function tagCEST($nItem = '', $texto = '')
@@ -1803,10 +1762,11 @@ class Make extends BaseMake
     }
 
     /**
-     * tagRECOPI
-     *
-     * @param  string $nItem
-     * @param  string $texto
+     * RECOPI Sistema de Registro e Controle das 
+     * Operações com Papel Imune instituído através 
+     * do Convênio ICMS 09/2012
+     * @param string $nItem
+     * @param string $texto
      * @return DOMElement
      */
     public function tagRECOPI($nItem = '', $texto = '')
@@ -1820,12 +1780,10 @@ class Make extends BaseMake
     }
 
     /**
-     * taginfAdProd
      * Informações adicionais do produto
      * tag NFe/infNFe/det[]/infAdProd
-     *
-     * @param  string $nItem
-     * @param  string $texto
+     * @param string $nItem
+     * @param string $texto
      * @return DOMElement
      */
     public function taginfAdProd($nItem = '', $texto = '')
@@ -1839,22 +1797,20 @@ class Make extends BaseMake
     }
 
     /**
-     * tagDI
      * Declaração de Importação I8 pai I01
      * tag NFe/infNFe/det[]/prod/DI
-     *
-     * @param  string $nItem
-     * @param  string $nDI
-     * @param  string $dDI
-     * @param  string $xLocDesemb
-     * @param  string $UFDesemb
-     * @param  string $dDesemb
-     * @param  string $tpViaTransp
-     * @param  string $vAFRMM
-     * @param  string $tpIntermedio
-     * @param  string $CNPJ
-     * @param  string $UFTerceiro
-     * @param  string $cExportador
+     * @param string $nItem
+     * @param string $nDI
+     * @param string $dDI
+     * @param string $xLocDesemb
+     * @param string $UFDesemb
+     * @param string $dDesemb
+     * @param string $tpViaTransp
+     * @param string $vAFRMM
+     * @param string $tpIntermedio
+     * @param string $CNPJ
+     * @param string $UFTerceiro
+     * @param string $cExportador
      * @return DOMElement
      */
     public function tagDI(
@@ -1956,17 +1912,15 @@ class Make extends BaseMake
     }
 
     /**
-     * tagadi
      * Adições I25 pai I18
      * tag NFe/infNFe/det[]/prod/DI/adi
-     *
-     * @param  string $nItem
-     * @param  string $nDI
-     * @param  string $nAdicao
-     * @param  string $nSeqAdic
-     * @param  string $cFabricante
-     * @param  string $vDescDI
-     * @param  string $nDraw
+     * @param string $nItem
+     * @param string $nDI
+     * @param string $nAdicao
+     * @param string $nSeqAdic
+     * @param string $cFabricante
+     * @param string $vDescDI
+     * @param string $nDraw
      * @return DOMElement
      */
     public function tagadi(
@@ -2024,16 +1978,14 @@ class Make extends BaseMake
     }
 
     /**
-     * tagdetExport
      * Grupo de informações de exportação para o item I50 pai I01
      * tag NFe/infNFe/det[]/prod/detExport
-     *
-     * @param  string $nItem
-     * @param  string $nDraw
-     * @param  string $exportInd
-     * @param  string $nRE
-     * @param  string $chNFe
-     * @param  string $qExport
+     * @param string $nItem
+     * @param string $nDraw
+     * @param string $exportInd
+     * @param string $nRE
+     * @param string $chNFe
+     * @param string $qExport
      * @return DOMElement
      */
     public function tagdetExport(
@@ -2080,35 +2032,33 @@ class Make extends BaseMake
     }
 
     /**
-     * tagveicProd
      * Detalhamento de Veículos novos J01 pai I90
      * tag NFe/infNFe/det[]/prod/veicProd (opcional)
-     *
-     * @param  string $nItem
-     * @param  string $tpOp
-     * @param  string $chassi
-     * @param  string $cCor
-     * @param  string $xCor
-     * @param  string $pot
-     * @param  string $cilin
-     * @param  string $pesoL
-     * @param  string $pesoB
-     * @param  string $nSerie
-     * @param  string $tpComb
-     * @param  string $nMotor
-     * @param  string $CMT
-     * @param  string $dist
-     * @param  string $anoMod
-     * @param  string $anoFab
-     * @param  string $tpPint
-     * @param  string $tpVeic
-     * @param  string $espVeic
-     * @param  string $VIN
-     * @param  string $condVeic
-     * @param  string $cMod
-     * @param  string $cCorDENATRAN
-     * @param  string $lota
-     * @param  string $tpRest
+     * @param string $nItem
+     * @param string $tpOp
+     * @param string $chassi
+     * @param string $cCor
+     * @param string $xCor
+     * @param string $pot
+     * @param string $cilin
+     * @param string $pesoL
+     * @param string $pesoB
+     * @param string $nSerie
+     * @param string $tpComb
+     * @param string $nMotor
+     * @param string $CMT
+     * @param string $dist
+     * @param string $anoMod
+     * @param string $anoFab
+     * @param string $tpPint
+     * @param string $tpVeic
+     * @param string $espVeic
+     * @param string $VIN
+     * @param string $condVeic
+     * @param string $cMod
+     * @param string $cCorDENATRAN
+     * @param string $lota
+     * @param string $tpRest
      * @return DOMElement
      */
     public function tagveicProd(
@@ -2313,16 +2263,14 @@ class Make extends BaseMake
     }
 
     /**
-     * tagmed
      * Detalhamento de medicamentos K01 pai I90
      * tag NFe/infNFe/det[]/prod/med (opcional)
-     *
-     * @param  string $nItem
-     * @param  string $nLote
-     * @param  string $qLote
-     * @param  string $dFab
-     * @param  string $dVal
-     * @param  string $vPMC
+     * @param string $nItem
+     * @param string $nLote
+     * @param string $qLote
+     * @param string $dFab
+     * @param string $dVal
+     * @param string $vPMC
      * @return DOMElement
      */
     public function tagmed(
@@ -2376,15 +2324,13 @@ class Make extends BaseMake
     }
 
     /**
-     * tagarma
      * Detalhamento de armas L01 pai I90
      * tag NFe/infNFe/det[]/prod/arma (opcional)
-     *
-     * @param  string $nItem
-     * @param  string $tpArma
-     * @param  string $nSerie
-     * @param  string $nCano
-     * @param  string $descr
+     * @param string $nItem
+     * @param string $tpArma
+     * @param string $nSerie
+     * @param string $nCano
+     * @param string $descr
      * @return DOMElement
      */
     public function tagarma(
@@ -2431,19 +2377,17 @@ class Make extends BaseMake
     }
 
     /**
-     * tagcomb
      * Detalhamento de combustiveis L101 pai I90
      * tag NFe/infNFe/det[]/prod/comb (opcional)
-     *
-     * @param  string $nItem
-     * @param  string $cProdANP
-     * @param  string $pMixGN
-     * @param  string $codif
-     * @param  string $qTemp
-     * @param  string $ufCons
-     * @param  string $qBCProd
-     * @param  string $vAliqProd
-     * @param  string $vCIDE
+     * @param string $nItem
+     * @param string $cProdANP
+     * @param string $pMixGN
+     * @param string $codif
+     * @param string $qTemp
+     * @param string $ufCons
+     * @param string $qBCProd
+     * @param string $vAliqProd
+     * @param string $vCIDE
      * @return DOMElement
      */
     public function tagcomb(
@@ -2518,18 +2462,16 @@ class Make extends BaseMake
     }
 
     /**
-     * tagencerrante
      * informações relacionadas com as operações de combustíveis, subgrupo de
      * encerrante que permite o controle sobre as operações de venda de combustíveis
      * LA11 pai LA01
      * tag NFe/infNFe/det[]/prod/comb/encerrante (opcional)
-     *
-     * @param  string $nItem
-     * @param  string $nBico
-     * @param  string $nBomba
-     * @param  string $nTanque
-     * @param  string $vEncIni
-     * @param  string $vEncFin
+     * @param string $nItem
+     * @param string $nBico
+     * @param string $nBomba
+     * @param string $nTanque
+     * @param string $vEncIni
+     * @param string $vEncFin
      * @return DOMElement
      */
     public function tagencerrante($nItem = '', $nBico = '', $nBomba = '', $nTanque = '', $vEncIni = '', $vEncFin = '')
@@ -2576,12 +2518,10 @@ class Make extends BaseMake
     }
 
     /**
-     * tagimposto
      * M01 pai H01
      * tag NFe/infNFe/det[]/imposto
-     *
-     * @param  string $nItem
-     * @param  string $vTotTrib
+     * @param string $nItem
+     * @param string $vTotTrib
      * @return DOMElement
      */
     public function tagimposto($nItem = '', $vTotTrib = '')
@@ -2600,31 +2540,29 @@ class Make extends BaseMake
     }
 
     /**
-     * tagICMS
      * Informações do ICMS da Operação própria e ST N01 pai M01
      * tag NFe/infNFe/det[]/imposto/ICMS
-     *
-     * @param  string $nItem
-     * @param  string $orig
-     * @param  string $CST
-     * @param  string $modBC
-     * @param  string $pRedBC
-     * @param  string $vBC
-     * @param  string $pICMS
-     * @param  string $vICMS
-     * @param  string $vICMSDeson
-     * @param  string $motDesICMS
-     * @param  string $modBCST
-     * @param  string $pMVAST
-     * @param  string $pRedBCST
-     * @param  string $vBCST
-     * @param  string $pICMSST
-     * @param  string $vICMSST
-     * @param  string $pDif
-     * @param  string $vICMSDif
-     * @param  string $vICMSOp
-     * @param  string $vBCSTRet
-     * @param  string $vICMSSTRet
+     * @param string $nItem
+     * @param string $orig
+     * @param string $CST
+     * @param string $modBC
+     * @param string $pRedBC
+     * @param string $vBC
+     * @param string $pICMS
+     * @param string $vICMS
+     * @param string $vICMSDeson
+     * @param string $motDesICMS
+     * @param string $modBCST
+     * @param string $pMVAST
+     * @param string $pRedBCST
+     * @param string $vBCST
+     * @param string $pICMSST
+     * @param string $vICMSST
+     * @param string $pDif
+     * @param string $vICMSDif
+     * @param string $vICMSOp
+     * @param string $vBCSTRet
+     * @param string $vICMSSTRet
      * @return DOMElement
      */
     public function tagICMS(
@@ -3286,27 +3224,25 @@ class Make extends BaseMake
     }
 
     /**
-     * tagICMSPart
      * Grupo de Partilha do ICMS entre a UF de origem e UF de destino ou
      * a UF definida na legislação. N10a pai N01
      * tag NFe/infNFe/det[]/imposto/ICMS/ICMSPart
-     *
-     * @param  string $nItem
-     * @param  string $orig
-     * @param  string $cst
-     * @param  string $modBC
-     * @param  string $vBC
-     * @param  string $pRedBC
-     * @param  string $pICMS
-     * @param  string $vICMS
-     * @param  string $modBCST
-     * @param  string $pMVAST
-     * @param  string $pRedBCST
-     * @param  string $vBCST
-     * @param  string $pICMSST
-     * @param  string $vICMSST
-     * @param  string $pBCOp
-     * @param  string $ufST
+     * @param string $nItem
+     * @param string $orig
+     * @param string $cst
+     * @param string $modBC
+     * @param string $vBC
+     * @param string $pRedBC
+     * @param string $pICMS
+     * @param string $vICMS
+     * @param string $modBCST
+     * @param string $pMVAST
+     * @param string $pRedBCST
+     * @param string $vBCST
+     * @param string $pICMSST
+     * @param string $vICMSST
+     * @param string $pBCOp
+     * @param string $ufST
      * @return DOMElement
      */
     public function tagICMSPart(
@@ -3445,17 +3381,15 @@ class Make extends BaseMake
     }
 
     /**
-     * tagICMSST N10b pai N01
      * Grupo de Repasse de ICMS ST retido anteriormente em operações
      * interestaduais com repasses através do Substituto Tributário
-     *
-     * @param  string $nItem
-     * @param  string $orig
-     * @param  string $cst
-     * @param  string $vBCSTRet
-     * @param  string $vICMSSTRet
-     * @param  string $vBCSTDest
-     * @param  string $vICMSSTDest
+     * @param string $nItem
+     * @param string $orig
+     * @param string $cst
+     * @param string $vBCSTRet
+     * @param string $vICMSSTRet
+     * @param string $vBCSTDest
+     * @param string $vICMSSTDest
      * @return DOMElement
      */
     public function tagICMSST(
@@ -3522,27 +3456,25 @@ class Make extends BaseMake
     }
 
     /**
-     * tagICMSSN
      * Tributação ICMS pelo Simples Nacional N10c pai N01
-     *
-     * @param  string $nItem
-     * @param  string $orig
-     * @param  string $csosn
-     * @param  string $modBC
-     * @param  string $vBC
-     * @param  string $pRedBC
-     * @param  string $pICMS
-     * @param  string $vICMS
-     * @param  string $pCredSN
-     * @param  string $vCredICMSSN
-     * @param  string $modBCST
-     * @param  string $pMVAST
-     * @param  string $pRedBCST
-     * @param  string $vBCST
-     * @param  string $pICMSST
-     * @param  string $vICMSST
-     * @param  string $vBCSTRet
-     * @param  string $vICMSSTRet
+     * @param string $nItem
+     * @param string $orig
+     * @param string $csosn
+     * @param string $modBC
+     * @param string $vBC
+     * @param string $pRedBC
+     * @param string $pICMS
+     * @param string $vICMS
+     * @param string $pCredSN
+     * @param string $vCredICMSSN
+     * @param string $modBCST
+     * @param string $pMVAST
+     * @param string $pRedBCST
+     * @param string $vBCST
+     * @param string $pICMSST
+     * @param string $vICMSST
+     * @param string $vBCSTRet
+     * @param string $vICMSSTRet
      * @return DOMElement
      */
     public function tagICMSSN(
@@ -3907,21 +3839,19 @@ class Make extends BaseMake
     }
 
     /**
-     * tagICMSUFDest
      * Grupo ICMSUFDest NA01 pai M01
      * tag NFe/infNFe/det[]/imposto/ICMSUFDest (opcional)
      * Grupo a ser informado nas vendas interestaduais para consumidor final,
      * não contribuinte do ICMS
-     *
-     * @param  string $nItem
-     * @param  string $vBCUFDest
-     * @param  string $pFCPUFDest
-     * @param  string $pICMSUFDest
-     * @param  string $pICMSInter
-     * @param  string $pICMSInterPart
-     * @param  string $vFCPUFDest
-     * @param  string $vICMSUFDest
-     * @param  string $vICMSUFRemet
+     * @param string $nItem
+     * @param string $vBCUFDest
+     * @param string $pFCPUFDest
+     * @param string $pICMSUFDest
+     * @param string $pICMSInter
+     * @param string $pICMSInterPart
+     * @param string $vFCPUFDest
+     * @param string $vICMSUFDest
+     * @param string $vICMSUFRemet
      * @return DOMElement
      */
     public function tagICMSUFDest(
@@ -4000,22 +3930,20 @@ class Make extends BaseMake
     }
 
     /**
-     * tagIPI
      * Grupo IPI O01 pai M01
      * tag NFe/infNFe/det[]/imposto/IPI (opcional)
-     *
-     * @param  string $nItem
-     * @param  string $cst
-     * @param  string $clEnq
-     * @param  string $cnpjProd
-     * @param  string $cSelo
-     * @param  string $qSelo
-     * @param  string $cEnq
-     * @param  string $vBC
-     * @param  string $pIPI
-     * @param  string $qUnid
-     * @param  string $vUnid
-     * @param  string $vIPI
+     * @param string $nItem
+     * @param string $cst
+     * @param string $clEnq
+     * @param string $cnpjProd
+     * @param string $cSelo
+     * @param string $qSelo
+     * @param string $cEnq
+     * @param string $vBC
+     * @param string $pIPI
+     * @param string $qUnid
+     * @param string $vUnid
+     * @param string $vIPI
      * @return DOMElement
      */
     public function tagIPI(
@@ -4131,15 +4059,13 @@ class Make extends BaseMake
     }
 
     /**
-     * tagII
      * Grupo Imposto de Importação P01 pai M01
      * tag NFe/infNFe/det[]/imposto/II
-     *
-     * @param  string $nItem
-     * @param  string $vBC
-     * @param  string $vDespAdu
-     * @param  string $vII
-     * @param  string $vIOF
+     * @param string $nItem
+     * @param string $vBC
+     * @param string $vDespAdu
+     * @param string $vII
+     * @param string $vIOF
      * @return DOMElement
      */
     public function tagII($nItem = '', $vBC = '', $vDespAdu = '', $vII = '', $vIOF = '')
@@ -4178,17 +4104,15 @@ class Make extends BaseMake
     }
 
     /**
-     * tagPIS
      * Grupo PIS Q01 pai M01
      * tag NFe/infNFe/det[]/imposto/PIS
-     *
-     * @param  string $nItem
-     * @param  string $cst
-     * @param  string $vBC
-     * @param  string $pPIS
-     * @param  string $vPIS
-     * @param  string $qBCProd
-     * @param  string $vAliqProd
+     * @param string $nItem
+     * @param string $cst
+     * @param string $vBC
+     * @param string $pPIS
+     * @param string $vPIS
+     * @param string $qBCProd
+     * @param string $vAliqProd
      * @return DOMElement
      */
     public function tagPIS(
@@ -4357,16 +4281,14 @@ class Make extends BaseMake
     }
 
     /**
-     * tagPISST
      * Grupo PIS Substituição Tributária R01 pai M01
      * tag NFe/infNFe/det[]/imposto/PISST (opcional)
-     *
-     * @param  string $nItem
-     * @param  string $vBC
-     * @param  string $pPIS
-     * @param  string $qBCProd
-     * @param  string $vAliqProd
-     * @param  string $vPIS
+     * @param string $nItem
+     * @param string $vBC
+     * @param string $pPIS
+     * @param string $qBCProd
+     * @param string $vAliqProd
+     * @param string $vPIS
      * @return DOMElement
      */
     public function tagPISST(
@@ -4418,17 +4340,15 @@ class Make extends BaseMake
     }
 
     /**
-     * tagCOFINS
      * Grupo COFINS S01 pai M01
      * tag det/imposto/COFINS (opcional)
-     *
-     * @param  string $nItem
-     * @param  string $cst
-     * @param  string $vBC
-     * @param  string $pCOFINS
-     * @param  string $vCOFINS
-     * @param  string $qBCProd
-     * @param  string $vAliqProd
+     * @param string $nItem
+     * @param string $cst
+     * @param string $vBC
+     * @param string $pCOFINS
+     * @param string $vCOFINS
+     * @param string $qBCProd
+     * @param string $vAliqProd
      * @return DOMElement
      */
     public function tagCOFINS(
@@ -4443,7 +4363,7 @@ class Make extends BaseMake
         switch ($cst) {
             case '01':
             case '02':
-                $confinsItem = $this->zTagCOFINSAliq($cst, $vBC, $pCOFINS, $vCOFINS);
+                $confinsItem = $this->buildCOFINSAliq($cst, $vBC, $pCOFINS, $vCOFINS);
                 break;
             case '03':
                 $confinsItem = $this->dom->createElement('COFINSQtde');
@@ -4482,7 +4402,7 @@ class Make extends BaseMake
             case '07':
             case '08':
             case '09':
-                $confinsItem = $this->zTagCOFINSNT($cst);
+                $confinsItem = $this->buildCOFINSNT($cst);
                 break;
             case '49':
             case '50':
@@ -4508,7 +4428,7 @@ class Make extends BaseMake
             case '75':
             case '98':
             case '99':
-                $confinsItem = $this->zTagCOFINSoutr($cst, $vBC, $pCOFINS, $qBCProd, $vAliqProd, $vCOFINS);
+                $confinsItem = $this->buildCOFINSoutr($cst, $vBC, $pCOFINS, $qBCProd, $vAliqProd, $vCOFINS);
                 break;
         }
         $confins = $this->dom->createElement('COFINS');
@@ -4520,16 +4440,14 @@ class Make extends BaseMake
     }
 
     /**
-     * tagCOFINSST
      * Grupo COFINS Substituição Tributária T01 pai M01
      * tag NFe/infNFe/det[]/imposto/COFINSST (opcional)
-     *
-     * @param  string $nItem
-     * @param  string $vBC
-     * @param  string $pCOFINS
-     * @param  string $qBCProd
-     * @param  string $vAliqProd
-     * @param  string $vCOFINS
+     * @param string $nItem
+     * @param string $vBC
+     * @param string $pCOFINS
+     * @param string $qBCProd
+     * @param string $vAliqProd
+     * @param string $vCOFINS
      * @return DOMElement
      */
     public function tagCOFINSST(
@@ -4581,27 +4499,25 @@ class Make extends BaseMake
     }
 
     /**
-     * tagISSQN
      * Grupo ISSQN U01 pai M01
      * tag NFe/infNFe/det[]/imposto/ISSQN (opcional)
-     *
-     * @param  string $nItem
-     * @param  string $vBC
-     * @param  string $vAliq
-     * @param  string $vISSQN
-     * @param  string $cMunFG
-     * @param  string $cListServ
-     * @param  string $vDeducao
-     * @param  string $vOutro
-     * @param  string $vDescIncond
-     * @param  string $vDescCond
-     * @param  string $vISSRet
-     * @param  string $indISS
-     * @param  string $cServico
-     * @param  string $cMun
-     * @param  string $cPais
-     * @param  string $nProcesso
-     * @param  string $indIncentivo
+     * @param string $nItem
+     * @param string $vBC
+     * @param string $vAliq
+     * @param string $vISSQN
+     * @param string $cMunFG
+     * @param string $cListServ
+     * @param string $vDeducao
+     * @param string $vOutro
+     * @param string $vDescIncond
+     * @param string $vDescCond
+     * @param string $vISSRet
+     * @param string $indISS
+     * @param string $cServico
+     * @param string $cMun
+     * @param string $cPais
+     * @param string $nProcesso
+     * @param string $indIncentivo
      * @return DOMElement
      */
     public function tagISSQN(
@@ -4741,13 +4657,11 @@ class Make extends BaseMake
     }
 
     /**
-     * tagimpostoDevol
      * Informação do Imposto devolvido U50 pai H01
      * tag NFe/infNFe/det[]/impostoDevol (opcional)
-     *
      * @param string $nItem
-     * @param  string $pDevol
-     * @param  string $vIPIDevol
+     * @param string $pDevol
+     * @param string $vIPIDevol
      * @return DOMElement
      */
     public function tagimpostoDevol($nItem = '', $pDevol = '', $vIPIDevol = '')
@@ -4774,26 +4688,24 @@ class Make extends BaseMake
     }
 
     /**
-     * tagICMSTot
      * Grupo Totais referentes ao ICMS W02 pai W01
      * tag NFe/infNFe/total/ICMSTot
-     *
-     * @param  string $vBC
-     * @param  string $vICMS
-     * @param  string $vICMSDeson
-     * @param  string $vBCST
-     * @param  string $vST
-     * @param  string $vProd
-     * @param  string $vFrete
-     * @param  string $vSeg
-     * @param  string $vDesc
-     * @param  string $vII
-     * @param  string $vIPI
-     * @param  string $vPIS
-     * @param  string $vCOFINS
-     * @param  string $vOutro
-     * @param  string $vNF
-     * @param  string $vTotTrib
+     * @param string $vBC
+     * @param string $vICMS
+     * @param string $vICMSDeson
+     * @param string $vBCST
+     * @param string $vST
+     * @param string $vProd
+     * @param string $vFrete
+     * @param string $vSeg
+     * @param string $vDesc
+     * @param string $vII
+     * @param string $vIPI
+     * @param string $vPIS
+     * @param string $vCOFINS
+     * @param string $vOutro
+     * @param string $vNF
+     * @param string $vTotTrib
      * @return DOMElement
      */
     public function tagICMSTot(
@@ -4814,7 +4726,7 @@ class Make extends BaseMake
         $vNF = '',
         $vTotTrib = ''
     ) {
-        $this->zTagtotal();
+        $this->buildTotal();
         $ICMSTot = $this->dom->createElement("ICMSTot");
         $this->dom->addChild(
             $ICMSTot,
@@ -4954,27 +4866,25 @@ class Make extends BaseMake
     }
 
     /**
-     * tagISSQNTot
      * Grupo Totais referentes ao ISSQN W17 pai W01
      * tag NFe/infNFe/total/ISSQNTot (opcional)
-     *
-     * @param  string $vServ
-     * @param  string $vBC
-     * @param  string $vISS
-     * @param  string $vPIS
-     * @param  string $vCOFINS
-     * @param  string $dCompet
-     * @param  string $vDeducao
-     * @param  string $vOutro
-     * @param  string $vDescIncond
-     * @param  string $vDescCond
-     * @param  string $vISSRet
-     * @param  string $cRegTrib
-     * @param  string $vOutro
-     * @param  string $vDescIncond
-     * @param  string $vDescCond
-     * @param  string $vISSRet
-     * @param  string $cRegTrib
+     * @param string $vServ
+     * @param string $vBC
+     * @param string $vISS
+     * @param string $vPIS
+     * @param string $vCOFINS
+     * @param string $dCompet
+     * @param string $vDeducao
+     * @param string $vOutro
+     * @param string $vDescIncond
+     * @param string $vDescCond
+     * @param string $vISSRet
+     * @param string $cRegTrib
+     * @param string $vOutro
+     * @param string $vDescIncond
+     * @param string $vDescCond
+     * @param string $vISSRet
+     * @param string $cRegTrib
      * @return DOMElement
      */
     public function tagISSQNTot(
@@ -4991,7 +4901,7 @@ class Make extends BaseMake
         $vISSRet = '',
         $cRegTrib = ''
     ) {
-        $this->zTagtotal();
+        $this->buildTotal();
         $ISSQNTot = $this->dom->createElement("ISSQNtot");
         $this->dom->addChild(
             $ISSQNTot,
@@ -5082,17 +4992,15 @@ class Make extends BaseMake
     }
 
     /**
-     * tagretTrib
      * Grupo Retenções de Tributos W23 pai W01
      * tag NFe/infNFe/total/reTrib (opcional)
-     *
-     * @param  string $vRetPIS
-     * @param  string $vRetCOFINS
-     * @param  string $vRetCSLL
-     * @param  string $vBCIRRF
-     * @param  string $vIRRF
-     * @param  string $vBCRetPrev
-     * @param  string $vRetPrev
+     * @param string $vRetPIS
+     * @param string $vRetCOFINS
+     * @param string $vRetCSLL
+     * @param string $vBCIRRF
+     * @param string $vIRRF
+     * @param string $vBCRetPrev
+     * @param string $vRetPrev
      * @return DOMElement
      */
     public function tagretTrib(
@@ -5159,11 +5067,9 @@ class Make extends BaseMake
     }
 
     /**
-     * tagtransp
      * Grupo Informações do Transporte X01 pai A01
      * tag NFe/infNFe/transp (obrigatório)
-     *
-     * @param  string $modFrete
+     * @param string $modFrete
      * @return DOMElement
      */
     public function tagtransp($modFrete = '')
@@ -5180,17 +5086,15 @@ class Make extends BaseMake
     }
 
     /**
-     * tagtransporta
      * Grupo Transportador X03 pai X01
      * tag NFe/infNFe/transp/tranporta (opcional)
-     *
-     * @param  string $numCNPJ
-     * @param  string $numCPF
-     * @param  string $xNome
-     * @param  string $numIE
-     * @param  string $xEnder
-     * @param  string $xMun
-     * @param  string $siglaUF
+     * @param string $numCNPJ
+     * @param string $numCPF
+     * @param string $xNome
+     * @param string $numIE
+     * @param string $xEnder
+     * @param string $xMun
+     * @param string $siglaUF
      * @return DOMElement
      */
     public function tagtransporta(
@@ -5261,13 +5165,11 @@ class Make extends BaseMake
     }
 
     /**
-     * tagveicTransp
      * Grupo Veículo Transporte X18 pai X17.1
      * tag NFe/infNFe/transp/veicTransp (opcional)
-     *
-     * @param  string $placa
-     * @param  string $siglaUF
-     * @param  string $rntc
+     * @param string $placa
+     * @param string $siglaUF
+     * @param string $rntc
      * @return DOMElement
      */
     public function tagveicTransp(
@@ -5306,15 +5208,13 @@ class Make extends BaseMake
     }
 
     /**
-     * tagreboque
      * Grupo Reboque X22 pai X17.1
      * tag NFe/infNFe/transp/reboque (opcional)
-     *
-     * @param  string $placa
-     * @param  string $siglaUF
-     * @param  string $rntc
-     * @param  string $vagao
-     * @param  string $balsa
+     * @param string $placa
+     * @param string $siglaUF
+     * @param string $rntc
+     * @param string $vagao
+     * @param string $balsa
      * @return DOMElement
      */
     public function tagreboque(
@@ -5370,16 +5270,14 @@ class Make extends BaseMake
     }
 
     /**
-     * tagretTransp
      * Grupo Retenção ICMS transporte X11 pai X01
      * tag NFe/infNFe/transp/retTransp (opcional)
-     *
-     * @param  string $vServ
-     * @param  string $vBCRet
-     * @param  string $pICMSRet
-     * @param  string $vICMSRet
-     * @param  string $cfop
-     * @param  string $cMunFG
+     * @param string $vServ
+     * @param string $vBCRet
+     * @param string $pICMSRet
+     * @param string $vICMSRet
+     * @param string $cfop
+     * @param string $cMunFG
      * @return DOMElement
      */
     public function tagretTransp(
@@ -5442,17 +5340,15 @@ class Make extends BaseMake
     }
 
     /**
-     * tagvol
      * Grupo Volumes X26 pai X01
      * tag NFe/infNFe/transp/vol (opcional)
-     *
-     * @param  string $qVol
-     * @param  string $esp
-     * @param  string $marca
-     * @param  string $nVol
-     * @param  string $pesoL
-     * @param  string $pesoB
-     * @param  array  $aLacres
+     * @param string $qVol
+     * @param string $esp
+     * @param string $marca
+     * @param string $nVol
+     * @param string $pesoL
+     * @param string $pesoB
+     * @param array  $aLacres
      * @return DOMElement
      */
     public function tagvol(
@@ -5510,7 +5406,7 @@ class Make extends BaseMake
         if (!empty($aLacres)) {
             //tag transp/vol/lacres (opcional)
             foreach ($aLacres as $nLacre) {
-                $lacre = $this->zTaglacres($nLacre);
+                $lacre = $this->buildLacres($nLacre);
                 $vol->appendChild($lacre);
                 $lacre = null;
             }
@@ -5525,14 +5421,12 @@ class Make extends BaseMake
     }
 
     /**
-     * tagfat
      * Grupo Fatura Y02 pai Y01
      * tag NFe/infNFe/cobr/fat (opcional)
-     *
-     * @param  string $nFat
-     * @param  string $vOrig
-     * @param  string $vDesc
-     * @param  string $vLiq
+     * @param string $nFat
+     * @param string $vOrig
+     * @param string $vDesc
+     * @param string $vLiq
      * @return DOMElement
      */
     public function tagfat(
@@ -5541,7 +5435,7 @@ class Make extends BaseMake
         $vDesc = '',
         $vLiq = ''
     ) {
-        $this->zTagcobr();
+        $this->buildCobr();
         $fat = $this->dom->createElement("fat");
         $this->dom->addChild($fat, "nFat", $nFat, false, "Número da Fatura");
         $this->dom->addChild($fat, "vOrig", $vOrig, false, "Valor Original da Fatura");
@@ -5552,14 +5446,12 @@ class Make extends BaseMake
     }
 
     /**
-     * tagdup
      * Grupo Duplicata Y07 pai Y02
      * tag NFe/infNFe/cobr/fat/dup (opcional)
      * É necessário criar a tag fat antes de criar as duplicatas
-     *
-     * @param  string $nDup
-     * @param  string $dVenc
-     * @param  string $vDup
+     * @param string $nDup
+     * @param string $dVenc
+     * @param string $vDup
      * @return DOMElement
      */
     public function tagdup(
@@ -5567,7 +5459,7 @@ class Make extends BaseMake
         $dVenc = '',
         $vDup = ''
     ) {
-        $this->zTagcobr();
+        $this->buildCobr();
         $dup = $this->dom->createElement("dup");
         $this->dom->addChild($dup, "nDup", $nDup, false, "Número da Duplicata");
         $this->dom->addChild($dup, "dVenc", $dVenc, false, "Data de vencimento");
@@ -5578,20 +5470,18 @@ class Make extends BaseMake
     }
 
     /**
-     * tagpag
      * Grupo de Formas de Pagamento YA01 pai A01
      * tag NFe/infNFe/pag (opcional)
      * Apenas para o modelo 65 NFCe
-     *
-     * @param  string $tPag
-     * @param  string $vPag
+     * @param string $tPag
+     * @param string $vPag
      * @return DOMElement
      */
     public function tagpag(
         $tPag = '',
         $vPag = ''
     ) {
-        $num = $this->zTagPag();
+        $num = $this->buildPag();
         $pag = $this->dom->createElement("pag");
         $this->dom->addChild(
             $this->aPag[$num-1],
@@ -5611,14 +5501,12 @@ class Make extends BaseMake
     }
 
     /**
-     * tagcard
      * Grupo de Cartões YA04 pai YA01
      * tag NFe/infNFe/pag/card
-     *
-     * @param  string $cnpj
-     * @param  string $tBand
-     * @param  string $cAut
-     * @param  string $tpIntegra
+     * @param string $cnpj
+     * @param string $tBand
+     * @param string $cAut
+     * @param string $tpIntegra
      * @return DOMElement
      */
     public function tagcard(
@@ -5664,19 +5552,17 @@ class Make extends BaseMake
     }
 
     /**
-     * taginfAdic
      * Grupo de Informações Adicionais Z01 pai A01
      * tag NFe/infNFe/infAdic (opcional)
-     *
-     * @param  string $infAdFisco
-     * @param  string $infCpl
+     * @param string $infAdFisco
+     * @param string $infCpl
      * @return DOMElement
      */
     public function taginfAdic(
         $infAdFisco = '',
         $infCpl = ''
     ) {
-        $this->zTaginfAdic();
+        $this->buildInfAdic();
         $this->dom->addChild(
             $this->infAdic,
             "infAdFisco",
@@ -5695,20 +5581,18 @@ class Make extends BaseMake
     }
 
     /**
-     * tagobsCont
      * Grupo Campo de uso livre do contribuinte Z04 pai Z01
      * tag NFe/infNFe/infAdic/obsCont (opcional)
      * O método taginfAdic deve ter sido carregado antes
-     *
-     * @param  string $xCampo
-     * @param  string $xTexto
+     * @param string $xCampo
+     * @param string $xTexto
      * @return DOMElement
      */
     public function tagobsCont(
         $xCampo = '',
         $xTexto = ''
     ) {
-        $this->zTaginfAdic();
+        $this->buildInfAdic();
         $obsCont = $this->dom->createElement("obsCont");
         $obsCont->setAttribute("xCampo", $xCampo);
         $this->dom->addChild($obsCont, "xTexto", $xTexto, true, "Conteúdo do campo");
@@ -5718,20 +5602,18 @@ class Make extends BaseMake
     }
 
     /**
-     * tagobsFisco
      * Grupo Campo de uso livre do Fisco Z07 pai Z01
      * tag NFe/infNFe/infAdic/obsFisco (opcional)
      * O método taginfAdic deve ter sido carregado antes
-     *
-     * @param  string $xCampo
-     * @param  string $xTexto
+     * @param string $xCampo
+     * @param string $xTexto
      * @return DOMElement
      */
     public function tagobsFisco(
         $xCampo = '',
         $xTexto = ''
     ) {
-        $this->zTaginfAdic();
+        $this->buildInfAdic();
         $obsFisco = $this->dom->createElement("obsFisco");
         $obsFisco->setAttribute("xCampo", $xCampo);
         $this->dom->addChild($obsFisco, "xTexto", $xTexto, true, "Conteúdo do campo");
@@ -5741,20 +5623,18 @@ class Make extends BaseMake
     }
 
     /**
-     * tagprocRef
      * Grupo Processo referenciado Z10 pai Z01 (NT2012.003)
      * tag NFe/infNFe/procRef (opcional)
      * O método taginfAdic deve ter sido carregado antes
-     *
-     * @param  string $nProc
-     * @param  string $indProc
+     * @param string $nProc
+     * @param string $indProc
      * @return DOMElement
      */
     public function tagprocRef(
         $nProc = '',
         $indProc = ''
     ) {
-        $this->zTaginfAdic();
+        $this->buildInfAdic();
         $procRef = $this->dom->createElement("procRef");
         $this->dom->addChild(
             $procRef,
@@ -5776,13 +5656,11 @@ class Make extends BaseMake
     }
 
     /**
-     * tagexporta
      * Grupo Exportação ZA01 pai A01
      * tag NFe/infNFe/exporta (opcional)
-     *
-     * @param  string $ufSaidaPais
-     * @param  string $xLocExporta
-     * @param  string $xLocDespacho
+     * @param string $ufSaidaPais
+     * @param string $xLocExporta
+     * @param string $xLocDespacho
      * @return DOMElement
      */
     public function tagexporta(
@@ -5816,13 +5694,11 @@ class Make extends BaseMake
     }
 
     /**
-     * tagcompra
      * Grupo Compra ZB01 pai A01
      * tag NFe/infNFe/compra (opcional)
-     *
-     * @param  string $xNEmp
-     * @param  string $xPed
-     * @param  string $xCont
+     * @param string $xNEmp
+     * @param string $xPed
+     * @param string $xCont
      * @return DOMElement
      */
     public function tagcompra(
@@ -5838,12 +5714,10 @@ class Make extends BaseMake
     }
 
     /**
-     * tagcana
      * Grupo Cana ZC01 pai A01
      * tag NFe/infNFe/cana (opcional)
-     *
-     * @param  string $safra
-     * @param  string $ref
+     * @param string $safra
+     * @param string $ref
      * @return DOMElement
      */
     public function tagcana(
@@ -5857,15 +5731,13 @@ class Make extends BaseMake
     }
 
     /**
-     * tagforDia
      * Grupo Fornecimento diário de cana ZC04 pai ZC01
      * tag NFe/infNFe/cana/forDia
-     *
-     * @param  string $dia
-     * @param  string $qtde
-     * @param  string $qTotMes
-     * @param  string $qTotAnt
-     * @param  string $qTotGer
+     * @param string $dia
+     * @param string $qtde
+     * @param string $qTotMes
+     * @param string $qTotAnt
+     * @param string $qTotGer
      * @return DOMElement
      */
     public function tagforDia(
@@ -5911,15 +5783,13 @@ class Make extends BaseMake
     }
 
     /**
-     * tagdeduc
      * Grupo Deduções – Taxas e Contribuições ZC10 pai ZC01
      * tag NFe/infNFe/cana/deduc (opcional)
-     *
-     * @param  string $xDed
-     * @param  string $vDed
-     * @param  string $vFor
-     * @param  string $vTotDed
-     * @param  string $vLiqFor
+     * @param string $xDed
+     * @param string $vDed
+     * @param string $vFor
+     * @param string $vTotDed
+     * @param string $vLiqFor
      * @return DOMElement
      */
     public function tagdeduc(
@@ -5975,14 +5845,12 @@ class Make extends BaseMake
     }
 
     /**
-     * zTagNFe
      * Tag raiz da NFe
      * tag NFe DOMNode
      * Função chamada pelo método [ monta ]
-     *
      * @return DOMElement
      */
-    private function zTagNFe()
+    private function buildNFe()
     {
         if (empty($this->NFe)) {
             $this->NFe = $this->dom->createElement("NFe");
@@ -5992,42 +5860,38 @@ class Make extends BaseMake
     }
 
     /**
-     * zTagNFref
      * Informação de Documentos Fiscais referenciados BA01 pai B01
      * tag NFe/infNFe/ide/NFref
      * Podem ser criados até 500 desses Nodes por NFe
      * Função chamada pelos métodos
      * [tagrefNFe] [tagrefNF] [tagrefNFP]  [tagCTeref] [tagrefECF]
+     * @return int contagem do numero de tags NFref
      */
-    private function zTagNFref()
+    private function builtNFref()
     {
         $this->aNFref[] = $this->dom->createElement("NFref");
         return count($this->aNFref);
     }
 
     /**
-     * zTagPag
      * Informação de pagamentos
      * tag NFe/infNFe/pag
      * Podem ser criados até 100 desses Nodes por NFe
      * Função chamada pelo método [tagPag]
-     *
      * @return int Total registros
      */
-    private function zTagPag()
+    private function buildPag()
     {
         $this->aPag[] = $this->dom->createElement("pag");
         return count($this->aPag);
     }
 
     /**
-     * zTagImp
      * Insere dentro dentro das tags imposto o ICMS IPI II PIS COFINS ISSQN
      * tag NFe/infNFe/det[]/imposto
-     *
      * @return void
      */
-    private function zTagImp()
+    private function buildImp()
     {
         foreach ($this->aImposto as $nItem => $imposto) {
             if (!empty($this->aICMS[$nItem])) {
@@ -6062,18 +5926,16 @@ class Make extends BaseMake
     }
 
     /**
-     * ztagCOFINSAliq
      * Grupo COFINS tributado pela alíquota S02 pai S01
      * tag det/imposto/COFINS/COFINSAliq (opcional)
      * Função chamada pelo método [ tagCOFINS ]
-     *
-     * @param  string $cst
-     * @param  string $vBC
-     * @param  string $pCOFINS
-     * @param  string $vCOFINS
+     * @param string $cst
+     * @param string $vBC
+     * @param string $pCOFINS
+     * @param string $vCOFINS
      * @return DOMElement
      */
-    private function zTagCOFINSAliq($cst = '', $vBC = '', $pCOFINS = '', $vCOFINS = '')
+    private function buildCOFINSAliq($cst = '', $vBC = '', $pCOFINS = '', $vCOFINS = '')
     {
         $confinsAliq = $this->dom->createElement('COFINSAliq');
         $this->dom->addChild(
@@ -6108,15 +5970,13 @@ class Make extends BaseMake
     }
 
     /**
-     * zTagCOFINSNT
      * Grupo COFINS não tributado S04 pai S01
      * tag NFe/infNFe/det[]/imposto/COFINS/COFINSNT (opcional)
      * Função chamada pelo método [ tagCOFINS ]
-     *
-     * @param  string $cst
+     * @param string $cst
      * @return DOMElement
      */
-    private function zTagCOFINSNT($cst = '')
+    private function buildCOFINSNT($cst = '')
     {
         $confinsnt = $this->dom->createElement('COFINSNT');
         $this->dom->addChild(
@@ -6130,20 +5990,18 @@ class Make extends BaseMake
     }
 
     /**
-     * zTagCOFINSoutr
      * Grupo COFINS Outras Operações S05 pai S01
      * tag NFe/infNFe/det[]/imposto/COFINS/COFINSoutr (opcional)
      * Função chamada pelo método [ tagCOFINS ]
-     *
-     * @param  string $cst
-     * @param  string $vBC
-     * @param  string $pCOFINS
-     * @param  string $qBCProd
-     * @param  string $vAliqProd
-     * @param  string $vCOFINS
+     * @param string $cst
+     * @param string $vBC
+     * @param string $pCOFINS
+     * @param string $qBCProd
+     * @param string $vAliqProd
+     * @param string $vCOFINS
      * @return DOMElement
      */
-    private function zTagCOFINSoutr($cst = '', $vBC = '', $pCOFINS = '', $qBCProd = '', $vAliqProd = '', $vCOFINS = '')
+    private function buildCOFINSoutr($cst = '', $vBC = '', $pCOFINS = '', $qBCProd = '', $vAliqProd = '', $vCOFINS = '')
     {
         $confinsoutr = $this->dom->createElement('COFINSOutr');
         $this->dom->addChild(
@@ -6195,7 +6053,7 @@ class Make extends BaseMake
      * Insere dentro da tag det os produtos
      * tag NFe/infNFe/det[]
      */
-    private function zTagdet()
+    private function buildDet()
     {
         if (empty($this->aProd)) {
             return '';
@@ -6211,7 +6069,6 @@ class Make extends BaseMake
                 $prod->insertBefore($child, $node);
             }
         }
-
         //insere CEST
         foreach ($this->aCest as $nItem => $cest) {
             $prod = $this->aProd[$nItem];
@@ -6223,7 +6080,6 @@ class Make extends BaseMake
                 $prod->insertBefore($child, $node);
             }
         }
-
         //insere DI
         foreach ($this->aDI as $nItem => $aDI) {
             $prod = $this->aProd[$nItem];
@@ -6237,35 +6093,30 @@ class Make extends BaseMake
             }
             $this->aProd[$nItem] = $prod;
         }
-
         //insere detExport
         foreach ($this->aDetExport as $nItem => $child) {
             $prod = $this->aProd[$nItem];
             $this->dom->appChild($prod, $child, "Inclusão do node detExport");
             $this->aProd[$nItem] = $prod;
         }
-
         //insere veiculo
         foreach ($this->aVeicProd as $nItem => $child) {
             $prod = $this->aProd[$nItem];
             $this->dom->appChild($prod, $child, "Inclusão do node veiculo");
             $this->aProd[$nItem] = $prod;
         }
-
         //insere medicamentos
         foreach ($this->aMed as $nItem => $child) {
             $prod = $this->aProd[$nItem];
             $this->dom->appChild($prod, $child, "Inclusão do node medicamento");
             $this->aProd[$nItem] = $prod;
         }
-
         //insere armas
         foreach ($this->aArma as $nItem => $child) {
             $prod = $this->aProd[$nItem];
             $this->dom->appChild($prod, $child, "Inclusão do node arma");
             $this->aProd[$nItem] = $prod;
         }
-
         //insere combustivel
         foreach ($this->aComb as $nItem => $child) {
             $prod = $this->aProd[$nItem];
@@ -6278,16 +6129,14 @@ class Make extends BaseMake
             $this->dom->appChild($prod, $child, "Inclusão do node combustivel");
             $this->aProd[$nItem] = $prod;
         }
-
         //insere RECOPI
         foreach ($this->aRECOPI as $nItem => $child) {
             $prod = $this->aProd[$nItem];
             $this->dom->appChild($prod, $child, "Inclusão do node RECOPI");
             $this->aProd[$nItem] = $prod;
         }
-
         //montagem da tag imposto[]
-        $this->zTagImp();
+        $this->buildImp();
         //montagem da tag det[]
         foreach ($this->aProd as $nItem => $prod) {
             $det = $this->dom->createElement("det");
@@ -6314,11 +6163,11 @@ class Make extends BaseMake
     }
 
     /**
-     * zTagttotal
      * Grupo Totais da NF-e W01 pai A01
      * tag NFe/infNFe/total
+     * @return void
      */
-    private function zTagtotal()
+    private function buildTotal()
     {
         if (empty($this->total)) {
             $this->total = $this->dom->createElement("total");
@@ -6332,14 +6181,12 @@ class Make extends BaseMake
     }
 
     /**
-     * zTaglacres
      * Grupo Lacres X33 pai X26
      * tag NFe/infNFe/transp/vol/lacres (opcional)
-     *
-     * @param  string $nLacre
+     * @param string $nLacre
      * @return DOMElement
      */
-    protected function zTaglacres($nLacre = '')
+    protected function buildLacres($nLacre = '')
     {
         $lacre = $this->dom->createElement("lacres");
         $this->dom->addChild($lacre, "nLacre", $nLacre, true, "Número dos Lacres");
@@ -6347,12 +6194,12 @@ class Make extends BaseMake
     }
 
     /**
-     * tagcobr
      * Grupo Cobrança Y01 pai A01
      * tag NFe/infNFe/cobr (opcional)
      * Depende de fat
+     * @return void
      */
-    private function zTagcobr()
+    private function buildCobr()
     {
         if (empty($this->cobr)) {
             $this->cobr = $this->dom->createElement("cobr");
@@ -6360,15 +6207,13 @@ class Make extends BaseMake
     }
 
     /**
-     * zTaginfAdic
      * Grupo de Informações Adicionais Z01 pai A01
      * tag NFe/infNFe/infAdic (opcional)
      * Função chamada pelos metodos
      * [taginfAdic] [tagobsCont] [tagobsFisco] [tagprocRef]
-     *
      * @return DOMElement
      */
-    private function zTaginfAdic()
+    private function buildInfAdic()
     {
         if (empty($this->infAdic)) {
             $this->infAdic = $this->dom->createElement("infAdic");
@@ -6377,18 +6222,19 @@ class Make extends BaseMake
     }
 
     /**
-     * zTestaChaveXML
      * Remonta a chave da NFe de 44 digitos com base em seus dados
+     * já contidos na NFE.
      * Isso é útil no caso da chave informada estar errada
      * se a chave estiver errada a mesma é substituida
-     *
      * @param Dom $dom
+     * @return void
      */
-    private function zTestaChaveXML($dom)
+    private function checkNFeKey($dom)
     {
         $infNFe= $dom->getElementsByTagName("infNFe")->item(0);
         $ide = $dom->getElementsByTagName("ide")->item(0);
         $emit = $dom->getElementsByTagName("emit")->item(0);
+        
         $cUF = $ide->getElementsByTagName('cUF')->item(0)->nodeValue;
         $dhEmi = $ide->getElementsByTagName('dhEmi')->item(0)->nodeValue;
         $cnpj = $emit->getElementsByTagName('CNPJ')->item(0)->nodeValue;
@@ -6398,11 +6244,26 @@ class Make extends BaseMake
         $tpEmis = $ide->getElementsByTagName('tpEmis')->item(0)->nodeValue;
         $cNF = $ide->getElementsByTagName('cNF')->item(0)->nodeValue;
         $chave = str_replace('NFe', '', $infNFe->getAttribute("Id"));
-        $tempData = explode("-", $dhEmi);
-        $chaveMontada = $this->montaChave(
+        
+        $dt = \DateTime($dhEmi);
+        
+        try {
+            $nfeKey = NFeAccessKey::generate(
+                $cUF,
+                $dt->format('ym'),
+                new Cnpj($cnpj),
+                $serie,
+                $nNF,
+                $cNF
+            );
+        } catch (InvalidDocumentException $e) {
+            echo $e->getMessage();
+        }
+        
+        $chaveMontada = Keys::build(
             $cUF,
-            $tempData[0] - 2000,
-            $tempData[1],
+            $dt->format('y'),
+            $dt->format('m'),
             $cnpj,
             $mod,
             $serie,

@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-ATENÇÃO! Este é o XML dos endereços dos webservices da NFC-e (NF-e modelo 65)
-ATENÇÃO!!! Vários endereços destes webservices ainda não foram totalmente 
-           revisados e/ou estão incompletos, testar com cuidado conforme cada
-           UF/ambiente.
--->
 <WS xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <UF>
     <sigla>AC</sigla>
@@ -18,7 +12,6 @@ ATENÇÃO!!! Vários endereços destes webservices ainda não foram totalmente
   <UF>
     <sigla>AM</sigla>
     <homologacao>
-        <!-- NOTA: este ambiente de homologação serve apenas a inscritos no estado do Amazinas -->
        <NfeAutorizacao method="nfeAutorizacaoLote" operation="NfeAutorizacao" version="3.10">https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeAutorizacao</NfeAutorizacao>
        <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NfeRetAutorizacao" version="3.10">https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeRetAutorizacao</NfeRetAutorizacao>
        <NfeInutilizacao  method="nfeInutilizacaoNF2" operation="NfeInutilizacao2" version="3.10">https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeInutilizacao2</NfeInutilizacao>
@@ -26,11 +19,6 @@ ATENÇÃO!!! Vários endereços destes webservices ainda não foram totalmente
        <NfeStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10">https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeStatusServico2</NfeStatusServico>
        <RecepcaoEvento  method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://homnfce.sefaz.am.gov.br/nfce-services/services/RecepcaoEvento</RecepcaoEvento>
        <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://homnfce.sefaz.am.gov.br/nfceweb/consultarNFCe.jsp</NfeConsultaQR>
-       <NfeConsultaCadastro method="consultaCadastro2" operation="NfeConsultaCadastro" version="3.10"></NfeConsultaCadastro>
-       <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="3.10"></NfeConsultaDest>
-       <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="3.10"></NfeDownloadNF>
-       <RecepcaoEPEC method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEPEC>
-       <NfeStatusEPEC method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusEPEC>       
     </homologacao>
     <producao>
        <NfeAutorizacao method="nfeAutorizacaoLote" operation="NfeAutorizacao" version="3.10">https://nfce.sefaz.am.gov.br/nfce-services/services/NfeAutorizacao</NfeAutorizacao>
@@ -40,51 +28,6 @@ ATENÇÃO!!! Vários endereços destes webservices ainda não foram totalmente
        <NfeStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10">https://nfce.sefaz.am.gov.br/nfce-services/services/NfeStatusServico2</NfeStatusServico>
        <RecepcaoEvento  method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://nfce.sefaz.am.gov.br/nfce-services/services/RecepcaoEvento</RecepcaoEvento>
        <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">https://sistemas.sefaz.am.gov.br/nfceweb/consultarNFCe.jsp</NfeConsultaQR>
-       <NfeConsultaCadastro method="consultaCadastro2" operation="NfeConsultaCadastro" version="3.10"></NfeConsultaCadastro>
-       <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="3.10"></NfeConsultaDest>
-       <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="3.10"></NfeDownloadNF>
-       <RecepcaoEPEC method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEPEC>
-       <NfeStatusEPEC method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusEPEC>       
-    </producao>
-  </UF>
-  <UF>
-    <sigla>AN</sigla>
-    <homologacao>
-       <NfeAutorizacao method="nfeAutorizacaoLote" operation="NfeAutorizacao" version="3.10"></NfeAutorizacao>
-       <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NfeRetAutorizacao" version="3.10"></NfeRetAutorizacao>
-       <NfeInutilizacao  method="nfeInutilizacaoNF2" operation="NfeInutilizacao2" version="3.10"></NfeInutilizacao>
-       <NfeConsultaProtocolo method="nfeConsultaNF2" operation="NfeConsulta2" version="3.10"></NfeConsultaProtocolo>
-       <NfeStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusServico>
-       <RecepcaoEvento  method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEvento>
-       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100"></NfeConsultaQR>
-       <NfeConsultaCadastro method="consultaCadastro2" operation="NfeConsultaCadastro" version="3.10"></NfeConsultaCadastro>
-       <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="3.10"></NfeConsultaDest>
-       <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="3.10"></NfeDownloadNF>
-       <RecepcaoEPEC method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEPEC>
-       <NfeStatusEPEC method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusEPEC>       
-    </homologacao>
-    <producao>
-       <NfeAutorizacao method="nfeAutorizacaoLote" operation="NfeAutorizacao" version="3.10"></NfeAutorizacao>
-       <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NfeRetAutorizacao" version="3.10"></NfeRetAutorizacao>
-       <NfeInutilizacao  method="nfeInutilizacaoNF2" operation="NfeInutilizacao2" version="3.10"></NfeInutilizacao>
-       <NfeConsultaProtocolo method="nfeConsultaNF2" operation="NfeConsulta2" version="3.10"></NfeConsultaProtocolo>
-       <NfeStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusServico>
-       <RecepcaoEvento  method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEvento>
-       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100"></NfeConsultaQR>
-       <NfeConsultaCadastro method="consultaCadastro2" operation="NfeConsultaCadastro" version="3.10"></NfeConsultaCadastro>
-       <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="3.10"></NfeConsultaDest>
-       <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="3.10"></NfeDownloadNF>
-       <RecepcaoEPEC method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEPEC>
-       <NfeStatusEPEC method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusEPEC>       
-    </producao>
-  </UF>
-  <UF>
-    <sigla>AP</sigla>
-    <homologacao>
-      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100"></NfeConsultaQR>
-    </homologacao>
-    <producao>
-      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100"></NfeConsultaQR>
     </producao>
   </UF>
   <UF>
@@ -107,10 +50,6 @@ ATENÇÃO!!! Vários endereços destes webservices ainda não foram totalmente
        <NfeConsultaCadastro method="consultaCadastro2" operation="NfeConsultaCadastro" version="3.10">https://nfceh.sefaz.ce.gov.br/nfce/services/CadConsultaCadastro2</NfeConsultaCadastro>
        <RecepcaoEvento method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://nfceh.sefaz.ce.gov.br/nfce/services/RecepcaoEvento</RecepcaoEvento>
        <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://nfceh.sefaz.ce.gov.br/pages/ShowNFCe.html</NfeConsultaQR>
-       <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="3.10"></NfeConsultaDest>
-       <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="3.10"></NfeDownloadNF>
-       <RecepcaoEPEC method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEPEC>
-       <NfeStatusEPEC method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusEPEC>      
     </homologacao>
     <producao>
        <NfeAutorizacao method="nfeAutorizacaoLote" operation="NfeAutorizacao" version="3.10"></NfeAutorizacao>
@@ -137,15 +76,6 @@ ATENÇÃO!!! Vários endereços destes webservices ainda não foram totalmente
     </producao>
   </UF>    
   <UF>
-    <sigla>ES</sigla>
-    <homologacao>
-      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100"></NfeConsultaQR>
-    </homologacao>
-    <producao>
-      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100"></NfeConsultaQR>
-    </producao>
-  </UF>
-  <UF>
     <sigla>GO</sigla>
     <homologacao>
        <RecepcaoEvento method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://homolog.sefaz.go.gov.br/nfe/services/v2/RecepcaoEvento</RecepcaoEvento>
@@ -158,9 +88,7 @@ ATENÇÃO!!! Vários endereços destes webservices ainda não foram totalmente
        <NfeAutorizacao method="nfeAutorizacao" operation="NfeAutorizacao" version="3.10">https://homolog.sefaz.go.gov.br/nfe/services/v2/NfeAutorizacao</NfeAutorizacao>
        <NfeRetAutorizacao method="nfeRetAutorizacao" operation="NfeRetAutorizacao" version="3.10">https://homolog.sefaz.go.gov.br/nfe/services/v2/NfeRetAutorizacao</NfeRetAutorizacao>
        <CscNFCe method="admCscNFCe" operation="CscNFCe" version="1.00">https://homolog.sefaz.go.gov.br/nfe/services/v2/CscNFCe</CscNFCe>       
-       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://www.nfe.go.gov.br/pagina/ver/10275/consulta-de-testes</NfeConsultaQR>
-       <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="3.10"></NfeConsultaDest>
-       <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="3.10"></NfeDownloadNF>
+       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100"> http://homolog.sefaz.go.gov.br/nfeweb/sites/nfce/danfeNFCe</NfeConsultaQR>
     </homologacao>
     <producao>
        <RecepcaoEvento method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://nfe.sefaz.go.gov.br/nfe/services/v2/RecepcaoEvento</RecepcaoEvento>
@@ -173,9 +101,7 @@ ATENÇÃO!!! Vários endereços destes webservices ainda não foram totalmente
        <NfeAutorizacao method="nfeAutorizacao" operation="NfeAutorizacao" version="3.10">https://homolog.sefaz.go.gov.br/nfe/services/v2/NfeAutorizacao</NfeAutorizacao>
        <NfeRetAutorizacao method="nfeRetAutorizacao" operation="NfeRetAutorizacao" version="3.10">https://nfe.sefaz.go.gov.br/nfe/services/v2/NfeRetAutorizacao</NfeRetAutorizacao>
        <CscNFCe method="admCscNFCe" operation="CscNFCe" version="1.00">https://nfe.sefaz.go.gov.br/nfe/services/v2/CscNFCe</CscNFCe>       
-       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://www.nfe.go.gov.br/pagina/ver/10270/consulta-completa</NfeConsultaQR>
-       <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="3.10"></NfeConsultaDest>
-       <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="3.10"></NfeDownloadNF>
+       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://nfe.sefaz.go.gov.br/nfeweb/sites/nfce/danfeNFCe</NfeConsultaQR>
     </producao>
   </UF>
   <UF>
@@ -188,68 +114,6 @@ ATENÇÃO!!! Vários endereços destes webservices ainda não foram totalmente
     </producao>
   </UF>
   <UF>
-    <sigla>MG</sigla>
-    <homologacao>
-       <NfeAutorizacao method="nfeAutorizacaoLote" operation="NfeAutorizacao" version="3.10"></NfeAutorizacao>
-       <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NfeRetAutorizacao" version="3.10"></NfeRetAutorizacao>
-       <NfeInutilizacao  method="nfeInutilizacaoNF2" operation="NfeInutilizacao2" version="3.10"></NfeInutilizacao>
-       <NfeConsultaProtocolo method="nfeConsultaNF2" operation="NfeConsulta2" version="3.10"></NfeConsultaProtocolo>
-       <NfeStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusServico>
-       <RecepcaoEvento  method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEvento>
-       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100"></NfeConsultaQR>
-       <NfeConsultaCadastro method="consultaCadastro2" operation="NfeConsultaCadastro" version="3.10"></NfeConsultaCadastro>
-       <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="3.10"></NfeConsultaDest>
-       <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="3.10"></NfeDownloadNF>
-       <RecepcaoEPEC method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEPEC>
-       <NfeStatusEPEC method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusEPEC>       
-    </homologacao>
-    <producao>
-       <NfeAutorizacao method="nfeAutorizacaoLote" operation="NfeAutorizacao" version="3.10"></NfeAutorizacao>
-       <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NfeRetAutorizacao" version="3.10"></NfeRetAutorizacao>
-       <NfeInutilizacao  method="nfeInutilizacaoNF2" operation="NfeInutilizacao2" version="3.10"></NfeInutilizacao>
-       <NfeConsultaProtocolo method="nfeConsultaNF2" operation="NfeConsulta2" version="3.10"></NfeConsultaProtocolo>
-       <NfeStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusServico>
-       <RecepcaoEvento  method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEvento>
-       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100"></NfeConsultaQR>
-       <NfeConsultaCadastro method="consultaCadastro2" operation="NfeConsultaCadastro" version="3.10"></NfeConsultaCadastro>
-       <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="3.10"></NfeConsultaDest>
-       <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="3.10"></NfeDownloadNF>
-       <RecepcaoEPEC method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEPEC>
-       <NfeStatusEPEC method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusEPEC>       
-    </producao>
-  </UF>
-  <UF>
-    <sigla>MS</sigla>
-    <homologacao>
-      <NfeAutorizacao method="nfeAutorizacaoLote" operation="NfeAutorizacao" version="3.10"></NfeAutorizacao>
-      <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NfeRetAutorizacao" version="3.10"></NfeRetAutorizacao>
-      <NfeInutilizacao  method="nfeInutilizacaoNF2" operation="NfeInutilizacao2" version="3.10"></NfeInutilizacao>
-      <NfeConsultaProtocolo method="nfeConsultaNF2" operation="NfeConsulta2" version="3.10"></NfeConsultaProtocolo>
-      <NfeStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusServico>
-      <RecepcaoEvento  method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEvento>
-      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100"></NfeConsultaQR>
-      <NfeConsultaCadastro method="consultaCadastro2" operation="NfeConsultaCadastro" version="3.10"></NfeConsultaCadastro>
-      <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="3.10"></NfeConsultaDest>
-      <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="3.10"></NfeDownloadNF>
-      <RecepcaoEPEC method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEPEC>
-      <NfeStatusEPEC method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusEPEC>       
-    </homologacao>
-    <producao>
-      <NfeAutorizacao method="nfeAutorizacaoLote" operation="NfeAutorizacao" version="3.10"></NfeAutorizacao>
-      <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NfeRetAutorizacao" version="3.10"></NfeRetAutorizacao>
-      <NfeInutilizacao  method="nfeInutilizacaoNF2" operation="NfeInutilizacao2" version="3.10"></NfeInutilizacao>
-      <NfeConsultaProtocolo method="nfeConsultaNF2" operation="NfeConsulta2" version="3.10"></NfeConsultaProtocolo>
-      <NfeStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusServico>
-      <RecepcaoEvento  method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEvento>
-      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100"></NfeConsultaQR>
-      <NfeConsultaCadastro method="consultaCadastro2" operation="NfeConsultaCadastro" version="3.10"></NfeConsultaCadastro>
-      <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="3.10"></NfeConsultaDest>
-      <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="3.10"></NfeDownloadNF>
-      <RecepcaoEPEC method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEPEC>
-      <NfeStatusEPEC method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusEPEC>       
-    </producao>
-  </UF>
-  <UF>
     <sigla>MT</sigla>
     <homologacao>
        <NfeAutorizacao method="nfeAutorizacaoLote" operation="NfeAutorizacao" version="3.10">https://homologacao.sefaz.mt.gov.br/nfcews/services/NfeAutorizacao</NfeAutorizacao>
@@ -259,11 +123,6 @@ ATENÇÃO!!! Vários endereços destes webservices ainda não foram totalmente
        <NfeStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10">https://homologacao.sefaz.mt.gov.br/nfcews/services/NfeStatusServico2</NfeStatusServico>
        <RecepcaoEvento  method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://homologacao.sefaz.mt.gov.br/nfcews/services/RecepcaoEvento</RecepcaoEvento>
        <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://homologacao.sefaz.mt.gov.br/nfce/consultanfce</NfeConsultaQR>
-       <NfeConsultaCadastro method="consultaCadastro2" operation="NfeConsultaCadastro" version="3.10"></NfeConsultaCadastro>
-       <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="3.10"></NfeConsultaDest>
-       <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="3.10"></NfeDownloadNF>
-       <RecepcaoEPEC method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEPEC>
-       <NfeStatusEPEC method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusEPEC>       
     </homologacao>
     <producao>
        <NfeAutorizacao method="nfeAutorizacaoLote" operation="NfeAutorizacao" version="3.10">https://nfce.sefaz.mt.gov.br/nfcews/services/NfeAutorizacao</NfeAutorizacao>
@@ -273,11 +132,6 @@ ATENÇÃO!!! Vários endereços destes webservices ainda não foram totalmente
        <NfeStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10">https://nfce.sefaz.mt.gov.br/nfcews/services/NfeStatusServico2</NfeStatusServico>
        <RecepcaoEvento  method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://nfce.sefaz.mt.gov.br/nfcews/services/RecepcaoEvento</RecepcaoEvento>
        <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://www.sefaz.mt.gov.br/nfce/consultanfce</NfeConsultaQR>
-       <NfeConsultaCadastro method="consultaCadastro2" operation="NfeConsultaCadastro" version="3.10"></NfeConsultaCadastro>
-       <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="3.10"></NfeConsultaDest>
-       <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="3.10"></NfeDownloadNF>
-       <RecepcaoEPEC method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEPEC>
-       <NfeStatusEPEC method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusEPEC>       
     </producao>
   </UF>
   <UF>
@@ -287,51 +141,6 @@ ATENÇÃO!!! Vários endereços destes webservices ainda não foram totalmente
     </homologacao>
     <producao>
       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">https://appnfc.sefa.pa.gov.br/portal/view/consultas/nfce/nfceForm.seam</NfeConsultaQR>
-    </producao>
-  </UF>
-  <UF>
-    <sigla>PB</sigla>
-    <homologacao>
-      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100"></NfeConsultaQR>
-    </homologacao>
-    <producao>
-      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100"></NfeConsultaQR>
-    </producao>
-  </UF>  
-  <UF>
-    <sigla>PI</sigla>
-    <homologacao>
-      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100"></NfeConsultaQR>
-    </homologacao>
-    <producao>
-      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100"></NfeConsultaQR>
-    </producao>
-  </UF>  
-  <UF>
-    <sigla>PE</sigla>
-    <homologacao>
-      <NfeInutilizacao method="nfeInutilizacaoNF2" operation="" version="3.10"></NfeInutilizacao>
-      <NfeConsultaProtocolo method="nfeConsultaNF2" operation="" version="3.10"></NfeConsultaProtocolo>
-      <NfeStatusServico method="nfeStatusServicoNF2" operation="" version="3.10"></NfeStatusServico>
-      <NfeConsultaCadastro method="consultaCadastro2" operation="" version="3.10"></NfeConsultaCadastro>
-      <RecepcaoEvento method="nfeRecepcaoEvento" operation="" version="3.10"></RecepcaoEvento>
-      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100"></NfeConsultaQR>
-      <NfeConsultaDest method="nfeConsultaNFDest" operation="" version="3.10"></NfeConsultaDest>
-      <NfeDownloadNF method="nfeDownloadNF" operation="" version="3.10"></NfeDownloadNF>
-      <RecepcaoEPEC method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEPEC>
-      <NfeStatusEPEC method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusEPEC>       
-    </homologacao>
-    <producao>
-      <NfeInutilizacao method="nfeInutilizacaoNF2" operation="" version="3.10"></NfeInutilizacao>
-      <NfeConsultaProtocolo method="nfeConsultaNF2" operation="" version="3.10"></NfeConsultaProtocolo>
-      <NfeStatusServico method="nfeStatusServicoNF2" operation="" version="3.10"></NfeStatusServico>
-      <NfeConsultaCadastro method="consultaCadastro2" operation="" version="3.10"></NfeConsultaCadastro>
-      <RecepcaoEvento method="nfeRecepcaoEvento" operation="" version="3.10"></RecepcaoEvento>
-      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100"></NfeConsultaQR>
-      <NfeConsultaDest method="nfeConsultaNFDest" operation="" version="3.10"></NfeConsultaDest>
-      <NfeDownloadNF method="nfeDownloadNF" operation="" version="3.10"></NfeDownloadNF>
-      <RecepcaoEPEC method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEPEC>
-      <NfeStatusEPEC method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusEPEC>       
     </producao>
   </UF>
  <UF>
@@ -344,10 +153,6 @@ ATENÇÃO!!! Vários endereços destes webservices ainda não foram totalmente
        <NfeStatusServico method="nfeStatusServicoNF" operation="NfeStatusServico3" version="3.10">https://homologacao.nfce.fazenda.pr.gov.br/nfce/NFeStatusServico3</NfeStatusServico>
        <RecepcaoEvento  method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://homologacao.nfce.fazenda.pr.gov.br/nfce/NFeRecepcaoEvento</RecepcaoEvento>
        <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://www.dfeportal.fazenda.pr.gov.br/dfe-portal/rest/servico/consultaNFCe</NfeConsultaQR>
-       <NfeConsultaCadastro method="consultaCadastro2" operation="NfeConsultaCadastro" version="3.10"></NfeConsultaCadastro>
-       <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="3.10"></NfeConsultaDest>
-       <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="3.10"></NfeDownloadNF>
-       <RecepcaoEPEC method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEPEC>
     </homologacao>
     <producao>
        <NfeAutorizacao method="nfeAutorizacaoLote" operation="NfeAutorizacao3" version="3.10">https://nfce.fazenda.pr.gov.br/nfce/NFeAutorizacao3</NfeAutorizacao>
@@ -357,22 +162,8 @@ ATENÇÃO!!! Vários endereços destes webservices ainda não foram totalmente
        <NfeStatusServico method="nfeStatusServicoNF" operation="NfeStatusServico3" version="3.10">https://nfce.fazenda.pr.gov.br/nfce/NFeStatusServico3</NfeStatusServico>
        <RecepcaoEvento  method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://nfce.fazenda.pr.gov.br/nfce/NFeRecepcaoEvento</RecepcaoEvento>
        <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://www.dfeportal.fazenda.pr.gov.br/dfe-portal/rest/servico/consultaNFCe</NfeConsultaQR>
-       <NfeConsultaCadastro method="consultaCadastro2" operation="NfeConsultaCadastro" version="3.10"></NfeConsultaCadastro>
-       <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="3.10"></NfeConsultaDest>
-       <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="3.10"></NfeDownloadNF>
-       <RecepcaoEPEC method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEPEC>
-       <NfeStatusEPEC method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusEPEC>       
     </producao>
   </UF>
-  <UF>
-    <sigla>RJ</sigla>
-    <homologacao>
-      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100"></NfeConsultaQR>
-    </homologacao>
-    <producao>
-      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100"></NfeConsultaQR>
-    </producao>
-  </UF>  
   <UF>
     <sigla>RN</sigla>
     <homologacao>
@@ -392,15 +183,6 @@ ATENÇÃO!!! Vários endereços destes webservices ainda não foram totalmente
     </producao>
   </UF>
   <UF>
-    <sigla>RR</sigla>
-    <homologacao>
-      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100"></NfeConsultaQR>
-    </homologacao>
-    <producao>
-      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100"></NfeConsultaQR>
-    </producao>
-  </UF>
-  <UF>
     <sigla>RS</sigla>
     <homologacao>
        <NfeAutorizacao method="nfeAutorizacaoLote" operation="NfeAutorizacao" version="3.10">https://nfce-homologacao.sefazrs.rs.gov.br/ws/NfeAutorizacao/NfeAutorizacao.asmx</NfeAutorizacao>
@@ -410,11 +192,6 @@ ATENÇÃO!!! Vários endereços destes webservices ainda não foram totalmente
        <NfeStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10">https://nfce-homologacao.sefazrs.rs.gov.br/ws/NfeStatusServico/NfeStatusServico2.asmx</NfeStatusServico>
        <RecepcaoEvento  method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://nfce-homologacao.sefazrs.rs.gov.br/ws/recepcaoevento/recepcaoevento.asmx</RecepcaoEvento>
        <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">https://www.sefaz.rs.gov.br/NFCE/NFCE-COM.aspx</NfeConsultaQR>
-       <NfeConsultaCadastro method="consultaCadastro2" operation="NfeConsultaCadastro" version="3.10"></NfeConsultaCadastro>
-       <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="3.10"></NfeConsultaDest>
-       <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="3.10"></NfeDownloadNF>
-       <RecepcaoEPEC method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEPEC>
-       <NfeStatusEPEC method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusEPEC>       
     </homologacao>
     <producao>
        <NfeAutorizacao method="nfeAutorizacaoLote" operation="NfeAutorizacao" version="3.10">https://nfce.sefazrs.rs.gov.br/ws/NfeAutorizacao/NfeAutorizacao.asmx</NfeAutorizacao>
@@ -424,11 +201,6 @@ ATENÇÃO!!! Vários endereços destes webservices ainda não foram totalmente
        <NfeStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10">https://nfce.sefazrs.rs.gov.br/ws/NfeStatusServico/NfeStatusServico2.asmx</NfeStatusServico>
        <RecepcaoEvento  method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://nfce.sefazrs.rs.gov.br/ws/recepcaoevento/recepcaoevento.asmx</RecepcaoEvento>
        <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">https://www.sefaz.rs.gov.br/NFCE/NFCE-COM.aspx</NfeConsultaQR>
-       <NfeConsultaCadastro method="consultaCadastro2" operation="NfeConsultaCadastro" version="3.10"></NfeConsultaCadastro>
-       <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="3.10"></NfeConsultaDest>
-       <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="3.10"></NfeDownloadNF>
-       <RecepcaoEPEC method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEPEC>
-       <NfeStatusEPEC method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusEPEC>       
     </producao>
   </UF>
   <UF>
@@ -459,9 +231,6 @@ ATENÇÃO!!! Vários endereços destes webservices ainda não foram totalmente
        <NfeStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10">https://homologacao.nfce.fazenda.sp.gov.br/ws/nfestatusservico2.asmx</NfeStatusServico>
        <RecepcaoEvento  method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://homologacao.nfce.fazenda.sp.gov.br/ws/recepcaoevento.asmx</RecepcaoEvento>
        <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">https://www.homologacao.nfce.fazenda.sp.gov.br/NFCeConsultaPublica/Paginas/ConsultaQRCode.aspx</NfeConsultaQR>
-       <NfeConsultaCadastro method="consultaCadastro2" operation="NfeConsultaCadastro" version="3.10"></NfeConsultaCadastro>
-       <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="3.10"></NfeConsultaDest>
-       <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="3.10"></NfeDownloadNF>
        <RecepcaoEPEC method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://homologacao.nfce.epec.fazenda.sp.gov.br/EPECws/RecepcaoEPEC.asmx</RecepcaoEPEC>
        <NfeStatusEPEC method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10">https://homologacao.nfce.epec.fazenda.sp.gov.br/EPECws/EPECStatusServico.asmx</NfeStatusEPEC>
     </homologacao>
@@ -473,9 +242,6 @@ ATENÇÃO!!! Vários endereços destes webservices ainda não foram totalmente
        <NfeStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10">https://nfce.fazenda.sp.gov.br/ws/nfestatusservico2.asmx</NfeStatusServico>
        <RecepcaoEvento  method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://nfce.fazenda.sp.gov.br/ws/recepcaoevento.asmx</RecepcaoEvento>
        <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">https://www.nfce.fazenda.sp.gov.br/NFCeConsultaPublica/Paginas/ConsultaQRCode.aspx</NfeConsultaQR>
-       <NfeConsultaCadastro method="consultaCadastro2" operation="NfeConsultaCadastro" version="3.10"></NfeConsultaCadastro>
-       <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="3.10"></NfeConsultaDest>
-       <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="3.10"></NfeDownloadNF>
        <RecepcaoEPEC method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://nfce.epec.fazenda.sp.gov.br/EPECws/RecepcaoEPEC.asmx</RecepcaoEPEC>
        <NfeStatusEPEC method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10">https://nfce.epec.fazenda.sp.gov.br/EPECws/EPECStatusServico.asmx</NfeStatusEPEC>
     </producao>
@@ -490,37 +256,6 @@ ATENÇÃO!!! Vários endereços destes webservices ainda não foram totalmente
     </producao>
   </UF>  
   <UF>
-    <sigla>SVAN</sigla>
-    <homologacao>
-       <NfeAutorizacao method="nfeAutorizacaoLote" operation="NfeAutorizacao" version="3.10"></NfeAutorizacao>
-       <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NfeRetAutorizacao" version="3.10"></NfeRetAutorizacao>
-       <NfeInutilizacao  method="nfeInutilizacaoNF2" operation="NfeInutilizacao2" version="3.10"></NfeInutilizacao>
-       <NfeConsultaProtocolo method="nfeConsultaNF2" operation="NfeConsulta2" version="3.10"></NfeConsultaProtocolo>
-       <NfeStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusServico>
-       <RecepcaoEvento  method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEvento>
-       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100"></NfeConsultaQR>
-       <NfeConsultaCadastro method="consultaCadastro2" operation="NfeConsultaCadastro" version="3.10"></NfeConsultaCadastro>
-       <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="3.10"></NfeConsultaDest>
-       <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="3.10"></NfeDownloadNF>
-       <RecepcaoEPEC method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEPEC>
-       <NfeStatusEPEC method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusEPEC>       
-    </homologacao>
-    <producao>
-       <NfeAutorizacao method="nfeAutorizacaoLote" operation="NfeAutorizacao" version="3.10"></NfeAutorizacao>
-       <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NfeRetAutorizacao" version="3.10"></NfeRetAutorizacao>
-       <NfeInutilizacao  method="nfeInutilizacaoNF2" operation="NfeInutilizacao2" version="3.10"></NfeInutilizacao>
-       <NfeConsultaProtocolo method="nfeConsultaNF2" operation="NfeConsulta2" version="3.10"></NfeConsultaProtocolo>
-       <NfeStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusServico>
-       <RecepcaoEvento  method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEvento>
-       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100"></NfeConsultaQR>
-       <NfeConsultaCadastro method="consultaCadastro2" operation="NfeConsultaCadastro" version="3.10"></NfeConsultaCadastro>
-       <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="3.10"></NfeConsultaDest>
-       <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="3.10"></NfeDownloadNF>
-       <RecepcaoEPEC method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEPEC>
-       <NfeStatusEPEC method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusEPEC>       
-    </producao>
-  </UF>
-  <UF>
     <sigla>SVRS</sigla>
     <homologacao>
        <NfeAutorizacao method="nfeAutorizacaoLote" operation="NfeAutorizacao" version="3.10">https://nfce-homologacao.svrs.rs.gov.br/ws/NfeAutorizacao/NfeAutorizacao.asmx</NfeAutorizacao>
@@ -529,12 +264,6 @@ ATENÇÃO!!! Vários endereços destes webservices ainda não foram totalmente
        <NfeConsultaProtocolo method="nfeConsultaNF2" operation="NfeConsulta2" version="3.10">https://nfce-homologacao.svrs.rs.gov.br/ws/NfeConsulta/NfeConsulta2.asmx</NfeConsultaProtocolo>
        <NfeStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10">https://nfce-homologacao.svrs.rs.gov.br/ws/NfeStatusServico/NfeStatusServico2.asmx</NfeStatusServico>
        <RecepcaoEvento  method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://nfce-homologacao.svrs.rs.gov.br/ws/recepcaoevento/recepcaoevento.asmx</RecepcaoEvento>
-       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100"></NfeConsultaQR>
-       <NfeConsultaCadastro method="consultaCadastro2" operation="NfeConsultaCadastro" version="3.10"></NfeConsultaCadastro>
-       <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="3.10"></NfeConsultaDest>
-       <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="3.10"></NfeDownloadNF>
-       <RecepcaoEPEC method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEPEC>
-       <NfeStatusEPEC method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusEPEC>       
     </homologacao>
     <producao>
        <NfeAutorizacao method="nfeAutorizacaoLote" operation="NfeAutorizacao" version="3.10">https://nfce.svrs.rs.gov.br/ws/NfeAutorizacao/NfeAutorizacao.asmx</NfeAutorizacao>
@@ -543,74 +272,6 @@ ATENÇÃO!!! Vários endereços destes webservices ainda não foram totalmente
        <NfeConsultaProtocolo method="nfeConsultaNF2" operation="NfeConsulta2" version="3.10">https://nfce.svrs.rs.gov.br/ws/NfeConsulta/NfeConsulta2.asmx</NfeConsultaProtocolo>
        <NfeStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10">https://nfce.svrs.rs.gov.br/ws/NfeStatusServico/NfeStatusServico2.asmx</NfeStatusServico>
        <RecepcaoEvento  method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://nfce.svrs.rs.gov.br/ws/recepcaoevento/recepcaoevento.asmx</RecepcaoEvento>
-       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100"></NfeConsultaQR>
-       <NfeConsultaCadastro method="consultaCadastro2" operation="NfeConsultaCadastro" version="3.10"></NfeConsultaCadastro>
-       <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="3.10"></NfeConsultaDest>
-       <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="3.10"></NfeDownloadNF>
-       <RecepcaoEPEC method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEPEC>
-       <NfeStatusEPEC method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusEPEC>       
-    </producao>
-  </UF>
-  <UF>
-    <sigla>SVCAN</sigla>
-    <homologacao>
-       <NfeAutorizacao method="nfeAutorizacaoLote" operation="NfeAutorizacao" version="3.10"></NfeAutorizacao>
-       <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NfeRetAutorizacao" version="3.10"></NfeRetAutorizacao>
-       <NfeInutilizacao  method="nfeInutilizacaoNF2" operation="NfeInutilizacao2" version="3.10"></NfeInutilizacao>
-       <NfeConsultaProtocolo method="nfeConsultaNF2" operation="NfeConsulta2" version="3.10"></NfeConsultaProtocolo>
-       <NfeStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusServico>
-       <RecepcaoEvento  method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEvento>
-       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100"></NfeConsultaQR>
-       <NfeConsultaCadastro method="consultaCadastro2" operation="NfeConsultaCadastro" version="3.10"></NfeConsultaCadastro>
-       <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="3.10"></NfeConsultaDest>
-       <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="3.10"></NfeDownloadNF>
-       <RecepcaoEPEC method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEPEC>
-       <NfeStatusEPEC method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusEPEC>       
-    </homologacao>
-    <producao>
-       <NfeAutorizacao method="nfeAutorizacaoLote" operation="NfeAutorizacao" version="3.10"></NfeAutorizacao>
-       <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NfeRetAutorizacao" version="3.10"></NfeRetAutorizacao>
-       <NfeInutilizacao  method="nfeInutilizacaoNF2" operation="NfeInutilizacao2" version="3.10"></NfeInutilizacao>
-       <NfeConsultaProtocolo method="nfeConsultaNF2" operation="NfeConsulta2" version="3.10"></NfeConsultaProtocolo>
-       <NfeStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusServico>
-       <RecepcaoEvento  method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEvento>
-       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100"></NfeConsultaQR>
-       <NfeConsultaCadastro method="consultaCadastro2" operation="NfeConsultaCadastro" version="3.10"></NfeConsultaCadastro>
-       <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="3.10"></NfeConsultaDest>
-       <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="3.10"></NfeDownloadNF>
-       <RecepcaoEPEC method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEPEC>
-       <NfeStatusEPEC method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusEPEC>       
-    </producao>
-  </UF>
-  <UF>
-    <sigla>SVCRS</sigla>
-    <homologacao>
-       <NfeAutorizacao method="nfeAutorizacaoLote" operation="NfeAutorizacao" version="3.10"></NfeAutorizacao>
-       <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NfeRetAutorizacao" version="3.10"></NfeRetAutorizacao>
-       <NfeInutilizacao  method="nfeInutilizacaoNF2" operation="NfeInutilizacao2" version="3.10"></NfeInutilizacao>
-       <NfeConsultaProtocolo method="nfeConsultaNF2" operation="NfeConsulta2" version="3.10"></NfeConsultaProtocolo>
-       <NfeStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusServico>
-       <RecepcaoEvento  method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEvento>
-       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100"></NfeConsultaQR>
-       <NfeConsultaCadastro method="consultaCadastro2" operation="NfeConsultaCadastro" version="3.10"></NfeConsultaCadastro>
-       <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="3.10"></NfeConsultaDest>
-       <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="3.10"></NfeDownloadNF>
-       <RecepcaoEPEC method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEPEC>
-       <NfeStatusEPEC method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusEPEC>       
-    </homologacao>
-    <producao>
-       <NfeAutorizacao method="nfeAutorizacaoLote" operation="NfeAutorizacao" version="3.10"></NfeAutorizacao>
-       <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NfeRetAutorizacao" version="3.10"></NfeRetAutorizacao>
-       <NfeInutilizacao  method="nfeInutilizacaoNF2" operation="NfeInutilizacao2" version="3.10"></NfeInutilizacao>
-       <NfeConsultaProtocolo method="nfeConsultaNF2" operation="NfeConsulta2" version="3.10"></NfeConsultaProtocolo>
-       <NfeStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusServico>
-       <RecepcaoEvento  method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEvento>
-       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100"></NfeConsultaQR>
-       <NfeConsultaCadastro method="consultaCadastro2" operation="NfeConsultaCadastro" version="3.10"></NfeConsultaCadastro>
-       <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="3.10"></NfeConsultaDest>
-       <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="3.10"></NfeDownloadNF>
-       <RecepcaoEPEC method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEPEC>
-       <NfeStatusEPEC method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusEPEC>       
     </producao>
   </UF>
 </WS>
