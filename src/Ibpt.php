@@ -48,7 +48,8 @@ class Ibpt
             $oCurl = self::setProxy($oCurl, $proxy);
         }
         curl_setopt($oCurl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($oCurl, CURLOPT_TIMEOUT, 20);
+        curl_setopt($oCurl, CURLOPT_TIMEOUT, 10);
+        curl_setopt($oCurl, CURLOPT_CONNECTTIMEOUT, 30);
         $response = curl_exec($oCurl);
         $httpcode = curl_getinfo($oCurl, CURLINFO_HTTP_CODE);
         $info = curl_getinfo($oCurl);
