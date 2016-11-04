@@ -1,10 +1,10 @@
-# SPED-NFE
+#SPED-NFE v5.0
 
-API para geração e comunicação das NFe com as SEFAZ autorizadoras.
+[![Chat][ico-gitter]][link-gitter]
 
-## APENAS EM DESENVOLVIMENTO !!
+Framework para geração e comunicação das NFe com as SEFAZ autorizadoras.
 
-Este pacote está em desenvolvimento, não é funcional e não deve ser utilizado para nada além de testes. 
+Esta versão do pacote está em desenvolvimento, não é funcional e não deve ser utilizado para nada além de testes. 
 
 [![Build Status][ico-travis]][link-travis]
 [![Coverage Status][ico-scrutinizer]][link-scrutinizer]
@@ -16,37 +16,37 @@ Este pacote está em desenvolvimento, não é funcional e não deve ser utilizad
 [![Issues][ico-issues]][link-issues]
 [![Forks][ico-forks]][link-forks]
 [![Stars][ico-stars]][link-stars]
-[![Chat][ico-gitter]][link-gitter]
+
 
 Este pacote visa fornecer os meios para gerar, assinar e anviar os dados relativos ao projeto Sped NFe.
 
 Este pacote faz parte da API NFePHP e atende aos parâmetros das PSR2 e PSR4, bem como é desenvolvida para de adequar as versões ATIVAS do PHP e aos layouts da NFe em vigor.
 
-## Install
+##Install
 
 EM BREVE
 
-## Change log
+##Change log
 
 Acompanhe o [CHANGELOG](CHANGELOG.md) para maiores informações sobre as alterações recentes.
 
-## Testing
+##Testing
 
 ``` bash
 $ composer test
 ```
 
-## Contributing
+##Contributing
 
 Para contribuir por favor observe o [CONTRIBUTING](CONTRIBUTING.md) e o  [Código de Conduta](CONDUCT.md) parea detalhes.
 
-## Security
+##Security
 
 Caso você encontre algum problema relativo a segurança, por favor envie um email diretamente aos mantenedores do pacote ao invés de abrir um ISSUE.
 
-## Credits
+##Credits
 
-## License
+##License
 
 Este pacote está diponibilizado sob LGPLv3 ou MIT License (MIT). Leia  [Arquivo de Licença](LICENSE.md) para maiores informações.
 
