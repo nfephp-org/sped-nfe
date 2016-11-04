@@ -9,7 +9,7 @@ $token = "<Aqui voce coloca seu token do IBPT>";
 $cnpj = "<seu CNPJ>";
 $ncm = "60063100"; //coloque o NCM do produto 
 $uf = 'SP';//coloque o estado que deseja saber os dados
-$extarif = 0;//indique o numro da excção tarifaria, se existir ou deixe como zero 
+$extarif = 0;//indique o numero da exceção tarifaria, se existir ou deixe como zero 
 
 //executa a consulta ao IBPT, o retorno é em JSON
 $resp = Ibpt::getProduto($cnpj, $token, $uf, $ncm);

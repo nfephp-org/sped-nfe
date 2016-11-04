@@ -1,23 +1,48 @@
-filter:
-    excluded_paths: [tests/*]
-
-checks:
+fchecks:
+    php: true
+coding_style:
     php:
-        remove_extra_empty_lines: true
-        remove_php_closing_tag: true
-        remove_trailing_whitespace: true
-        fix_use_statements:
-            remove_unused: true
-            preserve_multiple: false
-            preserve_blanklines: true
-            order_alphabetically: true
-        fix_php_opening_tag: true
-        fix_linefeed: true
-        fix_line_ending: true
-        fix_identation_4spaces: true
-        fix_doc_comments: true
-
+        spaces:
+            around_operators:
+                concatenation: true
+filter:
+    excluded_paths:
+        - "vendor/*"
+    paths:
+        - "src/*"
 tools:
-    external_code_coverage:
-        timeout: 600
-        runs: 3
+    php_analyzer: true
+    php_changetracking: true
+    php_code_sniffer:
+        enabled: true
+        config:
+            standard: PSR2
+    php_cpd: true
+    php_mess_detector: true
+    php_pdepend: true
+    php_sim: true
+
+build:
+    dependencies:
+        before:
+            - "sudo composer self-update"
+        override:
+            - "composer install --no-interaction --prefer-dist"
+    tests:
+        override:
+            -
+                command: './vendor/bin/phpunit -c phpunit.xml.dist --coverage-clover=clover.xml'
+                coverage:
+                    file: 'clover.xml'
+                    format: 'php-clover'
+    environment:
+        php:
+            version: 7.0.8
+        mysql: false
+        postgresql: false
+        redis: false
+        elasticsearch: false
+        rabbitmq: false
+        mongodb: false
+        neo4j: false
+        memcached: false
