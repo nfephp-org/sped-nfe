@@ -1762,8 +1762,8 @@ class Make
     }
 
     /**
-     * RECOPI Sistema de Registro e Controle das 
-     * Operações com Papel Imune instituído através 
+     * RECOPI Sistema de Registro e Controle das
+     * Operações com Papel Imune instituído através
      * do Convênio ICMS 09/2012
      * @param string $nItem
      * @param string $texto
