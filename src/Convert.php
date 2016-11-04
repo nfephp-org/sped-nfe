@@ -7,8 +7,8 @@ namespace NFePHP\NFe;
  * SEFAZ SP Manual_de_layout_TXT-NF-e_v3.1.0.pdf para o formato XML.
  *
  * @category  NFePHP
- * @package   NFePHP\NFe\ConvertNFe
- * @copyright NFePHP Copyright (c) 2008
+ * @package   NFePHP\NFe\Convert
+ * @copyright NFePHP Copyright (c) 2016
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
  * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
@@ -20,166 +20,97 @@ use NFePHP\NFe\Make;
 
 class Convert
 {
-    //parametros protegidos da classe
     /**
-     * $limparString
-     * Força a substituição dos caracteres especiais e acentuados
-     * pelos seus substitutos normais
-     *
      * @var bool
      */
     protected $limparString = true;
     /**
-     * $version
-     * versão do layout do xml da NFe
-     * que esta classe cria
-     *
      * @var string
      */
     protected $version = '3.10';
     /**
-     * $make
-     * Instancia da classe Make
-     *
      * @var NFePHP\NFe\Make
      */
     protected $make;
     /**
-     * $linhaBA10
-     * refNFP
-     *
      * @var array
      */
     protected $linhaBA10 = array();
     /**
-     * $linhaC
-     * Dados do Emitente
-     *
      * @var array
      */
     protected $linhaC = array();
     /**
-     * $linhaE
-     * Dados do destinatario
-     *
      * @var array
      */
     protected $linhaE = array();
     /**
-     * $linhaF
-     * Local de retirada
-     *
      * @var array
      */
     protected $linhaF = array();
     /**
-     * $linhaG
-     * Local de entrega
-     *
      * @var array
      */
     protected $linhaG = array();
     /**
-     * $nItem
-     * numero do item da NFe
-     *
      * @var int
      */
     protected $nItem = 0;
     /**
-     * $nDI
-     * numero da DI
-     *
      * @var int
      */
     protected $nDI = '0';
     /**
-     * $linhaI50
-     * dados de exportação
-     *
      * @var array
      */
     protected $linhaI50 = array();
     /**
-     * $linhaLA
-     * dados de combustiveis
-     *
      * @var array
      */
     protected $linhaLA = array();
     /**
-     * $linhaO
-     * dados de IPI
-     *
      * @var array
      */
     protected $linhaO = array();
     /**
-     * $linhaQ
-     * dados do PIS
-     *
      * @var array
      */
     protected $linhaQ = array();
     /**
-     * $linhaR
-     * dados do PISST
-     *
      * @var array
      */
     protected $linhaR = array();
     /**
-     * $linhaS
-     * dados do COFINS
-     *
      * @var array
      */
     protected $linhaS = array();
     /**
-     * $linhaT
-     * dados de COFINSST
-     *
      * @var array
      */
     protected $linhaT = array();
     /**
-     * $linhaX
-     * dados de transporte
-     *
      * @var array
      */
     protected $linhaX = array();
     /**
-     * $linhaX26
-     * dados de volumes
-     *
      * @var array
      */
     protected $linhaX26 = array();
     /**
-     *
      * @var int
      */
     protected $volId = -1;
     /**
-     * $linhaZC
-     * dados de cana
-     *
      * @var array
      */
     protected $linhaZC = array();
     /**
-     * $aLacres
-     * dados de lacres
-     *
      * @var array
      */
     protected $aLacres = array();
 
     /**
-     * contruct
-     * Método contrutor da classe
-     *
+     * contructor
      * @param  boolean $limparString Ativa flag para limpar os caracteres especiais
      *                e acentos
      * @return void
@@ -190,35 +121,18 @@ class Convert
     }
 
     /**
-     * txt2xml
-     * Converte uma ou multiplas NF em formato txt em xml
-     *
-     * @param  mixed $txt Path para txt, txt ou array de txt
+     * Converts one or many NFe from txt to xml
+     * @param  string $txt content of NFe in txt format
      * @return array
      */
     public function txt2xml($txt)
     {
         $aNF = array();
-        if (is_file($txt)) {
-            //extrai cada linha do arquivo em um campo de matriz
-            $aDados = file($txt, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES | FILE_TEXT);
-        } elseif (is_array($txt)) {
-            //carrega a matriz
-            $aDados = $txt;
-        } else {
-            if (strlen($txt) > 0) {
-                //carrega a matriz com as linha do arquivo
-                $aDados = explode("\n", $txt);
-            } else {
-                return $aNF;
-            }
-        }
-        //verificar se existem mais de uma NF
+        $aDados = explode("\n", $txt);
         $aNotas = $this->zSliceNotas($aDados);
         foreach ($aNotas as $nota) {
             $this->notafiscalEntity();
             $this->zArray2xml($nota);
-            //carrega os volumes, movido de yEntity
             foreach ($this->linhaX26 as $vol) {
                 $this->zLinhaXVolEntity($vol);
             }
@@ -260,7 +174,6 @@ class Convert
     /**
      * bEntity
      * Cria a tag ide
-     *
      * @param array $aCampos
      */
     protected function bEntity($aCampos)
