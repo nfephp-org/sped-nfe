@@ -3,7 +3,8 @@
 namespace NFePHP\NFe\Common;
 
 /**
- * Class to Read and preprocess WS paramters form xml file to json encode or stdClass
+ * Class to Read and preprocess WS parameters from xml storage
+ * file to json encode or stdClass
  *
  * @category  NFePHP
  * @package   NFePHP\NFe\Common\Webservices

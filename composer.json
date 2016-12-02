@@ -25,9 +25,10 @@
     ],
     "require": {
         "php" : "~5.6|~7.0",
-        "nfephp-org/sped-common" : "dev-develop",
+        "nfephp-org/sped-common" : "v5.0.x-dev",
         "league/flysystem": "^1.0",
-        "brazanation/documents": "^0.4.0"
+        "brazanation/documents": "^0.5.0",
+        "sabre/xml": "^2.0"
         
     },
     "require-dev": {

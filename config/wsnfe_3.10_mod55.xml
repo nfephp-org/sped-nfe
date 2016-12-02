@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-ATENÇÃO! Este é o XML dos endereços dos webservices da NF-e modelo 55 layout
-"3.10", portanto é incompatível com a versão "2.00" do layout da NF-e, prevista
-para ser desativada em 01/12/2014.
-AM Consulta de Cadastro não EXISTE
--->
 <WS xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <UF>
     <sigla>AM</sigla>

@@ -3,8 +3,8 @@
 namespace NFePHP\NFe\Factories;
 
 /**
- * Class QRCode create a string to make a QRCode in NFCe
- * NOTE: this class only works with model 65 NFCe and do not work with model 55 NFe
+ * Class QRCode create a string to make a QRCode string to NFCe
+ * NOTE: this class only works with model 65 NFCe only
  *
  * @category  NFePHP
  * @package   NFePHP\NFe\Common\QRCode
@@ -20,24 +20,21 @@ class QRCode
 {
     /**
      * putQRTag
-     * Monta a URI para o QRCode e coloca a tag
-     * no xml já assinado
-     *
-     * @param  Dom $dom
+     * Mount URI for QRCode and create XML tag in signed xml
+     * @param DOMDocument $dom
      * @return string
      */
-    public function putQRTag(\DOMDocument $dom, $token, $idToken, $sigla, $versao, $url = '')
+    public static function putQRTag(\DOMDocument $dom, $token, $idToken, $sigla, $versao, $url = '')
     {
         if (empty($url)) {
             return $dom->saveXML();
         }
-        //pega os dados necessários para a montagem da URI a partir do xml
         $nfe = $dom->getElementsByTagName('NFe')->item(0);
         $infNFe = $dom->getElementsByTagName('infNFe')->item(0);
         $ide = $dom->getElementsByTagName('ide')->item(0);
         $dest = $dom->getElementsByTagName('dest')->item(0);
         $icmsTot = $dom->getElementsByTagName('ICMSTot')->item(0);
-        $signedInfo  = $dom->getElementsByTagName('SignedInfo')->item(0);
+        $signedInfo = $dom->getElementsByTagName('SignedInfo')->item(0);
         $chNFe = preg_replace('/[^0-9]/', '', $infNFe->getAttribute("Id"));
         $cUF = $ide->getElementsByTagName('cUF')->item(0)->nodeValue;
         $tpAmb = $ide->getElementsByTagName('tpAmb')->item(0)->nodeValue;
@@ -78,7 +75,6 @@ class QRCode
     }
     
     /**
-     * get
      * Return a QRCode string to be used in NFCe
      * @param  string $chNFe
      * @param  string $url
@@ -130,7 +126,6 @@ class QRCode
     }
     
     /**
-     * str2Hex
      * Convert string to hexadecimal ASCII equivalent
      * @param  string $str
      * @return string

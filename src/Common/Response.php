@@ -3,11 +3,11 @@
 namespace NFePHP\NFe\Common;
 
 /**
- * Classe para extrair os dados retornados das consultas e envios a SEFAZ
+ * Class to extrat data from SEFAZ responses
  *
  * @category  Library
  * @package   NFePHP\NFe\Auxiliar\Response
- * @copyright NFePHP Copyright (c) 2008
+ * @copyright NFePHP Copyright (c) 2016
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
  * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
@@ -15,12 +15,11 @@ namespace NFePHP\NFe\Common;
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
 
-use NFePHP\Common\Dom\Dom;
+use NFePHP\Common\DOMImproved as Dom;
 
 class Response
 {
     /**
-     * readRespoenseSefaz
      * Trata o retorno da SEFAZ devolvendo o resultado em um array
      *
      * @param  string $method
