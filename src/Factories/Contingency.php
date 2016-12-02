@@ -103,6 +103,7 @@ class Contingency
             'SP'=>'SVCAN',
             'TO'=>'SVCAN'
         );
+        $type = strtoupper(str_replace('-', '', $type));
         if (empty($type)) {
             $type = (string) $list[$acronym];
         }

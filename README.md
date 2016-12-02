@@ -2,8 +2,11 @@
 ##Este release está preparado para atender a versão 4.0 do layout da SEFAZ!
 
 >Ambiente de Homologação (ambiente de teste das empresas): 01/06/2017;
+
 >Ambiente de Produção: 01/08/17;
+
 >Desativação da versão anterior 3.10: 06/11/17.
+
 >**Até 06/11/2017 esta versão será movida para master e as anteriores se tornam automaticamente OBSOLETAS e não mais receberão correções ou atualizações.**
 
 [![Chat][ico-gitter]][link-gitter]
