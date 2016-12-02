@@ -6,6 +6,8 @@ Todas as atualizações a partir de 30/05/206 devem observar os principios [Mant
 
 ## 5.0.0-dev 
 
+## Notas da versão:
+Esta release quebra a compatibilidade com as versões anteriores e contêm várias mudanças em relação a forma de configuração e uso.
 ### Added
 - Nothing
 

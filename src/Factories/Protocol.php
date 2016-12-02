@@ -6,11 +6,11 @@ class Protocol
 {
     /**
      * addProtMsg
-     * @param  string $tagproc
-     * @param  string $tagmsg
-     * @param  string $xmlmsg
-     * @param  string $tagretorno
-     * @param  string $xmlretorno
+     * @param string $tagproc
+     * @param string $tagmsg
+     * @param string $xmlmsg
+     * @param string $tagretorno
+     * @param string $xmlretorno
      * @return string
      */
     public function add($tagproc, $tagmsg, $xmlmsg, $tagretorno, $xmlretorno)

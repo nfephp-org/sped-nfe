@@ -3,11 +3,12 @@
 namespace NFePHP\NFe\Common;
 
 /**
- * Classe para a identificação do documento eletrônico da NFe
+ * Class for identification of eletronic documents in xml
+ * used for Sped NFe comunications
  *
  * @category  NFePHP
- * @package   NFePHP\NFe\Auxiliar\IdentifyNFe
- * @copyright NFePHP Copyright (c) 2008
+ * @package   NFePHP\NFe\Auxiliar\Identify
+ * @copyright NFePHP Copyright (c) 2016
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
  * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
@@ -20,10 +21,9 @@ use NFePHP\Common\Identify\Identify as IdentifyBase;
 
 class Identify extends IdentifyBase
 {
-    
-    public static function identificar($xml = '', &$aResp = array())
+    public static function identificar($xml, &$aResp = [])
     {
-        $aList = array(
+        $aList = [
             'consReciNFe' => 'consReciNFe',
             'consSitNFe' => 'consSitNFe',
             'consStatServ' => 'consStatServ',
@@ -41,7 +41,7 @@ class Identify extends IdentifyBase
             'retDistDFeInt' => 'retDistDFeInt',
             'retEnviNFe' => 'retEnviNFe',
             'retInutNFe' => 'retInutNFe'
-        );
+        ];
         Identify::setListSchemesId($aList);
         $schem = Identify::identificacao($xml, $aResp);
         $dom = $aResp['dom'];

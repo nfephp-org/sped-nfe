@@ -3,8 +3,7 @@
 namespace NFePHP\NFe;
 
 /**
- * Classe para a conversão de notas fiscais do formato TXT conforme padrão
- * SEFAZ SP Manual_de_layout_TXT-NF-e_v3.1.0.pdf para o formato XML.
+ * Class to conver NFe in txt format to XML
  *
  * @category  NFePHP
  * @package   NFePHP\NFe\Convert
@@ -29,7 +28,7 @@ class Convert
      */
     protected $version = '3.10';
     /**
-     * @var NFePHP\NFe\Make
+     * @var Make
      */
     protected $make;
     /**
@@ -144,8 +143,7 @@ class Convert
     }
 
     /**
-     * notafiscalEntity
-     * Cria a entidade nota fiscal
+     * Creates the instance of the constructor class
      */
     protected function notafiscalEntity()
     {
@@ -155,8 +153,7 @@ class Convert
     }
 
     /**
-     * aEntity
-     * Cria a tag infNFe
+     * Make tag <infNFe>
      * @param  array $aCampos
      * @throws \RuntimeException
      */
@@ -172,8 +169,7 @@ class Convert
     }
 
     /**
-     * bEntity
-     * Cria a tag ide
+     * Make tag <ide>
      * @param array $aCampos
      */
     protected function bEntity($aCampos)
@@ -210,7 +206,7 @@ class Convert
     }
 
     /**
-     * baEntity
+     * Get BA marker from txt
      * @param array $aCampos
      */
     protected function baEntity($aCampos)
@@ -221,8 +217,7 @@ class Convert
     }
 
     /**
-     * ba02Entity
-     * Cria a tag refNFe
+     * Make tag <refNFe>
      * @param array $aCampos
      */
     protected function ba02Entity($aCampos)
@@ -232,8 +227,7 @@ class Convert
     }
 
     /**
-     * ba03Entity
-     * Cria a tag refNF
+     * Make tag <refNF>
      * @param array $aCampos
      */
     protected function ba03Entity($aCampos)
@@ -250,8 +244,7 @@ class Convert
     }
 
     /**
-     * ba10Entity
-     * Cria a tag refNFP
+     * Make tag <refNFP>
      * @param array $aCampos
      */
     protected function ba10Entity($aCampos)
@@ -291,8 +284,7 @@ class Convert
     }
 
     /**
-     * zLinhaB10Entity
-     * Cria a tag refNFP
+     * Make tag <refNFP>
      * @param array $aCampos
      */
     protected function zLinhaBA10Entity($aCampos)
@@ -311,8 +303,7 @@ class Convert
     }
 
     /**
-     * ba19Entity
-     * Cria a tag refCTe
+     * Make tag <refCTe>
      * @param array $aCampos
      */
     protected function ba19Entity($aCampos)
@@ -322,8 +313,7 @@ class Convert
     }
 
     /**
-     * b20Entity
-     * Cria a tag refECF
+     * Make tag <refECF>
      * @param array $aCampos
      */
     protected function ba20Entity($aCampos)
@@ -337,7 +327,7 @@ class Convert
     }
 
     /**
-     * cEntity
+     * Load cEntity
      * @param array $aCampos
      */
     protected function cEntity($aCampos)
@@ -378,8 +368,7 @@ class Convert
     }
 
     /**
-     * zLinhaCEntity
-     * Cria a tag emit
+     * Make tag <emit>
      * @param array $aCampos
      */
     protected function zLinhaCEntity($aCampos)
@@ -399,8 +388,7 @@ class Convert
     }
 
     /**
-     * c05Entity
-     * Cria a tag enderEmit
+     * Make tag <enderEmit>
      * @param array $aCampos
      */
     protected function c05Entity($aCampos)
@@ -422,7 +410,7 @@ class Convert
     }
 
     /**
-     * eEntity
+     * Load eEntity
      * @param array $aCampos
      */
     protected function eEntity($aCampos)
@@ -474,8 +462,7 @@ class Convert
     }
 
     /**
-     * zLinhaEEntity
-     * Cria a tag dest
+     * Make tag <dest>
      * @param array $aCampos
      */
     protected function zLinhaEEntity($aCampos)
@@ -495,8 +482,7 @@ class Convert
     }
 
     /**
-     * e05Entity
-     * Cria a tag enderDest
+     * Make tag <enderDest>
      * @param array $aCampos
      */
     protected function e05Entity($aCampos)
@@ -518,8 +504,7 @@ class Convert
     }
 
     /**
-     * fEntity
-     * Local de retirada
+     * Load fEntity (Local de retirada)
      * @param array $aCampos
      */
     protected function fEntity($aCampos)
@@ -560,8 +545,7 @@ class Convert
     }
 
     /**
-     * zLinhaFEntity
-     * Cria a tag retirada
+     * Make tag <retirada>
      * @param array $aCampos
      */
     protected function zLinhaFEntity($aCampos)
@@ -581,8 +565,7 @@ class Convert
     }
 
     /**
-     * gEntity
-     * Local de entrega
+     * Load gEntity (Local de entrega)
      * @param array $aCampos
      */
     protected function gEntity($aCampos)
@@ -623,8 +606,7 @@ class Convert
     }
 
     /**
-     * zLinhaGEntity
-     * Cria tag entrega
+     * Make tag <entrega>
      * @param array $aCampos
      */
     protected function zLinhaGEntity($aCampos)
@@ -644,7 +626,7 @@ class Convert
     }
 
     /**
-     * gaEntity
+     * Get txt marker GA02
      * @param array $aCampos
      */
     protected function gaEntity($aCampos)
@@ -655,8 +637,7 @@ class Convert
     }
 
     /**
-     * ga02Entity
-     * Cria a tag autXML com CNPJ
+     * Make tag <autXML>  with CNPJ
      * @param array $aCampos
      */
     protected function ga02Entity($aCampos)
@@ -666,8 +647,7 @@ class Convert
     }
 
     /**
-     * ga03Entity
-     * Cria a tag autXML com CPF
+     * Make tag <autXML> with CPF
      * @param array $aCampos
      */
     protected function ga03Entity($aCampos)
@@ -677,8 +657,7 @@ class Convert
     }
 
     /**
-     * hEntity
-     * Cria tag infAdProd
+     * Make tag <infAdProd>
      * @param array $aCampos
      */
     protected function hEntity($aCampos)
@@ -691,8 +670,7 @@ class Convert
     }
 
     /**
-     * iEntity
-     * Cria tag prod
+     * Make tag <prod>
      * @param array $aCampos
      */
     protected function iEntity($aCampos)
@@ -728,8 +706,7 @@ class Convert
     }
 
     /**
-     * i05aEntity
-     * Cria a tag NVE
+     * Make tag <NVE>
      * @param array $aCampos
      */
     protected function i05aEntity($aCampos)
@@ -739,9 +716,7 @@ class Convert
     }
 
     /**
-     * i05cEntity
-     * Cria a tag CEST
-     *
+     * Make tag <CEST>
      * @param array $aCampos
      */
     protected function i05cEntity($aCampos)
@@ -751,8 +726,7 @@ class Convert
     }
 
     /**
-     * i18Entity
-     * Cria a tag DI
+     * Make tag <DI>
      * @param array $aCampos
      */
     protected function i18Entity($aCampos)
@@ -777,8 +751,7 @@ class Convert
     }
 
     /**
-     * i25Entity
-     * Cria tag adi
+     * Make tag <adi>
      * @param array $aCampos
      */
     protected function i25Entity($aCampos)
@@ -796,7 +769,7 @@ class Convert
     }
 
     /**
-     * i50Entity
+     * LOad I50
      * @param array $aCampos
      */
     protected function i50Entity($aCampos)
@@ -810,7 +783,7 @@ class Convert
     }
 
     /**
-     * i52Entity
+     * Load I52
      * @param array $aCampos
      */
     protected function i52Entity($aCampos)
@@ -823,8 +796,7 @@ class Convert
     }
 
     /**
-     * zLinhaI50Entity
-     * Cria a tag detExport
+     * Make tag <detExport>
      * @param array $aCampos
      */
     protected function zLinhaI50Entity($aCampos)
@@ -840,8 +812,7 @@ class Convert
     }
 
     /**
-     * jaEntity
-     * Cria tag veicProd
+     * Make tag <veicProd>
      * @param array $aCampos
      */
     protected function jaEntity($aCampos)
@@ -879,8 +850,7 @@ class Convert
     }
 
     /**
-     * kEntity
-     * Cria tag med
+     * Make tag <med>
      * @param array $aCampos
      */
     protected function kEntity($aCampos)
@@ -897,9 +867,7 @@ class Convert
     }
 
     /**
-     * lEntity
-     * Cria a tag arma
-     *
+     * Make tag <arma>
      * @param array $aCampos
      */
     protected function lEntity($aCampos)
@@ -915,8 +883,7 @@ class Convert
     }
 
     /**
-     * laEntity
-     *
+     * Load LA
      * @param arry $aCampos
      */
     protected function laEntity($aCampos)
@@ -930,8 +897,7 @@ class Convert
     }
 
     /**
-     * la07Entity
-     *
+     * Load LA07
      * @param array $aCampos
      */
     protected function la07Entity($aCampos)
@@ -944,9 +910,7 @@ class Convert
     }
 
     /**
-     * zLinhaLAEntity
-     * Cria a tag comb
-     *
+     * Make tag <comb>
      * @param type $aCampos
      */
     protected function zLinhaLAEntity($aCampos)
@@ -966,9 +930,7 @@ class Convert
     }
 
     /**
-     * lbEntity
-     * Cria a tag RECOPI
-     *
+     * Make tag <RECOPI>
      * @param array $aCampos
      */
     protected function lbEntity($aCampos)
@@ -978,9 +940,7 @@ class Convert
     }
 
     /**
-     * mEntity
-     * Cria a tag imposto
-     *
+     * Make tag <imposto>
      * @param array $aCampos
      */
     protected function mEntity($aCampos)
@@ -990,8 +950,7 @@ class Convert
     }
 
     /**
-     * nEntity
-     *
+     * Get N marker trom txt
      * @param array $aCampos
      */
     protected function nEntity($aCampos)
@@ -1002,17 +961,12 @@ class Convert
     }
 
     /**
-     * n02Entity
-     *
+     * Load N02
      * @param array $aCampos
      */
     protected function n02Entity($aCampos)
     {
-        //     1    2    3    4    5     6
         //N02|orig|CST|modBC|vBC|pICMS|vICMS|
-        //Nxx|orig|cst|modBC|pRedBC|vBC|pICMS|vICMS|vICMSDeson|motDesICMS|modBCST
-        //   |pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|pDif|vICMSDif|vICMSOp
-        //   |BCSTRet|vICMSSTRet|
         $aFields = array(
             $this->nItem,
             $aCampos[1], //orig
@@ -1040,17 +994,12 @@ class Convert
     }
 
     /**
-     * n03Entity
-     *
+     * Load N03
      * @param array $aCampos
      */
     protected function n03Entity($aCampos)
     {
-        //      1   2    3    4    5     6     7       8      9       10     11      12
         //N03|orig|CST|modBC|vBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|
-        //Nxx|orig|cst|modBC|pRedBC|vBC|pICMS|vICMS|vICMSDeson|motDesICMS|modBCST
-        //   |pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|pDif|vICMSDif|vICMSOp
-        //   |BCSTRet|vICMSSTRet|
         $aFields = array(
             $this->nItem,
             $aCampos[1], //orig
@@ -1078,17 +1027,12 @@ class Convert
     }
 
     /**
-     * n04Entity
-     *
+     * Load N04
      * @param array $aCampos
      */
     protected function n04Entity($aCampos)
     {
-        //     1    2   3       4    5    6    7        8         9
         //N04|orig|CST|modBC|pRedBC|vBC|pICMS|vICMS|vICMSDeson|motDesICMS|
-        //Nxx|orig|cst|modBC|pRedBC|vBC|pICMS|vICMS|vICMSDeson|motDesICMS|modBCST
-        //   |pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|pDif|vICMSDif|vICMSOp
-        //   |BCSTRet|vICMSSTRet|
         $aFields = array(
             $this->nItem,
             $aCampos[1], //orig
@@ -1116,17 +1060,12 @@ class Convert
     }
 
     /**
-     * n05Entity
-     *
+     * Load N05
      * @param array $aCampos
      */
     protected function n05Entity($aCampos)
     {
-        //     1    2     3      4      5       6      7       8         9         10
         //N05|orig|CST|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vICMSDeson|motDesICMS|
-        //Nxx|orig|CST|modBC|pRedBC|vBC|pICMS|vICMS|vICMSDeson|motDesICMS|modBCST
-        //   |pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|pDif|vICMSDif|vICMSOp
-        //   |BCSTRet|vICMSSTRet|
         $aFields = array(
             $this->nItem,
             $aCampos[1], //orig
@@ -1154,17 +1093,12 @@ class Convert
     }
 
     /**
-     * n06Entity
-     *
+     * Load N06
      * @param array $aCampos
      */
     protected function n06Entity($aCampos)
     {
-        //      1   2      3         4
         //N06|orig|CST|vICMSDeson|motDesICMS|
-        //Nxx|orig|CST|modBC|pRedBC|vBC|pICMS|vICMS|vICMSDeson|motDesICMS|modBCST
-        //   |pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|pDif|vICMSDif|vICMSOp
-        //   |BCSTRet|vICMSSTRet|
         $aFields = array(
             $this->nItem,
             $aCampos[1], //orig
@@ -1192,17 +1126,12 @@ class Convert
     }
 
     /**
-     * n07Entity
-     *
+     * Load N07
      * @param array $aCampos
      */
     protected function n07Entity($aCampos)
     {
-        //     1    2    3     4     5    6     7      8     9       10
         //N07|orig|CST|modBC|pRedBC|vBC|pICMS|vICMSOp|pDif|vICMSDif|vICMS|
-        //Nxx|orig|CST|modBC|pRedBC|vBC|pICMS|vICMS|vICMSDeson|motDesICMS|modBCST
-        //   |pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|pDif|vICMSDif|vICMSOp
-        //   |BCSTRet|vICMSSTRet|
         $aFields = array(
             $this->nItem,
             $aCampos[1], //orig
@@ -1230,17 +1159,12 @@ class Convert
     }
 
     /**
-     * n08Entity
-     *
+     * Load N08
      * @param array $aCampos
      */
     protected function n08Entity($aCampos)
     {
-        //     1    2     3        4
         //N08|orig|CST|vBCSTRet|vICMSSTRet|
-        //Nxx|orig|CST|modBC|pRedBC|vBC|pICMS|vICMS|vICMSDeson|motDesICMS|modBCST
-        //   |pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|pDif|vICMSDif|vICMSOp
-        //   |BCSTRet|vICMSSTRet|
         $aFields = array(
             $this->nItem,
             $aCampos[1], //orig
@@ -1268,17 +1192,12 @@ class Convert
     }
 
     /**
-     * n09Entity
-     *
+     * Load N09
      * @param array $aCampos
      */
     protected function n09Entity($aCampos)
     {
-        //     1    2   3     4      5   6     7      8       9      10      11    12       13      14          15
         //N09|orig|CST|modBC|pRedBC|vBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vICMSDeson|motDesICMS|
-        //Nxx|orig|CST|modBC|pRedBC|vBC|pICMS|vICMS|vICMSDeson|motDesICMS|modBCST
-        //   |pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|pDif|vICMSDif|vICMSOp
-        //   |BCSTRet|vICMSSTRet|
         $aFields = array(
             $this->nItem,
             $aCampos[1], //orig
@@ -1306,17 +1225,12 @@ class Convert
     }
 
     /**
-     * n10Entity
-     *
+     * Load N10
      * @param array $aCampos
      */
     protected function n10Entity($aCampos)
     {
-        //     1    2    3    4    5     6      7     8       9       10     11     12     13       14           15
         //N10|orig|CST|modBC|vBC|pRedBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vICMSDeson|motDesICMS|
-        //Nxx|orig|CST|modBC|pRedBC|vBC|pICMS|vICMS|vICMSDeson|motDesICMS|modBCST
-        //   |pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|pDif|vICMSDif|vICMSOp
-        //   |BCSTRet|vICMSSTRet|
         $aFields = array(
             $this->nItem,
             $aCampos[1], //orig
@@ -1344,9 +1258,7 @@ class Convert
     }
 
     /**
-     * n10aEntity
-     * Cria a tag ICMSPart
-     *
+     * Make tag <ICMSPart>
      * @param array $aCampos
      */
     protected function n10aEntity($aCampos)
@@ -1373,9 +1285,7 @@ class Convert
     }
 
     /**
-     * n10bEntity
-     * Cria tag ICMSST
-     *
+     * Make tag <ICMSST>
      * @param array $aCampos
      */
     protected function n10bEntity($aCampos)
@@ -1393,8 +1303,7 @@ class Convert
     }
 
     /**
-     * n10cEntity
-     *
+     * Load N10c
      * @param type $aCampos
      */
     protected function n10cEntity($aCampos)
@@ -1424,8 +1333,7 @@ class Convert
     }
 
     /**
-     * n10dEntity
-     *
+     * Load N10d
      * @param array $aCampos
      */
     protected function n10dEntity($aCampos)
@@ -1455,8 +1363,7 @@ class Convert
     }
 
     /**
-     * n10eEntity
-     *
+     * Load N10e
      * @param array $aCampos
      */
     protected function n10eEntity($aCampos)
@@ -1486,8 +1393,7 @@ class Convert
     }
 
     /**
-     * n10fEntity
-     *
+     * Load N10f
      * @param array $aCampos
      */
     protected function n10fEntity($aCampos)
@@ -1517,8 +1423,7 @@ class Convert
     }
 
     /**
-     * n10gEntity
-     *
+     * Load N10g
      * @param array $aCampos
      */
     protected function n10gEntity($aCampos)
@@ -1548,8 +1453,7 @@ class Convert
     }
 
     /**
-     * n10hEntity
-     *
+     * Load N10h
      * @param array $aCampos
      */
     protected function n10hEntity($aCampos)
@@ -1580,9 +1484,7 @@ class Convert
     }
 
     /**
-     * naEntity
-     * Cria a tag ICMSUFDest
-     *
+     * Make tag <ICMSUFDest>
      * @param array $aCampos
      */
     protected function naEntity($aCampos)
@@ -1604,9 +1506,7 @@ class Convert
     }
 
     /**
-     * zLinhaNEntity
-     * Cria a tag ICMS
-     *
+     * Make tag <ICMS>
      * @param array $aCampos
      */
     protected function zLinhaNEntity($aCampos)
@@ -1640,9 +1540,7 @@ class Convert
     }
 
     /**
-     * zLinhaNSNEntity
-     * Cria a tag ICMSSN
-     *
+     * Load tag <ICMSSN>
      * @param array $aCampos
      */
     protected function zLinhaNSNEntity($aCampos)
@@ -1673,8 +1571,7 @@ class Convert
     }
 
     /**
-     * oEntity
-     *
+     * Load O
      * @param array $aCampos
      */
     protected function oEntity($aCampos)
@@ -1695,8 +1592,7 @@ class Convert
     }
 
     /**
-     * o07Entity
-     *
+     * Load O07
      * @param array $aCampos
      */
     protected function o07Entity($aCampos)
@@ -1707,8 +1603,7 @@ class Convert
     }
 
     /**
-     * o10Entity
-     *
+     * Load O10
      * @param array $aCampos
      */
     protected function o10Entity($aCampos)
@@ -1720,8 +1615,7 @@ class Convert
     }
 
     /**
-     * o11Entity
-     *
+     * Load O11
      * @param array $aCampos
      */
     protected function o11Entity($aCampos)
@@ -1733,8 +1627,7 @@ class Convert
     }
 
     /**
-     * o08Entity
-     *
+     * Load O08
      * @param array $aCampos
      */
     protected function o08Entity($aCampos)
@@ -1745,9 +1638,7 @@ class Convert
     }
 
     /**
-     * zLinhaOEntity
-     * Cria a tag IPI
-     *
+     * Make tag <IPI>
      * @param array $aCampos
      */
     protected function zLinhaOEntity($aCampos)
@@ -2700,7 +2591,7 @@ class Convert
 
     /**
      * zClearParam
-     * Limpar os parametros da classe para a conversão de nova NFe
+     * Clear all parameters
      */
     protected function zClearParam()
     {
@@ -2785,9 +2676,7 @@ class Convert
     }
 
     /**
-     * zClean
-     * Efetua limpeza dos campos
-     *
+     * Clear strings
      * @param  array $aCampos
      * @return array
      */

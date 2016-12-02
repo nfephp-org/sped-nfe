@@ -4,8 +4,6 @@ namespace NFePHP\NFe\Factories;
 
 /**
  * Class Contingency make a structure to set contingency mode
- * for SVAN and SVRS only
- * NOTE: this class only works with model 55 NFe and do not work with model 65 NFCe
  *
  * @category  NFePHP
  * @package   NFePHP\NFe\Common\Contingency
@@ -20,27 +18,60 @@ namespace NFePHP\NFe\Factories;
 class Contingency
 {
     /**
-     * Constructor
-     * May recive a json string of contingency data or not
-     * @var string
+     * @var \stdClass
      */
     protected $config;
-    
+    /**
+     * @var string
+     */
+    public $type;
+    /**
+     * @var string
+     */
+    public $motive;
+    /**
+     * @var int
+     */
+    public $timestamp;
+    /**
+     * @var int
+     */
+    public $tpEmis;
+
+    /**
+     * Constructor
+     * @param string $contingency
+     */
     public function __construct($contingency = '')
     {
         $this->deactivate();
         if (!empty($contingency)) {
-            $this->config = json_decode($contingency);
+            $this->load($contingency);
         }
     }
     
     /**
-     * Create a object with contingency data
-     * @param string $uf
-     * @param string $motive
-     * @return \stdClass
+     * Load json string with contingency configurations
+     * @param string $contingency
+     * @return void
      */
-    public function activate($uf, $motive)
+    public function load($contingency)
+    {
+        $this->config = json_decode($contingency);
+        $this->type = $this->config->type;
+        $this->timestamp = $this->config->timestamp;
+        $this->motive = $this->config->motive;
+        $this->tpEmis = $this->config->tpEmis;
+    }
+    
+    /**
+     * Create a object with contingency data
+     * @param string $acronym Sigla do estado
+     * @param string $motive
+     * @param string $type Opcional parameter only used if FS-DA, EPEC or OFFLINE
+     * @return string
+     */
+    public function activate($acronym, $motive, $type = '')
     {
         $dt = new \DateTime('now');
         $list = array(
@@ -72,31 +103,25 @@ class Contingency
             'SP'=>'SVCAN',
             'TO'=>'SVCAN'
         );
-        $this->config = new \stdClass();
-        $this->config->motive = (string) $motive;
-        $this->config->timestamp = (int) $dt->getTimestamp();
-        $this->config->type = (string) $list[$uf];
-        return $this->config;
+        if (empty($type)) {
+            $type = (string) $list[$acronym];
+        }
+        $this->config = $this->configBuild($dt->getTimestamp(), $motive, $type);
+        return $this->__toString();
     }
     
     /**
      * Deactivate contingency mode
+     * @return string
      */
     public function deactivate()
     {
-        $this->config = new \stdClass();
-        $this->config->motive = '';
-        $this->config->timestamp = 0;
-        $this->config->type = '';
-    }
-    
-    /**
-     * Return type of contingnecy SVCAN or SVCRS
-     * @return string
-     */
-    public function type()
-    {
-        return $this->config->type;
+        $this->config = $this->configBuild(0, '', '');
+        $this->timestamp = 0;
+        $this->motive = '';
+        $this->type = '';
+        $this->tpEmis = 1;
+        return $this->__toString();
     }
 
     /**
@@ -106,5 +131,40 @@ class Contingency
     public function __toString()
     {
         return json_encode($this->config);
+    }
+    
+    /**
+     * Build parameter config as stdClass
+     * @param int $timestamp
+     * @param string $motive
+     * @param string $type
+     * @return \stdClass
+     */
+    private function configBuild($timestamp, $motive, $type)
+    {
+        switch ($type) {
+            case 'FS-DA':
+                $tpEmis = 5;
+                break;
+            case 'SVC-AN':
+            case 'SVCAN':
+                $tpEmis = 6;
+                break;
+            case 'SVC-RS':
+            case 'SVCRS':
+                $tpEmis = 7;
+                break;
+            case 'OFFLINE': //this is only to model 65 NFCe
+                $tpEmis = 9;
+                break;
+            default:
+                $tpEmis = 1;
+        }
+        $config = new \stdClass();
+        $config->motive = $motive;
+        $config->timestamp = $timestamp;
+        $config->type = $type;
+        $config->tpEmis = $tpEmis;
+        return $config;
     }
 }

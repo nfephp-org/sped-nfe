@@ -1,7 +1,7 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 'On');
-require_once '../../bootstrap.php';
+require_once '../bootstrap.php';
 
 use NFePHP\NFe\Ibpt;
 
@@ -30,7 +30,7 @@ echo "</pre>";
         [Descricao] => Outs.tecidos de malha de fibras sinteticas, crus ou branqueados
         [Nacional] => 13.45
         [Estadual] => 18
-        [Importado] => 16.14
+        [Importado] => 36.14
     )
   
 Em caso de não encontrar o produto pelo NCM, ou qualquer outro erro na comunicação, retornará:

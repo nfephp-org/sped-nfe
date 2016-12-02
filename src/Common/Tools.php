@@ -8,6 +8,7 @@ use NFePHP\Common\Signer;
 use NFePHP\Common\Validator;
 use NFePHP\NFe\Factories\Contingency;
 use NFePHP\NFe\Factories\Header;
+use NFePHP\Common\Soap\SoapCurl;
 
 class Tools
 {
@@ -47,11 +48,6 @@ class Tools
      */
     public $soap;
     /**
-     * Aplicative version
-     * @var string
-     */
-    public $verAplic;
-    /**
      * certificate class
      * @var Certificate
      */
@@ -66,6 +62,11 @@ class Tools
      * @var int
      */
     protected $modelo = 55;
+    /**
+     * Version of layout
+     * @var string
+     */
+    protected $versao = '3.10';
     /**
      * urlPortal
      * Instância do WebService
@@ -109,12 +110,6 @@ class Tools
         'SVAN' => 91
     ];
     /**
-     * urlPortal
-     * Instância do WebService
-     * @var string
-     */
-    protected $urlPortal = '';
-    /**
      * urlcUF
      * @var string
      */
@@ -130,26 +125,39 @@ class Tools
      */
     protected $urlService = '';
     /**
-     * urlMethod
      * @var string
      */
     protected $urlMethod = '';
     /**
-     * urlOperation
      * @var string
      */
     protected $urlOperation = '';
     /**
-     * urlNamespace
      * @var string
      */
     protected $urlNamespace = '';
     /**
-     * urlHeader
+     * @var string
+     */
+    protected $urlAction = '';
+    /**
+     * @var \SOAPHeader
+     */
+    protected $objHeader;
+    /**
      * @var string
      */
     protected $urlHeader = '';
-    
+    /**
+     * @var array
+     */
+    protected $soapnamespaces = [
+        'xmlns:xsi' => "http://www.w3.org/2001/XMLSchema-instance",
+        'xmlns:xsd' => "http://www.w3.org/2001/XMLSchema",
+        'xmlns:soap' => "http://www.w3.org/2003/05/soap-envelope"
+    ];
+
+
     /**
      * Constructor
      * load configurations,
@@ -165,25 +173,30 @@ class Tools
         $this->config = json_decode($configJson);
         $this->pathconfig = __DIR__ .
             DIRECTORY_SEPARATOR .
+            '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR .
             'config' .
             DIRECTORY_SEPARATOR;
         $this->pathschemes = __DIR__ .
             DIRECTORY_SEPARATOR .
+            '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR .
             'schemes' .
             DIRECTORY_SEPARATOR .
-            $this->config->schemesNFe .
+            $this->config->schemes .
             DIRECTORY_SEPARATOR;
-        $this->setEnvironmentTimeZone($this->config->siglaUF);
+        $this->version($this->config->versao);
+        $this->setEnvironmentTimeZone($this->config->uf);
         $this->certificate = $certificate;
-        $this->setAmbiente($this->config->tpAmb);
+        $this->setEnvironment($this->config->ambiente);
         $this->contingency = new Contingency();
+        $this->soap = new SoapCurl($certificate);
     }
     
     /**
      * Sets environment time zone
-     * @param string $sigla
+     * @param string $acronym (ou seja a sigla do estado)
+     * @return void
      */
-    public function setEnvironmentTimeZone($sigla)
+    public function setEnvironmentTimeZone($acronym)
     {
         $tz = [
             'AC'=>'America/Rio_Branco',
@@ -214,12 +227,13 @@ class Tools
             'SP'=>'America/Sao_Paulo',
             'TO'=>'America/Araguaina'
         ];
-        date_default_timezone_set($tz[$sigla]);
+        date_default_timezone_set($tz[$acronym]);
     }
 
     /**
      * Alter environment from "homologacao" to "producao" and vice-versa
      * @param int $tpAmb
+     * @return void
      */
     protected function setEnvironment($tpAmb = 2)
     {
@@ -231,36 +245,12 @@ class Tools
     }
     
     /**
-     * ativaContingencia
-     * Ativa a contingencia SVCAN ou SVCRS conforme a
-     * sigla do estado ou EPEC
-     * @param  string $sigla
-     * @param  string $motivo
-     * @return string json string with contingency data
-     */
-    public function ativaContingencia($sigla, $motivo)
-    {
-        $this->contingency->activate($sigla, $motivo);
-        return (string) "{$this->contingency}";
-    }
-    
-    /**
-     * desativaContingencia
-     * Desliga opção de contingência
-     * @return boolean
-     */
-    public function desativaContingencia()
-    {
-        $this->contingency->deativate();
-        return true;
-    }
-      
-    /**
      * Load Soap Class
      * Soap Class may be \NFePHP\Common\Soap\SoapNative or \NFePHP\Common\Soap\SoapCurl
      * @param SoapInterface $soap
+     * @return void
      */
-    public function setSoapClass(SoapInterface $soap)
+    public function loadSoapClass(SoapInterface $soap)
     {
         $this->soap = $soap;
         $this->soap->loadCertificate($this->certificate);
@@ -269,6 +259,7 @@ class Tools
     /**
      * Set OPENSSL Algorithm using OPENSSL constants
      * @param int $algorithm
+     * @return void
      */
     public function setSignAlgorithm($algorithm = OPENSSL_ALGO_SHA1)
     {
@@ -276,45 +267,91 @@ class Tools
     }
 
     /**
-     * setModel
-     * Set model of documento to 55 or 65
+     * Set or get model of document NFe = 55 or NFCe = 65
      * @param int $model
+     * @return int modelo class parameter
      */
-    public function setModel($model)
+    public function model($model = null)
     {
-        if ($model != 55 && $model != 65) {
-            $model = 55;
+        if ($model == 55 || $model == 65) {
+            $this->modelo = $model;
         }
-        $this->modelo = $model;
-    }
-    
-    /**
-     * getModel
-     * Return documento model
-     * @return int
-     */
-    public function getModelo()
-    {
         return $this->modelo;
     }
     
     /**
-     * Executa a validação da mensagem XML com base no XSD
-     * @param string $versao versão dos schemas
-     * @param string $body corpo do XML a ser validado
-     * @param string $method Denominação do método
-     * @param string $suffix Alguns xsd possuem sulfixos
-     * @return boolean
+     * Set or get teh parameter versao do layout
+     * NOTE: for new layout this will be removed because it is no longer necessary
+     * @param string $version
+     * @return string
+     */
+    public function version($version = '')
+    {
+        if (!empty($version)) {
+            $this->versao = $version;
+        }
+        return $this->versao;
+    }
+    
+    /**
+     * Recover cUF number from
+     * @param string $acronym Sigal do estado
+     * @return int number cUF
+     */
+    public function getcUF($acronym)
+    {
+        return $this->cUFlist[$acronym];
+    }
+    
+    /**
+     * Recover Federation unit acronym by cUF number
+     * @param int $cUF
+     * @return string acronym sigla
+     */
+    public function getAcronym($cUF)
+    {
+        return array_search($cUF, $this->cUFlist);
+    }
+    
+    /**
+     * Sign NFe or NFCe
+     * @param  string  $xml NFe xml content
+     * @return string singed NFe xml
+     * @throws \RuntimeException
+     */
+    public function signNFe($xml)
+    {
+        try {
+            $xml = preg_replace('/>\s+</', '><', $xml);
+            $signed = Signer::sign($this->certificate, $xml, 'infNFe', 'Id', $this->algorithm, [false,false,null,null]);
+            $dom = new \DOMDocument('1.0', 'UTF-8');
+            $dom->preserveWhiteSpace = false;
+            $dom->formatOutput = false;
+            $dom->loadXML($signed);
+            $modelo = $dom->getElementsByTagName('mod')->item(0)->nodeValue;
+            if ($modelo == 65) {
+                $signed = $this->addQRCode($dom);
+            }
+            $this->isValid($this->urlVersion, $signed, 'nfe');
+        } catch (NFePHP\Common\Exception\SignerException $e) {
+            throw new \RuntimeException($e->getMessage);
+        } catch (\InvalidArgumentException $e) {
+            throw new \RuntimeException($e->getMessage);
+        }
+        return $signed;
+    }
+
+    /**
+     * Performs xml validation with its respective XSD structure definition document
+     * @param string $version
+     * @param type $body
+     * @param type $method
+     * @return type
      * @throws \InvalidArgumentException
      */
-    public function validar($versao, $body, $method = '', $suffix = 'v')
+    protected function isValid($version, $body, $method)
     {
-        $ver = str_pad($versao, 2, '0', STR_PAD_LEFT);
-        $path = $this->pathschemes . DIRECTORY_SEPARATOR . $this->config->schemesNFe;
-        $schema = $path . DIRECTORY_SEPARATOR . $method . ".xsd";
-        if ($suffix) {
-            $schema = $path . DIRECTORY_SEPARATOR . $method . "_v$ver.xsd";
-        }
+        $schema = $this->pathschemes.$method."_v$version.xsd";
         if (!is_file($schema)) {
             throw new \InvalidArgumentException("XSD file not found. [$schema]");
         }
@@ -325,54 +362,31 @@ class Tools
     }
     
     /**
-     * setVerAplic
-     * @param string $versao
-     */
-    public function setVerAplic($versao)
-    {
-        $this->verAplic = $versao;
-    }
-     
-    /**
-     * getcUF
-     * @param string $sigla
-     * @return int number cUF
-     */
-    public function getcUF($sigla)
-    {
-        return $this->cUFlist[$sigla];
-    }
-    
-    /**
-     * getSigla
-     * @param int $cUF
-     * @return string UF sigla
-     */
-    public function getSigla($cUF)
-    {
-        return array_search($cUF, $this->cUFlist);
-    }
-    
-    /**
-     * servico
-     * Monta o namespace e o cabecalho da comunicação SOAP
+     * Assembles all the necessary parameters for soap communication
      * @param string $service
      * @param string $uf
      * @param string $tpAmb
+     * @return void
      */
-    public function servico(
+    protected function servico(
         $service,
         $uf,
         $tpAmb
     ) {
         $ambiente = $tpAmb == 1 ? "producao" : "homologacao";
         $webs = new Webservices($this->getXmlUrlPath());
-        $sigla = !empty($this->contingency->config->type) ? $this->contingency->config->type : $uf;
+        $sigla = $uf;
+        $cont = $this->contingency->type();
+        if (!empty($cont)) {
+            $sigla = $cont;
+        }
         $stdServ = $webs->get($sigla, $ambiente, $this->modelo);
-        //fazer duas verificações
-        //1 - se o serviço existe
-        //2 - se o url do serviço existe
-        //caso ocorra qualquer um deles disparar uma excpetion
+        if ($stdServ === false) {
+            throw \RuntimeException('Não foram localizados serviços para essa unidade.');
+        }
+        if (empty($stdServ->$service->url)) {
+            throw \RuntimeException('Esse serviço não é disponibilizado para essa unidade da federação.');
+        }
         //recuperação do cUF
         $this->urlcUF = $this->getcUF($uf);
         //recuperação da versão
@@ -387,17 +401,43 @@ class Tools
         $this->urlNamespace = sprintf("%s/wsdl/%s", $this->urlPortal, $this->urlOperation);
         //montagem do cabeçalho da comunicação SOAP
         $this->urlHeader = Header::get($this->urlNamespace, $this->urlcUF, $this->urlVersion);
+        //montagem do SOAP Header
+        $this->objHeader = new \SOAPHeader(
+            $this->urlNamespace,
+            'nfeCabecMsg',
+            ['cUF' => $this->urlcUF, 'versaoDados' => $this->urlVersion]
+        );
+        $this->urlAction = "\"" . $this->urlNamespace . "/" . $this->urlMethod . "\"";
     }
     
     /**
-     * getXmlUrlPath
-     * @param string $tipo
+     * Send request message to webservice
+     * @param string $request
+     * @return string
+     */
+    protected function sendRequest($request)
+    {
+        $parameters = ['nfeDadosMsg' => $request];
+        $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
+        return (string) $this->soap->send(
+            $this->urlService,
+            $this->urlMethod,
+            $this->urlAction,
+            SOAP_1_2,
+            $parameters,
+            $this->soapnamespaces,
+            $body,
+            $this->objHeader
+        );
+    }
+    
+    /**
+     * Recover path to xml data base with list of soap services
      * @return string
      */
     protected function getXmlUrlPath()
     {
-        $file = $this->config->pathXmlUrlFileNFe;
-        $file = str_replace('65', '55', $file);
+        $file = "wsnfe_".$this->versao."_mod55.xml";
         if ($this->modelo == 65) {
             $file = str_replace('55', '65', $file);
         }

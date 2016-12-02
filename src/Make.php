@@ -16,11 +16,10 @@ namespace NFePHP\NFe;
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
 
-
 use Brazanation\Documents\NFeAccessKey;
-use Brazanation\Documents\Exception\InvalidDocument as  InvalidDocumentException;
+use Brazanation\Documents\Exception\InvalidDocument as InvalidDocumentException;
 
-use NFePHP\Common\SpedDOM;
+use NFePHP\Common\DOMImproved as Dom;
 use \DOMDocument;
 use \DOMElement;
 use \DOMNode;
@@ -48,7 +47,7 @@ class Make
      */
     private $mod = 55;
     /**
-     * @var \NFePHP\Common\Dom\Dom
+     * @var \NFePHP\Common\DOMImproved
      */
     private $dom;
     /**

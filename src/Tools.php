@@ -3,11 +3,11 @@
 namespace NFePHP\NFe;
 
 /**
- * Classe principal para a comunicação com a SEFAZ
+ * Class responsible for communication with SEFAZ
  *
  * @category  NFePHP
  * @package   NFePHP\NFe\Tools
- * @copyright NFePHP Copyright (c) 2008
+ * @copyright NFePHP Copyright (c) 2008-2017
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
  * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
@@ -27,228 +27,14 @@ class Tools extends ToolsCommon
     const EVT_CIENCIA = 210210;
     const EVT_DESCONHECIMENTO = 210220;
     const EVT_NAO_REALIZADA = 210240;
-    
-    
+
     /**
-     * addB2B
-     * Add tags B2B, as example ANFAVEA
-     * @param  string $nfe xml nfe content
-     * @param  string $b2b xml b2b content
-     * @param  string $tagB2B name B2B tag default 'NFeB2BFin' from ANFAVEA
-     * @return string
-     * @throws \InvalidArgumentException
-     * @throws \RuntimeException
-     */
-    public function addB2B($nfe, $b2b, $tagB2B = 'NFeB2BFin')
-    {
-        $domnfe = new \DOMDocument('1.0', 'UTF-8');
-        $domnfe->preserveWhiteSpace = false;
-        $domnfe->formatOutput = false;
-        $domnfe->loadXML($nfe);
-        $nodenfe = $domnfe->getElementsByTagName('nfeProc')->item(0);
-        if (empty($nodenfe)) {
-            $msg = "O arquivo indicado como NFe não está protocolado ou não é uma NFe!!";
-            throw new \RuntimeException($msg);
-        }
-        //carrega o arquivo B2B
-        $domb2b = new \DOMDocument('1.0', 'UTF-8');
-        $domb2b->preserveWhiteSpace = false;
-        $domb2b->formatOutput = false;
-        $domb2b->loadXML($b2b);
-        $nodeb2b = $domnfe->getElementsByTagName($tagB2B)->item(0);
-        if (empty($nodeb2b)) {
-            $msg = "O arquivo indicado como B2B não contêm a tag requerida!!";
-            throw new \RuntimeException($msg);
-        }
-        //cria a NFe processada com a tag do protocolo
-        $procb2b = new \DOMDocument('1.0', 'UTF-8');
-        $procb2b->preserveWhiteSpace = false;
-        $proc2b->formatOutput = false;
-        //cria a tag nfeProc
-        $nfeProcB2B = $procb2b->createElement('nfeProcB2B');
-        $procb2b->appendChild($nfeProcB2B);
-        //inclui a tag NFe
-        $node1 = $procb2b->importNode($nodenfe, true);
-        $nfeProcB2B->appendChild($node1);
-        //inclui a tag NFeB2BFin
-        $node2 = $procb2b->importNode($nodeb2b, true);
-        $nfeProcB2B->appendChild($node2);
-        $nfeb2bXML = $procb2b->saveXML();
-        $nfeb2bXMLString = str_replace(array("\n","\r","\s"), '', $nfeb2bXML);
-        return (string) $nfeb2bXMLString;
-    }
-    
-    /**
-     * addCancelamento
-     * Add cancel protocol to a autorized NFe
-     * @param  string $nfe
-     * @param  string $cancelamento
-     * @return string
-     * @throws \RuntimeException
-     */
-    public function addCancelamento($nfe, $cancelamento)
-    {
-        $procXML = $nfe;
-        $domnfe = new \DOMDocument('1.0', 'utf-8');
-        $domnfe->formatOutput = false;
-        $domnfe->preserveWhiteSpace = false;
-        $domnfe->loadXML($nfe);
-        $nodenfe = $domnfe->getElementsByTagName('NFe')->item(0);
-        $proNFe = $domnfe->getElementsByTagName('protNFe')->item(0);
-        if (empty($proNFe)) {
-            $msg = "A NFe não está protocolada!";
-            throw new \RuntimeException($msg);
-        }
-        $chaveNFe = $proNFe->getElementsByTagName('chNFe')->item(0)->nodeValue;
-        $tpAmb = $domnfe->getElementsByTagName('tpAmb')->item(0)->nodeValue;
-        //carrega o cancelamento pode ser um evento ou resultado de uma
-        //consulta com o retorno contendo multiplos eventos
-        $domcanc = new \DOMDocument('1.0', 'utf-8');
-        $domcanc->formatOutput = false;
-        $domcanc->preserveWhiteSpace = false;
-        $domcanc->loadXML($cancelamento);
-        $retEvento = $domcanc->getElementsByTagName('retEvento')->item(0);
-        $eventos = $retEvento->getElementsByTagName('infEvento');
-        foreach ($eventos as $evento) {
-            //evento
-            $cStat = $evento->getElementsByTagName('cStat')->item(0)->nodeValue;
-            $tpAmb = $evento->getElementsByTagName('tpAmb')->item(0)->nodeValue;
-            $chaveEvento = $evento->getElementsByTagName('chNFe')->item(0)->nodeValue;
-            $tpEvento = $evento->getElementsByTagName('tpEvento')->item(0)->nodeValue;
-            if (($cStat == '135' || $cStat == '136' || $cStat == '155')
-                && $tpEvento == '110111'
-                && $chaveEvento == $chaveNFe
-            ) {
-                $proNFe->getElementsByTagName('cStat')->item(0)->nodeValue = '101';
-                $proNFe->getElementsByTagName('xMotivo')->item(0)->nodeValue = 'Cancelamento de NF-e homologado';
-                $procXML = Strings::clearProt($domnfe->saveXML());
-                break;
-            }
-        }
-        return (string) $procXML;
-    }
-    
-    /**
-     * Adiciona o protocolo de autorização de uso da NFe
-     * NOTA: exigência da SEFAZ, a nota somente é válida com o seu respectivo protocolo
-     * @param  string  $nfe nfe content
-     * @param  string  $protocol protocol content
-     * @return string
-     * @throws \RuntimeException
-     */
-    public function addProtocolo($nfe, $protocol)
-    {
-        //carrega a NFe
-        $domnfe = new \DOMDocument('1.0', 'UTF-8');
-        $domnfe->preserveWhiteSpace = false;
-        $domnfe->formatOutput = false;
-        $domnfe->loadXML($nfe);
-        $nodenfe = $domnfe->getElementsByTagName('NFe')->item(0);
-        if ($nodenfe == '') {
-            $msg = "O arquivo indicado como NFe não é um xml de NFe!";
-            throw new \RuntimeException($msg);
-        }
-        if (empty($docnfe->$domnfe->getElementsByTagName('Signature')->item(0))) {
-            $msg = "A NFe não está assinada!";
-            throw new \RuntimeException($msg);
-        }
-        //carrega o protocolo
-        $domprot = new  \DOMDocument('1.0', 'UTF-8');
-        $domprot->preserveWhiteSpace = false;
-        $domprot->formatOutput = false;
-        $domprot->loadXML($protocol);
-        $nodeprot = $domprot->getElementsByTagName('protNFe');
-        if ($nodeprot->length == 0) {
-            $msg = "O arquivo indicado não contêm um protocolo de autorização!";
-            throw new \RuntimeException($msg);
-        }
-        $tpAmb = $domnfe->getElementsByTagName('tpAmb')->item(0)->nodeValue;
-        $infNFe = $domnfe->getNode("infNFe", 0);
-        $versao = $infNFe->getAttribute("versao");
-        $chaveNFe = preg_replace('/[^0-9]/', '', $infNFe->getAttribute("Id"));
-        $digValueNFe = $domnfe->getElementsByTagName('DigestValue')->item(0)->nodeValue;
-        $digValueProt = '';
-        for ($i = 0; $i < $nodeprot->length; $i++) {
-            $node = $nodeprot->item($i);
-            $protver = $node->getAttribute("versao");
-            $chaveProt = $node->getElementsByTagName("chNFe")->item(0)->nodeValue;
-            $digValueProt = ($node->getElementsByTagName("digVal")->length)
-                ? $node->getElementsByTagName("digVal")->item(0)->nodeValue
-                : '';
-            $infProt = $node->getElementsByTagName("infProt")->item(0);
-            if ($digValueNFe == $digValueProt && $chaveNFe == $chaveProt) {
-                break;
-            }
-        }
-        if ($digValueNFe != $digValueProt) {
-            $msg = "Inconsistência! O DigestValue da NFe não combina com o digVal do protocolo indicado!";
-            throw new \RuntimeException($msg);
-        }
-        if ($chaveNFe != $chaveProt) {
-            $msg = "O protocolo indicado pertence a outra NFe. Os números das chaves não combinam !";
-            throw new \RuntimeException($msg);
-        }
-        //cria a NFe processada com a tag do protocolo
-        $procnfe = new \DOMDocument('1.0', 'utf-8');
-        $procnfe->formatOutput = false;
-        $procnfe->preserveWhiteSpace = false;
-        //cria a tag nfeProc
-        $nfeProc = $procnfe->createElement('nfeProc');
-        $procnfe->appendChild($nfeProc);
-        //estabele o atributo de versão
-        $nfeProcAtt1 = $nfeProc->appendChild($procnfe->createAttribute('versao'));
-        $nfeProcAtt1->appendChild($procnfe->createTextNode($protver));
-        //estabelece o atributo xmlns
-        $nfeProcAtt2 = $nfeProc->appendChild($procnfe->createAttribute('xmlns'));
-        $nfeProcAtt2->appendChild($procnfe->createTextNode($this->urlPortal));
-        //inclui a tag NFe
-        $node = $procnfe->importNode($nodenfe, true);
-        $nfeProc->appendChild($node);
-        //cria tag protNFe
-        $protNFe = $procnfe->createElement('protNFe');
-        $nfeProc->appendChild($protNFe);
-        //estabele o atributo de versão
-        $protNFeAtt1 = $protNFe->appendChild($procnfe->createAttribute('versao'));
-        $protNFeAtt1->appendChild($procnfe->createTextNode($versao));
-        //cria tag infProt
-        $nodep = $procnfe->importNode($infProt, true);
-        $protNFe->appendChild($nodep);
-        //salva o xml como string em uma variável
-        $procXML = $procnfe->saveXML();
-        //remove as informações indesejadas
-        $procXML = Strings::clearProt($procXML);
-        return $procXML;
-    }
-    
-    /**
-     * Sign NFe or NFCe
-     * @param  string  $xml
-     * @return string
-     */
-    public function assina($xml)
-    {
-        $signed = Signer::sign($this->certificate, $xml, 'infNFe', 'Id', $this->algorithm, [false,false,null,null]);
-        $dom = new \DOMDocument('1.0', 'UTF-8');
-        //verifica se o modelo da NFe é 65 se for inclui o QRCode ao XML assinado
-        $dom->preserveWhiteSpace = false;
-        $dom->formatOutput = false;
-        $dom->loadXML($signed);
-        $modelo = $dom->getElementsByTagName('mod')->item(0)->nodeValue;
-        if ($modelo == 65) {
-            $signed = $this->addQRCode($dom);
-        }
-        return $signed;
-    }
-    
-    /**
-     * sefazEnviaLote
-     * Solicita a autorização de uso de Lote de NFe
-     * @param array $aXml
-     * @param string $idLote
-     * @param array $aRetorno
-     * @param int $indSinc
-     * @param bool $compactar
-     * @return string
+     * Send one ou more NFe to SEFAZ
+     * @param array $aXml array of nfe's xml
+     * @param string $idLote lote number
+     * @param int $indSinc flag to use synchronous communication
+     * @param bool $compactar flag to compress data with gzip
+     * @return string soap response xml
      */
     public function sefazEnviaLote(
         $aXml,
@@ -265,14 +51,12 @@ class Tools extends ToolsCommon
         }
         $sxml = preg_replace("/<\?xml.*\?>/", "", $sxml);
         $siglaUF = $this->config->siglaUF;
-        //carrega serviço
         $servico = 'NfeAutorizacao';
         $this->servico(
             'NfeAutorizacao',
             $this->config->siglaUF,
             $this->tpAmb
         );
-        //montagem dos dados da mensagem SOAP
         $cons = "<enviNFe xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
                 . "<idLote>$idLote</idLote>"
                 . "<indSinc>$indSinc</indSinc>"
@@ -292,17 +76,7 @@ class Tools extends ToolsCommon
             $body = "<nfeDadosMsgZip xmlns=\"$this->urlNamespace\">$gzdata</nfeDadosMsgZip>";
             $method = $this->urlMethod."Zip";
         }
-        //envia a solicitação via SOAP
-        /*
-        $retorno = $this->oSoap->send($this->urlService, $this->urlNamespace, $this->urlHeader, $body, $method);
-        $this->soapDebug = $this->oSoap->soapDebug;
-        //tratar dados de retorno
-        $aRetorno = Response::readResponseSefaz($servico, $retorno);
-        //caso o envio seja recebido com sucesso mover a NFe da pasta
-        //das assinadas para a pasta das enviadas
-         * 
-         */
-        return (string) $retorno;
+        return $this->sendRequest($request);
     }
     
     /**
@@ -334,31 +108,8 @@ class Tools extends ToolsCommon
             . "<tpAmb>$tpAmb</tpAmb>"
             . "<nRec>$recibo</nRec>"
             . "</consReciNFe>";
-        //validar mensagem com xsd
-        //if (! $this->validarXml($cons)) {
-        //    $msg = 'Falha na validação. '.$this->error;
-        //    throw new Exception\RuntimeException($msg);
-        //}
-        //montagem dos dados da mensagem SOAP
-        $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$cons</nfeDadosMsg>";
-        //envia a solicitação via SOAP
-        /*
-        $retorno = $this->oSoap->send(
-            $this->urlService,
-            $this->urlNamespace,
-            $this->urlHeader,
-            $body,
-            $this->urlMethod
-        );
-        $this->soapDebug = $this->oSoap->soapDebug;
-        //tratar dados de retorno
-        $aRetorno = Response::readResponseSefaz($servico, $retorno);
-        //podem ser retornados nenhum, um ou vários protocolos
-        //caso existam protocolos protocolar as NFe e movelas-las para a
-        //pasta enviadas/aprovadas/anomes
-         * 
-         */
-        return (string) $retorno;
+        $this->isValid($this->urlVersion, $request, 'consReciNFe');
+        return $this->sendRequest($request);
     }
     
     /**
@@ -388,45 +139,22 @@ class Tools extends ToolsCommon
             $this->getSigla($cUF),
             $tpAmb
         );
-        $cons = "<consSitNFe xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
+        $request = "<consSitNFe xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
                 . "<tpAmb>$tpAmb</tpAmb>"
                 . "<xServ>CONSULTAR</xServ>"
                 . "<chNFe>$chNFe</chNFe>"
                 . "</consSitNFe>";
-        //validar mensagem com xsd
-        //if (! $this->validarXml($cons)) {
-        //    $msg = 'Falha na validação. '.$this->error;
-        //    throw new Exception\RuntimeException($msg);
-        //}
-        //montagem dos dados da mensagem SOAP
-        $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$cons</nfeDadosMsg>";
-        //envia a solicitação via SOAP
-        /*
-        $retorno = $this->oSoap->send(
-            $this->urlService,
-            $this->urlNamespace,
-            $this->urlHeader,
-            $body,
-            $this->urlMethod
-        );
-        $lastMsg = $this->oSoap->lastMsg;
-        $this->soapDebug = $this->oSoap->soapDebug;
-        //tratar dados de retorno
-        $aRetorno = Response::readResponseSefaz($servico, $retorno);
-         * 
-         */
-        return (string) $retorno;
+        $this->isValid($this->urlVersion, $request, 'consSitNFe');
+        return $this->sendRequest($request);
     }
 
     /**
-     * sefazInutiliza
-     * Solicita a inutilização de uma ou uma sequencia de NFe
-     * de uma determinada série
-     * @param    integer $nSerie
-     * @param    integer $nIni
-     * @param    integer $nFin
-     * @param    string  $xJust
-     * @return   string
+     * Request to disable one or an NFe sequence of a given series
+     * @param integer $nSerie
+     * @param integer $nIni
+     * @param integer $nFin
+     * @param string $xJust
+     * @return string
      */
     public function sefazInutiliza(
         $nSerie,
@@ -444,10 +172,6 @@ class Tools extends ToolsCommon
             $this->config->siglaUF,
             $this->tpAmb
         );
-        if ($this->urlService == '') {
-            $msg = "A o endereço do serviço não está disponível!!!";
-            throw new \RuntimeException($msg);
-        }
         $cnpj = $this->config->cnpj;
         $sAno = (string) date('y');
         $sSerie = str_pad($nSerie, 3, '0', STR_PAD_LEFT);
@@ -481,29 +205,8 @@ class Tools extends ToolsCommon
         $signed = Signer::sign($this->certificate, $msg, 'infInut', 'Id', $this->algorithm, [false,false,null,null]);
         $signed = Strings::clearXml($signed, true);
         //valida a mensagem com o xsd, em caso de erro será chamada uma exception
-        $this->validar($this->urlVersion, $msg, 'inutNFe', 'v');
-        $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$signed</nfeDadosMsg>";
-        //envia a solicitação via SOAP
-        /*
-        $retorno = $this->oSoap->send(
-            $this->urlService,
-            $this->urlNamespace,
-            $this->urlHeader,
-            $body,
-            $this->urlMethod
-        );
-        $lastMsg = $this->oSoap->lastMsg;
-        $this->soapDebug = $this->oSoap->soapDebug;
-        //tratar dados de retorno
-        $aRetorno = Response::readResponseSefaz($servico, $retorno);
-        
-        if ($aRetorno['cStat'] == '102') {
-            $retorno = $this->addProtMsg('ProcInutNFe', 'inutNFe', $signedMsg, 'retInutNFe', $retorno);
-        }
-         * 
-         */
-        return $body;
-        //return (string) $retorno;
+        $this->isValid($this->urlVersion, $request, 'inutNFe');
+        return $this->sendRequest($request);
     }
     
     /**
@@ -528,15 +231,14 @@ class Tools extends ToolsCommon
         $iest = '',
         $cpf = ''
     ) {
-        //selecionar o criterio de filtragem CNPJ ou IE ou CPF
         if ($cnpj != '') {
-            $filtro = "<CNPJ>$cnpj</CNPJ>";
+            $filter = "<CNPJ>$cnpj</CNPJ>";
             $txtFile = "CNPJ_$cnpj";
         } elseif ($iest != '') {
-            $filtro = "<IE>$iest</IE>";
+            $filter = "<IE>$iest</IE>";
             $txtFile = "IE_$iest";
         } else {
-            $filtro = "<CPF>$cpf</CPF>";
+            $filter = "<CPF>$cpf</CPF>";
             $txtFile = "CPF_$cpf";
         }
         //carrega serviço
@@ -546,79 +248,33 @@ class Tools extends ToolsCommon
             $uf,
             $this->tpAmb
         );
-        $cons = "<ConsCad xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
+        $request = "<ConsCad xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
             . "<infCons>"
             . "<xServ>CONS-CAD</xServ>"
             . "<UF>$siglaUF</UF>"
-            . "$filtro</infCons></ConsCad>";
-        //validar mensagem com xsd
-        //if (! $this->validarXml($cons)) {
-        //    $msg = 'Falha na validação. '.$this->error;
-        //    throw new Exception\RuntimeException($msg);
-        //}
-        //montagem dos dados da mensagem SOAP
-        $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$cons</nfeDadosMsg>";
-        //envia a solicitação via SOAP
-        /*
-        $retorno = $this->oSoap->send(
-            $this->urlService,
-            $this->urlNamespace,
-            $this->urlHeader,
-            $body,
-            $this->urlMethod
-        );
-        $lastMsg = $this->oSoap->lastMsg;
-        $this->soapDebug = $this->oSoap->soapDebug;
-        //tratar dados de retorno
-        $aRetorno = Response::readResponseSefaz($servico, $retorno);
-         */
-        return (string) $retorno;
+            . "$filter</infCons></ConsCad>";
+        //$this->isValid($this->urlVersion, $request, 'dont existis XSD for this ?');
+        return $this->sendRequest($request);
     }
 
     /**
-     * sefazStatus
-     * Verifica o status do serviço da SEFAZ/SVC
-     * @param string $siglaUF  sigla da unidade da Federação
-     * @param string $tpAmb    tipo de ambiente 1-produção e 2-homologação
-     * @param array  $aRetorno parametro passado por referencia contendo a resposta da consulta em um array
-     * @return mixed string XML do retorno do webservice, ou false se ocorreu algum erro
+     * Check services status SEFAZ/SVC
+     * @param string $siglaUF  initials of federation unit
+     * @return mixed string xml soap response
      */
-    public function sefazStatus($uf = '')
+    public function sefazStatus($uf)
     {
-        //carrega serviço
         $servico = 'NfeStatusServico';
         $this->servico(
             'NfeStatusServico',
             $uf,
             $this->tpAmb
         );
-        $cons = "<consStatServ xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
+        $request = "<consStatServ xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
             . "<tpAmb>$this->tpAmb</tpAmb><cUF>$this->urlcUF</cUF>"
             . "<xServ>STATUS</xServ></consStatServ>";
-        //valida mensagem com xsd
-        //validar mensagem com xsd
-        //if (! $this->validarXml($cons)) {
-        //    $msg = 'Falha na validação. '.$this->error;
-        //    throw new Exception\RuntimeException($msg);
-        //}
-        //montagem dos dados da mensagem SOAP
-        $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$cons</nfeDadosMsg>";
-        /*
-        //consome o webservice e verifica o retorno do SOAP
-        $retorno = $this->oSoap->send(
-            $this->urlService,
-            $this->urlNamespace,
-            $this->urlHeader,
-            $body,
-            $this->urlMethod
-        );
-        $lastMsg = $this->oSoap->lastMsg;
-        $this->soapDebug = $this->oSoap->soapDebug;
-        //tratar dados de retorno
-        $aRetorno = Response::readResponseSefaz($servico, $retorno);
-         * 
-         */
-        return (string) $retorno;
+        $this->isValid($this->urlVersion, $request, 'consStatServ');
+        return $this->sendRequest($request);
     }
 
     /**
@@ -652,36 +308,18 @@ class Tools extends ToolsCommon
             $tagNSU = "<consNSU><NSU>$numNSU</NSU></consNSU>";
         }
         //monta a consulta
-        $cons = "<distDFeInt xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
+        $request = "<distDFeInt xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
             . "<tpAmb>$tpAmb</tpAmb>"
             . "<cUFAutor>$cUF</cUFAutor>"
             . "<CNPJ>$cnpj</CNPJ>$tagNSU</distDFeInt>";
-        //validar mensagem com xsd
-        //if (! $this->validarXml($cons)) {
-        //    $msg = 'Falha na validação. '.$this->error;
-        //    throw new Exception\RuntimeException($msg);
-        //}
+        //$this->isValid($this->urlVersion, $request, '????');
         //montagem dos dados da mensagem SOAP
         $body = "<nfeDistDFeInteresse xmlns=\"$this->urlNamespace\">"
             . "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$cons</nfeDadosMsg>"
             . "</nfeDistDFeInteresse>";
-        //envia dados via SOAP e verifica o retorno este webservice não requer cabeçalho
+        //este webservice não requer cabeçalho
         $this->urlHeader = '';
-        /*
-        $retorno = $this->oSoap->send(
-            $this->urlService,
-            $this->urlNamespace,
-            $this->urlHeader,
-            $body,
-            $this->urlMethod
-        );
-        $lastMsg = $this->oSoap->lastMsg;
-        $this->soapDebug = $this->oSoap->soapDebug;
-        //tratar dados de retorno
-        $aRetorno = Response::readResponseSefaz($servico, $retorno);
-         * 
-         */
-        return (string) $retorno;
+        return $this->sendRequest($request);
     }
 
     /**
@@ -840,34 +478,25 @@ class Tools extends ToolsCommon
             'AN',
             $this->tpAmb
         );
-        $cons = "<downloadNFe xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
+        $request = "<downloadNFe xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
                 . "<tpAmb>$this->tpAmb</tpAmb>"
                 . "<xServ>DOWNLOAD NFE</xServ>"
                 . "<CNPJ>$this->config->cnpj</CNPJ>"
                 . "<chNFe>$chNFe</chNFe>"
                 . "</downloadNFe>";
-        //validar mensagem com xsd
-        //if (! $this->validarXml($cons)) {
-        //    $msg = 'Falha na validação. '.$this->error;
-        //    throw new Exception\RuntimeException($msg);
-        //}
+        //$this->isValid($this->urlVersion, $request, '?????');
         //montagem dos dados da mensagem SOAP
-        $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$cons</nfeDadosMsg>";
-        /*
-        //consome o webservice e verifica o retorno do SOAP
-        $retorno = $this->oSoap->send(
+        $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
+        $retorno = $this->soap->send(
             $this->urlService,
-            $this->urlNamespace,
-            $this->urlHeader,
+            $this->urlMethod,
+            $this->urlAction,
+            SOAP_1_2,
+            $parameters,
+            $this->soapnamespaces,
             $body,
-            $this->urlMethod
+            $this->objHeader
         );
-        $lastMsg = $this->oSoap->lastMsg;
-        $this->soapDebug = $this->oSoap->soapDebug;
-        //tratar dados de retorno
-        $aRetorno = Response::readResponseSefaz($servico, $retorno);
-         * 
-         */
         return (string) $retorno;
     }
     
@@ -924,35 +553,5 @@ class Tools extends ToolsCommon
          * 
          */
         return (string) $retorno;
-    }
-        
-    /**
-     * verificaValidade
-     * Verifica a validade de uma NFe recebida
-     * @param  string $nfe
-     * @param  array  $aRetorno
-     * @return boolean
-     * @throws \RuntimeException
-     */
-    public function verificaValidade($nfe)
-    {
-        //verifica a assinatura da NFe, exception caso de falha
-        Signer::isSigned($dom, 'infNFe');
-        //verifica a validade no webservice da SEFAZ
-        $domnfe = new \DOMDocument('1.0', 'utf-8');
-        $domnfe->formatOutput = false;
-        $domnfe->preserveWhiteSpace = false;
-        $domnfe->loadXML($nfe);
-        $tpAmb = $domnfe->getElementsByTagName('tpAmb')->item(0)->nodeValue;
-        $infNFe  = $domnfe->getElementsByTagName('infNFe')->item(0);
-        $chaveNFe = preg_replace('/[^0-9]/', '', $infNFe->getAttribute("Id"));
-        $this->sefazConsultaChave($chNFe, $tpAmb);
-        /*
-        if ($aRetorno['cStat'] != '100' && $aRetorno['cStat'] != '150') {
-            return false;
-        }
-         * 
-         */
-        return true;
     }
 }

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/nfe" targetNamespace="http://www.portalfiscal.inf.br/nfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v1.01.xsd"/>
+  <xs:include schemaLocation="tiposDistDFe_v1.01.xsd"/>
+  <xs:element name="resNFe">
+    <xs:annotation>
+      <xs:documentation>Schema da estrutura XML gerada pelo Ambiente Nacional com o conjunto de informações resumidas de uma NF-e</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="chNFe" type="TChNFe">
+          <xs:annotation>
+            <xs:documentation>Chave de acesso da NF-e</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:choice>
+          <xs:element name="CNPJ" type="TCnpj">
+            <xs:annotation>
+              <xs:documentation>CNPJ do Emitente</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CPF" type="TCpf">
+            <xs:annotation>
+              <xs:documentation>CPF do Emitente</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:choice>
+        <xs:element name="xNome">
+          <xs:annotation>
+            <xs:documentation>Razão Social ou Nome do emitente</xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="TString">
+              <xs:maxLength value="60"/>
+              <xs:minLength value="2"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="IE" type="TIe">
+          <xs:annotation>
+            <xs:documentation>Inscrição Estadual do Emitente</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="dhEmi" type="TDateTimeUTC">
+          <xs:annotation>
+            <xs:documentation>Data e Hora de emissão do Documento Fiscal (AAAA-MM-DDThh:mm:ssTZD) ex.: 2012-09-01T13:00:00-03:00</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="tpNF">
+          <xs:annotation>
+            <xs:documentation>Tipo do Documento Fiscal (0 - entrada; 1 - saída)</xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:whiteSpace value="preserve"/>
+              <xs:enumeration value="0"/>
+              <xs:enumeration value="1"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="vNF" type="TDec_1302">
+          <xs:annotation>
+            <xs:documentation>Valor Total da NF-e</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="digVal" type="ds:DigestValueType" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>Digest Value da NF-e processada. Utilizado para conferir a integridade da NF-e original</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="dhRecbto" type="TDateTimeUTC">
+          <xs:annotation>
+            <xs:documentation>Data e hora de autorização da NF-e, no formato AAAA-MM-DDTHH:MM:SSTZD</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="nProt" type="TProt">
+          <xs:annotation>
+            <xs:documentation>Número do Protocolo de Status da NF-e. 1 posição (1 – Secretaria de Fazenda Estadual 2 – Receita Federal); 2 - códiga da UF - 2 posições ano; 10 seqüencial no ano</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="cSitNFe">
+          <xs:annotation>
+            <xs:documentation>
+            Situação da NF-e
+            1-Uso autorizado no momento da consulta;
+            2-Uso denegado;
+            </xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:whiteSpace value="preserve"/>
+              <xs:enumeration value="1"/>
+              <xs:enumeration value="2"/>
+              <xs:enumeration value="3"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="versao" type="TVerResNFe" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:simpleType name="TVerResNFe">
+    <xs:annotation>
+      <xs:documentation>Tipo Versão do leiate resNFe</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="preserve"/>
+      <xs:enumeration value="1.01"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
+
+
