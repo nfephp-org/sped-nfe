@@ -166,6 +166,7 @@ class Contingency
         $config->timestamp = $timestamp;
         $config->type = $type;
         $config->tpEmis = $tpEmis;
+        $this->load(json_encode($config));
         return $config;
     }
 }

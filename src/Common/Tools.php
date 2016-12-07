@@ -2,6 +2,7 @@
 
 namespace NFePHP\NFe\Common;
 
+use NFePHP\Common\Strings\Strings;
 use NFePHP\Common\Certificate;
 use NFePHP\Common\Soap\SoapInterface;
 use NFePHP\Common\Signer;
@@ -184,9 +185,9 @@ class Tools
             $this->config->schemes .
             DIRECTORY_SEPARATOR;
         $this->version($this->config->versao);
-        $this->setEnvironmentTimeZone($this->config->uf);
+        $this->setEnvironmentTimeZone($this->config->siglaUF);
         $this->certificate = $certificate;
-        $this->setEnvironment($this->config->ambiente);
+        $this->setEnvironment($this->config->tpAmb);
         $this->contingency = new Contingency();
         $this->soap = new SoapCurl($certificate);
     }
@@ -230,20 +231,6 @@ class Tools
         date_default_timezone_set($tz[$acronym]);
     }
 
-    /**
-     * Alter environment from "homologacao" to "producao" and vice-versa
-     * @param int $tpAmb
-     * @return void
-     */
-    protected function setEnvironment($tpAmb = 2)
-    {
-        $this->tpAmb = $tpAmb;
-        $this->ambiente = 'homologacao';
-        if ($tpAmb == 1) {
-            $this->ambiente = 'producao';
-        }
-    }
-    
     /**
      * Load Soap Class
      * Soap Class may be \NFePHP\Common\Soap\SoapNative or \NFePHP\Common\Soap\SoapCurl
@@ -323,6 +310,8 @@ class Tools
     {
         try {
             $xml = preg_replace('/>\s+</', '><', $xml);
+            //corret fields from NFe for contigency mode
+            $xml = $this->correctNFeForContingencyMode($xml);
             $signed = Signer::sign($this->certificate, $xml, 'infNFe', 'Id', $this->algorithm, [false,false,null,null]);
             $dom = new \DOMDocument('1.0', 'UTF-8');
             $dom->preserveWhiteSpace = false;
@@ -332,13 +321,56 @@ class Tools
             if ($modelo == 65) {
                 $signed = $this->addQRCode($dom);
             }
-            $this->isValid($this->urlVersion, $signed, 'nfe');
+            $this->isValid($this->versao, $signed, 'nfe');
         } catch (NFePHP\Common\Exception\SignerException $e) {
             throw new \RuntimeException($e->getMessage);
         } catch (\InvalidArgumentException $e) {
             throw new \RuntimeException($e->getMessage);
         }
         return $signed;
+    }
+    
+    /**
+     * Corret NFe fields when in contingency mode
+     * @param string $xml
+     * @return string
+     * @throws \RuntimeException
+     */
+    protected function correctNFeForContingencyMode($xml)
+    {
+        if ($this->contingency->type == '') {
+            return $xml;
+        }
+        $dom = new \DOMDocument('1.0', 'UTF-8');
+        $dom->preserveWhiteSpace = false;
+        $dom->formatOutput = false;
+        $dom->loadXML($xml);
+        //remove signature if is signed
+        if (Signer::isSigned($dom, 'infNFe')) {
+            $dom = Signer::removeSignature($dom);
+        }
+        $motivo = trim(Strings::cleanString($this->contingency->motive));
+        $len = strlen($motivo);
+        if ($len < 15 || $len > 255) {
+            throw new \RuntimeException('O motivo da contingência não atende os parametros de tamanho');
+        }
+        $dt = new \DateTime();
+        $dt->setTimestamp($this->contingency->timestamp);
+        $ide = $dom->getElementsByTagName('ide')->item(0);
+        $ide->getElementsByTagName('tpEmis')->item(0)->nodeValue = $this->contingency->tpEmis;
+        if (!empty($ide->getElementsByTagName('dhCont')->item(0)->nodeValue)) {
+            $ide->getElementsByTagName('dhCont')->item(0)->nodeValue = $dt->format('Y-m-d\TH:i:sP');
+        } else {
+            $dhCont = $dom->createElement('dhCont', $dt->format('Y-m-d\TH:i:sP'));
+            $ide->appendChild($dhCont);
+        }
+        if (!empty($ide->getElementsByTagName('xJust')->item(0)->nodeValue)) {
+            $ide->getElementsByTagName('xJust')->item(0)->nodeValue = $motivo;
+        } else {
+            $xJust = $dom->createElement('xJust', $motivo);
+            $ide->appendChild($xJust);
+        }
+        return $dom->saveXML();
     }
 
     /**
@@ -359,6 +391,34 @@ class Tools
             $body,
             $schema
         );
+    }
+
+    protected function checkContingencyForServices($service)
+    {
+        //se a contingencia é OFFLINE ou FSDA nenhum servidor está disponivel
+        //se a contigencia EPEC está ativa apenas o envio de Lote está ativo,
+        //então gerar um RunTimeException
+        if ($this->contingency->type == 'FSDA'
+            || $this->contingency->type == 'OFFLINE'
+            || ($this->contingency->type == 'EPEC' && $service != 'NfeAutorizacao')
+        ) {
+            throw new \RuntimeException('Operando em modo de contingência esse serviço não está disponivel');
+        }
+        //se a contingência SVC está ativa apenas modificar os XML e obviamente os webservices
+    }
+    
+    /**
+     * Alter environment from "homologacao" to "producao" and vice-versa
+     * @param int $tpAmb
+     * @return void
+     */
+    protected function setEnvironment($tpAmb = 2)
+    {
+        $this->tpAmb = $tpAmb;
+        $this->ambiente = 'homologacao';
+        if ($tpAmb == 1) {
+            $this->ambiente = 'producao';
+        }
     }
     
     /**
