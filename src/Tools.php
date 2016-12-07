@@ -54,7 +54,7 @@ class Tools extends ToolsCommon
             //esses xml deverão ser modificados e reassinados e retornados
             //no parametro $xmls para serem armazenados pelo aplicativo
             //pois serão alterados
-            foreach($aXml as $doc) {
+            foreach ($aXml as $doc) {
                 $xmls[] = $this->signNFe($xml);
             }
             $aXml = $xmls;
