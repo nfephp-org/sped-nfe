@@ -1746,7 +1746,7 @@ class Convert
      */
     protected function q05Entity($aCampos)
     {
-        //Q05|CST|
+        //Q05|CST|vPIS|
         $this->linhaQ[1] = $aCampos[1]; //cst
         $this->linhaQ[2] = ''; //vBC
         $this->linhaQ[3] = ''; //pPIS
@@ -1763,10 +1763,9 @@ class Convert
      */
     protected function q07Entity($aCampos)
     {
-        //Q07|vBC|pPIS|vPIS|
+        //Q07|vBC|pPIS|
         $this->linhaQ[2] = $aCampos[1]; //vBC
         $this->linhaQ[3] = $aCampos[2]; //pPIS
-        $this->linhaQ[4] = $aCampos[3]; //vPIS
         $this->zLinhaQEntity($this->linhaQ);
     }
 

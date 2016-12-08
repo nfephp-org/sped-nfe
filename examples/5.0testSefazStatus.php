@@ -13,10 +13,10 @@ use NFePHP\Common\Soap\SoapCurl;
 //exemplo durante a fase de desenvolvimento e testes.
 $arr = [
     "atualizacao" => "2016-11-03 18:01:21",
-    "ambiente" => 2,
-    "razao" => "SUA RAZAO SOCIAL LTDA",
+    "tpAmb" => 2,
+    "razaosocial" => "SUA RAZAO SOCIAL LTDA",
     "cnpj" => "99999999999999",
-    "uf" => "SP",
+    "siglaUF" => "SP",
     "schemes" => "PL008i2",
     "versao" => '3.10',
     "tokenIBPT" => "AAAAAAA",

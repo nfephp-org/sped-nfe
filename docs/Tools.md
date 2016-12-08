@@ -99,7 +99,7 @@ Sign NFe or NFCe xml string (dont is a file path)
 >Este método assina a NFe ou a NFCe e testa sua validade com o respectivo XSD.
 
 ###Ativando as contingências
-Ao carregar a classe é instaciada a classe Contingency automaticamente na propriedade publica $contingency e apartir dessa propriedade podem ser ativadas ou desativdos os modos de contingencia. Lembrando que isso deverá ser usado tmabém na criação das NFe.
+Ao carregar a classe é instaciada a classe Factories\Contingency automaticamente na propriedade publica $contingency e a partir dessa propriedade podem ser ativadas ou desativdos os modos de contingencia. Lembrando que isso deverá ser usado também na criação das NFe.
 
 **ATIVANDO**
 ```php
@@ -108,19 +108,23 @@ $contJson = $tools->contingency->activate($sigla, $motivo, $tipo = '');
 O modo de contingência pode ser melhor entendido ao se estudar [Contingency](Contingency.md). O parametro tipo é opsional e só deve ser passado em caso do uso de contingência FS-DA, EPEC ou OFFLINE (para NFCe).
 
 **REATIVANDO**
-Cada vez que a classe é invocada o modo de contingência esta desabilitado, e nesta versão da API passa a ser trabalho do aplicativo manter o estado da contingência a sua maneira em arquivo ou em base de dados. Caso o sistema de contigência ainda esteja ativo é necessário recarregalo na classe, com os mesmos parâmetros de sua ativação. Para isso usamos a string json retornada na ativação.
+Cada vez que a classe é invocada o modo de contingência esta desabilitado, e nesta versão da API passa a ser trabalho do aplicativo manter o estado da contingência a sua maneira em arquivo ou em base de dados. Caso o sistema de contigência ainda esteja ativo é necessário recarrega-lo na classe, com os mesmos parâmetros de sua ativação. Para isso usamos a string json retornada na ativação.
 
 ```php
-$contJson = $tools->contingency->load($contJson);
+$tools->contingency->load($contJson);
 ```
 
 **DESATIVANDO**
 ```php
 $contJson = $tools->contingency->deactivate();
 ```
+Ao desativar o modo de contingência é retornado um json com os parametros default.
 
+**Envio de NFe em contingência**
+Ao tenta fazer o envio de lotes em contingência a NFe são modificadas para atender aos requisitos da SEFAZ.
 
-
+**MODO EPEC**
+Ao enviar NFe ou NFCe em modo de contingência EPEC os dados das NFe enviadas serão extraidos das mesmas, as condições basicas serão modificadas na tag &lt;ide&gt; e a NFe será novamente assinada, o retorno 
 
 
 
