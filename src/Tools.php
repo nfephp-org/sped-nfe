@@ -40,23 +40,35 @@ class Tools extends ToolsCommon
         $aXml,
         $idLote = '',
         $indSinc = 0,
-        $compactar = false
+        $compactar = false,
+        &$xmls = []
     ) {
-        $sxml = $aXml;
-        if (is_array($aXml)) {
-            if (count($aXml) > 1) {
-                $indSinc = 0;
-            }
-            $sxml = implode("", $sxml);
+        $servico = 'NfeAutorizacao';
+        //throw Exception if in contingency not for this service
+        $this->checkContingencyForServices($servico);
+        if (count($aXml) > 1) {
+            $indSinc = 0;
         }
+        if ($this->contingency->type != '') {
+            //em modo de contingencia
+            //esses xml deverão ser modificados e reassinados e retornados
+            //no parametro $xmls para serem armazenados pelo aplicativo
+            //pois serão alterados
+            foreach ($aXml as $doc) {
+                $xmls[] = $this->signNFe($xml);
+            }
+            $aXml = $xmls;
+        }
+        $sxml = implode("", $aXml);
         $sxml = preg_replace("/<\?xml.*\?>/", "", $sxml);
         $siglaUF = $this->config->siglaUF;
-        $servico = 'NfeAutorizacao';
+        
         $this->servico(
             'NfeAutorizacao',
             $this->config->siglaUF,
             $this->tpAmb
         );
+        
         $cons = "<enviNFe xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
                 . "<idLote>$idLote</idLote>"
                 . "<indSinc>$indSinc</indSinc>"
@@ -125,6 +137,7 @@ class Tools extends ToolsCommon
      */
     public function sefazConsultaChave($chave = '')
     {
+        
         $chNFe = preg_replace('/[^0-9]/', '', $chave);
         if (strlen($chNFe) != 44) {
             $msg = "Uma chave de 44 dígitos da NFe deve ser passada.";
