@@ -7,16 +7,14 @@ namespace NFePHP\NFe;
  *
  * @category  NFePHP
  * @package   NFePHP\NFe\MakeNFe
- * @copyright Copyright (c) 2008
- * @copyright NFePHP Copyright (c) 2008
+ * @copyright NFePHP Copyright (c) 2008 - 2017
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
  * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
  * @author    Roberto L. Machado <linux.rlm at gmail dot com>
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
-use Brazanation\Documents\NFeAccessKey;
-use Brazanation\Documents\Exception\InvalidDocument as InvalidDocumentException;
+use NFePHP\Common\Keys;
 use NFePHP\Common\DOMImproved as Dom;
 use \DOMDocument;
 use \DOMElement;
@@ -1522,7 +1520,7 @@ class Make
 
     /**
      * Detalhamento de medicamentos K01 pai I90
-     * tag NFe/infNFe/det[]/prod/med (opcional)
+     * tag NFe/infNFe/det[]/prod/med[] (opcional)
      * @param string $nItem
      * @param string $nLote
      * @param string $qLote
@@ -1532,34 +1530,39 @@ class Make
      * @return DOMElement
      */
     public function tagmed(
-    $nItem = '', $nLote = '', $qLote = '', $dFab = '', $dVal = '', $vPMC = ''
+        $nItem = '',
+        $nLote = '',
+        $qLote = '',
+        $dFab = '',
+        $dVal = '',
+        $vPMC = ''
     )
     {
         $identificador = 'K01 <med> - ';
         $med = $this->dom->createElement("med");
         $this->dom->addChild(
-                $med, "nLote", $nLote, true, "$identificador [item $nItem] Número do Lote de medicamentos ou de matérias-primas farmacêuticas"
+            $med, "nLote", $nLote, true, "$identificador [item $nItem] Número do Lote de medicamentos ou de matérias-primas farmacêuticas"
         );
         $this->dom->addChild(
-                $med, "qLote", $qLote, true, "$identificador [item $nItem] Quantidade de produto no Lote de medicamentos "
+            $med, "qLote", $qLote, true, "$identificador [item $nItem] Quantidade de produto no Lote de medicamentos "
                 . "ou de matérias-primas farmacêuticas"
         );
         $this->dom->addChild(
-                $med, "dFab", $dFab, true, "$identificador [item $nItem] Data de fabricação"
+            $med, "dFab", $dFab, true, "$identificador [item $nItem] Data de fabricação"
         );
         $this->dom->addChild(
-                $med, "dVal", $dVal, true, "$identificador [item $nItem] Data de validade"
+            $med, "dVal", $dVal, true, "$identificador [item $nItem] Data de validade"
         );
         $this->dom->addChild(
-                $med, "vPMC", $vPMC, true, "$identificador [item $nItem] Preço máximo consumidor"
+            $med, "vPMC", $vPMC, true, "$identificador [item $nItem] Preço máximo consumidor"
         );
-        $this->aMed[$nItem] = $med;
+        $this->aMed[$nItem][] = $med;
         return $med;
     }
 
     /**
      * Detalhamento de armas L01 pai I90
-     * tag NFe/infNFe/det[]/prod/arma (opcional)
+     * tag NFe/infNFe/det[]/prod/arma[] (opcional)
      * @param string $nItem
      * @param string $tpArma
      * @param string $nSerie
@@ -1568,26 +1571,30 @@ class Make
      * @return DOMElement
      */
     public function tagarma(
-    $nItem = '', $tpArma = '', $nSerie = '', $nCano = '', $descr = ''
-    )
-    {
+        $nItem = '',
+        $tpArma = '',
+        $nSerie = '',
+        $nCano = '',
+        $descr = ''
+    ) {
         $identificador = 'L01 <arma> - ';
         $arma = $this->dom->createElement("arma");
         $this->dom->addChild(
-                $arma, "tpArma", $tpArma, true, "$identificador [item $nItem] Indicador do tipo de arma de fogo"
+            $arma, "tpArma", $tpArma, true, "$identificador [item $nItem] Indicador do tipo de arma de fogo"
         );
         $this->dom->addChild(
-                $arma, "nSerie", $nSerie, true, "$identificador [item $nItem] Número de série da arma"
+            $arma, "nSerie", $nSerie, true, "$identificador [item $nItem] Número de série da arma"
         );
         $this->dom->addChild(
-                $arma, "nCano", $nCano, true, "$identificador [item $nItem] Número de série do cano"
+            $arma, "nCano", $nCano, true, "$identificador [item $nItem] Número de série do cano"
         );
         $this->dom->addChild(
-                $arma, "descr", $descr, true, "$identificador [item $nItem] Descrição completa da arma, compreendendo: calibre, marca, capacidade, "
+            $arma,
+            "descr", $descr, true, "$identificador [item $nItem] Descrição completa da arma, compreendendo: calibre, marca, capacidade, "
                 . "tipo de funcionamento, comprimento e demais elementos que "
                 . "permitam a sua perfeita identificação."
         );
-        $this->aArma[$nItem] = $arma;
+        $this->aArma[$nItem][] = $arma;
         return $arma;
     }
 
@@ -1606,9 +1613,16 @@ class Make
      * @return DOMElement
      */
     public function tagcomb(
-    $nItem = '', $cProdANP = '', $pMixGN = '', $codif = '', $qTemp = '', $ufCons = '', $qBCProd = '', $vAliqProd = '', $vCIDE = ''
-    )
-    {
+        $nItem = '',
+        $cProdANP = '',
+        $pMixGN = '',
+        $codif = '',
+        $qTemp = '',
+        $ufCons = '',
+        $qBCProd = '',
+        $vAliqProd = '',
+        $vCIDE = ''
+    ) {
         $identificador = 'L101 <comb> - ';
         $comb = $this->dom->createElement("comb");
         $this->dom->addChild(
