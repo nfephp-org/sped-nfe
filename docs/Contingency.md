@@ -242,11 +242,11 @@ $motive --- texto com o motivo da entrada em contingência
 
 $type --- podem ser usadas as constantes:
 
-Contingency::SVCAN
-Contingency::SVCRS
-Contingency::FSDA
-Contingency::OFFLINE
-Contingency::EPEC
+- Contingency::SVCAN
+- Contingency::SVCRS
+- Contingency::FSDA
+- Contingency::OFFLINE
+- Contingency::EPEC
 
 
 ```
