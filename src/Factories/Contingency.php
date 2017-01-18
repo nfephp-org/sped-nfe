@@ -17,6 +17,14 @@ namespace NFePHP\NFe\Factories;
 
 class Contingency
 {
+    
+    const SVCAN = 'SVCAN';
+    const SVCRS = 'SVCRS';
+    const OFFLINE = 'OFFLINE';
+    const EPEC = 'EPEC';
+    const FSDA = 'FS-DA';
+    
+    
     /**
      * @var \stdClass
      */

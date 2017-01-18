@@ -139,6 +139,57 @@ Se continuar sem resposta, siga o indicado acima, cancele e emita outra.
 
 #Class Factories\Contingency
 
+##USAGE
+
+**Habilitando o modo de contingência**
+ 
+```
+use NFePHP\NFe\Factories\Contingency;
+
+$contingency = new Contingency();
+
+$acronym = 'SP';
+$motive = 'SEFAZ fora do AR';
+$type = 'SVCAN';
+
+$status = $contingency->activate($acronym, $motive, $type);
+
+```
+$status irá conter uma string JSON ENCODED, com as informações sobre a condição de contingência. 
+
+```
+{
+   "motive":"SEFAZ fora do AR",
+   "timestamp":1484747583,
+   "type":"SVCAN",
+   "tpEmis":6
+}
+```
+Essa string deverá ser arquivada, em disco ou em base de dados para uso posterior, até que o modeo de contingencia seja desabilitado. 
+Ou seja, a cada vez que carregar a classe Tools deverá ser passada a classe contingency, ou será considerado que o ambiente é normal. 
+
+**Desabilitando o modo de contingência**
+```
+use NFePHP\NFe\Factories\Contingency;
+
+//onde $status é a string obtida quando entrou em modo de contingência.
+$contingency = new Contingency($status);
+
+$status = $contingency->deactivate();
+
+```
+$status irá conter dados padrões em condições normais.
+```
+{
+   "motive":"",
+   "timestamp":0,
+   "type":"",
+   "tpEmis":1
+}
+```
+Essa string deverá ser arquivada, em disco ou em base de dados para uso posterior, ou apenas ignorada, e o arquivo ou registro da base de dadso removida. 
+
+
 ##Properties
 
 public $type;
@@ -168,3 +219,34 @@ public $tpEmis;
 
 ##Methods
 
+```
+Contingency::construct($string)
+```
+Construtor, caso seja passado o parametro, uma string JSON, a condição de contingencia contida nessa string será registrada na classe.
+Caso nada seja passado a classe irá considerar condição de emissão normal.
+ 
+```
+Contingency::load($string)
+```
+Essa é outra forma de passar o paramtro (string JSON) para a classe.
+
+```
+Contingency::activate($acronym, $motive, $type)
+```
+Esse método ativa o modo de contignência da classe.
+Os parametros são:
+$acronym --- sigla do estado
+$motive --- texto com o motivo da entrada em contingência
+$type --- podem ser usadas as constantes:
+
+Contingency::SVCAN
+Contingency::SVCRS
+Contingency::FSDA
+Contingency::OFFLINE
+Contingency::EPEC
+
+
+```
+Contingency::deactivate()
+```
+Esse método desativa o modo de contingência e retorna uma string json com os valores padrões.
