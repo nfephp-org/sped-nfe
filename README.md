@@ -1,13 +1,13 @@
-#SPED-NFE v5.0
-##Este release está preparado para atender a versão 4.0 do layout da SEFAZ!
+#SPED-NFE v5.0 (em desenvolvimento)
+##Este release está sendo preparado para atender a versão 4.0 do layout da SEFAZ!
 
 >Ambiente de Homologação (ambiente de teste das empresas): 01/06/2017;
 
->Ambiente de Produção: 01/08/17;
+>*Ambiente de Produção: 01/08/17;*
 
->Desativação da versão anterior 3.10: 06/11/17.
+>*Desativação da versão anterior 3.10: 06/11/17.*
 
->**Até 06/11/2017 esta versão será movida para master e as anteriores se tornam automaticamente OBSOLETAS e não mais receberão correções ou atualizações.**
+>**IMPORTANTE: Até 06/11/2017 esta versão será movida para master e as anteriores se tornam automaticamente OBSOLETAS e não mais receberão correções ou atualizações.**
 
 [![Chat][ico-gitter]][link-gitter]
 
@@ -41,9 +41,7 @@ Acompanhe o [CHANGELOG](CHANGELOG.md) para maiores informações sobre as altera
 
 ##Testing
 
-``` bash
-$ composer test
-```
+Todos os testes são desenvolvidos para operar com o PHPUNIT
 
 ##Contributing
 
@@ -54,6 +52,8 @@ Para contribuir por favor observe o [CONTRIBUTING](CONTRIBUTING.md) e o  [Códig
 Caso você encontre algum problema relativo a segurança, por favor envie um email diretamente aos mantenedores do pacote ao invés de abrir um ISSUE.
 
 ##Credits
+
+Roberto L. Machado (owner and developer)
 
 ##License
 

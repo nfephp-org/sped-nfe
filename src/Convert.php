@@ -2656,7 +2656,6 @@ class Convert
     /**
      * zArray2xml
      * Converte uma Nota Fiscal em um array de txt em um xml
-     *
      * @param  array $aDados
      * @return string
      * @throws Exception\RuntimeException
@@ -2664,7 +2663,7 @@ class Convert
     protected function zArray2xml($aDados = array())
     {
         foreach ($aDados as $dado) {
-            $aCampos = $this->zClean(explode("|", $dado));
+            $aCampos = array_walk_recursive(explode("|", $dado), 'clearFieldString');
             $metodo = strtolower(str_replace(' ', '', $aCampos[0])).'Entity';
             if (! method_exists($this, $metodo)) {
                 $msg = "O txt tem um metodo não definido!! $dado";
@@ -2675,18 +2674,17 @@ class Convert
     }
 
     /**
-     * Clear strings
-     * @param  array $aCampos
-     * @return array
+     * Clear the string of unwanted characters
+     * Will remove all duplicated spaces and if wanted
+     * replace all accented characters by their originals
+     * and all the special ones
+     * @param string $field string to be cleaned
      */
-    protected function zClean($aCampos = array())
+    private function clearFieldString(&$field)
     {
-        foreach ($aCampos as $campo) {
-            $campo = trim(preg_replace('/\s+/', ' ', $campo));
-            if ($this->limparString) {
-                $campo = Strings::cleanString($campo);
-            }
+        $field = trim(preg_replace('/\s+/', ' ', $field));
+        if ($this->limparString) {
+            $field = Strings::cleanString($field);
         }
-        return $aCampos;
     }
 }
