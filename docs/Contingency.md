@@ -165,7 +165,7 @@ $status irá conter uma string JSON ENCODED, com as informações sobre a condi�
    "tpEmis":6
 }
 ```
-Essa string deverá ser arquivada, em disco ou em base de dados para uso posterior, até que o modeo de contingencia seja desabilitado. 
+Essa string deverá ser arquivada, em disco ou em base de dados para uso posterior, até que o modo de contingencia seja desabilitado. 
 Ou seja, a cada vez que carregar a classe Tools deverá ser passada a classe contingency, ou será considerado que o ambiente é normal. 
 
 **Desabilitando o modo de contingência**
@@ -187,7 +187,7 @@ $status irá conter dados padrões em condições normais.
    "tpEmis":1
 }
 ```
-Essa string deverá ser arquivada, em disco ou em base de dados para uso posterior, ou apenas ignorada, e o arquivo ou registro da base de dadso removida. 
+Essa string deverá ser arquivada, em disco ou em base de dados para uso posterior, ou apenas ignorada, e o arquivo ou registro da base de dados removida. 
 
 
 ##Properties
@@ -235,8 +235,11 @@ Contingency::activate($acronym, $motive, $type)
 ```
 Esse método ativa o modo de contignência da classe.
 Os parametros são:
+
 $acronym --- sigla do estado
+
 $motive --- texto com o motivo da entrada em contingência
+
 $type --- podem ser usadas as constantes:
 
 Contingency::SVCAN
