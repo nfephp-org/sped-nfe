@@ -93,8 +93,11 @@ Nesse caso o xml da NFCe deve indicar na propriedade &lt;tpEmis&gt; o valor 9
 As vezes a internet está "ON LINE" mas comunicação com a SEFAZ pode estar muito RUIM (isso é BRASIL), nesses casos fica a pergunta **o que fazer ?**.
 Não tem uma resposta simples para todos os casos, pois esse timeout pode ser causado por:
 1. falhas no servidor da SEFAZ
+
 2. problemas de DNS
+
 3. falhas nos roteadores da operadora
+
 4. etc.
 
 ##NFe
