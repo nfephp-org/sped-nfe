@@ -1791,7 +1791,7 @@ class Make
 
     /**
      * Rastreabilidade do produto podem ser até 500 por item TAG I80 pai I01
-     * NT 2016.002 v1.00 
+     * NT 2016.002 v1.00
      * tag NFe/infNFe/det[]/prod/rastro
      * @param int $nItem
      * @param string $nLote
@@ -2379,8 +2379,8 @@ class Make
      * Detalhamento de medicamentos K01 pai I90
      * tag NFe/infNFe/det[]/prod/med[] (opcional)
      * @param int $nItem
-     * @param string $cProdANVISA Utilizar o número do registro do produto 
-     *                            da Câmara de Regulação do Mercado de 
+     * @param string $cProdANVISA Utilizar o número do registro do produto
+     *                            da Câmara de Regulação do Mercado de
      *                            Medicamento – CMED
      * @param float $vPMC
      * @return DOMElement
@@ -2694,33 +2694,33 @@ class Make
      * @return DOMElement
      */
     public function tagICMS(
-        $nItem = '',
-        $orig = '',
-        $CST = '',
-        $modBC = '',
-        $pRedBC = '',
-        $vBC = '',
-        $pICMS = '',
-        $vICMS = '',
-            $vBCFCP,
-        $pFCP = '',
-        $vFCP = '',   
-        $vICMSDeson = '',
-        $motDesICMS = '',
-        $modBCST = '',
-        $pMVAST = '',
-        $pRedBCST = '',
-        $vBCST = '',
-        $pICMSST = '',
-        $vICMSST = '',
-            $vBCFCPST,
-            $pFCPST,
-            $vFCPST,
-        $pDif = '',
-        $vICMSDif = '',
-        $vICMSOp = '',
-        $vBCSTRet = '',
-        $vICMSSTRet = ''
+        $nItem,
+        $orig,
+        $CST,
+        $modBC,
+        $pRedBC,
+        $vBC,
+        $pICMS,
+        $vICMS,
+        $vBCFCP,
+        $pFCP,
+        $vFCP,
+        $vICMSDeson,
+        $motDesICMS,
+        $modBCST,
+        $pMVAST,
+        $pRedBCST,
+        $vBCST,
+        $pICMSST,
+        $vICMSST,
+        $vBCFCPST,
+        $pFCPST,
+        $vFCPST,
+        $pDif,
+        $vICMSDif,
+        $vICMSOp,
+        $vBCSTRet,
+        $vICMSSTRet
     ) {
         $identificador = 'N01 <ICMSxx> - ';
         switch ($CST) {
@@ -4884,18 +4884,18 @@ class Make
         $vBC,
         $vICMS,
         $vICMSDeson,
-            $vFCP,
+        $vFCP,
         $vBCST,
         $vST,
-            $vFCPST,
-            $vFCPSTRet,
+        $vFCPST,
+        $vFCPSTRet,
         $vProd,
         $vFrete,
         $vSeg,
         $vDesc,
         $vII,
         $vIPI,
-            $vIPIDevol,
+        $vIPIDevol,
         $vPIS,
         $vCOFINS,
         $vOutro,
@@ -5666,7 +5666,7 @@ class Make
     public function tagpag(
         $tPag,
         $vPag,
-        $vTroco    
+        $vTroco
     ) {
         $num = $this->buildPag();
         $pag = $this->dom->createElement("pag");
