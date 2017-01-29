@@ -192,36 +192,4 @@ class Complements
         $this->isValid($this->urlVersion, $procXML, 'procNFe');
         return $procXML;
     }
-    
-
-
-    /**
-     * verificaValidade
-     * Verifica a validade de uma NFe recebida
-     * @param  string $nfe
-     * @param  array  $aRetorno
-     * @return boolean
-     * @throws \RuntimeException
-     */
-    public function verificaValidade($nfe)
-    {
-        //verifica a assinatura da NFe, exception caso de falha
-        Signer::isSigned($dom, 'infNFe');
-        //verifica a validade no webservice da SEFAZ
-        $domnfe = new \DOMDocument('1.0', 'utf-8');
-        $domnfe->formatOutput = false;
-        $domnfe->preserveWhiteSpace = false;
-        $domnfe->loadXML($nfe);
-        $tpAmb = $domnfe->getElementsByTagName('tpAmb')->item(0)->nodeValue;
-        $infNFe  = $domnfe->getElementsByTagName('infNFe')->item(0);
-        $chaveNFe = preg_replace('/[^0-9]/', '', $infNFe->getAttribute("Id"));
-        $this->sefazConsultaChave($chNFe, $tpAmb);
-        /*
-        if ($aRetorno['cStat'] != '100' && $aRetorno['cStat'] != '150') {
-            return false;
-        }
-         * 
-         */
-        return true;
-    }
 }
