@@ -19,10 +19,10 @@ use NFePHP\Common\DOMImproved as Dom;
 use \DOMDocument;
 use \DOMElement;
 use \DOMNode;
+use \DateTime;
 
 class Make
 {
-
     /**
      * @var array
      */
@@ -41,13 +41,13 @@ class Make
     /**
      * @var string
      */
-    private $versao = '3.10';
+    private $versao = '4.00';
 
     /**
      * @var integer
      */
     private $mod = 55;
-
+    
     /**
      * @var \NFePHP\Common\DOMImproved
      */
@@ -144,127 +144,133 @@ class Make
     private $aTotICMSUFDest = ['vFCPUFDest' => '', 'vICMSUFDest' => '', 'vICMSUFRemet' => ''];
 
     /**
-     * @var array
+     * @var array of DOMElements
      */
     private $aNFref = [];
 
     /**
-     * @var array
+     * @var array of DOMElements
      */
     private $aDup = [];
 
     /**
-     * @var array
+     * @var array of DOMElements
      */
     private $aPag = [];
 
     /**
-     * @var array
+     * @var array of DOMElements
      */
     private $aReboque = [];
 
     /**
-     * @var array
+     * @var array of DOMElements
      */
     private $aVol = [];
 
     /**
-     * @var array
+     * @var array of DOMElements
      */
     private $aAutXML = [];
 
     /**
-     * @var array
+     * @var array of DOMElements
      */
     private $aDet = [];
 
     /**
-     * @var array
+     * @var array of DOMElements
      */
     private $aProd = [];
+    
+    /**
+     *
+     * @var array of DOMElements
+     */
+    private $aRastro = [];
 
     /**
-     * @var array
+     * @var array of DOMElements
      */
     private $aNVE = [];
 
     /**
-     * @var array
+     * @var array of DOMElements
      */
     private $aCest = [];
 
     /**
-     * @var array
+     * @var array of DOMElements
      */
     private $aRECOPI = [];
 
     /**
-     * @var array
+     * @var array of DOMElements
      */
     private $aDetExport = [];
 
     /**
-     * @var array
+     * @var array of DOMElements
      */
     private $aDI = [];
 
     /**
-     * @var array
+     * @var array of DOMElements
      */
     private $aAdi = [];
 
     /**
-     * @var array
+     * @var array of DOMElements
      */
     private $aVeicProd = [];
 
     /**
-     * @var array
+     * @var array of DOMElements
      */
     private $aMed = [];
 
     /**
-     * @var array
+     * @var array of DOMElements
      */
     private $aArma = [];
 
     /**
-     * @var array
+     * @var array of DOMElements
      */
     private $aComb = [];
 
     /**
-     * @var array
+     * @var array of DOMElements
      */
     private $aEncerrante = [];
 
     /**
-     * @var array
+     * @var array of DOMElements
      */
     private $aImposto = [];
 
     /**
-     * @var array
+     * @var array of DOMElements
      */
     private $aICMS = [];
 
     /**
-     * @var array
+     * @var array of DOMElements
      */
     private $aICMSUFDest = [];
 
     /**
-     * @var array
+     * @var array of DOMElements
      */
     private $aIPI = [];
 
     /**
-     * @var array
+     * @var array of DOMElements
      */
     private $aII = [];
 
     /**
-     * @var array
+     * @var array of DOMElements
      */
     private $aISSQN = [];
 
@@ -274,52 +280,52 @@ class Make
     private $aPIS = [];
 
     /**
-     * @var array
+     * @var array of DOMElements
      */
     private $aPISST = [];
 
     /**
-     * @var array
+     * @var array of DOMElements
      */
     private $aCOFINS = [];
 
     /**
-     * @var array
+     * @var array of DOMElements
      */
     private $aCOFINSST = [];
 
     /**
-     * @var array
+     * @var array of DOMElements
      */
     private $aImpostoDevol = [];
 
     /**
-     * @var array
+     * @var array of DOMElements
      */
     private $aInfAdProd = [];
 
     /**
-     * @var array
+     * @var array of DOMElements
      */
     private $aObsCont = [];
 
     /**
-     * @var array
+     * @var array of DOMElements
      */
     private $aObsFisco = [];
 
     /**
-     * @var array
+     * @var array of DOMElements
      */
     private $aProcRef = [];
 
     /**
-     * @var array
+     * @var array of DOMElements
      */
     private $aForDia = [];
 
     /**
-     * @var array
+     * @var array of DOMElements
      */
     private $aDeduc = [];
 
@@ -328,9 +334,9 @@ class Make
      * que será carregado com o documento fiscal
      * @param string $versao Versao do layout do XML
      */
-    public function __construct($versao = '3.10')
+    public function __construct($versao = '4.00')
     {
-        if (!empty($versao) && ($versao == '3.10' || $versao = '4.00')) {
+        if (!empty($versao)) {
             $this->versao = $versao;
         }
         $this->dom = new Dom('1.0', 'UTF-8');
@@ -430,7 +436,6 @@ class Make
         $this->dom->appChild($this->dom, $this->NFe, 'Falta DOMDocument');
         //testa da chave e a refaz se necessário
         $this->checkNFeKey($this->dom);
-
         if (count($this->dom->erros) > 0) {
             return false;
         }
@@ -461,7 +466,6 @@ class Make
      * @param string $cUF
      * @param string $cNF
      * @param string $natOp
-     * @param string $indPag
      * @param string $mod
      * @param string $serie
      * @param string $nNF
@@ -487,7 +491,6 @@ class Make
         $cUF = '',
         $cNF = '',
         $natOp = '',
-        $indPag = '',
         $mod = '',
         $serie = '',
         $nNF = '',
@@ -508,7 +511,6 @@ class Make
         $dhCont = '',
         $xJust = ''
     ) {
-    
         $this->tpAmb = $tpAmb;
         $identificador = 'B01 <ide> - ';
         $ide = $this->dom->createElement("ide");
@@ -532,13 +534,6 @@ class Make
             $natOp,
             true,
             $identificador . "Descrição da Natureza da Operaçãoo"
-        );
-        $this->dom->addChild(
-            $ide,
-            "indPag",
-            $indPag,
-            true,
-            $identificador . "Indicador da forma de pagamento"
         );
         $this->dom->addChild(
             $ide,
@@ -682,8 +677,6 @@ class Make
         }
         $this->mod = $mod;
         $this->ide = $ide;
-        $this->chave()
-
         return $ide;
     }
 
@@ -1632,7 +1625,6 @@ class Make
         $nItemPed = '',
         $nFCI = ''
     ) {
-    
         $identificador = 'I01 <prod> - ';
         $prod = $this->dom->createElement("prod");
         $this->dom->addChild(
@@ -1797,6 +1789,51 @@ class Make
         return $prod;
     }
 
+    /**
+     * Rastreabilidade do produto podem ser até 500 por item TAG I80 pai I01
+     * NT 2016.002 v1.00 
+     * tag NFe/infNFe/det[]/prod/rastro
+     * @param int $nItem
+     * @param string $nLote
+     * @param float $qLote
+     * @param DateTime $dFab
+     * @param DateTime $dVal
+     */
+    public function tagRastro($nItem, $nLote, $qLote, \DateTime $dFab, \DateTime $dVal)
+    {
+        $rastro = $this->dom->createElement("rastro");
+        $this->dom->addChild(
+            $rastro,
+            "nLote",
+            $nLote,
+            true,
+            $identificador . "[item $nItem] Número do lote"
+        );
+        $this->dom->addChild(
+            $rastro,
+            "qLote",
+            number_format($qLote, 3, '.', ''),
+            true,
+            $identificador . "[item $nItem] Quantidade do lote"
+        );
+        $this->dom->addChild(
+            $rastro,
+            "dFab",
+            $dFab->format('Y-m-d'),
+            true,
+            $identificador . "[item $nItem] Data de fabricação"
+        );
+        $this->dom->addChild(
+            $rastro,
+            "dVal",
+            $dVal->format('Y-m-d'),
+            true,
+            $identificador . "[item $nItem] Data da validade"
+        );
+        $this->aRastro[$nItem][] = $rastro;
+        return $rastro;
+    }
+    
     /**
      * NVE NOMENCLATURA DE VALOR ADUANEIRO E ESTATÍSTICA
      * Podem ser até 8 NVE's por item
@@ -2341,58 +2378,32 @@ class Make
     /**
      * Detalhamento de medicamentos K01 pai I90
      * tag NFe/infNFe/det[]/prod/med[] (opcional)
-     * @param string $nItem
-     * @param string $nLote
-     * @param string $qLote
-     * @param string $dFab
-     * @param string $dVal
-     * @param string $vPMC
+     * @param int $nItem
+     * @param string $cProdANVISA Utilizar o número do registro do produto 
+     *                            da Câmara de Regulação do Mercado de 
+     *                            Medicamento – CMED
+     * @param float $vPMC
      * @return DOMElement
      */
     public function tagmed(
         $nItem = '',
-        $nLote = '',
-        $qLote = '',
-        $dFab = '',
-        $dVal = '',
-        $vPMC = ''
+        $cProdANVISA = '',
+        $vPMC = 0
     ) {
-    
         $identificador = 'K01 <med> - ';
         $med = $this->dom->createElement("med");
         $this->dom->addChild(
             $med,
-            "nLote",
-            $nLote,
+            "cProdANVISA",
+            $cProdANVISA,
             true,
-            "$identificador [item $nItem] Número do Lote de medicamentos ou de matérias-primas farmacêuticas"
-        );
-        $this->dom->addChild(
-            $med,
-            "qLote",
-            $qLote,
-            true,
-            "$identificador [item $nItem] Quantidade de produto no Lote de medicamentos "
-                . "ou de matérias-primas farmacêuticas"
-        );
-        $this->dom->addChild(
-            $med,
-            "dFab",
-            $dFab,
-            true,
-            "$identificador [item $nItem] Data de fabricação"
-        );
-        $this->dom->addChild(
-            $med,
-            "dVal",
-            $dVal,
-            true,
-            "$identificador [item $nItem] Data de validade"
+            "$identificador [item $nItem] Número do registro do produto da "
+                . "Câmara de Regulação do Mercado de Medicamento – CMED"
         );
         $this->dom->addChild(
             $med,
             "vPMC",
-            $vPMC,
+            number_format($vPMC, 2, '.', ''),
             true,
             "$identificador [item $nItem] Preço máximo consumidor"
         );
@@ -2468,15 +2479,19 @@ class Make
      * @return DOMElement
      */
     public function tagcomb(
-        $nItem = '',
-        $cProdANP = '',
-        $pMixGN = '',
-        $codif = '',
-        $qTemp = '',
-        $ufCons = '',
-        $qBCProd = '',
-        $vAliqProd = '',
-        $vCIDE = ''
+        $nItem,
+        $cProdANP,
+        $descANP,
+        $pGLP,
+        $pGNn,
+        $pGNi,
+        $vPart,
+        $codif,
+        $qTemp,
+        $ufCons,
+        $qBCProd,
+        $vAliqProd,
+        $vCIDE
     ) {
         $identificador = 'L101 <comb> - ';
         $comb = $this->dom->createElement("comb");
@@ -2485,21 +2500,57 @@ class Make
             "cProdANP",
             $cProdANP,
             true,
-            "$identificador [item $nItem] Código de produto da ANP"
+            "$identificador [item $nItem] Utilizar a codificação de produtos do"
+                . " Sistema de Informações de Movimentação de Produtos - "
+                . "SIMP (http://www.anp.gov.br/simp/). (NT 2012/003)"
         );
         $this->dom->addChild(
             $comb,
-            "pMixGN",
-            $pMixGN,
+            "descANP",
+            $descANP,
+            true,
+            "$identificador [item $nItem] Utilizar a descrição de produtos do "
+                . "Sistema de Informações de Movimentação de Produtos - "
+                . "SIMP (http://www.anp.gov.br/simp/"
+        );
+        $this->dom->addChild(
+            $comb,
+            "pGLP",
+            $pGLP,
             false,
-            "$identificador [item $nItem] Percentual de Gás Natural para o produto GLP (cProdANP=210203001)"
+            "$identificador [item $nItem] Percentual do GLP derivado do "
+                . "petróleo no produto GLP (cProdANP=210203001) 1v4"
+        );
+        $this->dom->addChild(
+            $comb,
+            "pGNn",
+            $pGNn,
+            false,
+            "$identificador [item $nItem] Percentual de Gás Natural Nacional"
+                . " – GLGNn para o produto GLP (cProdANP=210203001) 1v4"
+        );
+        $this->dom->addChild(
+            $comb,
+            "pGNi",
+            $pGNi,
+            false,
+            "$identificador [item $nItem] Percentual de Gás Natural Importado"
+                . " – GLGNi para o produto GLP (cProdANP=210203001) 1v4"
+        );
+        $this->dom->addChild(
+            $comb,
+            "vPart",
+            $vPart,
+            false,
+            "$identificador [item $nItem] Valor de partida (cProdANP=210203001) "
         );
         $this->dom->addChild(
             $comb,
             "CODIF",
             $codif,
             false,
-            "[item $nItem] Código de autorização / registro do CODIF"
+            "$identificador [item $nItem] Código de autorização / registro do"
+                . " CODIF"
         );
         $this->dom->addChild(
             $comb,
@@ -2651,6 +2702,9 @@ class Make
         $vBC = '',
         $pICMS = '',
         $vICMS = '',
+            $vBCFCP,
+        $pFCP = '',
+        $vFCP = '',   
         $vICMSDeson = '',
         $motDesICMS = '',
         $modBCST = '',
@@ -2659,13 +2713,15 @@ class Make
         $vBCST = '',
         $pICMSST = '',
         $vICMSST = '',
+            $vBCFCPST,
+            $pFCPST,
+            $vFCPST,
         $pDif = '',
         $vICMSDif = '',
         $vICMSOp = '',
         $vBCSTRet = '',
         $vICMSSTRet = ''
     ) {
-    
         $identificador = 'N01 <ICMSxx> - ';
         switch ($CST) {
             case '00':
@@ -2711,6 +2767,22 @@ class Make
                     $vICMS,
                     true,
                     "$identificador [item $nItem] Valor do ICMS"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'pFCP',
+                    $pFCP,
+                    false,
+                    "$identificador [item $nItem] Percentual do ICMS relativo "
+                        . "ao Fundo de Combate à Pobreza (FCP) 3v2-4"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'vFCP',
+                    $vFCP,
+                    false,
+                    "$identificador [item $nItem] Valor do ICMS relativo ao "
+                        . "Fundo de Combate à Pobreza (FCP)"
                 );
                 break;
             case '10':
@@ -2799,6 +2871,8 @@ class Make
                     true,
                     "$identificador [item $nItem] Valor do ICMS ST"
                 );
+                
+                
                 break;
             case '20':
                 $icms = $this->dom->createElement("ICMS20");
@@ -3924,27 +3998,29 @@ class Make
      * tag NFe/infNFe/det[]/imposto/ICMSUFDest (opcional)
      * Grupo a ser informado nas vendas interestaduais para consumidor final,
      * não contribuinte do ICMS
-     * @param string $nItem
-     * @param string $vBCUFDest
-     * @param string $pFCPUFDest
-     * @param string $pICMSUFDest
-     * @param string $pICMSInter
-     * @param string $pICMSInterPart
-     * @param string $vFCPUFDest
-     * @param string $vICMSUFDest
-     * @param string $vICMSUFRemet
+     * @param int $nItem
+     * @param float $vBCUFDest
+     * @param float $vBCFCPUFDest
+     * @param float $pFCPUFDest
+     * @param float $pICMSUFDest
+     * @param float $pICMSInter
+     * @param float $pICMSInterPart
+     * @param float $vFCPUFDest
+     * @param float $vICMSUFDest
+     * @param float $vICMSUFRemet
      * @return DOMElement
      */
     public function tagICMSUFDest(
-        $nItem = '',
-        $vBCUFDest = '',
-        $pFCPUFDest = '',
-        $pICMSUFDest = '',
-        $pICMSInter = '',
-        $pICMSInterPart = '',
-        $vFCPUFDest = '',
-        $vICMSUFDest = '',
-        $vICMSUFRemet = ''
+        $nItem,
+        $vBCUFDest,
+        $vBCFCPUFDest,
+        $pFCPUFDest,
+        $pICMSUFDest,
+        $pICMSInter,
+        $pICMSInterPart,
+        $vFCPUFDest,
+        $vICMSUFDest,
+        $vICMSUFRemet
     ) {
     
         $icmsUFDest = $this->dom->createElement('ICMSUFDest');
@@ -3953,8 +4029,16 @@ class Make
             "vBCUFDest",
             $vBCUFDest,
             true,
-            "[item $nItem] Valor da BC do ICMS na UF do destinatário"
+            "[item $nItem] Valor da BC do ICMS na UF de destino"
         );
+        $this->dom->addChild(
+            $icmsUFDest,
+            "vBCFCPUFDest",
+            $vBCFCPUFDest,
+            true,
+            "[item $nItem] Valor da BC FCP na UF de destino"
+        );
+        
         $this->dom->addChild(
             $icmsUFDest,
             "pFCPUFDest",
@@ -4778,43 +4862,46 @@ class Make
     /**
      * Grupo Totais referentes ao ICMS W02 pai W01
      * tag NFe/infNFe/total/ICMSTot
-     * @param string $vBC
-     * @param string $vICMS
-     * @param string $vICMSDeson
-     * @param string $vBCST
-     * @param string $vST
-     * @param string $vProd
-     * @param string $vFrete
-     * @param string $vSeg
-     * @param string $vDesc
-     * @param string $vII
-     * @param string $vIPI
-     * @param string $vPIS
-     * @param string $vCOFINS
-     * @param string $vOutro
-     * @param string $vNF
-     * @param string $vTotTrib
+     * @param float $vBC
+     * @param float $vICMS
+     * @param float $vICMSDeson
+     * @param float $vBCST
+     * @param float $vST
+     * @param float $vProd
+     * @param float $vFrete
+     * @param float $vSeg
+     * @param float $vDesc
+     * @param float $vII
+     * @param float $vIPI
+     * @param float $vPIS
+     * @param float $vCOFINS
+     * @param float $vOutro
+     * @param float $vNF
+     * @param float $vTotTrib
      * @return DOMElement
      */
     public function tagICMSTot(
-        $vBC = '',
-        $vICMS = '',
-        $vICMSDeson = '',
-        $vBCST = '',
-        $vST = '',
-        $vProd = '',
-        $vFrete = '',
-        $vSeg = '',
-        $vDesc = '',
-        $vII = '',
-        $vIPI = '',
-        $vPIS = '',
-        $vCOFINS = '',
-        $vOutro = '',
-        $vNF = '',
-        $vTotTrib = ''
+        $vBC,
+        $vICMS,
+        $vICMSDeson,
+            $vFCP,
+        $vBCST,
+        $vST,
+            $vFCPST,
+            $vFCPSTRet,
+        $vProd,
+        $vFrete,
+        $vSeg,
+        $vDesc,
+        $vII,
+        $vIPI,
+            $vIPIDevol,
+        $vPIS,
+        $vCOFINS,
+        $vOutro,
+        $vNF,
+        $vTotTrib
     ) {
-    
         $this->buildTotal();
         $ICMSTot = $this->dom->createElement("ICMSTot");
         $this->dom->addChild(
@@ -5571,15 +5658,16 @@ class Make
      * Grupo de Formas de Pagamento YA01 pai A01
      * tag NFe/infNFe/pag (opcional)
      * Apenas para o modelo 65 NFCe
-     * @param string $tPag
-     * @param string $vPag
+     * @param int $tPag
+     * @param float $vPag
+     * @param float $vTroco
      * @return DOMElement
      */
     public function tagpag(
-        $tPag = '',
-        $vPag = ''
+        $tPag,
+        $vPag,
+        $vTroco    
     ) {
-    
         $num = $this->buildPag();
         $pag = $this->dom->createElement("pag");
         $this->dom->addChild(
@@ -5595,6 +5683,13 @@ class Make
             $vPag,
             true,
             "Valor do Pagamento"
+        );
+        $this->dom->addChild(
+            $this->aPag[$num - 1],
+            "vTroco",
+            $vTroco,
+            true,
+            "Valor do troco"
         );
         return $pag;
     }
@@ -6338,12 +6433,11 @@ class Make
      * @param Dom $dom
      * @return void
      */
-    private function checkNFeKey($dom)
+    private function checkNFeKey(Dom $dom)
     {
         $infNFe = $dom->getElementsByTagName("infNFe")->item(0);
         $ide = $dom->getElementsByTagName("ide")->item(0);
         $emit = $dom->getElementsByTagName("emit")->item(0);
-
         $cUF = $ide->getElementsByTagName('cUF')->item(0)->nodeValue;
         $dhEmi = $ide->getElementsByTagName('dhEmi')->item(0)->nodeValue;
         $cnpj = $emit->getElementsByTagName('CNPJ')->item(0)->nodeValue;
@@ -6353,22 +6447,9 @@ class Make
         $tpEmis = $ide->getElementsByTagName('tpEmis')->item(0)->nodeValue;
         $cNF = $ide->getElementsByTagName('cNF')->item(0)->nodeValue;
         $chave = str_replace('NFe', '', $infNFe->getAttribute("Id"));
-
+        
         $dt = \DateTime($dhEmi);
-
-        try {
-            $nfeKey = NFeAccessKey::generate(
-                $cUF,
-                $dt->format('ym'),
-                new Cnpj($cnpj),
-                $serie,
-                $nNF,
-                $cNF
-            );
-        } catch (InvalidDocumentException $e) {
-            echo $e->getMessage();
-        }
-
+        
         $chaveMontada = Keys::build(
             $cUF,
             $dt->format('y'),

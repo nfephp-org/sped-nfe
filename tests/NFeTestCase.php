@@ -2,7 +2,6 @@
 
 namespace NFePHP\NFe\Tests;
 
-
 class NFeTestCase extends \PHPUnit_Framework_TestCase
 {
     public $fixturesPath = '';

@@ -116,7 +116,6 @@ class QRCode
         $seq .= '&vICMS=' . $vICMS;
         $seq .= '&digVal=' . strtolower($digHex);
         $seq .= '&cIdToken=' . $idToken;
-        //o hash code é calculado com o Token incluso
         $hash = sha1($seq.$token);
         $seq .= '&cHashQRCode='. strtoupper($hash);
         if (strpos($url, '?') === false) {
@@ -134,10 +133,11 @@ class QRCode
     {
         $hex = "";
         $iCount = 0;
+        $tot = strlen($str);
         do {
             $hex .= sprintf("%02x", ord($str{$iCount}));
             $iCount++;
-        } while ($iCount < strlen($str));
+        } while ($iCount < $tot);
         return $hex;
     }
 }

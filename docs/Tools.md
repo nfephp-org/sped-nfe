@@ -29,7 +29,7 @@ Sets the PHP environment time zone
 @return void
 
 >Este método é invocado automaticamente na instanciação da classe e ajusta o tomezone do PHP para a localidade indicada no config.json.
-Mas pode ser usado posteriormente a instanciação da classe para alterar essa condição. Isso é necessário pois um mesmo servidor poderá acessar e enviar dados para mais de um autorizador em estados diferentes com zonas d etempo difenres, lembrando que no Brazil existem 4 zonas de tempo e com variáções em função do horário de verão *(das zero horas do terceiro domingo de outubro até as zero horas do terceiro domingo de fevereiro)*.
+Mas pode ser usado posteriormente a instanciação da classe para alterar essa condição. Isso é necessário pois um mesmo servidor poderá acessar e enviar dados para mais de um autorizador em estados diferentes com zonas de tempo diferentes, lembrando que no Brasil existem 4 zonas de tempo e com variáções em função do horário de verão *(das zero horas do terceiro domingo de outubro até as zero horas do terceiro domingo de fevereiro)*.
 
 ###public function loadSoapClass(SoapInterface $soap)
 Load Soap Class
@@ -49,7 +49,7 @@ Set OPENSSL Algorithm using OPENSSL constants
 
 @return void
 
->O uso deste método é opcional e está aqui apenas para a previsão futura de mudanças no algoritimo da assinatura digital dos xml. A condição default do framwork é usar SHA1.
+>O uso deste método é opcional e está aqui apenas para a previsão futura de mudanças no algoritimo da assinatura digital dos xml. A condição default do framework é usar SHA1.
 
 ###public function model($model = null)
 Set or get model of document NFe = 55 or NFCe = 65
@@ -105,7 +105,7 @@ Ao carregar a classe é instaciada a classe Factories\Contingency automaticament
 ```php
 $contJson = $tools->contingency->activate($sigla, $motivo, $tipo = '');
 ```
-O modo de contingência pode ser melhor entendido ao se estudar [Contingency](Contingency.md). O parametro tipo é opsional e só deve ser passado em caso do uso de contingência FS-DA, EPEC ou OFFLINE (para NFCe).
+O modo de contingência pode ser melhor entendido ao se estudar [Contingency](Contingency.md). O parametro tipo é opcional e só deve ser passado em caso do uso de contingência FS-DA, EPEC ou OFFLINE (para NFCe).
 
 **REATIVANDO**
 Cada vez que a classe é invocada o modo de contingência esta desabilitado, e nesta versão da API passa a ser trabalho do aplicativo manter o estado da contingência a sua maneira em arquivo ou em base de dados. Caso o sistema de contigência ainda esteja ativo é necessário recarrega-lo na classe, com os mesmos parâmetros de sua ativação. Para isso usamos a string json retornada na ativação.
