@@ -30,7 +30,7 @@ Alguns dos subnodes possuem outros subnodes também e que ao final representam a
 
 
 ### [Ide::class](Ide.md)
-[Ide] *OBRIGATÓRIA, identificação do documento*  
+<a name="ide"></a> *OBRIGATÓRIA, identificação do documento*  
 
 
 ###[NFref::class](NFref.md) 
