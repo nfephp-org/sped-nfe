@@ -7,19 +7,19 @@ Essas sub classes que representam os "NODES" do XML recebem como parametro uma s
 Existem 15 NODES principais, que podem ser adicionados a classe NFe 
 
 1. [ide](#ide)
-2. NFref
-3. emit
-4. dest
-5. retirada
-6. entrega
-7. autXML
-8. det
-9. total
-10. transp
-11. cobr
-12. pag
-13. exporta
-14. compra
+2. [NFref](#NFref)
+3. [emit](#emit)
+4. [dest](#dest)
+5. [retirada](#retirada)
+6. [entrega](#entrega)
+7. [autXML](#autXML)
+8. [det](#det)
+9. [total](#total)
+10. [transp](#transp)
+11. [cobr](#cobr)
+12. [pag](#pag)
+13. [exporta](#exporta)
+14. [compra](#compra)
 15. [cana](#cana)
 
 Porém vários desses NODES possuem subnodes.
@@ -29,11 +29,11 @@ Alguns dos subnodes possuem outros subnodes também e que ao final representam a
 ##Classes a adicionar a NFe::class
 
 
-### [Ide::class](Ide.md)
-<a name="ide"></a> *OBRIGATÓRIA, identificação do documento*  
+###<a name="ide"></a>[Ide::class](Ide.md)
+*OBRIGATÓRIA, identificação do documento*  
 
 
-###[NFref::class](NFref.md) 
+###<a name="NFref"></a>[NFref::class](NFref.md) 
 *(opcional), Indica as Notas referenciadas*
 
     RefNFe::class  (opcional)  NFe referenciadas
@@ -42,32 +42,32 @@ Alguns dos subnodes possuem outros subnodes também e que ao final representam a
     RefNFP::class  (opcional)  NFP referenciadas
     RefECF::class  (opcional)  ECF referenciadas
 
-###[Emit::class](Emit.md)
+###<a name="emit"></a>[Emit::class](Emit.md)
 *OBRIGATÓRIA, Dados do Emitente*
 
     EnderEmit::class (OBRIGATÓRIA) Endereco
 
-###[Dest::class](Dest.md)
+###<a name="dest"></a>[Dest::class](Dest.md)
 *(opcional em alguns casos), Dados do  Destinatario
 
     EnderDest::class (opcional) Endereco
 
-###[Retirada::class](Retirada.md)
+###<a name="retirada"></a>[Retirada::class](Retirada.md)
 *(opcional)  Local da Retirada*
 
-###[Entrega::class](Entrega.md)
+###<a name="entrega"></a>[Entrega::class](Entrega.md)
 *(opcional), Local da Entrega*
 
-###[AutXML::class](AutXML.md)
+###<a name="autXML"></a>[AutXML::class](AutXML.md)
 *(opcional), Identificação dos autorizados a obter o XML*
 
-###[Det::class](Det.md)
+###<a name="det"></a>[Det::class](Det.md)
 *OBRIGATÓRIA, Detalhamento dos itens da NFe*
 
 	Prod::class (OBRIGATÓRIO) 
 	InfAdProd::class (Opcional) [0 - 500] Informações do produto
 
-###[Total::class](Total.md)
+###<a name="total"></a>[Total::class](Total.md)
 *OBRIGATÓRIA, totalizações*
 
 	ICMSTot::class (OBRIGATÓRIO) Totalizações de Impostos
@@ -76,7 +76,7 @@ Alguns dos subnodes possuem outros subnodes também e que ao final representam a
 	
 	RetTrib::class (opcional) Retenção de Tributos
 
-###[Transp::class](Transp.md)
+###<a name="transp"></a>[Transp::class](Transp.md)
 *OBRIGATÓRIA, Informações sobre o transporte*
 
     Transporta::class (opcional) Dados da trensportadora
@@ -90,13 +90,13 @@ Alguns dos subnodes possuem outros subnodes também e que ao final representam a
     Vol::class (opcional) [0 - 5000] Dados dos Volumes
     		Lacres::class (opcional) [0 - 5000]  Lacres 
 
-###[Cobr::class](Cobr.md)
+###<a name="cabr"></a>[Cobr::class](Cobr.md)
 *(opcional em alguns casos)  Cobrança*
 
     Fat::class (opcional) Dados da Fatura
     Dup::class (opcional) Dados das Duplicatas
 
-###[InfAdic::class](InfAdic.md)
+###<a name="infAdic"></a>[InfAdic::class](InfAdic.md)
 *(opcional), Informações adicionais*
 
 	ObsCont::class (opcional) Observações do contribuinte
@@ -105,17 +105,17 @@ Alguns dos subnodes possuem outros subnodes também e que ao final representam a
 	
 	ProcRef::class (opcional) Processo Referenciado
 
-###[Pag::class](Pag.md)
+###<a name="pag"></a>[Pag::class](Pag.md)
 *(opcional), Informações sobre o pagamento*
 
-###[Exporta::class](Exporta.md)
+###<a name="exporta"></a>[Exporta::class](Exporta.md)
 *(opcional), Dados de Exportacao*
 
-###[Compra::class](Compra.md)
+###<a name="compra"></a>[Compra::class](Compra.md)
 *(opcional), Dados de Compra*
 
-###[Cana::class](Cana.md)
-<a name="cana"></a>*(opcional), Informações do Registro de Aquisição de Cana*
+###<a name="cana"></a>[Cana::class](Cana.md)
+*(opcional), Informações do Registro de Aquisição de Cana*
 
     ForDia::class [0 - 31] (opcional) Fornecimento diário
     
