@@ -166,9 +166,9 @@ Alguns dos subnodes possuem outros subnodes também e que ao final representam a
 ###<a name="cana"></a>[Cana::class](Cana.md) [ 0 - 1 ]
 *(opcional), Informações do Registro de Aquisição de Cana*
 
->ForDia::class [0 - 31]  (opcional) Fornecimento diário
+>ForDia::class (opcional) [0 - 31]  Fornecimento diário
     
->Deduc::class  [0 - 10]  (opcional) Deduções
+>Deduc::class  (opcional) [0 - 10]  Deduções
 
 ##Forma de Uso
 
