@@ -376,9 +376,9 @@ class Tools
     /**
      * Performs xml validation with its respective XSD structure definition document
      * @param string $version
-     * @param type $body
-     * @param type $method
-     * @return type
+     * @param string $body
+     * @param string $method
+     * @return boolean
      * @throws \InvalidArgumentException
      */
     protected function isValid($version, $body, $method)

@@ -6,7 +6,7 @@ namespace NFePHP\NFe;
  * Classe a construção do xml da NFe modelo 55 e modelo 65
  *
  * @category  NFePHP
- * @package   NFePHP\NFe\MakeNFe
+ * @package   NFePHP\NFe\Make
  * @copyright NFePHP Copyright (c) 2008 - 2017
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
@@ -27,22 +27,18 @@ class Make
      * @var array
      */
     public $erros = [];
-
     /**
      * @var string
      */
     public $chNFe;
-
     /**
      * @var string
      */
     public $xml = '';
-
     /**
      * @var string
      */
     private $versao = '4.00';
-
     /**
      * @var integer
      */
@@ -52,132 +48,106 @@ class Make
      * @var \NFePHP\Common\DOMImproved
      */
     private $dom;
-
     /**
      * @var string
      */
     private $tpAmb = '2';
-
     /**
      * @var DOMElement
      */
     private $NFe;
-
     /**
      * @var DOMElement
      */
     private $infNFe;
-
     /**
      * @var DOMElement
      */
     private $ide;
-
     /**
      * @var DOMElement
      */
     private $emit;
-
     /**
      * @var DOMElement
      */
     private $enderEmit;
-
     /**
      * @var DOMElement
      */
     private $dest;
-
     /**
      * @var DOMElement
      */
     private $enderDest;
-
     /**
      * @var DOMElement
      */
     private $retirada;
-
     /**
      * @var DOMElement
      */
     private $entrega;
-
     /**
      * @var DOMElement
      */
     private $total;
-
     /**
      * @var DOMElement
      */
     private $cobr;
-
     /**
      * @var DOMElement
      */
     private $transp;
-
     /**
      * @var DOMElement
      */
     private $infAdic;
-
     /**
      * @var DOMElement
      */
     private $exporta;
-
     /**
      * @var DOMElement
      */
     private $compra;
-
     /**
      * @var DOMElement
      */
     private $cana;
-
     /**
      * @var array
      */
     private $aTotICMSUFDest = ['vFCPUFDest' => '', 'vICMSUFDest' => '', 'vICMSUFRemet' => ''];
-
     /**
      * @var array of DOMElements
      */
     private $aNFref = [];
-
     /**
      * @var array of DOMElements
      */
     private $aDup = [];
-
     /**
      * @var array of DOMElements
      */
     private $aPag = [];
-
     /**
      * @var array of DOMElements
      */
     private $aReboque = [];
-
     /**
      * @var array of DOMElements
      */
     private $aVol = [];
-
     /**
      * @var array of DOMElements
      */
     private $aAutXML = [];
-
     /**
      * @var array of DOMElements
      */
     private $aDet = [];
-
     /**
      * @var array of DOMElements
      */
@@ -188,147 +158,118 @@ class Make
      * @var array of DOMElements
      */
     private $aRastro = [];
-
     /**
      * @var array of DOMElements
      */
     private $aNVE = [];
-
     /**
      * @var array of DOMElements
      */
     private $aCest = [];
-
     /**
      * @var array of DOMElements
      */
     private $aRECOPI = [];
-
     /**
      * @var array of DOMElements
      */
     private $aDetExport = [];
-
     /**
      * @var array of DOMElements
      */
     private $aDI = [];
-
     /**
      * @var array of DOMElements
      */
     private $aAdi = [];
-
     /**
      * @var array of DOMElements
      */
     private $aVeicProd = [];
-
     /**
      * @var array of DOMElements
      */
     private $aMed = [];
-
     /**
      * @var array of DOMElements
      */
     private $aArma = [];
-
     /**
      * @var array of DOMElements
      */
     private $aComb = [];
-
     /**
      * @var array of DOMElements
      */
     private $aEncerrante = [];
-
     /**
      * @var array of DOMElements
      */
     private $aImposto = [];
-
     /**
      * @var array of DOMElements
      */
     private $aICMS = [];
-
     /**
      * @var array of DOMElements
      */
     private $aICMSUFDest = [];
-
     /**
      * @var array of DOMElements
      */
     private $aIPI = [];
-
     /**
      * @var array of DOMElements
      */
     private $aII = [];
-
     /**
      * @var array of DOMElements
      */
     private $aISSQN = [];
-
     /**
      * @var array
      */
     private $aPIS = [];
-
     /**
      * @var array of DOMElements
      */
     private $aPISST = [];
-
     /**
      * @var array of DOMElements
      */
     private $aCOFINS = [];
-
     /**
      * @var array of DOMElements
      */
     private $aCOFINSST = [];
-
     /**
      * @var array of DOMElements
      */
     private $aImpostoDevol = [];
-
     /**
      * @var array of DOMElements
      */
     private $aInfAdProd = [];
-
     /**
      * @var array of DOMElements
      */
     private $aObsCont = [];
-
     /**
      * @var array of DOMElements
      */
     private $aObsFisco = [];
-
     /**
      * @var array of DOMElements
      */
     private $aProcRef = [];
-
     /**
      * @var array of DOMElements
      */
     private $aForDia = [];
-
     /**
      * @var array of DOMElements
      */
     private $aDeduc = [];
-
     /**
      * Função construtora cria um objeto DOMDocument
      * que será carregado com o documento fiscal
@@ -343,7 +284,6 @@ class Make
         $this->dom->preserveWhiteSpace = false;
         $this->dom->formatOutput = false;
     }
-
     /**
      * Retorna o xml que foi montado
      * @return string
@@ -352,7 +292,6 @@ class Make
     {
         return $this->xml;
     }
-
     /**
      * Retorna o numero da chave da NFe
      * @return type
@@ -361,7 +300,6 @@ class Make
     {
         return $this->chNFe;
     }
-
     /**
      * Retrona o modelo de NFe 55 ou 65
      * @return int
@@ -370,7 +308,6 @@ class Make
     {
         return $this->mod;
     }
-
     /**
      * montaNFe
      * Método de montagem do xml da NFe
@@ -442,7 +379,6 @@ class Make
         $this->xml = $this->dom->saveXML();
         return true;
     }
-
     /**
      * Informações da NF-e A01 pai NFe
      * tag NFe/infNFe
@@ -459,7 +395,6 @@ class Make
         $this->chNFe = $chave;
         return $this->infNFe;
     }
-
     /**
      * Informações de identificação da NF-e B01 pai A01
      * tag NFe/infNFe/ide
@@ -679,7 +614,6 @@ class Make
         $this->ide = $ide;
         return $ide;
     }
-
     /**
      * Chave de acesso da NF-e referenciada BA02 pai BA01
      * tag NFe/infNFe/ide/NFref/refNFe
@@ -693,7 +627,6 @@ class Make
         $this->dom->appChild($this->aNFref[$num - 1], $refNFe);
         return $refNFe;
     }
-
     /**
      * Informação da NF modelo 1/1A referenciada BA03 pai BA01
      * tag NFe/infNFe/ide/NFref/NF DOMNode
@@ -762,7 +695,6 @@ class Make
         $this->dom->appChild($this->aNFref[$num - 1], $refNF);
         return $refNF;
     }
-
     /**
      * Informações da NF de produtor rural referenciada BA10 pai BA01
      * tag NFe/infNFe/ide/NFref/refNFP
@@ -849,7 +781,6 @@ class Make
         $this->dom->appChild($this->aNFref[$num - 1], $refNFP);
         return $refNFP;
     }
-
     /**
      * Chave de acesso do CT-e referenciada BA19 pai BA01
      * tag NFe/infNFe/ide/NFref/refCTe
@@ -863,7 +794,6 @@ class Make
         $this->dom->appChild($this->aNFref[$num - 1], $refCTe);
         return $refCTe;
     }
-
     /**
      * Informações do Cupom Fiscal referenciado BA20 pai BA01
      * tag NFe/infNFe/ide/NFref/refECF
@@ -905,7 +835,6 @@ class Make
         $this->dom->appChild($this->aNFref[$num - 1], $refECF);
         return $refECF;
     }
-
     /**
      * Identificação do emitente da NF-e C01 pai A01
      * tag NFe/infNFe/emit
@@ -999,7 +928,6 @@ class Make
         );
         return $this->emit;
     }
-
     /**
      * Endereço do emitente C05 pai C01
      * tag NFe/infNFe/emit/endEmit
@@ -1113,7 +1041,6 @@ class Make
         $this->emit->insertBefore($this->enderEmit, $node);
         return $this->enderEmit;
     }
-
     /**
      * Identificação do Destinatário da NF-e E01 pai A01
      * tag NFe/infNFe/dest (opcional para modelo 65)
@@ -1143,7 +1070,6 @@ class Make
         $identificador = 'E01 <dest> - ';
         $flagNome = true; //marca se xNome é ou não obrigatório
         $temIE = $numIE != '' && $numIE != 'ISENTO'; // Tem inscrição municipal
-
         $this->dest = $this->dom->createElement("dest");
         if (!$temIE && $indIEDest == '1') {
             $indIEDest = '2';
@@ -1228,7 +1154,6 @@ class Make
         );
         return $this->dest;
     }
-
     /**
      * Endereço do Destinatário da NF-e E05 pai E01
      * tag NFe/infNFe/dest/enderDest  (opcional para modelo 65)
@@ -1349,7 +1274,6 @@ class Make
         $this->dest->insertBefore($this->enderDest, $node);
         return $this->enderDest;
     }
-
     /**
      * Identificação do Local de retirada F01 pai A01
      * tag NFe/infNFe/retirada (opcional)
@@ -1443,7 +1367,6 @@ class Make
         );
         return $this->retirada;
     }
-
     /**
      * Identificação do Local de entrega G01 pai A01
      * tag NFe/infNFe/entrega (opcional)
@@ -1537,7 +1460,6 @@ class Make
         );
         return $this->entrega;
     }
-
     /**
      * Pessoas autorizadas para o download do XML da NF-e G50 pai A01
      * tag NFe/infNFe/autXML (somente versão 3.1)
@@ -1570,7 +1492,6 @@ class Make
             return [];
         }
     }
-
     /**
      * Detalhamento de Produtos e Serviços I01 pai H01
      * tag NFe/infNFe/det[]/prod
@@ -1788,7 +1709,6 @@ class Make
         $this->aProd[$nItem] = $prod;
         return $prod;
     }
-
     /**
      * Rastreabilidade do produto podem ser até 500 por item TAG I80 pai I01
      * NT 2016.002 v1.00
@@ -1850,7 +1770,6 @@ class Make
         $this->aNVE[$nItem][] = $nve;
         return $nve;
     }
-
     /**
      * Código Especificador da Substituição Tributária – CEST,
      * que identifica a mercadoria sujeita aos regimes de substituição
@@ -1869,7 +1788,6 @@ class Make
         $this->aCest[$nItem][] = $cest;
         return $cest;
     }
-
     /**
      * RECOPI Sistema de Registro e Controle das
      * Operações com Papel Imune instituído através
@@ -1887,7 +1805,6 @@ class Make
         $this->aRECOPI[$nItem] = $recopi;
         return $recopi;
     }
-
     /**
      * Informações adicionais do produto
      * tag NFe/infNFe/det[]/infAdProd
@@ -1904,7 +1821,6 @@ class Make
         $this->aInfAdProd[$nItem] = $infAdProd;
         return $infAdProd;
     }
-
     /**
      * Declaração de Importação I8 pai I01
      * tag NFe/infNFe/det[]/prod/DI
@@ -2020,7 +1936,6 @@ class Make
         $this->aDI[$nItem][$nDI] = $tDI;
         return $tDI;
     }
-
     /**
      * Adições I25 pai I18
      * tag NFe/infNFe/det[]/prod/DI/adi
@@ -2087,7 +2002,6 @@ class Make
         $this->aDI[$nItem][$nDI] = $nodeDI;
         return $adi;
     }
-
     /**
      * Grupo de informações de exportação para o item I50 pai I01
      * tag NFe/infNFe/det[]/prod/detExport
@@ -2142,7 +2056,6 @@ class Make
         $this->aDetExport[$nItem] = $detExport;
         return $detExport;
     }
-
     /**
      * Detalhamento de Veículos novos J01 pai I90
      * tag NFe/infNFe/det[]/prod/veicProd (opcional)
@@ -2374,7 +2287,6 @@ class Make
         $this->aVeicProd[$nItem] = $veicProd;
         return $veicProd;
     }
-
     /**
      * Detalhamento de medicamentos K01 pai I90
      * tag NFe/infNFe/det[]/prod/med[] (opcional)
@@ -2410,7 +2322,6 @@ class Make
         $this->aMed[$nItem][] = $med;
         return $med;
     }
-
     /**
      * Detalhamento de armas L01 pai I90
      * tag NFe/infNFe/det[]/prod/arma[] (opcional)
@@ -2463,7 +2374,6 @@ class Make
         $this->aArma[$nItem][] = $arma;
         return $arma;
     }
-
     /**
      * Detalhamento de combustiveis L101 pai I90
      * tag NFe/infNFe/det[]/prod/comb (opcional)
@@ -2588,7 +2498,6 @@ class Make
         $this->aComb[$nItem] = $comb;
         return $comb;
     }
-
     /**
      * informações relacionadas com as operações de combustíveis, subgrupo de
      * encerrante que permite o controle sobre as operações de venda de combustíveis
@@ -2644,7 +2553,6 @@ class Make
         $this->aEncerrante[$nItem] = $encerrante;
         return $encerrante;
     }
-
     /**
      * M01 pai H01
      * tag NFe/infNFe/det[]/imposto
@@ -2666,7 +2574,6 @@ class Make
         $this->aImposto[$nItem] = $imposto;
         return $imposto;
     }
-
     /**
      * Informações do ICMS da Operação própria e ST N01 pai M01
      * tag NFe/infNFe/det[]/imposto/ICMS
@@ -3374,7 +3281,6 @@ class Make
         $this->aICMS[$nItem] = $tagIcms;
         return $tagIcms;
     }
-
     /**
      * Grupo de Partilha do ICMS entre a UF de origem e UF de destino ou
      * a UF definida na legislação. N10a pai N01
@@ -3532,7 +3438,6 @@ class Make
         $this->aICMS[$nItem] = $tagIcms;
         return $tagIcms;
     }
-
     /**
      * Grupo de Repasse de ICMS ST retido anteriormente em operações
      * interestaduais com repasses através do Substituto Tributário
@@ -3608,7 +3513,6 @@ class Make
         $this->aICMS[$nItem] = $tagIcms;
         return $tagIcms;
     }
-
     /**
      * Tributação ICMS pelo Simples Nacional N10c pai N01
      * @param string $nItem
@@ -3992,7 +3896,6 @@ class Make
         $this->aICMS[$nItem] = $tagIcms;
         return $tagIcms;
     }
-
     /**
      * Grupo ICMSUFDest NA01 pai M01
      * tag NFe/infNFe/det[]/imposto/ICMSUFDest (opcional)
@@ -4094,7 +3997,6 @@ class Make
         $this->aTotICMSUFDest['vICMSUFRemet'] += $vICMSUFRemet;
         return $icmsUFDest;
     }
-
     /**
      * Grupo IPI O01 pai M01
      * tag NFe/infNFe/det[]/imposto/IPI (opcional)
@@ -4224,7 +4126,6 @@ class Make
         $this->aIPI[$nItem] = $ipi;
         return $ipi;
     }
-
     /**
      * Grupo Imposto de Importação P01 pai M01
      * tag NFe/infNFe/det[]/imposto/II
@@ -4269,7 +4170,6 @@ class Make
         $this->aII[$nItem] = $tii;
         return $tii;
     }
-
     /**
      * Grupo PIS Q01 pai M01
      * tag NFe/infNFe/det[]/imposto/PIS
@@ -4447,7 +4347,6 @@ class Make
         $this->aPIS[$nItem] = $pis;
         return $pis;
     }
-
     /**
      * Grupo PIS Substituição Tributária R01 pai M01
      * tag NFe/infNFe/det[]/imposto/PISST (opcional)
@@ -4507,7 +4406,6 @@ class Make
         $this->aPISST[$nItem] = $pisst;
         return $pisst;
     }
-
     /**
      * Grupo COFINS S01 pai M01
      * tag det/imposto/COFINS (opcional)
@@ -4608,7 +4506,6 @@ class Make
         $this->aCOFINS[$nItem] = $confins;
         return $confins;
     }
-
     /**
      * Grupo COFINS Substituição Tributária T01 pai M01
      * tag NFe/infNFe/det[]/imposto/COFINSST (opcional)
@@ -4668,7 +4565,6 @@ class Make
         $this->aCOFINSST[$nItem] = $cofinsst;
         return $cofinsst;
     }
-
     /**
      * Grupo ISSQN U01 pai M01
      * tag NFe/infNFe/det[]/imposto/ISSQN (opcional)
@@ -4827,7 +4723,6 @@ class Make
         $this->aISSQN[$nItem] = $issqn;
         return $issqn;
     }
-
     /**
      * Informação do Imposto devolvido U50 pai H01
      * tag NFe/infNFe/det[]/impostoDevol (opcional)
@@ -4858,7 +4753,6 @@ class Make
         $this->aImpostoDevol[$nItem] = $impostoDevol;
         return $impostoDevol;
     }
-
     /**
      * Grupo Totais referentes ao ICMS W02 pai W01
      * tag NFe/infNFe/total/ICMSTot
@@ -5040,7 +4934,6 @@ class Make
         $this->dom->appChild($this->total, $ICMSTot, '');
         return $ICMSTot;
     }
-
     /**
      * Grupo Totais referentes ao ISSQN W17 pai W01
      * tag NFe/infNFe/total/ISSQNTot (opcional)
@@ -5167,7 +5060,6 @@ class Make
         $this->dom->appChild($this->total, $ISSQNTot, '');
         return $ISSQNTot;
     }
-
     /**
      * Grupo Retenções de Tributos W23 pai W01
      * tag NFe/infNFe/total/reTrib (opcional)
@@ -5243,7 +5135,6 @@ class Make
         $this->dom->appChild($this->total, $retTrib, '');
         return $retTrib;
     }
-
     /**
      * Grupo Informações do Transporte X01 pai A01
      * tag NFe/infNFe/transp (obrigatório)
@@ -5262,7 +5153,6 @@ class Make
         );
         return $this->transp;
     }
-
     /**
      * Grupo Transportador X03 pai X01
      * tag NFe/infNFe/transp/tranporta (opcional)
@@ -5342,7 +5232,6 @@ class Make
         );
         return $transporta;
     }
-
     /**
      * Grupo Veículo Transporte X18 pai X17.1
      * tag NFe/infNFe/transp/veicTransp (opcional)
@@ -5386,7 +5275,6 @@ class Make
         );
         return $veicTransp;
     }
-
     /**
      * Grupo Reboque X22 pai X17.1
      * tag NFe/infNFe/transp/reboque (opcional)
@@ -5449,7 +5337,6 @@ class Make
         );
         return $reboque;
     }
-
     /**
      * Grupo Retenção ICMS transporte X11 pai X01
      * tag NFe/infNFe/transp/retTransp (opcional)
@@ -5520,7 +5407,6 @@ class Make
         );
         return $retTransp;
     }
-
     /**
      * Grupo Volumes X26 pai X01
      * tag NFe/infNFe/transp/vol (opcional)
@@ -5602,7 +5488,6 @@ class Make
         );
         return $vol;
     }
-
     /**
      * Grupo Fatura Y02 pai Y01
      * tag NFe/infNFe/cobr/fat (opcional)
@@ -5628,7 +5513,6 @@ class Make
         $this->dom->appChild($this->cobr, $fat);
         return $fat;
     }
-
     /**
      * Grupo Duplicata Y07 pai Y02
      * tag NFe/infNFe/cobr/fat/dup (opcional)
@@ -5653,7 +5537,6 @@ class Make
         $this->aDup[] = $dup;
         return $dup;
     }
-
     /**
      * Grupo de Formas de Pagamento YA01 pai A01
      * tag NFe/infNFe/pag (opcional)
@@ -5693,7 +5576,6 @@ class Make
         );
         return $pag;
     }
-
     /**
      * Grupo de Cartões YA04 pai YA01
      * tag NFe/infNFe/pag/card
@@ -5745,7 +5627,6 @@ class Make
             return $card;
         }
     }
-
     /**
      * Grupo de Informações Adicionais Z01 pai A01
      * tag NFe/infNFe/infAdic (opcional)
@@ -5775,7 +5656,6 @@ class Make
         );
         return $this->infAdic;
     }
-
     /**
      * Grupo Campo de uso livre do contribuinte Z04 pai Z01
      * tag NFe/infNFe/infAdic/obsCont (opcional)
@@ -5797,7 +5677,6 @@ class Make
         $this->dom->appChild($this->infAdic, $obsCont, '');
         return $obsCont;
     }
-
     /**
      * Grupo Campo de uso livre do Fisco Z07 pai Z01
      * tag NFe/infNFe/infAdic/obsFisco (opcional)
@@ -5819,7 +5698,6 @@ class Make
         $this->dom->appChild($this->infAdic, $obsFisco, '');
         return $obsFisco;
     }
-
     /**
      * Grupo Processo referenciado Z10 pai Z01 (NT2012.003)
      * tag NFe/infNFe/procRef (opcional)
@@ -5853,7 +5731,6 @@ class Make
         $this->dom->appChild($this->infAdic, $procRef, '');
         return $procRef;
     }
-
     /**
      * Grupo Exportação ZA01 pai A01
      * tag NFe/infNFe/exporta (opcional)
@@ -5892,7 +5769,6 @@ class Make
         );
         return $this->exporta;
     }
-
     /**
      * Grupo Compra ZB01 pai A01
      * tag NFe/infNFe/compra (opcional)
@@ -5913,7 +5789,6 @@ class Make
         $this->dom->addChild($this->compra, "xCont", $xCont, false, "Contrato");
         return $this->compra;
     }
-
     /**
      * Grupo Cana ZC01 pai A01
      * tag NFe/infNFe/cana (opcional)
@@ -5931,7 +5806,6 @@ class Make
         $this->dom->addChild($this->cana, "ref", $ref, true, "Mês e ano de referência");
         return $this->cana;
     }
-
     /**
      * Grupo Fornecimento diário de cana ZC04 pai ZC01
      * tag NFe/infNFe/cana/forDia
@@ -5984,7 +5858,6 @@ class Make
         $this->dom->appChild($this->cana, $forDia, 'O metodo tacana deveria ter sido chamado antes. [tagforDia]');
         return $forDia;
     }
-
     /**
      * Grupo Deduções – Taxas e Contribuições ZC10 pai ZC01
      * tag NFe/infNFe/cana/deduc (opcional)
@@ -6047,7 +5920,6 @@ class Make
         );
         return $deduc;
     }
-
     /**
      * Tag raiz da NFe
      * tag NFe DOMNode
@@ -6062,7 +5934,6 @@ class Make
         }
         return $this->NFe;
     }
-
     /**
      * Informação de Documentos Fiscais referenciados BA01 pai B01
      * tag NFe/infNFe/ide/NFref
@@ -6076,7 +5947,6 @@ class Make
         $this->aNFref[] = $this->dom->createElement("NFref");
         return count($this->aNFref);
     }
-
     /**
      * Informação de pagamentos
      * tag NFe/infNFe/pag
@@ -6089,7 +5959,6 @@ class Make
         $this->aPag[] = $this->dom->createElement("pag");
         return count($this->aPag);
     }
-
     /**
      * Insere dentro dentro das tags imposto o ICMS IPI II PIS COFINS ISSQN
      * tag NFe/infNFe/det[]/imposto
@@ -6128,7 +5997,6 @@ class Make
             $this->aImposto[$nItem] = $imposto;
         }
     }
-
     /**
      * Grupo COFINS tributado pela alíquota S02 pai S01
      * tag det/imposto/COFINS/COFINSAliq (opcional)
@@ -6172,7 +6040,6 @@ class Make
         );
         return $confinsAliq;
     }
-
     /**
      * Grupo COFINS não tributado S04 pai S01
      * tag NFe/infNFe/det[]/imposto/COFINS/COFINSNT (opcional)
@@ -6192,7 +6059,6 @@ class Make
         );
         return $confinsnt;
     }
-
     /**
      * Grupo COFINS Outras Operações S05 pai S01
      * tag NFe/infNFe/det[]/imposto/COFINS/COFINSoutr (opcional)
@@ -6252,7 +6118,6 @@ class Make
         );
         return $confinsoutr;
     }
-
     /**
      * Insere dentro da tag det os produtos
      * tag NFe/infNFe/det[]
@@ -6365,7 +6230,6 @@ class Make
             $det = null;
         }
     }
-
     /**
      * Grupo Totais da NF-e W01 pai A01
      * tag NFe/infNFe/total
@@ -6383,7 +6247,6 @@ class Make
             $this->aTotICMSUFDest['vFCPUFDest'] = number_format($this->aTotICMSUFDest['vFCPUFDest'], 2, '.', '');
         }
     }
-
     /**
      * Grupo Lacres X33 pai X26
      * tag NFe/infNFe/transp/vol/lacres (opcional)
@@ -6396,7 +6259,6 @@ class Make
         $this->dom->addChild($lacre, "nLacre", $nLacre, true, "Número dos Lacres");
         return $lacre;
     }
-
     /**
      * Grupo Cobrança Y01 pai A01
      * tag NFe/infNFe/cobr (opcional)
@@ -6409,7 +6271,6 @@ class Make
             $this->cobr = $this->dom->createElement("cobr");
         }
     }
-
     /**
      * Grupo de Informações Adicionais Z01 pai A01
      * tag NFe/infNFe/infAdic (opcional)
@@ -6424,7 +6285,6 @@ class Make
         }
         return $this->infAdic;
     }
-
     /**
      * Remonta a chave da NFe de 44 digitos com base em seus dados
      * já contidos na NFE.
