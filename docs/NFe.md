@@ -122,7 +122,7 @@ Alguns dos subnodes possuem outros subnodes também e que ao final representam a
 	
 >RetTrib::class (opcional) [0 - 1] Retenção de Tributos
 
-###<a name="transp"></a>[Transp::class](Transp.md) [ 0 - 1 ]
+###<a name="transp"></a>[Transp::class](Transp.md) [ 1 - 1 ]
 *OBRIGATÓRIA, Informações sobre o transporte*
 
 >Transporta::class (opcional) [0 - 1] Dados da trensportadora
