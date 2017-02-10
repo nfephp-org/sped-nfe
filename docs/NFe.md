@@ -139,8 +139,9 @@ Alguns dos subnodes possuem outros subnodes também e que ao final representam a
 ###<a name="cobr"></a>[Cobr::class](Cobr.md) [ 0 - 1 ]
 *(opcional em alguns casos)  Cobrança*
 
-    Fat::class (opcional) Dados da Fatura
-    Dup::class (opcional) Dados das Duplicatas
+>Fat::class (opcional) [0 - 1] Dados da Fatura
+
+>Dup::class (opcional) [0 - 120] Dados das Duplicatas
 
 ###<a name="infAdic"></a>[InfAdic::class](InfAdic.md) [ 0 - 1 ]
 *(opcional), Informações adicionais*
