@@ -20,7 +20,7 @@ Existem 15 NODES principais, que podem ser adicionados a classe NFe
 12. pag
 13. exporta
 14. compra
-15. cana
+15. [cana](#cana)
 
 Porém vários desses NODES possuem subnodes.
 Alguns dos subnodes possuem outros subnodes também e que ao final representam a totalidade dos dados a serem inclusos em uma NFe.
@@ -115,7 +115,7 @@ Alguns dos subnodes possuem outros subnodes também e que ao final representam a
 *(opcional), Dados de Compra*
 
 ###[Cana::class](Cana.md)
-*(opcional), Informações do Registro de Aquisição de Cana*
+<a name="cana"></a>*(opcional), Informações do Registro de Aquisição de Cana*
 
     ForDia::class [0 - 31] (opcional) Fornecimento diário
     
