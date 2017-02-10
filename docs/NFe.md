@@ -29,68 +29,76 @@ Alguns dos subnodes possuem outros subnodes também e que ao final representam a
 ##Classes a adicionar a NFe::class
 
 
-###<a name="ide"></a>[Ide::class](Ide.md)
-*OBRIGATÓRIA, identificação do documento*  
+###<a name="ide"></a>[Ide::class](Ide.md) [ 1 - 1 ]
+*OBRIGATÓRIA, identificação do documento, apenas uma instancia é permitida, não possui subnodes*  
 
 
-###<a name="NFref"></a>[NFref::class](NFref.md) 
+###<a name="NFref"></a>[NFref::class](NFref.md) [ 0 - 500 ]
 *(opcional), Indica as Notas referenciadas*
+*Podem ser criadas até 500 instancias dessa classe, 5 possiveis subnodes, mas apenas um pode ser incluso a cada NFref*
 
-    RefNFe::class  (opcional)  NFe referenciadas
-    RefCTe::class  (opcional)  CTe referenciadas
-    RefNF::class   (opcional)  NF referenciadas
-    RefNFP::class  (opcional)  NFP referenciadas
-    RefECF::class  (opcional)  ECF referenciadas
+>RefNFe::class  (opcional)  NFe referenciadas [ 0 - 1]
 
-###<a name="emit"></a>[Emit::class](Emit.md)
-*OBRIGATÓRIA, Dados do Emitente*
+>RefCTe::class  (opcional)  CTe referenciadas [ 0 - 1]
 
-    EnderEmit::class (OBRIGATÓRIA) Endereco
+>RefNF::class   (opcional)  NF referenciadas [ 0 - 1]
 
-###<a name="dest"></a>[Dest::class](Dest.md)
-*(opcional em alguns casos), Dados do  Destinatario
+>RefNFP::class  (opcional)  NFP referenciadas [ 0 - 1]
 
-    EnderDest::class (opcional) Endereco
+>RefECF::class  (opcional)  ECF referenciadas [ 0 - 1]
 
-###<a name="retirada"></a>[Retirada::class](Retirada.md)
-*(opcional)  Local da Retirada*
+>NOTA: Caso sejam inclusos mais de um subnode em cada instancia da classe principal, apenas um será usado, obedecendo a ordem acima.
 
-###<a name="entrega"></a>[Entrega::class](Entrega.md)
-*(opcional), Local da Entrega*
+###<a name="emit"></a>[Emit::class](Emit.md) [ 1 - 1 ]
+*OBRIGATÓRIA, Dados do Emitente, apenas uma instancia*
 
-###<a name="autXML"></a>[AutXML::class](AutXML.md)
-*(opcional), Identificação dos autorizados a obter o XML*
+>EnderEmit::class (OBRIGATÓRIA) Endereco [ 1 - 1 ]
 
-###<a name="det"></a>[Det::class](Det.md)
-*OBRIGATÓRIA, Detalhamento dos itens da NFe*
+###<a name="dest"></a>[Dest::class](Dest.md) [ 0 - 1 ]
+*(opcional em alguns casos), Dados do  Destinatario, se existir, apenas uma instancia é permitida*
 
-	Prod::class (OBRIGATÓRIO) 
-	InfAdProd::class (Opcional) [0 - 500] Informações do produto
+>EnderDest::class (opcional) Endereco [ 0 - 1 ], se existir, apenas uma instancia é permitida
 
-###<a name="total"></a>[Total::class](Total.md)
+###<a name="retirada"></a>[Retirada::class](Retirada.md) [ 0 - 1 ]
+*(opcional)  Local da Retirada, se houver, apenas uma instancia é permitida, não possui subnodes*
+
+###<a name="entrega"></a>[Entrega::class](Entrega.md) [ 0 - 1 ]
+*(opcional), Local da Entrega, se houver, apenas uma instancia é permitida, não possui subnodes*
+
+###<a name="autXML"></a>[AutXML::class](AutXML.md) [ 0 - 10 ]
+*(opcional), Identificação dos autorizados a obter o XML, até 10 instancias são permitidas, não possui subnodes*
+
+###<a name="det"></a>[Det::class](Det.md) [ 1 - 990 ]
+*OBRIGATÓRIA, Detalhamento dos itens da NFe, até 990 instancias são permitidas*
+
+>Prod::class (OBRIGATÓRIO) [ 1 - 1 ]
+
+>InfAdProd::class (Opcional) [0 - 500] Informações do produto
+
+###<a name="total"></a>[Total::class](Total.md) [ 1 - 1 ]
 *OBRIGATÓRIA, totalizações*
 
-	ICMSTot::class (OBRIGATÓRIO) Totalizações de Impostos
+>ICMSTot::class (OBRIGATÓRIO) [0 - 1] Totalizações de Impostos
 	
-	ISSQNtot::class (opcional) Totalização de ISS
+>ISSQNtot::class (opcional) [0 - 1] Totalização de ISS
 	
-	RetTrib::class (opcional) Retenção de Tributos
+>RetTrib::class (opcional) [0 - 1] Retenção de Tributos
 
-###<a name="transp"></a>[Transp::class](Transp.md)
+###<a name="transp"></a>[Transp::class](Transp.md) [ 0 - 1 ]
 *OBRIGATÓRIA, Informações sobre o transporte*
 
-    Transporta::class (opcional) Dados da trensportadora
+>Transporta::class (opcional) [0 - 1] Dados da trensportadora
     
-    RetTransp::class (opcional) Retenção ICMS no transporte
+>RetTransp::class (opcional) [0 - 1] Retenção ICMS no transporte
     
-    VeicTransp::class (opcional) Dados do veiculo
+>VeicTransp::class (opcional) [0 - 1]Dados do veiculo
     
-    Reboque::class (opcional) [0 - 5] Dados dos reboques
+>Reboque::class (opcional) [0 - 5] Dados dos reboques
     
-    Vol::class (opcional) [0 - 5000] Dados dos Volumes
-    		Lacres::class (opcional) [0 - 5000]  Lacres 
+>Vol::class (opcional) [0 - 5000] Dados dos Volumes
+>>Lacres::class (opcional) [0 - 5000]  Lacres 
 
-###<a name="cabr"></a>[Cobr::class](Cobr.md)
+###<a name="cobr"></a>[Cobr::class](Cobr.md)
 *(opcional em alguns casos)  Cobrança*
 
     Fat::class (opcional) Dados da Fatura
@@ -99,27 +107,29 @@ Alguns dos subnodes possuem outros subnodes também e que ao final representam a
 ###<a name="infAdic"></a>[InfAdic::class](InfAdic.md)
 *(opcional), Informações adicionais*
 
-	ObsCont::class (opcional) Observações do contribuinte
+>ObsCont::class (opcional) [0-10] Observações do contribuinte
 	
-	ObsFisco::class (opcional) Observações do Fisco
+>ObsFisco::class (opcional) [0-10] Observações do Fisco
 	
-	ProcRef::class (opcional) Processo Referenciado
+>ProcRef::class (opcional) [0-100] Processo Referenciado
 
-###<a name="pag"></a>[Pag::class](Pag.md)
-*(opcional), Informações sobre o pagamento*
+###<a name="pag"></a>[Pag::class](Pag.md) [ 0 - 100 ]
+*(opcional), Informações sobre o pagamento, até 100 instancias da classe são aceitos*
 
-###<a name="exporta"></a>[Exporta::class](Exporta.md)
-*(opcional), Dados de Exportacao*
+>Card::class (opcional) [0 - 1], Dados do cartão de crédito ou débito, somente para nodes Pag onde tPag = 3 ou 4, pagamento com cartões. 
 
-###<a name="compra"></a>[Compra::class](Compra.md)
-*(opcional), Dados de Compra*
+###<a name="exporta"></a>[Exporta::class](Exporta.md) [ 0 - 1 ]
+*(opcional), Dados de Exportacao, não possui subnodes*
 
-###<a name="cana"></a>[Cana::class](Cana.md)
+###<a name="compra"></a>[Compra::class](Compra.md) [ 0 - 1 ]
+*(opcional), Dados de Compra, não possui subnodes*
+
+###<a name="cana"></a>[Cana::class](Cana.md) [ 0 - 1 ]
 *(opcional), Informações do Registro de Aquisição de Cana*
 
-    ForDia::class [0 - 31] (opcional) Fornecimento diário
+>ForDia::class [0 - 31] (opcional) Fornecimento diário
     
-    Deduc::class  [0 - 10] (opcional) Deduções
+>Deduc::class  [0 - 10] (opcional) Deduções
 
 ##Forma de Uso
 
