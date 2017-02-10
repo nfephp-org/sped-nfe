@@ -136,13 +136,13 @@ Alguns dos subnodes possuem outros subnodes também e que ao final representam a
 >Vol::class (opcional) [0 - 5000] Dados dos Volumes
 >>Lacres::class (opcional) [0 - 5000]  Lacres 
 
-###<a name="cobr"></a>[Cobr::class](Cobr.md)
+###<a name="cobr"></a>[Cobr::class](Cobr.md) [ 0 - 1 ]
 *(opcional em alguns casos)  Cobrança*
 
     Fat::class (opcional) Dados da Fatura
     Dup::class (opcional) Dados das Duplicatas
 
-###<a name="infAdic"></a>[InfAdic::class](InfAdic.md)
+###<a name="infAdic"></a>[InfAdic::class](InfAdic.md) [ 0 - 1 ]
 *(opcional), Informações adicionais*
 
 >ObsCont::class (opcional) [0-10] Observações do contribuinte
