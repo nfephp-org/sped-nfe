@@ -6,7 +6,7 @@ Essas sub classes que representam os "NODES" do XML recebem como parametro uma s
 
 Existem 15 NODES principais, que podem ser adicionados a classe NFe 
 
-1. [ide](#Ide::class)
+1. [ide](#ide::class)
 2. NFref
 3. emit
 4. dest
@@ -29,7 +29,7 @@ Alguns dos subnodes possuem outros subnodes também e que ao final representam a
 ##Classes a adicionar a NFe::class
 
 
-###[Ide::class](Ide.md)
+### [Ide::class](Ide.md)
 *OBRIGATÓRIA, identificação do documento*  
 
 
