@@ -11,125 +11,75 @@ use stdClass;
 
 class NFe
 {
-    public $versao = '4.0';
-    public $id;
-    
     /**
      * @var Dom
      */
     protected $dom;
+
+    /**
+     * @var string
+     */
+    public $versao = '4.0';
+    /**
+     * @var string
+     */
+    public $id = '';
     /**
      * @var Tags\Ide
      */
-    protected $ide;
+    public $ide;
+    /**
+     * @var Tags\NFref
+     */
+    public $NFref;
     /**
      * @var Tags\Emit
      */
-    protected $emit;
-    /**
-     * @var Tags\EnderEmit
-     */
-    protected $enderEmit;
+    public $emit;
     /**
      * @var Tags\Dest
      */
-    protected $dest;
-    /**
-     * @var Tags\EnderDest
-     */
-    protected $enderDest;
-    /**
-     * @var Tags\RefNFe
-     */
-    protected $refNFe;
-    /**
-     * @var array Tags\RefNF
-     */
-    protected $refNF = [];
-    /**
-     * @var array Tags\RefNFP
-     */
-    protected $refNFP = [];
-    /**
-     * @var Tags\RefCTe
-     */
-    protected $refCTe;
-    /**
-     * @var array Tags\RefECF
-     */
-    protected $refECF = [];
+    public $dest;
     /**
      * @var Tags\Retirada
      */
-    protected $retirada;
+    public $retirada;
     /**
      * @var Tags\Entrega
      */
-    protected $entrega;
+    public $entrega;
     /**
-     * @var array Tags\AutXML
+     * @var Tags\AutXML
      */
-    protected $autXML = [];
-    
-    
-    protected $transp;
-    protected $transporta;
-    protected $retTransp;
-    protected $veicTransp;
-    protected $reboque = [];
-    protected $vol = [];
-    
-
+    public $autXML;
     /**
-     * @var Tags\Fat
+     * @var Tags\Transp
      */
-    protected $fat;
+    public $transp;
     /**
-     * @var array Tags\Dup
+     * @var Tags\Cobr
      */
-    protected $dup = [];
+    public $cobr;
     /**
      * @var array Tags\Pag
-     * NOTA: os dados do cartão Tags\Card já deve estar inserido na class Pag
-     * e serve apenas para tPag = 3 ou 4, pagamento com cartão
      */
-    protected $pag = [];
+    public $pag;
     /**
      * @var Tags\InfAdic
      */
-    protected $infAdic;
-    /**
-     * @var array Tags\ObsCont
-     */
-    protected $obsCont = [];
-    /**
-     * @var array Tags\ObsFisco
-     */
-    protected $obsFisco = [];
-    /**
-     * @var array Tags\ProcRef
-     */
-    protected $procRef = [];
+    public $infAdic;
     /**
      * @var Tags\Exporta
      */
-    protected $exporta;
+    public $exporta;
     /**
      * @var Tags\Compra
      */
-    protected $compra;
+    public $compra;
     /**
      * @var Tags\Cana
      */
-    protected $cana;
-    /**
-     * @var array Tags\ForDia
-     */
-    protected $forDia = [];
-    /**
-     * @var array Tags\Deduc
-     */
-    protected $deduc = [];
+    public $cana;
 
     public function __construct($versao = '4.0')
     {

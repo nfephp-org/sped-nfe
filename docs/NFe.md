@@ -4,7 +4,7 @@ Toda a estrutura das NFe foi desmembrada em um grupo de classes dentro do namesp
 
 Essas sub classes que representam os "NODES" do XML recebem como parametro uma stdClass do PHP, e as propriedades dessa stdClass representam os elementos contidos no "NODE".
 
-Existem 13 NODES principais, que podem ser adicionados a classe NFe 
+Existem 15 NODES principais, que podem ser adicionados a classe NFe 
 
 1 ide
 2 NFref
@@ -12,13 +12,15 @@ Existem 13 NODES principais, que podem ser adicionados a classe NFe
 4 dest
 5 retirada
 6 entrega
-7 det
-8 total
-9 transp
-10 cobr
-11 exporta
-12 compra
-13 cana
+7 autXML
+8 det
+9 total
+10 transp
+11 cobr
+12 pag
+13 exporta
+14 compra
+15 cana
 
 Porém vários desses NODES possuem subnodes.
 Alguns dos subnodes possuem outros subnode também e que ao final representam a totalidade dos dados a serem inclusos em uma NFe.
@@ -56,11 +58,14 @@ Alguns dos subnodes possuem outros subnode também e que ao final representam a 
 ###[Entrega::class](Entrega.md)
 *(opcional), Local da Entrega*
 
+###[AutXML::class](AutXML.md)
+*(opcional), Identificação dos autorizados a obter o XML*
+
 ###[Det::class](Det.md)
 *OBRIGATÓRIA, Detalhamento dos itens da NFe*
 
-Prod::class (OBRIGATÓRIO) 
-InfAdProd::class (Opcional) [0 - 500] Informações do produto
+	Prod::class (OBRIGATÓRIO) 
+	InfAdProd::class (Opcional) [0 - 500] Informações do produto
 
 ###[Total::class](Total.md)
 *OBRIGATÓRIA, totalizações*
@@ -100,13 +105,14 @@ InfAdProd::class (Opcional) [0 - 500] Informações do produto
 	
 	ProcRef::class (opcional) Processo Referenciado
 
+###[Pag::class](Pag.md)
+*(opcional), Informações sobre o pagamento*
 
 ###[Exporta::class](Exporta.md)
 *(opcional), Dados de Exportacao*
 
 ###[Compra::class](Compra.md)
 *(opcional), Dados de Compra*
-
 
 ###[Cana::class](Cana.md)
 *(opcional), Informações do Registro de Aquisição de Cana*
@@ -115,6 +121,34 @@ InfAdProd::class (Opcional) [0 - 500] Informações do produto
     
     Deduc::class  [0 - 10] (opcional) Deduções
 
+##Forma de Uso
 
+A classe NFe, possui apenas 2 métodos publicos
+
+**function add(TagInterface $tag);**
+
+Este método recebe como parâmetro uma das 15 tags principais, acima listadas e a adiciona à respectiva propriedade da classe.
+ 
+**function build();**
+
+Este médodo realiza a construção do XML propriamente dita e retorna o XML em uma string.
+
+
+```php
+
+use NFePHP\NFe\NFe;
+
+//adiona as tags, providas pelas classes construtoras
+$nfe->add(Tags\Ide($std));
+$nfe->add(Tags\Emit($std));
+.
+.
+.
+
+//monta o XML, com base noa dados providos pelas classes construtoras
+$xml = $nfe->build();
+
+
+```
 
    

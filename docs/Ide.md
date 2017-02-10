@@ -1,17 +1,17 @@
 #Ide::class
 
 Node de Identificação da NFe, contêm as informações básicas referentes a uma NFe, inclusive os dados necessários para a geração da chave de 44 digitos.
-Essa é um NODE obrigatório e está presentente em toda e qualuqer NFe ou NFCe emitida.
+Essa classe representa um NODE obrigatório e está presentente em toda e qualquer NFe ou NFCe emitida.
 
 >NOTA: Leia as informações sobre a classe [Contingency](Contingency.md)
 
->NOTA: Essas classes não irão realizar nenhum tipo especifico de validação sobre os dados inseridos, portanto cabe ao aplicativo que fará uso da classe garantir a correção das informações.
+>NOTA: Esta classe não irá realizar nenhum tipo especifico de validação sobre os dados inseridos, portanto cabe ao aplicativo que fará uso da classe garantir a correção das informações. Exceto a definição dos TZD (zonas de tempo) de cada estado da Federação. E por esse motivo os dados referentes as Datas devem ser passados como classes DateTime().
 
 >NOTA: As propriedades da stdClass, devem ser obrigatóriamente as mesmas indicadas no Manual da SEFAZ, ou seja, são os mesmos nomes usados na identificação de cada elemento do layout do XML. Com uma vantagem não é necessário se preocupar em usar letras maiusculas ou minusculas, pois os dados são "case insensitive".
 
 >NOTA: Caso alguma propriedade não seja definida, quer por esquecimento, quer por não ser necessária, ela será desconsiderada se não for obrigatória, e inserida vazia no XML caso seja obrigatória.
 
->NOTA: Estas classes não deverão NUNCA retornar ERRORS, WARNINGS, NOTICES ou EXCEPTIONS, simplesmente irão processar o XML com ou sem as informações devidas, pois o mesmo deverá ser validado a posteriori com base em seu respectivo XSD.
+>NOTA: Esta classe não deverá NUNCA retornar ERRORS, WARNINGS, NOTICES ou EXCEPTIONS, simplesmente irá processar o XML com ou sem as informações devidas, pois o XML deverá ser validado posteriormente com base em seu respectivo XSD.
 
 >NOTA: Este NODE não possue subnodes.
 
@@ -28,7 +28,7 @@ use NFePHP\NFe\Tag;
 //========================
 $ide = new stdClass();
 $ide->cUF = 23;
-$ide->cNF = '10';//se não for passado será usado o numero da nota nNF
+$ide->cNF = 10;//se não for passado será usado o numero da nota nNF
 $ide->natOp = 'Venda de Produto';
 $ide->indPag = 0;
 $ide->mod = 55;
@@ -52,7 +52,13 @@ $contingency = new Contingency();
 $ide->contingency = $contingency;
 $ideClass = Tag::ide($ide);
 ```
-Essa classe pode gerar uma string JSON, para finalidade de armazenamento.
+Esta classe pode gerar uma string JSON, para finalidade de armazenamento, e outras.
+
+```php
+
+$ideJson = "{$ideClass}";
+
+```
 
 Para adicionar essa classe a NFe::class poemos proceder das seguintes formas:
 
