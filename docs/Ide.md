@@ -1,4 +1,4 @@
-#Ide::class
+#Ide::class .................  [voltar](NFe.md)
 
 Node de Identificação da NFe, contêm as informações básicas referentes a uma NFe, inclusive os dados necessários para a geração da chave de 44 digitos.
 Essa classe representa um NODE obrigatório e está presentente em toda e qualquer NFe ou NFCe emitida.
