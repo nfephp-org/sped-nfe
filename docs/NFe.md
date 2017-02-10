@@ -73,12 +73,50 @@ Alguns dos subnodes possuem outros subnodes também e que ao final representam a
 
 >Prod::class (OBRIGATÓRIO) [ 1 - 1 ]
 
+>>DI::class (opcional) [0 - 100] Dados da importação
+
+>>>Adi::class (opcional) [1 - 100] Adições
+
+>>DetExport::class (opcional) [0 - 500] Drawback e exportação
+
+>>>ExportInd::class (opcional) [0 - 1] exportação indireta
+
+>>VeicProd::class (opcional) [0 - 1] Veiculos NOVOS
+
+>>Med::class (opcional) [0 - 500] Medicamentos
+
+>>Arma::class (opcional) [0 - 500] Armamentos e munições
+
+>>Comb::class  (opcional) [0 - 1] Combustiveis
+
+>Imposto::class (OBRIGATÓRIO) [1 - 1] Impostos
+
+>>ICMS::class (opcional) [0 - 1] ICMS
+
+>>ICMSPart::class  (opcional) [0 - 1] ICMS Partilha
+
+>>ICMSST::class  (opcional) [0 - 1] Repasse de ICMS ST retido
+
+>>ICMSSN::class  (opcional) [0 - 1] ICMS Simples Nacional
+
+>>IPI::class (opcional) [0 - 1] Imposto produtos industrializados
+
+>>II::class  (opcional) [0 - 1] Imposto de importação
+
+>>PIS::class (opcional) [0 - 1] Contribuição de PIS
+
+>>COFINS::class (opcional) [0 - 1]  Contribuição de COFINS
+
+>>ISSQN::class (opcional) [0 - 1] Imposto sobre Serviços
+
+>ImpostoDevol::class  (opcional) [0 - 1] Informação do Imposto devolvido
+
 >InfAdProd::class (Opcional) [0 - 500] Informações do produto
 
 ###<a name="total"></a>[Total::class](Total.md) [ 1 - 1 ]
 *OBRIGATÓRIA, totalizações*
 
->ICMSTot::class (OBRIGATÓRIO) [0 - 1] Totalizações de Impostos
+>ICMSTot::class (OBRIGATÓRIO) [1 - 1] Totalizações de Impostos
 	
 >ISSQNtot::class (opcional) [0 - 1] Totalização de ISS
 	
