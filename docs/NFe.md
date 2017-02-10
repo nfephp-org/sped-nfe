@@ -6,21 +6,21 @@ Essas sub classes que representam os "NODES" do XML recebem como parametro uma s
 
 Existem 15 NODES principais, que podem ser adicionados a classe NFe 
 
-1 ide
-2 NFref
-3 emit
-4 dest
-5 retirada
-6 entrega
-7 autXML
-8 det
-9 total
-10 transp
-11 cobr
-12 pag
-13 exporta
-14 compra
-15 cana
+1. ide
+2. NFref
+3. emit
+4. dest
+5. retirada
+6. entrega
+7. autXML
+8. det
+9. total
+10. transp
+11. cobr
+12. pag
+13. exporta
+14. compra
+15. cana
 
 Porém vários desses NODES possuem subnodes.
 Alguns dos subnodes possuem outros subnode também e que ao final representam a totalidade dos dados a serem inclusos em uma NFe.
