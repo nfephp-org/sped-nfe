@@ -135,7 +135,6 @@ function __constuct(stdClass $std)
 ```
 Método construtor, pode receber como parametro um stdClass, como já mensionado, contendo os dados da TAG do XML, esses dados serão tratados e alocados nas propriedades da classe. 
 
-
 ```php
 function toNode()
 ```
