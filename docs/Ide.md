@@ -92,23 +92,19 @@ $ide->verProc = '5.0.0';
 $ide->cDV = 0;
 $ide->contingency = new Contingency();
 
-
 ```
 
 
 Esta classe pode gerar uma string JSON, para finalidade de armazenamento, e outras.
 
 ```php
-
 $ideJson = "{$ideClass}";
-
 ```
 
 Para adicionar essa classe a NFe::class podemos proceder das seguintes formas:
 
 
 ```php
-
 use NFePHP\NFe\NFe;
 
 //instanciar a classe NFe indicando a vero do layout a ser usado
@@ -121,7 +117,6 @@ $nfe->add($ideClass);
 Ou alternativamente, essa classe pode ser carregada diretamente em sua respectiva propriedade publica:
 
 ```php
-
 use NFePHP\NFe\NFe;
 
 //instanciar a classe NFe indicando a verção do layout a ser usado
@@ -158,7 +153,7 @@ Esta classe possui as seguintes propriedades:
 
 > NOTA: Fique atento ao tipo da variável.
  
-> NOTA: Para saber o que significam esses nomes, quais são os possiveis consteudos e suas regras, use o Manual da SEFAZ
+> NOTA: Para saber o que significam esses nomes, quais são os possiveis conteúdos e suas regras, use o Manual da SEFAZ
 
 ```php
 /**
