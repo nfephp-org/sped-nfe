@@ -59,7 +59,6 @@ $ideClass = Tag::ide($ide);
 Alternativamente, os dados do Node podem ser carregados diretamente nas propriedades publicas da classe, que possuem exatamente os mesmos nomes das suas respecitivas tags no XML, definidos pelo layout da SEFAZ. Como abaixo indicado:
 
 ```php
-
 use NFePHP\NFe\Factories\Contingency;
 use NFePHP\NFe\Tag;
 use NFePHP\NFe\NFe;
@@ -90,8 +89,14 @@ $ide->indPres = 9;
 $ide->procEmi = 0;
 $ide->verProc = '5.0.0';
 $ide->cDV = 0;
+//ou carrega Contingency::class e passa para Ide::class
 $ide->contingency = new Contingency();
+//ou carrega as variáveis diretamente
+//$ide->tpEmis = 4;
+//$ide->dhCont = '2017-02-12T11:04:02-03:00';
+//$ide->xJust = 'Justificativa de constingencia';
 
+//NOTA: Se Contingency::class for carregada ela será mandatória e irá sobreescrever as variáveis derivadas. 
 ```
 
 
