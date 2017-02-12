@@ -31,15 +31,27 @@ class Base
      * Base Constructor
      * @param stdClass $std
      */
-    public function __construct(stdClass $std)
+    public function __construct(stdClass $std = null)
     {
-        $std = $this->standardizeParams($this->parameters, $std);
-        $this->std = $std;
-        $this->dom = new Dom('1.0', 'UTF-8');
-        $this->dom->preserveWhiteSpace = false;
-        $this->dom->formatOutput = false;
+        if (!empty($std)) {
+            $std = $this->standardizeParams($this->parameters, $std);
+            $this->std = $std;
+        }
+        $this->init();
     }
     
+    /**
+     * Initialize DOM
+     */
+    protected function init()
+    {
+        if (empty($this->dom)) {
+            $this->dom = new Dom('1.0', 'UTF-8');
+            $this->dom->preserveWhiteSpace = false;
+            $this->dom->formatOutput = false;
+        }    
+    }
+
     /**
      * Return data from DOMElement in json string
      * @return string

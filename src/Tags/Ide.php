@@ -174,6 +174,11 @@ class Ide extends Base implements TagInterface
         $this->xJust = $this->std->contingency->motive;
     }
     
+    private function adjustProperties()
+    {
+        
+    }
+    
     /**
      * Build DOMElement form class properties
      * @return DOMElement

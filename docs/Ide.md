@@ -1,13 +1,15 @@
-#Ide::class .................  [voltar](NFe.md)
+# Ide::class
 
 Node de Identificação da NFe, contêm as informações básicas referentes a uma NFe, inclusive os dados necessários para a geração da chave de 44 digitos.
+
 Essa classe representa um NODE obrigatório e está presentente em toda e qualquer NFe ou NFCe emitida.
 
 >NOTA: Leia as informações sobre a classe [Contingency](Contingency.md)
 
 >NOTA: Esta classe não irá realizar nenhum tipo especifico de validação sobre os dados inseridos, portanto cabe ao aplicativo que fará uso da classe garantir a correção das informações. Exceto a definição dos TZD (zonas de tempo) de cada estado da Federação. E por esse motivo os dados referentes as Datas devem ser passados como classes DateTime().
 
->NOTA: As propriedades da stdClass, devem ser obrigatóriamente as mesmas indicadas no Manual da SEFAZ, ou seja, são os mesmos nomes usados na identificação de cada elemento do layout do XML. Com uma vantagem não é necessário se preocupar em usar letras maiusculas ou minusculas, pois os dados são "case insensitive".
+>NOTA: Com a quantidade de dados em geral é elevada em cada classe, as propriedades das classes "TAG" receberão como parâmetro uma stdClass no método construtor ou pordem ser carregadas diretamente pelas suas propriedades publicas.
+>As propriedades da stdClass, devem ser obrigatóriamente as mesmas indicadas no Manual da SEFAZ, ou seja, são os mesmos nomes usados na identificação de cada elemento do layout do XML. Com uma vantagem não é necessário se preocupar em usar letras maiusculas ou minusculas, pois os dados são "case insensitive".
 
 >NOTA: Caso alguma propriedade não seja definida, quer por esquecimento, quer por não ser necessária, ela será desconsiderada se não for obrigatória, e inserida vazia no XML caso seja obrigatória.
 
@@ -15,7 +17,7 @@ Essa classe representa um NODE obrigatório e está presentente em toda e qualqu
 
 >NOTA: Este NODE não possue subnodes.
 
-##Forma de USO
+## Forma de USO
 
 ```php
 
@@ -88,3 +90,4 @@ $nfe->ide = $ideClass;
 ```
 
 
+[NFe::class](NFe.md)
