@@ -45,6 +45,8 @@ $ide->cDV = 0;//não é importante será recalculado de qualquer forma
 $contingency = new Contingency();
 $ide->contingency = $contingency;
 $ideClass = Tag::ide($ide);
+header('Content-type: text/json; charset=UTF-8');
+echo "{$ideClass}";
 die;
 //adicionando <ide>
 $nfe->add($ideClass);

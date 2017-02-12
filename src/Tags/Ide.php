@@ -113,11 +113,10 @@ class Ide extends Base implements TagInterface
      * @var string
      */
     protected $dhSaiEntString;
-    
     /**
      * @var array
      */
-    public $parameters = [
+    protected  $parameters = [
         'cUF'       =>  'string',
         'cNF'       =>  'integer',
         'natOp'     =>  'string',
@@ -150,7 +149,7 @@ class Ide extends Base implements TagInterface
      */
     private function adjustProperties()
     {
-        $this->tzd = new DateTimeZone(TimeZoneByUF::get($this->cuf));
+        $this->tzd = new DateTimeZone(TimeZoneByUF::get($this->cUF));
         if (empty($this->dhEmi)) {
             $this->dhEmi = new DateTime();
         }
@@ -164,11 +163,13 @@ class Ide extends Base implements TagInterface
         }
         if (!empty($this->contingency)) {
             $this->tpEmis = $this->contingency->tpEmis;
-            $dt = new \DateTime();
-            $dt->setTimezone($this->tzd);
-            $dt->setTimestamp($this->contingency->timestamp);
-            $this->dhCont = $dt->format('Y-m-d\TH:i:sP');
-            $this->xJust = $this->contingency->motive;
+            if ($this->tpEmis != 1) {
+                $dt = new \DateTime();
+                $dt->setTimezone($this->tzd);
+                $dt->setTimestamp($this->contingency->timestamp);
+                $this->dhCont = $dt->format('Y-m-d\TH:i:sP');
+                $this->xJust = $this->contingency->motive;
+            }
         }
         if (empty($this->tpEmis)) {
             $this->tpEmis = 1;

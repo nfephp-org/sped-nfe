@@ -17,15 +17,15 @@ class Base
     /**
      * @var stdClass
      */
-    public $std;
+    protected $std;
     /**
      * @var DOMElement
      */
-    public $node;
+    protected $node;
     /**
      * @var array
      */
-    public $parameters = [];
+    protected $parameters = [];
     
     /**
      * Base Constructor
@@ -148,6 +148,6 @@ class Base
         $newdoc->appendChild($newdoc->importNode($cloned, true));
         $xml_string = $newdoc->saveXML();
         $xml = simplexml_load_string($xml_string);
-        return json_encode($xml);
+        return json_encode($xml, JSON_PRETTY_PRINT);
     }
 }

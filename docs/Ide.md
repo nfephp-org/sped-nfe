@@ -1,4 +1,4 @@
-# Ide::class
+# Tags\Ide::class
 
 Node de Identificação da NFe, contêm as informações básicas referentes a uma NFe, inclusive os dados necessários para a geração da chave de 44 digitos.
 
@@ -56,7 +56,7 @@ $ide->contingency = $contingency;
 $ideClass = Tag::ide($ide);
 ```
 
-Alternativamente, os dados do Node podem ser carregadas diretamente nas propriedades publicas da classe, que possuem exatament eos mesmos nomes das suas respecitivas tags no XML definido pelo layout da SEFAZ. Como abaixo indicado:
+Alternativamente, os dados do Node podem ser carregados diretamente nas propriedades publicas da classe, que possuem exatamente os mesmos nomes das suas respecitivas tags no XML, definidos pelo layout da SEFAZ. Como abaixo indicado:
 
 ```php
 
