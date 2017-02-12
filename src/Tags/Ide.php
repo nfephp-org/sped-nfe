@@ -18,7 +18,7 @@ class Ide extends Base implements TagInterface
      */
     public $cUF;
     /**
-     * @var string
+     * @var integer
      */
     public $cNF;
     /**
@@ -38,11 +38,11 @@ class Ide extends Base implements TagInterface
      */
     public $nNF;
     /**
-     * @var string
+     * @var DateTime
      */
     public $dhEmi;
     /**
-     * @var string
+     * @var DateTime
      */
     public $dhSaiEnt;
     /**
@@ -102,10 +102,21 @@ class Ide extends Base implements TagInterface
      */
     public $xJust;
     /**
+     * @var Contingency
+     */
+    public $contingency;
+    /**
      * @var DateTimeZone
      */
-    public $tzd;
+    protected $tzd;
+    /**
+     * @var string
+     */
+    protected $dhSaiEntString;
     
+    /**
+     * @var array
+     */
     public $parameters = [
         'cUF'       =>  'string',
         'cNF'       =>  'integer',
@@ -132,51 +143,36 @@ class Ide extends Base implements TagInterface
     public function __construct(stdClass $std)
     {
         parent::__construct($std);
-        $this->tzd = new DateTimeZone(TimeZoneByUF::get($this->std->cuf));
-        if (empty($this->std->dhemi)) {
-            $this->std->dhemi = new DateTime();
-        }
-        $this->dhEmi = $this->std->dhemi->setTimeZone($this->tzd);
-        $this->cUF = $this->std->cuf;
-        if (empty($this->std->cnf)) {
-            $this->std->cnf = $this->std->nnf;
-        }
-        $this->cNF = str_pad($this->std->cnf, 8, '0', STR_PAD_LEFT);
-        $this->natOp = $this->std->natop;
-        $this->mod = $this->std->mod;
-        $this->serie = $this->std->serie;
-        $this->nNF = $this->std->nnf;
-        $this->dhEmi = $this->std->dhemi->format('Y-m-d\TH:i:sP');
-        $this->dhSaiEnt = '';
-        if (!empty($this->std->dhsaient)) {
-            $this->std->dhsaient->setTimeZone($this->tzd);
-            $this->dhSaiEnt = $this->std->dhsaient->format('Y-m-d\TH:i:sP');
-        }
-        $this->tpNF = $this->std->tpnf;
-        $this->idDest = $this->std->iddest;
-        $this->cMunFG = $this->std->cmunfg;
-        $this->tpImp = $this->std->tpimp;
-        $this->cDV = $this->std->cdv;
-        $this->tpAmb = $this->std->tpamb;
-        $this->finNFe = $this->std->finnfe;
-        $this->indFinal = $this->std->indfinal;
-        $this->indPres = $this->std->indpres;
-        $this->procEmi = $this->std->procemi;
-        $this->verProc = $this->std->verproc;
-        $this->tpEmis = $this->std->contingency->tpEmis;
-        $this->dhCont = '';
-        if ($this->std->contingency->timestamp > 0) {
-            $dt = new \DateTime();
-            $dt->setTimezone($this->tzd);
-            $dt->setTimestamp($this->std->contingency->timestamp);
-            $this->dhCont = $dt->format('Y-m-d\TH:i:sP');
-        }
-        $this->xJust = $this->std->contingency->motive;
     }
     
+    /**
+     * Adjust all propreties to build
+     */
     private function adjustProperties()
     {
-        
+        $this->tzd = new DateTimeZone(TimeZoneByUF::get($this->cuf));
+        if (empty($this->dhEmi)) {
+            $this->dhEmi = new DateTime();
+        }
+        $this->dhEmi = $this->dhEmi->setTimeZone($this->tzd);
+        if (!empty($this->dhSaiEnt)) {
+            $this->dhSaiEnt->setTimeZone($this->tzd);
+            $this->dhSaiEntString = $this->dhSaiEnt->format('Y-m-d\TH:i:sP');
+        }
+        if (empty($this->cNF)) {
+            $this->cNF = $this->nNF;
+        }
+        if (!empty($this->contingency)) {
+            $this->tpEmis = $this->contingency->tpEmis;
+            $dt = new \DateTime();
+            $dt->setTimezone($this->tzd);
+            $dt->setTimestamp($this->contingency->timestamp);
+            $this->dhCont = $dt->format('Y-m-d\TH:i:sP');
+            $this->xJust = $this->contingency->motive;
+        }
+        if (empty($this->tpEmis)) {
+            $this->tpEmis = 1;
+        }
     }
     
     /**
@@ -185,6 +181,7 @@ class Ide extends Base implements TagInterface
      */
     public function toNode()
     {
+        $this->adjustProperties();
         $ideTag = $this->dom->createElement("ide");
         $this->dom->addChild(
             $ideTag,
@@ -195,7 +192,7 @@ class Ide extends Base implements TagInterface
         $this->dom->addChild(
             $ideTag,
             "cNF",
-            $this->cNF,
+            str_pad($this->cNF, 8, '0', STR_PAD_LEFT),
             true
         );
         $this->dom->addChild(
@@ -225,13 +222,13 @@ class Ide extends Base implements TagInterface
         $this->dom->addChild(
             $ideTag,
             "dhEmi",
-            $this->dhEmi,
+            $this->dhEmi->format('Y-m-d\TH:i:sP'),
             true
         );
         $this->dom->addChild(
             $ideTag,
             "dhSaiEnt",
-            $this->dhSaiEnt,
+            $this->dhSaiEntString,
             false
         );
         $this->dom->addChild(

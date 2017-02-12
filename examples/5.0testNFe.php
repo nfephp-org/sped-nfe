@@ -45,6 +45,7 @@ $ide->cDV = 0;//não é importante será recalculado de qualquer forma
 $contingency = new Contingency();
 $ide->contingency = $contingency;
 $ideClass = Tag::ide($ide);
+die;
 //adicionando <ide>
 $nfe->add($ideClass);
 

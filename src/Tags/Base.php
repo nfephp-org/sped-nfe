@@ -36,6 +36,7 @@ class Base
         if (!empty($std)) {
             $std = $this->standardizeParams($this->parameters, $std);
             $this->std = $std;
+            $this->loadProperties();
         }
         $this->init();
     }
@@ -65,6 +66,20 @@ class Base
     }
     
     /**
+     * Load all properties from $this->std, from __construct method
+     */
+    protected function loadProperties()
+    {
+        $properties = array_keys(get_object_vars($this));
+        foreach($properties as $key) {
+            $q = strtolower($key);
+            if (isset($this->std->$q)) {
+                $this->$key = $this->std->$q;
+            }    
+        }
+    }
+
+    /**
      * Standardize parameters
      * @param array $parameters
      * @param stdClass $dados
@@ -85,7 +100,7 @@ class Base
                 case 'double':
                 case 'array':
                 case 'resource':
-                    $value = '';
+                    $value = null;
                     break;
                 default:
                     $obj = explode(':', $type);

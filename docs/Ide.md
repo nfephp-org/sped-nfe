@@ -71,7 +71,7 @@ use NFePHP\NFe\NFe;
 $ide = Tag::Ide();
 
 $ide->cUF = 23;
-$ide->cNF = '10';//se não for passado será usado o numero da nota nNF
+$ide->cNF = 10;//se não for passado será usado o numero da nota nNF
 $ide->natOp = 'Venda de Produto';
 $ide->indPag = 0;
 $ide->mod = 55;
@@ -161,7 +161,7 @@ Esta classe possui as seguintes propriedades:
 public $cUF;
 
 /**
- * @var string
+ * @var integer
  */
 public $cNF;
 
@@ -186,12 +186,12 @@ public $serie;
 public $nNF;
 
 /**
- * @var string
+ * @var DateTime
  */
 public $dhEmi;
 
 /**
- * @var string
+ * @var DateTime
  */
 public $dhSaiEnt;
 
