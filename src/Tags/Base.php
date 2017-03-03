@@ -50,7 +50,7 @@ class Base
             $this->dom = new Dom('1.0', 'UTF-8');
             $this->dom->preserveWhiteSpace = false;
             $this->dom->formatOutput = false;
-        }    
+        }
     }
 
     /**
@@ -71,11 +71,11 @@ class Base
     protected function loadProperties()
     {
         $properties = array_keys(get_object_vars($this));
-        foreach($properties as $key) {
+        foreach ($properties as $key) {
             $q = strtolower($key);
             if (isset($this->std->$q)) {
                 $this->$key = $this->std->$q;
-            }    
+            }
         }
     }
 

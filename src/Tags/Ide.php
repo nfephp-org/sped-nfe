@@ -116,7 +116,7 @@ class Ide extends Base implements TagInterface
     /**
      * @var array
      */
-    protected  $parameters = [
+    protected $parameters = [
         'cUF'       =>  'string',
         'cNF'       =>  'integer',
         'natOp'     =>  'string',

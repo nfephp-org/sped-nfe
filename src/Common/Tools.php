@@ -7,7 +7,9 @@ use NFePHP\Common\Certificate;
 use NFePHP\Common\Soap\SoapInterface;
 use NFePHP\Common\Signer;
 use NFePHP\Common\Validator;
+use NFePHP\Common\TimeZoneByUF;
 use NFePHP\NFe\Factories\Contingency;
+use NFePHP\NFe\Common\Webservices;
 use NFePHP\NFe\Factories\Header;
 use NFePHP\Common\Soap\SoapCurl;
 
@@ -19,10 +21,10 @@ class Tools
      */
     public $config;
     /**
-     * Path to config folder
+     * Path to storage folder
      * @var string
      */
-    public $pathconfig = '';
+    public $pathwsfiles = '';
     /**
      * Path to schemes folder
      * @var string
@@ -172,18 +174,27 @@ class Tools
     public function __construct($configJson, Certificate $certificate)
     {
         $this->config = json_decode($configJson);
-        $this->pathconfig = __DIR__ .
-            DIRECTORY_SEPARATOR .
-            '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR .
-            'config' .
-            DIRECTORY_SEPARATOR;
-        $this->pathschemes = __DIR__ .
-            DIRECTORY_SEPARATOR .
-            '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR .
-            'schemes' .
-            DIRECTORY_SEPARATOR .
-            $this->config->schemes .
-            DIRECTORY_SEPARATOR;
+        
+        $this->pathwsfiles = __DIR__
+            . DIRECTORY_SEPARATOR
+            . '..'
+            . DIRECTORY_SEPARATOR
+            . '..'
+            . DIRECTORY_SEPARATOR
+            . 'storage'
+            . DIRECTORY_SEPARATOR;
+        
+        $this->pathschemes = __DIR__
+            . DIRECTORY_SEPARATOR
+            . '..'
+            . DIRECTORY_SEPARATOR
+            . '..'
+            . DIRECTORY_SEPARATOR
+            . 'schemes'
+            . DIRECTORY_SEPARATOR
+            . $this->config->schemes
+            . DIRECTORY_SEPARATOR;
+        
         $this->version($this->config->versao);
         $this->setEnvironmentTimeZone($this->config->siglaUF);
         $this->certificate = $certificate;
@@ -199,36 +210,7 @@ class Tools
      */
     public function setEnvironmentTimeZone($acronym)
     {
-        $tz = [
-            'AC'=>'America/Rio_Branco',
-            'AL'=>'America/Maceio',
-            'AM'=>'America/Manaus',
-            'AP'=>'America/Belem',
-            'BA'=>'America/Bahia',
-            'CE'=>'America/Fortaleza',
-            'DF'=>'America/Sao_Paulo',
-            'ES'=>'America/Sao_Paulo',
-            'GO'=>'America/Sao_Paulo',
-            'MA'=>'America/Fortaleza',
-            'MG'=>'America/Sao_Paulo',
-            'MS'=>'America/Campo_Grande',
-            'MT'=>'America/Cuiaba',
-            'PA'=>'America/Belem',
-            'PB'=>'America/Fortaleza',
-            'PE'=>'America/Recife',
-            'PI'=>'America/Fortaleza',
-            'PR'=>'America/Sao_Paulo',
-            'RJ'=>'America/Sao_Paulo',
-            'RN'=>'America/Fortaleza',
-            'RO'=>'America/Porto_Velho',
-            'RR'=>'America/Boa_Vista',
-            'RS'=>'America/Sao_Paulo',
-            'SC'=>'America/Sao_Paulo',
-            'SE'=>'America/Maceio',
-            'SP'=>'America/Sao_Paulo',
-            'TO'=>'America/Araguaina'
-        ];
-        date_default_timezone_set($tz[$acronym]);
+        date_default_timezone_set(TimeZoneByUF::get($acronym));
     }
 
     /**
@@ -436,7 +418,7 @@ class Tools
         $ambiente = $tpAmb == 1 ? "producao" : "homologacao";
         $webs = new Webservices($this->getXmlUrlPath());
         $sigla = $uf;
-        $cont = $this->contingency->type();
+        $cont = $this->contingency->type;
         if (!empty($cont)) {
             $sigla = $cont;
         }
@@ -501,7 +483,9 @@ class Tools
         if ($this->modelo == 65) {
             $file = str_replace('55', '65', $file);
         }
-        return $this->pathconfig . DIRECTORY_SEPARATOR . $file;
+        return file_get_contents($this->pathwsfiles
+            . DIRECTORY_SEPARATOR
+            . $file);
     }
     
     /**
