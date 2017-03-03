@@ -291,24 +291,20 @@ class Tools extends ToolsCommon
     }
 
     /**
-     * sefazDistDFe
      * Serviço destinado à distribuição de informações
      * resumidas e documentos fiscais eletrônicos de interesse de um ator.
-     *
-     * @param string $fonte sigla da fonte dos dados 'AN' e para alguns casos pode ser 'RS'
-     * @param string  $cnpj
      * @param integer $ultNSU  ultimo numero NSU que foi consultado
      * @param integer $numNSU  numero de NSU que se quer consultar
+     * @param string $fonte sigla da fonte dos dados 'AN' e para alguns casos pode ser 'RS'
      * @return string
      */
     public function sefazDistDFe(
-        $fonte = 'AN',
-        $cnpj = '',
         $ultNSU = 0,
-        $numNSU = 0
+        $numNSU = 0,
+        $fonte = 'AN'
     ) {
         //carrega serviço
-        $this->zLoadServico(
+        $this->servico(
             'NfeDistribuicaoDFe',
             $fonte,
             $this->tpAmb
@@ -322,9 +318,9 @@ class Tools extends ToolsCommon
         }
         //monta a consulta
         $request = "<distDFeInt xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
-            . "<tpAmb>$tpAmb</tpAmb>"
+            . "<tpAmb>$this->tpAmb</tpAmb>"
             . "<cUFAutor>$cUF</cUFAutor>"
-            . "<CNPJ>$cnpj</CNPJ>$tagNSU</distDFeInt>";
+            . "<CNPJ>$this->config->cnpj</CNPJ>$tagNSU</distDFeInt>";
         //$this->isValid($this->urlVersion, $request, '????');
         //montagem dos dados da mensagem SOAP
         $body = "<nfeDistDFeInteresse xmlns=\"$this->urlNamespace\">"

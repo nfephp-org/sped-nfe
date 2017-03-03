@@ -138,9 +138,6 @@ class Webservices
      */
     protected function convert($xml)
     {
-        if (is_file($xml)) {
-            $xml = file_get_contents($xml);
-        }
         $resp = simplexml_load_string($xml, null, LIBXML_NOCDATA);
         $aWS = [];
         foreach ($resp->children() as $element) {
