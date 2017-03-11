@@ -226,7 +226,8 @@ class Tools extends ToolsCommon
     /**
      * Search for the registration data of an NFe issuer,
      * if in contingency mode this service will cause a
-     * Excption and not all Sefaz has this service available
+     * Exception and remember not all Sefaz have this service available,
+     * so it will not work in some cases.
      * @param string $uf  federation unit
      * @param string $cnpj CNPJ number (optional)
      * @param string $iest IE number (optional)
