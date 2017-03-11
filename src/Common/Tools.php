@@ -2,6 +2,19 @@
 
 namespace NFePHP\NFe\Common;
 
+/**
+ * Class base responsible for communication with SEFAZ
+ *
+ * @category  NFePHP
+ * @package   NFePHP\NFe\Common\Tools
+ * @copyright NFePHP Copyright (c) 2008-2017
+ * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
+ * @license   https://opensource.org/licenses/MIT MIT
+ * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
+ * @author    Roberto L. Machado <linux.rlm at gmail dot com>
+ * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
+ */
+
 use NFePHP\Common\Strings\Strings;
 use NFePHP\Common\Certificate;
 use NFePHP\Common\Soap\SoapInterface;
@@ -12,6 +25,11 @@ use NFePHP\NFe\Factories\Contingency;
 use NFePHP\NFe\Common\Webservices;
 use NFePHP\NFe\Factories\Header;
 use NFePHP\Common\Soap\SoapCurl;
+use RuntimeException;
+use InvalidArgumentException;
+use NFePHP\Common\Exception\SignerException;
+use DateTime;
+use DOMDocument;
 
 class Tools
 {
@@ -160,7 +178,6 @@ class Tools
         'xmlns:soap' => "http://www.w3.org/2003/05/soap-envelope"
     ];
 
-
     /**
      * Constructor
      * load configurations,
@@ -286,7 +303,7 @@ class Tools
      * Sign NFe or NFCe
      * @param  string  $xml NFe xml content
      * @return string singed NFe xml
-     * @throws \RuntimeException
+     * @throws RuntimeException
      */
     public function signNFe($xml)
     {
@@ -295,7 +312,7 @@ class Tools
             //corret fields from NFe for contigency mode
             $xml = $this->correctNFeForContingencyMode($xml);
             $signed = Signer::sign($this->certificate, $xml, 'infNFe', 'Id', $this->algorithm, [false,false,null,null]);
-            $dom = new \DOMDocument('1.0', 'UTF-8');
+            $dom = new DOMDocument('1.0', 'UTF-8');
             $dom->preserveWhiteSpace = false;
             $dom->formatOutput = false;
             $dom->loadXML($signed);
@@ -304,10 +321,10 @@ class Tools
                 $signed = $this->addQRCode($dom);
             }
             $this->isValid($this->versao, $signed, 'nfe');
-        } catch (NFePHP\Common\Exception\SignerException $e) {
-            throw new \RuntimeException($e->getMessage);
-        } catch (\InvalidArgumentException $e) {
-            throw new \RuntimeException($e->getMessage);
+        } catch (SignerException $e) {
+            throw new RuntimeException($e->getMessage);
+        } catch (InvalidArgumentException $e) {
+            throw new RuntimeException($e->getMessage);
         }
         return $signed;
     }
@@ -316,7 +333,7 @@ class Tools
      * Corret NFe fields when in contingency mode
      * @param string $xml
      * @return string
-     * @throws \RuntimeException
+     * @throws RuntimeException
      */
     protected function correctNFeForContingencyMode($xml)
     {
@@ -334,9 +351,11 @@ class Tools
         $motivo = trim(Strings::cleanString($this->contingency->motive));
         $len = strlen($motivo);
         if ($len < 15 || $len > 255) {
-            throw new \RuntimeException('O motivo da contingência não atende os parametros de tamanho');
+            throw new RuntimeException(
+                'O motivo da contingência não atende os parametros de tamanho'
+            );
         }
-        $dt = new \DateTime();
+        $dt = new DateTime();
         $dt->setTimestamp($this->contingency->timestamp);
         $ide = $dom->getElementsByTagName('ide')->item(0);
         $ide->getElementsByTagName('tpEmis')->item(0)->nodeValue = $this->contingency->tpEmis;
@@ -356,18 +375,19 @@ class Tools
     }
 
     /**
-     * Performs xml validation with its respective XSD structure definition document
+     * Performs xml validation with its respective
+     * XSD structure definition document
+     * NOTE: if dont existis the XSD file will return true
      * @param string $version
      * @param string $body
      * @param string $method
      * @return boolean
-     * @throws \InvalidArgumentException
      */
     protected function isValid($version, $body, $method)
     {
         $schema = $this->pathschemes.$method."_v$version.xsd";
         if (!is_file($schema)) {
-            throw new \InvalidArgumentException("XSD file not found. [$schema]");
+            return true;
         }
         return Validator::isValid(
             $body,
@@ -375,18 +395,20 @@ class Tools
         );
     }
 
-    protected function checkContingencyForServices($service)
+    protected function checkContingencyForWebServices($service)
     {
         //se a contingencia é OFFLINE ou FSDA nenhum servidor está disponivel
         //se a contigencia EPEC está ativa apenas o envio de Lote está ativo,
         //então gerar um RunTimeException
         if ($this->contingency->type == 'FSDA'
             || $this->contingency->type == 'OFFLINE'
-            || ($this->contingency->type == 'EPEC' && $service != 'NfeAutorizacao')
+            || ($this->contingency->type == 'EPEC'
+                && $service != 'NfeAutorizacao')
         ) {
-            throw new \RuntimeException('Operando em modo de contingência esse serviço não está disponivel');
+            throw new RuntimeException(
+                'Operating in contingency mode, this service is not available'
+            );
         }
-        //se a contingência SVC está ativa apenas modificar os XML e obviamente os webservices
     }
     
     /**
@@ -408,26 +430,34 @@ class Tools
      * @param string $service
      * @param string $uf
      * @param string $tpAmb
+     * @param bool $ignoreContingency
      * @return void
      */
     protected function servico(
         $service,
         $uf,
-        $tpAmb
+        $tpAmb,
+        $ignoreContingency = false
     ) {
         $ambiente = $tpAmb == 1 ? "producao" : "homologacao";
         $webs = new Webservices($this->getXmlUrlPath());
         $sigla = $uf;
-        $cont = $this->contingency->type;
-        if (!empty($cont)) {
-            $sigla = $cont;
+        if (!$ignoreContingency) {
+            $contType = $this->contingency->type;
+            if (!empty($contType)) {
+                $sigla = $contType;
+            }
         }
         $stdServ = $webs->get($sigla, $ambiente, $this->modelo);
         if ($stdServ === false) {
-            throw \RuntimeException('Não foram localizados serviços para essa unidade.');
+            throw RuntimeException(
+                'No services were found for this federation unit.'
+            );
         }
         if (empty($stdServ->$service->url)) {
-            throw \RuntimeException('Esse serviço não é disponibilizado para essa unidade da federação.');
+            throw RuntimeException(
+                'This service not found for this federation unit.'
+            );
         }
         //recuperação do cUF
         $this->urlcUF = $this->getcUF($uf);
@@ -440,16 +470,31 @@ class Tools
         //recuperação da operação
         $this->urlOperation = $stdServ->$service->operation;
         //montagem do namespace do serviço
-        $this->urlNamespace = sprintf("%s/wsdl/%s", $this->urlPortal, $this->urlOperation);
-        //montagem do cabeçalho da comunicação SOAP
-        $this->urlHeader = Header::get($this->urlNamespace, $this->urlcUF, $this->urlVersion);
-        //montagem do SOAP Header
-        $this->objHeader = new \SOAPHeader(
-            $this->urlNamespace,
-            'nfeCabecMsg',
-            ['cUF' => $this->urlcUF, 'versaoDados' => $this->urlVersion]
+        $this->urlNamespace = sprintf(
+            "%s/wsdl/%s",
+            $this->urlPortal,
+            $this->urlOperation
         );
-        $this->urlAction = "\"" . $this->urlNamespace . "/" . $this->urlMethod . "\"";
+        //montagem do cabeçalho da comunicação SOAP
+        $this->urlHeader = Header::get(
+            $this->urlNamespace,
+            $this->urlcUF,
+            $this->urlVersion
+        );
+        $this->urlAction = "\""
+            . $this->urlNamespace
+            . "/"
+            . $this->urlMethod
+            . "\"";
+        //montagem do SOAP Header
+        //para versões posteriores a 3.10 não incluir o SOAPHeader !!!!
+        if ($this->versao < 4.0) {
+            $this->objHeader = new \SOAPHeader(
+                $this->urlNamespace,
+                'nfeCabecMsg',
+                ['cUF' => $this->urlcUF, 'versaoDados' => $this->urlVersion]
+            );
+        }
     }
     
     /**
@@ -490,10 +535,10 @@ class Tools
     
     /**
      * Add QRCode Tag to signed XML from a NFCe
-     * @param \DOMDocument $dom
+     * @param DOMDocument $dom
      * @return string
      */
-    protected function addQRCode(\DOMDocument $dom)
+    protected function addQRCode(DOMDocument $dom)
     {
         $memmod = $this->modelo;
         $this->modelo = 65;
