@@ -3,7 +3,8 @@
 namespace NFePHP\NFe;
 
 /**
- * Class responsible for communication with SEFAZ
+ * Class responsible for communication with SEFAZ extends
+ * NFePHP\NFe\Common\Tools
  *
  * @category  NFePHP
  * @package   NFePHP\NFe\Tools
@@ -45,7 +46,7 @@ class Tools extends ToolsCommon
     ) {
         $servico = 'NfeAutorizacao';
         //throw Exception if in contingency not for this service
-        $this->checkContingencyForServices($servico);
+        $this->checkContingencyForWebServices($servico);
         if (count($aXml) > 1) {
             $indSinc = 0;
         }
@@ -223,20 +224,15 @@ class Tools extends ToolsCommon
     }
     
     /**
-     * sefazCadastro
-     * Busca os dados cadastrais de um emitente de NFe
-     * NOTA: Nem todas as Sefaz disponibilizam esse serviço
-     *
-     * @param    string $siglaUF  sigla da UF da empresa que queremos consultar
-     * @param    string $tpAmb
-     * @param    string $cnpj     numero do CNPJ da empresa a ser consultada
-     * @param    string $iest     numero da Insc. Est. da empresa a ser consultada
-     * @param    string $cpf      CPF da pessoa física a ser consultada
-     * @param    array  $aRetorno aRetorno retorno da resposta da SEFAZ em array
-     * @return   string XML de retorno do SEFAZ
-     * @throws   Exception\RuntimeException
-     * @throws   Exception\InvalidArgumentException
-     * @internal function zLoadServico (Common\Base\BaseTools)
+     * Search for the registration data of an NFe issuer,
+     * if in contingency mode this service will cause a
+     * Exception and remember not all Sefaz have this service available,
+     * so it will not work in some cases.
+     * @param string $uf  federation unit
+     * @param string $cnpj CNPJ number (optional)
+     * @param string $iest IE number (optional)
+     * @param string $cpf  CPF number (optional)
+     * @return string xml soap response
      */
     public function sefazCadastro(
         $uf,
@@ -259,29 +255,38 @@ class Tools extends ToolsCommon
         $this->servico(
             'NfeConsultaCadastro',
             $uf,
-            $this->tpAmb
+            $this->tpAmb,
+            true
         );
         $request = "<ConsCad xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
             . "<infCons>"
             . "<xServ>CONS-CAD</xServ>"
-            . "<UF>$siglaUF</UF>"
+            . "<UF>$uf</UF>"
             . "$filter</infCons></ConsCad>";
-        //$this->isValid($this->urlVersion, $request, 'dont existis XSD for this ?');
+        $this->isValid($this->urlVersion, $request, 'consCad');
         return $this->sendRequest($request);
     }
 
     /**
      * Check services status SEFAZ/SVC
-     * @param string $siglaUF  initials of federation unit
-     * @return mixed string xml soap response
+     * If $uf is empty use normal check with contingency
+     * If $uf is NOT empty ignore contingency mode
+     * @param string $uf  initials of federation unit
+     * @return string xml soap response
      */
-    public function sefazStatus($uf)
+    public function sefazStatus($uf = '')
     {
+        $ignoreContingency = true;
+        if (empty($uf)) {
+            $uf = $this->config->siglaUF;
+            $ignoreContingency = false;
+        }
         $servico = 'NfeStatusServico';
         $this->servico(
             'NfeStatusServico',
             $uf,
-            $this->tpAmb
+            $this->tpAmb,
+            $ignoreContingency
         );
         $request = "<consStatServ xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
             . "<tpAmb>$this->tpAmb</tpAmb><cUF>$this->urlcUF</cUF>"

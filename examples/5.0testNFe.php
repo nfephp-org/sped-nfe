@@ -3,6 +3,8 @@ error_reporting(E_ALL);
 ini_set('display_errors', 'On');
 require_once '../bootstrap.php';
 
+//NOTA: Esse exemplo ainda esta em desenvolvimento NÃO FUNCIONAL!!!
+
 use stdClass;
 use NFePHP\NFe\Factories\Contingency;
 use NFePHP\NFe\Tag;
