@@ -46,10 +46,11 @@ $contingencia = $tools->contingency->deactivate();
 $tools->contingency->load($contingencia);
 
 $response = $tools->sefazDistDFe(
-        'AN',
-        $arr['cnpj'],
-        0,
-        0);
+    'AN',
+    $arr['cnpj'],
+    0,
+    0
+);
 
 echo "<pre>";
 print_r($response);

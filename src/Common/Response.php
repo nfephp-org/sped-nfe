@@ -4,9 +4,8 @@ namespace NFePHP\NFe\Common;
 
 /**
  * Class to extrat data from SEFAZ responses
- *
  * @category  Library
- * @package   NFePHP\NFe\Auxiliar\Response
+ * @package   NFePHP\NFe\Common\Response
  * @copyright NFePHP Copyright (c) 2016
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT

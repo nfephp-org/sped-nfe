@@ -16,7 +16,7 @@ namespace NFePHP\NFe;
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
 
-use NFePHP\Common\Strings\Strings;
+use NFePHP\Common\Strings;
 use NFePHP\Common\Signer;
 use NFePHP\NFe\Factories\QRCode;
 use NFePHP\NFe\Factories\Events;
@@ -138,7 +138,6 @@ class Tools extends ToolsCommon
      */
     public function sefazConsultaChave($chave = '')
     {
-        
         $chNFe = preg_replace('/[^0-9]/', '', $chave);
         if (strlen($chNFe) != 44) {
             $msg = "Uma chave de 44 dígitos da NFe deve ser passada.";
