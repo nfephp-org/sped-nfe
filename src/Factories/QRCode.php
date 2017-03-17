@@ -24,7 +24,7 @@ class QRCode
      * putQRTag
      * Mount URI for QRCode and create XML tag in signed xml
      * @param DOMDocument $dom NFe
-     * @param string $token CSC number 
+     * @param string $token CSC number
      * @param string $idToken CSC identification
      * @param string $sigla UF alias
      * @param string $versao version of field

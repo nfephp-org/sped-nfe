@@ -24,7 +24,7 @@ class Protocol
 {
     /**
      * Add protocol to xml
-     * @param string $xmlnfe xml 
+     * @param string $xmlnfe xml
      * @param string $protocol response xml
      * @return string
      * @throws InvalidArgumentException
@@ -40,7 +40,7 @@ class Protocol
             throw new \InvalidArgumentException(
                 'O documento passado não é um xml.'
             );
-        }    
+        }
         
         $dom = new \DOMDocument('1.0', 'UTF-8');
         $dom->formatOutput = false;

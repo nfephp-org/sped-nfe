@@ -18,7 +18,6 @@ namespace NFePHP\NFe\Common;
 
 use DOMDocument;
 
-
 class Identify extends IdentifyBase
 {
     public static function identificar($xml, &$aResp = [])

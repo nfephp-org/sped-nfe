@@ -351,7 +351,7 @@ class Tools
      * XSD structure definition document
      * NOTE: if dont existis the XSD file will return true
      * @param string $version layout version
-     * @param string $body 
+     * @param string $body
      * @param string $method
      * @return boolean
      */

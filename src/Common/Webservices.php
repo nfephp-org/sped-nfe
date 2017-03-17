@@ -23,7 +23,7 @@ class Webservices
     
     /**
      * Constructor
-     * @param string $xml path or xml content from 
+     * @param string $xml path or xml content from
      *               nfe_ws3_mod55 or nfe_ws3_mod65
      */
     public function __construct($xml)
