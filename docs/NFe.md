@@ -160,10 +160,10 @@ Alguns dos subnodes possuem outros subnodes também e que ao final representam a
 ### <a name="exporta"></a>[Exporta::class](Exporta.md) [ 0 - 1 ]
 *(opcional), Dados de Exportacao, não possui subnodes*
 
-## #<a name="compra"></a>[Compra::class](Compra.md) [ 0 - 1 ]
+### <a name="compra"></a>[Compra::class](Compra.md) [ 0 - 1 ]
 *(opcional), Dados de Compra, não possui subnodes*
 
-###<a name="cana"></a>[Cana::class](Cana.md) [ 0 - 1 ]
+### <a name="cana"></a>[Cana::class](Cana.md) [ 0 - 1 ]
 *(opcional), Informações do Registro de Aquisição de Cana*
 
 > ForDia::class (opcional) [0 - 31]  Fornecimento diário
