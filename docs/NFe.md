@@ -26,7 +26,7 @@ Porém vários desses NODES possuem subnodes.
 Alguns dos subnodes possuem outros subnodes também e que ao final representam a totalidade dos dados a serem inclusos em uma NFe.
 
 
-##Classes a adicionar a NFe::class
+## Classes a adicionar a NFe::class
 
 
 ### <a name="ide"></a>[Ide::class](Ide.md) [ 1 - 1 ]
