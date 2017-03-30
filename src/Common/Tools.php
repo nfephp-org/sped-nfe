@@ -481,7 +481,7 @@ class Tools
      * @param string $request
      * @return string
      */
-    protected function sendRequest($body, $parameters = [])
+    protected function sendRequest($request, $parameters = [])
     {
         return (string) $this->soap->send(
             $this->urlService,
@@ -490,7 +490,7 @@ class Tools
             SOAP_1_2,
             $parameters,
             $this->soapnamespaces,
-            $body,
+            $request,
             $this->objHeader
         );
     }

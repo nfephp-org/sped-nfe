@@ -28,7 +28,7 @@ class Events
      * @throws   Exception\RuntimeException
      * @internal function zLoadServico (Common\Base\BaseTools)
      */
-    protected function zSefazEvento(
+    public function send(
         $siglaUF = '',
         $chNFe = '',
         $tpAmb = '2',
