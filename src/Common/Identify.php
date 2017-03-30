@@ -16,8 +16,7 @@ namespace NFePHP\NFe\Common;
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
 
-use \DOMDocument;
-use NFePHP\Common\Identify\Identify as IdentifyBase;
+use DOMDocument;
 
 class Identify extends IdentifyBase
 {

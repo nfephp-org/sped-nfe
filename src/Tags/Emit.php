@@ -10,14 +10,41 @@ class Emit extends Base implements TagInterface
 {
     const TAG_NAME = 'emit';
     
+    /**
+     * @var string
+     */
     public $CNPJ;
+    /**
+     * @var string
+     */
     public $CPF;
+    /**
+     * @var string
+     */
     public $xNome;
+    /**
+     * @var string
+     */
     public $xFant;
+    /**
+     * @var string
+     */
     public $IE;
+    /**
+     * @var string
+     */
     public $IEST;
+    /**
+     * @var string
+     */
     public $IM;
+    /**
+     * @var string
+     */
     public $CNAE;
+    /**
+     * @var string
+     */
     public $CRT;
     /**
      * @var EnderEmit
@@ -25,21 +52,66 @@ class Emit extends Base implements TagInterface
     public $enderEmit;
     
     public $parameters = [
-        'CNPJ'=>'string',
-        'CPF'=>'string',
-        'xNome'=>'string',
-        'xFant'=>'string',
-        'IE'=>'string',
-        'IEST'=>'string',
-        'IM'=>'string',
-        'CNAE'=>'string',
-        'CRT'=>'string'
+        'CNPJ'=>[
+            'type' => 'string',
+            'format'=>'14',
+            'required'=>false,
+            'force'=>false
+        ],
+        'CPF'=>[
+            'type' => 'string',
+            'format'=>'14',
+            'required'=>false,
+            'force'=>false
+        ],
+        'xNome'=>[
+            'type' => 'string',
+            'format'=>'14',
+            'required'=>false,
+            'force'=>false
+        ],
+        'xFant'=>[
+            'type' => 'string',
+            'format'=>'14',
+            'required'=>false,
+            'force'=>false
+        ],
+        'IE'=>[
+            'type' => 'string',
+            'format'=>'14',
+            'required'=>false,
+            'force'=>false
+        ],
+        'IEST'=>[
+            'type' => 'string',
+            'format'=>'14',
+            'required'=>false,
+            'force'=>false
+        ],
+        'IM'=>[
+            'type' => 'string',
+            'format'=>'14',
+            'required'=>false,
+            'force'=>false
+        ],
+        'CNAE'=>[
+            'type' => 'string',
+            'format'=>'14',
+            'required'=>false,
+            'force'=>false
+        ],
+        'CRT'=>[
+            'type' => 'string',
+            'format'=>'14',
+            'required'=>false,
+            'force'=>false
+        ]
     ];
     
     public function __construct(stdClass $std)
     {
         parent::__construct($std);
-    
+        /*
         $this->CNPJ = $this->std->cnpj;
         $this->CPF = $this->std->cpf;
         $this->xNome = $this->std->xnome;
@@ -49,6 +121,8 @@ class Emit extends Base implements TagInterface
         $this->IM = $this->std->im;
         $this->CNAE = $this->std->cnae;
         $this->CRT = $this->std->crt;
+         * 
+         */
     }
     
     public function toNode()
@@ -57,8 +131,8 @@ class Emit extends Base implements TagInterface
         $this->dom->addChild(
             $emitTag,
             "CNPJ",
-            $this->CNPJ,
-            false
+            self::formatToTag($this->parameters['CNPJ'], $this->CNPJ),
+            $this->parameters['CNPJ']['']
         );
         $this->dom->addChild(
             $emitTag,

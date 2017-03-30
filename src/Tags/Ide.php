@@ -26,6 +26,11 @@ class Ide extends Base implements TagInterface
      */
     public $natOp;
     /**
+     * EXCLUIDO na versão 4.0 do layout
+     * @var integer
+     */
+    public $indPag;
+    /**
      * @var integer
      */
     public $mod;
@@ -117,26 +122,133 @@ class Ide extends Base implements TagInterface
      * @var array
      */
     protected $parameters = [
-        'cUF'       =>  'string',
-        'cNF'       =>  'integer',
-        'natOp'     =>  'string',
-        'mod'       =>  'integer',
-        'serie'     =>  'integer',
-        'nNF'       =>  'integer',
-        'dhEmi'     =>  'object:\DateTime',//obrigatorio e do tipo \DateTime
-        'dhSaiEnt'  =>  'object',
-        'tpNF'      =>  'integer',
-        'idDest'    =>  'integer',
-        'cMunFG'    =>  'integer',
-        'tpImp'     =>  'integer',
-        'cDV'       =>  'integer',
-        'tpAmb'     =>  'integer',
-        'finNFe'    =>  'integer',
-        'indFinal'  =>  'integer',
-        'indPres'   =>  'integer',
-        'procEmi'   =>  'integer',
-        'verProc'   =>  'string',
-        'contingency'=>'object:NFePHP\NFe\Factories\Contingency'//obrigatorio
+        'cUF' => [
+            'type' => 'integer',
+            'format'=> '2',
+            'required' => true,
+            'force' => false
+        ],
+        'cNF' => [
+            'type' => 'integer',
+            'format'=> '8',
+            'required' => true,
+            'force' => false
+        ],
+        'natOp' => [
+            'type' => 'string',
+            'format'=> '60',
+            'required' => true,
+            'force' => false
+        ],
+        'mod' => [
+            'type' => 'integer',
+            'format'=> '2',
+            'required' => true,
+            'force' => false
+        ],
+        'serie' => [
+            'type' => 'integer',
+            'format'=> '3',
+            'required' => true,
+            'force' => false
+
+        ],
+        'nNF' => [
+            'type' => 'integer',
+            'format'=> '9',
+            'required' => true,
+            'force' => false
+        ],
+        'dhEmi' => [
+            'type' => 'objetct:DateTime',
+            'format'=> 'Y-m-d\TH:i:sP',
+            'required' => true,
+            'force' => false
+        ],//obrigatorio e do tipo \DateTime
+        'dhSaiEnt' =>  [
+            'type' => 'objetct:DateTime',
+            'format'=> 'Y-m-d\TH:i:sP',
+            'required' => false,
+            'force' => false
+        ],
+        'tpNF' => [
+            'type' => 'integer',
+            'format'=> '1',
+            'required' => true,
+            'force' => false
+        ],
+        'idDest' =>  [
+            'type' => 'integer',
+            'format'=> '1',
+            'required' => true,
+            'force' => false
+        ],
+        'cMunFG' =>  [
+            'type' => 'integer',
+            'format'=> '7',
+            'required' => true,
+            'force' => false
+        ],
+        'tpImp' =>  [
+            'type' => 'integer',
+            'format'=> '1',
+            'required' => true,
+            'force' => false
+        ],
+        'cDV' =>  [
+            'type' => 'integer',
+            'format'=> '1',
+            'required' => true,
+            'force' => false
+        ],
+        'tpAmb' =>  [
+            'type' => 'integer',
+            'format'=> '1',
+            'required' => true,
+            'force' => false
+        ],
+        'finNFe' =>  [
+            'type' => 'integer',
+            'format'=> '1',
+            'required' => true,
+            'force' => false
+        ],
+        'indFinal' =>  [
+            'type' => 'integer',
+            'format'=> '1',
+            'required' => true,
+            'force' => false
+        ],
+        'indPag' =>  [
+            'type' => 'integer',
+            'format'=> '1',
+            'required' => false,
+            'force' => false
+        ],
+        'indPres' =>  [
+            'type' => 'integer',
+            'format'=> '1',
+            'required' => true,
+            'force' => false
+        ],
+        'procEmi' =>  [
+            'type' => 'integer',
+            'format'=> '1',
+            'required' => true,
+            'force' => false
+        ],
+        'verProc'   =>  [
+            'type' => 'string',
+            'format'=> '20',
+            'required' => true,
+            'force' => false
+        ],
+        'contingency' =>  [
+            'type' => 'object:NFePHP\NFe\Factories\Contingency',
+            'format'=> '',
+            'required' => false,
+            'force' => false
+        ]
     ];
     
     public function __construct(stdClass $std)
@@ -187,32 +299,40 @@ class Ide extends Base implements TagInterface
         $this->dom->addChild(
             $ideTag,
             "cUF",
-            $this->cUF,
-            true
+            self::formatToTag($this->parameters['cUF'], $this->cUF),
+            $this->parameters['cUF']['required']
         );
         $this->dom->addChild(
             $ideTag,
             "cNF",
-            str_pad($this->cNF, 8, '0', STR_PAD_LEFT),
-            true
+            self::formatToTag($this->parameters['cNF'], $this->cNF),
+            $this->parameters['cNF']['required']
         );
         $this->dom->addChild(
             $ideTag,
             "natOp",
-            $this->natOp,
-            true
+            self::formatToTag($this->parameters['natOp'], $this->natOp),
+            $this->parameters['natOp']['required']
+        );
+        //excluido na versão 4.0 do layout
+        $this->dom->addChild(
+            $ideTag,
+            "indPag",
+            self::formatToTag($this->parameters['indPag'], $this->indPag),
+            $this->parameters['indPag']['required']
         );
         $this->dom->addChild(
             $ideTag,
             "mod",
-            $this->mod,
-            true
+            self::formatToTag($this->parameters['mod'], $this->mod),
+            $this->parameters['mod']['required']
         );
         $this->dom->addChild(
             $ideTag,
             "serie",
             $this->serie,
-            true
+            self::formatToTag($this->parameters['serie'], $this->serie),
+            $this->parameters['serie']['required']
         );
         $this->dom->addChild(
             $ideTag,

@@ -7,8 +7,8 @@ namespace NFePHP\NFe\Factories;
  * NOTE: this class only works with model 65 NFCe only
  *
  * @category  NFePHP
- * @package   NFePHP\NFe\Common\QRCode
- * @copyright NFePHP Copyright (c) 2016
+ * @package   NFePHP\NFe\Factories\QRCode
+ * @copyright NFePHP Copyright (c) 2008-2017
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
  * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
@@ -16,16 +16,29 @@ namespace NFePHP\NFe\Factories;
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
 
+use DOMDocument;
+
 class QRCode
 {
     /**
      * putQRTag
      * Mount URI for QRCode and create XML tag in signed xml
-     * @param DOMDocument $dom
+     * @param DOMDocument $dom NFe
+     * @param string $token CSC number
+     * @param string $idToken CSC identification
+     * @param string $sigla UF alias
+     * @param string $versao version of field
+     * @param string $url URL for serach by QRCode
      * @return string
      */
-    public static function putQRTag(\DOMDocument $dom, $token, $idToken, $sigla, $versao, $url = '')
-    {
+    public static function putQRTag(
+        \DOMDocument $dom,
+        $token,
+        $idToken,
+        $sigla,
+        $versao,
+        $url
+    ) {
         if (empty($url)) {
             return $dom->saveXML();
         }

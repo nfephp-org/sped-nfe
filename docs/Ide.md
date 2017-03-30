@@ -4,18 +4,18 @@ Node de Identificação da NFe, contêm as informações básicas referentes a u
 
 Essa classe representa um NODE obrigatório e está presentente em toda e qualquer NFe ou NFCe emitida.
 
->NOTA: Leia as informações sobre a classe [Contingency](Contingency.md)
+> NOTA: Leia as informações sobre a classe [Contingency](Contingency.md)
 
->NOTA: Esta classe não irá realizar nenhum tipo especifico de validação sobre os dados inseridos, portanto cabe ao aplicativo que fará uso da classe garantir a correção das informações. Exceto a definição dos TZD (zonas de tempo) de cada estado da Federação. E por esse motivo os dados referentes as Datas devem ser passados como classes DateTime().
+> NOTA: Esta classe não irá realizar nenhum tipo especifico de validação sobre os dados inseridos, portanto cabe ao aplicativo que fará uso da classe garantir a correção das informações. Exceto a definição dos TZD (zonas de tempo) de cada estado da Federação. E por esse motivo os dados referentes as Datas devem ser passados como classes DateTime().
 
->NOTA: Como a quantidade de dados em geral é elevada em cada classe, as propriedades das classes "TAG" receberão como parâmetro uma stdClass no método construtor ou pordem ser carregadas diretamente pelas suas propriedades publicas.
->As propriedades da stdClass, devem ser obrigatóriamente as mesmas indicadas no Manual da SEFAZ, ou seja, são os mesmos nomes usados na identificação de cada elemento do layout do XML. Com uma vantagem não é necessário se preocupar em usar letras maiusculas ou minusculas, pois os dados são "case insensitive".
+> NOTA: Como a quantidade de dados em geral é elevada em cada classe, as propriedades das classes "TAG" receberão como parâmetro uma stdClass no método construtor ou pordem ser carregadas diretamente pelas suas propriedades publicas.
+> As propriedades da stdClass, devem ser obrigatóriamente as mesmas indicadas no Manual da SEFAZ, ou seja, são os mesmos nomes usados na identificação de cada elemento do layout do XML. Com uma vantagem não é necessário se preocupar em usar letras maiusculas ou minusculas, pois os dados são "case insensitive".
 
->NOTA: Caso alguma propriedade não seja definida, quer por esquecimento, quer por não ser necessária, ela será desconsiderada se não for obrigatória, e inserida vazia no XML caso seja obrigatória.
+> NOTA: Caso alguma propriedade não seja definida, quer por esquecimento, quer por não ser necessária, ela será desconsiderada se não for obrigatória, e inserida vazia no XML caso seja obrigatória.
 
->NOTA: Esta classe não deverá NUNCA retornar ERRORS, WARNINGS, NOTICES ou EXCEPTIONS, simplesmente irá processar o XML com ou sem as informações devidas, pois o XML deverá ser validado posteriormente com base em seu respectivo XSD.
+> NOTA: Esta classe não deverá NUNCA retornar ERRORS, WARNINGS, NOTICES ou EXCEPTIONS, simplesmente irá processar o XML com ou sem as informações devidas, pois o XML deverá ser validado posteriormente com base em seu respectivo XSD.
 
->NOTA: Este NODE não possue subnodes.
+> NOTA: Este NODE não possue subnodes.
 
 ## Forma de USO
 
@@ -96,7 +96,7 @@ $ide->contingency = new Contingency();
 //$ide->dhCont = '2017-02-12T11:04:02-03:00';
 //$ide->xJust = 'Justificativa de constingencia';
 
-//NOTA: Se Contingency::class for carregada ela será mandatória e irá sobreescrever as variáveis derivadas. 
+//NOTA: Se Contingency::class for carregada ela será mandatória e irá sobreescrever as variáveis derivadas.
 ```
 
 
@@ -138,7 +138,7 @@ Esta classe possui os métodos publicos:
 ```php
 function __constuct(stdClass $std)
 ```
-Método construtor, pode receber como parametro um stdClass, como já mensionado, contendo os dados da TAG do XML, esses dados serão tratados e alocados nas propriedades da classe. 
+Método construtor, pode receber como parametro um stdClass, como já mensionado, contendo os dados da TAG do XML, esses dados serão tratados e alocados nas propriedades da classe.
 
 ```php
 function toNode()
@@ -156,7 +156,7 @@ Método de conversão dos dados das propriedades da classe em uma string JSON, q
 Esta classe possui as seguintes propriedades:
 
 > NOTA: Fique atento ao tipo da variável.
- 
+
 > NOTA: Para saber o que significam esses nomes, quais são os possiveis conteúdos e suas regras, use o Manual da SEFAZ
 
 ```php

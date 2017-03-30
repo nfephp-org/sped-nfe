@@ -20,7 +20,7 @@ class Pag extends Base implements TagInterface
      */
     public $vPag;
     /**
-     * @var Tags\Card
+     * @var Tags\Pag\Card
      */
     public $card;
     

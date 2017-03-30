@@ -8,7 +8,7 @@ namespace NFePHP\NFe\Common;
  *
  * @category  NFePHP
  * @package   NFePHP\NFe\Common\Webservices
- * @copyright NFePHP Copyright (c) 2016
+ * @copyright NFePHP Copyright (c) 2008-2017
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
  * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
@@ -23,7 +23,8 @@ class Webservices
     
     /**
      * Constructor
-     * @param string $xml path or xml content from nfe_ws3_mod55 or nfe_ws3_mod65
+     * @param string $xml path or xml content from
+     *               nfe_ws3_mod55 or nfe_ws3_mod65
      */
     public function __construct($xml)
     {

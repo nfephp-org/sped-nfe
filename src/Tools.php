@@ -16,7 +16,7 @@ namespace NFePHP\NFe;
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
 
-use NFePHP\Common\Strings\Strings;
+use NFePHP\Common\Strings;
 use NFePHP\Common\Signer;
 use NFePHP\NFe\Factories\QRCode;
 use NFePHP\NFe\Factories\Events;
@@ -45,7 +45,6 @@ class Tools extends ToolsCommon
         &$xmls = []
     ) {
         $servico = 'NfeAutorizacao';
-        //throw Exception if in contingency not for this service
         $this->checkContingencyForWebServices($servico);
         if (count($aXml) > 1) {
             $indSinc = 0;
@@ -56,40 +55,36 @@ class Tools extends ToolsCommon
             //no parametro $xmls para serem armazenados pelo aplicativo
             //pois serão alterados
             foreach ($aXml as $doc) {
-                $xmls[] = $this->signNFe($xml);
+                //corrigir o xml para o tipo de contigência setado
+                $xmls[] = $this->correctNFeForContingencyMode($doc);
             }
             $aXml = $xmls;
         }
         $sxml = implode("", $aXml);
         $sxml = preg_replace("/<\?xml.*\?>/", "", $sxml);
-        $siglaUF = $this->config->siglaUF;
-        
         $this->servico(
             'NfeAutorizacao',
             $this->config->siglaUF,
             $this->tpAmb
         );
-        
-        $cons = "<enviNFe xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
+        $request = "<enviNFe xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
                 . "<idLote>$idLote</idLote>"
                 . "<indSinc>$indSinc</indSinc>"
                 . "$sxml"
                 . "</enviNFe>";
-        //valida a mensagem com o xsd
-        //validar mensagem com xsd
-        //if (! $this->validarXml($cons)) {
-        //    $msg = 'Falha na validação. '.$this->error;
-        //    throw new Exception\RuntimeException($msg);
-        //}
+        $this->isValid($this->urlVersion, $request, 'enviNFe');
         //montagem dos dados da mensagem SOAP
-        $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$cons</nfeDadosMsg>";
+        $parameters = ['nfeDadosMsg' => $request];
+        $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
         $method = $this->urlMethod;
         if ($compactarZip) {
             $gzdata = base64_encode(gzencode($cons, 9, FORCE_GZIP));
             $body = "<nfeDadosMsgZip xmlns=\"$this->urlNamespace\">$gzdata</nfeDadosMsgZip>";
             $method = $this->urlMethod."Zip";
+            $parameters = ['nfeDadosMsgZip' => $gzdata];
+            $body = "<nfeDadosMsgZip xmlns=\"$this->urlNamespace\">$gzdata</nfeDadosMsgZip>";
         }
-        return $this->sendRequest($request);
+        return $this->sendRequest($body, $parameters);
     }
     
     /**
@@ -99,30 +94,27 @@ class Tools extends ToolsCommon
      * @param string $tpAmb
      * @return string
      */
-    public function sefazConsultaRecibo($recibo, $tpAmb = '')
+    public function sefazConsultaRecibo($recibo)
     {
-        if ($tpAmb == '') {
-            $tpAmb = $this->aConfig['tpAmb'];
-        }
-        $siglaUF = $this->aConfig['siglaUF'];
         //carrega serviço
         $servico = 'NfeRetAutorizacao';
-        $this->zLoadServico(
-            'nfe',
-            $servico,
-            $siglaUF,
-            $tpAmb
+        $this->servico(
+            'NfeRetAutorizacao',
+            $this->config->siglaUF,
+            $this->tpAmb
         );
         if ($this->urlService == '') {
             $msg = "A consulta de NFe não está disponível na SEFAZ $siglaUF!!!";
             throw new Exception\RuntimeException($msg);
         }
-        $cons = "<consReciNFe xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
+        $request = "<consReciNFe xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
             . "<tpAmb>$tpAmb</tpAmb>"
             . "<nRec>$recibo</nRec>"
             . "</consReciNFe>";
         $this->isValid($this->urlVersion, $request, 'consReciNFe');
-        return $this->sendRequest($request);
+        $parameters = ['nfeDadosMsg' => $request];
+        $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
+        return $this->sendRequest($body, $parameters);
     }
     
     /**
@@ -130,28 +122,18 @@ class Tools extends ToolsCommon
      * Consulta o status da NFe pela chave de 44 digitos
      *
      * @param    string $chave
-     * @param    array  $aRetorno
      * @return   string
-     * @throws   Exception\InvalidArgumentException
-     * @throws   Exception\RuntimeException
-     * @internal function zLoadServico (Common\Base\BaseTools)
      */
-    public function sefazConsultaChave($chave = '')
+    public function sefazConsultaChave($chave)
     {
-        
-        $chNFe = preg_replace('/[^0-9]/', '', $chave);
-        if (strlen($chNFe) != 44) {
-            $msg = "Uma chave de 44 dígitos da NFe deve ser passada.";
-            throw new Exception\InvalidArgumentException($msg);
-        }
         $cUF = substr($chNFe, 0, 2);
-        $siglaUF = $this->getSigla($cUF);
+        $siglaUF = UFList::getCodeByUF($cUF);
         //carrega serviço
         $servico = 'NfeConsultaProtocolo';
         $this->servico(
-            $servico,
-            $this->getSigla($cUF),
-            $tpAmb
+            'NfeConsultaProtocolo',
+            $siglaUF,
+            $this->tpAmb
         );
         $request = "<consSitNFe xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
                 . "<tpAmb>$tpAmb</tpAmb>"
@@ -159,7 +141,9 @@ class Tools extends ToolsCommon
                 . "<chNFe>$chNFe</chNFe>"
                 . "</consSitNFe>";
         $this->isValid($this->urlVersion, $request, 'consSitNFe');
-        return $this->sendRequest($request);
+        $parameters = ['nfeDadosMsg' => $request];
+        $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
+        return $this->sendRequest($body, $parameters);
     }
 
     /**
@@ -180,9 +164,11 @@ class Tools extends ToolsCommon
         $nSerie = (integer) $nSerie;
         $nIni = (integer) $nIni;
         $nFin = (integer) $nFin;
+        $servico = 'NfeInutilizacao';
+        $this->checkContingencyForWebServices($servico);
         //carrega serviço
         $this->servico(
-            'NfeInutilizacao',
+            $servico,
             $this->config->siglaUF,
             $this->tpAmb
         );
@@ -216,11 +202,19 @@ class Tools extends ToolsCommon
             "<xJust>$xJust</xJust>" .
             "</infInut></inutNFe>";
         //assina a solicitação
-        $signed = Signer::sign($this->certificate, $msg, 'infInut', 'Id', $this->algorithm, [false,false,null,null]);
-        $signed = Strings::clearXml($signed, true);
-        //valida a mensagem com o xsd, em caso de erro será chamada uma exception
+        $request = Signer::sign(
+            $this->certificate,
+            $msg,
+            'infInut',
+            'Id',
+            $this->algorithm,
+            [false,false,null,null]
+        );
+        $request = Strings::clearXml($request, true);
         $this->isValid($this->urlVersion, $request, 'inutNFe');
-        return $this->sendRequest($request);
+        $parameters = ['nfeDadosMsg' => $request];
+        $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
+        return $this->sendRequest($body, $parameters);
     }
     
     /**
@@ -264,7 +258,9 @@ class Tools extends ToolsCommon
             . "<UF>$uf</UF>"
             . "$filter</infCons></ConsCad>";
         $this->isValid($this->urlVersion, $request, 'consCad');
-        return $this->sendRequest($request);
+        $parameters = ['nfeDadosMsg' => $request];
+        $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
+        return $this->sendRequest($body, $parameters);
     }
 
     /**
@@ -292,7 +288,9 @@ class Tools extends ToolsCommon
             . "<tpAmb>$this->tpAmb</tpAmb><cUF>$this->urlcUF</cUF>"
             . "<xServ>STATUS</xServ></consStatServ>";
         $this->isValid($this->urlVersion, $request, 'consStatServ');
-        return $this->sendRequest($request);
+        $parameters = ['nfeDadosMsg' => $request];
+        $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
+        return $this->sendRequest($body, $parameters);
     }
 
     /**
@@ -312,7 +310,8 @@ class Tools extends ToolsCommon
         $this->servico(
             'NfeDistribuicaoDFe',
             $fonte,
-            $this->tpAmb
+            1,
+            true
         );
         $cUF = self::getcUF($this->config->siglaUF);
         $ultNSU = str_pad($ultNSU, 15, '0', STR_PAD_LEFT);
@@ -322,18 +321,21 @@ class Tools extends ToolsCommon
             $tagNSU = "<consNSU><NSU>$numNSU</NSU></consNSU>";
         }
         //monta a consulta
-        $request = "<distDFeInt xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
-            . "<tpAmb>$this->tpAmb</tpAmb>"
+        $consulta = "<distDFeInt xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
+            . "<tpAmb>1</tpAmb>"
             . "<cUFAutor>$cUF</cUFAutor>"
-            . "<CNPJ>$this->config->cnpj</CNPJ>$tagNSU</distDFeInt>";
-        //$this->isValid($this->urlVersion, $request, '????');
+            . "<CNPJ>".$this->config->cnpj."</CNPJ>$tagNSU</distDFeInt>";
+        //valida o xml da requisição
+        $this->isValid($this->urlVersion, $consulta, 'distDFeInt');
         //montagem dos dados da mensagem SOAP
+        $request = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$consulta</nfeDadosMsg>";
+        $parameters = ['nfeDistDFeInteresse' => $request];
         $body = "<nfeDistDFeInteresse xmlns=\"$this->urlNamespace\">"
-            . "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$cons</nfeDadosMsg>"
+            . $request
             . "</nfeDistDFeInteresse>";
         //este webservice não requer cabeçalho
-        $this->urlHeader = '';
-        return $this->sendRequest($request);
+        $this->objHeader = null;
+        return $this->sendRequest($body, $parameters);
     }
 
     /**
@@ -481,16 +483,17 @@ class Tools extends ToolsCommon
      * Solicita o download de NFe já manifestada
      * @param  string $chave
      * @return string
-     * @throws Exception\RuntimeException
      */
     public function sefazDownload($chave)
     {
         //carrega serviço
         $servico = 'NfeDownloadNF';
-        $this->zLoadServico(
+        
+        $this->servico(
             'NfeDownloadNF',
             'AN',
-            $this->tpAmb
+            $this->tpAmb,
+            true
         );
         $request = "<downloadNFe xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
                 . "<tpAmb>$this->tpAmb</tpAmb>"
@@ -498,20 +501,10 @@ class Tools extends ToolsCommon
                 . "<CNPJ>$this->config->cnpj</CNPJ>"
                 . "<chNFe>$chNFe</chNFe>"
                 . "</downloadNFe>";
-        //$this->isValid($this->urlVersion, $request, '?????');
-        //montagem dos dados da mensagem SOAP
+        //$this->isValid($this->urlVersion, $request, 'downloadNFe');
+        $parameters = ['nfeDadosMsg' => $request];
         $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
-        $retorno = $this->soap->send(
-            $this->urlService,
-            $this->urlMethod,
-            $this->urlAction,
-            SOAP_1_2,
-            $parameters,
-            $this->soapnamespaces,
-            $body,
-            $this->objHeader
-        );
-        return (string) $retorno;
+        return $this->sendRequest($body, $parameters);
     }
     
     /**
@@ -531,8 +524,13 @@ class Tools extends ToolsCommon
             $this->config->siglaUF,
             $this->tpAmb
         );
+        $request = "<admCscNFCe versao=\"$this->urlVersion\" xmlns=\"$this->urlPortal\">"
+            . "<tpAmb>$this->tpAmb</tpAmb>"
+            . "<indOp>$indOp</indOp>"
+            . "<raizCNPJ>$raizCNPJ</raizCNPJ>"
+            . "</admCscNFCe>";
         if ($indOp == 3) {
-            $cons = "<admCscNFCe versao=\"$this->urlVersion\" xmlns=\"$this->urlPortal\">"
+            $request = "<admCscNFCe versao=\"$this->urlVersion\" xmlns=\"$this->urlPortal\">"
             . "<tpAmb>$this->tpAmb</tpAmb>"
             . "<indOp>$indOp</indOp>"
             . "<raizCNPJ>$raizCNPJ</raizCNPJ>"
@@ -541,32 +539,12 @@ class Tools extends ToolsCommon
             . "<codigoCsc>".$this->config->tokenNFCe."</codigoCsc>"
             . "</dadosCsc>"
             . "</admCscNFCe>";
-        } else {
-            $cons = "<admCscNFCe versao=\"$this->urlVersion\" xmlns=\"$this->urlPortal\">"
-            . "<tpAmb>$this->tpAmb</tpAmb>"
-            . "<indOp>$indOp</indOp>"
-            . "<raizCNPJ>$raizCNPJ</raizCNPJ>"
-            . "</admCscNFCe>";
         }
-        
-        //montagem dos dados da mensagem SOAP
-        $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$cons</nfeDadosMsg>";
-        /*
-        //envia a solicitação via SOAP
-        $retorno = $this->oSoap->send(
-            $this->urlService,
-            $this->urlNamespace,
-            $this->urlHeader,
-            $body,
-            $this->urlMethod
-        );
-        $lastMsg = $this->oSoap->lastMsg;
-        $this->soapDebug = $this->oSoap->soapDebug;
-        //tratar dados de retorno
-        $aRetorno = Response::readResponseSefaz($servico, $retorno);
-         * 
-         */
-        return (string) $retorno;
+        //o xsd não está disponivel
+        //$this->isValid($this->urlVersion, $request, 'cscNFCe');
+        $parameters = ['nfeDadosMsg' => $request];
+        $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
+        return $this->sendRequest($body, $parameters);
     }
     
     

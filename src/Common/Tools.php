@@ -15,21 +15,23 @@ namespace NFePHP\NFe\Common;
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
 
-use NFePHP\Common\Strings\Strings;
+use DateTime;
+use DOMDocument;
+use Exception;
+use RuntimeException;
+use InvalidArgumentException;
+use NFePHP\Common\Strings;
+use NFePHP\Common\Keys;
 use NFePHP\Common\Certificate;
 use NFePHP\Common\Soap\SoapInterface;
+use NFePHP\Common\Soap\SoapCurl;
 use NFePHP\Common\Signer;
 use NFePHP\Common\Validator;
 use NFePHP\Common\TimeZoneByUF;
+use NFePHP\Common\UFList;
 use NFePHP\NFe\Factories\Contingency;
 use NFePHP\NFe\Common\Webservices;
 use NFePHP\NFe\Factories\Header;
-use NFePHP\Common\Soap\SoapCurl;
-use RuntimeException;
-use InvalidArgumentException;
-use NFePHP\Common\Exception\SignerException;
-use DateTime;
-use DOMDocument;
 
 class Tools
 {
@@ -96,41 +98,6 @@ class Tools
      */
     protected $urlPortal = 'http://www.portalfiscal.inf.br/nfe';
     /**
-     * cUFlist
-     * @var array
-     */
-    protected $cUFlist = [
-        'AC'=>12,
-        'AL'=>27,
-        'AM'=>13,
-        'AN'=>91,
-        'AP'=>16,
-        'BA'=>29,
-        'CE'=>23,
-        'DF'=>53,
-        'ES'=>32,
-        'GO'=>52,
-        'MA'=>21,
-        'MG'=>31,
-        'MS'=>50,
-        'MT'=>51,
-        'PA'=>15,
-        'PB'=>25,
-        'PE'=>26,
-        'PI'=>22,
-        'PR'=>41,
-        'RJ'=>33,
-        'RN'=>24,
-        'RO'=>11,
-        'RR'=>14,
-        'RS'=>43,
-        'SC'=>42,
-        'SE'=>28,
-        'SP'=>35,
-        'TO'=>17,
-        'SVAN' => 91
-    ];
-    /**
      * urlcUF
      * @var string
      */
@@ -192,25 +159,13 @@ class Tools
     {
         $this->config = json_decode($configJson);
         
-        $this->pathwsfiles = __DIR__
-            . DIRECTORY_SEPARATOR
-            . '..'
-            . DIRECTORY_SEPARATOR
-            . '..'
-            . DIRECTORY_SEPARATOR
-            . 'storage'
-            . DIRECTORY_SEPARATOR;
+        $this->pathwsfiles = realpath(
+            __DIR__ . '/../../storage'
+        ).'/';
         
-        $this->pathschemes = __DIR__
-            . DIRECTORY_SEPARATOR
-            . '..'
-            . DIRECTORY_SEPARATOR
-            . '..'
-            . DIRECTORY_SEPARATOR
-            . 'schemes'
-            . DIRECTORY_SEPARATOR
-            . $this->config->schemes
-            . DIRECTORY_SEPARATOR;
+        $this->pathschemes = realpath(
+            __DIR__ . '/../../schemes/'. $this->config->schemes
+        ).'/';
         
         $this->version($this->config->versao);
         $this->setEnvironmentTimeZone($this->config->siglaUF);
@@ -280,13 +235,25 @@ class Tools
     }
     
     /**
+     * Set environment for production or homologation
+     * @param int $tpAmb
+     */
+    public function environment($tpAmb = 2)
+    {
+        if (!empty($tpAmb) && ($tpAmb == 1 || $tpAmb == 2)) {
+            $this->tpAmb = $tpAmb;
+            $this->ambiente = ($tpAmb == 1) ? 'producao' : 'homologacao';
+        }
+    }
+    
+    /**
      * Recover cUF number from
-     * @param string $acronym Sigal do estado
+     * @param string $acronym Sigla do estado
      * @return int number cUF
      */
     public function getcUF($acronym)
     {
-        return $this->cUFlist[$acronym];
+        return UFlist::getCodeByUF($acronym);
     }
     
     /**
@@ -296,7 +263,7 @@ class Tools
      */
     public function getAcronym($cUF)
     {
-        return array_search($cUF, $this->cUFlist);
+        return UFlist::getUFByCode($cUF);
     }
     
     /**
@@ -308,10 +275,18 @@ class Tools
     public function signNFe($xml)
     {
         try {
-            $xml = preg_replace('/>\s+</', '><', $xml);
+            //clear invalid strings
+            $xml = Strings::clearXmlString($xml);
             //corret fields from NFe for contigency mode
             $xml = $this->correctNFeForContingencyMode($xml);
-            $signed = Signer::sign($this->certificate, $xml, 'infNFe', 'Id', $this->algorithm, [false,false,null,null]);
+            $signed = Signer::sign(
+                $this->certificate,
+                $xml,
+                'infNFe',
+                'Id',
+                $this->algorithm,
+                [false,false,null,null]
+            );
             $dom = new DOMDocument('1.0', 'UTF-8');
             $dom->preserveWhiteSpace = false;
             $dom->formatOutput = false;
@@ -321,9 +296,7 @@ class Tools
                 $signed = $this->addQRCode($dom);
             }
             $this->isValid($this->versao, $signed, 'nfe');
-        } catch (SignerException $e) {
-            throw new RuntimeException($e->getMessage);
-        } catch (InvalidArgumentException $e) {
+        } catch (Exception $e) {
             throw new RuntimeException($e->getMessage);
         }
         return $signed;
@@ -331,9 +304,8 @@ class Tools
     
     /**
      * Corret NFe fields when in contingency mode
-     * @param string $xml
+     * @param string $xml NFe xml content
      * @return string
-     * @throws RuntimeException
      */
     protected function correctNFeForContingencyMode($xml)
     {
@@ -344,23 +316,18 @@ class Tools
         $dom->preserveWhiteSpace = false;
         $dom->formatOutput = false;
         $dom->loadXML($xml);
-        //remove signature if is signed
-        if (Signer::isSigned($dom, 'infNFe')) {
-            $dom = Signer::removeSignature($dom);
-        }
+        $dom = Signer::removeSignature($dom);
         $motivo = trim(Strings::cleanString($this->contingency->motive));
-        $len = strlen($motivo);
-        if ($len < 15 || $len > 255) {
-            throw new RuntimeException(
-                'O motivo da contingência não atende os parametros de tamanho'
-            );
-        }
         $dt = new DateTime();
         $dt->setTimestamp($this->contingency->timestamp);
         $ide = $dom->getElementsByTagName('ide')->item(0);
-        $ide->getElementsByTagName('tpEmis')->item(0)->nodeValue = $this->contingency->tpEmis;
+        $ide->getElementsByTagName('tpEmis')
+            ->item(0)
+            ->nodeValue = $this->contingency->tpEmis;
         if (!empty($ide->getElementsByTagName('dhCont')->item(0)->nodeValue)) {
-            $ide->getElementsByTagName('dhCont')->item(0)->nodeValue = $dt->format('Y-m-d\TH:i:sP');
+            $ide->getElementsByTagName('dhCont')
+                ->item(0)
+                ->nodeValue = $dt->format('Y-m-d\TH:i:sP');
         } else {
             $dhCont = $dom->createElement('dhCont', $dt->format('Y-m-d\TH:i:sP'));
             $ide->appendChild($dhCont);
@@ -371,14 +338,21 @@ class Tools
             $xJust = $dom->createElement('xJust', $motivo);
             $ide->appendChild($xJust);
         }
-        return $dom->saveXML();
+        //corrigir a chave
+        $infNFe = $dom->getElementsByTagName('infNFe')->item(0);
+        $chave = substr($infNFe->getAttribute('Id'), 3, 44);
+        $chave = substr($chave, 0, 34)
+            . $this->contingency->tpEmis
+            . substr($chave, 34, 8);
+        $infNFe->setAttribute('Id', $chave.Keys::verifyingDigit($chave));
+        return Strings::clearXmlString($dom->saveXML(), true);
     }
 
     /**
      * Performs xml validation with its respective
      * XSD structure definition document
      * NOTE: if dont existis the XSD file will return true
-     * @param string $version
+     * @param string $version layout version
      * @param string $body
      * @param string $method
      * @return boolean
@@ -394,7 +368,12 @@ class Tools
             $schema
         );
     }
-
+    
+    /**
+     * Verifies the existence of the service
+     * @param string $service
+     * @throws RuntimeException
+     */
     protected function checkContingencyForWebServices($service)
     {
         //se a contingencia é OFFLINE ou FSDA nenhum servidor está disponivel
@@ -502,10 +481,8 @@ class Tools
      * @param string $request
      * @return string
      */
-    protected function sendRequest($request)
+    protected function sendRequest($body, $parameters = [])
     {
-        $parameters = ['nfeDadosMsg' => $request];
-        $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
         return (string) $this->soap->send(
             $this->urlService,
             $this->urlMethod,

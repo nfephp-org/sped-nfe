@@ -24,14 +24,14 @@
   <UF>
     <sigla>AN</sigla>
     <homologacao>
-      <NfeDistribuicaoDFe method="nfeDistDFeInteresse" operation="NFeDistribuicaoDFe" version="1.00">https://hom.nfe.fazenda.gov.br/NFeDistribuicaoDFe/NFeDistribuicaoDFe.asmx</NfeDistribuicaoDFe>
+      <NfeDistribuicaoDFe method="nfeDistDFeInteresse" operation="NFeDistribuicaoDFe" version="1.01">https://hom.nfe.fazenda.gov.br/NFeDistribuicaoDFe/NFeDistribuicaoDFe.asmx</NfeDistribuicaoDFe>
       <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="1.01">https://hom.nfe.fazenda.gov.br/NFeConsultaDest/NFeConsultaDest.asmx</NfeConsultaDest>
       <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="1.00">https://hom.nfe.fazenda.gov.br/NfeDownloadNF/NfeDownloadNF.asmx</NfeDownloadNF>
       <RecepcaoEvento method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://hom.nfe.fazenda.gov.br/RecepcaoEvento/RecepcaoEvento.asmx</RecepcaoEvento>
       <RecepcaoEPEC method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://hom.nfe.fazenda.gov.br/RecepcaoEvento/RecepcaoEvento.asmx</RecepcaoEPEC>
     </homologacao>
     <producao>
-      <NfeDistribuicaoDFe method="nfeDistDFeInteresse" operation="NFeDistribuicaoDFe" version="1.00">https://www1.nfe.fazenda.gov.br/NFeDistribuicaoDFe/NFeDistribuicaoDFe.asmx</NfeDistribuicaoDFe>        
+      <NfeDistribuicaoDFe method="nfeDistDFeInteresse" operation="NFeDistribuicaoDFe" version="1.01">https://www1.nfe.fazenda.gov.br/NFeDistribuicaoDFe/NFeDistribuicaoDFe.asmx</NfeDistribuicaoDFe>        
       <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="1.01">https://www.nfe.fazenda.gov.br/NFeConsultaDest/NFeConsultaDest.asmx</NfeConsultaDest>
       <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="1.00">https://www.nfe.fazenda.gov.br/NfeDownloadNF/NfeDownloadNF.asmx</NfeDownloadNF>
       <RecepcaoEvento method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://www.nfe.fazenda.gov.br/RecepcaoEvento/RecepcaoEvento.asmx</RecepcaoEvento>
@@ -132,7 +132,7 @@
       <NfeConsultaProtocolo method="nfeConsultaNF2" operation="NfeConsulta2" version="2.01">https://nfe.fazenda.mg.gov.br/nfe2/services/NfeConsulta2</NfeConsultaProtocolo>
       <NfeInutilizacao method="nfeInutilizacaoNF2" operation="NfeInutilizacao2" version="2.00">https://nfe.fazenda.mg.gov.br/nfe2/services/NfeInutilizacao2</NfeInutilizacao>
       <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NfeRetAutorizacao" version="3.10">https://nfe.fazenda.mg.gov.br/nfe2/services/NfeRetAutorizacao</NfeRetAutorizacao>
-      <NfeStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="2.00">https://nfe.fazenda.mg.gov.br/nfe2/services/NfeStatus2</NfeStatusServico>
+      <NfeStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10">https://nfe.fazenda.mg.gov.br/nfe2/services/NfeStatus2</NfeStatusServico>
       <RecepcaoEvento method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://nfe.fazenda.mg.gov.br/nfe2/services/RecepcaoEvento</RecepcaoEvento>
     </producao>
   </UF>

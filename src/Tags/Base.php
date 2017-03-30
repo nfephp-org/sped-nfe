@@ -91,24 +91,9 @@ class Base
         foreach ($properties as $key => $value) {
             $keyList[strtoupper($key)] = gettype($value);
         }
-        foreach ($parameters as $key => $type) {
-            switch ($type) {
-                case 'boolean':
-                case 'string':
-                case 'integer':
-                case 'object':
-                case 'double':
-                case 'array':
-                case 'resource':
-                    $value = null;
-                    break;
-                default:
-                    $obj = explode(':', $type);
-                    $class = $obj[1];
-                    $value = new $class();
-            }
+        foreach ($parameters as $key => $data) {
             if (!key_exists(strtoupper($key), $keyList)) {
-                //nesse caso a classe não contem a propriedade então
+                //nesse caso a classe não contêm a propriedade então
                 //ela deve ser criada pois todos os parametros devem
                 //ser definidos
                 $dados->{$key} = $value;
@@ -120,6 +105,81 @@ class Base
         return self::propertiesToLower($dados);
     }
     
+    protected static function formatToTag($params, $value = null)
+    {
+        if ($value === null && $params['required'] == true) {
+            $value = self::createEmptyValue($params['type'], $params['format']);
+        } elseif ($value === null && $params['required'] == false) {
+            return $value;
+        }
+        switch ($params['type']) {
+            case 'string':
+                return self::stringTag($value, $params['format']);
+                break;
+            case 'integer':
+                return self::integerTag($value, $params['format']);
+                break;
+            case 'double':
+                return self::doubleTag($value, $params['format']);
+                break;
+            case 'object':
+                return self::objectTag($value);
+                break;
+            case 'DateTime':
+                return self::dataTag($value, $params['format']);
+                break;
+        }
+    }
+    
+    protected static function createEmptyValue($type, $format)
+    {
+        switch ($type) {
+            case 'string':
+                return '';
+                break;
+            case 'integer':
+                return 0;
+                break;
+            case 'double':
+                return 0;
+                break;
+            case 'DateTime':
+                return ;
+                break;
+        }
+    }
+
+
+    protected static function stringTag($value, $length)
+    {
+        
+        return substr(trim($value), 0, $length);
+    }
+    
+    protected static function integerTag($value, $length)
+    {
+        return str_pad(
+            substr(preg_replace("/[^0-9\s]/", "", $value), 0, $length),
+            '0',
+            STR_PAD_LEFT
+        );
+    }
+
+    protected static function dataTag(DateTime $value, $format)
+    {
+        return $value->format($format);
+    }
+    
+    protected static function doubleTag($value, $format)
+    {
+        $f = explode('v', $format);
+        return number_format($value, $f[1], '.', '');
+    }
+    
+    protected static function objectTag($value)
+    {
+    }
+
     /**
      * Change properties names of stdClass to lower case
      * @param stdClass $dados

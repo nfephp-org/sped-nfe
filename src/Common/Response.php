@@ -4,9 +4,8 @@ namespace NFePHP\NFe\Common;
 
 /**
  * Class to extrat data from SEFAZ responses
- *
  * @category  Library
- * @package   NFePHP\NFe\Auxiliar\Response
+ * @package   NFePHP\NFe\Common\Response
  * @copyright NFePHP Copyright (c) 2016
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
@@ -482,7 +481,7 @@ class Response
         $aResposta = array(
             'bStat' => true,
             'versao' => $tag->getAttribute('versao'),
-            'tpAmb' => $tag->getAttribute('tpAmb'),
+            'tpAmb' => $dom->getValue($tag, 'tpAmb'),
             'verAplic' => $dom->getValue($tag, 'verAplic'),
             'cStat' => $dom->getValue($tag, 'cStat'),
             'xMotivo' => $dom->getValue($tag, 'xMotivo'),
