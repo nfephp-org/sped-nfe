@@ -338,7 +338,7 @@ class Tools
             $xJust = $dom->createElement('xJust', $motivo);
             $ide->appendChild($xJust);
         }
-        //corrigir a chave 
+        //corrigir a chave
         $infNFe = $dom->getElementsByTagName('infNFe')->item(0);
         $chave = substr($infNFe->getAttribute('Id'), 3, 44);
         $chave = substr($chave, 0, 34)
