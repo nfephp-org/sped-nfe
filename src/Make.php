@@ -270,6 +270,7 @@ class Make
      * @var array of DOMElements
      */
     private $aDeduc = [];
+    
     /**
      * Função construtora cria um objeto DOMDocument
      * que será carregado com o documento fiscal
@@ -284,6 +285,7 @@ class Make
         $this->dom->preserveWhiteSpace = false;
         $this->dom->formatOutput = false;
     }
+    
     /**
      * Retorna o xml que foi montado
      * @return string
@@ -292,6 +294,7 @@ class Make
     {
         return $this->xml;
     }
+    
     /**
      * Retorna o numero da chave da NFe
      * @return type
@@ -300,6 +303,7 @@ class Make
     {
         return $this->chNFe;
     }
+    
     /**
      * Retrona o modelo de NFe 55 ou 65
      * @return int
@@ -308,6 +312,7 @@ class Make
     {
         return $this->mod;
     }
+    
     /**
      * montaNFe
      * Método de montagem do xml da NFe
@@ -379,6 +384,7 @@ class Make
         $this->xml = $this->dom->saveXML();
         return true;
     }
+    
     /**
      * Informações da NF-e A01 pai NFe
      * tag NFe/infNFe
@@ -395,6 +401,7 @@ class Make
         $this->chNFe = $chave;
         return $this->infNFe;
     }
+    
     /**
      * Informações de identificação da NF-e B01 pai A01
      * tag NFe/infNFe/ide
@@ -614,6 +621,7 @@ class Make
         $this->ide = $ide;
         return $ide;
     }
+    
     /**
      * Chave de acesso da NF-e referenciada BA02 pai BA01
      * tag NFe/infNFe/ide/NFref/refNFe
@@ -627,6 +635,7 @@ class Make
         $this->dom->appChild($this->aNFref[$num - 1], $refNFe);
         return $refNFe;
     }
+    
     /**
      * Informação da NF modelo 1/1A referenciada BA03 pai BA01
      * tag NFe/infNFe/ide/NFref/NF DOMNode
@@ -695,6 +704,7 @@ class Make
         $this->dom->appChild($this->aNFref[$num - 1], $refNF);
         return $refNF;
     }
+    
     /**
      * Informações da NF de produtor rural referenciada BA10 pai BA01
      * tag NFe/infNFe/ide/NFref/refNFP
@@ -781,6 +791,7 @@ class Make
         $this->dom->appChild($this->aNFref[$num - 1], $refNFP);
         return $refNFP;
     }
+    
     /**
      * Chave de acesso do CT-e referenciada BA19 pai BA01
      * tag NFe/infNFe/ide/NFref/refCTe
@@ -794,6 +805,7 @@ class Make
         $this->dom->appChild($this->aNFref[$num - 1], $refCTe);
         return $refCTe;
     }
+    
     /**
      * Informações do Cupom Fiscal referenciado BA20 pai BA01
      * tag NFe/infNFe/ide/NFref/refECF
@@ -807,7 +819,6 @@ class Make
         $nECF = '',
         $nCOO = ''
     ) {
-    
         $identificador = 'BA20 <refECF> - ';
         $num = $this->buildNFref();
         $refECF = $this->dom->createElement("refECF");
@@ -835,6 +846,7 @@ class Make
         $this->dom->appChild($this->aNFref[$num - 1], $refECF);
         return $refECF;
     }
+    
     /**
      * Identificação do emitente da NF-e C01 pai A01
      * tag NFe/infNFe/emit
@@ -928,6 +940,7 @@ class Make
         );
         return $this->emit;
     }
+    
     /**
      * Endereço do emitente C05 pai C01
      * tag NFe/infNFe/emit/endEmit
@@ -1041,6 +1054,7 @@ class Make
         $this->emit->insertBefore($this->enderEmit, $node);
         return $this->enderEmit;
     }
+    
     /**
      * Identificação do Destinatário da NF-e E01 pai A01
      * tag NFe/infNFe/dest (opcional para modelo 65)
@@ -1154,6 +1168,7 @@ class Make
         );
         return $this->dest;
     }
+    
     /**
      * Endereço do Destinatário da NF-e E05 pai E01
      * tag NFe/infNFe/dest/enderDest  (opcional para modelo 65)
@@ -1274,6 +1289,7 @@ class Make
         $this->dest->insertBefore($this->enderDest, $node);
         return $this->enderDest;
     }
+    
     /**
      * Identificação do Local de retirada F01 pai A01
      * tag NFe/infNFe/retirada (opcional)
@@ -1367,6 +1383,7 @@ class Make
         );
         return $this->retirada;
     }
+    
     /**
      * Identificação do Local de entrega G01 pai A01
      * tag NFe/infNFe/entrega (opcional)
@@ -1460,6 +1477,7 @@ class Make
         );
         return $this->entrega;
     }
+    
     /**
      * Pessoas autorizadas para o download do XML da NF-e G50 pai A01
      * tag NFe/infNFe/autXML (somente versão 3.1)
@@ -1492,6 +1510,7 @@ class Make
             return [];
         }
     }
+    
     /**
      * Detalhamento de Produtos e Serviços I01 pai H01
      * tag NFe/infNFe/det[]/prod
@@ -1709,6 +1728,7 @@ class Make
         $this->aProd[$nItem] = $prod;
         return $prod;
     }
+    
     /**
      * Rastreabilidade do produto podem ser até 500 por item TAG I80 pai I01
      * NT 2016.002 v1.00
@@ -1770,6 +1790,7 @@ class Make
         $this->aNVE[$nItem][] = $nve;
         return $nve;
     }
+    
     /**
      * Código Especificador da Substituição Tributária – CEST,
      * que identifica a mercadoria sujeita aos regimes de substituição
@@ -1788,6 +1809,7 @@ class Make
         $this->aCest[$nItem][] = $cest;
         return $cest;
     }
+    
     /**
      * RECOPI Sistema de Registro e Controle das
      * Operações com Papel Imune instituído através
@@ -1805,6 +1827,7 @@ class Make
         $this->aRECOPI[$nItem] = $recopi;
         return $recopi;
     }
+    
     /**
      * Informações adicionais do produto
      * tag NFe/infNFe/det[]/infAdProd
@@ -1821,6 +1844,7 @@ class Make
         $this->aInfAdProd[$nItem] = $infAdProd;
         return $infAdProd;
     }
+    
     /**
      * Declaração de Importação I8 pai I01
      * tag NFe/infNFe/det[]/prod/DI
@@ -1936,6 +1960,7 @@ class Make
         $this->aDI[$nItem][$nDI] = $tDI;
         return $tDI;
     }
+    
     /**
      * Adições I25 pai I18
      * tag NFe/infNFe/det[]/prod/DI/adi
@@ -2002,6 +2027,7 @@ class Make
         $this->aDI[$nItem][$nDI] = $nodeDI;
         return $adi;
     }
+    
     /**
      * Grupo de informações de exportação para o item I50 pai I01
      * tag NFe/infNFe/det[]/prod/detExport
@@ -2287,6 +2313,7 @@ class Make
         $this->aVeicProd[$nItem] = $veicProd;
         return $veicProd;
     }
+    
     /**
      * Detalhamento de medicamentos K01 pai I90
      * tag NFe/infNFe/det[]/prod/med[] (opcional)
@@ -2322,6 +2349,7 @@ class Make
         $this->aMed[$nItem][] = $med;
         return $med;
     }
+    
     /**
      * Detalhamento de armas L01 pai I90
      * tag NFe/infNFe/det[]/prod/arma[] (opcional)
@@ -2374,6 +2402,7 @@ class Make
         $this->aArma[$nItem][] = $arma;
         return $arma;
     }
+    
     /**
      * Detalhamento de combustiveis L101 pai I90
      * tag NFe/infNFe/det[]/prod/comb (opcional)
@@ -2498,6 +2527,7 @@ class Make
         $this->aComb[$nItem] = $comb;
         return $comb;
     }
+    
     /**
      * informações relacionadas com as operações de combustíveis, subgrupo de
      * encerrante que permite o controle sobre as operações de venda de combustíveis
@@ -2553,6 +2583,7 @@ class Make
         $this->aEncerrante[$nItem] = $encerrante;
         return $encerrante;
     }
+    
     /**
      * M01 pai H01
      * tag NFe/infNFe/det[]/imposto
@@ -2574,6 +2605,7 @@ class Make
         $this->aImposto[$nItem] = $imposto;
         return $imposto;
     }
+    
     /**
      * Informações do ICMS da Operação própria e ST N01 pai M01
      * tag NFe/infNFe/det[]/imposto/ICMS
@@ -3438,6 +3470,7 @@ class Make
         $this->aICMS[$nItem] = $tagIcms;
         return $tagIcms;
     }
+    
     /**
      * Grupo de Repasse de ICMS ST retido anteriormente em operações
      * interestaduais com repasses através do Substituto Tributário

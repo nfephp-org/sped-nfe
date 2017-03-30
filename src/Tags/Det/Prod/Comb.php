@@ -97,58 +97,16 @@ class Comb extends Base implements TagInterface
             $this->cProdANP,
             true
         );
-        
-    /**
-     * EXCLUIDO na versão 4.0 do layout
-     * 3v4
-     * @var float
-     */
-        public $pMixGN;
-    /**
-     * INCLUIDO v4.0
-     * @var string
-     */
-        public $descANP;
-    /**
-     * INCLUIDO v4.0
-     * 1v4
-     * @var float
-     */
-        public $pGLP;
-    /**
-     * INCLUIDO v4.0
-     * 1v4
-     * @var float
-     */
-        public $pGNn;
-    /**
-     * INCLUIDO v4.0
-     * 1v4
-     * @var float
-     */
-        public $pGNi;
-    /**
-     * INCLUIDO v4.0
-     * 13v2
-     * @var float
-     */
-        public $vPart;
-    /**
-     * @var string
-     */
-        public $CODIF;
-    /**
-     * 12v4
-     * @var float
-     */
-        public $qTemp;
-    /**
-     * @var string
-     */
-        public $UFCons;
-    /**
-     * @var CIDE
-     */
-        public $CIDE;
+   
+        //public $pMixGN;
+        //public $descANP;
+        //public $pGLP;
+        //public $pGNn;
+        //public $pGNi;
+        //public $vPart;
+        //public $CODIF;
+        //public $qTemp;
+        //public $UFCons;
+        //public $CIDE;
     }
 }

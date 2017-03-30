@@ -22,6 +22,7 @@ use NFePHP\Common\UFList;
 use NFePHP\NFe\Factories\QRCode;
 use NFePHP\NFe\Factories\Events;
 use NFePHP\NFe\Common\Tools as ToolsCommon;
+use RuntimeException;
 
 class Tools extends ToolsCommon
 {
@@ -52,7 +53,7 @@ class Tools extends ToolsCommon
         }
         if ($this->contingency->type != '') {
             //em modo de contingencia
-            //esses xml deverão ser modificados e reassinados e retornados
+            //esses xml deverão ser modificados e re-assinados e retornados
             //no parametro $xmls para serem armazenados pelo aplicativo
             //pois serão alterados
             foreach ($aXml as $doc) {
@@ -64,15 +65,15 @@ class Tools extends ToolsCommon
         $sxml = implode("", $aXml);
         $sxml = preg_replace("/<\?xml.*\?>/", "", $sxml);
         $this->servico(
-            'NfeAutorizacao',
+            $servico,
             $this->config->siglaUF,
             $this->tpAmb
         );
         $request = "<enviNFe xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
-                . "<idLote>$idLote</idLote>"
-                . "<indSinc>$indSinc</indSinc>"
-                . "$sxml"
-                . "</enviNFe>";
+            . "<idLote>$idLote</idLote>"
+            . "<indSinc>$indSinc</indSinc>"
+            . "$sxml"
+            . "</enviNFe>";
         $this->isValid($this->urlVersion, $request, 'enviNFe');
         //montagem dos dados da mensagem SOAP
         $parameters = ['nfeDadosMsg' => $request];
@@ -91,21 +92,25 @@ class Tools extends ToolsCommon
     /**
      * Consulta a situação de um Lote de NFe enviadas pelo recibo desse envio
      * @param string $recibo
-     * @param string $tpAmb
+     * @param int $tpAmb
      * @return string
      */
-    public function sefazConsultaRecibo($recibo)
+    public function sefazConsultaRecibo($recibo, $tpAmb = null)
     {
+        if (empty($tpAmb)) {
+            $tpAmb = $this->tpAmb;
+        }
         //carrega serviço
         $servico = 'NfeRetAutorizacao';
+        $this->checkContingencyForWebServices($servico);
         $this->servico(
-            'NfeRetAutorizacao',
+            $servico,
             $this->config->siglaUF,
-            $this->tpAmb
+            $tpAmb
         );
         if ($this->urlService == '') {
             $msg = "A consulta de NFe não está disponível na SEFAZ $siglaUF!!!";
-            throw new Exception\RuntimeException($msg);
+            throw new RuntimeException($msg);
         }
         $request = "<consReciNFe xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
             . "<tpAmb>$tpAmb</tpAmb>"
@@ -119,25 +124,30 @@ class Tools extends ToolsCommon
     
     /**
      * Consulta o status da NFe pela chave de 44 digitos
-     * @param    string $chave
-     * @return   string
+     * @param string $chave
+     * @param int $tpAmb
+     * @return string
      */
-    public function sefazConsultaChave($chave)
+    public function sefazConsultaChave($chave, $tpAmb = null)
     {
-        $cUF = substr($chNFe, 0, 2);
-        $siglaUF = UFList::getCodeByUF($cUF);
+        if (empty($tpAmb)) {
+            $tpAmb = $this->tpAmb;
+        }
         //carrega serviço
         $servico = 'NfeConsultaProtocolo';
+        $this->checkContingencyForWebServices($servico);
+        $cUF = substr($chNFe, 0, 2);
+        $uf = UFList::getCodeByUF($cUF);
         $this->servico(
-            'NfeConsultaProtocolo',
-            $siglaUF,
-            $this->tpAmb
+            $servico,
+            $uf,
+            $tpAmb
         );
         $request = "<consSitNFe xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
-                . "<tpAmb>$tpAmb</tpAmb>"
-                . "<xServ>CONSULTAR</xServ>"
-                . "<chNFe>$chNFe</chNFe>"
-                . "</consSitNFe>";
+            . "<tpAmb>$tpAmb</tpAmb>"
+            . "<xServ>CONSULTAR</xServ>"
+            . "<chNFe>$chNFe</chNFe>"
+            . "</consSitNFe>";
         $this->isValid($this->urlVersion, $request, 'consSitNFe');
         $parameters = ['nfeDadosMsg' => $request];
         $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
@@ -150,14 +160,19 @@ class Tools extends ToolsCommon
      * @param integer $nIni
      * @param integer $nFin
      * @param string $xJust
+     * @param int $tpAmb
      * @return string
      */
     public function sefazInutiliza(
         $nSerie,
         $nIni,
         $nFin,
-        $xJust
+        $xJust,
+        $tpAmb = null
     ) {
+        if (empty($tpAmb)) {
+            $tpAmb = $this->tpAmb;
+        }
         $xJust = Strings::cleanString($xJust);
         $nSerie = (integer) $nSerie;
         $nIni = (integer) $nIni;
@@ -168,30 +183,30 @@ class Tools extends ToolsCommon
         $this->servico(
             $servico,
             $this->config->siglaUF,
-            $this->tpAmb
+            $tpAmb
         );
         $cnpj = $this->config->cnpj;
-        $sAno = (string) date('y');
-        $sSerie = str_pad($nSerie, 3, '0', STR_PAD_LEFT);
-        $sInicio = str_pad($nIni, 9, '0', STR_PAD_LEFT);
-        $sFinal = str_pad($nFin, 9, '0', STR_PAD_LEFT);
-        $idInut = "ID" .
-            $this->urlcUF .
-            $sAno .
-            $cnpj .
-            $this->modelo .
-            $sSerie .
-            $sInicio .
-            $sFinal;
+        $strAno = (string) date('y');
+        $strSerie = str_pad($nSerie, 3, '0', STR_PAD_LEFT);
+        $strInicio = str_pad($nIni, 9, '0', STR_PAD_LEFT);
+        $strFinal = str_pad($nFin, 9, '0', STR_PAD_LEFT);
+        $idInut = "ID"
+            . $this->urlcUF
+            . $strAno
+            . $cnpj
+            . $this->modelo
+            . $strSerie
+            . $strInicio
+            . $strFinal;
         //limpa os caracteres indesejados da justificativa
-        $xJust = Strings::cleanString($xJust);
+        $xJust = Strings::replaceSpecialsChars($xJust);
         //montagem do corpo da mensagem
         $msg = "<inutNFe xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">" .
             "<infInut Id=\"$idInut\">" .
-            "<tpAmb>$this->tpAmb</tpAmb>" .
+            "<tpAmb>$tpAmb</tpAmb>" .
             "<xServ>INUTILIZAR</xServ>" .
             "<cUF>$this->urlcUF</cUF>" .
-            "<ano>$sAno</ano>" .
+            "<ano>$strAno</ano>" .
             "<CNPJ>$cnpj</CNPJ>" .
             "<mod>$this->modelo</mod>" .
             "<serie>$nSerie</serie>" .
@@ -208,7 +223,7 @@ class Tools extends ToolsCommon
             $this->algorithm,
             [false,false,null,null]
         );
-        $request = Strings::clearXml($request, true);
+        $request = Strings::clearXmlString($request, true);
         $this->isValid($this->urlVersion, $request, 'inutNFe');
         $parameters = ['nfeDadosMsg' => $request];
         $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
@@ -244,8 +259,9 @@ class Tools extends ToolsCommon
         }
         //carrega serviço
         $servico = 'NfeConsultaCadastro';
+        $this->checkContingencyForWebServices($servico);
         $this->servico(
-            'NfeConsultaCadastro',
+            $servico,
             $uf,
             $this->tpAmb,
             true
@@ -268,18 +284,22 @@ class Tools extends ToolsCommon
      * @param string $uf  initials of federation unit
      * @return string xml soap response
      */
-    public function sefazStatus($uf = '')
+    public function sefazStatus($uf = '', $tpAmb = null)
     {
+        if (empty($tpAmb)) {
+            $tpAmb = $this->tpAmb;
+        }
         $ignoreContingency = true;
         if (empty($uf)) {
             $uf = $this->config->siglaUF;
             $ignoreContingency = false;
         }
         $servico = 'NfeStatusServico';
+        $this->checkContingencyForWebServices($servico);
         $this->servico(
-            'NfeStatusServico',
+            $servico,
             $uf,
-            $this->tpAmb,
+            $tpAmb,
             $ignoreContingency
         );
         $request = "<consStatServ xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
@@ -305,13 +325,15 @@ class Tools extends ToolsCommon
         $fonte = 'AN'
     ) {
         //carrega serviço
+        $servico = 'NfeDistribuicaoDFe';
+        $this->checkContingencyForWebServices($servico);
         $this->servico(
-            'NfeDistribuicaoDFe',
+            $servico,
             $fonte,
             1,
             true
         );
-        $cUF = self::getcUF($this->config->siglaUF);
+        $cUF = UFList::getCodeByUF($this->config->siglaUF);
         $ultNSU = str_pad($ultNSU, 15, '0', STR_PAD_LEFT);
         $tagNSU = "<distNSU><ultNSU>$ultNSU</ultNSU></distNSU>";
         if ($numNSU != 0) {
@@ -337,20 +359,6 @@ class Tools extends ToolsCommon
     }
 
     /**
-     * sefazEPEC
-     * Solicita autorização em contingência EPEC
-     * @param  string $xml
-     * @param  string $siglaUF
-     * @return string
-     */
-    public function sefazEPEC($xml, $siglaUF = 'AN')
-    {
-        // EPEC
-    }
-    
-    
-    
-    /**
      * sefazCCe
      * Solicita a autorização da Carta de Correção
      * @param  string $chNFe
@@ -363,7 +371,6 @@ class Tools extends ToolsCommon
         $xCorrecao = Strings::replaceSpecialsChars($xCorrecao);
         $uf = UFList::getUFByCode(substr($chNFe, 0, 2));
         $tpEvento = 110110;
-        //use a classe events
         $tagAdic = "<xCorrecao>"
             . $xCorrecao
             . "</xCorrecao><xCondUso>$xCondUso</xCondUso>";
@@ -417,7 +424,6 @@ class Tools extends ToolsCommon
     }
     
     /**
-     * sefazECPP
      * Solicita o cancelamento do pedido de prorrogação do prazo de retorno
      * de produtos de uma NF-e de remessa para industrialização por encomenda
      * com suspensão do ICMS em operações interestaduais
@@ -455,7 +461,7 @@ class Tools extends ToolsCommon
     }
         
     /**
-     * Solicita o cancelamento da NFe
+     * Requires nfe cancellation
      * @param  string $chNFe
      * @param  string $xJust
      * @param  string $nProt
@@ -478,25 +484,105 @@ class Tools extends ToolsCommon
     }
     
     /**
-     * Solicita o registro da manifestação de destinatário
+     * Request the registration of the manifestation of recipient
      * @param string $chNFe
-     * @param string $xJust
      * @param int $tpEvento
+     * @param string $xJust
      * @param int $nSeqEvento
      * @return string
      */
-    public function sefazManifesta($chNFe, $xJust, $tpEvento, $nSeqEvento = 1)
-    {
+    public function sefazManifesta(
+        $chNFe,
+        $tpEvento,
+        $xJust = '',
+        $nSeqEvento = 1
+    ) {
         $tagAdic = '';
         if ($tpEvento == 210240) {
             $xJust = Strings::replaceSpecialsChars($xJust);
             $tagAdic = "<xJust>$xJust</xJust>";
         }
-        return $this->sefazEvento('AN', $chNFe, $tpEvento, $nSeqEvento, $tagAdic);
+        return $this->sefazEvento(
+            'AN',
+            $chNFe,
+            $tpEvento,
+            $nSeqEvento,
+            $tagAdic
+        );
     }
     
     /**
-     *
+     * Solicita autorização em contingência EPEC
+     * @param  string $xml
+     * @return string
+     */
+    public function sefazEPEC(&$xml)
+    {
+        $tagAdic = '';
+        $tpEvento = 110140;
+        $nSeqEvento = 1;
+        $xml = $this->correctNFeForContingencyMode($xml);
+        $dom = new \DOMDocument('1.0', 'UTF-8');
+        $dom->preserveWhiteSpace = false;
+        $dom->formatOutput = false;
+        $dom->loadXML($xml);
+        $infNFe = $dom->getElementsByTagName('infNFe')->item(0);
+        $emit = $dom->getElementsByTagName('dest')->item(0);
+        $dest = $dom->getElementsByTagName('dest')->item(0);
+        $cOrgaoAutor = UFList::getCodeByUF($this->config->siglaUF);
+        $chNFe = substr($infNFe->getAttribute('Id'), 3, 44);
+        // EPEC
+        $dhEmi = $dom->getElementsByTagName('dhEmi')->item(0)->nodeValue;
+        $tpNF = $dom->getElementsByTagName('tpNF')->item(0)->nodeValue;
+        $emitIE = $emit->getElementsByTagName('IE')->item(0)->nodeValue;
+        $destUF = $dest->getElementsByTagName('UF')->item(0)->nodeValue;
+        $ICMStot = $dom->getElementsByTagName('ICMStot')->item(0);
+        $vNF = $ICMStot->getElementsByTagName('vNF')->item(0)->nodeValue;
+        $vICMS = $ICMStot->getElementsByTagName('vICMS')->item(0)->nodeValue;
+        $vST = $ICMStot->getElementsByTagName('vST')->item(0)->nodeValue;
+        $dID = $dest->getElementsByTagName('CNPJ')->item(0)->nodeValue;
+        if (!empty($dID)) {
+            $destID = "<CNPJ>$dID</CNPJ>";
+        } else {
+            $dID = $dest->getElementsByTagName('CPF')->item(0)->nodeValue;
+            if (!empty($dID)) {
+                $destID = "<CPF>$dID</CPF>";
+            } else {
+                $dID = $dest->getElementsByTagName('idEstrangeiro')
+                    ->item(0)
+                    ->nodeValue;
+                $destID = "<idEstrangeiro>$dID</idEstrangeiro>";
+            }
+        }
+        $dIE = $dest->getElementsByTagName('IE')->item(0)->nodeValue;
+        if (!empty($dIE)) {
+            $destIE = "<IE>$dIE</IE>";
+        }
+        $tagAdic = "<cOrgaoAutor>$cOrgaoAutor</cOrgaoAutor>"
+            . "<tpAutor>1</tpAutor>"
+            . "<verAplic>$this->verAplic</verAplic>"
+            . "<dhEmi>$dhEmi</dhEmi>"
+            . "<tpNF>$tpNF</tpNF>"
+            . "<IE>$emitIE</IE>"
+            . "<dest>"
+            . "<UF>$destUF</UF>"
+            . $destID
+            . $destIE
+            . "<vNF>$vNF</vNF>"
+            . "<vICMS>$vICMS</vICMS>"
+            . "<vST>$vST</vST>"
+            . "<dest>";
+        return $this->sefazEvento(
+            'AN',
+            $chNFe,
+            $tpEvento,
+            $nSeqEvento,
+            $tagAdic
+        );
+    }
+    
+    /**
+     * Send event to SEFAZ
      * @param string $uf
      * @param string $chave
      * @param int $tpEvento
@@ -511,7 +597,6 @@ class Tools extends ToolsCommon
         $nSeqEvento = 1,
         $tagAdic = ''
     ) {
-        //carrega serviço
         $servico = 'RecepcaoEvento';
         $this->checkContingencyForWebServices($servico);
         $this->servico(
@@ -553,9 +638,8 @@ class Tools extends ToolsCommon
             $this->algorithm,
             [false,false,null,null]
         );
-        $request = Strings::clearXml($request, true);
-        $lote = rand(5, 15);
-        
+        $request = Strings::clearXmlString($request, true);
+        $lote = rand(1, 15);
         $request = "<envEvento xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
             . "<idLote>$lote</idLote>"
             . $request
@@ -577,9 +661,9 @@ class Tools extends ToolsCommon
     {
         //carrega serviço
         $servico = 'NfeDownloadNF';
-        
+        $this->checkContingencyForWebServices($servico);
         $this->servico(
-            'NfeDownloadNF',
+            $servico,
             'AN',
             $this->tpAmb,
             true
@@ -590,26 +674,29 @@ class Tools extends ToolsCommon
                 . "<CNPJ>$this->config->cnpj</CNPJ>"
                 . "<chNFe>$chNFe</chNFe>"
                 . "</downloadNFe>";
-        //$this->isValid($this->urlVersion, $request, 'downloadNFe');
+        $this->isValid($this->urlVersion, $request, 'downloadNFe');
         $parameters = ['nfeDadosMsg' => $request];
         $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
         return $this->sendRequest($body, $parameters);
     }
     
     /**
-     * sefazManutencaoCsc
      * Manutenção do Código de Segurança do Contribuinte (Antigo Token)
-     * @param int $indOp
+     * @param int $indOp Identificador do tipo de operação:
+     *                   1 - Consulta CSC Ativos;
+     *                   2 - Solicita novo CSC;
+     *                   3 - Revoga CSC Ativo
      * @return string
      */
     public function sefazManutencaoCsc(
-        $indOp = ''
+        $indOp
     ) {
         $raizCNPJ = substr($this->config->cnpj, 0, -6);
         //carrega serviço
         $servico = 'CscNFCe';
+        $this->checkContingencyForWebServices($servico);
         $this->servico(
-            'CscNFCe',
+            $servico,
             $this->config->siglaUF,
             $this->tpAmb
         );
@@ -636,15 +723,9 @@ class Tools extends ToolsCommon
         return $this->sendRequest($body, $parameters);
     }
     
-    
-    
-    
-    
-    
     /**
      * Verifica a validade de uma NFe recebida
      * @param  string $nfe
-     * @param  array  $aRetorno
      * @return boolean
      * @throws \RuntimeException
      */
@@ -659,14 +740,11 @@ class Tools extends ToolsCommon
         $domnfe->loadXML($nfe);
         $tpAmb = $domnfe->getElementsByTagName('tpAmb')->item(0)->nodeValue;
         $infNFe  = $domnfe->getElementsByTagName('infNFe')->item(0);
-        $chaveNFe = preg_replace('/[^0-9]/', '', $infNFe->getAttribute("Id"));
-        $this->sefazConsultaChave($chNFe, $tpAmb);
-        /*
-        if ($aRetorno['cStat'] != '100' && $aRetorno['cStat'] != '150') {
-            return false;
-        }
-         * 
-         */
+        $chNFe = preg_replace('/[^0-9]/', '', $infNFe->getAttribute("Id"));
+        //consulta a NFe
+        $response = $this->sefazConsultaChave($chNFe, $tpAmb);
+        //analisar a resposta da SEFAZ para ver se a nota está valida
+        //?????????????????????????????????
         return true;
     }
     
@@ -721,6 +799,7 @@ class Tools extends ToolsCommon
                 //Ciencia da Operacao
                 $std->alias = 'EvCiencia';
                 $std->desc = 'Ciencia da Operacao';
+                $std->tpAutor = 2;
                 break;
             case 210220:
                 //Desconhecimento da Operacao
@@ -735,7 +814,7 @@ class Tools extends ToolsCommon
             default:
                 $msg = "O código do tipo de evento informado não corresponde a "
                 . "nenhum evento estabelecido.";
-                throw new \RuntimeException($msg);
+                throw new RuntimeException($msg);
         }
         return $std;
     }

@@ -24,9 +24,6 @@ class InfAdic extends Base implements TagInterface
     public function __construct(stdClass $std)
     {
         parent::__construct($std);
-        
-        $this->infAdFisco = $this->std->infadfisco;
-        $this->infCpl = $this->std->infcpl;
     }
     
     public function toNode()

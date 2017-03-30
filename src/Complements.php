@@ -2,8 +2,11 @@
 
 namespace NFePHP\NFe;
 
+use NFePHP\Common\Strings;
+
 class Complements
 {
+    protected $urlPortal = 'http://www.portalfiscal.inf.br/nfe';
     
     /**
      * Add tags B2B, as example ANFAVEA
@@ -21,7 +24,8 @@ class Complements
         $domnfe->loadXML($nfe);
         $nodenfe = $domnfe->getElementsByTagName('nfeProc')->item(0);
         if (empty($nodenfe)) {
-            $msg = "O arquivo indicado como NFe não está protocolado ou não é uma NFe!!";
+            $msg = "O arquivo indicado como NFe não está protocolado "
+                    . "ou não é uma NFe!!";
             throw new \InvalidArgumentException($msg);
         }
         //carrega o arquivo B2B
@@ -31,7 +35,7 @@ class Complements
         $domb2b->loadXML($b2b);
         $nodeb2b = $domnfe->getElementsByTagName($tagB2B)->item(0);
         if (empty($nodeb2b)) {
-            $msg = "O arquivo indicado como B2B não contêm a tag requerida!!";
+            $msg = "O arquivo indicado como B2B não contêm a tagB2B indicada!!";
             throw new \InvalidArgumentException($msg);
         }
         //cria a NFe processada com a tag do protocolo
@@ -83,17 +87,29 @@ class Complements
         $retEvento = $domcanc->getElementsByTagName('retEvento')->item(0);
         $eventos = $retEvento->getElementsByTagName('infEvento');
         foreach ($eventos as $evento) {
-            $cStat = $evento->getElementsByTagName('cStat')->item(0)->nodeValue;
-            $tpAmb = $evento->getElementsByTagName('tpAmb')->item(0)->nodeValue;
-            $chaveEvento = $evento->getElementsByTagName('chNFe')->item(0)->nodeValue;
-            $tpEvento = $evento->getElementsByTagName('tpEvento')->item(0)->nodeValue;
+            $cStat = $evento->getElementsByTagName('cStat')
+                ->item(0)
+                ->nodeValue;
+            $tpAmb = $evento->getElementsByTagName('tpAmb')
+                ->item(0)
+                ->nodeValue;
+            $chaveEvento = $evento->getElementsByTagName('chNFe')
+                ->item(0)
+                ->nodeValue;
+            $tpEvento = $evento->getElementsByTagName('tpEvento')
+                ->item(0)
+                ->nodeValue;
             if (($cStat == '135' || $cStat == '136' || $cStat == '155')
                 && $tpEvento == '110111'
                 && $chaveEvento == $chaveNFe
             ) {
-                $proNFe->getElementsByTagName('cStat')->item(0)->nodeValue = '101';
-                $proNFe->getElementsByTagName('xMotivo')->item(0)->nodeValue = 'Cancelamento de NF-e homologado';
-                $procXML = Strings::clearProt($domnfe->saveXML());
+                $proNFe->getElementsByTagName('cStat')
+                    ->item(0)
+                    ->nodeValue = '101';
+                $proNFe->getElementsByTagName('xMotivo')
+                    ->item(0)
+                    ->nodeValue = 'Cancelamento de NF-e homologado';
+                $procXML = Strings::clearProtocoledXML($domnfe->saveXML());
                 break;
             }
         }
@@ -120,7 +136,8 @@ class Complements
             $msg = "O arquivo indicado como NFe não é um xml de NFe!";
             throw new \InvalidArgumentException($msg);
         }
-        if (empty($docnfe->$domnfe->getElementsByTagName('Signature')->item(0))) {
+        $signode = $docnfe->$domnfe->getElementsByTagName('Signature')->item(0);
+        if (empty($signode)) {
             $msg = "A NFe não está assinada!";
             throw new \InvalidArgumentException($msg);
         }
@@ -138,12 +155,16 @@ class Complements
         $infNFe = $domnfe->getNode("infNFe", 0);
         $versao = $infNFe->getAttribute("versao");
         $chaveNFe = preg_replace('/[^0-9]/', '', $infNFe->getAttribute("Id"));
-        $digValueNFe = $domnfe->getElementsByTagName('DigestValue')->item(0)->nodeValue;
+        $digValueNFe = $domnfe->getElementsByTagName('DigestValue')
+            ->item(0)
+            ->nodeValue;
         $digValueProt = '';
         for ($i = 0; $i < $nodeprot->length; $i++) {
             $node = $nodeprot->item($i);
             $protver = $node->getAttribute("versao");
-            $chaveProt = $node->getElementsByTagName("chNFe")->item(0)->nodeValue;
+            $chaveProt = $node->getElementsByTagName("chNFe")
+                ->item(0)
+                ->nodeValue;
             $digValueProt = ($node->getElementsByTagName("digVal")->length)
                 ? $node->getElementsByTagName("digVal")->item(0)->nodeValue
                 : '';
@@ -153,11 +174,13 @@ class Complements
             }
         }
         if ($digValueNFe != $digValueProt) {
-            $msg = "Inconsistência! O DigestValue da NFe não combina com o digVal do protocolo indicado!";
+            $msg = "Inconsistência! O DigestValue da NFe não combina com o "
+                    . "digVal do protocolo indicado!";
             throw new \RuntimeException($msg);
         }
         if ($chaveNFe != $chaveProt) {
-            $msg = "O protocolo indicado pertence a outra NFe. Os números das chaves não combinam !";
+            $msg = "O protocolo indicado pertence a outra NFe. Os números "
+                    . "das chaves não combinam !";
             throw new \RuntimeException($msg);
         }
         //cria a NFe processada com a tag do protocolo
@@ -168,11 +191,19 @@ class Complements
         $nfeProc = $procnfe->createElement('nfeProc');
         $procnfe->appendChild($nfeProc);
         //estabele o atributo de versão
-        $nfeProcAtt1 = $nfeProc->appendChild($procnfe->createAttribute('versao'));
-        $nfeProcAtt1->appendChild($procnfe->createTextNode($protver));
+        $nfeProcAtt1 = $nfeProc->appendChild(
+            $procnfe->createAttribute('versao')
+        );
+        $nfeProcAtt1->appendChild(
+            $procnfe->createTextNode($protver)
+        );
         //estabelece o atributo xmlns
-        $nfeProcAtt2 = $nfeProc->appendChild($procnfe->createAttribute('xmlns'));
-        $nfeProcAtt2->appendChild($procnfe->createTextNode($this->urlPortal));
+        $nfeProcAtt2 = $nfeProc->appendChild(
+            $procnfe->createAttribute('xmlns')
+        );
+        $nfeProcAtt2->appendChild(
+            $procnfe->createTextNode($this->urlPortal)
+        );
         //inclui a tag NFe
         $node = $procnfe->importNode($nodenfe, true);
         $nfeProc->appendChild($node);
@@ -180,16 +211,18 @@ class Complements
         $protNFe = $procnfe->createElement('protNFe');
         $nfeProc->appendChild($protNFe);
         //estabele o atributo de versão
-        $protNFeAtt1 = $protNFe->appendChild($procnfe->createAttribute('versao'));
-        $protNFeAtt1->appendChild($procnfe->createTextNode($versao));
+        $protNFeAtt1 = $protNFe->appendChild(
+            $procnfe->createAttribute('versao')
+        );
+        $protNFeAtt1->appendChild(
+            $procnfe->createTextNode($versao)
+        );
         //cria tag infProt
         $nodep = $procnfe->importNode($infProt, true);
         $protNFe->appendChild($nodep);
         //salva o xml como string em uma variável
         $procXML = $procnfe->saveXML();
-        //remove as informações indesejadas
-        $procXML = Strings::clearProt($procXML);
-        $this->isValid($this->urlVersion, $procXML, 'procNFe');
-        return $procXML;
+        //remove as informações indesejadas e retorna
+        return Strings::clearProtocoledXML($procXML);
     }
 }
