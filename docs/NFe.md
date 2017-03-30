@@ -1,26 +1,29 @@
+
 # NFe
 
 Toda a estrutura das NFe foi desmembrada em um grupo de classes dentro do namespace NFePHP\NFe\Tags, e devem ser instanciadas diretamente pela classe Tag::class.
 
 Essas sub classes que representam os "NODES" do XML recebem como parametro uma stdClass do PHP, e as propriedades dessa stdClass representam os elementos contidos no "NODE".
 
-Existem 15 NODES principais, que podem ser adicionados a classe NFe 
+Existem 17 NODES principais, que podem ser adicionados a classe NFe 
 
-1. [ide](#ide)
-2. [NFref](#NFref)
-3. [emit](#emit)
-4. [dest](#dest)
-5. [retirada](#retirada)
-6. [entrega](#entrega)
-7. [autXML](#autXML)
-8. [det](#det)
-9. [total](#total)
-10. [transp](#transp)
-11. [cobr](#cobr)
-12. [pag](#pag)
-13. [exporta](#exporta)
-14. [compra](#compra)
-15. [cana](#cana)
+1. [NFe](#NFe)
+2. [infNFe](#InfNFe)
+3. [ide](#ide)
+4. [NFref](#NFref)
+5. [emit](#emit)
+6. [dest](#dest)
+7. [retirada](#retirada)
+8. [entrega](#entrega)
+9. [autXML](#autXML)
+10. [det](#det)
+11. [total](#total)
+12. [transp](#transp)
+13. [cobr](#cobr)
+14. [pag](#pag)
+15. [exporta](#exporta)
+16. [compra](#compra)
+17. [cana](#cana)
 
 Porém vários desses NODES possuem subnodes.
 Alguns dos subnodes possuem outros subnodes também e que ao final representam a totalidade dos dados a serem inclusos em uma NFe.
@@ -28,13 +31,19 @@ Alguns dos subnodes possuem outros subnodes também e que ao final representam a
 
 ## Classes a adicionar a NFe::class
 
+### <a name="NFe"></a>[NFe::class](NFe.md) [ 1 - 1 ]
+* OBRIGATÓRIA, identificação do documento, contêm \<infNFe\>, \<infNFeSupl\> e \<Signature\> *
+
+### <a name="infNFe"></a>[InfNFe::class](InfNFe.md) [ 1 - 1 ]
+* OBRIGATÓRIA, identificação da versão do documento, nesta tag estarão contidas todas as demais. *
+
+Essas tags acima são as construtoras da estrutura.
 
 ### <a name="ide"></a>[Ide::class](Ide.md) [ 1 - 1 ]
-*OBRIGATÓRIA, identificação do documento, apenas uma instancia é permitida, não possui subnodes*  
-
+* OBRIGATÓRIA, identificação do documento, apenas uma instancia é permitida, não possui subnodes *  
 
 ### <a name="NFref"></a>[NFref::class](NFref.md) [ 0 - 500 ]
-*(opcional), Indica as Notas referenciadas*
+*(OPCIONAL), Indica as Notas referenciadas*
 *Podem ser criadas até 500 instancias dessa classe, 5 possiveis subnodes, mas apenas um pode ser incluso a cada NFref*
 
 > RefNFe::class  (opcional)  NFe referenciadas [ 0 - 1]
@@ -106,6 +115,10 @@ Alguns dos subnodes possuem outros subnodes também e que ao final representam a
 >> PIS::class (opcional) [0 - 1] Contribuição de PIS
 
 >> COFINS::class (opcional) [0 - 1]  Contribuição de COFINS
+
+>> PISST::class (opcional) [0 - 1] Contribuição de PIS ST
+
+>> COFINSST::class (opcional) [0 - 1]  Contribuição de COFINS ST
 
 >> ISSQN::class (opcional) [0 - 1] Imposto sobre Serviços
 

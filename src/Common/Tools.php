@@ -21,6 +21,7 @@ use Exception;
 use RuntimeException;
 use InvalidArgumentException;
 use NFePHP\Common\Strings;
+use NFePHP\Common\Keys;
 use NFePHP\Common\Certificate;
 use NFePHP\Common\Soap\SoapInterface;
 use NFePHP\Common\Soap\SoapCurl;
@@ -158,25 +159,13 @@ class Tools
     {
         $this->config = json_decode($configJson);
         
-        $this->pathwsfiles = __DIR__
-            . DIRECTORY_SEPARATOR
-            . '..'
-            . DIRECTORY_SEPARATOR
-            . '..'
-            . DIRECTORY_SEPARATOR
-            . 'storage'
-            . DIRECTORY_SEPARATOR;
+        $this->pathwsfiles = realpath(
+            __DIR__ . '/../../storage'
+        ).'/';
         
-        $this->pathschemes = __DIR__
-            . DIRECTORY_SEPARATOR
-            . '..'
-            . DIRECTORY_SEPARATOR
-            . '..'
-            . DIRECTORY_SEPARATOR
-            . 'schemes'
-            . DIRECTORY_SEPARATOR
-            . $this->config->schemes
-            . DIRECTORY_SEPARATOR;
+        $this->pathschemes = realpath(
+            __DIR__ . '/../../schemes/'. $this->config->schemes
+        ).'/';
         
         $this->version($this->config->versao);
         $this->setEnvironmentTimeZone($this->config->siglaUF);
@@ -246,6 +235,18 @@ class Tools
     }
     
     /**
+     * Set environment for production or homologation
+     * @param int $tpAmb
+     */
+    public function environment($tpAmb = 2)
+    {
+        if (!empty($tpAmb) && ($tpAmb == 1 || $tpAmb == 2)) {
+            $this->tpAmb = $tpAmb;
+            $this->ambiente = ($tpAmb == 1) ? 'producao' : 'homologacao';
+        }
+    }
+    
+    /**
      * Recover cUF number from
      * @param string $acronym Sigla do estado
      * @return int number cUF
@@ -305,7 +306,6 @@ class Tools
      * Corret NFe fields when in contingency mode
      * @param string $xml NFe xml content
      * @return string
-     * @throws RuntimeException
      */
     protected function correctNFeForContingencyMode($xml)
     {
@@ -316,23 +316,18 @@ class Tools
         $dom->preserveWhiteSpace = false;
         $dom->formatOutput = false;
         $dom->loadXML($xml);
-        //remove signature if is signed
-        if (Signer::isSigned($dom, 'infNFe')) {
-            $dom = Signer::removeSignature($dom);
-        }
+        $dom = Signer::removeSignature($dom);
         $motivo = trim(Strings::cleanString($this->contingency->motive));
-        $len = strlen($motivo);
-        if ($len < 15 || $len > 255) {
-            throw new RuntimeException(
-                'O motivo da contingência não atende os parametros de tamanho'
-            );
-        }
         $dt = new DateTime();
         $dt->setTimestamp($this->contingency->timestamp);
         $ide = $dom->getElementsByTagName('ide')->item(0);
-        $ide->getElementsByTagName('tpEmis')->item(0)->nodeValue = $this->contingency->tpEmis;
+        $ide->getElementsByTagName('tpEmis')
+            ->item(0)
+            ->nodeValue = $this->contingency->tpEmis;
         if (!empty($ide->getElementsByTagName('dhCont')->item(0)->nodeValue)) {
-            $ide->getElementsByTagName('dhCont')->item(0)->nodeValue = $dt->format('Y-m-d\TH:i:sP');
+            $ide->getElementsByTagName('dhCont')
+                ->item(0)
+                ->nodeValue = $dt->format('Y-m-d\TH:i:sP');
         } else {
             $dhCont = $dom->createElement('dhCont', $dt->format('Y-m-d\TH:i:sP'));
             $ide->appendChild($dhCont);
@@ -343,7 +338,14 @@ class Tools
             $xJust = $dom->createElement('xJust', $motivo);
             $ide->appendChild($xJust);
         }
-        return $dom->saveXML();
+        //corrigir a chave 
+        $infNFe = $dom->getElementsByTagName('infNFe')->item(0);
+        $chave = substr($infNFe->getAttribute('Id'), 3, 44);
+        $chave = substr($chave, 0, 34)
+            . $this->contingency->tpEmis
+            . substr($chave, 34, 8);
+        $infNFe->setAttribute('Id', $chave.Keys::verifyingDigit($chave));
+        return Strings::clearXmlString($dom->saveXML(), true);
     }
 
     /**
@@ -479,10 +481,8 @@ class Tools
      * @param string $request
      * @return string
      */
-    protected function sendRequest($request)
+    protected function sendRequest($body, $parameters = [])
     {
-        $parameters = ['nfeDadosMsg' => $request];
-        $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
         return (string) $this->soap->send(
             $this->urlService,
             $this->urlMethod,

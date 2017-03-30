@@ -481,7 +481,7 @@ class Response
         $aResposta = array(
             'bStat' => true,
             'versao' => $tag->getAttribute('versao'),
-            'tpAmb' => $tag->getAttribute('tpAmb'),
+            'tpAmb' => $dom->getValue($tag, 'tpAmb'),
             'verAplic' => $dom->getValue($tag, 'verAplic'),
             'cStat' => $dom->getValue($tag, 'cStat'),
             'xMotivo' => $dom->getValue($tag, 'xMotivo'),
