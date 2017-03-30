@@ -18,6 +18,7 @@ namespace NFePHP\NFe;
 
 use NFePHP\Common\Strings;
 use NFePHP\Common\Signer;
+use NFePHP\Common\UFList;
 use NFePHP\NFe\Factories\QRCode;
 use NFePHP\NFe\Factories\Events;
 use NFePHP\NFe\Common\Tools as ToolsCommon;
@@ -88,7 +89,6 @@ class Tools extends ToolsCommon
     }
     
     /**
-     * sefazConsultaRecibo
      * Consulta a situação de um Lote de NFe enviadas pelo recibo desse envio
      * @param string $recibo
      * @param string $tpAmb
@@ -118,9 +118,7 @@ class Tools extends ToolsCommon
     }
     
     /**
-     * sefazConsultaChave
      * Consulta o status da NFe pela chave de 44 digitos
-     *
      * @param    string $chave
      * @return   string
      */
@@ -339,6 +337,20 @@ class Tools extends ToolsCommon
     }
 
     /**
+     * sefazEPEC
+     * Solicita autorização em contingência EPEC
+     * @param  string $xml
+     * @param  string $siglaUF
+     * @return string
+     */
+    public function sefazEPEC($xml, $siglaUF = 'AN')
+    {
+        // EPEC
+    }
+    
+    
+    
+    /**
      * sefazCCe
      * Solicita a autorização da Carta de Correção
      * @param  string $chNFe
@@ -348,13 +360,20 @@ class Tools extends ToolsCommon
      */
     public function sefazCCe($chNFe, $xCorrecao, $nSeqEvento = 1)
     {
-        $xCorrecao = Strings::cleanString($xCorrecao);
-        $uf = $this->getSigla(substr($chNFe, 0, 2));
-        $tpEvento = '110110';
+        $xCorrecao = Strings::replaceSpecialsChars($xCorrecao);
+        $uf = UFList::getUFByCode(substr($chNFe, 0, 2));
+        $tpEvento = 110110;
         //use a classe events
-        $tagAdic = "<xCorrecao>$xCorrecao</xCorrecao><xCondUso>$xCondUso</xCondUso>";
-        //$retorno = $this->zSefazEvento($siglaUF, $chNFe, $tpAmb, $tpEvento, $nSeqEvento, $tagAdic);
-        return $retorno;
+        $tagAdic = "<xCorrecao>"
+            . $xCorrecao
+            . "</xCorrecao><xCondUso>$xCondUso</xCondUso>";
+        return $this->sefazEvento(
+            $uf,
+            $chNFe,
+            $tpEvento,
+            $nSeqEvento,
+            $tagAdic
+        );
     }
     
     /**
@@ -375,18 +394,26 @@ class Tools extends ToolsCommon
         $nProt = '',
         $itens = array()
     ) {
-        $siglaUF = $this->zGetSigla(substr($chNFe, 0, 2));
-        $tpEvento = '111500';
+        $siglaUF = UFList::getListByCode(substr($chNFe, 0, 2));
+        $tpEvento = 111500;
         if ($nSeqEvento == 2) {
-            $tpEvento = '111501';
+            $tpEvento = 111501;
         }
         $tagAdic = "<nProt>$nProt</nProt><itemPedido>";
         foreach ($itens as $item) {
-            $tagAdic .= "<itemPedido numItem=\"".$item[0]."\"><qtdeItem>".$item[1]."</qtdeItem><itemPedido>";
+            $tagAdic .= "<itemPedido numItem=\""
+                . $item[0]
+                . "\"><qtdeItem>"
+                . $item[1]
+                ."</qtdeItem><itemPedido>";
         }
-        $retorno = $this->zSefazEvento($siglaUF, $chNFe, $tpAmb, $tpEvento, $nSeqEvento, $tagAdic);
-        $aRetorno = $this->aLastRetEvent;
-        return $retorno;
+        return $this->sefazEvento(
+            $uf,
+            $chNFe,
+            $tpEvento,
+            $nSeqEvento,
+            $tagAdic
+        );
     }
     
     /**
@@ -405,77 +432,139 @@ class Tools extends ToolsCommon
         $nSeqEvento = 1,
         $nProt = ''
     ) {
-        $siglaUF = $this->getSigla(substr($chNFe, 0, 2));
-        $tpEvento = '111502';
-        $origEvent = '111500';
+        $uf = UFList::getListByCode(substr($chNFe, 0, 2));
+        $tpEvento = 111502;
+        $origEvent = 111500;
         if ($nSeqEvento == 2) {
-            $tpEvento = '111503';
-            $origEvent = '111501';
+            $tpEvento = 111503;
+            $origEvent = 111501;
         }
         $sSeqEvento = str_pad($nSeqEvento, 2, "0", STR_PAD_LEFT);
         $idPedidoCancelado = "ID$origEvent$chNFe$sSeqEvento";
-        $tagAdic = "<idPedidoCancelado>$idPedidoCancelado</idPedidoCancelado><nProt>$nProt</nProt>";
+        $tagAdic = "<idPedidoCancelado>"
+                . "$idPedidoCancelado"
+                . "</idPedidoCancelado>"
+                . "<nProt>$nProt</nProt>";
+        return $this->sefazEvento(
+            $uf,
+            $chNFe,
+            $tpEvento,
+            $nSeqEvento,
+            $tagAdic
+        );
+    }
         
-        //$retorno = $this->zSefazEvento($siglaUF, $chNFe, $tpAmb, $tpEvento, $nSeqEvento, $tagAdic);
-        //$aRetorno = $this->aLastRetEvent;
-        return $retorno;
-    }
-    
     /**
-     * sefazEPEC
-     * Solicita autorização em contingência EPEC
-     * @param  string $xml
-     * @param  string $siglaUF
-     * @return string
-     * @throws Exception\InvalidArgumentException
-     */
-    public function sefazEPEC($xml, $tpAmb = '2', $siglaUF = 'AN', &$aRetorno = array())
-    {
-        //ese a classe EPEC
-    }
-    
-    /**
-     * sefazCancela
      * Solicita o cancelamento da NFe
-     *
      * @param  string $chNFe
      * @param  string $xJust
      * @param  string $nProt
      * @return string
-     * @throws Exception\InvalidArgumentException
      */
     public function sefazCancela($chNFe, $xJust, $nProt)
     {
-        $xJust = Strings::cleanString($xJust);
-        $siglaUF = $this->getSigla(substr($chNFe, 0, 2));
-        //estabelece o codigo do tipo de evento CANCELAMENTO
-        $tpEvento = '110111';
+        $xJust = Strings::replaceSpecialsChars($xJust);
+        $uf = UFList::getListByCode(substr($chNFe, 0, 2));
+        $tpEvento = 110111;
         $nSeqEvento = 1;
-        //monta mensagem
         $tagAdic = "<nProt>$nProt</nProt><xJust>$xJust</xJust>";
-        //$retorno = $this->zSefazEvento($siglaUF, $chNFe, $tpAmb, $tpEvento, $nSeqEvento, $tagAdic);
-        //$aRetorno = $this->aLastRetEvent;
-        return $retorno;
+        return $this->sefazEvento(
+            $uf,
+            $chNFe,
+            $tpEvento,
+            $nSeqEvento,
+            $tagAdic
+        );
     }
     
     /**
-     * sefazManifesta
      * Solicita o registro da manifestação de destinatário
-     * @param  string $chNFe
-     * @param  string $xJust
-     * @param  string $tpEvento
+     * @param string $chNFe
+     * @param string $xJust
+     * @param int $tpEvento
+     * @param int $nSeqEvento
      * @return string
      */
-    public function sefazManifesta($chNFe, $xJust, $tpEvento)
+    public function sefazManifesta($chNFe, $xJust, $tpEvento, $nSeqEvento = 1)
     {
         $tagAdic = '';
-        if ($tpEvento == '210240') {
-            $xJust = Strings::cleanString($xJust);
+        if ($tpEvento == 210240) {
+            $xJust = Strings::replaceSpecialsChars($xJust);
             $tagAdic = "<xJust>$xJust</xJust>";
         }
-        //$retorno = $this->zSefazEvento('AN', $chNFe, $tpAmb, $tpEvento, '1', $tagAdic);
-        //$aRetorno = $this->aLastRetEvent;
-        return $retorno;
+        return $this->sefazEvento('AN', $chNFe, $tpEvento, $nSeqEvento, $tagAdic);
+    }
+    
+    /**
+     *
+     * @param string $uf
+     * @param string $chave
+     * @param int $tpEvento
+     * @param int $nSeqEvento
+     * @param string $tagAdic
+     * @return string
+     */
+    public function sefazEvento(
+        $uf,
+        $chave,
+        $tpEvento,
+        $nSeqEvento = 1,
+        $tagAdic = ''
+    ) {
+        //carrega serviço
+        $servico = 'RecepcaoEvento';
+        $this->checkContingencyForWebServices($servico);
+        $this->servico(
+            $servico,
+            $uf,
+            $this->tpAmb
+        );
+        $ev = $this->tpEv($tpEvento);
+        $aliasEvento = $ev->alias;
+        $descEvento = $ev->desc;
+        $cnpj = $this->config->cnpj;
+        $dt = new \DateTime();
+        $dhEvento = $dt->format('Y-m-d\TH:i:sP');
+        $sSeqEvento = str_pad($nSeqEvento, 2, "0", STR_PAD_LEFT);
+        $eventId = "ID".$tpEvento.$chave.$sSeqEvento;
+        $cOrgao = UFList::getCodeByUF($uf);
+        $request = "<evento xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
+            . "<infEvento Id=\"$eventId\">"
+            . "<cOrgao>$cOrgao</cOrgao>"
+            . "<tpAmb>$tpAmb</tpAmb>"
+            . "<CNPJ>$cnpj</CNPJ>"
+            . "<chNFe>$chave</chNFe>"
+            . "<dhEvento>$dhEvento</dhEvento>"
+            . "<tpEvento>$tpEvento</tpEvento>"
+            . "<nSeqEvento>$nSeqEvento</nSeqEvento>"
+            . "<verEvento>$this->urlVersion</verEvento>"
+            . "<detEvento versao=\"$this->urlVersion\">"
+            . "<descEvento>$descEvento</descEvento>"
+            . "$tagAdic"
+            . "</detEvento>"
+            . "</infEvento>"
+            . "</evento>";
+        //assinatura dos dados
+        $request = Signer::sign(
+            $this->certificate,
+            $request,
+            'infEvento',
+            '',
+            $this->algorithm,
+            [false,false,null,null]
+        );
+        $request = Strings::clearXml($request, true);
+        $lote = rand(5, 15);
+        
+        $request = "<envEvento xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
+            . "<idLote>$lote</idLote>"
+            . $request
+            . "</envEvento>";
+        $this->isValid($this->urlVersion, $request, 'envEvento');
+        $parameters = ['nfeDadosMsg' => $request];
+        $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
+        return $this->sendRequest($body, $parameters);
+        return (string) $retorno;
     }
     
     /**
@@ -548,6 +637,10 @@ class Tools extends ToolsCommon
     }
     
     
+    
+    
+    
+    
     /**
      * Verifica a validade de uma NFe recebida
      * @param  string $nfe
@@ -575,5 +668,75 @@ class Tools extends ToolsCommon
          * 
          */
         return true;
+    }
+    
+    /**
+     *
+     * @param  int $tpEvento
+     * @return stdClass
+     * @throws Exception
+     */
+    private function tpEv($tpEvento)
+    {
+        $std = new \stdClass();
+        $std->alias = '';
+        $std->desc = '';
+        switch ($tpEvento) {
+            case 110110:
+                //CCe
+                $std->alias = 'CCe';
+                $std->desc = 'Carta de Correcao';
+                break;
+            case 110111:
+                //cancelamento
+                $std->alias = 'CancNFe';
+                $std->desc = 'Cancelamento';
+                break;
+            case 110140:
+                //EPEC
+                //emissão em contingência EPEC
+                $std->alias = 'EPEC';
+                $std->desc = 'EPEC';
+                break;
+            case 111500:
+            case 111501:
+                //EPP
+                //Pedido de prorrogação
+                $std->alias = 'EPP';
+                $std->desc = 'Pedido de Prorrogacao';
+                break;
+            case 111502:
+            case 111503:
+                //ECPP
+                //Cancelamento do Pedido de prorrogação
+                $std->alias = 'ECPP';
+                $std->desc = 'Cancelamento de Pedido de Prorrogacao';
+                break;
+            case 210200:
+                //Confirmacao da Operacao
+                $std->alias = 'EvConfirma';
+                $std->desc = 'Confirmacao da Operacao';
+                break;
+            case 210210:
+                //Ciencia da Operacao
+                $std->alias = 'EvCiencia';
+                $std->desc = 'Ciencia da Operacao';
+                break;
+            case 210220:
+                //Desconhecimento da Operacao
+                $std->alias = 'EvDesconh';
+                $std->desc = 'Desconhecimento da Operacao';
+                break;
+            case 210240:
+                //Operacao não Realizada
+                $std->alias = 'EvNaoRealizada';
+                $std->desc = 'Operacao nao Realizada';
+                break;
+            default:
+                $msg = "O código do tipo de evento informado não corresponde a "
+                . "nenhum evento estabelecido.";
+                throw new \RuntimeException($msg);
+        }
+        return $std;
     }
 }
