@@ -20,17 +20,24 @@ class AutXML extends Base implements TagInterface
      */
     public $CPF;
     
-    public $parameters = [
-        'CNPJ' => 'string',
-        'CPF' => 'string',
+    protected $parameters = [
+        'CNPJ' => [
+            'type' => 'string',
+            'format'=> '14',
+            'required' => true,
+            'force' => false
+        ],
+        'CPF' => [
+            'type' => 'string',
+            'format'=> '11',
+            'required' => true,
+            'force' => false
+        ]
     ];
     
     public function __construct(stdClass $std)
     {
         parent::__construct($std);
-        
-        $this->CNPJ = $this->std->cnpj;
-        $this->CPF = $this->std->cpf;
     }
     
     public function toNode()

@@ -71,6 +71,11 @@ class Tools
      */
     public $soap;
     /**
+     * Application version
+     * @var string
+     */
+    public $verAplic = '';
+    /**
      * certificate class
      * @var Certificate
      */
@@ -183,6 +188,15 @@ class Tools
     public function setEnvironmentTimeZone($acronym)
     {
         date_default_timezone_set(TimeZoneByUF::get($acronym));
+    }
+    
+    /**
+     * Set application version
+     * @param string $ver
+     */
+    public function setVerAplic($ver)
+    {
+        $this->verAplic = $ver;
     }
 
     /**
