@@ -136,17 +136,15 @@ class Tools extends ToolsCommon
         //carrega serviço
         $servico = 'NfeConsultaProtocolo';
         $this->checkContingencyForWebServices($servico);
-        $cUF = substr($chNFe, 0, 2);
-        $uf = UFList::getCodeByUF($cUF);
         $this->servico(
             $servico,
-            $uf,
+            UFList::getUFByCode(substr($chave, 0, 2)),
             $tpAmb
         );
         $request = "<consSitNFe xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
             . "<tpAmb>$tpAmb</tpAmb>"
             . "<xServ>CONSULTAR</xServ>"
-            . "<chNFe>$chNFe</chNFe>"
+            . "<chNFe>$chave</chNFe>"
             . "</consSitNFe>";
         $this->isValid($this->urlVersion, $request, 'consSitNFe');
         $parameters = ['nfeDadosMsg' => $request];
@@ -173,7 +171,7 @@ class Tools extends ToolsCommon
         if (empty($tpAmb)) {
             $tpAmb = $this->tpAmb;
         }
-        $xJust = Strings::cleanString($xJust);
+        $xJust = Strings::replaceSpecialsChars($xJust);
         $nSerie = (integer) $nSerie;
         $nIni = (integer) $nIni;
         $nFin = (integer) $nFin;
@@ -371,6 +369,16 @@ class Tools extends ToolsCommon
         $xCorrecao = Strings::replaceSpecialsChars($xCorrecao);
         $uf = UFList::getUFByCode(substr($chNFe, 0, 2));
         $tpEvento = 110110;
+        $xCondUso = 'A Carta de Correcao e disciplinada pelo paragrafo '
+            . '1o-A do art. 7o do Convenio S/N, de 15 de dezembro de 1970 '
+            . 'e pode ser utilizada para regularizacao de erro ocorrido '
+            . 'na emissao de documento fiscal, desde que o erro nao esteja '
+            . 'relacionado com: I - as variaveis que determinam o valor '
+            . 'do imposto tais como: base de calculo, aliquota, '
+            . 'diferenca de preco, quantidade, valor da operacao ou da '
+            . 'prestacao; II - a correcao de dados cadastrais que implique '
+            . 'mudanca do remetente ou do destinatario; III - a data de '
+            . 'emissao ou de saida.';
         $tagAdic = "<xCorrecao>"
             . $xCorrecao
             . "</xCorrecao><xCondUso>$xCondUso</xCondUso>";
@@ -384,35 +392,33 @@ class Tools extends ToolsCommon
     }
     
     /**
-     * sefazEPP
      * Solicita pedido de prorrogação do prazo de retorno de produtos de uma
      * NF-e de remessa para industrialização por encomenda com suspensão do ICMS
      * em operações interestaduais
      * @param  string  $chNFe
-     * @param  string  $tpAmb
-     * @param  integer $nSeqEvento
      * @param  string  $nProt
+     * @param  integer $nSeqEvento
      * @param  array   $itens
      * @return string
      */
     public function sefazEPP(
         $chNFe,
-        $nSeqEvento = 1,
-        $nProt = '',
-        $itens = array()
+        $nProt,
+        $itens = array(),
+        $nSeqEvento = 1
     ) {
-        $siglaUF = UFList::getListByCode(substr($chNFe, 0, 2));
+        $uf = UFList::getUFByCode(substr($chNFe, 0, 2));
         $tpEvento = 111500;
         if ($nSeqEvento == 2) {
             $tpEvento = 111501;
         }
-        $tagAdic = "<nProt>$nProt</nProt><itemPedido>";
+        $tagAdic = "<nProt>$nProt</nProt>";
         foreach ($itens as $item) {
             $tagAdic .= "<itemPedido numItem=\""
                 . $item[0]
                 . "\"><qtdeItem>"
                 . $item[1]
-                ."</qtdeItem><itemPedido>";
+                ."</qtdeItem></itemPedido>";
         }
         return $this->sefazEvento(
             $uf,
@@ -428,17 +434,16 @@ class Tools extends ToolsCommon
      * de produtos de uma NF-e de remessa para industrialização por encomenda
      * com suspensão do ICMS em operações interestaduais
      * @param  string  $chNFe
-     * @param  integer $nSeqEvento
      * @param  string  $nProt
+     * @param  integer $nSeqEvento
      * @return string
-     * @throws Exception\InvalidArgumentException
      */
     public function sefazECPP(
         $chNFe,
-        $nSeqEvento = 1,
-        $nProt = ''
+        $nProt,
+        $nSeqEvento = 1
     ) {
-        $uf = UFList::getListByCode(substr($chNFe, 0, 2));
+        $uf = UFList::getUFByCode(substr($chNFe, 0, 2));
         $tpEvento = 111502;
         $origEvent = 111500;
         if ($nSeqEvento == 2) {
@@ -470,7 +475,7 @@ class Tools extends ToolsCommon
     public function sefazCancela($chNFe, $xJust, $nProt)
     {
         $xJust = Strings::replaceSpecialsChars($xJust);
-        $uf = UFList::getListByCode(substr($chNFe, 0, 2));
+        $uf = UFList::getUFByCode(substr($chNFe, 0, 2));
         $tpEvento = 110111;
         $nSeqEvento = 1;
         $tagAdic = "<nProt>$nProt</nProt><xJust>$xJust</xJust>";
@@ -521,13 +526,16 @@ class Tools extends ToolsCommon
         $tagAdic = '';
         $tpEvento = 110140;
         $nSeqEvento = 1;
+        if ($this->contingency->type !== 'EPEC') {
+            throw new \RuntimeException('A contingência EPEC deve estar ativada.');
+        }
         $xml = $this->correctNFeForContingencyMode($xml);
         $dom = new \DOMDocument('1.0', 'UTF-8');
         $dom->preserveWhiteSpace = false;
         $dom->formatOutput = false;
         $dom->loadXML($xml);
         $infNFe = $dom->getElementsByTagName('infNFe')->item(0);
-        $emit = $dom->getElementsByTagName('dest')->item(0);
+        $emit = $dom->getElementsByTagName('emit')->item(0);
         $dest = $dom->getElementsByTagName('dest')->item(0);
         $cOrgaoAutor = UFList::getCodeByUF($this->config->siglaUF);
         $chNFe = substr($infNFe->getAttribute('Id'), 3, 44);
@@ -536,10 +544,10 @@ class Tools extends ToolsCommon
         $tpNF = $dom->getElementsByTagName('tpNF')->item(0)->nodeValue;
         $emitIE = $emit->getElementsByTagName('IE')->item(0)->nodeValue;
         $destUF = $dest->getElementsByTagName('UF')->item(0)->nodeValue;
-        $ICMStot = $dom->getElementsByTagName('ICMStot')->item(0);
-        $vNF = $ICMStot->getElementsByTagName('vNF')->item(0)->nodeValue;
-        $vICMS = $ICMStot->getElementsByTagName('vICMS')->item(0)->nodeValue;
-        $vST = $ICMStot->getElementsByTagName('vST')->item(0)->nodeValue;
+        $total = $dom->getElementsByTagName('total')->item(0);
+        $vNF = $total->getElementsByTagName('vNF')->item(0)->nodeValue;
+        $vICMS = $total->getElementsByTagName('vICMS')->item(0)->nodeValue;
+        $vST = $total->getElementsByTagName('vST')->item(0)->nodeValue;
         $dID = $dest->getElementsByTagName('CNPJ')->item(0)->nodeValue;
         if (!empty($dID)) {
             $destID = "<CNPJ>$dID</CNPJ>";
@@ -554,7 +562,9 @@ class Tools extends ToolsCommon
                 $destID = "<idEstrangeiro>$dID</idEstrangeiro>";
             }
         }
-        $dIE = $dest->getElementsByTagName('IE')->item(0)->nodeValue;
+        $dIE = !empty($dest->getElementsByTagName('IE')->item(0)->nodeValue) ?
+                $dest->getElementsByTagName('IE')->item(0)->nodeValue : '';
+        $destIE = '';
         if (!empty($dIE)) {
             $destIE = "<IE>$dIE</IE>";
         }
@@ -571,7 +581,8 @@ class Tools extends ToolsCommon
             . "<vNF>$vNF</vNF>"
             . "<vICMS>$vICMS</vICMS>"
             . "<vST>$vST</vST>"
-            . "<dest>";
+            . "</dest>";
+        
         return $this->sefazEvento(
             'AN',
             $chNFe,
@@ -597,12 +608,17 @@ class Tools extends ToolsCommon
         $nSeqEvento = 1,
         $tagAdic = ''
     ) {
+        $ignore = false;
+        if ($tpEvento == 110140) {
+            $ignore = true;
+        }
         $servico = 'RecepcaoEvento';
         $this->checkContingencyForWebServices($servico);
         $this->servico(
             $servico,
             $uf,
-            $this->tpAmb
+            $this->tpAmb,
+            $ignore
         );
         $ev = $this->tpEv($tpEvento);
         $aliasEvento = $ev->alias;
@@ -616,7 +632,7 @@ class Tools extends ToolsCommon
         $request = "<evento xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
             . "<infEvento Id=\"$eventId\">"
             . "<cOrgao>$cOrgao</cOrgao>"
-            . "<tpAmb>$tpAmb</tpAmb>"
+            . "<tpAmb>$this->tpAmb</tpAmb>"
             . "<CNPJ>$cnpj</CNPJ>"
             . "<chNFe>$chave</chNFe>"
             . "<dhEvento>$dhEvento</dhEvento>"
@@ -639,7 +655,7 @@ class Tools extends ToolsCommon
             [false,false,null,null]
         );
         $request = Strings::clearXmlString($request, true);
-        $lote = rand(1, 15);
+        $lote = $dt->format('YmdHis').rand(0, 9);
         $request = "<envEvento xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
             . "<idLote>$lote</idLote>"
             . $request
@@ -668,11 +684,12 @@ class Tools extends ToolsCommon
             $this->tpAmb,
             true
         );
-        $request = "<downloadNFe xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
+        $request = "<downloadNFe xmlns=\"$this->urlPortal\" "
+                . "versao=\"$this->urlVersion\">"
                 . "<tpAmb>$this->tpAmb</tpAmb>"
                 . "<xServ>DOWNLOAD NFE</xServ>"
-                . "<CNPJ>$this->config->cnpj</CNPJ>"
-                . "<chNFe>$chNFe</chNFe>"
+                . "<CNPJ>" . $this->config->cnpj . "</CNPJ>"
+                . "<chNFe>$chave</chNFe>"
                 . "</downloadNFe>";
         $this->isValid($this->urlVersion, $request, 'downloadNFe');
         $parameters = ['nfeDadosMsg' => $request];
