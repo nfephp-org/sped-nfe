@@ -357,16 +357,31 @@ class Tools
      */
     protected function checkContingencyForWebServices($service)
     {
+        $permit = [
+            55 => ['SVCAN', 'SVCRS', 'EPEC', 'FSDA'],
+            65 => ['FSDA', 'EPEC', 'OFFLINE']
+        ];
+        
+        $type = $this->contingency->type;
+        $mod = $this->modelo;
+        if (!empty($type)) {
+            if (array_search($type, $permit[$mod]) === false) {
+                throw new RuntimeException(
+                    "Esse modo de contingência [$type] não é aceito "
+                    . "para o modelo [$mod]"
+                );
+            }
+        }
+        
         //se a contingencia é OFFLINE ou FSDA nenhum servidor está disponivel
         //se a contigencia EPEC está ativa apenas o envio de Lote está ativo,
         //então gerar um RunTimeException
-        if ($this->contingency->type == 'FSDA'
-            || $this->contingency->type == 'OFFLINE'
-            || ($this->contingency->type == 'EPEC'
-                && $service != 'RecepcaoEvento')
+        if ($type == 'FSDA'
+            || $type == 'OFFLINE'
+            || ($type == 'EPEC' && $service != 'RecepcaoEvento')
         ) {
             throw new RuntimeException(
-                "Operando em modo de contingência ["
+                "Quando operando em modo de contingência ["
                 . $this->contingency->type
                 . "], este serviço [$service] não está disponível."
             );
@@ -406,18 +421,20 @@ class Tools
         $sigla = $uf;
         if (!$ignoreContingency) {
             $contType = $this->contingency->type;
-            if (!empty($contType)) {
+            if (!empty($contType)
+                && ($contType == 'SVCRS' || $contType == 'SVCAN')
+            ) {
                 $sigla = $contType;
             }
         }
         $stdServ = $webs->get($sigla, $ambiente, $this->modelo);
         if ($stdServ === false) {
-            throw RuntimeException(
+            throw \RuntimeException(
                 'Nenhum serviço foi localizado para esta unidade da federação.'
             );
         }
         if (empty($stdServ->$service->url)) {
-            throw RuntimeException(
+            throw new \RuntimeException(
                 "Este serviço [$service] não está disponivel para esta "
                 . "unidade da federação [$uf] ou para este modelo de Nota ["
                 . $this->modelo

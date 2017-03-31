@@ -33,7 +33,7 @@ Este tipo de contingência foi substituido pelo modo EPEC que utiliza eventos pa
 
 Nesse caso o xml da NFe deve indicar na propriedade &lt;tpEmis&gt; o valor 4
 
-### EPEC (tpEmis = 4)
+### EPEC (tpEmis = 4) *NFe e NFCe*
 Evento Prévio da Emissão em Contingência
 
 **Uso: SEFAZ OFF e SVC OFF mas emitente com acesso à internet.**
@@ -42,7 +42,7 @@ Este modo de contingência é diferente dos demais por que na verdade irá envia
 
 Nesse caso o xml da NFe deve indicar na propriedade &lt;tpEmis&gt; o valor 4
 
-### FS-DA DOCUMENTO AUXILIAR (tpEmis = 5) * Pode usar em NFe e NFCe*
+### FS-DA DOCUMENTO AUXILIAR (tpEmis = 5) *NFe e NFCe*
 Este modo de contingência permite que a NFe seja emitida sem que haja a prévia autorização pela SEFAZ autorizadora através da impressão do DANFE em formulário de segurança.
 
 **Uso: Sem acesso a internet.**
@@ -58,7 +58,7 @@ Nesse caso o xml da NFe deve indicar na propriedade &lt;tpEmis&gt; o valor 2
 
 Nesse caso o xml da NFe deve indicar na propriedade &lt;tpEmis&gt; o valor 5
 
-### SVC-AN (tpEmis = 6) *Apenas NFe*
+### SVC-AN (tpEmis = 6) *Apenas NFe (modelo 55)*
 SEFAZ Virtual de Contingência do Ambiente Nacional
 
 Este sistema de contingência é o melhor de todos e permite que as notas sejam emitidas com poucas altereções e sem a necessidade de reenvio posterior. Nesse modo as motas enviadas serão sincronizadas automaticamente pelos orgãos autorizadores sem a necessidade que qualquer outra ação pelo emitente. Este serviço atende:
@@ -68,7 +68,7 @@ AC, AL, AP, DF, ES, MG, PB, RJ, RN, RO, RR, RS, SC, SE, SP, TO
 
 Nesse caso o xml da NFe deve indicar na propriedade &lt;tpEmis&gt; o valor 6
 
-### SVC-RS (tpEmis = 7) *Apenas NFe*
+### SVC-RS (tpEmis = 7) *Apenas NFe (modelo 55)*
 SEFAZ Virtual de Contingência do RS
 
 Este sistema de contingência é o melhor de todos e permite que as notas sejam emitidas com poucas altereções e sem a necessidade de reenvio posterior. Nesse modo as motas enviadas serão sincronizadas automaticamente pelos orgãos autorizadores sem a necessidade que qualquer outra ação pelo emitente. Este serviço atende:
