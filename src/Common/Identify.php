@@ -17,12 +17,12 @@ namespace NFePHP\NFe\Common;
  */
 
 use DOMDocument;
+use InvalidArgumentException;
+use NFePHP\Common\Validator;
 
-class Identify extends IdentifyBase
+class Identify
 {
-    public static function identificar($xml, &$aResp = [])
-    {
-        $aList = [
+    public static $schemesList = [
             'consReciNFe' => 'consReciNFe',
             'consSitNFe' => 'consSitNFe',
             'consStatServ' => 'consStatServ',
@@ -41,20 +41,31 @@ class Identify extends IdentifyBase
             'retEnviNFe' => 'retEnviNFe',
             'retInutNFe' => 'retInutNFe'
         ];
-        Identify::setListSchemesId($aList);
-        $schem = Identify::identificacao($xml, $aResp);
-        $dom = $aResp['dom'];
-        $node = $dom->getElementsByTagName($aResp['tag'])->item(0);
-        if ($schem == 'nfe') {
-            //se for um nfe então é necessário pegar a versão
-            // em outro node infNFe
-            $node1 = $dom->getElementsByTagName('infNFe')->item(0);
-            $versao = $node1->getAttribute('versao');
-        } else {
-            $versao = $node->getAttribute('versao');
+    
+    /**
+     * Search xml for specific Node
+     * @param string $xml
+     * @return string
+     */
+    protected static function search($xml)
+    {
+        if (!Validator::isXML($xml)) {
+            throw new \InvalidArgumentException(
+                'The argument is not a XML.'
+            );
         }
-        $aResp['versao'] = $versao;
-        $aResp['xml'] = $dom->saveXML($node);
-        return $schem;
+        $dom = new \DOMDocument('1.0', 'UTF-8');
+        $dom->preserveWhiteSpace = false;
+        $dom->formatOutput = false;
+        $dom->loadXML($xml);
+        foreach (self::$schemesList as $key => $schId) {
+            $node = $dom->getElementsByTagName($key)->item(0);
+            if (!empty($node)) {
+                return $schId;
+            }
+        }
+        throw new \InvalidArgumentException(
+            'This xml does not belong to SPED NFe.'
+        );
     }
 }

@@ -331,7 +331,7 @@ class Tools
         $dom->formatOutput = false;
         $dom->loadXML($xml);
         $dom = Signer::removeSignature($dom);
-        $motivo = trim(Strings::cleanString($this->contingency->motive));
+        $motivo = trim(Strings::replaceSpecialsChars($this->contingency->motive));
         $dt = new DateTime();
         $dt->setTimestamp($this->contingency->timestamp);
         $ide = $dom->getElementsByTagName('ide')->item(0);
@@ -358,7 +358,7 @@ class Tools
         $chave = substr($chave, 0, 34)
             . $this->contingency->tpEmis
             . substr($chave, 34, 8);
-        $infNFe->setAttribute('Id', $chave.Keys::verifyingDigit($chave));
+        $infNFe->setAttribute('Id', 'NFe'.$chave.Keys::verifyingDigit($chave));
         return Strings::clearXmlString($dom->saveXML(), true);
     }
 
@@ -396,7 +396,7 @@ class Tools
         if ($this->contingency->type == 'FSDA'
             || $this->contingency->type == 'OFFLINE'
             || ($this->contingency->type == 'EPEC'
-                && $service != 'NfeAutorizacao')
+                && $service != 'RecepcaoEvento')
         ) {
             throw new RuntimeException(
                 'Operating in contingency mode, this service is not available'
@@ -533,7 +533,9 @@ class Tools
     {
         $memmod = $this->modelo;
         $this->modelo = 65;
-        $uf = $this->getSigla($dom->getElementsByTagName('cUF')->item(0)->nodeValue);
+        $uf = UFList::getUFByCode(
+            $dom->getElementsByTagName('cUF')->item(0)->nodeValue
+        );
         $this->servico(
             'NfeConsultaQR',
             $uf,
