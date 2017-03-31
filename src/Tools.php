@@ -284,7 +284,7 @@ class Tools extends ToolsCommon
      */
     public function sefazStatus($uf = '', $tpAmb = null)
     {
-        if (empty($tpAmb)) {
+        if (empty($tpAmb) && ($tpAmb == 1 || $tpAmb == 2)) {
             $tpAmb = $this->tpAmb;
         }
         $ignoreContingency = true;
@@ -301,7 +301,7 @@ class Tools extends ToolsCommon
             $ignoreContingency
         );
         $request = "<consStatServ xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
-            . "<tpAmb>$this->tpAmb</tpAmb><cUF>$this->urlcUF</cUF>"
+            . "<tpAmb>$tpAmb</tpAmb><cUF>$this->urlcUF</cUF>"
             . "<xServ>STATUS</xServ></consStatServ>";
         $this->isValid($this->urlVersion, $request, 'consStatServ');
         $parameters = ['nfeDadosMsg' => $request];
