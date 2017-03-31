@@ -79,7 +79,7 @@ class Tools extends ToolsCommon
         $parameters = ['nfeDadosMsg' => $request];
         $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
         $method = $this->urlMethod;
-        if ($compactarZip) {
+        if ($compactar) {
             $gzdata = base64_encode(gzencode($cons, 9, FORCE_GZIP));
             $body = "<nfeDadosMsgZip xmlns=\"$this->urlNamespace\">$gzdata</nfeDadosMsgZip>";
             $method = $this->urlMethod."Zip";
@@ -708,6 +708,15 @@ class Tools extends ToolsCommon
     public function sefazManutencaoCsc(
         $indOp
     ) {
+        throw new RuntimeException(
+            'Este serviço não está disponível ainda, AGURDE EM BREVE.'
+        );
+        if ($this->modelo != 65) {
+            throw new RuntimeException(
+                "Esta operação é exclusiva de NFCe modelo [65], "
+                . "você está usando modelo [55]."
+            );
+        }
         $raizCNPJ = substr($this->config->cnpj, 0, -6);
         //carrega serviço
         $servico = 'CscNFCe';

@@ -32,19 +32,19 @@ class Contingency
     /**
      * @var string
      */
-    public $type;
+    public $type = '';
     /**
      * @var string
      */
-    public $motive;
+    public $motive = '';
     /**
      * @var int
      */
-    public $timestamp;
+    public $timestamp = 0;
     /**
      * @var int
      */
-    public $tpEmis;
+    public $tpEmis = 1;
 
     /**
      * Constructor
@@ -112,6 +112,7 @@ class Contingency
             'TO'=>'SVCAN'
         );
         $type = strtoupper(str_replace('-', '', $type));
+        
         if (empty($type)) {
             $type = (string) $list[$acronym];
         }
@@ -153,6 +154,7 @@ class Contingency
     {
         switch ($type) {
             case 'FS-DA':
+            case 'FSDA':
                 $tpEmis = 5;
                 break;
             case 'SVC-AN':
@@ -167,7 +169,16 @@ class Contingency
                 $tpEmis = 9;
                 break;
             default:
-                $tpEmis = 1;
+                if ($type == '') {
+                    $tpEmis = 1;
+                    $timestamp = 0;
+                    $motive = '';
+                    break;
+                }
+                throw new \InvalidArgumentException(
+                    "Tipo de contingência "
+                    . "[$type] não está disponível;"
+                );
         }
         $config = new \stdClass();
         $config->motive = $motive;

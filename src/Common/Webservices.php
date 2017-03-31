@@ -104,6 +104,12 @@ class Webservices
             'SVCAN'=>'SVCAN',
             'SVCRS'=>'SVCRS'
         ];
+        if (!key_exists($sigla, $autorizadores[$modelo])) {
+            throw new \RuntimeException(
+                "Não existe o autorizador [$sigla] para os "
+                . "webservices do modelo [$modelo]"
+            );
+        }
         $auto = $autorizadores[$modelo][$sigla];
         if (empty($auto)) {
             return false;

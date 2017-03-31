@@ -32,6 +32,7 @@ use NFePHP\Common\UFList;
 use NFePHP\NFe\Factories\Contingency;
 use NFePHP\NFe\Common\Webservices;
 use NFePHP\NFe\Factories\Header;
+use NFePHP\NFe\Factories\ContingencyNFe;
 
 class Tools
 {
@@ -291,8 +292,6 @@ class Tools
         try {
             //clear invalid strings
             $xml = Strings::clearXmlString($xml);
-            //corret fields from NFe for contigency mode
-            $xml = $this->correctNFeForContingencyMode($xml);
             $signed = Signer::sign(
                 $this->certificate,
                 $xml,
@@ -326,40 +325,8 @@ class Tools
         if ($this->contingency->type == '') {
             return $xml;
         }
-        $dom = new \DOMDocument('1.0', 'UTF-8');
-        $dom->preserveWhiteSpace = false;
-        $dom->formatOutput = false;
-        $dom->loadXML($xml);
-        $dom = Signer::removeSignature($dom);
-        $motivo = trim(Strings::replaceSpecialsChars($this->contingency->motive));
-        $dt = new DateTime();
-        $dt->setTimestamp($this->contingency->timestamp);
-        $ide = $dom->getElementsByTagName('ide')->item(0);
-        $ide->getElementsByTagName('tpEmis')
-            ->item(0)
-            ->nodeValue = $this->contingency->tpEmis;
-        if (!empty($ide->getElementsByTagName('dhCont')->item(0)->nodeValue)) {
-            $ide->getElementsByTagName('dhCont')
-                ->item(0)
-                ->nodeValue = $dt->format('Y-m-d\TH:i:sP');
-        } else {
-            $dhCont = $dom->createElement('dhCont', $dt->format('Y-m-d\TH:i:sP'));
-            $ide->appendChild($dhCont);
-        }
-        if (!empty($ide->getElementsByTagName('xJust')->item(0)->nodeValue)) {
-            $ide->getElementsByTagName('xJust')->item(0)->nodeValue = $motivo;
-        } else {
-            $xJust = $dom->createElement('xJust', $motivo);
-            $ide->appendChild($xJust);
-        }
-        //corrigir a chave
-        $infNFe = $dom->getElementsByTagName('infNFe')->item(0);
-        $chave = substr($infNFe->getAttribute('Id'), 3, 44);
-        $chave = substr($chave, 0, 34)
-            . $this->contingency->tpEmis
-            . substr($chave, 34, 8);
-        $infNFe->setAttribute('Id', 'NFe'.$chave.Keys::verifyingDigit($chave));
-        return Strings::clearXmlString($dom->saveXML(), true);
+        $xml = ContingencyNFe::adjust($xml, $this->contingency);
+        return $this->signNFe($xml);
     }
 
     /**
@@ -399,7 +366,9 @@ class Tools
                 && $service != 'RecepcaoEvento')
         ) {
             throw new RuntimeException(
-                'Operating in contingency mode, this service is not available'
+                "Operando em modo de contingência ["
+                . $this->contingency->type
+                . "], este serviço [$service] não está disponível."
             );
         }
     }
@@ -409,7 +378,7 @@ class Tools
      * @param int $tpAmb
      * @return void
      */
-    protected function setEnvironment($tpAmb = 2)
+    public function setEnvironment($tpAmb = 2)
     {
         $this->tpAmb = $tpAmb;
         $this->ambiente = 'homologacao';
@@ -444,12 +413,15 @@ class Tools
         $stdServ = $webs->get($sigla, $ambiente, $this->modelo);
         if ($stdServ === false) {
             throw RuntimeException(
-                'No services were found for this federation unit.'
+                'Nenhum serviço foi localizado para esta unidade da federação.'
             );
         }
         if (empty($stdServ->$service->url)) {
             throw RuntimeException(
-                'This service not found for this federation unit.'
+                "Este serviço [$service] não está disponivel para esta "
+                . "unidade da federação [$uf] ou para este modelo de Nota ["
+                . $this->modelo
+                ."]."
             );
         }
         //recuperação do cUF
