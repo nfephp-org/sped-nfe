@@ -153,6 +153,9 @@ class Contingency
     private function configBuild($timestamp, $motive, $type)
     {
         switch ($type) {
+            case 'EPEC':
+                $tpEmis = 4;
+                break;
             case 'FS-DA':
             case 'FSDA':
                 $tpEmis = 5;

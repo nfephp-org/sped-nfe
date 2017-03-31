@@ -10,8 +10,8 @@ class Complements
     
     /**
      * Add tags B2B, as example ANFAVEA
-     * @param  string $nfe xml nfe content
-     * @param  string $b2b xml b2b content
+     * @param  string $nfe xml nfe string content
+     * @param  string $b2b xml b2b string content
      * @param  string $tagB2B name B2B tag default 'NFeB2BFin' from ANFAVEA
      * @return string
      * @throws \InvalidArgumentException
