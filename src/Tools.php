@@ -709,7 +709,7 @@ class Tools extends ToolsCommon
         $indOp
     ) {
         throw new RuntimeException(
-                'Este serviço não está disponível ainda, AGURDE EM BREVE.'
+            'Este serviço não está disponível ainda, AGURDE EM BREVE.'
         );
         if ($this->modelo != 65) {
             throw new RuntimeException(

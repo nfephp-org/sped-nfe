@@ -327,7 +327,6 @@ class Tools
         }
         $xml = ContingencyNFe::adjust($xml, $this->contingency);
         return $this->signNFe($xml);
-        
     }
 
     /**
