@@ -282,6 +282,23 @@ class Tools
     }
     
     /**
+     * Validate cUF from the key content and returns the state acronym
+     * @param string $chave
+     * @return string
+     * @throws InvalidArgumentException
+     */
+    public function validKeyByUF($chave)
+    {
+        $uf = $this->config->siglaUF;
+        if ($uf != UFList::getUFByCode(substr($chave, 0, 2))) {
+            throw new \InvalidArgumentException(
+                "A chave da NFe indicada [$chave] não pertence a [$uf]."
+            );
+        }
+        return $uf;
+    }
+    
+    /**
      * Sign NFe or NFCe
      * @param  string  $xml NFe xml content
      * @return string singed NFe xml
@@ -429,8 +446,9 @@ class Tools
         }
         $stdServ = $webs->get($sigla, $ambiente, $this->modelo);
         if ($stdServ === false) {
-            throw \RuntimeException(
-                'Nenhum serviço foi localizado para esta unidade da federação.'
+            throw new \RuntimeException(
+                "Nenhum serviço foi localizado para esta unidade "
+                . "da federação [$sigla], com o modelo [$this->modelo]."
             );
         }
         if (empty($stdServ->$service->url)) {

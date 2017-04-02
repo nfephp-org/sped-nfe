@@ -32,7 +32,7 @@ class Tools extends ToolsCommon
     const EVT_NAO_REALIZADA = 210240;
 
     /**
-     * Send one ou more NFe to SEFAZ
+     * Request authorization to issue NFe in batch with one or more documents
      * @param array $aXml array of nfe's xml
      * @param string $idLote lote number
      * @param int $indSinc flag to use synchronous communication
@@ -90,7 +90,7 @@ class Tools extends ToolsCommon
     }
     
     /**
-     * Consulta a situação de um Lote de NFe enviadas pelo recibo desse envio
+     * Check status of Batch of NFe sent by receipt of this shipment
      * @param string $recibo
      * @param int $tpAmb
      * @return string
@@ -123,13 +123,14 @@ class Tools extends ToolsCommon
     }
     
     /**
-     * Consulta o status da NFe pela chave de 44 digitos
+     * Check the NFe status for the 44-digit key and retrieve the protocol
      * @param string $chave
      * @param int $tpAmb
      * @return string
      */
     public function sefazConsultaChave($chave, $tpAmb = null)
     {
+        $uf = $this->validKeyByUF($chave);
         if (empty($tpAmb)) {
             $tpAmb = $this->tpAmb;
         }
@@ -138,7 +139,7 @@ class Tools extends ToolsCommon
         $this->checkContingencyForWebServices($servico);
         $this->servico(
             $servico,
-            UFList::getUFByCode(substr($chave, 0, 2)),
+            $uf,
             $tpAmb
         );
         $request = "<consSitNFe xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
@@ -154,9 +155,9 @@ class Tools extends ToolsCommon
 
     /**
      * Request to disable one or an NFe sequence of a given series
-     * @param integer $nSerie
-     * @param integer $nIni
-     * @param integer $nFin
+     * @param int $nSerie
+     * @param int $nIni
+     * @param int $nFin
      * @param string $xJust
      * @param int $tpAmb
      * @return string
@@ -245,6 +246,7 @@ class Tools extends ToolsCommon
         $iest = '',
         $cpf = ''
     ) {
+        $cUF = UFList::getCodeByUF($uf);
         if ($cnpj != '') {
             $filter = "<CNPJ>$cnpj</CNPJ>";
             $txtFile = "CNPJ_$cnpj";
@@ -310,11 +312,11 @@ class Tools extends ToolsCommon
     }
 
     /**
-     * Serviço destinado à distribuição de informações
-     * resumidas e documentos fiscais eletrônicos de interesse de um ator.
-     * @param integer $ultNSU  ultimo numero NSU que foi consultado
-     * @param integer $numNSU  numero de NSU que se quer consultar
-     * @param string $fonte sigla da fonte dos dados 'AN' e para alguns casos pode ser 'RS'
+     * Service for the distribution of summary information and
+     * electronic tax documents of interest to an actor.
+     * @param integer $ultNSU  last NSU number recived
+     * @param integer $numNSU  NSU number you wish to consult
+     * @param string $fonte data source 'AN' and for some cases it may be 'RS'
      * @return string
      */
     public function sefazDistDFe(
@@ -357,17 +359,16 @@ class Tools extends ToolsCommon
     }
 
     /**
-     * sefazCCe
-     * Solicita a autorização da Carta de Correção
-     * @param  string $chNFe
+     * Request authorization for Letter of Correction
+     * @param  string $chave
      * @param  string $xCorrecao
      * @param  int $nSeqEvento
      * @return string
      */
-    public function sefazCCe($chNFe, $xCorrecao, $nSeqEvento = 1)
+    public function sefazCCe($chave, $xCorrecao, $nSeqEvento = 1)
     {
+        $uf = $this->validKeyByUF($chave);
         $xCorrecao = Strings::replaceSpecialsChars($xCorrecao);
-        $uf = UFList::getUFByCode(substr($chNFe, 0, 2));
         $tpEvento = 110110;
         $xCondUso = 'A Carta de Correcao e disciplinada pelo paragrafo '
             . '1o-A do art. 7o do Convenio S/N, de 15 de dezembro de 1970 '
@@ -384,7 +385,7 @@ class Tools extends ToolsCommon
             . "</xCorrecao><xCondUso>$xCondUso</xCondUso>";
         return $this->sefazEvento(
             $uf,
-            $chNFe,
+            $chave,
             $tpEvento,
             $nSeqEvento,
             $tagAdic
@@ -392,9 +393,9 @@ class Tools extends ToolsCommon
     }
     
     /**
-     * Solicita pedido de prorrogação do prazo de retorno de produtos de uma
-     * NF-e de remessa para industrialização por encomenda com suspensão do ICMS
-     * em operações interestaduais
+     * Request extension of the term of return of products of an NF-e of
+     * consignment for industrialization to order with suspension of ICMS
+     * in interstate operations
      * @param  string  $chNFe
      * @param  string  $nProt
      * @param  integer $nSeqEvento
@@ -430,9 +431,9 @@ class Tools extends ToolsCommon
     }
     
     /**
-     * Solicita o cancelamento do pedido de prorrogação do prazo de retorno
-     * de produtos de uma NF-e de remessa para industrialização por encomenda
-     * com suspensão do ICMS em operações interestaduais
+     * Request the cancellation of the request for an extension of the term
+     * of return of products of an NF-e of consignment for industrialization
+     * by order with suspension of ICMS in interstate operations
      * @param  string  $chNFe
      * @param  string  $nProt
      * @param  integer $nSeqEvento
@@ -467,21 +468,21 @@ class Tools extends ToolsCommon
         
     /**
      * Requires nfe cancellation
-     * @param  string $chNFe
+     * @param  string $chave
      * @param  string $xJust
      * @param  string $nProt
      * @return string
      */
-    public function sefazCancela($chNFe, $xJust, $nProt)
+    public function sefazCancela($chave, $xJust, $nProt)
     {
+        $uf = $this->validKeyByUF($chave);
         $xJust = Strings::replaceSpecialsChars($xJust);
-        $uf = UFList::getUFByCode(substr($chNFe, 0, 2));
         $tpEvento = 110111;
         $nSeqEvento = 1;
         $tagAdic = "<nProt>$nProt</nProt><xJust>$xJust</xJust>";
         return $this->sefazEvento(
             $uf,
-            $chNFe,
+            $chave,
             $tpEvento,
             $nSeqEvento,
             $tagAdic
@@ -517,7 +518,7 @@ class Tools extends ToolsCommon
     }
     
     /**
-     * Solicita autorização em contingência EPEC
+     * Request authorization for issuance in contingency EPEC
      * @param  string $xml
      * @return string
      */
@@ -668,19 +669,19 @@ class Tools extends ToolsCommon
     }
     
     /**
-     * sefazDownload
-     * Solicita o download de NFe já manifestada
+     * Request the NFe download already manifested by its recipient, by the key
      * @param  string $chave
      * @return string
      */
     public function sefazDownload($chave)
     {
         //carrega serviço
+        $fonte = 'AN';
         $servico = 'NfeDownloadNF';
         $this->checkContingencyForWebServices($servico);
         $this->servico(
             $servico,
-            'AN',
+            $fonte,
             $this->tpAmb,
             true
         );
@@ -698,7 +699,7 @@ class Tools extends ToolsCommon
     }
     
     /**
-     * Manutenção do Código de Segurança do Contribuinte (Antigo Token)
+     * Maintenance of the Taxpayer Security Code - CSC (Old Token)
      * @param int $indOp Identificador do tipo de operação:
      *                   1 - Consulta CSC Ativos;
      *                   2 - Solicita novo CSC;
@@ -709,7 +710,7 @@ class Tools extends ToolsCommon
         $indOp
     ) {
         throw new RuntimeException(
-            'Este serviço não está disponível ainda, AGURDE EM BREVE.'
+            'Este serviço não está disponível ainda, AGUARDE EM BREVE.'
         );
         if ($this->modelo != 65) {
             throw new RuntimeException(
@@ -750,27 +751,26 @@ class Tools extends ToolsCommon
     }
     
     /**
-     * Verifica a validade de uma NFe recebida
+     * Checks the validity of an NFe, normally used for received NFe
      * @param  string $nfe
      * @return boolean
-     * @throws \RuntimeException
      */
     public function sefazValidate($nfe)
     {
+        $dom = new \DOMDocument('1.0', 'utf-8');
+        $dom->formatOutput = false;
+        $dom->preserveWhiteSpace = false;
+        $dom->loadXML($nfe);
         //verifica a assinatura da NFe, exception caso de falha
         Signer::isSigned($dom, 'infNFe');
         //verifica a validade no webservice da SEFAZ
-        $domnfe = new \DOMDocument('1.0', 'utf-8');
-        $domnfe->formatOutput = false;
-        $domnfe->preserveWhiteSpace = false;
-        $domnfe->loadXML($nfe);
-        $tpAmb = $domnfe->getElementsByTagName('tpAmb')->item(0)->nodeValue;
-        $infNFe  = $domnfe->getElementsByTagName('infNFe')->item(0);
+        $tpAmb = $dom->getElementsByTagName('tpAmb')->item(0)->nodeValue;
+        $infNFe  = $dom->getElementsByTagName('infNFe')->item(0);
         $chNFe = preg_replace('/[^0-9]/', '', $infNFe->getAttribute("Id"));
+        $protocol = $dom->getElementsByTagName('nProt')->item(0)->nodeValue;
         //consulta a NFe
         $response = $this->sefazConsultaChave($chNFe, $tpAmb);
-        //analisar a resposta da SEFAZ para ver se a nota está valida
-        //?????????????????????????????????
+        
         return true;
     }
     
