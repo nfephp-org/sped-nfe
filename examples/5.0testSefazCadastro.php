@@ -46,8 +46,12 @@ $tools->model('55');
 //IE
 //CPF
 //pelo menos um dos três deverá ser indicado
-//essa busca não funciona se nãa houver a disponibilidade do serviço na SEFAZ
-$response = $tools->sefazCadastro('<UF>', '<CNPJ>');
+//essa busca não funciona se não houver a disponibilidade do serviço na SEFAZ
+$uf = 'SP';
+$cnpj = '07003293000100';
+$iest = '';
+$cpf = '';
+$response = $tools->sefazCadastro($uf, $cnpj, $iest, $cpf);
 
 header('Content-type: text/xml; charset=UTF-8');
 echo $response;
