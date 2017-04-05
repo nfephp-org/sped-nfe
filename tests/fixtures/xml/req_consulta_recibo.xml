@@ -1,0 +1,16 @@
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+    <soap:Header>
+        <nfeCabecMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetAutorizacao">
+            <cUF>35</cUF>
+            <versaoDados>3.10</versaoDados>
+        </nfeCabecMsg>
+    </soap:Header>
+    <soap:Body>
+        <nfeDadosMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetAutorizacao">
+            <consReciNFe xmlns="http://www.portalfiscal.inf.br/nfe" versao="3.10">
+                <tpAmb>2</tpAmb>
+                <nRec>123456789012345</nRec>
+            </consReciNFe>
+        </nfeDadosMsg>
+    </soap:Body>
+</soap:Envelope>

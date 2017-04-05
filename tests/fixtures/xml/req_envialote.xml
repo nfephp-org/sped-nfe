@@ -1,0 +1,388 @@
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+    <soap:Header>
+        <nfeCabecMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NfeAutorizacao">
+            <cUF>35</cUF>
+            <versaoDados>3.10</versaoDados>
+        </nfeCabecMsg>
+    </soap:Header>
+    <soap:Body>
+        <nfeDadosMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NfeAutorizacao">
+            <enviNFe xmlns="http://www.portalfiscal.inf.br/nfe" versao="3.10">
+                <idLote>1234</idLote>
+                <indSinc>0</indSinc>
+                <NFe xmlns="http://www.portalfiscal.inf.br/nfe">
+                    <infNFe Id="NFe35150300822602000124550010009923466099234657" versao="3.10">
+                        <ide>
+                            <cUF>35</cUF>
+                            <cNF>09923465</cNF>
+                            <natOp>Venda prod. do estab.</natOp>
+                            <indPag>1</indPag>
+                            <mod>55</mod>
+                            <serie>1</serie>
+                            <nNF>992346</nNF>
+                            <dhEmi>2015-03-27T09:40:00-03:00</dhEmi>
+                            <dhSaiEnt>2015-03-27T09:40:00-03:00</dhSaiEnt>
+                            <tpNF>1</tpNF>
+                            <idDest>1</idDest>
+                            <cMunFG>3550308</cMunFG>
+                            <tpImp>1</tpImp>
+                            <tpEmis>6</tpEmis>
+                            <cDV>6</cDV>
+                            <tpAmb>2</tpAmb>
+                            <finNFe>1</finNFe>
+                            <indFinal>1</indFinal>
+                            <indPres>3</indPres>
+                            <procEmi>3</procEmi>
+                            <verProc>3.10.43</verProc>
+                            <dhCont>2017-04-05T08:35:32-03:00</dhCont>
+                            <xJust>Isso e um teste</xJust>
+                        </ide>
+                        <emit>
+                            <CNPJ>00822602000124</CNPJ>
+                            <xNome>Plotag Sistemas e Suprimentos Ltda</xNome>
+                            <xFant>Plotag - Localhost</xFant>
+                            <enderEmit>
+                                <xLgr>Rua Solon</xLgr>
+                                <nro>558</nro>
+                                <xBairro>Bom Retiro</xBairro>
+                                <cMun>3550308</cMun>
+                                <xMun>Sao Paulo</xMun>
+                                <UF>SP</UF>
+                                <CEP>01127010</CEP>
+                                <cPais>1058</cPais>
+                                <xPais>BRASIL</xPais>
+                                <fone>1123587604</fone>
+                            </enderEmit>
+                            <IE>114489114119</IE>
+                            <CRT>1</CRT>
+                        </emit>
+                        <dest>
+                            <CNPJ>99999999000191</CNPJ>
+                            <xNome>NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL</xNome>
+                            <enderDest>
+                                <xLgr>Rua Jaragua</xLgr>
+                                <nro>774</nro>
+                                <xBairro>Bom Retiro</xBairro>
+                                <cMun>3550308</cMun>
+                                <xMun>Sao Paulo</xMun>
+                                <UF>SP</UF>
+                                <CEP>01129000</CEP>
+                                <cPais>1058</cPais>
+                                <xPais>BRASIL</xPais>
+                                <fone>33933501</fone>
+                            </enderDest>
+                            <indIEDest>9</indIEDest>
+                            <email>gui_calabria@yahoo.com.br</email>
+                        </dest>
+                        <det nItem="1">
+                            <prod>
+                                <cProd>B17025056</cProd>
+                                <cEAN/>
+                                <xProd>PAPEL MAXPLOT- 170MX250MX56GRS 3"</xProd>
+                                <NCM>48025599</NCM>
+                                <CFOP>5101</CFOP>
+                                <uCom>Rl</uCom>
+                                <qCom>1.0000</qCom>
+                                <vUnCom>138.3000</vUnCom>
+                                <vProd>138.30</vProd>
+                                <cEANTrib/>
+                                <uTrib>RL</uTrib>
+                                <qTrib>1.0000</qTrib>
+                                <vUnTrib>138.3000</vUnTrib>
+                                <indTot>1</indTot>
+                            </prod>
+                            <imposto>
+                                <vTotTrib>41.49</vTotTrib>
+                                <ICMS>
+                                    <ICMSSN101>
+                                        <orig>0</orig>
+                                        <CSOSN>101</CSOSN>
+                                        <pCredSN>2.5600</pCredSN>
+                                        <vCredICMSSN>3.54</vCredICMSSN>
+                                    </ICMSSN101>
+                                </ICMS>
+                                <IPI>
+                                    <clEnq>48025</clEnq>
+                                    <CNPJProd>00822602000124</CNPJProd>
+                                    <cEnq>599</cEnq>
+                                    <IPINT>
+                                        <CST>53</CST>
+                                    </IPINT>
+                                </IPI>
+                                <PIS>
+                                    <PISNT>
+                                        <CST>07</CST>
+                                    </PISNT>
+                                </PIS>
+                                <COFINS>
+                                    <COFINSNT>
+                                        <CST>07</CST>
+                                    </COFINSNT>
+                                </COFINS>
+                            </imposto>
+                        </det>
+                        <det nItem="2">
+                            <prod>
+                                <cProd>1070100752</cProd>
+                                <cEAN/>
+                                <xProd>PAPEL MAXPLOT- 1070X100MX75GRS 2"</xProd>
+                                <NCM>48025599</NCM>
+                                <CFOP>5101</CFOP>
+                                <uCom>RL</uCom>
+                                <qCom>1.0000</qCom>
+                                <vUnCom>48.9100</vUnCom>
+                                <vProd>48.91</vProd>
+                                <cEANTrib/>
+                                <uTrib>RL</uTrib>
+                                <qTrib>1.0000</qTrib>
+                                <vUnTrib>48.9100</vUnTrib>
+                                <indTot>1</indTot>
+                            </prod>
+                            <imposto>
+                                <vTotTrib>14.67</vTotTrib>
+                                <ICMS>
+                                    <ICMSSN101>
+                                        <orig>0</orig>
+                                        <CSOSN>101</CSOSN>
+                                        <pCredSN>2.5600</pCredSN>
+                                        <vCredICMSSN>1.25</vCredICMSSN>
+                                    </ICMSSN101>
+                                </ICMS>
+                                <IPI>
+                                    <clEnq>48025</clEnq>
+                                    <CNPJProd>00822602000124</CNPJProd>
+                                    <cEnq>599</cEnq>
+                                    <IPINT>
+                                        <CST>53</CST>
+                                    </IPINT>
+                                </IPI>
+                                <PIS>
+                                    <PISNT>
+                                        <CST>07</CST>
+                                    </PISNT>
+                                </PIS>
+                                <COFINS>
+                                    <COFINSNT>
+                                        <CST>07</CST>
+                                    </COFINSNT>
+                                </COFINS>
+                            </imposto>
+                        </det>
+                        <det nItem="3">
+                            <prod>
+                                <cProd>B17025056</cProd>
+                                <cEAN/>
+                                <xProd>PAPEL MAXPLOT- 170MX250MX56GRS 3"</xProd>
+                                <NCM>48025599</NCM>
+                                <CFOP>5101</CFOP>
+                                <uCom>Rl</uCom>
+                                <qCom>1.0000</qCom>
+                                <vUnCom>138.3000</vUnCom>
+                                <vProd>138.30</vProd>
+                                <cEANTrib/>
+                                <uTrib>RL</uTrib>
+                                <qTrib>1.0000</qTrib>
+                                <vUnTrib>138.3000</vUnTrib>
+                                <indTot>1</indTot>
+                            </prod>
+                            <imposto>
+                                <vTotTrib>41.49</vTotTrib>
+                                <ICMS>
+                                    <ICMSSN101>
+                                        <orig>0</orig>
+                                        <CSOSN>101</CSOSN>
+                                        <pCredSN>2.5600</pCredSN>
+                                        <vCredICMSSN>3.54</vCredICMSSN>
+                                    </ICMSSN101>
+                                </ICMS>
+                                <IPI>
+                                    <clEnq>48025</clEnq>
+                                    <CNPJProd>00822602000124</CNPJProd>
+                                    <cEnq>599</cEnq>
+                                    <IPINT>
+                                        <CST>53</CST>
+                                    </IPINT>
+                                </IPI>
+                                <PIS>
+                                    <PISNT>
+                                        <CST>07</CST>
+                                    </PISNT>
+                                </PIS>
+                                <COFINS>
+                                    <COFINSNT>
+                                        <CST>07</CST>
+                                    </COFINSNT>
+                                </COFINS>
+                            </imposto>
+                        </det>
+                        <det nItem="4">
+                            <prod>
+                                <cProd>B17040056</cProd>
+                                <cEAN/>
+                                <xProd>PAPEL MAXPLOT - 1.700X400MX 56 GRS 3"</xProd>
+                                <NCM>48025599</NCM>
+                                <CFOP>5101</CFOP>
+                                <uCom>Rl</uCom>
+                                <qCom>1.0000</qCom>
+                                <vUnCom>214.5700</vUnCom>
+                                <vProd>214.57</vProd>
+                                <cEANTrib/>
+                                <uTrib>Rl</uTrib>
+                                <qTrib>1.0000</qTrib>
+                                <vUnTrib>214.5700</vUnTrib>
+                                <indTot>1</indTot>
+                            </prod>
+                            <imposto>
+                                <vTotTrib>64.37</vTotTrib>
+                                <ICMS>
+                                    <ICMSSN101>
+                                        <orig>0</orig>
+                                        <CSOSN>101</CSOSN>
+                                        <pCredSN>2.5600</pCredSN>
+                                        <vCredICMSSN>5.49</vCredICMSSN>
+                                    </ICMSSN101>
+                                </ICMS>
+                                <IPI>
+                                    <clEnq>48025</clEnq>
+                                    <CNPJProd>00822602000124</CNPJProd>
+                                    <cEnq>599</cEnq>
+                                    <IPINT>
+                                        <CST>53</CST>
+                                    </IPINT>
+                                </IPI>
+                                <PIS>
+                                    <PISNT>
+                                        <CST>07</CST>
+                                    </PISNT>
+                                </PIS>
+                                <COFINS>
+                                    <COFINSNT>
+                                        <CST>07</CST>
+                                    </COFINSNT>
+                                </COFINS>
+                            </imposto>
+                        </det>
+                        <det nItem="5">
+                            <prod>
+                                <cProd>B18525056</cProd>
+                                <cEAN/>
+                                <xProd>PAPEL MAXPLOT-1.85MX250MX56GRS 3"</xProd>
+                                <NCM>48025599</NCM>
+                                <CFOP>5101</CFOP>
+                                <uCom>Rl</uCom>
+                                <qCom>1.0000</qCom>
+                                <vUnCom>149.8300</vUnCom>
+                                <vProd>149.83</vProd>
+                                <cEANTrib/>
+                                <uTrib>RL</uTrib>
+                                <qTrib>1.0000</qTrib>
+                                <vUnTrib>149.8300</vUnTrib>
+                                <indTot>1</indTot>
+                            </prod>
+                            <imposto>
+                                <vTotTrib>44.95</vTotTrib>
+                                <ICMS>
+                                    <ICMSSN101>
+                                        <orig>0</orig>
+                                        <CSOSN>101</CSOSN>
+                                        <pCredSN>2.5600</pCredSN>
+                                        <vCredICMSSN>3.84</vCredICMSSN>
+                                    </ICMSSN101>
+                                </ICMS>
+                                <IPI>
+                                    <clEnq>48025</clEnq>
+                                    <CNPJProd>00822602000124</CNPJProd>
+                                    <cEnq>599</cEnq>
+                                    <IPINT>
+                                        <CST>53</CST>
+                                    </IPINT>
+                                </IPI>
+                                <PIS>
+                                    <PISNT>
+                                        <CST>07</CST>
+                                    </PISNT>
+                                </PIS>
+                                <COFINS>
+                                    <COFINSNT>
+                                        <CST>07</CST>
+                                    </COFINSNT>
+                                </COFINS>
+                            </imposto>
+                        </det>
+                        <total>
+                            <ICMSTot>
+                                <vBC>0.00</vBC>
+                                <vICMS>0.00</vICMS>
+                                <vICMSDeson>0.00</vICMSDeson>
+                                <vBCST>0.00</vBCST>
+                                <vST>0.00</vST>
+                                <vProd>689.91</vProd>
+                                <vFrete>0.00</vFrete>
+                                <vSeg>0.00</vSeg>
+                                <vDesc>0.00</vDesc>
+                                <vII>0.00</vII>
+                                <vIPI>0.00</vIPI>
+                                <vPIS>0.00</vPIS>
+                                <vCOFINS>0.00</vCOFINS>
+                                <vOutro>0.00</vOutro>
+                                <vNF>689.91</vNF>
+                                <vTotTrib>206.97</vTotTrib>
+                            </ICMSTot>
+                        </total>
+                        <transp>
+                            <modFrete>1</modFrete>
+                            <transporta>
+                                <xNome>Cliente Retira</xNome>
+                                <xEnder>Rua ,</xEnder>
+                                <xMun>Sao Paulo</xMun>
+                                <UF>SP</UF>
+                            </transporta>
+                            <vol>
+                                <qVol>1</qVol>
+                                <marca>S/m</marca>
+                                <nVol>S/n</nVol>
+                                <pesoL>0.000</pesoL>
+                                <pesoB>0.000</pesoB>
+                            </vol>
+                        </transp>
+                        <cobr>
+                            <fat>
+                                <nFat>992346</nFat>
+                                <vOrig>689.91</vOrig>
+                                <vLiq>689.91</vLiq>
+                            </fat>
+                            <dup>
+                                <nDup>992346</nDup>
+                                <dVenc>2015-04-24</dVenc>
+                                <vDup>689.91</vDup>
+                            </dup>
+                        </cobr>
+                        <infAdic>
+                            <infCpl>"DOCUMENTO EMITIDO POR EMPRESA OPTANTE PELO SIMPLES NACIONAL;NAO GERA DIREITO A CREDITO FISCAL DE IPI";"PERMITE O APROVEITAMENTO DE CREDITO DE ICMS NO VALOR DE: R$17,66 CORRESPONDENTE A ALIQUOTA DE 2.56%";Vendedor:1 - Guilherme Kavedikado;Valor Aproximado dos Tributos : R$ 206,97. Fonte IBPT (Instituto Brasileiro de Planejamento Tributario)</infCpl>
+                        </infAdic>
+                    </infNFe>
+                    <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+                        <SignedInfo>
+                            <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+                            <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+                            <Reference URI="#NFe35150300822602000124550010009923466099234657">
+                                <Transforms>
+                                    <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                                    <Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+                                </Transforms>
+                                <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+                                <DigestValue>ECmPBDlIUSXAn2BNybvpJLLBtls=</DigestValue>
+                            </Reference>
+                        </SignedInfo>
+                        <SignatureValue>epyWCy8s7fp4Oyc84s5XYz8UaBX8w6TsI/M4mSkib0lCpuYEsmN4pQ0M1xRHMGGBAbpqXNKJlJcm6gHT2yC4DSDBfjXOSviNQXITooFYTzs/nGEgzudQJ3K8z1GsuecMpckBGfBoVg+9nsgRZ6tBVB32u7hXn9WkKA0m4TpuNUJJtYbwuDMyWDLWOZps2bTHTLRcpLD3bFu4vbvBS1cF/UVM7qgFNEuoFpJ06NtcWl8USjraP21VnYI+YdUSvIrDH3pJMMqCp1JAbm2GLTu/n5p7Wwh3R0DNf4bCnewvDp2aFL1PQTIIsgmHo4ZSwaiqAbHmhdtIaUfKGY+VrxC9iA==</SignatureValue>
+                        <KeyInfo>
+                            <X509Data>
+                                <X509Certificate>MIIINTCCBh2gAwIBAgIQEABoI3FQdSnFVyEEKSwjtzANBgkqhkiG9w0BAQsFADB0MQswCQYDVQQGEwJCUjETMBEGA1UEChMKSUNQLUJyYXNpbDEtMCsGA1UECxMkQ2VydGlzaWduIENlcnRpZmljYWRvcmEgRGlnaXRhbCBTLkEuMSEwHwYDVQQDExhBQyBDZXJ0aXNpZ24gTXVsdGlwbGEgRzUwHhcNMTYwNDI1MDAwMDAwWhcNMTcwNDI0MjM1OTU5WjCBwzELMAkGA1UEBhMCQlIxEzARBgNVBAoUCklDUC1CcmFzaWwxIjAgBgNVBAsUGUF1dGVudGljYWRvIHBvciBBUiBEYXNjaGkxGzAZBgNVBAsUEkFzc2luYXR1cmEgVGlwbyBBMTEWMBQGA1UECxQNSUQgLSAxMDI4MzQzNjEcMBoGA1UEAxMTRklNQVRFQyBURVhUSUwgTFREQTEoMCYGCSqGSIb3DQEJARYZZmluYW5jZWlyb0BmaW1hdGVjLmNvbS5icjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANheJGu0qkiNGFY36IXp2Qokkzc9qViSEp55QXnKv0QKXvKgY+YDede5DDT9oOm7fI6GwVAt16nuZS5f9x3wufCcM5Kf4YPHkiqwDSQ02v4S7qDJIn9DqCl2R8EiKxBTmY4b8bKwqGupb1ZGs8Nq9D5seZahNAMEsKb5FYEEhavIi6sVEDzsTQyQfcMZMOuXcqgbSbdIGHrKqECfq7c6SaOi/UQcPAbTOmVFL6duxPmjCs+R9Uxu++8F/LKzUZg0zmyxDGQcGj9ev4ebBKMPJRLvQg/lujq/bDK5+VTkuHykV+Fjra4yrqf2EXh1846gcN9Vx3yiZb0I07xx5wF+yesCAwEAAaOCA3EwggNtMIG3BgNVHREEga8wgaygOAYFYEwBAwSgLwQtMjAxMDE5NTkwNTIyNTUzNzg4MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwoCEGBWBMAQMCoBgEFkZFUk5BTkRPIEpPU0UgS0FJUkFMTEGgGQYFYEwBAwOgEAQONTg3MTY1MjMwMDAxMTmgFwYFYEwBAwegDgQMMDAwMDAwMDAwMDAwgRlmaW5hbmNlaXJvQGZpbWF0ZWMuY29tLmJyMAkGA1UdEwQCMAAwHwYDVR0jBBgwFoAUnVDPvf8kyq+xM+sX4kJ6jmkqjlMwDgYDVR0PAQH/BAQDAgXgMIGJBgNVHSAEgYEwfzB9BgZgTAECAQswczBxBggrBgEFBQcCARZlaHR0cDovL2ljcC1icmFzaWwuY2VydGlzaWduLmNvbS5ici9yZXBvc2l0b3Jpby9kcGMvQUNfQ2VydGlzaWduX011bHRpcGxhL0RQQ19BQ19DZXJ0aVNpZ25NdWx0aXBsYS5wZGYwggElBgNVHR8EggEcMIIBGDBcoFqgWIZWaHR0cDovL2ljcC1icmFzaWwuY2VydGlzaWduLmNvbS5ici9yZXBvc2l0b3Jpby9sY3IvQUNDZXJ0aXNpZ25NdWx0aXBsYUc1L0xhdGVzdENSTC5jcmwwW6BZoFeGVWh0dHA6Ly9pY3AtYnJhc2lsLm91dHJhbGNyLmNvbS5ici9yZXBvc2l0b3Jpby9sY3IvQUNDZXJ0aXNpZ25NdWx0aXBsYUc1L0xhdGVzdENSTC5jcmwwW6BZoFeGVWh0dHA6Ly9yZXBvc2l0b3Jpby5pY3BicmFzaWwuZ292LmJyL2xjci9DZXJ0aXNpZ24vQUNDZXJ0aXNpZ25NdWx0aXBsYUc1L0xhdGVzdENSTC5jcmwwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMEMIGgBggrBgEFBQcBAQSBkzCBkDBkBggrBgEFBQcwAoZYaHR0cDovL2ljcC1icmFzaWwuY2VydGlzaWduLmNvbS5ici9yZXBvc2l0b3Jpby9jZXJ0aWZpY2Fkb3MvQUNfQ2VydGlzaWduX011bHRpcGxhX0c1LnA3YzAoBggrBgEFBQcwAYYcaHR0cDovL29jc3AuY2VydGlzaWduLmNvbS5icjANBgkqhkiG9w0BAQsFAAOCAgEAoKKStBShY9SJbz1kK/5QzqnVSFaPP2TrBBfJQG8IYVQXwghke/OqHmW4fr3LDMDMg/8I31xfYr20Kqu/o7myGV+ZnTLQckWUuODTVB7d/d22DNQaS4KLV9YB9R6l1csMr+KWl0dprechWlo7f90I62cZso/dLXW9Od/JXvbFPYiJrThwaIbY8LBFjYmHNodu1ILALBS8PhgfquOq3TEy2ZI8adfwEqPaGycVIqE5TdCMLKuhoXNf1EuuLPiXB7z6OjKHcJKsUXLrvdzHS4hGqVaGfRjBYkiSnA7m88/H9ab1H0SaxjZHC55ymVBYuQ/JHgNbjMKpGDGNSqyKD9difi4wjLV9H9RlS46FA0l8jUKgUomBzgBZJ4BVM2W2VhPqUUkupxturCJgeXV4nQaGraLLNpsmx6uK+DX+gHc21JDWmm57rguyLyZZC7iJSPioQomeJhA+ro/ReBAYp/8LVRlvFqSDgYqeB9ejFWKJep8Oh/EbHcVbkrqyJ0ZGGJgwCCYF8L55NuvocJVYJpPSJ2+dTDYjKrm062mlMI+w9amIHNy7ygIE15X/sWe+HOZCL9NNbUBb8gpe5xpdjNiym3Rx0YNX5vOa+pniNLjHFtoDIskgvWJYOB3QzygzcMD85zAzVzDX29jkqR22idGQ8kCqBbhmfLofh87czMj4Er4=</X509Certificate>
+                            </X509Data>
+                        </KeyInfo>
+                    </Signature>
+                </NFe>
+            </enviNFe>
+        </nfeDadosMsg>
+    </soap:Body>
+</soap:Envelope>
