@@ -706,12 +706,9 @@ class Tools extends ToolsCommon
      *                   3 - Revoga CSC Ativo
      * @return string
      */
-    public function sefazManutencaoCsc(
+    public function sefazCsc(
         $indOp
     ) {
-        throw new RuntimeException(
-            'Este serviço não está disponível ainda, AGUARDE EM BREVE.'
-        );
         if ($this->modelo != 65) {
             throw new RuntimeException(
                 "Esta operação é exclusiva de NFCe modelo [65], "
