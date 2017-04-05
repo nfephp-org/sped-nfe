@@ -33,7 +33,7 @@ class Webservices
     
     /**
      * Get webservices parameters for specific conditions
-     * the parameters with the authorizers are in a json file in 
+     * the parameters with the authorizers are in a json file in
      * the storage folder
      * @param string $sigla
      * @param string $ambiente "homologacao" ou "producao"
