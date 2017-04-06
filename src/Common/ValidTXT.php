@@ -1,13 +1,29 @@
 <?php
 
-
 namespace NFePHP\NFe\Common;
+
+/**
+ * Validation for TXT representation of NFe
+ *
+ * @category  NFePHP
+ * @package   NFePHP\NFe\Common\ValidTXT
+ * @copyright NFePHP Copyright (c) 2008 - 2017
+ * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
+ * @license   https://opensource.org/licenses/MIT MIT
+ * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
+ * @author    Roberto L. Machado <linux.rlm at gmail dot com>
+ * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
+ */
 
 class ValidTXT
 {
     public static $errors = [];
     public static $entities = [];
     
+    /**
+     * Loads structure of txt from json file in storage folder
+     * @param float $version
+     */
     public static function loadStructure($version = 3.10)
     {
         $path = realpath(__DIR__ . "/../../storage");
@@ -17,6 +33,13 @@ class ValidTXT
         self::$entities = json_decode($json, true);
     }
     
+    /**
+     * Verifies the validity of txt according to the rules of the code
+     * Important: The structures are in the storage folder and must be
+     * obtained through reverse engineering with the free sender
+     * @param string $txt
+     * @return array
+     */
     public static function isValid($txt)
     {
         self::loadStructure();
