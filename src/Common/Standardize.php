@@ -7,8 +7,8 @@ namespace NFePHP\NFe\Common;
  * used for Sped NFe comunications
  *
  * @category  NFePHP
- * @package   NFePHP\NFe\Auxiliar\Standardize
- * @copyright NFePHP Copyright (c) 2017
+ * @package   NFePHP\NFe\Common\Standardize
+ * @copyright NFePHP Copyright (c) 2008 - 2017
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
  * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
