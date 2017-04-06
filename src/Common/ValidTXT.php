@@ -3,7 +3,6 @@
 
 namespace NFePHP\NFe\Common;
 
-
 class ValidTXT
 {
     public static $errors = [];
@@ -46,7 +45,7 @@ class ValidTXT
             $default = count(explode('|', self::$entities[$ref]));
             if ($default != $count) {
                 self::$errors[] = "ERRO: O numero de parametros na linha "
-                    . "está errado. [ $row ] Esperado [ " 
+                    . "está errado. [ $row ] Esperado [ "
                     . self::$entities[$ref]." ]";
             }
         }

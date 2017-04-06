@@ -1,9 +1,10 @@
 <?php
 
 namespace NFePHP\NFe\Factories;
+
 /**
  * Classe a construção do xml da NFe modelo 55 e modelo 65
- * Esta classe basica está estruturada para montar XML da NFe para o 
+ * Esta classe basica está estruturada para montar XML da NFe para o
  * layout versão 3.10
  *
  * @category  NFePHP
@@ -6010,8 +6011,14 @@ class MakeBasic
      * @param  string $vCOFINS
      * @return DOMElement
      */
-    protected function buildCOFINSoutr($cst = '', $vBC = '', $pCOFINS = '', $qBCProd = '', $vAliqProd = '', $vCOFINS = '')
-    {
+    protected function buildCOFINSoutr(
+        $cst = '',
+        $vBC = '',
+        $pCOFINS = '',
+        $qBCProd = '',
+        $vAliqProd = '',
+        $vCOFINS = ''
+    ) {
         $confinsoutr = $this->dom->createElement('COFINSOutr');
         $this->dom->addChild(
             $confinsoutr,
@@ -6272,5 +6279,5 @@ class MakeBasic
             $infNFe->setAttribute("Id", "NFe" . $chaveMontada);
             $this->chNFe = $chaveMontada;
         }
-    }    
+    }
 }

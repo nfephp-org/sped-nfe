@@ -4,7 +4,7 @@ namespace NFePHP\NFe;
 
 /**
  * Class to conver NFe in txt format to XML
- * 
+ *
  * @category  NFePHP
  * @package   NFePHP\NFe\Convert
  * @copyright NFePHP Copyright (c) 2008-2017
@@ -241,14 +241,14 @@ class Convert
     protected static function clearFieldsString($fields)
     {
         $n = [];
-        foreach($fields as $field) {
+        foreach ($fields as $field) {
             $field = trim(preg_replace('/\s+/', ' ', $field));
             if (self::$limparString) {
                 $field = Strings::replaceSpecialsChars($field);
             }
             $n[] = $field;
         }
-        if(empty($n[count($n)-1])) {
+        if (empty($n[count($n)-1])) {
             unset($n[count($n)-1]);
         }
         return $n;
@@ -1845,7 +1845,7 @@ class Convert
     }
     
     /**
-     * Carrega e cria a tag PIS [Q07]    
+     * Carrega e cria a tag PIS [Q07]
      * @param array $fields
      */
     protected static function q07Entity($fields)
@@ -2378,7 +2378,7 @@ class Convert
     }
     
     /**
-     * Cria a tag vol 
+     * Cria a tag vol
      * @param array $fields
      */
     protected static function buildVolEntity($fields)
