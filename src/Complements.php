@@ -3,10 +3,27 @@
 namespace NFePHP\NFe;
 
 use NFePHP\Common\Strings;
+use NFePHP\NFe\Common\Standardize;
+use DOMDocument;
+use InvalidArgumentException;
 
 class Complements
 {
-    protected $urlPortal = 'http://www.portalfiscal.inf.br/nfe';
+    protected static $urlPortal = 'http://www.portalfiscal.inf.br/nfe';
+    
+    /**
+     * Authorize document adding his protocol
+     * @param string $request
+     * @param string $response
+     * @return string
+     */
+    public static function toAuthorize($request, $response)
+    {
+        $st = new Standardize();
+        $key = ucfirst($st->whichIs($request));
+        $func = "add".$key."Protocol";
+        return self::$func($request, $response);
+    }
     
     /**
      * Add tags B2B, as example ANFAVEA
@@ -16,9 +33,9 @@ class Complements
      * @return string
      * @throws \InvalidArgumentException
      */
-    public function addB2B($nfe, $b2b, $tagB2B = 'NFeB2BFin')
+    public static function b2bTag($nfe, $b2b, $tagB2B = 'NFeB2BFin')
     {
-        $domnfe = new \DOMDocument('1.0', 'UTF-8');
+        $domnfe = new DOMDocument('1.0', 'UTF-8');
         $domnfe->preserveWhiteSpace = false;
         $domnfe->formatOutput = false;
         $domnfe->loadXML($nfe);
@@ -26,20 +43,20 @@ class Complements
         if (empty($nodenfe)) {
             $msg = "O arquivo indicado como NFe não está protocolado "
                     . "ou não é uma NFe!!";
-            throw new \InvalidArgumentException($msg);
+            throw new InvalidArgumentException($msg);
         }
         //carrega o arquivo B2B
-        $domb2b = new \DOMDocument('1.0', 'UTF-8');
+        $domb2b = new DOMDocument('1.0', 'UTF-8');
         $domb2b->preserveWhiteSpace = false;
         $domb2b->formatOutput = false;
         $domb2b->loadXML($b2b);
         $nodeb2b = $domnfe->getElementsByTagName($tagB2B)->item(0);
         if (empty($nodeb2b)) {
             $msg = "O arquivo indicado como B2B não contêm a tagB2B indicada!!";
-            throw new \InvalidArgumentException($msg);
+            throw new InvalidArgumentException($msg);
         }
         //cria a NFe processada com a tag do protocolo
-        $procb2b = new \DOMDocument('1.0', 'UTF-8');
+        $procb2b = new DOMDocument('1.0', 'UTF-8');
         $procb2b->preserveWhiteSpace = false;
         $proc2b->formatOutput = false;
         //cria a tag nfeProc
@@ -65,10 +82,10 @@ class Complements
      * @return string
      * @throws \InvalidArgumentException
      */
-    public function addCancelamento($nfe, $cancelamento)
+    public static function cancelNFe($nfe, $cancelamento)
     {
         $procXML = $nfe;
-        $domnfe = new \DOMDocument('1.0', 'utf-8');
+        $domnfe = new DOMDocument('1.0', 'utf-8');
         $domnfe->formatOutput = false;
         $domnfe->preserveWhiteSpace = false;
         $domnfe->loadXML($nfe);
@@ -76,11 +93,12 @@ class Complements
         $proNFe = $domnfe->getElementsByTagName('protNFe')->item(0);
         if (empty($proNFe)) {
             $msg = "A NFe não está protocolada!";
-            throw new \InvalidArgumentException($msg);
+            throw new InvalidArgumentException($msg);
         }
         $chaveNFe = $proNFe->getElementsByTagName('chNFe')->item(0)->nodeValue;
         $tpAmb = $domnfe->getElementsByTagName('tpAmb')->item(0)->nodeValue;
-        $domcanc = new \DOMDocument('1.0', 'utf-8');
+        
+        $domcanc = new DOMDocument('1.0', 'utf-8');
         $domcanc->formatOutput = false;
         $domcanc->preserveWhiteSpace = false;
         $domcanc->loadXML($cancelamento);
@@ -117,112 +135,195 @@ class Complements
     }
     
     /**
-     * Add authorization protocol to NFe XML
-     * @param  string  $nfe signed nfe content
-     * @param  string  $protocol protocol content from SEFAZ response
-     * @return string Notarized invoice
-     * @throws \InvalidArgumentException
-     * @throws \RuntimeException
+     * Authorize Inutilization of numbers
+     * @param string $request
+     * @param string $response
+     * @return string
+     * @throws InvalidArgumentException
      */
-    public function addProtocolo($nfe, $protocol)
+    protected static function addInutNFeProtocol($request, $response)
     {
-        //carrega a NFe
-        $domnfe = new \DOMDocument('1.0', 'UTF-8');
-        $domnfe->preserveWhiteSpace = false;
-        $domnfe->formatOutput = false;
-        $domnfe->loadXML($nfe);
-        $nodenfe = $domnfe->getElementsByTagName('NFe')->item(0);
-        if ($nodenfe == '') {
-            $msg = "O arquivo indicado como NFe não é um xml de NFe!";
-            throw new \InvalidArgumentException($msg);
+        $req = new DOMDocument('1.0', 'UTF-8');
+        $req->preserveWhiteSpace = false;
+        $req->formatOutput = false;
+        $req->loadXML($request);
+        $inutNFe = $req->getElementsByTagName('inutNFe')->item(0);
+        $versao = $inutNFe->getAttribute("versao");
+        $infInut = $req->getElementsByTagName('infInut')->item(0);
+        $tpAmb = $infInut->getElementsByTagName('tpAmb')->item(0)->nodeValue;
+        $cUF = $infInut->getElementsByTagName('cUF')->item(0)->nodeValue;
+        $ano = $infInut->getElementsByTagName('ano')->item(0)->nodeValue;
+        $cnpj = $infInut->getElementsByTagName('CNPJ')->item(0)->nodeValue;
+        $mod = $infInut->getElementsByTagName('mod')->item(0)->nodeValue;
+        $serie = $infInut->getElementsByTagName('serie')->item(0)->nodeValue;
+        $nNFIni = $infInut->getElementsByTagName('nNFIni')->item(0)->nodeValue;
+        $nNFFin = $infInut->getElementsByTagName('nNFFin')->item(0)->nodeValue;
+        
+        $ret = new DOMDocument('1.0', 'UTF-8');
+        $ret->preserveWhiteSpace = false;
+        $ret->formatOutput = false;
+        $ret->loadXML($response);
+        $retInutNFe = $ret->getElementsByTagName('retInutNFe')->item(0);
+        if (!isset($retInutNFe)) {
+            throw new InvalidArgumentException(
+                'O documento de resposta não contêm o NODE "retInutNFe".'
+            );
         }
-        $signode = $docnfe->$domnfe->getElementsByTagName('Signature')->item(0);
-        if (empty($signode)) {
-            $msg = "A NFe não está assinada!";
-            throw new \InvalidArgumentException($msg);
+        $retversao = $retInutNFe->getAttribute("versao");
+        $retInfInut = $ret->getElementsByTagName('infInut')->item(0);
+        $cStat = $retInfInut->getElementsByTagName('cStat')->item(0)->nodeValue;
+        $xMotivo = $retInfInut->getElementsByTagName('xMotivo')->item(0)->nodeValue;
+        if ($cStat != 102) {
+            throw new InvalidArgumentException(
+                "Erro localizado [$cStat] $xMotivo."
+            );
         }
-        //carrega o protocolo
-        $domprot = new  \DOMDocument('1.0', 'UTF-8');
-        $domprot->preserveWhiteSpace = false;
-        $domprot->formatOutput = false;
-        $domprot->loadXML($protocol);
-        $nodeprot = $domprot->getElementsByTagName('protNFe');
-        if ($nodeprot->length == 0) {
-            $msg = "O arquivo indicado não contêm um protocolo de autorização!";
-            throw new \InvalidArgumentException($msg);
+        $rettpAmb = $retInfInut->getElementsByTagName('tpAmb')->item(0)->nodeValue;
+        $retcUF = $retInfInut->getElementsByTagName('cUF')->item(0)->nodeValue;
+        $retano = $retInfInut->getElementsByTagName('ano')->item(0)->nodeValue;
+        $retcnpj = $retInfInut->getElementsByTagName('CNPJ')->item(0)->nodeValue;
+        $retmod = $retInfInut->getElementsByTagName('mod')->item(0)->nodeValue;
+        $retserie = $retInfInut->getElementsByTagName('serie')->item(0)->nodeValue;
+        $retnNFIni = $retInfInut->getElementsByTagName('nNFIni')->item(0)->nodeValue;
+        $retnNFFin = $retInfInut->getElementsByTagName('nNFFin')->item(0)->nodeValue;
+        if ($versao != $retversao ||
+            $tpAmb != $rettpAmb ||
+            $cUF != $retcUF ||
+            $ano != $retano ||
+            $cnpj != $retcnpj ||
+            $mod != $retmod ||
+            $serie != $retserie ||
+            $nNFIni != $retnNFIni ||
+            $nNFFin != $retnNFFin
+        ) {
+            throw new InvalidArgumentException(
+                'Os documentos de referem a diferentes objetos.'
+                . ' Algum parametro é diferente do original.'
+            );
         }
-        $tpAmb = $domnfe->getElementsByTagName('tpAmb')->item(0)->nodeValue;
-        $infNFe = $domnfe->getNode("infNFe", 0);
+        return self::join(
+            $req->saveXML($inutNFe),
+            $ret->saveXML($retInutNFe),
+            'procInutNFe',
+            $versao
+        );
+    }
+
+    /**
+     * Authorize NFe
+     * @param string $request
+     * @param string $response
+     * @return string
+     * @throws InvalidArgumentException
+     */
+    protected static function addNFeProtocol($request, $response)
+    {
+        $req = new DOMDocument('1.0', 'UTF-8');
+        $req->preserveWhiteSpace = false;
+        $req->formatOutput = false;
+        $req->loadXML($request);
+        
+        $nfe = $req->getElementsByTagName('NFe')->item(0);
+        $infNFe = $req->getElementsByTagName('infNFe')->item(0);
         $versao = $infNFe->getAttribute("versao");
-        $chaveNFe = preg_replace('/[^0-9]/', '', $infNFe->getAttribute("Id"));
-        $digValueNFe = $domnfe->getElementsByTagName('DigestValue')
+        $chave = preg_replace('/[^0-9]/', '', $infNFe->getAttribute("Id"));
+        $digNFe = $req->getElementsByTagName('DigestValue')
             ->item(0)
             ->nodeValue;
-        $digValueProt = '';
-        for ($i = 0; $i < $nodeprot->length; $i++) {
-            $node = $nodeprot->item($i);
-            $protver = $node->getAttribute("versao");
-            $chaveProt = $node->getElementsByTagName("chNFe")
-                ->item(0)
-                ->nodeValue;
-            $digValueProt = ($node->getElementsByTagName("digVal")->length)
-                ? $node->getElementsByTagName("digVal")->item(0)->nodeValue
-                : '';
-            $infProt = $node->getElementsByTagName("infProt")->item(0);
-            if ($digValueNFe == $digValueProt && $chaveNFe == $chaveProt) {
-                break;
-            }
+                
+        $ret = new DOMDocument('1.0', 'UTF-8');
+        $ret->preserveWhiteSpace = false;
+        $ret->formatOutput = false;
+        $ret->loadXML($response);
+        $retProt = $ret->getElementsByTagName('protNFe')->item(0);
+        if (!isset($retProt)) {
+            throw new InvalidArgumentException(
+                'O documento de resposta não contêm o NODE "protNFe".'
+            );
         }
-        if ($digValueNFe != $digValueProt) {
-            $msg = "Inconsistência! O DigestValue da NFe não combina com o "
-                    . "digVal do protocolo indicado!";
-            throw new \RuntimeException($msg);
+        $infProt = $ret->getElementsByTagName('infProt')->item(0);
+        $cStat  = $infProt->getElementsByTagName('cStat')->item(0)->nodeValue;
+        $xMotivo = $infProt->getElementsByTagName('xMotivo')->item(0)->nodeValue;
+        $dig = $infProt->getElementsByTagName("digVal")->item(0);
+        $digProt = '000';
+        if (isset($dig)) {
+            $digProt = $dig->nodeValue;
         }
-        if ($chaveNFe != $chaveProt) {
-            $msg = "O protocolo indicado pertence a outra NFe. Os números "
-                    . "das chaves não combinam !";
-            throw new \RuntimeException($msg);
+        //100 Autorizado
+        //150 Autorizado fora do prazo
+        if ($cStat != '100' || $cStat != '150') {
+            throw new InvalidArgumentException(
+                "Erro localizado [$cStat] $xMotivo."
+            );
         }
-        //cria a NFe processada com a tag do protocolo
-        $procnfe = new \DOMDocument('1.0', 'utf-8');
-        $procnfe->formatOutput = false;
-        $procnfe->preserveWhiteSpace = false;
-        //cria a tag nfeProc
-        $nfeProc = $procnfe->createElement('nfeProc');
-        $procnfe->appendChild($nfeProc);
-        //estabele o atributo de versão
-        $nfeProcAtt1 = $nfeProc->appendChild(
-            $procnfe->createAttribute('versao')
+        if ($digNFe !== $digProt) {
+            throw new InvalidArgumentException(
+                'Os documentos de referem a diferentes objetos.'
+                . ' O digest é diferente.'
+            );
+        }
+        return self::join(
+            $req->saveXML($nfe),
+            $ret->saveXML($retProt),
+            'nfeProc',
+            $versao
         );
-        $nfeProcAtt1->appendChild(
-            $procnfe->createTextNode($protver)
+    }
+    
+    /**
+     * Authorize Event
+     * @param string $request
+     * @param string $response
+     * @return string
+     * @throws InvalidArgumentException
+     */
+    protected static function addEnvEventoProtocol($request, $response)
+    {
+        $ev = new \DOMDocument('1.0', 'UTF-8');
+        $ev->preserveWhiteSpace = false;
+        $ev->formatOutput = false;
+        $ev->loadXML($request);
+        //extrai numero do lote do envio
+        $envLote = $ev->getElementsByTagName('idLote')->item(0)->nodeValue;
+        //extrai tag evento do xml origem (solicitação)
+        $event = $ev->getElementsByTagName('evento')->item(0);
+        $versao = $event->getAttribute('versao');
+        
+        $ret = new \DOMDocument('1.0', 'UTF-8');
+        $ret->preserveWhiteSpace = false;
+        $ret->formatOutput = false;
+        $ret->loadXML($response);
+        //extrai numero do lote da resposta
+        $resLote = $ret->getElementsByTagName('idLote')->item(0)->nodeValue;
+        //extrai a rag retEvento da resposta (retorno da SEFAZ)
+        $retEv = $ret->getElementsByTagName('retEvento')->item(0);
+        $cStat  = $retEv->getElementsByTagName('cStat')->item(0)->nodeValue;
+        $xMotivo = $retEv->getElementsByTagName('xMotivo')->item(0)->nodeValue;
+        if ($cStat != '135') {
+            throw new \InvalidArgumentException(
+                "Erro localizado [$cStat] $xMotivo."
+            );
+        }
+        if ($resLote !== $envLote) {
+            throw new \InvalidArgumentException('Os numeros de lote '
+                    . 'dos documentos são diferentes.');
+        }
+        return self::join(
+            $ev->saveXML($event),
+            $ret->saveXML($retEv),
+            'procEventoNFe',
+            $versao
         );
-        //estabelece o atributo xmlns
-        $nfeProcAtt2 = $nfeProc->appendChild(
-            $procnfe->createAttribute('xmlns')
-        );
-        $nfeProcAtt2->appendChild(
-            $procnfe->createTextNode($this->urlPortal)
-        );
-        //inclui a tag NFe
-        $node = $procnfe->importNode($nodenfe, true);
-        $nfeProc->appendChild($node);
-        //cria tag protNFe
-        $protNFe = $procnfe->createElement('protNFe');
-        $nfeProc->appendChild($protNFe);
-        //estabele o atributo de versão
-        $protNFeAtt1 = $protNFe->appendChild(
-            $procnfe->createAttribute('versao')
-        );
-        $protNFeAtt1->appendChild(
-            $procnfe->createTextNode($versao)
-        );
-        //cria tag infProt
-        $nodep = $procnfe->importNode($infProt, true);
-        $protNFe->appendChild($nodep);
-        //salva o xml como string em uma variável
-        $procXML = $procnfe->saveXML();
-        //remove as informações indesejadas e retorna
-        return Strings::clearProtocoledXML($procXML);
+    }
+    
+    protected static function join($first, $second, $nodename, $versao)
+    {
+        $xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+                . "<$nodename versao=\"$versao\" "
+                . "xmlns=\"".self::$urlPortal."\">";
+        $xml .= $first;
+        $xml .= $second;
+        $xml .= "</$nodename>";
+        return $xml;
     }
 }
