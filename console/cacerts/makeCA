@@ -16,7 +16,7 @@
 #
 # Exemplo de uso :
 #
-# userprompt$ ./mkCA sped_cacerts.pem SpedCacert autorizadores.list
+# userprompt$ ./makeCA sped_cacerts.pem SpedCacert autorizadores.list
 #
 # Os certificadospode ser colocados em /usr/share/ca-certificates e instalados
 # com o comando update-ca-certificates
