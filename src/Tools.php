@@ -75,6 +75,7 @@ class Tools extends ToolsCommon
             . "$sxml"
             . "</enviNFe>";
         $this->isValid($this->urlVersion, $request, 'enviNFe');
+        $this->lastRequest = $request;
         //montagem dos dados da mensagem SOAP
         $parameters = ['nfeDadosMsg' => $request];
         $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
@@ -86,7 +87,8 @@ class Tools extends ToolsCommon
             $parameters = ['nfeDadosMsgZip' => $gzdata];
             $body = "<nfeDadosMsgZip xmlns=\"$this->urlNamespace\">$gzdata</nfeDadosMsgZip>";
         }
-        return $this->sendRequest($body, $parameters);
+        $this->lastResponse = $this->sendRequest($body, $parameters);
+        return $this->lastResponse;
     }
     
     /**
@@ -117,9 +119,11 @@ class Tools extends ToolsCommon
             . "<nRec>$recibo</nRec>"
             . "</consReciNFe>";
         $this->isValid($this->urlVersion, $request, 'consReciNFe');
+        $this->lastRequest = $request;
         $parameters = ['nfeDadosMsg' => $request];
         $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
-        return $this->sendRequest($body, $parameters);
+        $this->lastResponse = $this->sendRequest($body, $parameters);
+        return $this->lastResponse;
     }
     
     /**
@@ -148,9 +152,11 @@ class Tools extends ToolsCommon
             . "<chNFe>$chave</chNFe>"
             . "</consSitNFe>";
         $this->isValid($this->urlVersion, $request, 'consSitNFe');
+        $this->lastRequest = $request;
         $parameters = ['nfeDadosMsg' => $request];
         $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
-        return $this->sendRequest($body, $parameters);
+        $this->lastResponse = $this->sendRequest($body, $parameters);
+        return $this->lastResponse;
     }
 
     /**
@@ -224,9 +230,11 @@ class Tools extends ToolsCommon
         );
         $request = Strings::clearXmlString($request, true);
         $this->isValid($this->urlVersion, $request, 'inutNFe');
+        $this->lastRequest = $request;
         $parameters = ['nfeDadosMsg' => $request];
         $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
-        return $this->sendRequest($body, $parameters);
+        $this->lastResponse = $this->sendRequest($body, $parameters);
+        return $this->lastResponse;
     }
     
     /**
@@ -272,9 +280,11 @@ class Tools extends ToolsCommon
             . "<UF>$uf</UF>"
             . "$filter</infCons></ConsCad>";
         $this->isValid($this->urlVersion, $request, 'consCad');
+        $this->lastRequest = $request;
         $parameters = ['nfeDadosMsg' => $request];
         $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
-        return $this->sendRequest($body, $parameters);
+        $this->lastResponse = $this->sendRequest($body, $parameters);
+        return $this->lastResponse;
     }
 
     /**
@@ -307,9 +317,11 @@ class Tools extends ToolsCommon
             . "<tpAmb>$tpAmb</tpAmb><cUF>$this->urlcUF</cUF>"
             . "<xServ>STATUS</xServ></consStatServ>";
         $this->isValid($this->urlVersion, $request, 'consStatServ');
+        $this->lastRequest = $request;
         $parameters = ['nfeDadosMsg' => $request];
         $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
-        return $this->sendRequest($body, $parameters);
+        $this->lastResponse = $this->sendRequest($body, $parameters);
+        return $this->lastResponse;
     }
 
     /**
@@ -348,6 +360,7 @@ class Tools extends ToolsCommon
             . "<CNPJ>".$this->config->cnpj."</CNPJ>$tagNSU</distDFeInt>";
         //valida o xml da requisição
         $this->isValid($this->urlVersion, $consulta, 'distDFeInt');
+        $this->lastRequest = $consulta;
         //montagem dos dados da mensagem SOAP
         $request = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$consulta</nfeDadosMsg>";
         $parameters = ['nfeDistDFeInteresse' => $request];
@@ -356,7 +369,8 @@ class Tools extends ToolsCommon
             . "</nfeDistDFeInteresse>";
         //este webservice não requer cabeçalho
         $this->objHeader = null;
-        return $this->sendRequest($body, $parameters);
+        $this->lastResponse = $this->sendRequest($body, $parameters);
+        return $this->lastResponse;
     }
 
     /**
@@ -663,10 +677,11 @@ class Tools extends ToolsCommon
             . $request
             . "</envEvento>";
         $this->isValid($this->urlVersion, $request, 'envEvento');
+        $this->lastRequest = $request;
         $parameters = ['nfeDadosMsg' => $request];
         $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
-        return $this->sendRequest($body, $parameters);
-        return (string) $retorno;
+        $this->lastResponse = $this->sendRequest($body, $parameters);
+        return $this->lastResponse;
     }
     
     /**
@@ -694,9 +709,11 @@ class Tools extends ToolsCommon
                 . "<chNFe>$chave</chNFe>"
                 . "</downloadNFe>";
         $this->isValid($this->urlVersion, $request, 'downloadNFe');
+        $this->lastRequest = $request;
         $parameters = ['nfeDadosMsg' => $request];
         $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
-        return $this->sendRequest($body, $parameters);
+        $this->lastResponse = $this->sendRequest($body, $parameters);
+        return $this->lastResponse;
     }
     
     /**
@@ -743,9 +760,11 @@ class Tools extends ToolsCommon
         }
         //o xsd não está disponivel
         //$this->isValid($this->urlVersion, $request, 'cscNFCe');
+        $this->lastRequest = $request;
         $parameters = ['nfeDadosMsg' => $request];
         $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
-        return $this->sendRequest($body, $parameters);
+        $this->lastResponse = $this->sendRequest($body, $parameters);
+        return $this->lastResponse;
     }
     
     /**
@@ -768,8 +787,33 @@ class Tools extends ToolsCommon
         $protocol = $dom->getElementsByTagName('nProt')->item(0)->nodeValue;
         //consulta a NFe
         $response = $this->sefazConsultaChave($chNFe, $tpAmb);
-        
-        return true;
+        $ret = new DOMDocument('1.0', 'UTF-8');
+        $ret->preserveWhiteSpace = false;
+        $ret->formatOutput = false;
+        $ret->loadXML($response);
+        $retProt = $ret->getElementsByTagName('protNFe')->item(0);
+        if (!isset($retProt)) {
+            throw new InvalidArgumentException(
+                'O documento de resposta não contêm o NODE "protNFe".'
+            );
+        }
+        $infProt = $ret->getElementsByTagName('infProt')->item(0);
+        $cStat  = $infProt->getElementsByTagName('cStat')->item(0)->nodeValue;
+        $xMotivo = $infProt->getElementsByTagName('xMotivo')->item(0)->nodeValue;
+        $dig = $infProt->getElementsByTagName("digVal")->item(0);
+        $digProt = '000';
+        if (isset($dig)) {
+            $digProt = $dig->nodeValue;
+        }
+        $chProt = $infProt->getElementsByTagName("chNFe")->item(0)->nodeValue;
+        $nProt = $infProt->getElementsByTagName("nProt")->item(0)->nodeValue;
+        if ($protocol == $nProt
+            && $digval == $digProt
+            && $chNFe == $chProt
+        ) {
+            return true;
+        }
+        return false;
     }
     
     /**

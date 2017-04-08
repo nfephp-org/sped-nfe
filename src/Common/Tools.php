@@ -76,6 +76,8 @@ class Tools
      * @var string
      */
     public $verAplic = '';
+    public $lastRequest = '';
+    public $lastResponse = '';
     /**
      * certificate class
      * @var Certificate
