@@ -666,7 +666,7 @@ class Tools extends ToolsCommon
             $this->certificate,
             $request,
             'infEvento',
-            '',
+            'Id',
             $this->algorithm,
             [false,false,null,null]
         );
