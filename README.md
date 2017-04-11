@@ -5,7 +5,7 @@
 
 >*Ambiente de Produção: 01/08/17;*
 
->*Desativação da versão anterior 3.10: 06/11/17.*
+>*Desativação da versão anterior 3.10: 02/04/18.*
 
 >**IMPORTANTE: Até 06/11/2017 esta versão será movida para master e as anteriores se tornam automaticamente OBSOLETAS e não mais receberão correções ou atualizações.**
 
