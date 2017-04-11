@@ -1,5 +1,5 @@
-#SPED-NFE v5.0 (em desenvolvimento)
-##Este release está sendo preparado para atender a versão 4.0 do layout da SEFAZ!
+# SPED-NFE v5.0 (em desenvolvimento)
+## Este release está sendo preparado para atender a versão 4.0 do layout da SEFAZ!
 
 >Ambiente de Homologação (ambiente de teste das empresas): 01/06/2017;
 
@@ -31,31 +31,31 @@ Este pacote visa fornecer os meios para gerar, assinar e anviar os dados relativ
 
 Este pacote faz parte da API NFePHP e atende aos parâmetros das PSR2 e PSR4, bem como é desenvolvida para de adequar as versões ATIVAS do PHP e aos layouts da NFe em vigor.
 
-##Install
+## Install
 
 composer install nfephp-org/sped-nfe
 
-##Change log
+## Change log
 
 Acompanhe o [CHANGELOG](CHANGELOG.md) para maiores informações sobre as alterações recentes.
 
-##Testing
+## Testing
 
 Todos os testes são desenvolvidos para operar com o PHPUNIT
 
-##Contributing
+## Contributing
 
 Para contribuir por favor observe o [CONTRIBUTING](CONTRIBUTING.md) e o  [Código de Conduta](CONDUCT.md) parea detalhes.
 
-##Security
+## Security
 
 Caso você encontre algum problema relativo a segurança, por favor envie um email diretamente aos mantenedores do pacote ao invés de abrir um ISSUE.
 
-##Credits
+## Credits
 
 Roberto L. Machado (owner and developer)
 
-##License
+## License
 
 Este pacote está diponibilizado sob LGPLv3 ou MIT License (MIT). Leia  [Arquivo de Licença](LICENSE.md) para maiores informações.
 
