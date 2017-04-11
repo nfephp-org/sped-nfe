@@ -33,7 +33,26 @@ Este pacote faz parte da API NFePHP e atende aos parâmetros das PSR2 e PSR4, be
 
 ## Install
 
+*Durante a fase de desenvolvimento e testes*
+composer install nfephp-org/sped-nfe:v5.0.x-dev
+
+*Após o realease estar disponível*
 composer install nfephp-org/sped-nfe
+
+## Requirements
+
+PHP 5.6 or PHP 7.x
+ext-curl
+ext-dom
+ext-gd
+ext-mbstring
+ext-mcrypt
+ext-openssl
+ext-soap
+ext-xml
+ext-zip
+
+[sped-common:v5.x](https://github.com/nfephp-org/sped-common/tree/v5.0)
 
 ## Change log
 
