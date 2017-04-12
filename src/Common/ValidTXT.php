@@ -62,14 +62,27 @@ class ValidTXT
                 continue;
             }
             if (!array_key_exists($ref, self::$entities)) {
-                self::$errors[] = "ERRO: Essa referencia não está definida. [$row]";
+                self::$errors[] = "ERRO: Essa referência não está definida. [$row]";
                 continue;
             }
             $default = count(explode('|', self::$entities[$ref]));
             if ($default != $count) {
-                self::$errors[] = "ERRO: O numero de parametros na linha "
+                self::$errors[] = "ERRO: O número de parâmetros na linha "
                     . "está errado. [ $row ] Esperado [ "
                     . self::$entities[$ref]." ]";
+            }
+            foreach ($fields as $field) {
+                if ($field != trim($field)) {
+                    self::$errors[] = "ERRO: Existem espaços em algum "
+                        . "campo dos dados. [$row]";
+                    continue;
+                }
+                $newfield = preg_replace("/[^a-zA-Z0-9 @,-.;:\/]/", "", $field);
+                if ($field != $newfield) {
+                    self::$errors[] = "ERRO: Existem caracteres especiais, "
+                        . "acentos ou aspas em algum campo dos dados. [$row]";
+                    continue;
+                }
             }
         }
         return self::$errors;
