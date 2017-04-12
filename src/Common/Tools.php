@@ -463,6 +463,10 @@ class Tools
         }
         //recuperação do cUF
         $this->urlcUF = $this->getcUF($uf);
+        if ($this->urlcUF > 91) {
+            //foi solicitado dado de SVCRS ou SVCAN
+            $this->urlcUF = $this->getcUF($this->config->siglaUF);
+        }
         //recuperação da versão
         $this->urlVersion = $stdServ->$service->version;
         //recuperação da url do serviço
