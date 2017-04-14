@@ -1,5 +1,5 @@
 # SPED-NFE v5.0 (em desenvolvimento)
-## Este release está sendo preparado para atender a versão 4.0 do layout da SEFAZ!
+## Este release está sendo preparado para atender as verões 3.10 e 4.0 do layout da SEFAZ!
 
 >Ambiente de Homologação (ambiente de teste das empresas): 01/06/2017;
 
@@ -13,7 +13,7 @@
 
 Framework para geração e comunicação das NFe com as SEFAZ autorizadoras.
 
-Esta versão do pacote está em desenvolvimento, não é funcional e não deve ser utilizado para nada além de testes. 
+Esta versão do pacote ainda está em desenvolvimento [FASE BETA TEST], pode não estar totalmente funcional e não deve ser utilizado para nada além de testes.
 
 [![Build Status][ico-travis]][link-travis]
 [![Coverage Status][ico-scrutinizer]][link-scrutinizer]
@@ -36,12 +36,17 @@ Não deixe de se cadastrar no [grupo de discussão do NFePHP](http://groups.goog
 ## Install
 
 *Durante a fase de desenvolvimento e testes*
+```bash
 composer install nfephp-org/sped-nfe:v5.0.x-dev
-
+```
 *Após os stable realeases estarem disponíveis*
+```bash
 composer install nfephp-org/sped-nfe
+```
 
 ## Requirements
+
+Para que este pacote possa funcionar são necessarios os seguintes requisitos do PHP e outros pacotes dos quais esse depende.
 
 - PHP 5.6 or PHP 7.x
 - ext-curl
@@ -54,14 +59,6 @@ composer install nfephp-org/sped-nfe
 - ext-xml
 - ext-zip
 - [sped-common:v5.x](https://github.com/nfephp-org/sped-common/tree/v5.0)
-
-## Change log
-
-Acompanhe o [CHANGELOG](CHANGELOG.md) para maiores informações sobre as alterações recentes.
-
-## Testing
-
-Todos os testes são desenvolvidos para operar com o PHPUNIT
 
 ## Donations
 
@@ -80,11 +77,17 @@ Mas também, caso você ache que qualquer informação obtida aqui, lhe foi úti
 
 > Walber Sales - *Patrocinador Gold*
 
-
-
 ## Contributing
 
 Para contribuir com correções de BUGS, melhoria no código, documentação, elaboração de testes ou qualquer outro auxilio técnico e de programação por favor observe o [CONTRIBUTING](CONTRIBUTING.md) e o  [Código de Conduta](CONDUCT.md) para maiores detalhes.
+
+## Change log
+
+Acompanhe o [CHANGELOG](CHANGELOG.md) para maiores informações sobre as alterações recentes.
+
+## Testing
+
+Todos os testes são desenvolvidos para operar com o PHPUNIT
 
 ## Security
 
