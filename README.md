@@ -1,5 +1,5 @@
 # SPED-NFE v5.0 (em desenvolvimento)
-## Este release está sendo preparado para atender a versão 4.0 do layout da SEFAZ!
+## Este release está sendo preparado para atender as verões 3.10 e 4.0 do layout da SEFAZ!
 
 >Ambiente de Homologação (ambiente de teste das empresas): 01/06/2017;
 
@@ -9,11 +9,13 @@
 
 >**IMPORTANTE: Até 06/11/2017 esta versão será movida para master e as anteriores se tornam automaticamente OBSOLETAS e não mais receberão correções ou atualizações.**
 
+*Utilize o chat do Gitter para iniciar discussões especificas sobre o desenvolvimento deste pacote.*
+
 [![Chat][ico-gitter]][link-gitter]
 
 Framework para geração e comunicação das NFe com as SEFAZ autorizadoras.
 
-Esta versão do pacote está em desenvolvimento, não é funcional e não deve ser utilizado para nada além de testes. 
+Esta versão do pacote ainda está em desenvolvimento [FASE BETA TEST], pode não estar totalmente funcional e não deve ser utilizado para nada além de testes.
 
 [![Build Status][ico-travis]][link-travis]
 [![Coverage Status][ico-scrutinizer]][link-scrutinizer]
@@ -29,17 +31,37 @@ Esta versão do pacote está em desenvolvimento, não é funcional e não deve s
 
 Este pacote visa fornecer os meios para gerar, assinar e anviar os dados relativos ao projeto Sped NFe.
 
-Este pacote faz parte da API NFePHP e atende aos parâmetros das PSR2 e PSR4, bem como é desenvolvida para de adequar as versões ATIVAS do PHP e aos layouts da NFe em vigor.
+E faz parte da API NFePHP e atende aos parâmetros das PSR2 e PSR4, bem como é desenvolvida para de adequar as versões ATIVAS do PHP e aos layouts da NFe em vigor.
+
+Não deixe de se cadastrar no [grupo de discussão do NFePHP](http://groups.google.com/group/nfephp) para acompanhar o desenvolvimento e participar das discussões e tirar duvidas!
 
 ## Install
 
-*Durante a fase de desenvolvimento e testes*
-composer install nfephp-org/sped-nfe:v5.0.x-dev
+**Este pacote esta listado no [Packgist](https://packagist.org/) foi desenvolvido para uso do [Composer](https://getcomposer.org/), portanto não será explicitada nenhuma alternativa de instalação.**
 
-*Após o realease estar disponível*
+*Durante a fase de desenvolvimento e testes este pacote deve ser intalado com:*
+```bash
+composer install nfephp-org/sped-nfe:v5.0.x-dev
+```
+> Ao utilizar este pacote ainda na fase de desenvolvimento não se esqueça de alterar o composer.json da sua aplicação para aceitar pacotes em desenvolvimento, alterando a propriedade "minimum-stability" de "stable" para "dev".
+> ```json
+> "minimum-stability": "dev"
+> ```
+
+*Após os stable realeases estarem disponíveis, pode ser instalado com:*
+```bash
 composer install nfephp-org/sped-nfe
+```
+Ou ainda alterando o composer.json do seu aplicativo inserindo:
+```json
+"require": {
+    "nfephp-org/sped-nfe" : "^5.0"
+}
+```
 
 ## Requirements
+
+Para que este pacote possa funcionar são necessarios os seguintes requisitos do PHP e outros pacotes dos quais esse depende.
 
 - PHP 5.6 or PHP 7.x
 - ext-curl
@@ -53,6 +75,44 @@ composer install nfephp-org/sped-nfe
 - ext-zip
 - [sped-common:v5.x](https://github.com/nfephp-org/sped-common/tree/v5.0)
 
+> Para outras ações necessárias ao SPED, são requeridos outros pacotes, como:
+
+> - [sped-da](https://github.com/nfephp-org/sped-da) Geração dos documentos impressos (DANFE, DACTE, etc.)
+> - [sped-mail](https://github.com/nfephp-org/sped-mail) Envio de email com as notas e outros documentos fiscais 
+> - [sped-ibpt](https://github.com/nfephp-org/sped-ibpt) Consulta dos impostos aproximados na venda a consumidor
+> - [sped-gnre](https://github.com/nfephp-org/sped-gnre) Geração do GNRE
+> - [posprint](https://github.com/nfephp-org/posprint) Impressão de documentos em impressoras térmicas POS
+
+
+## Donations
+
+**Estamos em busca de *doadores* e *patrocinadores* para ajudar a financiar parte do desenvolvimento deste pacote e de outros pacotes, aqueles que estiverem interessados por favor entrem em contato com o autor pelo email linux.rlm@gmail.com** 
+
+Este é um projeto totalmente *OpenSource*, para usa-lo, copia-lo e modifica-lo você não paga absolutamente nada. Porém para continuarmos a mante-lo é necessário qua alguma contribuição seja feita, seja auxiliando na codificação, na documentação, na realização de testes e identificação de falhas e BUGs.
+
+Mas também, caso você ache que qualquer informação obtida aqui, lhe foi útil e que isso vale de algum dinheiro e está disposto a doar algo, sinta-se livre para enviar qualquer quantia diretamente ao autor ou através do PayPal e do PagSeguro.
+
+<a target="_blank" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=linux%2erlm%40gmail%2ecom&lc=BR&item_name=NFePHP%20OpenSource%20API&item_number=nfephp&currency_code=BRL&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest">
+<img alt="Doar com Paypal" src="https://www.paypalobjects.com/pt_BR/BR/i/btn/btn_donateCC_LG.gif"/></a>
+
+<a target="_blank" href="https://pag.ae/bkXPq4">
+<img alt="Doar PagSeguro" src="https://stc.pagseguro.uol.com.br/public/img/botoes/doacoes/120x53-doar.gif"/></a>
+
+
+*Agradecemos a contribuição, dos colegas abaixo indicados, pois sem a ajuda deles o desenvolvimento desse projeto seria muito mais lento e talvez até impossivel.*
+
+> ### Walber Sales - *Patrocinador Gold*
+
+## Documentation
+
+O processo de documentação ainda esta no inicio, mas já existem alguns documentos uteis.
+
+[Docs](docs/sped-nfe.md)
+
+## Contributing
+
+Para contribuir com correções de BUGS, melhoria no código, documentação, elaboração de testes ou qualquer outro auxilio técnico e de programação por favor observe o [CONTRIBUTING](CONTRIBUTING.md) e o  [Código de Conduta](CONDUCT.md) para maiores detalhes.
+
 ## Change log
 
 Acompanhe o [CHANGELOG](CHANGELOG.md) para maiores informações sobre as alterações recentes.
@@ -60,10 +120,6 @@ Acompanhe o [CHANGELOG](CHANGELOG.md) para maiores informações sobre as altera
 ## Testing
 
 Todos os testes são desenvolvidos para operar com o PHPUNIT
-
-## Contributing
-
-Para contribuir por favor observe o [CONTRIBUTING](CONTRIBUTING.md) e o  [Código de Conduta](CONDUCT.md) parea detalhes.
 
 ## Security
 
