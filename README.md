@@ -29,7 +29,7 @@ Esta versão do pacote ainda está em desenvolvimento [FASE BETA TEST], pode nã
 
 Este pacote visa fornecer os meios para gerar, assinar e anviar os dados relativos ao projeto Sped NFe.
 
-Este pacote faz parte da API NFePHP e atende aos parâmetros das PSR2 e PSR4, bem como é desenvolvida para de adequar as versões ATIVAS do PHP e aos layouts da NFe em vigor.
+E faz parte da API NFePHP e atende aos parâmetros das PSR2 e PSR4, bem como é desenvolvida para de adequar as versões ATIVAS do PHP e aos layouts da NFe em vigor.
 
 Não deixe de se cadastrar no [grupo de discussão do NFePHP](http://groups.google.com/group/nfephp) para acompanhar o desenvolvimento e participar das discussões e tirar duvidas!
 
@@ -59,6 +59,15 @@ Para que este pacote possa funcionar são necessarios os seguintes requisitos do
 - ext-xml
 - ext-zip
 - [sped-common:v5.x](https://github.com/nfephp-org/sped-common/tree/v5.0)
+
+> Para outras ações são requeriros outros pacotes, como:
+
+> - [sped-da]() Geração dos documentos impressos (DANFE, DACTE, etc.)
+> - [sped-mail]() Envio de email com as notas 
+> - [sped-ibpt]() Consulta dos impostos aproximados na venda a consumidor
+> - [sped-gnre]() Geração do GNRE
+> - [posprint]() Impressão de documentos em impressoras térmicas
+
 
 ## Donations
 
