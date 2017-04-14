@@ -9,6 +9,7 @@
 
 >**IMPORTANTE: Até 06/11/2017 esta versão será movida para master e as anteriores se tornam automaticamente OBSOLETAS e não mais receberão correções ou atualizações.**
 
+Utilize o chat do Gitter para iniciar discussões especificas sobre o desenvolvimento deste pacote.
 [![Chat][ico-gitter]][link-gitter]
 
 Framework para geração e comunicação das NFe com as SEFAZ autorizadoras.
