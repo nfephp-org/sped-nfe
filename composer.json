@@ -30,7 +30,8 @@
     "require-dev": {
         "squizlabs/php_codesniffer": "^2.8",
         "phpunit/phpunit": "^5.7",
-        "scrutinizer/ocular": "^1.3"
+        "scrutinizer/ocular": "^1.3",
+        "phpmd/phpmd": "dev-master"
     },
     "autoload": {
         "psr-4": {

@@ -3,6 +3,7 @@ limpaTAB.php
 *~
 *.pfx
 *.pem
+messdetector.txt
 config.json
 local
 vendor
