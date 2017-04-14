@@ -1,6 +1,8 @@
 # SPED-NFE v5.0 (em desenvolvimento)
 ## Este release está sendo preparado para atender as verões 3.10 e 4.0 do layout da SEFAZ!
 
+> ### Versão 4.0 do layout da SEFAZ
+
 >Ambiente de Homologação (ambiente de teste das empresas): 01/06/2017;
 
 >*Ambiente de Produção: 01/08/17;*
