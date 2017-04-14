@@ -1,9 +1,11 @@
 # SPED-NFE v5.0 (em desenvolvimento)
 ## Este release está sendo preparado para atender as verões 3.10 e 4.0 do layout da SEFAZ!
 
->Ambiente de Homologação (ambiente de teste das empresas): 01/06/2017;
+> ### Versão 4.0 do layout da SEFAZ
 
->*Ambiente de Produção: 01/08/17;*
+>Ambiente de Homologação 4.0 (ambiente de teste das empresas): 01/06/2017;
+
+>*Ambiente de Produção 4.0 : 01/08/17;*
 
 >*Desativação da versão anterior 3.10: 02/04/18.*
 
@@ -13,10 +15,11 @@
 
 [![Chat][ico-gitter]][link-gitter]
 
-Framework para geração e comunicação das NFe com as SEFAZ autorizadoras.
+Framework para geração e comunicação das NFe com as SEFAZ autorizadoras, e visa fornecer os meios para gerar, assinar e anviar os dados relativos ao projeto Sped NFe das SEFAZ.
 
 Esta versão do pacote ainda está em desenvolvimento [FASE BETA TEST], pode não estar totalmente funcional e não deve ser utilizado para nada além de testes.
 
+[![Latest Stable Version][ico-stable]][link-packagist]
 [![Build Status][ico-travis]][link-travis]
 [![Coverage Status][ico-scrutinizer]][link-scrutinizer]
 [![Quality Score][ico-code-quality]][link-code-quality]
@@ -29,9 +32,11 @@ Esta versão do pacote ainda está em desenvolvimento [FASE BETA TEST], pode nã
 [![Stars][ico-stars]][link-stars]
 
 
-Este pacote visa fornecer os meios para gerar, assinar e anviar os dados relativos ao projeto Sped NFe.
+Este pacote é aderente com os [PSR-1], [PSR-2] and [PSR-4]. Se você observar negligências de conformidade, por favor envie um patch via pull request.
 
-E faz parte da API NFePHP e atende aos parâmetros das PSR2 e PSR4, bem como é desenvolvida para de adequar as versões ATIVAS do PHP e aos layouts da NFe em vigor.
+[PSR-1]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md
+[PSR-2]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md
+[PSR-4]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md
 
 Não deixe de se cadastrar no [grupo de discussão do NFePHP](http://groups.google.com/group/nfephp) para acompanhar o desenvolvimento e participar das discussões e tirar duvidas!
 
@@ -133,7 +138,7 @@ Roberto L. Machado (owner and developer)
 
 Este pacote está diponibilizado sob LGPLv3 ou MIT License (MIT). Leia  [Arquivo de Licença](LICENSE.md) para maiores informações.
 
-
+[ico-stable]: https://poser.pugx.org/nfephp-org/sped-nfe/version
 [ico-stars]: https://img.shields.io/github/stars/nfephp-org/sped-nfe.svg?style=flat-square
 [ico-forks]: https://img.shields.io/github/forks/nfephp-org/sped-nfe.svg?style=flat-square
 [ico-issues]: https://img.shields.io/github/issues/nfephp-org/sped-nfe.svg?style=flat-square
