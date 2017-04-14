@@ -1,4 +1,9 @@
 # SPED-NFE v5.0 (em desenvolvimento)
+
+Framework para geração e comunicação das NFe com as SEFAZ autorizadoras, e visa fornecer os meios para gerar, assinar e anviar os dados relativos ao projeto Sped NFe das SEFAZ.
+
+Esta versão do pacote ainda está em desenvolvimento [FASE BETA TEST], pode não estar totalmente funcional e não deve ser utilizado para nada além de testes.
+
 ## Este release está sendo preparado para atender as verões 3.10 e 4.0 do layout da SEFAZ!
 
 > ### Versão 4.0 do layout da SEFAZ
@@ -15,9 +20,6 @@
 
 [![Chat][ico-gitter]][link-gitter]
 
-Framework para geração e comunicação das NFe com as SEFAZ autorizadoras, e visa fornecer os meios para gerar, assinar e anviar os dados relativos ao projeto Sped NFe das SEFAZ.
-
-Esta versão do pacote ainda está em desenvolvimento [FASE BETA TEST], pode não estar totalmente funcional e não deve ser utilizado para nada além de testes.
 
 [![Latest Stable Version][ico-stable]][link-packagist]
 [![Build Status][ico-travis]][link-travis]
