@@ -84,9 +84,9 @@ Mas também, caso você ache que qualquer informação obtida aqui, lhe foi úti
 <img alt="Doar PagSeguro" src="https://stc.pagseguro.uol.com.br/public/img/botoes/doacoes/120x53-doar.gif"/></a>
 
 
-### Agradecemos a contribuição, dos colegas abaixo indicados, pois sem a ajuda deles o desenvolvimento desse projeto seria muito mais lento e talvez até impossivel.
+*Agradecemos a contribuição, dos colegas abaixo indicados, pois sem a ajuda deles o desenvolvimento desse projeto seria muito mais lento e talvez até impossivel.*
 
-> Walber Sales - *Patrocinador Gold*
+> ### Walber Sales - *Patrocinador Gold*
 
 ## Contributing
 
