@@ -17,7 +17,7 @@ Framework para geração e comunicação das NFe com as SEFAZ autorizadoras.
 
 Esta versão do pacote ainda está em desenvolvimento [FASE BETA TEST], pode não estar totalmente funcional e não deve ser utilizado para nada além de testes.
 
-[![Latest Stable Version][ico-stable][link-packgist]
+[![Latest Stable Version]][ico-stable][link-packgist]
 [![Build Status][ico-travis]][link-travis]
 [![Coverage Status][ico-scrutinizer]][link-scrutinizer]
 [![Quality Score][ico-code-quality]][link-code-quality]
