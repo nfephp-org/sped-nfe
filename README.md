@@ -15,7 +15,7 @@
 
 [![Chat][ico-gitter]][link-gitter]
 
-Framework para geração e comunicação das NFe com as SEFAZ autorizadoras.
+Framework para geração e comunicação das NFe com as SEFAZ autorizadoras, e visa fornecer os meios para gerar, assinar e anviar os dados relativos ao projeto Sped NFe das SEFAZ.
 
 Esta versão do pacote ainda está em desenvolvimento [FASE BETA TEST], pode não estar totalmente funcional e não deve ser utilizado para nada além de testes.
 
@@ -32,9 +32,11 @@ Esta versão do pacote ainda está em desenvolvimento [FASE BETA TEST], pode nã
 [![Stars][ico-stars]][link-stars]
 
 
-Este pacote visa fornecer os meios para gerar, assinar e anviar os dados relativos ao projeto Sped NFe.
+Este pacote é aderente com os [PSR-1], [PSR-2] and [PSR-4]. Se você observar negligências de conformidade, por favor envie um patch via pull request.
 
-E faz parte da API NFePHP e atende aos parâmetros das PSR2 e PSR4, bem como é desenvolvida para de adequar as versões ATIVAS do PHP e aos layouts da NFe em vigor.
+[PSR-1]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md
+[PSR-2]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md
+[PSR-4]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md
 
 Não deixe de se cadastrar no [grupo de discussão do NFePHP](http://groups.google.com/group/nfephp) para acompanhar o desenvolvimento e participar das discussões e tirar duvidas!
 
