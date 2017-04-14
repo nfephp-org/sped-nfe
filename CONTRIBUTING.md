@@ -9,6 +9,12 @@ Nós aceitamos contribuições via "pull request" através do repositório no [G
 *We accept contributions via Pull Requests on [Github](https://github.com/nfephp-org/sped-nfe).*
 
 
+# Ambiente
+
+Nossos scripts e exemplos são direcionados para ambiente LINUX, pois esse é com certeza onde a maior parte dos aplicativos em PHP são executados.
+
+Caso o desenvolvimento esteja sendo feito em Windows ou ainda em MacOS é recomendável que ou seja instalado uma interface tipo BASH como console ou que sejam usados outros meios e scripts para a execução das tarefas necessárias. 
+
 ## Pull Requests
 
 - **[PSR-2 Coding Standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md)** - A forma mais facil de aplicar as convenções é atraves do PHP Code Sniffer. *The easiest way to apply the conventions is to install [PHP Code Sniffer](http://pear.php.net/package/PHP_CodeSniffer).*
@@ -28,17 +34,25 @@ Nós aceitamos contribuições via "pull request" através do repositório no [G
 > Quanto PSR-2, são disponibilizados na instalação de desenvolvimento pelo composer, os pacotes phpcs e phpcbf, ambos auxiliam a terefa de deixar o codigo coerente os esses requisitos.
 > A forma de usar essas ferramentas é, estando na raiz do projeto e digitar no console:
 
-```
+```sh
 vendor/bin/phpcbf --standard=psr2 src/
 ```
-
+ou alternativamente 
+```sh
+composer phpcbf
+```
 O comando acima irá promover a limpeza dos codigos de todos os arquivos .php contidos na pasta src/
 
-```
+```sh
 vendor/bin/phpcs --standard=psr2 src/
+```
+ou alternativamente 
+```sh
+composer phpcs
 ```
 O comando acima analizar os codigos de todos os arquivos .php contidos na pasta src/ e irá retornar quaisquer erros encontrados, que por sua vez deverão ser corrigidos antes da submissão do pull request.
 
+O mesmo deverá ser executado na pasta tests/ que contêm os testes unitários com o PHPUNIT
 
 ## Running Tests
 
