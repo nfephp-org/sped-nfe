@@ -3,9 +3,9 @@
 
 > ### Versão 4.0 do layout da SEFAZ
 
->Ambiente de Homologação (ambiente de teste das empresas): 01/06/2017;
+>Ambiente de Homologação 4.0 (ambiente de teste das empresas): 01/06/2017;
 
->*Ambiente de Produção: 01/08/17;*
+>*Ambiente de Produção 4.0 : 01/08/17;*
 
 >*Desativação da versão anterior 3.10: 02/04/18.*
 
