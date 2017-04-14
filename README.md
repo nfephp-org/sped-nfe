@@ -37,7 +37,7 @@ Não deixe de se cadastrar no [grupo de discussão do NFePHP](http://groups.goog
 
 **Este pacote esta listado no [Packgist](https://packagist.org/) foi desenvolvido para uso do [Composer](https://getcomposer.org/), portanto não será explicitada nenhuma alternativa de instalação.**
 
-*Durante a fase de desenvolvimento e testes*
+*Durante a fase de desenvolvimento e testes este pacote deve ser intalado com:*
 ```bash
 composer install nfephp-org/sped-nfe:v5.0.x-dev
 ```
@@ -46,11 +46,15 @@ composer install nfephp-org/sped-nfe:v5.0.x-dev
 > "minimum-stability": "dev"
 > ```
 
-
-
-*Após os stable realeases estarem disponíveis*
+*Após os stable realeases estarem disponíveis, pode ser instalado com:*
 ```bash
 composer install nfephp-org/sped-nfe
+```
+Ou ainda alterando o composer.json do seu aplicativo inserindo:
+```json
+"require": {
+    "nfephp-org/sped-nfe" : "^5.0"
+}
 ```
 
 ## Requirements
