@@ -32,7 +32,7 @@ Esta versão do pacote ainda está em desenvolvimento [FASE BETA TEST], pode nã
 [![Stars][ico-stars]][link-stars]
 
 
-Este pacote é aderente com os [PSR-1], [PSR-2] and [PSR-4]. Se você observar negligências de conformidade, por favor envie um patch via pull request.
+Este pacote é aderente com os [PSR-1], [PSR-2] e [PSR-4]. Se você observar negligências de conformidade, por favor envie um patch via pull request.
 
 [PSR-1]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md
 [PSR-2]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md
