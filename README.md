@@ -31,12 +31,14 @@ Este pacote visa fornecer os meios para gerar, assinar e anviar os dados relativ
 
 Este pacote faz parte da API NFePHP e atende aos parâmetros das PSR2 e PSR4, bem como é desenvolvida para de adequar as versões ATIVAS do PHP e aos layouts da NFe em vigor.
 
+Não deixe de se cadastrar no [grupo de discussão do NFePHP](http://groups.google.com/group/nfephp) para acompanhar o desenvolvimento e participar das discussões e tirar duvidas!
+
 ## Install
 
 *Durante a fase de desenvolvimento e testes*
 composer install nfephp-org/sped-nfe:v5.0.x-dev
 
-*Após o realease estar disponível*
+*Após os stable realeases estarem disponíveis*
 composer install nfephp-org/sped-nfe
 
 ## Requirements
@@ -61,9 +63,28 @@ Acompanhe o [CHANGELOG](CHANGELOG.md) para maiores informações sobre as altera
 
 Todos os testes são desenvolvidos para operar com o PHPUNIT
 
+## Donations
+
+**Estamos em busca de *doadores* e *patrocinadores* para ajudar a financiar parte do desenvolvimento deste pacote e de outros pacotes, aqueles que estiverem interessados por favor entrem em contato com o autor pelo email linux.rlm@gmail.com** 
+
+Este é um projeto totalmente *OpenSource*, para usa-lo, copia-lo e modifica-lo você não paga absolutamente nada. Porém para continuarmos a mante-lo é necessário qua alguma contribuição seja feita, seja auxiliando na codificação, na documentação, na realização de testes e identificação de falhas e BUGs.
+
+Mas também, caso você ache que qualquer informação obtida aqui, lhe foi útil e que isso vale de algum dinheiro e está disposto a doar algo, sinta-se livre para enviar qualquer quantia através de :
+
+<a target="_blank" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=linux%2erlm%40gmail%2ecom&lc=BR&item_name=NFePHP%20OpenSource%20API&item_number=nfephp&currency_code=BRL&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest">
+<img alt="Doar com Paypal" src="https://www.paypalobjects.com/pt_BR/BR/i/btn/btn_donateCC_LG.gif"/></a>
+[![](https://stc.pagseguro.uol.com.br/public/img/botoes/doacoes/209x48-doar-assina.gif)](https://pag.ae/bkXPq4) 
+
+
+*Agradecemos a colaboração e o patrocinio, pois sem eles o desenvolvimento desse projeto seria muito mais lento a talvez até impossivel.*
+
+> Walber Sales - *Patrocinador Gold*
+
+
+
 ## Contributing
 
-Para contribuir por favor observe o [CONTRIBUTING](CONTRIBUTING.md) e o  [Código de Conduta](CONDUCT.md) parea detalhes.
+Para contribuir com correções de BUGS, melhoria no código, documentação, elaboração de testes ou qualquer outro auxilio técnico e de programação por favor observe o [CONTRIBUTING](CONTRIBUTING.md) e o  [Código de Conduta](CONDUCT.md) para maiores detalhes.
 
 ## Security
 
