@@ -62,11 +62,11 @@ Para que este pacote possa funcionar são necessarios os seguintes requisitos do
 
 > Para outras ações são requeriros outros pacotes, como:
 
-> - [sped-da]() Geração dos documentos impressos (DANFE, DACTE, etc.)
-> - [sped-mail]() Envio de email com as notas 
-> - [sped-ibpt]() Consulta dos impostos aproximados na venda a consumidor
-> - [sped-gnre]() Geração do GNRE
-> - [posprint]() Impressão de documentos em impressoras térmicas
+> - [sped-da](https://github.com/nfephp-org/sped-da) Geração dos documentos impressos (DANFE, DACTE, etc.)
+> - [sped-mail](https://github.com/nfephp-org/sped-mail) Envio de email com as notas 
+> - [sped-ibpt](https://github.com/nfephp-org/sped-ibpt) Consulta dos impostos aproximados na venda a consumidor
+> - [sped-gnre](https://github.com/nfephp-org/sped-gnre) Geração do GNRE
+> - [posprint](https://github.com/nfephp-org/posprint) Impressão de documentos em impressoras térmicas POS
 
 
 ## Donations
