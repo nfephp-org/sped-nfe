@@ -35,6 +35,8 @@ Não deixe de se cadastrar no [grupo de discussão do NFePHP](http://groups.goog
 
 ## Install
 
+**Este pacote esta listado no [Packgist](https://packagist.org/) foi desenvolvido para uso do [Composer](https://getcomposer.org/), portanto não será explicitada nenhuma alternativa de instalação.**
+
 *Durante a fase de desenvolvimento e testes*
 ```bash
 composer install nfephp-org/sped-nfe:v5.0.x-dev
