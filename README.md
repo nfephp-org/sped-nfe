@@ -46,11 +46,11 @@ Não deixe de se cadastrar no [grupo de discussão do NFePHP](http://groups.goog
 
 **Este pacote esta listado no [Packgist](https://packagist.org/) foi desenvolvido para uso do [Composer](https://getcomposer.org/), portanto não será explicitada nenhuma alternativa de instalação.**
 
-*Durante a fase de desenvolvimento e testes este pacote deve ser intalado com:*
+*Durante a fase de desenvolvimento e testes este pacote deve ser instalado com:*
 ```bash
 composer install nfephp-org/sped-nfe:v5.0.x-dev
 ```
-> Ao utilizar este pacote ainda na fase de desenvolvimento não se esqueça de alterar o composer.json da sua aplicação para aceitar pacotes em desenvolvimento, alterando a propriedade "minimum-stability" de "stable" para "dev".
+> NOTA: Ao utilizar este pacote ainda na fase de desenvolvimento não se esqueça de alterar o composer.json da sua aplicação para aceitar pacotes em desenvolvimento, alterando a propriedade "minimum-stability" de "stable" para "dev".
 > ```json
 > "minimum-stability": "dev"
 > ```
@@ -82,7 +82,7 @@ Para que este pacote possa funcionar são necessarios os seguintes requisitos do
 - ext-zip
 - [sped-common:v5.x](https://github.com/nfephp-org/sped-common/tree/v5.0)
 
-> Para outras ações necessárias ao SPED, são requeridos outros pacotes, como:
+> Para outras ações necessárias ao SPED, podem ser usados (opcionalmente) outros pacotes, como:
 
 > - [sped-da](https://github.com/nfephp-org/sped-da) Geração dos documentos impressos (DANFE, DACTE, etc.)
 > - [sped-mail](https://github.com/nfephp-org/sped-mail) Envio de email com as notas e outros documentos fiscais 
@@ -114,7 +114,7 @@ Mas também, caso você ache que qualquer informação obtida aqui, lhe foi úti
 
 O processo de documentação ainda esta no inicio, mas já existem alguns documentos uteis.
 
-[Docs](docs/sped-nfe.md)
+[Documentação](docs/sped-nfe.md)
 
 ## Contributing
 
