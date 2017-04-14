@@ -60,10 +60,10 @@ Para que este pacote possa funcionar são necessarios os seguintes requisitos do
 - ext-zip
 - [sped-common:v5.x](https://github.com/nfephp-org/sped-common/tree/v5.0)
 
-> Para outras ações são requeriros outros pacotes, como:
+> Para outras ações necessárias ao SPED, são requeridos outros pacotes, como:
 
 > - [sped-da](https://github.com/nfephp-org/sped-da) Geração dos documentos impressos (DANFE, DACTE, etc.)
-> - [sped-mail](https://github.com/nfephp-org/sped-mail) Envio de email com as notas 
+> - [sped-mail](https://github.com/nfephp-org/sped-mail) Envio de email com as notas e outros documentos fiscais 
 > - [sped-ibpt](https://github.com/nfephp-org/sped-ibpt) Consulta dos impostos aproximados na venda a consumidor
 > - [sped-gnre](https://github.com/nfephp-org/sped-gnre) Geração do GNRE
 > - [posprint](https://github.com/nfephp-org/posprint) Impressão de documentos em impressoras térmicas POS

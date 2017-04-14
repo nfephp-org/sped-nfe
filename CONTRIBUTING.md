@@ -3,8 +3,8 @@
 Todas as contribuições são **bem vindas** e serão totalmente **creditadas** aos seus autores.
 *Contributions are **welcome** and will be fully **credited**.*
 
-Nós aceitamos contribuições via "pull request" através do repositório no [GitHub](https://github.com/nfephp-org/posprint).
-*We accept contributions via Pull Requests on [Github](https://github.com/nfephp-org/posprint).*
+Nós aceitamos contribuições via "pull request" através do repositório no [GitHub](https://github.com/nfephp-org/sped-nfe).
+*We accept contributions via Pull Requests on [Github](https://github.com/nfephp-org/sped-nfe).*
 
 
 ## Pull Requests
