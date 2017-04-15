@@ -8,7 +8,7 @@ use NFePHP\NFe\Tests\NFeTestCase;
 class ValidTXTTest extends NFeTestCase
 {
     /**
-     * @covers ClassName::<protected>
+     * @covers ValidTXT::<protected>
      */
     public function testIsValid()
     {
