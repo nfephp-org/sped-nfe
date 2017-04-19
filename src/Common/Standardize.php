@@ -42,7 +42,6 @@ class Standardize
         'inutNFe',
         'admCscNFCe',
         'consStatServ',
-        
         'retDistDFeInt',
         'retEnvEvento',
         'retConsCad',
@@ -53,7 +52,6 @@ class Standardize
         'retInutNFe',
         'retAdmCscNFCe',
         'retConsStatServ',
-        
         'procInutNFe',
         'procEventoNFe',
         'procNFe',

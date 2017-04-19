@@ -1,2 +1,0 @@
-# Emit::Class
-
