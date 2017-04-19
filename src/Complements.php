@@ -251,10 +251,12 @@ class Complements
         }
         //100 Autorizado
         //150 Autorizado fora do prazo
-        if ($cStat != '100' || $cStat != '150') {
-            throw new InvalidArgumentException(
-                "Erro localizado [$cStat] $xMotivo."
-            );
+        if ($cStat != '100') {
+            if ($cStat != '150') {
+                throw new InvalidArgumentException(
+                    "Erro localizado [$cStat] $xMotivo."
+                );
+            }
         }
         if ($digNFe !== $digProt) {
             throw new InvalidArgumentException(
