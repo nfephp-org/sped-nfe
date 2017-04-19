@@ -114,7 +114,7 @@ Mas também, caso você ache que qualquer informação obtida aqui, lhe foi úti
 
 O processo de documentação ainda esta no inicio, mas já existem alguns documentos uteis.
 
-[Documentação](docs/sped-nfe.md)
+[Documentação](docs/Funcionalidades.md)
 
 ## Contributing
 
