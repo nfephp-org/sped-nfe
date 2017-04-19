@@ -308,29 +308,26 @@ class Tools
      */
     public function signNFe($xml)
     {
-        try {
-            //clear invalid strings
-            $xml = Strings::clearXmlString($xml);
-            $signed = Signer::sign(
-                $this->certificate,
-                $xml,
-                'infNFe',
-                'Id',
-                $this->algorithm,
-                [false,false,null,null]
-            );
-            $dom = new DOMDocument('1.0', 'UTF-8');
-            $dom->preserveWhiteSpace = false;
-            $dom->formatOutput = false;
-            $dom->loadXML($signed);
-            $modelo = $dom->getElementsByTagName('mod')->item(0)->nodeValue;
-            if ($modelo == 65) {
-                $signed = $this->addQRCode($dom);
-            }
-            $this->isValid($this->versao, $signed, 'nfe');
-        } catch (Exception $e) {
-            throw new RuntimeException($e->getMessage);
+        //clear invalid strings
+        $xml = Strings::clearXmlString($xml);
+        $signed = Signer::sign(
+            $this->certificate,
+            $xml,
+            'infNFe',
+            'Id',
+            $this->algorithm,
+            [false,false,null,null]
+        );
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->preserveWhiteSpace = false;
+        $dom->formatOutput = false;
+        $dom->loadXML($signed);
+        $modelo = $dom->getElementsByTagName('mod')->item(0)->nodeValue;
+        if ($modelo == 65) {
+            $signed = $this->addQRCode($dom);
         }
+        //exception se não for valido
+        $this->isValid($this->versao, $signed, 'nfe');
         return $signed;
     }
     
