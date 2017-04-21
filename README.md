@@ -8,11 +8,11 @@ Esta versão do pacote ainda está em desenvolvimento [FASE BETA TEST], pode nã
 
 > ### Versão 4.0 do layout da SEFAZ
 
->Ambiente de Homologação 4.0 (ambiente de teste das empresas): 01/06/2017;
+>Ambiente SEFAZ de Homologação 4.0 (ambiente de teste das empresas): a partir de 01/06/2017;
 
->*Ambiente de Produção 4.0 : 01/08/17;*
+>*Ambiente SEFAZ de Produção 4.0 : a pertir de 01/08/17;*
 
->*Desativação da versão anterior 3.10: 02/04/18.*
+>*Desativação na SEFAZ da versão anterior 3.10: até 02/04/18.*
 
 >**IMPORTANTE: Até 06/11/2017 esta versão será movida para master e as anteriores se tornam automaticamente OBSOLETAS e não mais receberão correções ou atualizações.**
 
