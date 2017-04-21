@@ -77,12 +77,15 @@ class Complements
      * Add cancel protocol to a autorized NFe
      * if event is not a cancellation will return
      * the same autorized NFe passing
+     * NOTE: This action is not necessary, I use only for my needs to
+     *       leave the NFe marked as Canceled in order to avoid mistakes
+     *       after its cancellation.
      * @param  string $nfe content of autorized NFe XML
      * @param  string $cancelamento content of SEFAZ response
      * @return string
      * @throws \InvalidArgumentException
      */
-    public static function cancelNFe($nfe, $cancelamento)
+    public static function cancelRegister($nfe, $cancelamento)
     {
         $procXML = $nfe;
         $domnfe = new DOMDocument('1.0', 'utf-8');
@@ -251,12 +254,13 @@ class Complements
         }
         //100 Autorizado
         //150 Autorizado fora do prazo
-        if ($cStat != '100') {
-            if ($cStat != '150') {
-                throw new InvalidArgumentException(
-                    "Erro localizado [$cStat] $xMotivo."
-                );
-            }
+        //110 Uso Denegado
+        //205 NFe Denegada
+        $cstatpermit = ['100', '150', '110', '205'];
+        if (!in_array($cStat, $cstatpermit)) {
+            throw new InvalidArgumentException(
+                "Essa NFe não será protocolada [$cStat] $xMotivo."
+            );
         }
         if ($digNFe !== $digProt) {
             throw new InvalidArgumentException(
