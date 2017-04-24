@@ -11,7 +11,6 @@ Consulta Cadastro de Contribuinte do ICMS de uma UF.
 Permite consultar a situação cadastral de um contribuinte em uma determinada UF, a funcionalidade é util para verificar se o destinatário da NF-e é um contribuinte em situação regular na UF de destino. Lembrando que quando o destinatário está inabilitado a NFe será DENEGADA.
 
 > NOTA: Funciona somente para modelo 55 (NFe), o modelo 65 (NFCe) evidentemente não possue esse tipo de serviço.
-A pesquisa pode ser feita pelo numero do CNPJ, CPF ou Inscrição estadual.
 
 **Escopo:** A consulta equivale à consulta SINTEGRA, isto é consulta a situação de destinatário que sejam inscritos no cadastro de contribuintes do ICMS na UF consultada.
 
