@@ -3,7 +3,7 @@ Consulta Cadastro de Contribuinte do ICMS de uma UF.
 
 **Função:** Serviço para consultar o cadastro de contribuintes do ICMS da unidade federada.
 
-**Processo:** síncrono.
+**Processo:** síncrono. A solicitação e o retorno ocorrem em uma única fase.
 
 **Método:** consultaCadastro
 
@@ -32,7 +32,16 @@ try {
     $response = $tools->sefazCadastro($uf, $cnpj, $iest, $cpf);
 
     //você pode padronizar os dados de retorno atraves da classe abaixo
-    
+    //de forma a ficilitar a extração dos dados do XML
+    //NOTA: mas lembre-se que esse XML muitas vezes será necessário, 
+    //      quando houver a necessidade de protocolos
+    $stdCl = new Standardize($response);
+    //nesse caso $std irá conter uma representação em stdClass do XML
+    $std = $stdCl->toStd();
+    //nesse caso o $arr irá conter uma representação em array do XML
+    $arr = $stdCl->toArray();
+    //nesse caso o $json irá conter uma representação em JSON do XML
+    $json = $stdCl->toJson();
 
 } catch (\Exception $e) {
     echo $e-<getMessage();
@@ -136,7 +145,9 @@ try {
 
 ## Standardize
 
-Esses retornos em XML podem ser "padronizados" para facilitar a extração de dados em:
+Esses retornos em XML podem ser "padronizados" para facilitar a extração de dados.
+
+Vide classe [Standardize](Standardize)
 
 ### ARRAY 
 
