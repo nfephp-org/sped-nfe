@@ -21,7 +21,14 @@ Permite consultar a situação cadastral de um contribuinte em uma determinada U
 ## Exemplo de Uso
 
 ```php
+
+use NFePHP\NFe\Tools;
+use NFePHP\Common\Certificate;
+use NFePHP\NFe\Common\Standardize;
+
 try {
+
+    $certificate = Certificate::readPfx($content, 'senha');
     $tools = new Tools($configJson, $certificate);
     $tools->model('55');
 
@@ -32,7 +39,7 @@ try {
     $response = $tools->sefazCadastro($uf, $cnpj, $iest, $cpf);
 
     //você pode padronizar os dados de retorno atraves da classe abaixo
-    //de forma a ficilitar a extração dos dados do XML
+    //de forma a facilitar a extração dos dados do XML
     //NOTA: mas lembre-se que esse XML muitas vezes será necessário, 
     //      quando houver a necessidade de protocolos
     $stdCl = new Standardize($response);
@@ -58,6 +65,7 @@ try {
 | Variável      | Detalhamento  |
 | ------------- | ------------- |
 | $configJson   | String Json com os dados de configuração(OBRIGATÓRIO)  |
+| $content      | String com o centeúdo do certificado PFX |
 | $certificado  | Classe Certificate::class contendo o certificado digital(OBRIGATÓRIO)  |
 | $uf           | Sigla da unidade da Federação a quem pertence o documento pesquisado (OBRIGATÓRIO) |
 | $cnpj         | Número do CNPJ *sem formatação* (OPCIONAL) |
