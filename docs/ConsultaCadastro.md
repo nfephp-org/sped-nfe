@@ -18,6 +18,15 @@ Permite consultar a situação cadastral de um contribuinte em uma determinada U
 
 **Informações:** Existe previsão para retorno dos dados cadastrais, mas nem todas as UF retornam todas as informações. A informação que todas UF, que possuem o serviço retornam é o CNPJ/CPF, Inscrição Estadual, Razão Social e situação cadastral: 0 - não habilitado ou 1 - habilitado
 
+## Dependências
+
+[NFePHP\Common\Certificate::class](Certificate.md)
+
+[NFePHP\NFe\Tools::class](Tools.md)
+
+[NFePHP\NFe\Common\Standardize::class](Standardize.md)
+
+
 ## Exemplo de Uso
 
 ```php
@@ -155,9 +164,8 @@ A variavel $response no exemplo conterá esse XML, ou algo semelhante.
 
 ## Standardize
 
-Esses retornos em XML podem ser "padronizados" para facilitar a extração de dados.
+Estruturas retornadas pela classe Standardize, para facilitar a extração de dados do XML.
 
-Vide classe [Standardize](Standardize)
 
 ### ARRAY 
 
