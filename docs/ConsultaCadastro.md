@@ -62,15 +62,15 @@ try {
 
 ## Parametros
 
-| Variável      | Detalhamento  |
-| ------------- | ------------- |
-| $configJson   | String Json com os dados de configuração(OBRIGATÓRIO)  |
-| $content      | String com o conteúdo do certificado PFX |
-| $certificado  | Classe Certificate::class contendo o certificado digital(OBRIGATÓRIO)  |
-| $uf           | Sigla da unidade da Federação a quem pertence o documento pesquisado (OBRIGATÓRIO) |
-| $cnpj         | Número do CNPJ *sem formatação* (OPCIONAL) |
-| $iest         | Número da Inscrição estadual *sem formatação* (OPCIONAL) |
-| $cpf          | Número do Cadastro de Pessoa Física *sem formatação* (OPCIONAL) |
+| Variável | Detalhamento  |
+| :---:  | :--- |
+| $configJson | String Json com os dados de configuração(OBRIGATÓRIO)  |
+| $content | String com o conteúdo do certificado PFX |
+| $certificado | Classe Certificate::class contendo o certificado digital(OBRIGATÓRIO)  |
+| $uf | Sigla da unidade da Federação a quem pertence o documento pesquisado (OBRIGATÓRIO) |
+| $cnpj | Número do CNPJ *sem formatação* (OPCIONAL) |
+| $iest | Número da Inscrição estadual *sem formatação* (OPCIONAL) |
+| $cpf | Número do Cadastro de Pessoa Física *sem formatação* (OPCIONAL) |
 
 ## Mensagens
 
@@ -297,6 +297,14 @@ stdClass Object
 )
 ```
 
+## SUCESSO
+
+A consulta com sucesso poderá resultar:
+
+| cStat | xMotivo |
+| :---: | :--- | 
+| 111 | consulta cadastro com uma ocorrência. |
+| 112 | consulta cadastro com mais de uma ocorrência, existe mais de um estabelecimento para o argumento pesquisado - ex.: consulta por IE de contribuinte com diversos estabelecimentos e inscrição estadual única. |
 
 ## Mensagens de ERRO (Exceptions)
 
