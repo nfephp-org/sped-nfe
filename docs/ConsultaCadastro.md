@@ -8,14 +8,14 @@ Consulta Cadastro de Contribuinte do ICMS de uma UF.
 **Método:** consultaCadastro
 
 ## Descrição
-Permite consultar a situação cadastral de um contribuinte em uma determinada UF, a funcionalidade é util para verificar se o destinatário da NF-e é um contribuinte em situação regular na UF de destino.
+Permite consultar a situação cadastral de um contribuinte em uma determinada UF, a funcionalidade é util para verificar se o destinatário da NF-e é um contribuinte em situação regular na UF de destino. Lembrando que quando o destinatário está inabilitado a NFe será DENEGADA.
 
-Funciona somente para modelo 55 (NFe), o modelo 65 (NFCe) evidentemente não possue esse tipo de serviço.
+> NOTA: Funciona somente para modelo 55 (NFe), o modelo 65 (NFCe) evidentemente não possue esse tipo de serviço.
 A pesquisa pode ser feita pelo numero do CNPJ, CPF ou Inscrição estadual.
 
 **Escopo:** A consulta equivale à consulta SINTEGRA, isto é consulta a situação de destinatário que sejam inscritos no cadastro de contribuintes do ICMS na UF consultada.
 
-**Disponibilidade:** Nem todas as UF oferecem a consulta, como regra geral podemos dizer que somente as UF que tem sistemas próprios de recepção de NF-e oferecem a consulta.
+**Disponibilidade:** Nem todas as UF oferecem a consulta, como regra geral podemos dizer que somente as UF que tem sistemas próprios de recepção de NF-e oferecem a consulta. Para saber quais SEFAZ oferecem esse serviço consulte sua SEFAZ. Caso a UF pesquisada não ofereça o serviço será retornada uma EXCEPTION.
 
 **Informações:** Existe previsão para retorno dos dados cadastrais, mas nem todas as UF retornam todas as informações. A informação que todas UF, que possuem o serviço retornam é o CNPJ/CPF, Inscrição Estadual, Razão Social e situação cadastral: 0 - não habilitado ou 1 - habilitado
 
@@ -48,9 +48,9 @@ try {
 | $configJson   | String Json com os dados de configuração(OBRIGATÓRIO)  |
 | $certificado  | Classe Certificate::class contendo o certificado digital(OBRIGATÓRIO)  |
 | $uf           | Sigla da unidade da Federação a quem pertence o documento pesquisado (OBRIGATÓRIO) |
-| $cnpj         | Número do CNPJ sem simbolos (OPCIONAL) |
-| $iest         | Número da Inscrição estadual (OPCIONAL) |
-| $cpf          | Número do Cadastro de Pessoal Física (OPCIONAL) |
+| $cnpj         | Número do CNPJ *sem formatação* (OPCIONAL) |
+| $iest         | Número da Inscrição estadual *sem formatação* (OPCIONAL) |
+| $cpf          | Número do Cadastro de Pessoa Física *sem formatação* (OPCIONAL) |
 
 ## Mensagens
 
