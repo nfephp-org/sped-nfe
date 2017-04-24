@@ -36,7 +36,7 @@ try {
 }
 
 ```
-> NOTA: Os campos não serão validados quanto a validade de seu conteúdo, antes do envio, **isso não é função da API**.
+> NOTA: Os campos não serão verificados quanto a validade de seu conteúdo, antes do envio, **isso não é função da API**.
 
 > NOTA: A prioridade é na ordem CNPJ, IEST e CPF, mesmo que você indique os três apenas o CNPJ será usado. 
 
