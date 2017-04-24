@@ -55,9 +55,9 @@ try {
 }
 
 ```
-> NOTA: Os campos não serão verificados quanto a validade de seu conteúdo, antes do envio, **isso não é função da API**.
+> NOTA: Os campos não serão verificados quanto a validade de seu conteúdo, **isso não é função da API**.
 
-> NOTA: A prioridade é na ordem CNPJ, IEST e CPF, mesmo que você indique os três apenas o CNPJ será usado. 
+> NOTA: A prioridade na pesquisa é na ordem CNPJ, IEST e CPF, mesmo que você indique os três apenas o CNPJ será usado. 
 
 
 ## Parametros
@@ -65,7 +65,7 @@ try {
 | Variável      | Detalhamento  |
 | ------------- | ------------- |
 | $configJson   | String Json com os dados de configuração(OBRIGATÓRIO)  |
-| $content      | String com o centeúdo do certificado PFX |
+| $content      | String com o conteúdo do certificado PFX |
 | $certificado  | Classe Certificate::class contendo o certificado digital(OBRIGATÓRIO)  |
 | $uf           | Sigla da unidade da Federação a quem pertence o documento pesquisado (OBRIGATÓRIO) |
 | $cnpj         | Número do CNPJ *sem formatação* (OPCIONAL) |
@@ -101,6 +101,8 @@ try {
 ```
 
 ### RETORNO
+
+A variavel $response no exemplo conterá esse XML, ou algo semelhante.
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
