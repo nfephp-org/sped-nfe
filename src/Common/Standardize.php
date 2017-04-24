@@ -27,7 +27,10 @@ class Standardize
      * @var string
      */
     public $node = '';
-    
+    /**
+     * @var string
+     */
+    public $json = '';
     /**
      * @var array
      */
@@ -59,10 +62,16 @@ class Standardize
         'NFe'
     ];
     
+    public function __construct($xml = null)
+    {
+        $this->toStd($xml);
+    }
+    
     /**
-     * Search xml for specific Node
+     * Identify node and extract from XML for convertion type
      * @param string $xml
-     * @return string
+     * @return string identificated node name
+     * @throws InvalidArgumentException
      */
     public function whichIs($xml)
     {
@@ -109,7 +118,37 @@ class Standardize
             $this->whichIs($xml);
         }
         $sxml = simplexml_load_string($this->node);
-        $json = str_replace('@attributes', 'attributes', json_encode($sxml));
-        return json_decode($json);
+        $this->json = str_replace(
+            '@attributes',
+            'attributes',
+            json_encode($sxml, JSON_PRETTY_PRINT)
+        );
+        return json_decode($this->json);
+    }
+    
+    /**
+     * Retruns JSON string form XML
+     * @param string $xml
+     * @return string
+     */
+    public function toJson($xml = null)
+    {
+        if (!empty($xml)) {
+            $this->toStd($xml);
+        }
+        return $this->json;
+    }
+    
+    /**
+     * Returns array from XML
+     * @param string $xml
+     * @return array
+     */
+    public function toArray($xml = null)
+    {
+        if (!empty($xml)) {
+            $this->toStd($xml);
+        }
+        return json_decode($this->json, true);
     }
 }
