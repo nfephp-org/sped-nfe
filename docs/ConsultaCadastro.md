@@ -30,6 +30,10 @@ try {
     $iest = '';
     $cpf = '';
     $response = $tools->sefazCadastro($uf, $cnpj, $iest, $cpf);
+
+    //você pode padronizar os dados de retorno atraves da classe abaixo
+    
+
 } catch (\Exception $e) {
     echo $e-<getMessage();
 }
@@ -129,6 +133,149 @@ try {
 </soap:Envelope>
 
 ```
+
+## Standardize
+
+Esses retornos em XML podem ser "padronizados" para facilitar a extração de dados em:
+
+### ARRAY 
+
+```
+Array
+(
+    [attributes] => Array
+        (
+            [versao] => 2.00
+        )
+
+    [infCons] => Array
+        (
+            [verAplic] => SP_NFE_PL_008i2
+            [cStat] => 111
+            [xMotivo] => Consulta cadastro com uma ocorrência
+            [UF] => SP
+            [CNPJ] => 00822602000111
+            [dhCons] => 2017-04-24T17:12:13-03:00
+            [cUF] => 35
+            [infCad] => Array
+                (
+                    [IE] => 888889114119
+                    [CNPJ] => 00822602000111
+                    [UF] => SP
+                    [cSit] => 1
+                    [indCredNFe] => 1
+                    [indCredCTe] => 4
+                    [xNome] => FAKE SISTEMAS E EQUIPAMENTOS LTDA - ME
+                    [xRegApur] => NORMAL - REGIME PERIÓDICO DE APURAÇÃO
+                    [CNAE] => 4651601
+                    [dIniAtiv] => 1995-11-06
+                    [dUltSit] => 1995-11-06
+                    [ender] => Array
+                        (
+                            [xLgr] => RUA GUIDO ALIBERTI
+                            [nro] => 5453
+                            [xBairro] => SAO JOSE
+                            [cMun] => 3548807
+                            [xMun] => SAO CAETANO DO SUL
+                            [CEP] => 09580400
+                        )
+
+                )
+
+        )
+
+)
+```
+
+### JSON STRING
+
+```json
+{
+    "attributes": {
+        "versao": "2.00"
+    },
+    "infCons": {
+        "verAplic": "SP_NFE_PL_008i2",
+        "cStat": "111",
+        "xMotivo": "Consulta cadastro com uma ocorr\u00eancia",
+        "UF": "SP",
+        "CNPJ": "00822602000111",
+        "dhCons": "2017-04-24T17:12:13-03:00",
+        "cUF": "35",
+        "infCad": {
+            "IE": "888889114119",
+            "CNPJ": "00822602000111",
+            "UF": "SP",
+            "cSit": "1",
+            "indCredNFe": "1",
+            "indCredCTe": "4",
+            "xNome": "FAKE SISTEMAS E EQUIPAMENTOS LTDA - ME",
+            "xRegApur": "NORMAL - REGIME PERI\u00d3DICO DE APURA\u00c7\u00c3O",
+            "CNAE": "4651601",
+            "dIniAtiv": "1995-11-06",
+            "dUltSit": "1995-11-06",
+            "ender": {
+                "xLgr": "RUA GUIDO ALIBERTI",
+                "nro": "5453",
+                "xBairro": "SAO JOSE",
+                "cMun": "3548807",
+                "xMun": "SAO CAETANO DO SUL",
+                "CEP": "09580400"
+            }
+        }
+    }
+}
+```
+
+### STDCLASS
+
+```
+stdClass Object
+(
+    [attributes] => stdClass Object
+        (
+            [versao] => 2.00
+        )
+
+    [infCons] => stdClass Object
+        (
+            [verAplic] => SP_NFE_PL_008i2
+            [cStat] => 111
+            [xMotivo] => Consulta cadastro com uma ocorrência
+            [UF] => SP
+            [CNPJ] => 00822602000111
+            [dhCons] => 2017-04-24T17:12:13-03:00
+            [cUF] => 35
+            [infCad] => stdClass Object
+                (
+                    [IE] => 888889114119
+                    [CNPJ] => 00822602000111
+                    [UF] => SP
+                    [cSit] => 1
+                    [indCredNFe] => 1
+                    [indCredCTe] => 4
+                    [xNome] => FAKE SISTEMAS E EQUIPAMENTOS LTDA - ME
+                    [xRegApur] => NORMAL - REGIME PERIÓDICO DE APURAÇÃO
+                    [CNAE] => 4651601
+                    [dIniAtiv] => 1995-11-06
+                    [dUltSit] => 1995-11-06
+                    [ender] => stdClass Object
+                        (
+                            [xLgr] => RUA GUIDO ALIBERTI
+                            [nro] => 5453
+                            [xBairro] => SAO JOSE
+                            [cMun] => 3548807
+                            [xMun] => SAO CAETANO DO SUL
+                            [CEP] => 09580400
+                        )
+
+                )
+
+        )
+
+)
+```
+
 
 ## Mensagens de ERRO (Exceptions)
 
