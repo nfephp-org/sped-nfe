@@ -36,9 +36,9 @@ try {
 }
 
 ```
-> NOTA: Os campos não serão validados antes do envio, isso não é função da API.
+> NOTA: Os campos não serão validados quanto a validade de seu conteúdo, antes do envio, **isso não é função da API**.
 
-> NOTA: A prioridade é na ordem CNPJ, se não for vazio será usado, IEST, se CNPJ='' e IEST != '' o IEST será usado, se ambos CNPJ='' e IEST='' então o CPF será usado. 
+> NOTA: A prioridade é na ordem CNPJ, IEST e CPF será usado, mesmo que você indique os três apenas o CNPJ será usado. 
 
 
 ## Parametros
