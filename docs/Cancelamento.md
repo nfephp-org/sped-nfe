@@ -15,10 +15,11 @@ Cancelamento de uma NFe já autorizada previamente.
 ## Descrição
 
 > NOTA: Esse documento deverá ser protocolado e armazenado para atender a legislação.
-> Em principio, podemos apenas cancelar NFe que ainda não sairam da empresa, portanto é considerado um limte de 24 para realizar o cancelamento a partir da data/hora da autorização do documento.
+> Em principio, podemos apenas cancelar NFe que ainda não sairam da empresa, portanto é considerado um prazo limite de 24 para realizar o cancelamento, a partir da data/hora da autorização do documento.
+
 > No caso de NFCe esse prazo passa a ser de 15 MINUTOS entre a emissão e a solicitação de cancelamento.
 
-> Para notas que não tenho sido canceladas dentro do prazo estabelecido, o correto é fazer uma nota de entrada desfazendo o processo fiscal original.
+> Para notas que não tenham sido canceladas dentro do prazo estabelecido, o correto é fazer uma nota de entrada desfazendo o processo fiscal original.
 
 ## Dependências
 
@@ -28,6 +29,8 @@ Cancelamento de uma NFe já autorizada previamente.
 
 [NFePHP\NFe\Common\Standardize::class](Standardize.md)
 
+[NFePHP\NFe\Common\Complements::class](Complements.md)
+
 
 ## Exemplo de Uso
 
@@ -36,6 +39,7 @@ Cancelamento de uma NFe já autorizada previamente.
 use NFePHP\NFe\Tools;
 use NFePHP\Common\Certificate;
 use NFePHP\NFe\Common\Standardize;
+use NFePHP\NFe\Common\Complements;
 
 try {
 
@@ -85,8 +89,8 @@ try {
 
 | Variável | Detalhamento  |
 | :---:  | :--- |
-| $configJson | String Json com os dados de configuração(OBRIGATÓRIO)  |
-| $content | String com o conteúdo do certificado PFX |
+| $configJson | String Json com os dados de configuração (OBRIGATÓRIO) |
+| $content | String com o conteúdo do certificado PFX (OBRIGATÓRIO) |
 | $certificado | Classe Certificate::class contendo o certificado digital(OBRIGATÓRIO)  |
 | $chave | Chave de 44 dígitos da NFe que se quer cancelar (OBRIGATÓRIO) |
 | $xJust | Justificativa para o cancelamento (OBRIGATÓRIO) |
