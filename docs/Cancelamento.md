@@ -14,10 +14,24 @@ Cancelamento de uma NFe já autorizada previamente.
 
 ## Descrição
 
-> NOTA: Esse documento deverá ser protocolado e armazenado para atender a legislação.
-> Em principio, podemos apenas cancelar NFe que ainda não sairam da empresa, portanto é considerado um prazo limite de 24 para realizar o cancelamento, a partir da data/hora da autorização do documento.
+**Condições para Cancelamento**
 
-> No caso de NFCe esse prazo passa a ser de 15 MINUTOS entre a emissão e a solicitação de cancelamento.
+- NF-e autorizada, o usuário deve utilizar a inutilização de numeração se a NF-e não estiver autorizada;
+- NF-e autorizada em até 24 horas, o prazo máximo é de até 2 horas em MT;
+- Possuir o número do protocolo de autorização de uso;
+- A mercadoria não pode ter circulado;
+- A NF-e não pode ter registro de passagem na fiscalização de trânsito;
+- A NF-e não pode ter a confirmação de recebimento;
+
+**Prazo de cancelamento**
+
+Em até 24 horas da autorização de uso da NF-e objeto do cancelamento, no MT o prazo de cancelamento é de 2 horas da autorização de uso. Algumas UF poderão aceitar o pedido de cancelamento após a expiração do prazo de 24 horas, mas o cancelamento vai constar como efetuado com atraso e estará sujeito a aplicação de multa. Algumas UF orientam o emissor para emitir uma NF-e de "estorno" para anular a operação, consulte o contador para obter a orientação adequado quando perder o prazo de cancelamento.
+
+**No caso de NFCe esse prazo passa a ser de 15 MINUTOS entre a emissão e a solicitação de cancelamento.**
+
+> NOTA: Quanto aos prazos podem haver variações desses limites e da condição de aceitação, por qualquer SEFAZ autorizadora, sem prévio aviso !!. 
+
+> NOTA: Esse documento deverá ser protocolado e armazenado para atender a legislação.
 
 > Para notas que não tenham sido canceladas dentro do prazo estabelecido, o correto é fazer uma nota de entrada desfazendo o processo fiscal original.
 
