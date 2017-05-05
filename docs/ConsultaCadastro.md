@@ -18,6 +18,15 @@ Permite consultar a situação cadastral de um contribuinte em uma determinada U
 
 **Informações:** Existe previsão para retorno dos dados cadastrais, mas nem todas as UF retornam todas as informações. A informação que todas UF, que possuem o serviço retornam é o CNPJ/CPF, Inscrição Estadual, Razão Social e situação cadastral: 0 - não habilitado ou 1 - habilitado
 
+## Dependências
+
+[NFePHP\Common\Certificate::class](Certificate.md)
+
+[NFePHP\NFe\Tools::class](Tools.md)
+
+[NFePHP\NFe\Common\Standardize::class](Standardize.md)
+
+
 ## Exemplo de Uso
 
 ```php
@@ -51,7 +60,7 @@ try {
     $json = $stdCl->toJson();
 
 } catch (\Exception $e) {
-    echo $e-<getMessage();
+    echo $e->getMessage();
 }
 
 ```
@@ -62,15 +71,15 @@ try {
 
 ## Parametros
 
-| Variável      | Detalhamento  |
-| ------------- | ------------- |
-| $configJson   | String Json com os dados de configuração(OBRIGATÓRIO)  |
-| $content      | String com o conteúdo do certificado PFX |
-| $certificado  | Classe Certificate::class contendo o certificado digital(OBRIGATÓRIO)  |
-| $uf           | Sigla da unidade da Federação a quem pertence o documento pesquisado (OBRIGATÓRIO) |
-| $cnpj         | Número do CNPJ *sem formatação* (OPCIONAL) |
-| $iest         | Número da Inscrição estadual *sem formatação* (OPCIONAL) |
-| $cpf          | Número do Cadastro de Pessoa Física *sem formatação* (OPCIONAL) |
+| Variável | Detalhamento  |
+| :---:  | :--- |
+| $configJson | String Json com os dados de configuração(OBRIGATÓRIO)  |
+| $content | String com o conteúdo do certificado PFX |
+| $certificado | Classe Certificate::class contendo o certificado digital(OBRIGATÓRIO)  |
+| $uf | Sigla da unidade da Federação a quem pertence o documento pesquisado (OBRIGATÓRIO) |
+| $cnpj | Número do CNPJ *sem formatação* (OPCIONAL) |
+| $iest | Número da Inscrição estadual *sem formatação* (OPCIONAL) |
+| $cpf | Número do Cadastro de Pessoa Física *sem formatação* (OPCIONAL) |
 
 ## Mensagens
 
@@ -155,9 +164,8 @@ A variavel $response no exemplo conterá esse XML, ou algo semelhante.
 
 ## Standardize
 
-Esses retornos em XML podem ser "padronizados" para facilitar a extração de dados.
+Estruturas retornadas pela classe Standardize, para facilitar a extração de dados do XML.
 
-Vide classe [Standardize](Standardize)
 
 ### ARRAY 
 
@@ -297,10 +305,79 @@ stdClass Object
 )
 ```
 
+## SUCESSO
+
+A consulta com sucesso poderá resultar:
+
+| cStat | xMotivo |
+| :---: | :--- | 
+| 111 | consulta cadastro com uma ocorrência. |
+| 112 | consulta cadastro com mais de uma ocorrência, existe mais de um estabelecimento para o argumento pesquisado - ex.: consulta por IE de contribuinte com diversos estabelecimentos e inscrição estadual única. |
 
 ## Mensagens de ERRO (Exceptions)
 
 Caso não passe em alguma validação ou sejam encontrados problemas na comunicação, será SEMPRE retornado um EXCEPTION que deve ser capturado.
 
 Mas os erros não se restringem a esse tipo de falha. Além de falhas na fase de montagem da mensagem e na comunicação podem ser retornados erros relativos a analise pelas regras de negócios da SEFAZ nesse caso os erros deverão ser analisados no xml de retorno.
+
+### Verificação do Certificado de Transmissão
+
+| cStat | xMotivo |
+| :---: | :--- | 
+| 280 | Rejeição: Certificado Transmissor inválido |
+| 281 | Rejeição: Certificado Transmissor Data Validade |
+| 282 | Rejeição: Certificado Transmissor sem CNPJ |
+| 283 | Rejeição: Certificado Transmissor - erro Cadeia de Certificação |
+| 284 | Rejeição: Certificado Transmissor revogado |
+| 285 | Rejeição: Certificado Transmissor difere ICP-Brasil |
+| 286 | Rejeição: Certificado Transmissor erro no acesso a LCR |
+
+### Verificação Inicial da Mensagem no Web Service
+
+| cStat | xMotivo |
+| :---: | :--- | 
+| 108 | Serviço Paralisado Momentaneamente (curto prazo) |
+| 109 | Serviço Paralisado sem Previsão |
+| 214 | Rejeição: Tamanho da mensagem excedeu o limite estabelecido |
+| 243 | Rejeição: XML Mal Formado |
+| 299 | Rejeição: XML da área de cabeçalho com codificação diferente de UTF-8 |
+
+
+### Validação das Regras de Negócio da Consulta Cadastro, feita pela SEFAZ
+
+| cStat | xMotivo |
+| :---: | :--- | 
+| 257 | Rejeição: Solicitante não habilitado para emissão da NF-e |
+| 258 | Rejeição: CNPJ da consulta inválido | 
+| 259 | Rejeição: CNPJ da consulta não cadastrado como contribuinte na UF |
+| 260 | Rejeição: IE da consulta inválida |
+| 261 | Rejeição: IE da consulta não cadastrada como contribuinte na UF |
+| 262 | Rejeição: UF não fornece consulta por CPF |
+| 263 | Rejeição: CPF da consulta inválido |
+| 264 | Rejeição: CPF da consulta não cadastrado como contribuinte na UF |
+| 265 | Rejeição: Sigla da UF da consulta difere da UF do Web Service |
+
+### Validação da Forma da Área de Dados
+
+| cStat | xMotivo |
+| :---: | :--- | 
+| 215 | Rejeição: Falha no schema XML
+| 402 | Rejeição: XML da área de dados com codificação diferente de UTF-8 |
+| 404 | Rejeição: Uso de prefixo de namespace não permitido |
+| 516 | Rejeição: Falha no schema XML – inexiste a tag raiz esperada para a mensagem |
+| 517 | Rejeição: Falha no schema XML – inexiste atributo versao na tag raiz da mensagem |
+| 545 | Rejeição: Falha no schema XML – versão informada na versaoDados do SOAPHeader diverge da versão da mensagem |
+| 587 | Rejeição: Usar somente o namespace padrão da NF-e |
+| 588 | Rejeição: Não é permitida a presença de caracteres de edição no início/fim da mensagem ou entre as tags da mensagem |
+
+### Validação das informações de controle da chamada ao Web Service
+
+| cStat | xMotivo |
+| :---: | :--- | 
+| 238 | Rejeição: Cabeçalho - Versão do arquivo XML superior a Versão vigente |
+| 239 | Rejeição: Cabeçalho - Versão do arquivo XML não suportada |
+| 242 | Rejeição: Cabeçalho - Falha no Schema XML |
+| 409 | Rejeição: Campo cUF inexistente no elemento nfeCabecMsg do SOAP Header |
+| 410 | Rejeição: UF informada no campo cUF não é atendida pelo Web Service |
+| 411 | Rejeição: Campo versaoDados inexistente no elemento nfeCabecMsg do SOAP Header |
 
