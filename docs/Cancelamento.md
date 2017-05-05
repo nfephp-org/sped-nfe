@@ -12,8 +12,13 @@ Cancelamento de uma NFe já autorizada previamente.
 
 **Método:** nfeRecepcaoEvento
 
-
 ## Descrição
+
+> NOTA: Esse documento deverá ser protocolado e armazenado para atender a legislação.
+> Em principio, podemos apenas cancelar NFe que ainda não sairam da empresa, portanto é considerado um limte de 24 para realizar o cancelamento a partir da data/hora da autorização do documento.
+> No caso de NFCe esse prazo passa a ser de 15 MINUTOS entre a emissão e a solicitação de cancelamento.
+
+> Para notas que não tenho sido canceladas dentro do prazo estabelecido, o correto é fazer uma nota de entrada desfazendo o processo fiscal original.
 
 ## Dependências
 
@@ -54,7 +59,22 @@ try {
     $arr = $stdCl->toArray();
     //nesse caso o $json irá conter uma representação em JSON do XML
     $json = $stdCl->toJson();
-
+    
+    //verifique se o evento foi processado
+    if ($std->cStat != 128) {
+        //houve alguma falha e o evento não foi processado
+        //TRATAR
+    } else {
+        $cStat = $std->retEvento->infEvento->cStat;
+        if ($cStat == '101' || $cStat == '155') {
+            //SUCESSO PROTOCOLAR A SOLICITAÇÂO ANTES DE GUARDAR
+            $xml = Complements::toAuthorize($tools->lastRequest, $response);
+            //grave o XML protocolado 
+        } else {
+            //houve alguma falha no evento 
+            //TRATAR
+        }
+    }    
 } catch (\Exception $e) {
     echo $e->getMessage();
 }
