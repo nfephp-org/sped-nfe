@@ -2,6 +2,7 @@
 <WS xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <UF>
     <sigla>AC</sigla>
+    <!-- NOTA: AC usa o SVRS -->
     <homologacao>
       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://hml.sefaznet.ac.gov.br/nfce/qrcode</NfeConsultaQR>
     </homologacao>
@@ -11,6 +12,7 @@
   </UF>
   <UF>
     <sigla>AL</sigla>
+    <!-- NOTA: AL usa o SVRS -->
     <homologacao>
       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://nfce.sefaz.al.gov.br/QRCode/consultarNFCe.jsp</NfeConsultaQR>
     </homologacao>
@@ -21,6 +23,7 @@
   <UF>
     <sigla>AM</sigla>
     <homologacao>
+        <!-- NOTA: este ambiente de homologação serve apenas a inscritos no estado do Amazonas -->
        <NfeAutorizacao method="nfeAutorizacaoLote" operation="NfeAutorizacao" version="3.10">https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeAutorizacao</NfeAutorizacao>
        <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NfeRetAutorizacao" version="3.10">https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeRetAutorizacao</NfeRetAutorizacao>
        <NfeInutilizacao  method="nfeInutilizacaoNF2" operation="NfeInutilizacao2" version="3.10">https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeInutilizacao2</NfeInutilizacao>
@@ -28,6 +31,11 @@
        <NfeStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10">https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeStatusServico2</NfeStatusServico>
        <RecepcaoEvento  method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://homnfce.sefaz.am.gov.br/nfce-services/services/RecepcaoEvento</RecepcaoEvento>
        <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://homnfce.sefaz.am.gov.br/nfceweb/consultarNFCe.jsp</NfeConsultaQR>
+       <NfeConsultaCadastro method="consultaCadastro2" operation="NfeConsultaCadastro" version="3.10"></NfeConsultaCadastro>
+       <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="3.10"></NfeConsultaDest>
+       <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="3.10"></NfeDownloadNF>
+       <RecepcaoEPEC method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEPEC>
+       <NfeStatusEPEC method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusEPEC>       
     </homologacao>
     <producao>
        <NfeAutorizacao method="nfeAutorizacaoLote" operation="NfeAutorizacao" version="3.10">https://nfce.sefaz.am.gov.br/nfce-services/services/NfeAutorizacao</NfeAutorizacao>
@@ -36,11 +44,17 @@
        <NfeConsultaProtocolo method="nfeConsultaNF2" operation="NfeConsulta2" version="3.10">https://nfce.sefaz.am.gov.br/nfce-services/services/NfeConsulta2</NfeConsultaProtocolo>
        <NfeStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10">https://nfce.sefaz.am.gov.br/nfce-services/services/NfeStatusServico2</NfeStatusServico>
        <RecepcaoEvento  method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://nfce.sefaz.am.gov.br/nfce-services/services/RecepcaoEvento</RecepcaoEvento>
-       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://sistemas.sefaz.am.gov.br/nfceweb/consultarNFCe.jsp</NfeConsultaQR>
+       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">https://sistemas.sefaz.am.gov.br/nfceweb/consultarNFCe.jsp</NfeConsultaQR>
+       <NfeConsultaCadastro method="consultaCadastro2" operation="NfeConsultaCadastro" version="3.10"></NfeConsultaCadastro>
+       <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="3.10"></NfeConsultaDest>
+       <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="3.10"></NfeDownloadNF>
+       <RecepcaoEPEC method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00"></RecepcaoEPEC>
+       <NfeStatusEPEC method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10"></NfeStatusEPEC>       
     </producao>
   </UF>
   <UF>
     <sigla>AP</sigla>
+    <!-- NOTA: AP usa o SVRS -->
     <homologacao>
       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">https://www.sefaz.ap.gov.br/nfcehml/nfce.php</NfeConsultaQR>
     </homologacao>
@@ -50,6 +64,7 @@
   </UF>
   <UF>
     <sigla>BA</sigla>
+    <!-- NOTA: BA usa o SVRS -->
     <homologacao>
        <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://hnfe.sefaz.ba.gov.br/servicos/nfce/modulos/geral/NFCEC_consulta_chave_acesso.aspx</NfeConsultaQR>
     </homologacao>
@@ -70,6 +85,7 @@
        <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://nfceh.sefaz.ce.gov.br/pages/ShowNFCe.html</NfeConsultaQR>
     </homologacao>
     <producao>
+       <!-- CE ainda não tem serviços em produção -->
        <NfeAutorizacao method="nfeAutorizacaoLote" operation="NfeAutorizacao" version="3.10"></NfeAutorizacao>
        <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NfeRetAutorizacao" version="3.10"></NfeRetAutorizacao>
        <NfeInutilizacao  method="nfeInutilizacaoNF2" operation="NfeInutilizacao2" version="3.10"></NfeInutilizacao>
@@ -86,6 +102,7 @@
   </UF>
   <UF>
     <sigla>DF</sigla>
+    <!-- NOTA: AP usa o SVRS -->
     <homologacao>
       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://dec.fazenda.df.gov.br/ConsultarNFCe.aspx</NfeConsultaQR>
     </homologacao>
@@ -124,6 +141,7 @@
   </UF>
   <UF>
     <sigla>MA</sigla>
+    <!-- NOTA: AP usa o SVAN -->
     <homologacao>
       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://www.hom.nfce.sefaz.ma.gov.br/portal/consultarNFCe.jsp</NfeConsultaQR>
     </homologacao>
@@ -154,6 +172,7 @@
   </UF>
   <UF>
     <sigla>PA</sigla>
+    <!-- NOTA: AP usa o SVAN -->
     <homologacao>
       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">https://appnfc.sefa.pa.gov.br/portal-homologacao/view/consultas/nfce/nfceForm.seam</NfeConsultaQR>
     </homologacao>
@@ -184,6 +203,7 @@
   </UF>
   <UF>
     <sigla>RN</sigla>
+    <!-- NOTA: AP usa o SVRS -->
     <homologacao>
        <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://hom.nfce.set.rn.gov.br/consultarNFCe.aspx</NfeConsultaQR>
     </homologacao>
@@ -193,6 +213,7 @@
   </UF>
   <UF>
     <sigla>RO</sigla>
+    <!-- NOTA: AP usa o SVRS -->
     <homologacao>
        <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://www.nfce.sefin.ro.gov.br/consultanfce/consulta.jsp</NfeConsultaQR>
     </homologacao>
@@ -223,6 +244,7 @@
   </UF>
   <UF>
     <sigla>SC</sigla>
+    <!-- NOTA: AP usa o SVRS -->
     <homologacao>
       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100"></NfeConsultaQR>
     </homologacao>
@@ -232,6 +254,7 @@
   </UF>  
   <UF>
     <sigla>SE</sigla>
+    <!-- NOTA: AP usa o SVRS -->
     <homologacao>
       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://www.hom.nfe.se.gov.br/portal/consultarNFCe.jsp</NfeConsultaQR>
     </homologacao>
@@ -266,6 +289,7 @@
   </UF>
   <UF>
     <sigla>TO</sigla>
+    <!-- NOTA: AP usa o SVRS -->
     <homologacao>
       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100"></NfeConsultaQR>
     </homologacao>
