@@ -17,9 +17,23 @@ Esse é um campo CDATA, pertencente ao XML, conforme mostrado abaixo:
 Essa TAG é inserida **AUTOMATICAMENTE** pela API durante a fase de assinatura da NFCe (método signNFe da classe Tools), desde que:
 
 1. O config.json contenha as informações sobre o CSC e CSC_id (denominados também como "tokenNFCe" e "tokenNFCeId"). Essas referencias devem ser obtidas pelo emitente junto a SEFAZ de seu estado.  
-2. Deve existir uma URL referenciando o serviço de consulta pelo QRCode no arquivo: nfephp/config/nfe_ws3_mod65.xml (no caso da versão 4.0 da API) ou em sped-nfe/storage/wsnfe_3.10_mod65.xml (no caso da versão 5.0 da API)
+2. Deve existir uma URL referenciando o serviço de consulta pelo QRCode no arquivo: sped-nfe/storage/wsnfe_3.10_mod65.xml, como no exemplo abaixo:
+
+```xml
+<UF>
+    <sigla>AC</sigla>
+    <!-- NOTA: AC usa o SVRS -->
+    <homologacao>
+      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://hml.sefaznet.ac.gov.br/nfce/qrcode</NfeConsultaQR>
+    </homologacao>
+    <producao>
+      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://www.sefaznet.ac.gov.br/nfce/qrcode</NfeConsultaQR>
+    </producao>
+  </UF>
+```
 
 Caso algum desses dados não exista a TAG do QRCode não será inserida no XML.
 
 > NOTA: especificamente para a versão >= 5.0 da API, deverá ocorrer uma EXCEPTION, caso falte alguma informação necessaria na constrção do QRCode. 
 
+> NOTA: podem estar faltando URL para o QRCode no arquivo ou esses URL pode "MUDAR", como o mantenedor não usa NFCe, fica dificil saber o que foi incluso e o que mudou se não houver ajuda por parte dos usuários da API. Portanto COLABORE informando os erros e falhas.
