@@ -12,11 +12,11 @@ Esse é um campo CDATA, pertencente ao XML, conforme mostrado abaixo:
 <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
 ```
 
-> NOTA: caso essa TAG não esteja presente no XML de NFCe a SEFAZ acusara o erro **394 - Nota Fiscal sem a informação do QR-Code** e a NFCE não será aceita.
+> NOTA: caso essa TAG não esteja presente no XML de NFCe a SEFAZ acusará o erro **394 - Nota Fiscal sem a informação do QR-Code** e a NFCE não será aceita.
 
 Essa TAG é inserida **AUTOMATICAMENTE** pela API durante a fase de assinatura da NFCe (método signNFe da classe Tools), desde que:
 
-1. O config.json contenha as informações sobre o CSC e CSC_id (denominados também como "tokenNFCe" e "tokenNFCeId"). Essas referencias devem ser obtidas pelo emitente junto a SEFAZ de seu estado.  
+1. O config.json contenha as informações sobre o CSC e CSC_id (denominados também como "tokenNFCe" e "tokenNFCeId"). Essas referencias (tokens) devem ser obtidas pelo emitente junto a SEFAZ de seu estado.  
 2. Deve existir uma URL referenciando o serviço de consulta pelo QRCode no arquivo: sped-nfe/storage/wsnfe_3.10_mod65.xml, como no exemplo abaixo:
 
 ```xml
@@ -34,6 +34,6 @@ Essa TAG é inserida **AUTOMATICAMENTE** pela API durante a fase de assinatura d
 
 Caso algum desses dados não exista a TAG do QRCode não será inserida no XML.
 
-> NOTA: especificamente para a versão >= 5.0 da API, deverá ocorrer uma EXCEPTION, caso falte alguma informação necessaria na constrção do QRCode. 
+> NOTA: especificamente para a versão >= 5.0 da API, deverá ocorrer uma EXCEPTION, caso falte alguma informação necessaria na construção do QRCode. 
 
-> NOTA: podem estar faltando URL para o QRCode no arquivo ou esses URL pode "MUDAR", como o mantenedor não usa NFCe, fica dificil saber o que foi incluso e o que mudou se não houver ajuda por parte dos usuários da API. Portanto COLABORE informando os erros e falhas.
+> NOTA: podem estar faltando URL's para o QRCode no arquivo ou essas URL's podem "MUDAR", como o mantenedor não usa NFCe, fica dificil saber o que foi incluso e o que mudou, se não houver ajuda por parte dos usuários da API. Portanto COLABORE informando os erros e falhas.
