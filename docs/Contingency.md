@@ -107,10 +107,10 @@ Nesse caso, não temos como saber nem se a NFe foi ou não recebida pois não co
 
 **O QUE FAZER ?**
 
-Tente novamente, após alguns segundos. Nesse qunado for reenviada a NFe pode ocorrer o seguinte:
+Tente novamente, após alguns segundos. Nesse caso, quando for reenviada, pode ocorrer o seguinte:
 
-- envio aceito com retorno do recibo, nesse caso vai em frente e esqueça o problema.
-- retorna o ERRO 204 - Duplicidade de NF-e, nesse caso o lote foi aceito (antes de dar o "timeout") e a NFe foi processada a autorizada ou denegada. Nessa caso você deve fazer uma consulta usando a chave de 44 digitos da NFe, essa consulta irá te retornar os dados do protocolo da NFe (autorizado ou denegado), é só adicionar a NFe e prosseguir. 
+- envio aceito com retorno do recibo, vai em frente e esqueça o problema.
+- retorna o **ERRO 204 - Duplicidade de NF-e**, nesse caso o lote foi aceito (antes de dar o "timeout") e a NFe foi processada a autorizada ou denegada. Nessa caso você deve fazer uma consulta usando a chave de 44 digitos da NFe, essa consulta irá te retornar os dados do protocolo da NFe (autorizado ou denegado), é só adicionar a NFe e prosseguir.
 
 Mas se continua dando "timeout", ai observe os comentários abaixo: 
 
