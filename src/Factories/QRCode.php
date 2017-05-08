@@ -17,6 +17,7 @@ namespace NFePHP\NFe\Factories;
  */
 
 use DOMDocument;
+use InvalidArgumentException;
 
 class QRCode
 {
@@ -28,8 +29,9 @@ class QRCode
      * @param string $idToken CSC identification
      * @param string $sigla UF alias
      * @param string $versao version of field
-     * @param string $url URL for serach by QRCode
+     * @param string $url URL for search by QRCode
      * @return string
+     * @throws InvalidArgumentException
      */
     public static function putQRTag(
         \DOMDocument $dom,
@@ -39,8 +41,16 @@ class QRCode
         $versao,
         $url
     ) {
-        if (empty($url)) {
-            return $dom->saveXML();
+        if (empty($token) | empty($idToken) | empty($url)) {
+            if ($token == '') {
+                $msg = "Falta o tokenNFCe no config.json";
+            } elseif ($idToken == '') {
+                $msg = "Falta o tokenNFCeId no config.json";
+            } else {
+                $msg = "Falta a URL do serviço NfeConsultaQR para a $sigla,"
+                    . " no arquivo wsnfe_3.10_mod65.xml";
+            }
+            throw new InvalidArgumentException($msg);
         }
         $nfe = $dom->getElementsByTagName('NFe')->item(0);
         $infNFe = $dom->getElementsByTagName('infNFe')->item(0);
