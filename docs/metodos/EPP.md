@@ -42,7 +42,7 @@ try {
         [2, 222],
         [3, 333]
     ];
-    $tipo = 1; //1-primero prazo paraos itens, 2-segundo prazo para os itens
+    $tipo = 1; //1-primero prazo para os itens, 2-segundo prazo para os itens
     $nSeqEvento = 1;
     $response = $tools->sefazEPP($chNFe,$nProt,$itens,$tipo,$nSeqEvento);
 

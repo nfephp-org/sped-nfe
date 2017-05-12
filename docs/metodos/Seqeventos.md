@@ -4,8 +4,8 @@ Sempre que um evento, quelquer que seja for gerado, será solicitado que um nume
 
 Isso se deve ao fato que alguns eventos permitem multiplas ocorrências, notadamente:
 
-- [Carta de Correção - CCe](metodos/CartaCorrecao.md)
-- [EPP - Solicitação de Prorrogação](metodos/EPP.md)
+- [Carta de Correção - CCe](CartaCorrecao.md)
+- [EPP - Solicitação de Prorrogação](EPP.md)
 
 ## Como gerar esse numero sequencial ?
 
