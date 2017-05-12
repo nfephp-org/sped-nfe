@@ -1,4 +1,4 @@
-# Standardize
+# PADRONIZAÇÃO DOS DADOS RETORNADOS
 
 Esta classe (Standardize::class) foi criada para permitir algumas facilidades na hora de obter os dados dos retornos da SEFAZ.
 

@@ -1,4 +1,4 @@
-# Cancelamento
+# CANCELAMENTO
 
 Cancelamento de uma NFe já autorizada previamente.
 

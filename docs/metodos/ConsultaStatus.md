@@ -1,1 +1,1 @@
-
+# CONSULTA DE STATUS

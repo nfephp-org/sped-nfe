@@ -32,8 +32,8 @@ Essa TAG é inserida **AUTOMATICAMENTE** pela API durante a fase de assinatura d
   </UF>
 ```
 
-Caso algum desses dados não exista a TAG do QRCode não será inserida no XML.
+Caso algum desses dados não exista; a TAG do QRCode **não será inserida** no XML.
 
-> NOTA: especificamente para a versão >= 5.0 da API, deverá ocorrer uma EXCEPTION, caso falte alguma informação necessaria na construção do QRCode. 
+> NOTA: especificamente para a versão >= 5.0 da API, deverá ocorrer uma EXCEPTION, caso falte alguma informação necessaria na construção do QRCode (que é obrigatório no xml). 
 
-> NOTA: podem estar faltando URL's para o QRCode no arquivo ou essas URL's podem "MUDAR", como o mantenedor não usa NFCe, fica dificil saber o que foi incluso e o que mudou, se não houver ajuda por parte dos usuários da API. Portanto COLABORE informando os erros e falhas.
+> NOTA: podem estar faltando URL's para o QRCode no arquivo ou essas URL's podem "MUDAR", como o mantenedor deste pacote não usa NFCe, fica dificil saber o que foi incluso e o que mudou, se não houver **ajuda por parte dos usuários da API**. Portanto **COLABORE** informando os erros e falhas.
