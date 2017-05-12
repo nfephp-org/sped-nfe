@@ -1,25 +1,10 @@
-# SPED-NFE v5.0 (em desenvolvimento)
+# sped-nfe
 
-Framework para geração e comunicação das NFe com as SEFAZ autorizadoras, e visa fornecer os meios para gerar, assinar e anviar os dados relativos ao projeto Sped NFe das SEFAZ.
+## Introdução
 
-Esta versão do pacote ainda está em desenvolvimento [FASE BETA TEST], pode não estar totalmente funcional e não deve ser utilizado para nada além de testes.
-
-## Este release está sendo preparado para atender as verões 3.10 e 4.0 do layout da SEFAZ!
-
-> ### Versão 4.0 do layout da SEFAZ
-
->Ambiente SEFAZ de Homologação 4.0 (ambiente de teste das empresas): a partir de 01/06/2017;
-
->*Ambiente SEFAZ de Produção 4.0 : a pertir de 01/08/17;*
-
->*Desativação na SEFAZ da versão anterior 3.10: até 02/04/18.*
-
->**IMPORTANTE: Até 06/11/2017 esta versão será movida para master e as anteriores se tornam automaticamente OBSOLETAS e não mais receberão correções ou atualizações.**
-
-*Utilize o chat do Gitter para iniciar discussões especificas sobre o desenvolvimento deste pacote.*
+Este pacote é um "framework especializado" destinado à geração e comunicação das NFe com as SEFAZ autorizadoras relativos ao projeto Sped NFe das SEFAZ.
 
 [![Chat][ico-gitter]][link-gitter]
-
 
 [![Latest Stable Version][ico-stable]][link-packagist]
 [![Build Status][ico-travis]][link-travis]
@@ -33,37 +18,20 @@ Esta versão do pacote ainda está em desenvolvimento [FASE BETA TEST], pode nã
 [![Forks][ico-forks]][link-forks]
 [![Stars][ico-stars]][link-stars]
 
+## Objetivos
 
-Este pacote é aderente com os [PSR-1], [PSR-2] e [PSR-4]. Se você observar negligências de conformidade, por favor envie um patch via pull request.
+- Fornecer uma base simples para construir e processar todas as mensagens do SPED NFe
+- Permitir facil integração com os aplicativos PHP
+- Simplicar operações complexas com o uso de certificados digitais e XML
+- Permitir a atualização das versões, perante as constantes mudanças e evolução do projeto da SEFAZ
+- Retirar a complexidade subjacente ao sistema SOAP da SEFAZ dos aplicativos
 
-[PSR-1]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md
-[PSR-2]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md
-[PSR-4]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md
+## Duvidas ?
 
-Não deixe de se cadastrar no [grupo de discussão do NFePHP](http://groups.google.com/group/nfephp) para acompanhar o desenvolvimento e participar das discussões e tirar duvidas!
 
-## Install
 
-**Este pacote esta listado no [Packgist](https://packagist.org/) foi desenvolvido para uso do [Composer](https://getcomposer.org/), portanto não será explicitada nenhuma alternativa de instalação.**
+## Instalação
 
-*Durante a fase de desenvolvimento e testes este pacote deve ser instalado com:*
-```bash
-composer require nfephp-org/sped-nfe:v5.0.x-dev
-```
-
-*Ou ainda alterando o composer.json do seu aplicativo inserindo:*
-```json
-"require": {
-    "nfephp-org/sped-nfe" : "v5.0.x-dev"
-}
-```
-
-> NOTA: Ao utilizar este pacote ainda na fase de desenvolvimento não se esqueça de alterar o composer.json da sua aplicação para aceitar pacotes em desenvolvimento, alterando a propriedade "minimum-stability" de "stable" para "dev".
-> ```json
-> "minimum-stability": "dev"
-> ```
-
-*Após os stable realeases estarem disponíveis, pode ser instalado com:*
 ```bash
 composer require nfephp-org/sped-nfe
 ```
@@ -74,80 +42,13 @@ Ou ainda alterando o composer.json do seu aplicativo inserindo:
 }
 ```
 
-## Requirements
-
-Para que este pacote possa funcionar são necessarios os seguintes requisitos do PHP e outros pacotes dos quais esse depende.
-
-- PHP 5.6 ou PHP 7.x
-- ext-curl
-- ext-dom
-- ext-json
-- ext-gd
-- ext-mbstring
-- ext-mcrypt
-- ext-openssl
-- ext-soap
-- ext-xml
-- ext-zip
-- [sped-common:v5.x](https://github.com/nfephp-org/sped-common/tree/v5.0)
-
-> Para outras ações necessárias ao SPED, podem ser usados (opcionalmente) outros pacotes, como:
-
-> - [sped-da](https://github.com/nfephp-org/sped-da) Geração dos documentos impressos (DANFE, DACTE, etc.)
-> - [sped-mail](https://github.com/nfephp-org/sped-mail) Envio de email com as notas e outros documentos fiscais 
-> - [sped-ibpt](https://github.com/nfephp-org/sped-ibpt) Consulta dos impostos aproximados na venda a consumidor
-> - [sped-gnre](https://github.com/nfephp-org/sped-gnre) Geração do GNRE
-> - [posprint](https://github.com/nfephp-org/posprint) Impressão de documentos em impressoras térmicas POS
+## Conceitos
 
 
-## Donations
 
-**Estamos em busca de *doadores* e *patrocinadores* para ajudar a financiar parte do desenvolvimento deste pacote e de outros pacotes, aqueles que estiverem interessados por favor entrem em contato com o autor pelo email linux.rlm@gmail.com** 
-
-Este é um projeto totalmente *OpenSource*, para usa-lo, copia-lo e modifica-lo você não paga absolutamente nada. Porém para continuarmos a mante-lo de forma adequada é necessária alguma contribuição seja feita, seja auxiliando na codificação, na documentação, na realização de testes e identificação de falhas e BUGs.
-
-Mas também, caso você ache que qualquer informação obtida aqui, lhe foi útil e que isso vale de algum dinheiro e está disposto a doar algo, sinta-se livre para enviar qualquer quantia, seja diretamente ao autor ou através do PayPal e do PagSeguro.
-
-<a target="_blank" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=linux%2erlm%40gmail%2ecom&lc=BR&item_name=NFePHP%20OpenSource%20API&item_number=nfephp&currency_code=BRL&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest">
-<img alt="Doar com Paypal" src="https://www.paypalobjects.com/pt_BR/BR/i/btn/btn_donateCC_LG.gif"/></a>
-
-<a target="_blank" href="https://pag.ae/bkXPq4">
-<img alt="Doar PagSeguro" src="https://stc.pagseguro.uol.com.br/public/img/botoes/doacoes/120x53-doar.gif"/></a>
+## A API
 
 
-*Agradecemos a contribuição, dos colegas abaixo indicados, pois sem a ajuda deles o desenvolvimento desse projeto seria muito mais lento e talvez até impossivel.*
-
-> ### Walber Sales - *Patrocinador Gold*
-
-## Documentation
-
-O processo de documentação ainda esta no inicio, mas já existem alguns documentos uteis.
-
-[Documentação](Funcionalidades.md)
-
-## Contributing
-
-Para contribuir com correções de BUGS, melhoria no código, documentação, elaboração de testes ou qualquer outro auxilio técnico e de programação por favor observe o [CONTRIBUTING](CONTRIBUTING.md) e o  [Código de Conduta](CONDUCT.md) para maiores detalhes.
-
-## Change log
-
-Acompanhe o [CHANGELOG](../CHANGELOG.md) para maiores informações sobre as alterações recentes.
-
-## Testing
-
-Todos os testes são desenvolvidos para operar com o PHPUNIT
-
-## Security
-
-Caso você encontre algum problema relativo a segurança, por favor envie um email diretamente aos mantenedores do pacote ao invés de abrir um ISSUE.
-
-## Credits
-
-Roberto L. Machado (owner and developer)
-
-## License
-
-Este pacote está diponibilizado sob LGPLv3 ou MIT License (MIT). Leia  [Arquivo de Licença](LICENSE.md) para maiores informações.
 
 [ico-stable]: https://poser.pugx.org/nfephp-org/sped-nfe/version
 [ico-stars]: https://img.shields.io/github/stars/nfephp-org/sped-nfe.svg?style=flat-square

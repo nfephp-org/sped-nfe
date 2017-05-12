@@ -6,7 +6,7 @@ Esta versão do pacote ainda está em desenvolvimento [FASE BETA TEST], pode nã
 
 ## Este release está sendo preparado para atender as verões 3.10 e 4.0 do layout da SEFAZ!
 
-> ### Versão 4.0 do layout da SEFAZ
+> ### NOVA Versão 4.0 do layout da SEFAZ
 
 >Ambiente SEFAZ de Homologação 4.0 (ambiente de teste das empresas): a partir de 01/06/2017;
 
@@ -14,7 +14,7 @@ Esta versão do pacote ainda está em desenvolvimento [FASE BETA TEST], pode nã
 
 >*Desativação na SEFAZ da versão anterior 3.10: até 02/04/18.*
 
->**IMPORTANTE: Até 06/11/2017 esta versão será movida para master e as anteriores se tornam automaticamente OBSOLETAS e não mais receberão correções ou atualizações.**
+>**IMPORTANTE: Até 15/06/2017 esta versão será movida para master e as anteriores se tornam automaticamente OBSOLETAS e não mais receberão correções ou atualizações.**
 
 *Utilize o chat do Gitter para iniciar discussões especificas sobre o desenvolvimento deste pacote.*
 
@@ -78,9 +78,10 @@ Ou ainda alterando o composer.json do seu aplicativo inserindo:
 
 Para que este pacote possa funcionar são necessarios os seguintes requisitos do PHP e outros pacotes dos quais esse depende.
 
-- PHP 5.6 or PHP 7.x
+- PHP 5.6 ou PHP 7.x (recomendável PHP 7.x) 
 - ext-curl
 - ext-dom
+- ext-json
 - ext-gd
 - ext-mbstring
 - ext-mcrypt
@@ -88,7 +89,7 @@ Para que este pacote possa funcionar são necessarios os seguintes requisitos do
 - ext-soap
 - ext-xml
 - ext-zip
-- [sped-common:v5.x](https://github.com/nfephp-org/sped-common/tree/v5.0)
+- [sped-common](https://github.com/nfephp-org/sped-common)
 
 > Para outras ações necessárias ao SPED, podem ser usados (opcionalmente) outros pacotes, como:
 
