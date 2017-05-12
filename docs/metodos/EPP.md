@@ -88,10 +88,11 @@ try {
 | $configJson | String Json com os dados de configuração (OBRIGATÓRIO) |
 | $content | String com o conteúdo do certificado PFX (OBRIGATÓRIO) |
 | $certificado | Classe Certificate::class contendo o certificado digital(OBRIGATÓRIO)  |
-| $chave | Chave de 44 dígitos da NFe que se quer cancelar (OBRIGATÓRIO) |
-| $xJust | Justificativa para o cancelamento (OBRIGATÓRIO) |
+| $chNFe | Chave de 44 dígitos da NFe que se quer prorrogar (OBRIGATÓRIO) |
 | $nProt | Número do protocolo de autorização de uso (OBRIGATÓRIO) |
-
+| $itens | Array com os numeros do itens e a suas quantidades, os quais se deseja prorrogar o prazo de retorno de industrialização (OBRIGATÓRIO) |
+| $tipo  | 1-prorrogação do 1o prazo ou 2-prorrogação do 2o prazo (OBRIGATÓRIO) |
+| $nSeqEvento | [Numero sequencial do evento](Seqeventos.md) (OBRIGATÓRIO) |
 
 ## Mensagens
 

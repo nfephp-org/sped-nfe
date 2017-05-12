@@ -47,6 +47,6 @@ E se houverem mais solicitações de prorrogação:
 | 1234 | 111500 | 2 | Solitação de prorrogação de prazo itens 3,7 | 
 | 1234 | 111501 | 2 | Solitação de prorrogação de 2o prazo item 2 | 
 
-> Veja que no caso da solicitaão de prorrogação passam a ser pertinentes também  os itens da NFe que estão sendo declarados nessa solicitação.
+> Veja que no caso da solicitação de prorrogação passam a ser pertinentes também  os itens da NFe que estão sendo declarados nessa solicitação.
 
 **Que inhaca !!**
