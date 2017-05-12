@@ -1,5 +1,4 @@
-
-# Funcionalidades
+# FUNCIONALIDADES DA API
 
 Os processos envolvendo a gestão de NFe, são vários e alguns um tanto "complexos".
 

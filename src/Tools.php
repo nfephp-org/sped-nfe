@@ -413,19 +413,21 @@ class Tools extends ToolsCommon
      * in interstate operations
      * @param  string  $chNFe
      * @param  string  $nProt
-     * @param  integer $nSeqEvento
+     * @param  integer $tipo 1-primerio prazo, 2-segundo prazo
      * @param  array   $itens
+     * @param  integer $nSeqEvento
      * @return string
      */
     public function sefazEPP(
         $chNFe,
         $nProt,
         $itens = array(),
+        $tipo = 1,
         $nSeqEvento = 1
     ) {
         $uf = UFList::getUFByCode(substr($chNFe, 0, 2));
         $tpEvento = 111500;
-        if ($nSeqEvento == 2) {
+        if ($tipo == 2) {
             $tpEvento = 111501;
         }
         $tagAdic = "<nProt>$nProt</nProt>";
@@ -724,9 +726,8 @@ class Tools extends ToolsCommon
      *                   3 - Revoga CSC Ativo
      * @return string
      */
-    public function sefazCsc(
-        $indOp
-    ) {
+    public function sefazCsc($indOp)
+    {
         if ($this->modelo != 65) {
             throw new RuntimeException(
                 "Esta operação é exclusiva de NFCe modelo [65], "
@@ -753,8 +754,8 @@ class Tools extends ToolsCommon
             . "<indOp>$indOp</indOp>"
             . "<raizCNPJ>$raizCNPJ</raizCNPJ>"
             . "<dadosCsc>"
-            . "<idCsc>".$this->config->tokenNFCeId."</idCsc>"
-            . "<codigoCsc>".$this->config->tokenNFCe."</codigoCsc>"
+            . "<idCsc>".$this->config->CSCid."</idCsc>"
+            . "<codigoCsc>".$this->config->CSC."</codigoCsc>"
             . "</dadosCsc>"
             . "</admCscNFCe>";
         }

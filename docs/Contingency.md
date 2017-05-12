@@ -1,4 +1,5 @@
-# CONTINGENCY
+# CONTINGÊNCIAS
+
 Em condições normais as NFe emitidas tem a propriedade &lt;tpEmis&gt; com o valor igual a 1, ou seja emissão normal.
 
 Quando a conexão via internet com a SEFAZ autorizadora não é possivel existem alternativas para permitir a emissão dos documentos mesmo nessas condições.

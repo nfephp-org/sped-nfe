@@ -2,11 +2,11 @@
 
 Para montar esse txt algumas regras básicas devem ser obedecidas:
 
-1 Todas as linhas devem terminar com "|" (pipe).
-2 Nos campos separados por "|" (pipe) não devem ter espaços em branco.
-3 Não são permitidos quaisquer caracteres especiais, exceto o "LF" (\n) ao linal da linha.
-4 Recomenda-se não usar acentuação, por exemplo "Ç" substitua por "C"
-5 Não são permitidas aspas (simples ou duplas)
+1. Todas as linhas devem terminar com "|" (pipe).
+2. Nos campos separados por "|" (pipe) não devem ter espaços em branco.
+3. Não são permitidos quaisquer caracteres especiais, exceto o "LF" (\n) ao linal da linha.
+4. Recomenda-se não usar acentuação, por exemplo "Ç" substitua por "C"
+5. Não são permitidas aspas (simples ou duplas)
 
 ## Como testar o TXT ?
 
@@ -25,12 +25,12 @@ print_r($errors);
 
 O métod estatico isValid(), irá retornar um ARRAY contendo os erros encontrados ou um array VAZIO caso nenhum erro seja localizado.
 
-> NOTA: Esta analise é apenas feita sobre a estrutura do TXT e não sobre o conteudo dos campos, portanto isso não irá impedir que surjam erros tentar converter ou ainda após a analise do XML pelo autorizador (SEFAZ).
+> NOTA: Esta analise é apenas feita sobre a estrutura do TXT e não sobre o conteúdo dos campos, portanto isso não irá impedir que **surjam erros** tentar converter ou ainda após a analise do XML pelo autorizador (SEFAZ).
 
-> IMPORTANTE: A estrutura tanto do XML como do TXT depende da versão do layout da SEFAZ neste caso estamos indicando a estrutura da versão 3.10.
+> IMPORTANTE: A estrutura tanto do XML como do TXT depende da versão do layout da SEFAZ, neste caso estamos indicando a estrutura da **versão 3.10 do layout**.
 
 
-## Estrutura, layout 3.10:
+## Estrutura, **layout 3.10**:
 
 
 NOTAFISCAL|1|

@@ -1,4 +1,4 @@
-# Consulta de Cadastro
+# CONSULTA DE CADASTRO
 Consulta Cadastro de Contribuinte do ICMS de uma UF.
 
 **Função:** Serviço para consultar o cadastro de contribuintes do ICMS da unidade federada.

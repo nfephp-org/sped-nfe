@@ -553,8 +553,8 @@ class Tools
         );
         $signed = QRCode::putQRTag(
             $dom,
-            $this->config->tokenNFCe,
-            $this->config->tokenNFCeId,
+            $this->config->CSC,
+            $this->config->CSCid,
             $uf,
             $this->urlVersion,
             $this->urlService

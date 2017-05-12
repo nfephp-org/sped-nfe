@@ -1,4 +1,4 @@
-# Class Tools
+# Tools::class
 
 A classe Tools é a responsável por fazer a comunicação entre o aplicativo e o webservice da SEFAZ.
 
