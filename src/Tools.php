@@ -422,7 +422,7 @@ class Tools extends ToolsCommon
         $chNFe,
         $nProt,
         $itens = array(),
-        $tipo = 1,    
+        $tipo = 1,
         $nSeqEvento = 1
     ) {
         $uf = UFList::getUFByCode(substr($chNFe, 0, 2));
@@ -726,9 +726,8 @@ class Tools extends ToolsCommon
      *                   3 - Revoga CSC Ativo
      * @return string
      */
-    public function sefazCsc(
-        $indOp
-    ) {
+    public function sefazCsc($indOp)
+    {
         if ($this->modelo != 65) {
             throw new RuntimeException(
                 "Esta operação é exclusiva de NFCe modelo [65], "
@@ -755,8 +754,8 @@ class Tools extends ToolsCommon
             . "<indOp>$indOp</indOp>"
             . "<raizCNPJ>$raizCNPJ</raizCNPJ>"
             . "<dadosCsc>"
-            . "<idCsc>".$this->config->tokenNFCeId."</idCsc>"
-            . "<codigoCsc>".$this->config->tokenNFCe."</codigoCsc>"
+            . "<idCsc>".$this->config->CSCid."</idCsc>"
+            . "<codigoCsc>".$this->config->CSC."</codigoCsc>"
             . "</dadosCsc>"
             . "</admCscNFCe>";
         }
