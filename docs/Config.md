@@ -4,7 +4,7 @@ Para passar os dados básicos para Tools::class, é usada uma string JSON. Isso 
 
 ## Construindo o config.json
 
-O config.json pode ser construido extraindo dados do usuário de uma base de dados, montando um array e convertendo esse array em uma string JSON, como demosntrado abaixo: 
+O config.json pode ser construido extraindo dados do usuário de uma base de dados, montando um array e convertendo esse array em uma string JSON, como demonstrado abaixo: 
 
 ```php
 
@@ -69,3 +69,6 @@ $json = json_encode($config);
 | proxyPort | Número da porta do proxy da rede interna | Se houver um proxy esse campo deve conter o numero da porta |
 | proxyUser | Nome do usuário do proxy da rede interna | Indicar apenas se a autenticação for obrigatória |
 | proxyPass | Password do usuário do proxy da rede interna | Indicar apenas se a autenticação for obrigatória |
+
+
+> NOTA: Para saber mais sobre o IBPT consulte o repositório [sped-ibpt](https://github.com/nfephp-org/sped-ibpt)
