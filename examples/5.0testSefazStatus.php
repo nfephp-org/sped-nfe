@@ -33,7 +33,7 @@ $arr = [
 $configJson = json_encode($arr);
 
 //carrega o conteudo do certificado.
-$content = file_get_contents('expired_certificate.pfx');
+$content = file_get_contents('fixtures/expired_certificate.pfx');
 
 //intancia a classe tools
 $tools = new Tools($configJson, Certificate::readPfx($content, 'associacao'));
