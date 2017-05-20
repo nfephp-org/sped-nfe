@@ -134,7 +134,7 @@ class Tools extends ToolsCommon
      */
     public function sefazConsultaChave($chave, $tpAmb = null)
     {
-        $uf = $this->validKeyByUF($chave);
+        $uf = UFList::getUFByCode(substr($chave, 0, 2));
         if (empty($tpAmb)) {
             $tpAmb = $this->tpAmb;
         }

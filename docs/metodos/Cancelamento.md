@@ -353,6 +353,12 @@ A consulta com sucesso poderá resultar:
 
 | cStat | xMotivo |
 | :---: | :--- | 
+| 128 | Lote de Evento Processado |
+
+Já na seção do retorno do evento "\<retEvento\>" :
+
+| cStat | xMotivo |
+| :---: | :--- | 
 | 101 | Cancelamento homologado. |
 | 155 | Cancelamento homologado fora de prazo. |
 

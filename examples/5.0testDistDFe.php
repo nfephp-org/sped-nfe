@@ -31,7 +31,7 @@ $arr = [
 ];
 $configJson = json_encode($arr);
 
-$content = file_get_contents('expired_certificate.pfx');
+$content = file_get_contents('fixtures/expired_certificate.pfx');
 
 $tools = new Tools($configJson, Certificate::readPfx($content, 'associacao'));
 $tools->model('55');
