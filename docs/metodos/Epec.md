@@ -4,11 +4,11 @@ A emissão do EPEC poderá ser adotada por qualquer emissor que esteja impossibi
 
 - Gerar a NF-e com “tpEmis = 4”, mantendo também a informação do motivo de entrada em contingência com data e hora do início da contingência, com número diferente de qualquer NF-e que tenha sido transmitida com outro “tpEmis”;
 - Gerar o arquivo XML do EPEC com as seguintes informações da NF-e:
- - UF, CNPJ e Inscrição Estadual do emitente;
- - Chave de Acesso;
- - UF e CNPJ ou CPF do destinatário;
- - Valor Total da NF-e, Valor Total do ICMS e Valor Total do ICMS-ST;
- - Outras informações constantes no leiaute.
+> - UF, CNPJ e Inscrição Estadual do emitente;
+> - Chave de Acesso;
+> - UF e CNPJ ou CPF do destinatário;
+> - Valor Total da NF-e, Valor Total do ICMS e Valor Total do ICMS-ST;
+> - Outras informações constantes no leiaute.
 
 - Assinar o arquivo com o certificado digital do emitente;
 - Enviar o arquivo XML do EPEC para o Web Service de Registro de Eventos do AN;
