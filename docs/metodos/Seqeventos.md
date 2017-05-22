@@ -24,7 +24,7 @@ Caso seja necessária uma segunda carta de correção, então :
 | NFe | Evento | Seq | Motivo |
 | :---: | :---:  | :---: | :--- |
 | 1234 | 110110 | 1 | Erro de digitação no nome do produto |
-| 1234 | 110110 | **2** | Erro na informação adicional da NFe |
+| 1234 | 110110 | **2** | Erro na informação adicional da NFe; Erro de digitação no nome do produto |
 
 > Portanto **deve existir** um controle sobre esses eventos, para cada NFe e se forem gerados eventos repetidos, esse numero de controle "sequencial" deverá ser incrementado.
 
@@ -33,7 +33,7 @@ Agora vamos pedir uma prorrogação de prazo de isenção de ICMS, um EPP, sobre
 | NFe | Evento | Seq | Motivo |
 | :---: | :---:  | :---: | :--- |
 | 1234 | 110110 | 1 | Erro de digitação no nome do produto |
-| 1234 | 110110 | 2 | Erro de informação adicional |
+| 1234 | 110110 | 2 | Erro na informação adicional da NFe; Erro de digitação no nome do produto |
 | 1234 | 111500 | **1** | Solitação de prorrogação de prazo itens 1,2 | 
 
 E se houverem mais solicitações de prorrogação: 
@@ -41,7 +41,7 @@ E se houverem mais solicitações de prorrogação:
 | NFe | Evento | Seq | Motivo |
 | :---: | :---:  | :---: | :--- |
 | 1234 | 110110 | 1 | Erro de digitação no nome do produto |
-| 1234 | 110110 | 2 | Erro de informação adicional |
+| 1234 | 110110 | 2 | Erro na informação adicional da NFe; Erro de digitação no nome do produto |
 | 1234 | 111500 | 1 | Solitação de prorrogação de prazo itens 1,2 | 
 | 1234 | 111501 | **1** | Solitação de prorrogação de 2o prazo item 1 | 
 | 1234 | 111500 | **2** | Solitação de prorrogação de prazo itens 3,7 | 
