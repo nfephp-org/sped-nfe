@@ -290,6 +290,9 @@ class MakeBasic
      */
     public function getXMl()
     {
+        if (empty($this->xml)) {
+            $this->montaNFe();
+        }
         return $this->xml;
     }
     
