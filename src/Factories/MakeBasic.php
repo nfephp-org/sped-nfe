@@ -5,12 +5,11 @@ namespace NFePHP\NFe\Factories;
 /**
  * Classe a construção do xml da NFe modelo 55 e modelo 65
  * Esta classe basica está estruturada para montar XML da NFe para o
- * layout versão 3.10
+ * layout versão 3.10, os demais modelos serão derivados deste
  *
  * @category  NFePHP
  * @package   NFePHP\NFe\Factories\MakeBasic
  * @copyright Copyright (c) 2008-2017
- * @copyright NFePHP Copyright (c) 2008
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
  * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
@@ -285,7 +284,7 @@ class MakeBasic
     }
     
     /**
-     * Retorna o xml que foi montado
+     * Retorna o xml e monta se necessário
      * @return string
      */
     public function getXMl()
@@ -298,7 +297,7 @@ class MakeBasic
     
     /**
      * Retorna o numero da chave da NFe
-     * @return type
+     * @return string
      */
     public function getChave()
     {
@@ -388,13 +387,15 @@ class MakeBasic
      * @param  string $versao
      * @return DOMElement
      */
-    public function taginfNFe($chave = '', $versao = '')
+    public function taginfNFe($chave = '')
     {
         $this->infNFe = $this->dom->createElement("infNFe");
         $this->infNFe->setAttribute("Id", 'NFe'.$chave);
-        $this->infNFe->setAttribute("versao", $versao);
+        $this->infNFe->setAttribute(
+            "versao",
+            number_format($this->versao, 2, '.', '')
+        );
         //$this->infNFe->setAttribute("pk_nItem",'');
-        $this->versao = $versao;
         $this->chNFe = $chave;
         return $this->infNFe;
     }
@@ -504,9 +505,6 @@ class MakeBasic
             true,
             $identificador . "Número do Documento Fiscal"
         );
-        if ($dhEmi == '') {
-            $dhEmi = DateTime::convertTimestampToSefazTime();
-        }
         $this->dom->addChild(
             $ide,
             "dhEmi",

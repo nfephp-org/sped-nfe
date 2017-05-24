@@ -17,7 +17,7 @@ Este serviço disponibiliza para os atores da NF-e informações e documentos fi
 Os documentos fiscais eletrônicos e informações resumidas estarão disponíveis para distribuição por até 3 meses após sua recepção pelo Ambiente Nacional da NF-e. A distribuição ocorrerá para os atores que desempenham papéis de emitente, destinatário, transportador e terceiros (informado na tag autXML) conforme tabela abaixo:
 
 | Documentos | Emitente | Destinatário (1) | Transportador (2) | Terceiros (3) |
-| :---:      | :---:    | :---:         | :---:          | :---:      |
+| :---      | :---:    | :---:         | :---:          | :---:      |
 | NF-e | Não | Sim | Sim | Sim |
 | Evento de Cancelamento | Não | Sim | Sim | Sim |
 | Evento de Carta de Correção | Não | Sim | Sim | Sim |
@@ -32,9 +32,13 @@ Os documentos fiscais eletrônicos e informações resumidas estarão disponíve
 | Resumo de Eventos de Registro de Passagem | Sim | Sim | Sim | Sim |
 
 *1. Os documentos fiscais e resumos de eventos estarão disponíveis somente se o destinatário se manifestar dando "Ciência da Operação", “Operação não Realizada” ou "Confirmação de Operação" para a NF-e, exceto para o Evento de Cancelamento, que será disponibilizado mesmo sem a manifestação do destinatário. Antes da manifestação ficará disponível para o destinatário somente a estrutura XML de “Resumo de NF-e” e o cancelamento de NF-e.*
+
 *2. A NF-e estará disponível somente para o transportador identificado no grupo X03.*
+
 *3. A NF-e estará disponível para terceiros somente cujo CNPJ ou CPF estiver informado na tag autXML.*
+
 *4. Eventos de Pedido de Prorrogação de Prazo da NT 2015.001: EPP1 e EPP2 (Evento Pedido de Prorrogação 1º e 2º Prazo), ECPP1 e ECPP2 (Evento Cancelamento Pedido de Prorrogação 1º e 2º Prazo).*
+
 *5. Eventos do Fisco em Resposta ao Pedido de Prorrogação de Prazo da NT 2015.001: EFPP1 e EFPP2 (Evento Fisco Resposta ao Pedido de Prorrogação 1º e 2º Prazo), EFCPP1 e EFCPP2 (Evento Fisco Resposta ao Cancelamento de Prorrogação 1º e 2º Prazo)*
 
 Os retornos podem ser 
