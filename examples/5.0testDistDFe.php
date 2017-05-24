@@ -30,10 +30,9 @@ $arr = [
     ]   
 ];
 $configJson = json_encode($arr);
+$pfxcontent = file_get_contents('fixtures/expired_certificate.pfx');
 
-$content = file_get_contents('fixtures/expired_certificate.pfx');
-
-$tools = new Tools($configJson, Certificate::readPfx($content, 'associacao'));
+$tools = new Tools($configJson, Certificate::readPfx($pfxcontent, 'associacao'));
 $tools->model('55');
 
 //sempre que ativar a contingência pela primeira vez essa informação deverá ser 
@@ -45,6 +44,7 @@ $contingencia = $tools->contingency->deactivate();
 //e se necessário carregada novamente quando a classe for instanciada
 $tools->contingency->load($contingencia);
 
+//executa a busca por documentos
 $response = $tools->sefazDistDFe(
     'AN',
     $arr['cnpj'],
