@@ -19,6 +19,7 @@ namespace NFePHP\NFe\Factories;
 
 use NFePHP\Common\Keys;
 use NFePHP\Common\DOMImproved as Dom;
+use NFePHP\Common\Strings;
 use RuntimeException;
 use DOMDocument;
 use DOMElement;
@@ -384,7 +385,6 @@ class MakeBasic
      * Informações da NF-e A01 pai NFe
      * tag NFe/infNFe
      * @param  string $chave
-     * @param  string $versao
      * @return DOMElement
      */
     public function taginfNFe($chave = '')
@@ -403,52 +403,52 @@ class MakeBasic
     /**
      * Informações de identificação da NF-e B01 pai A01
      * tag NFe/infNFe/ide
-     * @param  string $cUF
-     * @param  string $cNF
+     * @param  int $cUF
+     * @param  int $cNF
      * @param  string $natOp
-     * @param  string $indPag
-     * @param  string $mod
-     * @param  string $serie
-     * @param  string $nNF
+     * @param  ind $indPag
+     * @param  int $mod
+     * @param  int $serie
+     * @param  int $nNF
      * @param  string $dhEmi
      * @param  string $dhSaiEnt
-     * @param  string $tpNF
-     * @param  string $idDest
+     * @param  int $tpNF
+     * @param  int $idDest
      * @param  string $cMunFG
-     * @param  string $tpImp
-     * @param  string $tpEmis
-     * @param  string $cDV
-     * @param  string $tpAmb
-     * @param  string $finNFe
-     * @param  string $indFinal
-     * @param  string $indPres
-     * @param  string $procEmi
+     * @param  int $tpImp
+     * @param  int $tpEmis
+     * @param  int $cDV
+     * @param  int $tpAmb
+     * @param  int $finNFe
+     * @param  int $indFinal
+     * @param  int $indPres
+     * @param  int $procEmi
      * @param  string $verProc
      * @param  string $dhCont
      * @param  string $xJust
      * @return DOMElement
      */
     public function tagide(
-        $cUF = '',
-        $cNF = '',
-        $natOp = '',
-        $indPag = '',
-        $mod = '',
-        $serie = '',
-        $nNF = '',
-        $dhEmi = '',
-        $dhSaiEnt = '',
-        $tpNF = '',
-        $idDest = '',
-        $cMunFG = '',
-        $tpImp = '',
-        $tpEmis = '',
-        $cDV = '',
-        $tpAmb = '',
-        $finNFe = '',
-        $indFinal = '0',
-        $indPres = '',
-        $procEmi = '',
+        $cUF,
+        $cNF,
+        $natOp,
+        $indPag,
+        $mod,
+        $serie,
+        $nNF,
+        $dhEmi,
+        $dhSaiEnt,
+        $tpNF,
+        $idDest,
+        $cMunFG,
+        $tpImp,
+        $tpEmis,
+        $cDV,
+        $tpAmb,
+        $finNFe,
+        $indFinal,
+        $indPres,
+        $procEmi = 0,
         $verProc = '',
         $dhCont = '',
         $xJust = ''
@@ -466,14 +466,14 @@ class MakeBasic
         $this->dom->addChild(
             $ide,
             "cNF",
-            $cNF,
+            str_pad($cNF, 8, '0', STR_PAD_LEFT),
             true,
             $identificador . "Código Numérico que compõe a Chave de Acesso"
         );
         $this->dom->addChild(
             $ide,
             "natOp",
-            $natOp,
+            Strings::replaceSpecialsChars(substr(trim($natOp), 0, 60)),
             true,
             $identificador . "Descrição da Natureza da Operaçãoo"
         );
@@ -512,7 +512,7 @@ class MakeBasic
             true,
             $identificador . "Data e hora de emissão do Documento Fiscal"
         );
-        if ($mod == '55' && $dhSaiEnt != '') {
+        if ($mod == '55' && !empty($dhSaiEnt)) {
             $this->dom->addChild(
                 $ide,
                 "dhSaiEnt",
@@ -616,7 +616,7 @@ class MakeBasic
             $this->dom->addChild(
                 $ide,
                 "xJust",
-                $xJust,
+                Strings::replaceSpecialsChars(substr(trim($xJust), 0, 256)),
                 true,
                 $identificador . "Justificativa da entrada em contingência"
             );
@@ -1754,32 +1754,28 @@ class MakeBasic
      * que identifica a mercadoria sujeita aos regimes de substituição
      * tributária e de antecipação do recolhimento do imposto.
      * vide NT2015.003
-     * @param  string $nItem
-     * @param  string $texto
+     * tag NFe/infNFe/det[item]/prod/CEST (opcional)
+     * @param  int $nItem
+     * @param  string $codigo
      * @return DOMElement
      */
-    public function tagCEST($nItem = '', $texto = '')
+    public function tagCEST($nItem, $codigo)
     {
-        if ($texto == '') {
-            return '';
-        }
-        $cest = $this->dom->createElement("CEST", $texto);
+        $cest = $this->dom->createElement("CEST", $codigo);
         $this->aCest[$nItem][] = $cest;
         return $cest;
     }
     
     /**
      * tagRECOPI
-     * @param  string $nItem
-     * @param  string $texto
+     * tag NFe/infNFe/det[item]/prod/nRECOPI
+     * @param  int $nItem
+     * @param  string $codigo
      * @return DOMElement
      */
-    public function tagRECOPI($nItem = '', $texto = '')
+    public function tagRECOPI($nItem, $codigo)
     {
-        if ($texto == '') {
-            return '';
-        }
-        $recopi = $this->dom->createElement("RECOPI", $texto);
+        $recopi = $this->dom->createElement("nRECOPI", $codigo);
         $this->aRECOPI[$nItem] = $recopi;
         return $recopi;
     }
@@ -1791,12 +1787,12 @@ class MakeBasic
      * @param  string $texto
      * @return DOMElement
      */
-    public function taginfAdProd($nItem = '', $texto = '')
+    public function taginfAdProd($nItem, $texto)
     {
-        if ($texto == '') {
-            return '';
-        }
-        $infAdProd = $this->dom->createElement("infAdProd", $texto);
+        $infAdProd = $this->dom->createElement(
+            "infAdProd",
+            Strings::replaceSpecialsChars(substr(trim($texto), 0, 500))
+        );
         $this->aInfAdProd[$nItem] = $infAdProd;
         return $infAdProd;
     }
@@ -4349,8 +4345,8 @@ class MakeBasic
     
     /**
      * Grupo COFINS S01 pai M01
-     * tag det/imposto/COFINS (opcional)
-     * @param  string $nItem
+     * tag det[item]/imposto/COFINS (opcional)
+     * @param  int $nItem
      * @param  string $cst
      * @param  string $vBC
      * @param  string $pCOFINS
