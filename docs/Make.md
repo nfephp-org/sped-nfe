@@ -6,8 +6,13 @@ Para construir o XML da NFe (ou da NFCe) deve ser usada a classe Make::class
 
 Os métodos públicos desta classe são praticamente os mesmos da versão anterior da API, com algumas poucas diferenças.
 
+### Considerações na passagem de parâmetros
 
-### function taginfNFe():DOMElement (OPCIONAL)
+**Em campos string, caso não haja informações a passar, passe uma string vazia ou null**
+
+**Em campos float, caso não haja informações a passar, passe null e não ZERO**
+
+### function taginfNFe($parametros):DOMElement (OPCIONAL)
 Informações iniciais da NF-e 
 
 > NOTA: Se esta tag não for criada pelo aplicativo, ela será criada em tempo de execução, e se for criada com uma chave incorreta a mesma será remontada e inserida antes da montagem do XML.
@@ -18,7 +23,7 @@ tag **NFe/infNFe**
 | :----    | :----: | :----     | 
 | $chave | string | Chave de 44 digitos (OPCIONAL) |
 
-### function tagide():DOMElement (OBRIGATÓRIO)
+### function tagide($parametros):DOMElement (OBRIGATÓRIO)
 Informações de identificação da NF-e
 
 tag **NFe/infNFe/ide**
@@ -33,7 +38,7 @@ tag **NFe/infNFe/ide**
 | $serie | int | Série do Documento Fiscal (OBRIGATÓRIO)|
 | $nNF | int | Número do Documento Fiscal  (OBRIGATÓRIO) |
 | $dhEmi | string | Data e hora de emissão do Documento Fiscal (OBRIGATÓRIO)|
-| $dhSaiEnt | Data e hora de Saída ou da Entrada da Mercadoria/Produto (OBRIGATÓRIO, mas caso não existe passe uma string vazia, caso das notas modelo 65)|
+| $dhSaiEnt | string |Data e hora de Saída ou da Entrada da Mercadoria/Produto (OBRIGATÓRIO, mas caso não existe passe uma string vazia, caso das notas modelo 65) |
 | $tpNF | int | Tipo de Operação (OBRIGATÓRIO)|
 | $idDest | int | Identificador de local de destino da operação (OBRIGATÓRIO)|
 | $cMunFG | string | Código do Município de Ocorrência do Fato Gerador (OBRIGATÓRIO)|
@@ -49,35 +54,119 @@ tag **NFe/infNFe/ide**
 | $dhCont | string | Data e Hora da entrada em contingência (OPCIONAL) Ao usar a Competency::class na classe Tools essa tag será ajusta de forma automática |
 | $xJust | string | Justificativa da entrada em contingência (OPCIONAL) Ao usar a Competency::class na classe Tools essa tag será ajusta de forma automática |
 
-### function tagrefNFe():DOMElement (OPCIONAL)
+### function tagrefNFe($parametros):DOMElement (OPCIONAL)
+Chave de acesso da NF-e referenciada
 
-### function tagrefNF():DOMElement (OPCIONAL)
+tag **NFe/infNFe/ide/NFref[]/refNFe**
 
-### function tagrefNFP():DOMElement (OPCIONAL)
+Cada chamada desse metodo irá criar um novo item em um array interno, usado posteriormente na montagem da NFe.
 
-### function tagrefCTe():DOMElement (OPCIONAL)
+> NOTA: Inclua em sequência todas as NFe referenciadas, antes de referenciar outros documentos.
+ 
+| Paramêtros | Tipo   | Descrição |
+| :----    | :----: | :----     | 
+| $chave   | string | Chave da NFe referenciada (OBRIGATÓRIO)|
 
-### function tagrefECF():DOMElement (OPCIONAL)
+### function tagrefNF($parametros):DOMElement (OPCIONAL)
+Informação da NF modelo 1/1A referenciada 
 
-### function tagemit():DOMElement (OBRIGATÓRIO)
+tag **NFe/infNFe/ide/NFref[]/NF**
 
-### function tagenderEmit():DOMElement (OBRIGATÓRIO)
+Cada chamada desse metodo irá criar um novo item em um array interno, usado posteriormente na montagem da NFe.
 
-### function tagdest():DOMElement (OBRIGATÓRIO)
+> NOTA: Inclua em sequência todas as NF (1/1A) referenciadas, antes de referenciar outros documentos.
 
-### function tagenderDest():DOMElement (OBRIGATÓRIO)
+| Paramêtros | Tipo   | Descrição |
+| :----    | :----: | :----     | 
+| $cUF | int | Código da UF do emitente na NF (OBRIGATÓRIO)|
+| $aamm | int | Ano e Mês de emissão da NF-e (OBRIGATÓRIO)|
+| $cnpj | string | CNPJ do emitente (OBRIGATÓRIO)|
+| $serie | int | Série do Documento Fiscal (ZERO se série unica) (OBRIGATÓRIO)|
+| $nNF | int | Número do Documento Fiscal (OBRIGATÓRIO)|
 
-### function tagretirada():DOMElement (OPCIONAL)
 
-### function tagentrega():DOMElement (OPCIONAL)
+### function tagrefNFP($parametros):DOMElement (OPCIONAL)
+Informações da NF de produtor rural referenciada
 
-### function tagautXML():DOMElement (OPCIONAL)
+tag **NFe/infNFe/ide/NFref[]/refNFP**
 
-### function tagprod():DOMElement (OBRIGATÓRIO)
+Cada chamada desse metodo irá criar um novo item em um array interno, usado posteriormente na montagem da NFe.
 
-### function tagNVE():DOMElement (OPCIONAL)
+> NOTA: Inclua em sequência todas as NFP referenciadas, antes de referenciar outros documentos.
 
-### function tagCEST():DOMElement (OPCIONAL)
+| Paramêtros | Tipo   | Descrição |
+| :----    | :----: | :----     | 
+| $cUF | int | Código da UF do emitente na NF (OBRIGATÓRIO)|
+| $aamm | int | Ano e Mês de emissão da NF-e (OBRIGATÓRIO)|
+| $cnpj | string | CNPJ do emitente (OPCIONAL) string vazia se não houver|
+| $cpf | string | CPF do emitente (OPCIONAL) string vazia se não houver|
+| $ie | string | Inscrição Estadual do emitente (OBRIGATÓRIO)|
+| $mod | int | Modelo do Documento Fiscal (2 ou 4) (OBRIGATÓRIO)|
+| $serie | int | Série do Documento Fiscal (ZERO se sem série) (OBRIGATÓRIO)|
+| $nNF | int | Número do Documento Fiscal (OBRIGATÓRIO)|
+
+### function tagrefCTe($parametros):DOMElement (OPCIONAL)
+Chave de acesso da CT-e referenciada
+
+tag **NFe/infNFe/ide/NFref[]/refCTe**
+
+Cada chamada desse metodo irá criar um novo item em um array interno, usado posteriormente na montagem da NFe.
+
+> NOTA: Inclua em sequência todas as CTe referenciadas, antes de referenciar outros documentos.
+ 
+| Paramêtros | Tipo   | Descrição |
+| :----    | :----: | :----     | 
+| $chave   | string | Chave da CTe referenciada (OBRIGATÓRIO)|
+
+### function tagrefECF($parametros):DOMElement (OPCIONAL)
+Informações do Cupom Fiscal referenciado
+
+tag **NFe/infNFe/ide/NFref[]/refECF**
+
+Cada chamada desse metodo irá criar um novo item em um array interno, usado posteriormente na montagem da NFe.
+
+> NOTA: Inclua em sequência todas as ECF referenciadas, antes de referenciar outros documentos.
+
+| Paramêtros | Tipo   | Descrição |
+| :----    | :----: | :----     | 
+| $mod | string | Modelo do Documento Fiscal (OBRIGATÓRIO) |
+| $nECF | int | Número de ordem sequencial do ECF (OBRIGATÓRIO) |
+| $nCOO | int | Número do Contador de Ordem de Operação - COO (OBRIGATÓRIO) |
+
+### function tagemit($parametros):DOMElement (OBRIGATÓRIO)
+Identificação do emitente da NF-e
+
+tag **NFe/infNFe/emit**
+
+| Paramêtros | Tipo   | Descrição |
+| :----    | :----: | :----     | 
+| $cnpj | string | CNPJ do emitente (OPCIONAL) passe uma string vazia se não houver|
+| $cpf | string | CPF do emitente (OPCIONAL) passe uma string vazia se não houver|
+| $xNome | string | Razão Social ou Nome do emitente  (OBRIGATÓRIO)|
+| $xFant | string | Nome fantasia (OPCIONAL) passe uma string vazia se não houver|
+| $ie | string | Inscrição Estadual do Emitente (OBRIGATÓRIO)|
+| $iest | string | IE do Substituto Tributário (OPCIONAL)|
+| $im | string | Inscrição Municipal do Prestador de Serviço (OPCIONAL) |
+| $cnae | string | CNAE fiscal (OPCIONAL) passe uma string vazia se não houver|
+| $crt | int | Código de Regime Tributário (OBRIGATÓRIO)|
+
+### function tagenderEmit($parametros):DOMElement (OBRIGATÓRIO)
+
+### function tagdest($parametros):DOMElement (OBRIGATÓRIO)
+
+### function tagenderDest($parametros):DOMElement (OBRIGATÓRIO)
+
+### function tagretirada($parametros):DOMElement (OPCIONAL)
+
+### function tagentrega($parametros):DOMElement (OPCIONAL)
+
+### function tagautXML($parametros):DOMElement (OPCIONAL)
+
+### function tagprod($parametros):DOMElement (OBRIGATÓRIO)
+
+### function tagNVE($parametros):DOMElement (OPCIONAL)
+
+### function tagCEST($parametros):DOMElement (OPCIONAL)
 
 Código Especificador da Substituição Tributária – CEST, que identifica a mercadoria sujeita aos regimes de substituição tributária e de antecipação do recolhimento do imposto.
 
@@ -90,7 +179,7 @@ tag **NFe/infNFe/det[item]/prod/CEST**
 | $nItem   | int | Numero do item da nota fiscal (OBRIGATÓRIO)|
 | $codigo  | string | Codigo do CEST ex. 01.099.00 (OBRIGATÓRIO)|
 
-### function tagRECOPI():DOMElement (OPCIONAL)
+### function tagRECOPI($parametros):DOMElement (OPCIONAL)
 
 A informação do número do RECOPI será obrigatória na operação com papel imune (NCM conforme Anexo II.01 - NCM Tipos de Papel (Vinculado ao RECOPI, #128 NCM) da NT2013/005) e a NF-e poderá ser autorizada em até 5 dias após a data contida no identificador gerado no RECOPI.
 
@@ -103,7 +192,7 @@ Vide: Anexo XII.02 - Identificador RECOPI
 | $nItem   | int | Numero do item da nota fiscal (OBRIGATÓRIO)|
 | $codigo  | string | Número do RECOPI (OBRIGATÓRIO)|
 
-### function taginfAdProd():DOMElement (OPCIONAL)
+### function taginfAdProd($parametros):DOMElement (OPCIONAL)
 
 Informações adicionais do produto
 
@@ -118,93 +207,93 @@ tag **NFe/infNFe/det[item]/infAdProd**
 | $nItem   | int | Numero do item da nota fiscal (OBRIGATÓRIO)|
 | $texto  | string | Texto adicional ao item da NFe (OBRIGATÓRIO)|
 
-### function tagDI():DOMElement  (OPCIONAL)
+### function tagDI($parametros):DOMElement  (OPCIONAL)
 
-### function tagadi():DOMElement (OPCIONAL)
+### function tagadi($parametros):DOMElement (OPCIONAL)
 
-### function tagdetExport():DOMElement (OPCIONAL)
+### function tagdetExport($parametros):DOMElement (OPCIONAL)
 
-### function tagveicProd():DOMElement (OPCIONAL)
+### function tagveicProd($parametros):DOMElement (OPCIONAL)
 
-### function tagmed():DOMElement (OPCIONAL)
+### function tagmed($parametros):DOMElement (OPCIONAL)
 
-### function tagarma():DOMElement (OPCIONAL)
+### function tagarma($parametros):DOMElement (OPCIONAL)
 
-### function tagcomb():DOMElement (OPCIONAL)
+### function tagcomb($parametros):DOMElement (OPCIONAL)
 
-### function tagencerrante():DOMElement (OPCIONAL)
+### function tagencerrante($parametros):DOMElement (OPCIONAL)
 
-### function tagimposto():DOMElement (OPCIONAL)
+### function tagimposto($parametros):DOMElement (OPCIONAL)
 
-### function tagICMS():DOMElement (OPCIONAL)
+### function tagICMS($parametros):DOMElement (OPCIONAL)
 
-### function tagICMSPart():DOMElement (OPCIONAL)
+### function tagICMSPart($parametros):DOMElement (OPCIONAL)
 
-### function tagICMSST():DOMElement (OPCIONAL)
+### function tagICMSST($parametros):DOMElement (OPCIONAL)
 
-### function tagICMSSN():DOMElement (OPCIONAL)
+### function tagICMSSN($parametros):DOMElement (OPCIONAL)
 
-### function tagICMSUFDest():DOMElement (OPCIONAL)
+### function tagICMSUFDest($parametros):DOMElement (OPCIONAL)
 
-### function tagIPI():DOMElement (OPCIONAL)
+### function tagIPI($parametros):DOMElement (OPCIONAL)
 
-### function tagII():DOMElement (OPCIONAL)
+### function tagII($parametros):DOMElement (OPCIONAL)
 
-### function tagPIS():DOMElement (OPCIONAL)
+### function tagPIS($parametros):DOMElement (OPCIONAL)
 
-### function tagPISST():DOMElement (OPCIONAL)
+### function tagPISST($parametros):DOMElement (OPCIONAL)
 
-### function tagCOFINS():DOMElement (OPCIONAL)
+### function tagCOFINS($parametros):DOMElement (OPCIONAL)
 
-### function tagCOFINSST():DOMElement (OPCIONAL)
+### function tagCOFINSST($parametros):DOMElement (OPCIONAL)
 
-### function tagISSQN():DOMElement  (OPCIONAL)
+### function tagISSQN($parametros):DOMElement  (OPCIONAL)
 
-### function tagimpostoDevol():DOMElement  (OPCIONAL)
+### function tagimpostoDevol($parametros):DOMElement  (OPCIONAL)
 
-### function tagICMSTot():DOMElement
+### function tagICMSTot($parametros):DOMElement
 
-### function tagISSQNTot():DOMElement (OPCIONAL)
+### function tagISSQNTot($parametros):DOMElement (OPCIONAL)
 
-### function tagretTrib():DOMElement (OPCIONAL)
+### function tagretTrib($parametros):DOMElement (OPCIONAL)
 
-### function tagtransp():DOMElement (OPCIONAL)
+### function tagtransp($parametros):DOMElement (OPCIONAL)
 
-### function tagtransporta():DOMElement (OPCIONAL)
+### function tagtransporta($parametros):DOMElement (OPCIONAL)
 
-### function tagveicTransp():DOMElement (OPCIONAL)
+### function tagveicTransp($parametros):DOMElement (OPCIONAL)
 
-### function tagreboque():DOMElement (OPCIONAL)
+### function tagreboque($parametros):DOMElement (OPCIONAL)
 
-### function tagretTransp():DOMElement (OPCIONAL)
+### function tagretTransp($parametros):DOMElement (OPCIONAL)
 
-### function tagvol():DOMElement (OPCIONAL)
+### function tagvol($parametros):DOMElement (OPCIONAL)
 
-### function tagfat():DOMElement (OPCIONAL)
+### function tagfat($parametros):DOMElement (OPCIONAL)
 
-### function tagdup():DOMElement (OPCIONAL)
+### function tagdup($parametros):DOMElement (OPCIONAL)
 
-### function tagpag():DOMElement (OPCIONAL)
+### function tagpag($parametros):DOMElement (OPCIONAL)
 
-### function tagcard():DOMElement (OPCIONAL)
+### function tagcard($parametros):DOMElement (OPCIONAL)
 
-### function taginfAdic():DOMElement (OPCIONAL)
+### function taginfAdic($parametros):DOMElement (OPCIONAL)
 
-### function tagobsCont():DOMElement (OPCIONAL)
+### function tagobsCont($parametros):DOMElement (OPCIONAL)
 
-### function tagobsFisco():DOMElement (OPCIONAL)
+### function tagobsFisco($parametros):DOMElement (OPCIONAL)
 
-### function tagprocRef():DOMElement (OPCIONAL)
+### function tagprocRef($parametros):DOMElement (OPCIONAL)
 
-### function tagexporta():DOMElement (OPCIONAL)
+### function tagexporta($parametros):DOMElement (OPCIONAL)
 
-### function tagcompra():DOMElement (OPCIONAL)
+### function tagcompra($parametros):DOMElement (OPCIONAL)
 
-### function tagcana():DOMElement (OPCIONAL)
+### function tagcana($parametros):DOMElement (OPCIONAL)
 
-### function tagforDia():DOMElement (OPCIONAL)
+### function tagforDia($parametros):DOMElement (OPCIONAL)
 
-### function tagdeduc():DOMElement (OPCIONAL)
+### function tagdeduc($parametros):DOMElement (OPCIONAL)
 
 ### function getXMl():string
 Este método retorna a string com o XML já criado
@@ -217,7 +306,7 @@ Este método retorna o modelo usado na construção da NFe (55 ou 65)
 
 ### function montaNFe():boolean
 
-Este método faz a montagem do XML, não é necessário usa-lo pois quando for solicitado o XML pelo método getXML() essa monstagem será realizada, caso ainda não tenha sido.
+Este método faz a montagem do XML, não é necessário usa-lo pois quando for solicitado o XML pelo método getXML() essa montagem será realizada, caso ainda não tenha sido.
 
 ## Exemplo de uso
 

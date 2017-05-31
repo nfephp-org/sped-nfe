@@ -44,50 +44,51 @@ class Make400 extends MakeBasic
      * Informações de identificação da NF-e B01 pai A01
      * NOTA: Ajustado para NT2016_002_v1.00
      * tag NFe/infNFe/ide
-     * @param string $cUF
-     * @param string $cNF
-     * @param string $natOp
-     * @param string $mod
-     * @param string $serie
-     * @param string $nNF
-     * @param string $dhEmi
-     * @param string $dhSaiEnt
-     * @param string $tpNF
-     * @param string $idDest
-     * @param string $cMunFG
-     * @param string $tpImp
-     * @param string $tpEmis
-     * @param string $cDV
-     * @param string $tpAmb
-     * @param string $finNFe
-     * @param string $indFinal
-     * @param string $indPres
-     * @param string $procEmi
-     * @param string $verProc
-     * @param string $dhCont
-     * @param string $xJust
+     * @param  int $cUF
+     * @param  int $cNF
+     * @param  string $natOp
+     * @param  int $mod
+     * @param  int $serie
+     * @param  int $nNF
+     * @param  string $dhEmi
+     * @param  string $dhSaiEnt
+     * @param  int $tpNF
+     * @param  int $idDest
+     * @param  string $cMunFG
+     * @param  int $tpImp
+     * @param  int $tpEmis
+     * @param  int $cDV
+     * @param  int $tpAmb
+     * @param  int $finNFe
+     * @param  int $indFinal
+     * @param  int $indPres
+     * @param  int $procEmi
+     * @param  string $verProc
+     * @param  string $dhCont
+     * @param  string $xJust
      * @return DOMElement
      */
     public function tagide(
-        $cUF = '',
-        $cNF = '',
-        $natOp = '',
-        $mod = '',
-        $serie = '',
-        $nNF = '',
-        $dhEmi = '',
-        $dhSaiEnt = '',
-        $tpNF = '',
-        $idDest = '',
-        $cMunFG = '',
-        $tpImp = '',
-        $tpEmis = '',
-        $cDV = '',
-        $tpAmb = '',
-        $finNFe = '',
-        $indFinal = '0',
-        $indPres = '',
-        $procEmi = '',
+        $cUF,
+        $cNF,
+        $natOp,
+        $indPag,
+        $mod,
+        $serie,
+        $nNF,
+        $dhEmi,
+        $dhSaiEnt,
+        $tpNF,
+        $idDest,
+        $cMunFG,
+        $tpImp,
+        $tpEmis,
+        $cDV,
+        $tpAmb,
+        $finNFe,
+        $indFinal,
+        $indPres,
+        $procEmi = 0,
         $verProc = '',
         $dhCont = '',
         $xJust = ''
@@ -105,14 +106,14 @@ class Make400 extends MakeBasic
         $this->dom->addChild(
             $ide,
             "cNF",
-            $cNF,
+            str_pad($cNF, 8, '0', STR_PAD_LEFT),
             true,
             $identificador . "Código Numérico que compõe a Chave de Acesso"
         );
         $this->dom->addChild(
             $ide,
             "natOp",
-            $natOp,
+            Strings::replaceSpecialsChars(substr(trim($natOp), 0, 60)),
             true,
             $identificador . "Descrição da Natureza da Operaçãoo"
         );
@@ -137,9 +138,6 @@ class Make400 extends MakeBasic
             true,
             $identificador . "Número do Documento Fiscal"
         );
-        if ($dhEmi == '') {
-            $dhEmi = DateTime::convertTimestampToSefazTime();
-        }
         $this->dom->addChild(
             $ide,
             "dhEmi",
@@ -147,7 +145,7 @@ class Make400 extends MakeBasic
             true,
             $identificador . "Data e hora de emissão do Documento Fiscal"
         );
-        if ($mod == '55' && $dhSaiEnt != '') {
+        if ($mod == '55' && !empty($dhSaiEnt)) {
             $this->dom->addChild(
                 $ide,
                 "dhSaiEnt",
@@ -251,7 +249,7 @@ class Make400 extends MakeBasic
             $this->dom->addChild(
                 $ide,
                 "xJust",
-                $xJust,
+                Strings::replaceSpecialsChars(substr(trim($xJust), 0, 256)),
                 true,
                 $identificador . "Justificativa da entrada em contingência"
             );
@@ -260,19 +258,292 @@ class Make400 extends MakeBasic
         $this->ide = $ide;
         return $ide;
     }
+    
+        /**
+     * Código Especificador da Substituição Tributária – CEST,
+     * que identifica a mercadoria sujeita aos regimes de substituição
+     * tributária e de antecipação do recolhimento do imposto.
+     * vide NT2015.003 e NT_2016.002_v1.20
+     * tag NFe/infNFe/det[item]/prod/ctrltST (opcional)
+     * @param  int $nItem
+     * @param  string $codigo CEST
+     * @param  string $indEscala S Produzido em Escala Relevante;
+     *                           N Produzido em Escala NÃO Relevante
+     * @param  string $cnpjFab Identificação do fabricante
+     * @return DOMElement
+     */
+    public function tagCEST($nItem, $codigo, $indEscala = '', $cnpjFab = '')
+    {
+        $ctrltST = $this->dom->createElement("ctrltST");
+        $this->dom->addChild(
+            $ctrltST,
+            "CEST",
+            Strings::onlyNumbers($codigo),
+            true,
+            "$identificador [item $nItem] Numero CEST"
+        );
+        $this->dom->addChild(
+            $ctrltST,
+            "indEscala",
+            trim($indEscala),
+            false,
+            "$identificador [item $nItem] Indicador de Produção em escala relevante"
+        );
+        $this->dom->addChild(
+            $ctrltST,
+            "CNPJFab",
+            Strings::onlyNumbers($cnpjFab),
+            false,
+            "$identificador [item $nItem] CNPJ do Fabricante da Mercadoria,"
+                . "obrigatório para produto em escala NÃO relevante."
+        );
+        $this->aCest[$nItem] = $ctrltST;
+        return $ctrltST;
+    }
 
+    /**
+     * Detalhamento de Produtos e Serviços I01 pai H01
+     * tag NFe/infNFe/det[]/prod
+     * @param  string $nItem
+     * @param  string $cProd
+     * @param  string $cEAN
+     * @param  string $xProd
+     * @param  string $NCM
+     * @param  string $cBenef
+     * @param  string $EXTIPI
+     * @param  string $CFOP
+     * @param  string $uCom
+     * @param  string $qCom
+     * @param  string $vUnCom
+     * @param  string $vProd
+     * @param  string $cEANTrib
+     * @param  string $uTrib
+     * @param  string $qTrib
+     * @param  string $vUnTrib
+     * @param  string $vFrete
+     * @param  string $vSeg
+     * @param  string $vDesc
+     * @param  string $vOutro
+     * @param  string $indTot
+     * @param  string $xPed
+     * @param  string $nItemPed
+     * @param  string $nFCI
+     * @return DOMElement
+     */
+    public function tagprod(
+        $nItem = '',
+        $cProd = '',
+        $cEAN = '',
+        $xProd = '',
+        $NCM = '',
+        $cBenef = '',
+        $EXTIPI = '',
+        $CFOP = '',
+        $uCom = '',
+        $qCom = '',
+        $vUnCom = '',
+        $vProd = '',
+        $cEANTrib = '',
+        $uTrib = '',
+        $qTrib = '',
+        $vUnTrib = '',
+        $vFrete = '',
+        $vSeg = '',
+        $vDesc = '',
+        $vOutro = '',
+        $indTot = '',
+        $xPed = '',
+        $nItemPed = '',
+        $nFCI = ''
+    ) {
+        $identificador = 'I01 <prod> - ';
+        $prod = $this->dom->createElement("prod");
+        $this->dom->addChild(
+            $prod,
+            "cProd",
+            $cProd,
+            true,
+            $identificador . "[item $nItem] Código do produto ou serviço"
+        );
+        $this->dom->addChild(
+            $prod,
+            "cEAN",
+            $cEAN,
+            true,
+            $identificador . "[item $nItem] GTIN (Global Trade Item Number) do produto, antigo "
+            . "código EAN ou código de barras",
+            true
+        );
+        if ($this->tpAmb == '2' && $this->mod == '65') {
+            $xProd = 'NOTA FISCAL EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
+        }
+        $this->dom->addChild(
+            $prod,
+            "xProd",
+            $xProd,
+            true,
+            $identificador . "[item $nItem] Descrição do produto ou serviço"
+        );
+        $this->dom->addChild(
+            $prod,
+            "NCM",
+            $NCM,
+            true,
+            $identificador . "[item $nItem] Código NCM com 8 dígitos ou 2 dígitos (gênero)"
+        );
+        $this->dom->addChild(
+            $prod,
+            "cBenef",
+            $cBenef,
+            false,
+            $identificador . "[item $nItem] Código de Benefício Fiscal utilizado pela UF"
+        );
+        $this->dom->addChild(
+            $prod,
+            "EXTIPI",
+            $EXTIPI,
+            false,
+            $identificador . "[item $nItem] Preencher de acordo com o código EX da TIPI"
+        );
+        $this->dom->addChild(
+            $prod,
+            "CFOP",
+            $CFOP,
+            true,
+            $identificador . "[item $nItem] Código Fiscal de Operações e Prestações"
+        );
+        $this->dom->addChild(
+            $prod,
+            "uCom",
+            $uCom,
+            true,
+            $identificador . "[item $nItem] Unidade Comercial do produto"
+        );
+        $this->dom->addChild(
+            $prod,
+            "qCom",
+            $qCom,
+            true,
+            $identificador . "[item $nItem] Quantidade Comercial do produto"
+        );
+        $this->dom->addChild(
+            $prod,
+            "vUnCom",
+            $vUnCom,
+            true,
+            $identificador . "[item $nItem] Valor Unitário de Comercialização do produto"
+        );
+        $this->dom->addChild(
+            $prod,
+            "vProd",
+            $vProd,
+            true,
+            $identificador . "[item $nItem] Valor Total Bruto dos Produtos ou Serviços"
+        );
+        $this->dom->addChild(
+            $prod,
+            "cEANTrib",
+            $cEANTrib,
+            true,
+            $identificador . "[item $nItem] GTIN (Global Trade Item Number) da unidade tributável, antigo "
+            . "código EAN ou código de barras",
+            true
+        );
+        $this->dom->addChild(
+            $prod,
+            "uTrib",
+            $uTrib,
+            true,
+            $identificador . "[item $nItem] Unidade Tributável do produto"
+        );
+        $this->dom->addChild(
+            $prod,
+            "qTrib",
+            $qTrib,
+            true,
+            $identificador . "[item $nItem] Quantidade Tributável do produto"
+        );
+        $this->dom->addChild(
+            $prod,
+            "vUnTrib",
+            $vUnTrib,
+            true,
+            $identificador . "[item $nItem] Valor Unitário de tributação do produto"
+        );
+        $this->dom->addChild(
+            $prod,
+            "vFrete",
+            $vFrete,
+            false,
+            $identificador . "[item $nItem] Valor Total do Frete"
+        );
+        $this->dom->addChild(
+            $prod,
+            "vSeg",
+            $vSeg,
+            false,
+            $identificador . "[item $nItem] Valor Total do Seguro"
+        );
+        $this->dom->addChild(
+            $prod,
+            "vDesc",
+            $vDesc,
+            false,
+            $identificador . "[item $nItem] Valor do Desconto"
+        );
+        $this->dom->addChild(
+            $prod,
+            "vOutro",
+            $vOutro,
+            false,
+            $identificador . "[item $nItem] Outras despesas acessórias"
+        );
+        $this->dom->addChild(
+            $prod,
+            "indTot",
+            $indTot,
+            true,
+            $identificador . "[item $nItem] Indica se valor do Item (vProd) entra no valor total da NF-e (vProd)"
+        );
+        $this->dom->addChild(
+            $prod,
+            "xPed",
+            $xPed,
+            false,
+            $identificador . "[item $nItem] Número do Pedido de Compra"
+        );
+        $this->dom->addChild(
+            $prod,
+            "nItemPed",
+            $nItemPed,
+            false,
+            $identificador . "[item $nItem] Item do Pedido de Compra"
+        );
+        $this->dom->addChild(
+            $prod,
+            "nFCI",
+            $nFCI,
+            false,
+            $identificador . "[item $nItem] Número de controle da FCI - Ficha de Conteúdo de Importação"
+        );
+        $this->aProd[$nItem] = $prod;
+        return $prod;
+    }
+
+    
     /**
      * Detalhamento de medicamentos K01 pai I90
      * NOTA: Ajustado para NT2016_002_v1.00
      * tag NFe/infNFe/det[]/prod/med (opcional)
+     * @param  int $nItem
      * @param  string $cProdANVISA
      * @param  string $vPMC
      * @return DOMElement
      */
     public function tagmed(
-        $nItem = '',
-        $cProdANVISA = '',
-        $vPMC = ''
+        $nItem,
+        $cProdANVISA,
+        $vPMC
     ) {
         $identificador = 'K01 <med> - ';
         $med = $this->dom->createElement("med");
@@ -431,16 +702,18 @@ class Make400 extends MakeBasic
      * @param int $nItem
      * @param string $nLote
      * @param float $qLote
-     * @param DateTime $dFab
-     * @param DateTime $dVal
+     * @param string $dFab
+     * @param string $dVal
+     * @param string $cAgreg
+     * @return DOMElement
      */
-    public function tagRastro($nItem, $nLote, $qLote, \DateTime $dFab, \DateTime $dVal)
+    public function tagRastro($nItem, $nLote, $qLote, $dFab, $dVal, $cAgreg = '')
     {
         $rastro = $this->dom->createElement("rastro");
         $this->dom->addChild(
             $rastro,
             "nLote",
-            $nLote,
+            substr(trim($nLote), 0, 20),
             true,
             $identificador . "[item $nItem] Número do lote"
         );
@@ -454,16 +727,23 @@ class Make400 extends MakeBasic
         $this->dom->addChild(
             $rastro,
             "dFab",
-            $dFab->format('Y-m-d'),
+            trim($dFab),
             true,
             $identificador . "[item $nItem] Data de fabricação"
         );
         $this->dom->addChild(
             $rastro,
             "dVal",
-            $dVal->format('Y-m-d'),
+            trim($dVal),
             true,
             $identificador . "[item $nItem] Data da validade"
+        );
+        $this->dom->addChild(
+            $rastro,
+            "cAgreg",
+            Strings::onlyNumbers($cAgreg),
+            true,
+            $identificador . "[item $nItem] Código de Agregação"
         );
         $this->aRastro[$nItem][] = $rastro;
         return $rastro;
@@ -644,6 +924,30 @@ class Make400 extends MakeBasic
                     $vICMS,
                     true,
                     "$identificador [item $nItem] Valor do ICMS"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'vBCFCP',
+                    $vBCFCP,
+                    false,
+                    "$identificador [item $nItem] Valor da Base de calculo "
+                        . "relativo ao Fundo de Combate à Pobreza (FCP)"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'pFCP',
+                    $pFCP,
+                    false,
+                    "$identificador [item $nItem] Percentual do ICMS "
+                        . "relativo ao Fundo de Combate à Pobreza (FCP)"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'vFCP',
+                    $vFCP,
+                    false,
+                    "$identificador [item $nItem] Valor do ICMS relativo "
+                        . "ao Fundo de Combate à Pobreza (FCP)"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -1137,6 +1441,30 @@ class Make400 extends MakeBasic
                     $vICMS,
                     true,
                     "$identificador [item $nItem] Valor do ICMS"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'vBCFCP',
+                    $vBCFCP,
+                    false,
+                    "$identificador [item $nItem] Valor da Base de calculo "
+                        . "relativo ao Fundo de Combate à Pobreza (FCP)"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'pFCP',
+                    $pFCP,
+                    false,
+                    "$identificador [item $nItem] Percentual do ICMS "
+                        . "relativo ao Fundo de Combate à Pobreza (FCP)"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'vFCP',
+                    $vFCP,
+                    false,
+                    "$identificador [item $nItem] Valor do ICMS relativo "
+                        . "ao Fundo de Combate à Pobreza (FCP)"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -2327,23 +2655,27 @@ class Make400 extends MakeBasic
         foreach ($this->aNVE as $nItem => $nve) {
             $prod = $this->aProd[$nItem];
             foreach ($nve as $child) {
-                $node = $prod->getElementsByTagName("EXTIPI")->item(0);
+                $node = $prod->getElementsByTagName("cBenef")->item(0);
                 if (empty($node)) {
-                    $node = $prod->getElementsByTagName("CFOP")->item(0);
+                    $node = $prod->getElementsByTagName("EXTIPI")->item(0);
+                    if (empty($node)) {
+                        $node = $prod->getElementsByTagName("CFOP")->item(0);
+                    }
                 }
                 $prod->insertBefore($child, $node);
             }
         }
-        //insere CEST
-        foreach ($this->aCest as $nItem => $cest) {
+        //insere ctrltST só pode existir um por item
+        foreach ($this->aCest as $nItem => $ctrltST) {
             $prod = $this->aProd[$nItem];
-            foreach ($cest as $child) {
+            $node = $prod->getElementsByTagName("cBenef")->item(0);
+            if (empty($node)) {
                 $node = $prod->getElementsByTagName("EXTIPI")->item(0);
                 if (empty($node)) {
                     $node = $prod->getElementsByTagName("CFOP")->item(0);
                 }
-                $prod->insertBefore($child, $node);
             }
+            $prod->insertBefore($ctrltST, $node);
         }
         //insere DI
         foreach ($this->aDI as $nItem => $aDI) {

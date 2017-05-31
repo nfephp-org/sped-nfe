@@ -629,36 +629,33 @@ class MakeBasic
     /**
      * Chave de acesso da NF-e referenciada BA02 pai BA01
      * tag NFe/infNFe/ide/NFref/refNFe
-     * @param  string $refNFe
+     * @param  string $chave
      * @return DOMElement
      */
-    public function tagrefNFe($refNFe = '')
+    public function tagrefNFe($chave)
     {
         $num = $this->buildNFref();
-        $refNFe = $this->dom->createElement("refNFe", $refNFe);
+        $refNFe = $this->dom->createElement("refNFe", $chave);
         $this->dom->appChild($this->aNFref[$num-1], $refNFe);
         return $refNFe;
     }
     
     /**
-     * tagrefNF
      * Informação da NF modelo 1/1A referenciada BA03 pai BA01
      * tag NFe/infNFe/ide/NFref/NF DOMNode
-     * @param  string $cUF
-     * @param  string $aamm
+     * @param  int $cUF
+     * @param  int $aamm
      * @param  string $cnpj
-     * @param  string $mod
-     * @param  string $serie
-     * @param  string $nNF
+     * @param  int $serie
+     * @param  int $nNF
      * @return DOMElement
      */
     public function tagrefNF(
-        $cUF = '',
-        $aamm = '',
-        $cnpj = '',
-        $mod = '',
-        $serie = '',
-        $nNF = ''
+        $cUF,
+        $aamm,
+        $cnpj,
+        $serie,
+        $nNF
     ) {
         $identificador = 'BA03 <refNF> - ';
         $num = $this->buildNFref();
@@ -687,7 +684,7 @@ class MakeBasic
         $this->dom->addChild(
             $refNF,
             "mod",
-            $mod,
+            '01',
             true,
             $identificador . "Modelo do Documento Fiscal"
         );
@@ -710,28 +707,27 @@ class MakeBasic
     }
     
     /**
-     * tagrefNFP
      * Informações da NF de produtor rural referenciada BA10 pai BA01
      * tag NFe/infNFe/ide/NFref/refNFP
-     * @param  string $cUF
-     * @param  string $aamm
+     * @param  int $cUF
+     * @param  int $aamm
      * @param  string $cnpj
      * @param  string $cpf
-     * @param  string $numIE
-     * @param  string $mod
-     * @param  string $serie
-     * @param  string $nNF
+     * @param  string $ie
+     * @param  int $mod
+     * @param  int $serie
+     * @param  int $nNF
      * @return DOMElement
      */
     public function tagrefNFP(
-        $cUF = '',
-        $aamm = '',
-        $cnpj = '',
-        $cpf = '',
-        $numIE = '',
-        $mod = '',
-        $serie = '',
-        $nNF = ''
+        $cUF,
+        $aamm,
+        $cnpj,
+        $cpf,
+        $ie,
+        $mod,
+        $serie,
+        $nNF
     ) {
         $identificador = 'BA10 <refNFP> - ';
         $num = $this->buildNFref();
@@ -767,14 +763,14 @@ class MakeBasic
         $this->dom->addChild(
             $refNFP,
             "IE",
-            $numIE,
+            $ie,
             true,
             $identificador . "Informar a IE do emitente da NF de Produtor ou o literal 'ISENTO'"
         );
         $this->dom->addChild(
             $refNFP,
             "mod",
-            $mod,
+            str_pad($mod, 2, '0', STR_PAD_LEFT),
             true,
             $identificador . "Modelo do Documento Fiscal"
         );
@@ -802,10 +798,10 @@ class MakeBasic
      * @param  string $refCTe
      * @return DOMElement
      */
-    public function tagrefCTe($refCTe = '')
+    public function tagrefCTe($chave)
     {
         $num = $this->buildNFref();
-        $refCTe = $this->dom->createElement("refCTe", $refCTe);
+        $refCTe = $this->dom->createElement("refCTe", $chave);
         $this->dom->appChild($this->aNFref[$num-1], $refCTe);
         return $refCTe;
     }
@@ -814,14 +810,14 @@ class MakeBasic
      * Informações do Cupom Fiscal referenciado BA20 pai BA01
      * tag NFe/infNFe/ide/NFref/refECF
      * @param  string $mod
-     * @param  string $nECF
-     * @param  string $nCOO
+     * @param  int $nECF
+     * @param  int $nCOO
      * @return DOMElement
      */
     public function tagrefECF(
-        $mod = '',
-        $nECF = '',
-        $nCOO = ''
+        $mod,
+        $nECF,
+        $nCOO
     ) {
         $identificador = 'BA20 <refECF> - ';
         $num = $this->buildNFref();
@@ -836,14 +832,14 @@ class MakeBasic
         $this->dom->addChild(
             $refECF,
             "nECF",
-            $nECF,
+            str_pad($nECF, 3, '0', STR_PAD_LEFT),
             true,
             $identificador . "Número de ordem sequencial do ECF"
         );
         $this->dom->addChild(
             $refECF,
             "nCOO",
-            $nCOO,
+            str_pad($nCOO, 6, '0', STR_PAD_LEFT),
             true,
             $identificador . "Número do Contador de Ordem de Operação - COO"
         );
@@ -852,86 +848,85 @@ class MakeBasic
     }
     
     /**
-     * tagemit
      * Identificação do emitente da NF-e C01 pai A01
      * tag NFe/infNFe/emit
      * @param  string $cnpj
      * @param  string $cpf
      * @param  string $xNome
      * @param  string $xFant
-     * @param  string $numIE
-     * @param  string $numIEST
-     * @param  string $numIM
+     * @param  string $ie
+     * @param  string $iest
+     * @param  string $im
      * @param  string $cnae
-     * @param  string $crt
+     * @param  int $crt
      * @return DOMElement
      */
     public function tagemit(
-        $cnpj = '',
-        $cpf = '',
-        $xNome = '',
-        $xFant = '',
-        $numIE = '',
-        $numIEST = '',
-        $numIM = '',
-        $cnae = '',
-        $crt = ''
+        $cnpj,
+        $cpf,
+        $xNome,
+        $xFant,
+        $ie,
+        $iest,
+        $im,
+        $cnae,
+        $crt
     ) {
         $identificador = 'C01 <emit> - ';
         $this->emit = $this->dom->createElement("emit");
         $this->dom->addChild(
             $this->emit,
             "CNPJ",
-            $cnpj,
+            Strings::onlyNumbers($cnpj),
             false,
             $identificador . "CNPJ do emitente"
         );
         $this->dom->addChild(
             $this->emit,
             "CPF",
-            $cpf,
+            Strings::onlyNumbers($cpf),
             false,
             $identificador . "CPF do remetente"
         );
         $this->dom->addChild(
             $this->emit,
             "xNome",
-            $xNome,
+            Strings::replaceSpecialsChars(substr(trim($xNome), 0, 60)),
             true,
             $identificador . "Razão Social ou Nome do emitente"
         );
         $this->dom->addChild(
             $this->emit,
             "xFant",
-            $xFant,
+            Strings::replaceSpecialsChars(substr(trim($xFant), 0, 60)),
             false,
             $identificador . "Nome fantasia do emitente"
         );
         $this->dom->addChild(
             $this->emit,
             "IE",
-            $numIE,
+            Strings::onlyNumbers($ie),
             true,
             $identificador . "Inscrição Estadual do emitente"
         );
         $this->dom->addChild(
             $this->emit,
             "IEST",
-            $numIEST,
+            Strings::onlyNumbers($iest),
             false,
             $identificador . "IE do Substituto Tributário do emitente"
         );
         $this->dom->addChild(
             $this->emit,
             "IM",
-            $numIM,
+            Strings::onlyNumbers($im),
             false,
             $identificador . "Inscrição Municipal do Prestador de Serviço do emitente"
         );
         $this->dom->addChild(
             $this->emit,
             "CNAE",
-            $cnae,
+            Strings::onlyNumbers($cnae),
             false,
             $identificador . "CNAE fiscal do emitente"
         );
@@ -954,7 +949,7 @@ class MakeBasic
      * @param  string $xBairro
      * @param  string $cMun
      * @param  string $xMun
-     * @param  string $siglaUF
+     * @param  string $uf
      * @param  string $cep
      * @param  string $cPais
      * @param  string $xPais
@@ -962,94 +957,94 @@ class MakeBasic
      * @return DOMElement
      */
     public function tagenderEmit(
-        $xLgr = '',
-        $nro = '',
-        $xCpl = '',
-        $xBairro = '',
-        $cMun = '',
-        $xMun = '',
-        $siglaUF = '',
-        $cep = '',
-        $cPais = '',
-        $xPais = '',
-        $fone = ''
+        $xLgr,
+        $nro,
+        $xCpl,
+        $xBairro,
+        $cMun,
+        $xMun,
+        $uf,
+        $cep,
+        $cPais,
+        $xPais,
+        $fone
     ) {
         $identificador = 'C05 <enderEmit> - ';
         $this->enderEmit = $this->dom->createElement("enderEmit");
         $this->dom->addChild(
             $this->enderEmit,
             "xLgr",
-            $xLgr,
+            Strings::replaceSpecialsChars(substr(trim($xLgr), 0, 60)),
             true,
             $identificador . "Logradouro do Endereço do emitente"
         );
         $this->dom->addChild(
             $this->enderEmit,
             "nro",
-            $nro,
+            Strings::replaceSpecialsChars(substr(trim($nro), 0, 60)),
             true,
             $identificador . "Número do Endereço do emitente"
         );
         $this->dom->addChild(
             $this->enderEmit,
             "xCpl",
-            $xCpl,
+            Strings::replaceSpecialsChars(substr(trim($xCpl), 0, 60)),
             false,
             $identificador . "Complemento do Endereço do emitente"
         );
         $this->dom->addChild(
             $this->enderEmit,
             "xBairro",
-            $xBairro,
+            Strings::replaceSpecialsChars(substr(trim($xBairro), 0, 60)),
             true,
             $identificador . "Bairro do Endereço do emitente"
         );
         $this->dom->addChild(
             $this->enderEmit,
             "cMun",
-            $cMun,
+            Strings::onlyNumbers($cMun),
             true,
             $identificador . "Código do município do Endereço do emitente"
         );
         $this->dom->addChild(
             $this->enderEmit,
             "xMun",
-            $xMun,
+            Strings::replaceSpecialsChars(substr(trim($xMun), 0, 60)),
             true,
             $identificador . "Nome do município do Endereço do emitente"
         );
         $this->dom->addChild(
             $this->enderEmit,
             "UF",
-            $siglaUF,
+            strtoupper(trim($uf)),
             true,
             $identificador . "Sigla da UF do Endereço do emitente"
         );
         $this->dom->addChild(
             $this->enderEmit,
             "CEP",
-            $cep,
+            Strings::onlyNumbers($cep),
             true,
             $identificador . "Código do CEP do Endereço do emitente"
         );
         $this->dom->addChild(
             $this->enderEmit,
             "cPais",
-            $cPais,
+            Strings::onlyNumbers($cPais),
             false,
             $identificador . "Código do País do Endereço do emitente"
         );
         $this->dom->addChild(
             $this->enderEmit,
             "xPais",
-            $xPais,
+            Strings::replaceSpecialsChars(substr(trim($xPais), 0, 60)),
             false,
             $identificador . "Nome do País do Endereço do emitente"
         );
         $this->dom->addChild(
             $this->enderEmit,
             "fone",
-            $fone,
+            trim($fone),
             false,
             $identificador . "Telefone do Endereço do emitente"
         );
@@ -1065,7 +1060,7 @@ class MakeBasic
      * @param  string $cpf
      * @param  string $idEstrangeiro
      * @param  string $xNome
-     * @param  string $indIEDest
+     * @param  int $indIEDest
      * @param  string $numIE
      * @param  string $isUF
      * @param  string $numIM
@@ -1077,21 +1072,21 @@ class MakeBasic
         $cpf = '',
         $idEstrangeiro = '',
         $xNome = '',
-        $indIEDest = '',
-        $numIE = '',
+        $indIEDest = null,
+        $ie = '',
         $isUF = '',
-        $numIM = '',
+        $im = '',
         $email = ''
     ) {
         $identificador = 'E01 <dest> - ';
         $flagNome = true;//marca se xNome é ou não obrigatório
-        $temIE = $numIE != '' && $numIE != 'ISENTO'; // Tem inscrição municipal
+        $temIE = $ie != '' && $ie != 'ISENTO'; // Tem inscrição municipal
         $this->dest = $this->dom->createElement("dest");
-        if (!$temIE && $indIEDest == '1') {
-            $indIEDest = '2';
+        if (!$temIE && $indIEDest == 1) {
+            $indIEDest = 2;
         }
         if ($this->mod == '65') {
-            $indIEDest = '9';
+            $indIEDest = 9;
             if ($xNome == '') {
                 $flagNome = false;//marca se xNome é ou não obrigatório
             }
@@ -1103,21 +1098,21 @@ class MakeBasic
         $this->dom->addChild(
             $this->dest,
             "CNPJ",
-            $cnpj,
+            Strings::onlyNumbers($cnpj),
             false,
             $identificador . "CNPJ do destinatário"
         );
         $this->dom->addChild(
             $this->dest,
             "CPF",
-            $cpf,
+            Strings::onlyNumbers($cpf),
             false,
             $identificador . "CPF do destinatário"
         );
         $this->dom->addChild(
             $this->dest,
             "idEstrangeiro",
-            $idEstrangeiro,
+            Strings::onlyNumbers($idEstrangeiro),
             false,
             $identificador . "Identificação do destinatário no caso de comprador estrangeiro"
         );
@@ -1127,14 +1122,14 @@ class MakeBasic
         $this->dom->addChild(
             $this->dest,
             "xNome",
-            $xNome,
+            Strings::replaceSpecialsChars(substr(trim($xNome), 0, 60)),
             $flagNome, //se mod 55 true ou mod 65 false
             $identificador . "Razão Social ou nome do destinatário"
         );
         $this->dom->addChild(
             $this->dest,
             "indIEDest",
-            $indIEDest,
+            Strings::onlyNumbers($indIEDest),
             true,
             $identificador . "Indicador da IE do Destinatário"
         );
@@ -1142,7 +1137,7 @@ class MakeBasic
             $this->dom->addChild(
                 $this->dest,
                 "IE",
-                $numIE,
+                Strings::onlyNumbers($ie),
                 true,
                 $identificador . "Inscrição Estadual do Destinatário"
             );
@@ -1150,21 +1145,21 @@ class MakeBasic
         $this->dom->addChild(
             $this->dest,
             "ISUF",
-            $isUF,
+            Strings::onlyNumbers($isUF),
             false,
             $identificador . "Inscrição na SUFRAMA do destinatário"
         );
         $this->dom->addChild(
             $this->dest,
             "IM",
-            $numIM,
+            Strings::onlyNumbers($im),
             false,
             $identificador . "Inscrição Municipal do Tomador do Serviço do destinatário"
         );
         $this->dom->addChild(
             $this->dest,
             "email",
-            $email,
+            Strings::replaceSpecialsChars(substr(trim($email), 0, 60)),
             false,
             $identificador . "Email do destinatário"
         );
@@ -1536,7 +1531,6 @@ class MakeBasic
      * @param  string $xPed
      * @param  string $nItemPed
      * @param  string $nFCI
-     * @param  string $nRECOPI
      * @return DOMElement
      */
     public function tagprod(
@@ -1732,7 +1726,6 @@ class MakeBasic
     }
     
     /**
-     * tagNVE
      * NVE NOMENCLATURA DE VALOR ADUANEIRO E ESTATÍSTICA
      * Podem ser até 8 NVE's por item
      * @param  string $nItem
@@ -1767,7 +1760,6 @@ class MakeBasic
     }
     
     /**
-     * tagRECOPI
      * tag NFe/infNFe/det[item]/prod/nRECOPI
      * @param  int $nItem
      * @param  string $codigo
@@ -1913,7 +1905,6 @@ class MakeBasic
     }
     
     /**
-     * tagadi
      * Adições I25 pai I18
      * tag NFe/infNFe/det[]/prod/DI/adi
      * @param  string $nItem
@@ -1980,7 +1971,6 @@ class MakeBasic
     }
     
     /**
-     * tagdetExport
      * Grupo de informações de exportação para o item I50 pai I01
      * tag NFe/infNFe/det[]/prod/detExport
      * @param  string $nItem
@@ -2035,7 +2025,6 @@ class MakeBasic
     }
     
     /**
-     * tagveicProd
      * Detalhamento de Veículos novos J01 pai I90
      * tag NFe/infNFe/det[]/prod/veicProd (opcional)
      * @param  string $nItem
@@ -2522,7 +2511,7 @@ class MakeBasic
     }
     
     /**
-     * M01 pai H01
+     * Impostos com o valor total tributado M01 pai H01
      * tag NFe/infNFe/det[]/imposto
      * @param  string $nItem
      * @param  string $vTotTrib
@@ -5793,18 +5782,18 @@ class MakeBasic
      * Grupo Deduções – Taxas e Contribuições ZC10 pai ZC01
      * tag NFe/infNFe/cana/deduc (opcional)
      * @param  string $xDed
-     * @param  string $vDed
-     * @param  string $vFor
-     * @param  string $vTotDed
-     * @param  string $vLiqFor
+     * @param  float $vDed
+     * @param  float $vFor
+     * @param  float $vTotDed
+     * @param  float $vLiqFor
      * @return DOMElement
      */
     public function tagdeduc(
-        $xDed = '',
-        $vDed = '',
-        $vFor = '',
-        $vTotDed = '',
-        $vLiqFor = ''
+        $xDed,
+        $vDed,
+        $vFor,
+        $vTotDed,
+        $vLiqFor
     ) {
         $deduc = $this->dom->createElement("deduc");
         $this->dom->addChild(
@@ -5942,7 +5931,7 @@ class MakeBasic
      * @param  string $vCOFINS
      * @return DOMElement
      */
-    protected function buildCOFINSAliq($cst = '', $vBC = '', $pCOFINS = '', $vCOFINS = '')
+    protected function buildCOFINSAliq($cst, $vBC, $pCOFINS, $vCOFINS)
     {
         $confinsAliq = $this->dom->createElement('COFINSAliq');
         $this->dom->addChild(
@@ -5983,7 +5972,7 @@ class MakeBasic
      * @param  string $cst
      * @return DOMElement
      */
-    protected function buildCOFINSNT($cst = '')
+    protected function buildCOFINSNT($cst)
     {
         $confinsnt = $this->dom->createElement('COFINSNT');
         $this->dom->addChild(

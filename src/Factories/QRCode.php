@@ -29,7 +29,8 @@ class QRCode
      * @param string $idToken CSC identification
      * @param string $sigla UF alias
      * @param string $versao version of field
-     * @param string $url URL for search by QRCode
+     * @param string $urlqr URL for search by QRCode
+     * @param string $urichave URL for search by chave
      * @return string
      * @throws InvalidArgumentException
      */
@@ -39,14 +40,15 @@ class QRCode
         $idToken,
         $sigla,
         $versao,
-        $url
+        $urlqr = '',
+        $urichave = ''
     ) {
-        if (empty($token) | empty($idToken) | empty($url)) {
+        if (empty($token) || empty($idToken) || empty($urlqr)) {
             if ($token == '') {
-                $msg = "Falta o tokenNFCe no config.json";
+                $msg = "Falta o CSC no config.json";
             } elseif ($idToken == '') {
-                $msg = "Falta o tokenNFCeId no config.json";
-            } else {
+                $msg = "Falta o CSCId no config.json";
+            } elseif ($urlqr == '') {
                 $msg = "Falta a URL do serviço NfeConsultaQR para a $sigla,"
                     . " no arquivo wsnfe_3.10_mod65.xml";
             }
@@ -91,6 +93,11 @@ class QRCode
         $infNFeSupl = $dom->createElement("infNFeSupl");
         $nodeqr = $infNFeSupl->appendChild($dom->createElement('qrCode'));
         $nodeqr->appendChild($dom->createCDATASection($qrcode));
+        if (!empty($urichave)) {
+            $infNFeSupl->appendChild(
+                $dom->createElement('urlChave', $std->$sigla)
+            );
+        }
         $signature = $dom->getElementsByTagName('Signature')->item(0);
         $nfe->insertBefore($infNFeSupl, $signature);
         $dom->formatOutput = false;

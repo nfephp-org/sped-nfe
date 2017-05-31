@@ -76,7 +76,15 @@ class Tools
      * @var string
      */
     public $verAplic = '';
+    /**
+     * last soap request
+     * @var string
+     */
     public $lastRequest = '';
+    /**
+     * last soap response
+     * @var string
+     */
     public $lastResponse = '';
     /**
      * certificate class
@@ -557,9 +565,30 @@ class Tools
             $this->config->CSCid,
             $uf,
             $this->urlVersion,
-            $this->urlService
+            $this->urlService,
+            $this->getURIConsultaNFCe($uf)
         );
         $this->modelo = $memmod;
         return $signed;
+    }
+    
+    /**
+     * Get URI for search NFCe by chave
+     * @param string $uf
+     * @return string
+     */
+    protected function getURIConsultaNFCe($uf)
+    {
+        if ($this->versao == '3.10') {
+            return '';
+        }
+        //existe no XML apenas para layout >= 4.x
+        //os URI estão em storage/uri_consulta_nfce.json
+        $std = json_decode(
+            file_get_contents(
+                $this->pathwsfiles.'uri_consulta_nfce.json'
+            )
+        );
+        return $std->$uf;
     }
 }

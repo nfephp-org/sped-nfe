@@ -383,7 +383,9 @@ class Tools extends ToolsCommon
     public function sefazCCe($chave, $xCorrecao, $nSeqEvento = 1)
     {
         $uf = $this->validKeyByUF($chave);
-        $xCorrecao = Strings::replaceSpecialsChars($xCorrecao);
+        $xCorrecao = Strings::replaceSpecialsChars(
+            substr(trim($xCorrecao), 0, 1000)
+        );
         $tpEvento = 110110;
         $xCondUso = 'A Carta de Correcao e disciplinada pelo paragrafo '
             . '1o-A do art. 7o do Convenio S/N, de 15 de dezembro de 1970 '
@@ -485,15 +487,17 @@ class Tools extends ToolsCommon
         
     /**
      * Requires nfe cancellation
-     * @param  string $chave
-     * @param  string $xJust
-     * @param  string $nProt
+     * @param  string $chave key of NFe
+     * @param  string $xJust justificative 255 characters max
+     * @param  string $nProt protocol number
      * @return string
      */
     public function sefazCancela($chave, $xJust, $nProt)
     {
         $uf = $this->validKeyByUF($chave);
-        $xJust = Strings::replaceSpecialsChars($xJust);
+        $xJust = Strings::replaceSpecialsChars(
+            substr(trim($xJust), 0, 255)
+        );
         $tpEvento = 110111;
         $nSeqEvento = 1;
         $tagAdic = "<nProt>$nProt</nProt><xJust>$xJust</xJust>";
@@ -510,7 +514,7 @@ class Tools extends ToolsCommon
      * Request the registration of the manifestation of recipient
      * @param string $chNFe
      * @param int $tpEvento
-     * @param string $xJust
+     * @param string $xJust Justification for not carrying out the operation
      * @param int $nSeqEvento
      * @return string
      */
@@ -522,7 +526,7 @@ class Tools extends ToolsCommon
     ) {
         $tagAdic = '';
         if ($tpEvento == 210240) {
-            $xJust = Strings::replaceSpecialsChars($xJust);
+            $xJust = Strings::replaceSpecialsChars(substr(trim($xJust), 0, 255));
             $tagAdic = "<xJust>$xJust</xJust>";
         }
         return $this->sefazEvento(
@@ -688,32 +692,40 @@ class Tools extends ToolsCommon
     
     /**
      * Request the NFe download already manifested by its recipient, by the key
+     * using new service in NfeDistribuicaoDFe
+     * NOTA: NfeDownloadNF is deactivated
      * @param  string $chave
      * @return string
      */
     public function sefazDownload($chave)
     {
         //carrega serviço
-        $fonte = 'AN';
-        $servico = 'NfeDownloadNF';
+        $servico = 'NfeDistribuicaoDFe';
         $this->checkContingencyForWebServices($servico);
         $this->servico(
             $servico,
             $fonte,
-            $this->tpAmb,
+            1,
             true
         );
-        $request = "<downloadNFe xmlns=\"$this->urlPortal\" "
-                . "versao=\"$this->urlVersion\">"
-                . "<tpAmb>$this->tpAmb</tpAmb>"
-                . "<xServ>DOWNLOAD NFE</xServ>"
-                . "<CNPJ>" . $this->config->cnpj . "</CNPJ>"
-                . "<chNFe>$chave</chNFe>"
-                . "</downloadNFe>";
-        $this->isValid($this->urlVersion, $request, 'downloadNFe');
-        $this->lastRequest = $request;
-        $parameters = ['nfeDadosMsg' => $request];
-        $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
+        $cUF = UFList::getCodeByUF($this->config->siglaUF);
+        $tagChave = "<consChNFe><chNFe>$chave</chNFe></consChNFe>";
+        //monta a consulta
+        $consulta = "<distDFeInt xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
+            . "<tpAmb>1</tpAmb>"
+            . "<cUFAutor>$cUF</cUFAutor>"
+            . "<CNPJ>".$this->config->cnpj."</CNPJ>$tagChave</distDFeInt>";
+        //valida o xml da requisição
+        $this->isValid($this->urlVersion, $consulta, 'distDFeInt');
+        $this->lastRequest = $consulta;
+        //montagem dos dados da mensagem SOAP
+        $request = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$consulta</nfeDadosMsg>";
+        $parameters = ['nfeDistDFeInteresse' => $request];
+        $body = "<nfeDistDFeInteresse xmlns=\"$this->urlNamespace\">"
+            . $request
+            . "</nfeDistDFeInteresse>";
+        //este webservice não requer cabeçalho
+        $this->objHeader = null;
         $this->lastResponse = $this->sendRequest($body, $parameters);
         return $this->lastResponse;
     }
