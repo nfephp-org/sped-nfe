@@ -7,6 +7,7 @@ php:
 
 # This triggers builds to run on the new TravisCI infrastructure.
 # See: http://docs.travis-ci.com/user/workers/container-based-infrastructure/
+dist: trusty
 sudo: false
 
 before_script:

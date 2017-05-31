@@ -15,6 +15,8 @@ namespace NFePHP\NFe\Factories;
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
 
+use NFePHP\Common\Strings;
+
 class Contingency
 {
     
@@ -184,7 +186,7 @@ class Contingency
                 );
         }
         $config = new \stdClass();
-        $config->motive = $motive;
+        $config->motive = Strings::replaceSpecialsChars(substr(trim($motive), 0, 256));
         $config->timestamp = $timestamp;
         $config->type = $type;
         $config->tpEmis = $tpEmis;
