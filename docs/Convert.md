@@ -37,7 +37,7 @@ try {
 
 ## Exceptions e Erros
 
-O TXT passado como parametro, será VALIDADO, com referência as regras estabelecidas, antes de sua conversão.
+O TXT passado como parametro, será VALIDADO, com referência as [regras estabelecidas](EstruturaTxt.md), antes de sua conversão.
 
 Se alguma falha for detectada será disparada uma Exception com o motivo.
 
