@@ -697,7 +697,7 @@ class Tools extends ToolsCommon
      * @param  string $chave
      * @return string
      */
-    public function sefazDownload($chave)
+    public function sefazDownload($chave, $fonte = 'AN')
     {
         //carrega serviço
         $servico = 'NfeDistribuicaoDFe';
