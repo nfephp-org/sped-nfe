@@ -47,6 +47,8 @@ Os retornos podem ser
 - schema: resEvento_1.00.xsd **Resumo de Evento**
 - schema: procEventoNFe_v1.00.xsd **Evento**
 
+> NOTA: Quando obter um **REsumode NFe** é um indicativo que essa nota deve ser **manifestada** para que em uma próxima busca possa recuperar o XML dessa NFe em si.*
+
 > NOTA: O emitente não tem acesso a seus próprios documentos. EVIDENTEMENTE!! 
 
 > NOTA: Este serviço só existe para NFe (modelo 55).
