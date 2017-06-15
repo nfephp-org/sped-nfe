@@ -12,7 +12,7 @@ Para estabelecer a estrutura do TXT, foi preciso fazer engenharia reversa usando
 
 Algumas informações úteis sobre a estutura desse TXT podem ser obtidas aqui [Estrutura do TXT para NFe](EstruturaTxt.md)
 
-Pois bem, como esse TXT não pode ser usado diretamente temos a faze em que devemos fazer sua conversão para xml, e para isso usamos a classe **Convert::class**, para maiores detalhes e exemplos de uso consulte [Convert::class](Convert.md)
+Pois bem, como esse TXT não pode ser usado diretamente, devemos fazer sua conversão para xml, e para isso usamos a classe **Convert::class**, para maiores detalhes e exemplos de uso consulte [Convert::class](Convert.md)
 
 Leia [Convert::class](Convert.md)
 
