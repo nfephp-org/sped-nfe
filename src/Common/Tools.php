@@ -173,7 +173,11 @@ class Tools
      */
     public function __construct($configJson, Certificate $certificate)
     {
-        $this->config = json_decode($configJson);
+        if (is_array($configJson)) {
+            $this->config = $configJson;
+        } else {
+            $this->config = json_decode($configJson);
+        }
         
         $this->pathwsfiles = realpath(
             __DIR__ . '/../../storage'
