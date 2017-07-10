@@ -15,8 +15,18 @@ namespace NFePHP\NFe\Factories;
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
 
+use NFePHP\Common\Strings;
+
 class Contingency
 {
+    
+    const SVCAN = 'SVCAN';
+    const SVCRS = 'SVCRS';
+    const OFFLINE = 'OFFLINE';
+    const EPEC = 'EPEC';
+    const FSDA = 'FS-DA';
+    
+    
     /**
      * @var \stdClass
      */
@@ -24,19 +34,19 @@ class Contingency
     /**
      * @var string
      */
-    public $type;
+    public $type = '';
     /**
      * @var string
      */
-    public $motive;
+    public $motive = '';
     /**
      * @var int
      */
-    public $timestamp;
+    public $timestamp = 0;
     /**
      * @var int
      */
-    public $tpEmis;
+    public $tpEmis = 1;
 
     /**
      * Constructor
@@ -104,6 +114,7 @@ class Contingency
             'TO'=>'SVCAN'
         );
         $type = strtoupper(str_replace('-', '', $type));
+        
         if (empty($type)) {
             $type = (string) $list[$acronym];
         }
@@ -144,7 +155,11 @@ class Contingency
     private function configBuild($timestamp, $motive, $type)
     {
         switch ($type) {
+            case 'EPEC':
+                $tpEmis = 4;
+                break;
             case 'FS-DA':
+            case 'FSDA':
                 $tpEmis = 5;
                 break;
             case 'SVC-AN':
@@ -159,10 +174,19 @@ class Contingency
                 $tpEmis = 9;
                 break;
             default:
-                $tpEmis = 1;
+                if ($type == '') {
+                    $tpEmis = 1;
+                    $timestamp = 0;
+                    $motive = '';
+                    break;
+                }
+                throw new \InvalidArgumentException(
+                    "Tipo de contingência "
+                    . "[$type] não está disponível;"
+                );
         }
         $config = new \stdClass();
-        $config->motive = $motive;
+        $config->motive = Strings::replaceSpecialsChars(substr(trim($motive), 0, 256));
         $config->timestamp = $timestamp;
         $config->type = $type;
         $config->tpEmis = $tpEmis;

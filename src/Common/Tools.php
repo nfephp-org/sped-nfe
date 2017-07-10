@@ -2,14 +2,37 @@
 
 namespace NFePHP\NFe\Common;
 
-use NFePHP\Common\Strings\Strings;
+/**
+ * Class base responsible for communication with SEFAZ
+ *
+ * @category  NFePHP
+ * @package   NFePHP\NFe\Common\Tools
+ * @copyright NFePHP Copyright (c) 2008-2017
+ * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
+ * @license   https://opensource.org/licenses/MIT MIT
+ * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
+ * @author    Roberto L. Machado <linux.rlm at gmail dot com>
+ * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
+ */
+
+use DateTime;
+use DOMDocument;
+use Exception;
+use RuntimeException;
+use InvalidArgumentException;
+use NFePHP\Common\Strings;
+use NFePHP\Common\Keys;
 use NFePHP\Common\Certificate;
 use NFePHP\Common\Soap\SoapInterface;
+use NFePHP\Common\Soap\SoapCurl;
 use NFePHP\Common\Signer;
 use NFePHP\Common\Validator;
+use NFePHP\Common\TimeZoneByUF;
+use NFePHP\Common\UFList;
 use NFePHP\NFe\Factories\Contingency;
+use NFePHP\NFe\Common\Webservices;
 use NFePHP\NFe\Factories\Header;
-use NFePHP\Common\Soap\SoapCurl;
+use NFePHP\NFe\Factories\ContingencyNFe;
 
 class Tools
 {
@@ -19,10 +42,10 @@ class Tools
      */
     public $config;
     /**
-     * Path to config folder
+     * Path to storage folder
      * @var string
      */
-    public $pathconfig = '';
+    public $pathwsfiles = '';
     /**
      * Path to schemes folder
      * @var string
@@ -48,6 +71,21 @@ class Tools
      * @var SoapInterface
      */
     public $soap;
+    /**
+     * Application version
+     * @var string
+     */
+    public $verAplic = '';
+    /**
+     * last soap request
+     * @var string
+     */
+    public $lastRequest = '';
+    /**
+     * last soap response
+     * @var string
+     */
+    public $lastResponse = '';
     /**
      * certificate class
      * @var Certificate
@@ -75,41 +113,6 @@ class Tools
      * @var string
      */
     protected $urlPortal = 'http://www.portalfiscal.inf.br/nfe';
-    /**
-     * cUFlist
-     * @var array
-     */
-    protected $cUFlist = [
-        'AC'=>12,
-        'AL'=>27,
-        'AM'=>13,
-        'AN'=>91,
-        'AP'=>16,
-        'BA'=>29,
-        'CE'=>23,
-        'DF'=>53,
-        'ES'=>32,
-        'GO'=>52,
-        'MA'=>21,
-        'MG'=>31,
-        'MS'=>50,
-        'MT'=>51,
-        'PA'=>15,
-        'PB'=>25,
-        'PE'=>26,
-        'PI'=>22,
-        'PR'=>41,
-        'RJ'=>33,
-        'RN'=>24,
-        'RO'=>11,
-        'RR'=>14,
-        'RS'=>43,
-        'SC'=>42,
-        'SE'=>28,
-        'SP'=>35,
-        'TO'=>17,
-        'SVAN' => 91
-    ];
     /**
      * urlcUF
      * @var string
@@ -158,7 +161,6 @@ class Tools
         'xmlns:soap' => "http://www.w3.org/2003/05/soap-envelope"
     ];
 
-
     /**
      * Constructor
      * load configurations,
@@ -172,18 +174,15 @@ class Tools
     public function __construct($configJson, Certificate $certificate)
     {
         $this->config = json_decode($configJson);
-        $this->pathconfig = __DIR__ .
-            DIRECTORY_SEPARATOR .
-            '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR .
-            'config' .
-            DIRECTORY_SEPARATOR;
-        $this->pathschemes = __DIR__ .
-            DIRECTORY_SEPARATOR .
-            '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR .
-            'schemes' .
-            DIRECTORY_SEPARATOR .
-            $this->config->schemes .
-            DIRECTORY_SEPARATOR;
+        
+        $this->pathwsfiles = realpath(
+            __DIR__ . '/../../storage'
+        ).'/';
+        
+        $this->pathschemes = realpath(
+            __DIR__ . '/../../schemes/'. $this->config->schemes
+        ).'/';
+        
         $this->version($this->config->versao);
         $this->setEnvironmentTimeZone($this->config->siglaUF);
         $this->certificate = $certificate;
@@ -199,36 +198,16 @@ class Tools
      */
     public function setEnvironmentTimeZone($acronym)
     {
-        $tz = [
-            'AC'=>'America/Rio_Branco',
-            'AL'=>'America/Maceio',
-            'AM'=>'America/Manaus',
-            'AP'=>'America/Belem',
-            'BA'=>'America/Bahia',
-            'CE'=>'America/Fortaleza',
-            'DF'=>'America/Sao_Paulo',
-            'ES'=>'America/Sao_Paulo',
-            'GO'=>'America/Sao_Paulo',
-            'MA'=>'America/Fortaleza',
-            'MG'=>'America/Sao_Paulo',
-            'MS'=>'America/Campo_Grande',
-            'MT'=>'America/Cuiaba',
-            'PA'=>'America/Belem',
-            'PB'=>'America/Fortaleza',
-            'PE'=>'America/Recife',
-            'PI'=>'America/Fortaleza',
-            'PR'=>'America/Sao_Paulo',
-            'RJ'=>'America/Sao_Paulo',
-            'RN'=>'America/Fortaleza',
-            'RO'=>'America/Porto_Velho',
-            'RR'=>'America/Boa_Vista',
-            'RS'=>'America/Sao_Paulo',
-            'SC'=>'America/Sao_Paulo',
-            'SE'=>'America/Maceio',
-            'SP'=>'America/Sao_Paulo',
-            'TO'=>'America/Araguaina'
-        ];
-        date_default_timezone_set($tz[$acronym]);
+        date_default_timezone_set(TimeZoneByUF::get($acronym));
+    }
+    
+    /**
+     * Set application version
+     * @param string $ver
+     */
+    public function setVerAplic($ver)
+    {
+        $this->verAplic = $ver;
     }
 
     /**
@@ -281,13 +260,25 @@ class Tools
     }
     
     /**
+     * Set environment for production or homologation
+     * @param int $tpAmb
+     */
+    public function environment($tpAmb = 2)
+    {
+        if (!empty($tpAmb) && ($tpAmb == 1 || $tpAmb == 2)) {
+            $this->tpAmb = $tpAmb;
+            $this->ambiente = ($tpAmb == 1) ? 'producao' : 'homologacao';
+        }
+    }
+    
+    /**
      * Recover cUF number from
-     * @param string $acronym Sigal do estado
+     * @param string $acronym Sigla do estado
      * @return int number cUF
      */
     public function getcUF($acronym)
     {
-        return $this->cUFlist[$acronym];
+        return UFlist::getCodeByUF($acronym);
     }
     
     /**
@@ -297,114 +288,128 @@ class Tools
      */
     public function getAcronym($cUF)
     {
-        return array_search($cUF, $this->cUFlist);
+        return UFlist::getUFByCode($cUF);
+    }
+    
+    /**
+     * Validate cUF from the key content and returns the state acronym
+     * @param string $chave
+     * @return string
+     * @throws InvalidArgumentException
+     */
+    public function validKeyByUF($chave)
+    {
+        $uf = $this->config->siglaUF;
+        if ($uf != UFList::getUFByCode(substr($chave, 0, 2))) {
+            throw new \InvalidArgumentException(
+                "A chave da NFe indicada [$chave] não pertence a [$uf]."
+            );
+        }
+        return $uf;
     }
     
     /**
      * Sign NFe or NFCe
      * @param  string  $xml NFe xml content
      * @return string singed NFe xml
-     * @throws \RuntimeException
+     * @throws RuntimeException
      */
     public function signNFe($xml)
     {
-        try {
-            $xml = preg_replace('/>\s+</', '><', $xml);
-            //corret fields from NFe for contigency mode
-            $xml = $this->correctNFeForContingencyMode($xml);
-            $signed = Signer::sign($this->certificate, $xml, 'infNFe', 'Id', $this->algorithm, [false,false,null,null]);
-            $dom = new \DOMDocument('1.0', 'UTF-8');
-            $dom->preserveWhiteSpace = false;
-            $dom->formatOutput = false;
-            $dom->loadXML($signed);
-            $modelo = $dom->getElementsByTagName('mod')->item(0)->nodeValue;
-            if ($modelo == 65) {
-                $signed = $this->addQRCode($dom);
-            }
-            $this->isValid($this->versao, $signed, 'nfe');
-        } catch (NFePHP\Common\Exception\SignerException $e) {
-            throw new \RuntimeException($e->getMessage);
-        } catch (\InvalidArgumentException $e) {
-            throw new \RuntimeException($e->getMessage);
+        //clear invalid strings
+        $xml = Strings::clearXmlString($xml);
+        $signed = Signer::sign(
+            $this->certificate,
+            $xml,
+            'infNFe',
+            'Id',
+            $this->algorithm,
+            [false,false,null,null]
+        );
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->preserveWhiteSpace = false;
+        $dom->formatOutput = false;
+        $dom->loadXML($signed);
+        $modelo = $dom->getElementsByTagName('mod')->item(0)->nodeValue;
+        if ($modelo == 65) {
+            $signed = $this->addQRCode($dom);
         }
+        //exception se não for valido
+        $this->isValid($this->versao, $signed, 'nfe');
         return $signed;
     }
     
     /**
      * Corret NFe fields when in contingency mode
-     * @param string $xml
+     * @param string $xml NFe xml content
      * @return string
-     * @throws \RuntimeException
      */
     protected function correctNFeForContingencyMode($xml)
     {
         if ($this->contingency->type == '') {
             return $xml;
         }
-        $dom = new \DOMDocument('1.0', 'UTF-8');
-        $dom->preserveWhiteSpace = false;
-        $dom->formatOutput = false;
-        $dom->loadXML($xml);
-        //remove signature if is signed
-        if (Signer::isSigned($dom, 'infNFe')) {
-            $dom = Signer::removeSignature($dom);
-        }
-        $motivo = trim(Strings::cleanString($this->contingency->motive));
-        $len = strlen($motivo);
-        if ($len < 15 || $len > 255) {
-            throw new \RuntimeException('O motivo da contingência não atende os parametros de tamanho');
-        }
-        $dt = new \DateTime();
-        $dt->setTimestamp($this->contingency->timestamp);
-        $ide = $dom->getElementsByTagName('ide')->item(0);
-        $ide->getElementsByTagName('tpEmis')->item(0)->nodeValue = $this->contingency->tpEmis;
-        if (!empty($ide->getElementsByTagName('dhCont')->item(0)->nodeValue)) {
-            $ide->getElementsByTagName('dhCont')->item(0)->nodeValue = $dt->format('Y-m-d\TH:i:sP');
-        } else {
-            $dhCont = $dom->createElement('dhCont', $dt->format('Y-m-d\TH:i:sP'));
-            $ide->appendChild($dhCont);
-        }
-        if (!empty($ide->getElementsByTagName('xJust')->item(0)->nodeValue)) {
-            $ide->getElementsByTagName('xJust')->item(0)->nodeValue = $motivo;
-        } else {
-            $xJust = $dom->createElement('xJust', $motivo);
-            $ide->appendChild($xJust);
-        }
-        return $dom->saveXML();
+        $xml = ContingencyNFe::adjust($xml, $this->contingency);
+        return $this->signNFe($xml);
     }
 
     /**
-     * Performs xml validation with its respective XSD structure definition document
-     * @param string $version
-     * @param type $body
-     * @param type $method
-     * @return type
-     * @throws \InvalidArgumentException
+     * Performs xml validation with its respective
+     * XSD structure definition document
+     * NOTE: if dont existis the XSD file will return true
+     * @param string $version layout version
+     * @param string $body
+     * @param string $method
+     * @return boolean
      */
     protected function isValid($version, $body, $method)
     {
         $schema = $this->pathschemes.$method."_v$version.xsd";
         if (!is_file($schema)) {
-            throw new \InvalidArgumentException("XSD file not found. [$schema]");
+            return true;
         }
         return Validator::isValid(
             $body,
             $schema
         );
     }
-
-    protected function checkContingencyForServices($service)
+    
+    /**
+     * Verifies the existence of the service
+     * @param string $service
+     * @throws RuntimeException
+     */
+    protected function checkContingencyForWebServices($service)
     {
+        $permit = [
+            55 => ['SVCAN', 'SVCRS', 'EPEC', 'FSDA'],
+            65 => ['FSDA', 'EPEC', 'OFFLINE']
+        ];
+        
+        $type = $this->contingency->type;
+        $mod = $this->modelo;
+        if (!empty($type)) {
+            if (array_search($type, $permit[$mod]) === false) {
+                throw new RuntimeException(
+                    "Esse modo de contingência [$type] não é aceito "
+                    . "para o modelo [$mod]"
+                );
+            }
+        }
+        
         //se a contingencia é OFFLINE ou FSDA nenhum servidor está disponivel
         //se a contigencia EPEC está ativa apenas o envio de Lote está ativo,
         //então gerar um RunTimeException
-        if ($this->contingency->type == 'FSDA'
-            || $this->contingency->type == 'OFFLINE'
-            || ($this->contingency->type == 'EPEC' && $service != 'NfeAutorizacao')
+        if ($type == 'FSDA'
+            || $type == 'OFFLINE'
+            || ($type == 'EPEC' && $service != 'RecepcaoEvento')
         ) {
-            throw new \RuntimeException('Operando em modo de contingência esse serviço não está disponivel');
+            throw new RuntimeException(
+                "Quando operando em modo de contingência ["
+                . $this->contingency->type
+                . "], este serviço [$service] não está disponível."
+            );
         }
-        //se a contingência SVC está ativa apenas modificar os XML e obviamente os webservices
     }
     
     /**
@@ -412,7 +417,7 @@ class Tools
      * @param int $tpAmb
      * @return void
      */
-    protected function setEnvironment($tpAmb = 2)
+    public function setEnvironment($tpAmb = 2)
     {
         $this->tpAmb = $tpAmb;
         $this->ambiente = 'homologacao';
@@ -426,29 +431,47 @@ class Tools
      * @param string $service
      * @param string $uf
      * @param string $tpAmb
+     * @param bool $ignoreContingency
      * @return void
      */
     protected function servico(
         $service,
         $uf,
-        $tpAmb
+        $tpAmb,
+        $ignoreContingency = false
     ) {
         $ambiente = $tpAmb == 1 ? "producao" : "homologacao";
         $webs = new Webservices($this->getXmlUrlPath());
         $sigla = $uf;
-        $cont = $this->contingency->type();
-        if (!empty($cont)) {
-            $sigla = $cont;
+        if (!$ignoreContingency) {
+            $contType = $this->contingency->type;
+            if (!empty($contType)
+                && ($contType == 'SVCRS' || $contType == 'SVCAN')
+            ) {
+                $sigla = $contType;
+            }
         }
         $stdServ = $webs->get($sigla, $ambiente, $this->modelo);
         if ($stdServ === false) {
-            throw \RuntimeException('Não foram localizados serviços para essa unidade.');
+            throw new \RuntimeException(
+                "Nenhum serviço foi localizado para esta unidade "
+                . "da federação [$sigla], com o modelo [$this->modelo]."
+            );
         }
         if (empty($stdServ->$service->url)) {
-            throw \RuntimeException('Esse serviço não é disponibilizado para essa unidade da federação.');
+            throw new \RuntimeException(
+                "Este serviço [$service] não está disponivel para esta "
+                . "unidade da federação [$uf] ou para este modelo de Nota ["
+                . $this->modelo
+                ."]."
+            );
         }
         //recuperação do cUF
         $this->urlcUF = $this->getcUF($uf);
+        if ($this->urlcUF > 91) {
+            //foi solicitado dado de SVCRS ou SVCAN
+            $this->urlcUF = $this->getcUF($this->config->siglaUF);
+        }
         //recuperação da versão
         $this->urlVersion = $stdServ->$service->version;
         //recuperação da url do serviço
@@ -458,16 +481,31 @@ class Tools
         //recuperação da operação
         $this->urlOperation = $stdServ->$service->operation;
         //montagem do namespace do serviço
-        $this->urlNamespace = sprintf("%s/wsdl/%s", $this->urlPortal, $this->urlOperation);
-        //montagem do cabeçalho da comunicação SOAP
-        $this->urlHeader = Header::get($this->urlNamespace, $this->urlcUF, $this->urlVersion);
-        //montagem do SOAP Header
-        $this->objHeader = new \SOAPHeader(
-            $this->urlNamespace,
-            'nfeCabecMsg',
-            ['cUF' => $this->urlcUF, 'versaoDados' => $this->urlVersion]
+        $this->urlNamespace = sprintf(
+            "%s/wsdl/%s",
+            $this->urlPortal,
+            $this->urlOperation
         );
-        $this->urlAction = "\"" . $this->urlNamespace . "/" . $this->urlMethod . "\"";
+        //montagem do cabeçalho da comunicação SOAP
+        $this->urlHeader = Header::get(
+            $this->urlNamespace,
+            $this->urlcUF,
+            $this->urlVersion
+        );
+        $this->urlAction = "\""
+            . $this->urlNamespace
+            . "/"
+            . $this->urlMethod
+            . "\"";
+        //montagem do SOAP Header
+        //para versões posteriores a 3.10 não incluir o SOAPHeader !!!!
+        if ($this->versao < 4.0) {
+            $this->objHeader = new \SOAPHeader(
+                $this->urlNamespace,
+                'nfeCabecMsg',
+                ['cUF' => $this->urlcUF, 'versaoDados' => $this->urlVersion]
+            );
+        }
     }
     
     /**
@@ -475,10 +513,8 @@ class Tools
      * @param string $request
      * @return string
      */
-    protected function sendRequest($request)
+    protected function sendRequest($request, $parameters = [])
     {
-        $parameters = ['nfeDadosMsg' => $request];
-        $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
         return (string) $this->soap->send(
             $this->urlService,
             $this->urlMethod,
@@ -486,7 +522,7 @@ class Tools
             SOAP_1_2,
             $parameters,
             $this->soapnamespaces,
-            $body,
+            $request,
             $this->objHeader
         );
     }
@@ -501,19 +537,23 @@ class Tools
         if ($this->modelo == 65) {
             $file = str_replace('55', '65', $file);
         }
-        return $this->pathconfig . DIRECTORY_SEPARATOR . $file;
+        return file_get_contents($this->pathwsfiles
+            . DIRECTORY_SEPARATOR
+            . $file);
     }
     
     /**
      * Add QRCode Tag to signed XML from a NFCe
-     * @param \DOMDocument $dom
+     * @param DOMDocument $dom
      * @return string
      */
-    protected function addQRCode(\DOMDocument $dom)
+    protected function addQRCode(DOMDocument $dom)
     {
         $memmod = $this->modelo;
         $this->modelo = 65;
-        $uf = $this->getSigla($dom->getElementsByTagName('cUF')->item(0)->nodeValue);
+        $uf = UFList::getUFByCode(
+            $dom->getElementsByTagName('cUF')->item(0)->nodeValue
+        );
         $this->servico(
             'NfeConsultaQR',
             $uf,
@@ -521,13 +561,34 @@ class Tools
         );
         $signed = QRCode::putQRTag(
             $dom,
-            $this->config->tokenNFCe,
-            $this->config->tokenNFCeId,
+            $this->config->CSC,
+            $this->config->CSCid,
             $uf,
             $this->urlVersion,
-            $this->urlService
+            $this->urlService,
+            $this->getURIConsultaNFCe($uf)
         );
         $this->modelo = $memmod;
         return $signed;
+    }
+    
+    /**
+     * Get URI for search NFCe by chave
+     * @param string $uf
+     * @return string
+     */
+    protected function getURIConsultaNFCe($uf)
+    {
+        if ($this->versao == '3.10') {
+            return '';
+        }
+        //existe no XML apenas para layout >= 4.x
+        //os URI estão em storage/uri_consulta_nfce.json
+        $std = json_decode(
+            file_get_contents(
+                $this->pathwsfiles.'uri_consulta_nfce.json'
+            )
+        );
+        return $std->$uf;
     }
 }

@@ -8,7 +8,7 @@ namespace NFePHP\NFe\Common;
  *
  * @category  NFePHP
  * @package   NFePHP\NFe\Common\Webservices
- * @copyright NFePHP Copyright (c) 2016
+ * @copyright NFePHP Copyright (c) 2008-2017
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
  * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
@@ -23,7 +23,8 @@ class Webservices
     
     /**
      * Constructor
-     * @param string $xml path or xml content from nfe_ws3_mod55 or nfe_ws3_mod65
+     * @param string $xml path or xml content from
+     *               nfe_ws3_mod55 or nfe_ws3_mod65
      */
     public function __construct($xml)
     {
@@ -32,6 +33,8 @@ class Webservices
     
     /**
      * Get webservices parameters for specific conditions
+     * the parameters with the authorizers are in a json file in
+     * the storage folder
      * @param string $sigla
      * @param string $ambiente "homologacao" ou "producao"
      * @param string $modelo "55" ou "65"
@@ -39,70 +42,14 @@ class Webservices
      */
     public function get($sigla, $ambiente, $modelo)
     {
-        $autorizadores['65'] = [
-            'AC'=>'SVRS',
-            'AL'=>'SVRS',
-            'AM'=>'AM',
-            'AP'=>'SVRS',
-            'BA'=>'SVRS',
-            'CE'=>'',
-            'DF'=>'SVRS',
-            'ES'=>'SVRS',
-            'GO'=>'SVRS',
-            'MA'=>'SVRS',
-            'MG'=>'',
-            'MS'=>'MS',
-            'MT'=>'MT',
-            'PA'=>'SVRS',
-            'PB'=>'SVRS',
-            'PE'=>'',
-            'PI'=>'SVRS',
-            'PR'=>'PR',
-            'RJ'=>'SVRS',
-            'RN'=>'SVRS',
-            'RO'=>'SVRS',
-            'RR'=>'SVRS',
-            'RS'=>'RS',
-            'SC'=>'SVRS',
-            'SE'=>'SVRS',
-            'SP'=>'SP',
-            'TO'=>'SVRS',
-            'SVRS'=>'SVRS'
-        ];
-        $autorizadores['55'] = [
-            'AC'=>'SVRS',
-            'AL'=>'SVRS',
-            'AM'=>'AM',
-            'AN'=>'AN',
-            'AP'=>'SVRS',
-            'BA'=>'BA',
-            'CE'=>'CE',
-            'DF'=>'SVRS',
-            'ES'=>'SVRS',
-            'GO'=>'GO',
-            'MA'=>'SVAN',
-            'MG'=>'MG',
-            'MS'=>'MS',
-            'MT'=>'MT',
-            'PA'=>'SVAN',
-            'PB'=>'SVRS',
-            'PE'=>'PE',
-            'PI'=>'SVAN',
-            'PR'=>'PR',
-            'RJ'=>'SVRS',
-            'RN'=>'SVRS',
-            'RO'=>'SVRS',
-            'RR'=>'SVRS',
-            'RS'=>'RS',
-            'SC'=>'SVRS',
-            'SE'=>'SVRS',
-            'SP'=>'SP',
-            'TO'=>'SVRS',
-            'SVAN'=>'SVAN',
-            'SVRS'=>'SVRS',
-            'SVCAN'=>'SVCAN',
-            'SVCRS'=>'SVCRS'
-        ];
+        $autfile = realpath(__DIR__ . '/../../storage/autorizadores.json');
+        $autorizadores = json_decode(file_get_contents($autfile), true);
+        if (!key_exists($sigla, $autorizadores[$modelo])) {
+            throw new \RuntimeException(
+                "Não existe o autorizador [$sigla] para os "
+                . "webservices do modelo [$modelo]"
+            );
+        }
         $auto = $autorizadores[$modelo][$sigla];
         if (empty($auto)) {
             return false;
@@ -138,9 +85,6 @@ class Webservices
      */
     protected function convert($xml)
     {
-        if (is_file($xml)) {
-            $xml = file_get_contents($xml);
-        }
         $resp = simplexml_load_string($xml, null, LIBXML_NOCDATA);
         $aWS = [];
         foreach ($resp->children() as $element) {

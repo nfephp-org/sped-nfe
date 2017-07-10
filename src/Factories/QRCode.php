@@ -7,8 +7,8 @@ namespace NFePHP\NFe\Factories;
  * NOTE: this class only works with model 65 NFCe only
  *
  * @category  NFePHP
- * @package   NFePHP\NFe\Common\QRCode
- * @copyright NFePHP Copyright (c) 2016
+ * @package   NFePHP\NFe\Factories\QRCode
+ * @copyright NFePHP Copyright (c) 2008-2017
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
  * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
@@ -16,18 +16,43 @@ namespace NFePHP\NFe\Factories;
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
 
+use DOMDocument;
+use InvalidArgumentException;
+
 class QRCode
 {
     /**
      * putQRTag
      * Mount URI for QRCode and create XML tag in signed xml
-     * @param DOMDocument $dom
+     * @param DOMDocument $dom NFe
+     * @param string $token CSC number
+     * @param string $idToken CSC identification
+     * @param string $sigla UF alias
+     * @param string $versao version of field
+     * @param string $urlqr URL for search by QRCode
+     * @param string $urichave URL for search by chave
      * @return string
+     * @throws InvalidArgumentException
      */
-    public static function putQRTag(\DOMDocument $dom, $token, $idToken, $sigla, $versao, $url = '')
-    {
-        if (empty($url)) {
-            return $dom->saveXML();
+    public static function putQRTag(
+        \DOMDocument $dom,
+        $token,
+        $idToken,
+        $sigla,
+        $versao,
+        $urlqr = '',
+        $urichave = ''
+    ) {
+        if (empty($token) || empty($idToken) || empty($urlqr)) {
+            if ($token == '') {
+                $msg = "Falta o CSC no config.json";
+            } elseif ($idToken == '') {
+                $msg = "Falta o CSCId no config.json";
+            } elseif ($urlqr == '') {
+                $msg = "Falta a URL do serviço NfeConsultaQR para a $sigla,"
+                    . " no arquivo wsnfe_3.10_mod65.xml";
+            }
+            throw new InvalidArgumentException($msg);
         }
         $nfe = $dom->getElementsByTagName('NFe')->item(0);
         $infNFe = $dom->getElementsByTagName('infNFe')->item(0);
@@ -68,6 +93,11 @@ class QRCode
         $infNFeSupl = $dom->createElement("infNFeSupl");
         $nodeqr = $infNFeSupl->appendChild($dom->createElement('qrCode'));
         $nodeqr->appendChild($dom->createCDATASection($qrcode));
+        if (!empty($urichave)) {
+            $infNFeSupl->appendChild(
+                $dom->createElement('urlChave', $std->$sigla)
+            );
+        }
         $signature = $dom->getElementsByTagName('Signature')->item(0);
         $nfe->insertBefore($infNFeSupl, $signature);
         $dom->formatOutput = false;
@@ -116,7 +146,6 @@ class QRCode
         $seq .= '&vICMS=' . $vICMS;
         $seq .= '&digVal=' . strtolower($digHex);
         $seq .= '&cIdToken=' . $idToken;
-        //o hash code é calculado com o Token incluso
         $hash = sha1($seq.$token);
         $seq .= '&cHashQRCode='. strtoupper($hash);
         if (strpos($url, '?') === false) {
@@ -134,10 +163,11 @@ class QRCode
     {
         $hex = "";
         $iCount = 0;
+        $tot = strlen($str);
         do {
             $hex .= sprintf("%02x", ord($str{$iCount}));
             $iCount++;
-        } while ($iCount < strlen($str));
+        } while ($iCount < $tot);
         return $hex;
     }
 }

@@ -17,22 +17,15 @@
             "homepage": "https://github.com/nfephp-org/sped-nfe/graphs/contributors"
         }
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/robmachado/sped-common"
-        }
-    ],
     "require": {
         "php" : "~5.6|~7.0",
-        "nfephp-org/sped-common" : "v5.0.x-dev",
-        "league/flysystem": "^1.0",
-        "brazanation/documents": "^0.5.0"
+        "nfephp-org/sped-common" : "^5.0"
     },
     "require-dev": {
-        "squizlabs/php_codesniffer": "^2.6",
-        "phpunit/phpunit": "^5.5",
-        "scrutinizer/ocular": "^1.3"
+        "squizlabs/php_codesniffer": "^2.8",
+        "phpunit/phpunit": "^5.7",
+        "scrutinizer/ocular": "^1.3",
+        "phpmd/phpmd": "dev-master"
     },
     "autoload": {
         "psr-4": {
@@ -45,12 +38,14 @@
         }
     },
     "scripts": {
-        "test": "phpunit"
+        "test": "phpunit",
+        "phpcbf": "vendor/bin/phpcbf --standard=psr2 src/ & vendor/bin/phpcbf --standard=psr2 tests/",
+        "phpcs": "vendor/bin/phpcs --standard=psr2 src/; vendor/bin/phpcs --standard=psr2 tests/"
     },
     "extra": {
         "branch-alias": {
             "v5.0": "5.0-dev"
         }
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "stable"
 }

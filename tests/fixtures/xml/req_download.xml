@@ -1,0 +1,18 @@
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+    <soap:Header>
+        <nfeCabecMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NfeDownloadNF">
+            <cUF>91</cUF>
+            <versaoDados>1.00</versaoDados>
+        </nfeCabecMsg>
+    </soap:Header>
+    <soap:Body>
+        <nfeDadosMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NfeDownloadNF">
+            <downloadNFe xmlns="http://www.portalfiscal.inf.br/nfe" versao="1.00">
+                <tpAmb>2</tpAmb>
+                <xServ>DOWNLOAD NFE</xServ>
+                <CNPJ>58716523000119</CNPJ>
+                <chNFe>35150300822602000124550010009923461099234656</chNFe>
+            </downloadNFe>
+        </nfeDadosMsg>
+    </soap:Body>
+</soap:Envelope>

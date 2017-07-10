@@ -3,6 +3,10 @@ limpaTAB.php
 *~
 *.pfx
 *.pem
+messdetector.txt
+src/Tags
+src/NFe.php
+src/Tag.php
 config.json
 local
 vendor

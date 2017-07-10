@@ -1,0 +1,63 @@
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+    <soap:Header>
+        <nfeCabecMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/RecepcaoEvento">
+            <cUF>91</cUF>
+            <versaoDados>1.00</versaoDados>
+        </nfeCabecMsg>
+    </soap:Header>
+    <soap:Body>
+        <nfeDadosMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/RecepcaoEvento">
+            <envEvento xmlns="http://www.portalfiscal.inf.br/nfe" versao="1.00">
+                <idLote>201704050835294</idLote>
+                <evento xmlns="http://www.portalfiscal.inf.br/nfe" versao="1.00">
+                    <infEvento Id="ID1101403515030082260200012455001000992346409923465001">
+                        <cOrgao>91</cOrgao>
+                        <tpAmb>2</tpAmb>
+                        <CNPJ>58716523000119</CNPJ>
+                        <chNFe>35150300822602000124550010009923464099234650</chNFe>
+                        <dhEvento>2017-04-05T08:35:29-03:00</dhEvento>
+                        <tpEvento>110140</tpEvento>
+                        <nSeqEvento>1</nSeqEvento>
+                        <verEvento>1.00</verEvento>
+                        <detEvento versao="1.00">
+                            <descEvento>EPEC</descEvento>
+                            <cOrgaoAutor>35</cOrgaoAutor>
+                            <tpAutor>1</tpAutor>
+                            <verAplic/>
+                            <dhEmi>2015-03-27T09:40:00-03:00</dhEmi>
+                            <tpNF>1</tpNF>
+                            <IE>114489114119</IE>
+                            <dest>
+                                <UF>SP</UF>
+                                <CNPJ>99999999000191</CNPJ>
+                                <vNF>689.91</vNF>
+                                <vICMS>0.00</vICMS>
+                                <vST>0.00</vST>
+                            </dest>
+                        </detEvento>
+                    </infEvento>
+                    <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+                        <SignedInfo>
+                            <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+                            <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+                            <Reference URI="">
+                                <Transforms>
+                                    <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                                    <Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+                                </Transforms>
+                                <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+                                <DigestValue>GFMF4uJf57xek6HqExMXgHjoYLc=</DigestValue>
+                            </Reference>
+                        </SignedInfo>
+                        <SignatureValue>eQ4F3QIugCQKEpm33Qf4xLFpfgkWDjIIWG7qP1SZxn4XNXbhognximr5M2EfgvwC1gIWxqOV2GaamdAFT2WDBMkEikoyDVNnqnMQyVX0iYXOGY2XesHs9hAQQ0kjY1G/SWlk9yhSafq+X0mKh94INJbqZ50bLZMk8ium0Do95aE2pTV41/d2lTFZecYBf0+70obmMTGNOuWevMIjnb9ypeG79lSxvnVazD77uB2bjt4ZGaNJ0TDPuWPJKhiT4u6FV6AVA5AezZ4LnK09n0CRsrbcD+2ob+2Hi7FC9kiu5HyomkiMaLu9xCrwuRElLjhoILoNeH3OVnA7SciioGqTkA==</SignatureValue>
+                        <KeyInfo>
+                            <X509Data>
+                                <X509Certificate>MIIINTCCBh2gAwIBAgIQEABoI3FQdSnFVyEEKSwjtzANBgkqhkiG9w0BAQsFADB0MQswCQYDVQQGEwJCUjETMBEGA1UEChMKSUNQLUJyYXNpbDEtMCsGA1UECxMkQ2VydGlzaWduIENlcnRpZmljYWRvcmEgRGlnaXRhbCBTLkEuMSEwHwYDVQQDExhBQyBDZXJ0aXNpZ24gTXVsdGlwbGEgRzUwHhcNMTYwNDI1MDAwMDAwWhcNMTcwNDI0MjM1OTU5WjCBwzELMAkGA1UEBhMCQlIxEzARBgNVBAoUCklDUC1CcmFzaWwxIjAgBgNVBAsUGUF1dGVudGljYWRvIHBvciBBUiBEYXNjaGkxGzAZBgNVBAsUEkFzc2luYXR1cmEgVGlwbyBBMTEWMBQGA1UECxQNSUQgLSAxMDI4MzQzNjEcMBoGA1UEAxMTRklNQVRFQyBURVhUSUwgTFREQTEoMCYGCSqGSIb3DQEJARYZZmluYW5jZWlyb0BmaW1hdGVjLmNvbS5icjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANheJGu0qkiNGFY36IXp2Qokkzc9qViSEp55QXnKv0QKXvKgY+YDede5DDT9oOm7fI6GwVAt16nuZS5f9x3wufCcM5Kf4YPHkiqwDSQ02v4S7qDJIn9DqCl2R8EiKxBTmY4b8bKwqGupb1ZGs8Nq9D5seZahNAMEsKb5FYEEhavIi6sVEDzsTQyQfcMZMOuXcqgbSbdIGHrKqECfq7c6SaOi/UQcPAbTOmVFL6duxPmjCs+R9Uxu++8F/LKzUZg0zmyxDGQcGj9ev4ebBKMPJRLvQg/lujq/bDK5+VTkuHykV+Fjra4yrqf2EXh1846gcN9Vx3yiZb0I07xx5wF+yesCAwEAAaOCA3EwggNtMIG3BgNVHREEga8wgaygOAYFYEwBAwSgLwQtMjAxMDE5NTkwNTIyNTUzNzg4MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwoCEGBWBMAQMCoBgEFkZFUk5BTkRPIEpPU0UgS0FJUkFMTEGgGQYFYEwBAwOgEAQONTg3MTY1MjMwMDAxMTmgFwYFYEwBAwegDgQMMDAwMDAwMDAwMDAwgRlmaW5hbmNlaXJvQGZpbWF0ZWMuY29tLmJyMAkGA1UdEwQCMAAwHwYDVR0jBBgwFoAUnVDPvf8kyq+xM+sX4kJ6jmkqjlMwDgYDVR0PAQH/BAQDAgXgMIGJBgNVHSAEgYEwfzB9BgZgTAECAQswczBxBggrBgEFBQcCARZlaHR0cDovL2ljcC1icmFzaWwuY2VydGlzaWduLmNvbS5ici9yZXBvc2l0b3Jpby9kcGMvQUNfQ2VydGlzaWduX011bHRpcGxhL0RQQ19BQ19DZXJ0aVNpZ25NdWx0aXBsYS5wZGYwggElBgNVHR8EggEcMIIBGDBcoFqgWIZWaHR0cDovL2ljcC1icmFzaWwuY2VydGlzaWduLmNvbS5ici9yZXBvc2l0b3Jpby9sY3IvQUNDZXJ0aXNpZ25NdWx0aXBsYUc1L0xhdGVzdENSTC5jcmwwW6BZoFeGVWh0dHA6Ly9pY3AtYnJhc2lsLm91dHJhbGNyLmNvbS5ici9yZXBvc2l0b3Jpby9sY3IvQUNDZXJ0aXNpZ25NdWx0aXBsYUc1L0xhdGVzdENSTC5jcmwwW6BZoFeGVWh0dHA6Ly9yZXBvc2l0b3Jpby5pY3BicmFzaWwuZ292LmJyL2xjci9DZXJ0aXNpZ24vQUNDZXJ0aXNpZ25NdWx0aXBsYUc1L0xhdGVzdENSTC5jcmwwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMEMIGgBggrBgEFBQcBAQSBkzCBkDBkBggrBgEFBQcwAoZYaHR0cDovL2ljcC1icmFzaWwuY2VydGlzaWduLmNvbS5ici9yZXBvc2l0b3Jpby9jZXJ0aWZpY2Fkb3MvQUNfQ2VydGlzaWduX011bHRpcGxhX0c1LnA3YzAoBggrBgEFBQcwAYYcaHR0cDovL29jc3AuY2VydGlzaWduLmNvbS5icjANBgkqhkiG9w0BAQsFAAOCAgEAoKKStBShY9SJbz1kK/5QzqnVSFaPP2TrBBfJQG8IYVQXwghke/OqHmW4fr3LDMDMg/8I31xfYr20Kqu/o7myGV+ZnTLQckWUuODTVB7d/d22DNQaS4KLV9YB9R6l1csMr+KWl0dprechWlo7f90I62cZso/dLXW9Od/JXvbFPYiJrThwaIbY8LBFjYmHNodu1ILALBS8PhgfquOq3TEy2ZI8adfwEqPaGycVIqE5TdCMLKuhoXNf1EuuLPiXB7z6OjKHcJKsUXLrvdzHS4hGqVaGfRjBYkiSnA7m88/H9ab1H0SaxjZHC55ymVBYuQ/JHgNbjMKpGDGNSqyKD9difi4wjLV9H9RlS46FA0l8jUKgUomBzgBZJ4BVM2W2VhPqUUkupxturCJgeXV4nQaGraLLNpsmx6uK+DX+gHc21JDWmm57rguyLyZZC7iJSPioQomeJhA+ro/ReBAYp/8LVRlvFqSDgYqeB9ejFWKJep8Oh/EbHcVbkrqyJ0ZGGJgwCCYF8L55NuvocJVYJpPSJ2+dTDYjKrm062mlMI+w9amIHNy7ygIE15X/sWe+HOZCL9NNbUBb8gpe5xpdjNiym3Rx0YNX5vOa+pniNLjHFtoDIskgvWJYOB3QzygzcMD85zAzVzDX29jkqR22idGQ8kCqBbhmfLofh87czMj4Er4=</X509Certificate>
+                            </X509Data>
+                        </KeyInfo>
+                    </Signature>
+                </evento>
+            </envEvento>
+        </nfeDadosMsg>
+    </soap:Body>
+</soap:Envelope>

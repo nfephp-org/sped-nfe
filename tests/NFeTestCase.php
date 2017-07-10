@@ -2,7 +2,6 @@
 
 namespace NFePHP\NFe\Tests;
 
-
 class NFeTestCase extends \PHPUnit_Framework_TestCase
 {
     public $fixturesPath = '';
@@ -29,7 +28,7 @@ class NFeTestCase extends \PHPUnit_Framework_TestCase
                 "proxyPort" => "",
                 "proxyUser" => "",
                 "proxyPass" => ""
-            ]   
+            ]
         ];
         $this->contentpfx = file_get_contents($this->fixturesPath . "certs/expired_certificate.pfx");
         $this->passwordpfx = "associacao";
