@@ -787,12 +787,12 @@ class Tools extends ToolsCommon
      */
     public function sefazValidate($nfe)
     {
+        //verifica a assinatura da NFe, exception caso de falha
+        Signer::isSigned($nfe);
         $dom = new \DOMDocument('1.0', 'utf-8');
         $dom->formatOutput = false;
         $dom->preserveWhiteSpace = false;
         $dom->loadXML($nfe);
-        //verifica a assinatura da NFe, exception caso de falha
-        Signer::isSigned($dom, 'infNFe');
         //verifica a validade no webservice da SEFAZ
         $tpAmb = $dom->getElementsByTagName('tpAmb')->item(0)->nodeValue;
         $infNFe  = $dom->getElementsByTagName('infNFe')->item(0);

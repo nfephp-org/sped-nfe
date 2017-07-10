@@ -324,7 +324,7 @@ class Tools
             'infNFe',
             'Id',
             $this->algorithm,
-            [false,false,null,null]
+            [true,false,null,null]
         );
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->preserveWhiteSpace = false;
