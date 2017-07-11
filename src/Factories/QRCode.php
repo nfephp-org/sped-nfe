@@ -95,7 +95,7 @@ class QRCode
         $nodeqr->appendChild($dom->createCDATASection($qrcode));
         if (!empty($urichave)) {
             $infNFeSupl->appendChild(
-                $dom->createElement('urlChave', $std->$sigla)
+                $dom->createElement('urlChave', $urichave)
             );
         }
         $signature = $dom->getElementsByTagName('Signature')->item(0);

@@ -29,8 +29,9 @@ use NFePHP\Common\Signer;
 use NFePHP\Common\Validator;
 use NFePHP\Common\TimeZoneByUF;
 use NFePHP\Common\UFList;
-use NFePHP\NFe\Factories\Contingency;
 use NFePHP\NFe\Common\Webservices;
+use NFePHP\NFe\Factories\Contingency;
+use NFePHP\NFe\Factories\QRCode;
 use NFePHP\NFe\Factories\Header;
 use NFePHP\NFe\Factories\ContingencyNFe;
 
@@ -559,6 +560,10 @@ class Tools
             $uf,
             $dom->getElementsByTagName('tpAmb')->item(0)->nodeValue
         );
+        $uri = '';
+        if ($this->versao > 3.10) {
+            $uri = $this->getURIConsultaNFCe($uf);
+        }
         $signed = QRCode::putQRTag(
             $dom,
             $this->config->CSC,
@@ -566,7 +571,7 @@ class Tools
             $uf,
             $this->urlVersion,
             $this->urlService,
-            $this->getURIConsultaNFCe($uf)
+            $uri
         );
         $this->modelo = $memmod;
         return $signed;
