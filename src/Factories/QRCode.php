@@ -59,7 +59,7 @@ class QRCode
         $infNFe = $dom->getElementsByTagName('infNFe')->item(0);
         $layoutver = $infNFe->getAttribute('versao');
         
-        if (strtoupper(substr(trim($urlqr), 0, 5)) !== 'HTTPS')  {
+        if (strtoupper(substr(trim($urlqr), 0, 5)) !== 'HTTPS') {
             /*throw new InvalidArgumentException(
                 "A URL para a consulta do QRCode deve ser HTTPS e "
                     . "foi fornecido um HTTP, verifique o registro em storage"
