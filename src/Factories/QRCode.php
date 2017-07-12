@@ -40,7 +40,7 @@ class QRCode
         $idToken,
         $sigla,
         $versao,
-        $urlqr = '',
+        $urlqr,
         $urichave = ''
     ) {
         if (empty($token) || empty($idToken) || empty($urlqr)) {
@@ -54,8 +54,18 @@ class QRCode
             }
             throw new InvalidArgumentException($msg);
         }
+        
         $nfe = $dom->getElementsByTagName('NFe')->item(0);
         $infNFe = $dom->getElementsByTagName('infNFe')->item(0);
+        $layoutver = $infNFe->getAttribute('versao');
+        
+        if (strtoupper(substr(trim($urlqr), 0, 5)) !== 'HTTPS')  {
+            /*throw new InvalidArgumentException(
+                "A URL para a consulta do QRCode deve ser HTTPS e "
+                    . "foi fornecido um HTTP, verifique o registro em storage"
+                    . "/wsnfe_". $layoutver . "_mod65.xml."
+            );*/
+        }
         $ide = $dom->getElementsByTagName('ide')->item(0);
         $dest = $dom->getElementsByTagName('dest')->item(0);
         $icmsTot = $dom->getElementsByTagName('ICMSTot')->item(0);
@@ -79,7 +89,7 @@ class QRCode
         $digVal = $signedInfo->getElementsByTagName('DigestValue')->item(0)->nodeValue;
         $qrcode = self::get(
             $chNFe,
-            $url,
+            $urlqr,
             $tpAmb,
             $dhEmi,
             $vNF,
@@ -93,7 +103,7 @@ class QRCode
         $infNFeSupl = $dom->createElement("infNFeSupl");
         $nodeqr = $infNFeSupl->appendChild($dom->createElement('qrCode'));
         $nodeqr->appendChild($dom->createCDATASection($qrcode));
-        if (!empty($urichave)) {
+        if (!empty($urichave) && $layoutver > 3.10) {
             $infNFeSupl->appendChild(
                 $dom->createElement('urlChave', $urichave)
             );
@@ -145,7 +155,7 @@ class QRCode
         $seq .= '&vNF=' . $vNF;
         $seq .= '&vICMS=' . $vICMS;
         $seq .= '&digVal=' . strtolower($digHex);
-        $seq .= '&cIdToken=' . $idToken;
+        $seq .= '&cIdToken=' . str_pad($idToken, 6, '0', STR_PAD_LEFT);
         $hash = sha1($seq.$token);
         $seq .= '&cHashQRCode='. strtoupper($hash);
         if (strpos($url, '?') === false) {

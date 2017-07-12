@@ -560,10 +560,6 @@ class Tools
             $uf,
             $dom->getElementsByTagName('tpAmb')->item(0)->nodeValue
         );
-        $uri = '';
-        if ($this->versao > 3.10) {
-            $uri = $this->getURIConsultaNFCe($uf);
-        }
         $signed = QRCode::putQRTag(
             $dom,
             $this->config->CSC,
@@ -571,7 +567,7 @@ class Tools
             $uf,
             $this->urlVersion,
             $this->urlService,
-            $uri
+            $this->getURIConsultaNFCe($uf)
         );
         $this->modelo = $memmod;
         return $signed;
