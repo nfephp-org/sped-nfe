@@ -65,6 +65,10 @@ class Tools extends BaseTools
      * @var bool
      */
     private $bSalvarMensagensEvento  = true;
+    
+    public static $PL_008i2 = 'PL_008i2';
+
+
     /**
      * setModelo
      *
@@ -2278,5 +2282,23 @@ class Tools extends BaseTools
     public function getLastMsg()
     {
         return $this->oSoap->lastMsg;
+    }
+
+    public static function validarXmlNfe($xml, $schema)
+    {
+        $aResp = array();
+        $schem = IdentifyNFe::identificar($xml, $aResp);
+        if ($schem == '') {
+            return ["Não foi possível identificar o documento"];
+        }
+        $xsdFile = "{$aResp['Id']}_v{$aResp['versao']}.xsd";
+        $xsdPath = implode(DIRECTORY_SEPARATOR, [dirname(__DIR__), 'schemes', $schema, $xsdFile]);
+        if (!is_file($xsdPath)) {
+            return ["O arquivo XSD {$xsdFile} não foi localizado."];
+        }
+        if (!ValidXsd::validar($aResp['xml'], $xsdPath)) {
+            return ValidXsd::$errors;
+        }
+        return [];
     }
 }
