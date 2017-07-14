@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+     Atualizado em 14-07-2017 todos os endereços testados 
+     e WSDL baixados e conferidos
+-->
+<WS xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <UF>
+        <sigla>AN</sigla>
+        <homologacao>
+            <RecepcaoEvento method="nfeRecepcaoEventoNF" operation="NFeRecepcaoEvento4" version="https://hom.nfe.fazenda.gov.br/NFeRecepcaoEvento4/NFeRecepcaoEvento4.asmx"/>
+        </homologacao>
+    </UF>
+    <UF>
+        <sigla>GO</sigla>
+        <homologacao>
+            <NfeStatusServico method="nfeStatusServicoNF" operation="NFeStatusServico4" version="4.00">https://homolog.sefaz.go.gov.br/nfe/services/NFeStatusServico4</NfeStatusServico>
+            <NfeAutorizacao method="nfeAutorizacaoLote" operation="NFeAutorizacao4" version="4.00">https://homolog.sefaz.go.gov.br/nfe/services/NFeAutorizacao4</NfeAutorizacao>
+            <NfeConsultaProtocolo method="nfeConsultaNF" operation="NFeConsultaProtocolo4" version="4.00">https://homolog.sefaz.go.gov.br/nfe/services/NFeConsultaProtocolo4</NfeConsultaProtocolo>
+            <NfeInutilizacao method="nfeInutilizacaoNF" operation="NFeInutilizacao4" version="4.00">https://homolog.sefaz.go.gov.br/nfe/services/NFeInutilizacao4</NfeInutilizacao>
+            <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NFeRetAutorizacao4" version="4.00">https://homolog.sefaz.go.gov.br/nfe/services/NFeRetAutorizacao4</NfeRetAutorizacao>
+            <RecepcaoEvento method="nfeRecepcaoEventoNF" operation="NFeRecepcaoEvento4" version="4.00">https://homolog.sefaz.go.gov.br/nfe/services/NFeRecepcaoEvento4</RecepcaoEvento>
+            <NfeConsultaCadastro method="consultaCadastro" operation="CadConsultaCadastro4" version="4.00">https://homolog.sefaz.go.gov.br/nfe/services/CadConsultaCadastro4</NfeConsultaCadastro>
+        </homologacao>
+    </UF>
+    <UF>
+        <sigla>MS</sigla>
+        <homologacao>
+            <NfeStatusServico method="nfeStatusServicoNF" operation="NFeStatusServico4" version="4.00">https://homologacao.nfe.ms.gov.br/ws/NFeStatusServico4</NfeStatusServico>
+            <NfeAutorizacao method="nfeAutorizacaoLote" operation="NFeAutorizacao4" version="4.00">https://homologacao.nfe.ms.gov.br/ws/NFeAutorizacao4</NfeAutorizacao>
+            <NfeConsultaProtocolo method="nfeConsultaNF" operation="NFeConsultaProtocolo4" version="4.00">https://homologacao.nfe.ms.gov.br/ws/NFeConsultaProtocolo4</NfeConsultaProtocolo>
+            <NfeInutilizacao method="nfeInutilizacaoNF" operation="NFeInutilizacao4" version="4.00">https://homologacao.nfe.ms.gov.br/ws/NFeInutilizacao4</NfeInutilizacao>
+            <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NFeRetAutorizacao4" version="4.00">https://homologacao.nfe.ms.gov.br/ws/NFeRetAutorizacao4</NfeRetAutorizacao>
+            <RecepcaoEvento method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="4.00">https://homologacao.nfe.ms.gov.br/ws/NFeRecepcaoEvento4</RecepcaoEvento>
+        </homologacao>
+    </UF>
+    <UF>
+        <sigla>PR</sigla>
+        <homologacao>
+            <NfeStatusServico method="nfeStatusServicoNF" operation="NFeStatusServico4" version="4.00">https://homologacao.nfe.sefa.pr.gov.br/nfe/NFeStatusServico4</NfeStatusServico>
+            <NfeAutorizacao method="nfeAutorizacaoLote" operation="NFeAutorizacao4" version="4.00">https://homologacao.nfe.sefa.pr.gov.br/nfe/NFeAutorizacao4</NfeAutorizacao>
+            <NfeConsultaProtocolo method="nfeConsultaNF" operation="NFeConsultaProtocolo4" version="4.00">https://homologacao.nfe.sefa.pr.gov.br/nfe/NFeConsultaProtocolo4</NfeConsultaProtocolo>
+            <NfeInutilizacao method="nfeInutilizacaoNF" operation="NFeInutilizacao4" version="4.00">https://homologacao.nfe.sefa.pr.gov.br/nfe/NFeInutilizacao4</NfeInutilizacao>
+            <NfeRetAutorizacao method="nfeRetAutorizacao" operation="NFeRetAutorizacao4" version="4.00">https://homologacao.nfe.sefa.pr.gov.br/nfe/NFeRetAutorizacao4</NfeRetAutorizacao>
+            <RecepcaoEvento method="nfeRecepcaoEventoNF" operation="NFeRecepcaoEvento4" version="4.00">https://homologacao.nfe.sefa.pr.gov.br/nfe/NFeRecepcaoEvento4</RecepcaoEvento>
+            <NfeConsultaCadastro method="consultaCadastro4" operation="CadConsultaCadastro4" version="4.00">https://homologacao.nfe.sefa.pr.gov.br/nfe/CadConsultaCadastro4</NfeConsultaCadastro>
+        </homologacao>
+    </UF>
+    <UF>
+        <sigla>RS</sigla>
+        <homologacao>
+            <NfeStatusServico method="nfeStatusServicoNF" operation="NfeStatusServico4" version="4.00">https://nfe-homologacao.sefazrs.rs.gov.br/ws/NfeStatusServico/NfeStatusServico4.asmx</NfeStatusServico>
+            <NfeAutorizacao method="nfeAutorizacaoLote" operation="NfeAutorizacao4" version="4.00">https://nfe-homologacao.sefazrs.rs.gov.br/ws/NfeAutorizacao/NFeAutorizacao4.asmx</NfeAutorizacao>
+            <NfeConsultaProtocolo method="nfeConsultaNF" operation="NfeConsulta4" version="4.00">https://nfe-homologacao.sefazrs.rs.gov.br/ws/NfeConsulta/NfeConsulta4.asmx</NfeConsultaProtocolo>
+            <NfeInutilizacao method="nfeInutilizacaoNF" operation="NfeInutilizacao4" version="4.00">https://nfe-homologacao.sefazrs.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao4.asmx</NfeInutilizacao>
+            <NFeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NfeRetAutorizacao4" version="4.00">https://nfe-homologacao.sefazrs.rs.gov.br/ws/NfeRetAutorizacao/NFeRetAutorizacao4.asmx</NFeRetAutorizacao>
+            <RecepcaoEvento method="nfeRecepcaoEvento" operation="RecepcaoEvento4" version="4.00">https://nfe-homologacao.sefazrs.rs.gov.br/ws/recepcaoevento/recepcaoevento4.asmx</RecepcaoEvento>
+        </homologacao>
+    </UF>
+    <UF>
+        <sigla>SP</sigla>
+        <homologacao>
+            <NfeStatusServico method="nfeStatusServicoNF" operation="NfeStatusServico4" version="4.00">https://homologacao.nfe.fazenda.sp.gov.br/ws/nfestatusservico4.asmx</NfeStatusServico>
+            <NfeAutorizacao method="nfeAutorizacaoLote" operation="NfeAutorizacao4" version="4.00">https://homologacao.nfe.fazenda.sp.gov.br/ws/nfeautorizacao4.asmx</NfeAutorizacao>
+            <NfeConsultaProtocolo method="nfeConsultaNF" operation="NfeConsulta4" version="4.00">https://homologacao.nfe.fazenda.sp.gov.br/ws/nfeconsulta4.asmx</NfeConsultaProtocolo>
+            <NfeInutilizacao method="nfeInutilizacaoNF" operation="NfeInutilizacao4" version="4.00">https://homologacao.nfe.fazenda.sp.gov.br/ws/nfeinutilizacao4.asmx</NfeInutilizacao>
+            <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NfeRetAutorizacao4" version="4.00">https://homologacao.nfe.fazenda.sp.gov.br/ws/nferetautorizacao4.asmx</NfeRetAutorizacao>
+        </homologacao>
+    </UF>
+    <UF>
+        <sigla>SVRS</sigla>
+        <homologacao>
+            <NfeStatusServico method="nfeStatusServicoNF" operation="NfeStatusServico4" version="4.00">https://nfe-homologacao.svrs.rs.gov.br/ws/NfeStatusServico/NfeStatusServico4.asmx</NfeStatusServico>
+            <NfeAutorizacao method="nfeAutorizacaoLote" operation="NfeAutorizacao4" version="4.00">https://nfe-homologacao.svrs.rs.gov.br/ws/NfeAutorizacao/NFeAutorizacao4.asmx</NfeAutorizacao>
+            <NfeConsultaProtocolo method="nfeConsultaNF" operation="NfeConsulta4" version="4.00">https://nfe-homologacao.svrs.rs.gov.br/ws/NfeConsulta/NfeConsulta4.asmx</NfeConsultaProtocolo>
+            <NfeInutilizacao method="nfeInutilizacaoNF" operation="NfeInutilizacao4" version="4.00">https://nfe-homologacao.svrs.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao4.asmx</NfeInutilizacao>
+            <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NfeRetAutorizacao4" version="4.00">https://nfe-homologacao.svrs.rs.gov.br/ws/NfeRetAutorizacao/NFeRetAutorizacao4.asmx</NfeRetAutorizacao>
+            <RecepcaoEvento method="nfeRecepcaoEvento" operation="RecepcaoEvento4" version="4.00">https://nfe-homologacao.svrs.rs.gov.br/ws/recepcaoevento/recepcaoevento4.asmx</RecepcaoEvento>
+        </homologacao>
+    </UF>
+</WS>
