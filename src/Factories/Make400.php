@@ -23,9 +23,9 @@ use \DateTime;
 class Make400 extends MakeBasic
 {
     /**
-     * @var float
+     * @var string
      */
-    protected $versao = 4.00;
+    protected $versao = '4.00';
     /**
      * @var array of DOMElements
      */
@@ -1739,9 +1739,6 @@ class Make400 extends MakeBasic
      * @param  string $pFCPSTRet
      * @param  string $vFCPSTRet
      * @param  string $pST
-     * @param  string $vBCFCPST
-     * @param  string $pFCPST
-     * @param  string $vFCPST
      * @return DOMElement
      */
     public function tagICMSSN(
@@ -1769,10 +1766,7 @@ class Make400 extends MakeBasic
         $vBCFCPSTRet = '',
         $pFCPSTRet = '',
         $vFCPSTRet = '',
-        $pST = '',
-        $vBCFCPST = '',
-        $pFCPST = '',
-        $vFCPST = ''
+        $pST = ''
     ) {
         switch ($csosn) {
             case '101':

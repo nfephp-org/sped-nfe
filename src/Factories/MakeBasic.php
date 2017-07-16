@@ -26,7 +26,7 @@ use DOMElement;
 use DOMNode;
 use DateTime;
 
-class MakeBasic
+abstract class MakeBasic
 {
     /**
      * @var array
@@ -41,9 +41,9 @@ class MakeBasic
      */
     public $xml = '';
     /**
-     * @var float
+     * @var string
      */
-    protected $versao = 3.10;
+    protected $versao = '3.10';
     /**
      * @var integer
      */
@@ -393,7 +393,7 @@ class MakeBasic
         $this->infNFe->setAttribute("Id", 'NFe'.$chave);
         $this->infNFe->setAttribute(
             "versao",
-            number_format($this->versao, 2, '.', '')
+            $this->versao
         );
         //$this->infNFe->setAttribute("pk_nItem",'');
         $this->chNFe = $chave;
@@ -1474,7 +1474,7 @@ class MakeBasic
     
     /**
      * Pessoas autorizadas para o download do XML da NF-e G50 pai A01
-     * tag NFe/infNFe/autXML (somente versão 3.1)
+     * tag NFe/infNFe/autXML
      * @param  string $cnpj
      * @param  string $cpf
      * @return array
@@ -1482,27 +1482,23 @@ class MakeBasic
     public function tagautXML($cnpj = '', $cpf = '')
     {
         $identificador = 'G50 <autXML> - ';
-        if (intval($this->versao, 10) > 2) {
-            $autXML = $this->dom->createElement("autXML");
-            $this->dom->addChild(
-                $autXML,
-                "CNPJ",
-                $cnpj,
-                false,
-                $identificador . "CNPJ do Cliente Autorizado"
-            );
-            $this->dom->addChild(
-                $autXML,
-                "CPF",
-                $cpf,
-                false,
-                $identificador . "CPF do Cliente Autorizado"
-            );
-            $this->aAutXML[] = $autXML;
-            return $autXML;
-        } else {
-            return array();
-        }
+        $autXML = $this->dom->createElement("autXML");
+        $this->dom->addChild(
+            $autXML,
+            "CNPJ",
+            $cnpj,
+            false,
+            $identificador . "CNPJ do Cliente Autorizado"
+        );
+        $this->dom->addChild(
+            $autXML,
+            "CPF",
+            $cpf,
+            false,
+            $identificador . "CPF do Cliente Autorizado"
+        );
+        $this->aAutXML[] = $autXML;
+        return $autXML;
     }
     
     /**
@@ -2254,68 +2250,7 @@ class MakeBasic
         $this->aVeicProd[$nItem] = $veicProd;
         return $veicProd;
     }
-    
-    /**
-     * Detalhamento de medicamentos K01 pai I90
-     * tag NFe/infNFe/det[]/prod/med (opcional)
-     * @param  string $nItem
-     * @param  string $nLote
-     * @param  string $qLote
-     * @param  string $dFab
-     * @param  string $dVal
-     * @param  string $vPMC
-     * @return DOMElement
-     */
-    public function tagmed(
-        $nItem = '',
-        $nLote = '',
-        $qLote = '',
-        $dFab = '',
-        $dVal = '',
-        $vPMC = ''
-    ) {
-        $identificador = 'K01 <med> - ';
-        $med = $this->dom->createElement("med");
-        $this->dom->addChild(
-            $med,
-            "nLote",
-            $nLote,
-            true,
-            "$identificador [item $nItem] Número do Lote de medicamentos ou de matérias-primas farmacêuticas"
-        );
-        $this->dom->addChild(
-            $med,
-            "qLote",
-            $qLote,
-            true,
-            "$identificador [item $nItem] Quantidade de produto no Lote de medicamentos "
-                . "ou de matérias-primas farmacêuticas"
-        );
-        $this->dom->addChild(
-            $med,
-            "dFab",
-            $dFab,
-            true,
-            "$identificador [item $nItem] Data de fabricação"
-        );
-        $this->dom->addChild(
-            $med,
-            "dVal",
-            $dVal,
-            true,
-            "$identificador [item $nItem] Data de validade"
-        );
-        $this->dom->addChild(
-            $med,
-            "vPMC",
-            $vPMC,
-            true,
-            "$identificador [item $nItem] Preço máximo consumidor"
-        );
-        $this->aMed[$nItem] = $med;
-        return $med;
-    }
-    
+  
     /**
      * Detalhamento de armas L01 pai I90
      * tag NFe/infNFe/det[]/prod/arma (opcional)
@@ -5465,37 +5400,7 @@ class MakeBasic
         return $dup;
     }
     
-    /**
-     * Grupo de Formas de Pagamento YA01 pai A01
-     * tag NFe/infNFe/pag (opcional)
-     * Apenas para o modelo 65 NFCe
-     * @param  string $tPag
-     * @param  string $vPag
-     * @return DOMElement
-     */
-    public function tagpag(
-        $tPag = '',
-        $vPag = ''
-    ) {
-        $num = $this->buildPag();
-        $pag = $this->dom->createElement("pag");
-        $this->dom->addChild(
-            $this->aPag[$num-1],
-            "tPag",
-            $tPag,
-            true,
-            "Forma de pagamento"
-        );
-        $this->dom->addChild(
-            $this->aPag[$num-1],
-            "vPag",
-            $vPag,
-            true,
-            "Valor do Pagamento"
-        );
-        return $pag;
-    }
-    
+  
     /**
      * Grupo de Cartões YA04 pai YA01
      * tag NFe/infNFe/pag/card

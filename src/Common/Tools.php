@@ -98,6 +98,11 @@ class Tools
      */
     protected $algorithm = OPENSSL_ALGO_SHA1;
     /**
+     * Canonical conversion options
+     * @var array
+     */
+    protected $canonical = [true,false,null,null];
+    /**
      * Model of NFe 55 or 65
      * @var int
      */
@@ -325,7 +330,7 @@ class Tools
             'infNFe',
             'Id',
             $this->algorithm,
-            [true,false,null,null]
+            $this->canonical
         );
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->preserveWhiteSpace = false;
@@ -428,6 +433,19 @@ class Tools
     }
     
     /**
+     * Set option for canonical transformation see C14n
+     * @param array $opt
+     * @return array
+     */
+    public function canonicalOptions($opt = [true,false,null,null])
+    {
+        if (!empty($opt) && is_array($opt)) {
+            $this->canonical = $opt;
+        }
+        return $this->canonical;
+    }
+    
+    /**
      * Assembles all the necessary parameters for soap communication
      * @param string $service
      * @param string $uf
@@ -500,7 +518,7 @@ class Tools
             . "\"";
         //montagem do SOAP Header
         //para versões posteriores a 3.10 não incluir o SOAPHeader !!!!
-        if ($this->versao < 4.0) {
+        if ($this->versao < '4.00') {
             $this->objHeader = new \SOAPHeader(
                 $this->urlNamespace,
                 'nfeCabecMsg',
@@ -534,13 +552,16 @@ class Tools
      */
     protected function getXmlUrlPath()
     {
-        $file = "wsnfe_".$this->versao."_mod55.xml";
+        $file = $this->pathwsfiles
+            . DIRECTORY_SEPARATOR
+            . "wsnfe_".$this->versao."_mod55.xml";
         if ($this->modelo == 65) {
             $file = str_replace('55', '65', $file);
         }
-        return file_get_contents($this->pathwsfiles
-            . DIRECTORY_SEPARATOR
-            . $file);
+        if (! file_exists($file)) {
+            return '';
+        }
+        return file_get_contents($file);
     }
     
     /**
@@ -575,12 +596,13 @@ class Tools
     
     /**
      * Get URI for search NFCe by chave
+     * NOTE: exists only in 4.00 layout
      * @param string $uf
      * @return string
      */
     protected function getURIConsultaNFCe($uf)
     {
-        if ($this->versao == '3.10') {
+        if ($this->versao < '4.00') {
             return '';
         }
         //existe no XML apenas para layout >= 4.x
