@@ -226,7 +226,7 @@ class Tools extends ToolsCommon
             'infInut',
             'Id',
             $this->algorithm,
-            [false,false,null,null]
+            $this->canonical
         );
         $request = Strings::clearXmlString($request, true);
         $this->isValid($this->urlVersion, $request, 'inutNFe');
@@ -674,7 +674,7 @@ class Tools extends ToolsCommon
             'infEvento',
             'Id',
             $this->algorithm,
-            [false,false,null,null]
+            $this->canonical
         );
         $request = Strings::clearXmlString($request, true);
         $lote = $dt->format('YmdHis').rand(0, 9);

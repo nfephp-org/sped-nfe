@@ -17,7 +17,10 @@ namespace NFePHP\NFe;
 
 class Make
 {
-    
+    /**
+     * Layouts available
+     * @var array
+     */
     private static $available = [
         'v310'       => Factories\Make310::class,
         'v400'       => Factories\Make400::class
