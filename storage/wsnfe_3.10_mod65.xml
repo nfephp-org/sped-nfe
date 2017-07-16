@@ -31,6 +31,7 @@
        <NfeStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10">https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeStatusServico2</NfeStatusServico>
        <RecepcaoEvento  method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://homnfce.sefaz.am.gov.br/nfce-services/services/RecepcaoEvento</RecepcaoEvento>
        <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://homnfce.sefaz.am.gov.br/nfceweb/consultarNFCe.jsp</NfeConsultaQR>
+       <CscNFCe method="admCscNFCe" operation="CscNFCe" version="1.00">https://homnfce.sefaz.am.gov.br/nfce-services/services/CscNFCe</CscNFCe>
        <NfeConsultaCadastro method="consultaCadastro2" operation="NfeConsultaCadastro" version="3.10"></NfeConsultaCadastro>
        <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="3.10"></NfeConsultaDest>
        <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="3.10"></NfeDownloadNF>
@@ -45,6 +46,7 @@
        <NfeStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10">https://nfce.sefaz.am.gov.br/nfce-services/services/NfeStatusServico2</NfeStatusServico>
        <RecepcaoEvento  method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://nfce.sefaz.am.gov.br/nfce-services/services/RecepcaoEvento</RecepcaoEvento>
        <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">https://sistemas.sefaz.am.gov.br/nfceweb/consultarNFCe.jsp</NfeConsultaQR>
+       <CscNFCe method="admCscNFCe" operation="CscNFCe" version="1.00">https://nfce.sefaz.am.gov.br/nfce-services/services/CscNFCe</CscNFCe>
        <NfeConsultaCadastro method="consultaCadastro2" operation="NfeConsultaCadastro" version="3.10"></NfeConsultaCadastro>
        <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="3.10"></NfeConsultaDest>
        <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="3.10"></NfeDownloadNF>
