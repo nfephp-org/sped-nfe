@@ -127,7 +127,7 @@ class Make extends BaseMake
     private $cana = '';
 
     // Arrays
-    private $aTotICMSUFDest = array('vFCPUFDest' => '', 'vICMSUFDest' => '', 'vICMSUFRemet' => '');
+    private $aTotICMSUFDest = array('vFCPUFDest' => null, 'vICMSUFDest' => null, 'vICMSUFRemet' => null);
 
     /**
      * @var DOMNode[]
@@ -6324,7 +6324,7 @@ class Make extends BaseMake
             $this->total = $this->dom->createElement("total");
         }
         //ajuste de digitos dos campos totalizados
-        if ($this->aTotICMSUFDest['vICMSUFDest'] != '') {
+        if ($this->aTotICMSUFDest['vICMSUFDest'] !== null) {
             $this->aTotICMSUFDest['vICMSUFDest'] = number_format($this->aTotICMSUFDest['vICMSUFDest'], 2, '.', '');
             $this->aTotICMSUFDest['vICMSUFRemet'] = number_format($this->aTotICMSUFDest['vICMSUFRemet'], 2, '.', '');
             $this->aTotICMSUFDest['vFCPUFDest'] = number_format($this->aTotICMSUFDest['vFCPUFDest'], 2, '.', '');
