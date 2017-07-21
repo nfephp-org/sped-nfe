@@ -173,28 +173,24 @@ class Tools
      * load Digital Certificate,
      * map all paths,
      * set timezone and
-     * check if is in contingency
+     * and instanciate Contingency::class
      * @param string $configJson content of config in json format
      * @param Certificate $certificate
      */
     public function __construct($configJson, Certificate $certificate)
     {
         $this->config = json_decode($configJson);
-        
         $this->pathwsfiles = realpath(
             __DIR__ . '/../../storage'
         ).'/';
-        
         $this->pathschemes = realpath(
             __DIR__ . '/../../schemes/'. $this->config->schemes
         ).'/';
-        
         $this->version($this->config->versao);
         $this->setEnvironmentTimeZone($this->config->siglaUF);
         $this->certificate = $certificate;
         $this->setEnvironment($this->config->tpAmb);
         $this->contingency = new Contingency();
-        $this->soap = new SoapCurl($certificate);
     }
     
     /**
@@ -218,7 +214,8 @@ class Tools
 
     /**
      * Load Soap Class
-     * Soap Class may be \NFePHP\Common\Soap\SoapNative or \NFePHP\Common\Soap\SoapCurl
+     * Soap Class may be \NFePHP\Common\Soap\SoapNative
+     * or \NFePHP\Common\Soap\SoapCurl
      * @param SoapInterface $soap
      * @return void
      */
@@ -252,8 +249,7 @@ class Tools
     }
     
     /**
-     * Set or get teh parameter versao do layout
-     * NOTE: for new layout this will be removed because it is no longer necessary
+     * Set or get parameter layout version
      * @param string $version
      * @return string
      */
@@ -278,7 +274,7 @@ class Tools
     }
     
     /**
-     * Recover cUF number from
+     * Recover cUF number from state acronym
      * @param string $acronym Sigla do estado
      * @return int number cUF
      */
@@ -288,7 +284,7 @@ class Tools
     }
     
     /**
-     * Recover Federation unit acronym by cUF number
+     * Recover state acronym from cUF number
      * @param int $cUF
      * @return string acronym sigla
      */
@@ -322,7 +318,7 @@ class Tools
      */
     public function signNFe($xml)
     {
-        //clear invalid strings
+        //remove all invalid strings
         $xml = Strings::clearXmlString($xml);
         $signed = Signer::sign(
             $this->certificate,
@@ -340,13 +336,13 @@ class Tools
         if ($modelo == 65) {
             $signed = $this->addQRCode($dom);
         }
-        //exception se não for valido
+        //exception will be throw if NFe is not valid
         $this->isValid($this->versao, $signed, 'nfe');
         return $signed;
     }
     
     /**
-     * Corret NFe fields when in contingency mode
+     * Corret NFe fields when in contingency mode is set
      * @param string $xml NFe xml content
      * @return string
      */
@@ -534,6 +530,7 @@ class Tools
      */
     protected function sendRequest($request, $parameters = [])
     {
+        $this->checkSoap();
         return (string) $this->soap->send(
             $this->urlService,
             $this->urlMethod,
@@ -613,5 +610,15 @@ class Tools
             )
         );
         return $std->$uf;
+    }
+    
+    /**
+     * Verify if SOAP class is loaded, if not, force load SoapCurl
+     */
+    protected function checkSoap()
+    {
+        if (empty($this->soap)) {
+            $this->soap = new SoapCurl($this->certificate);
+        }
     }
 }
