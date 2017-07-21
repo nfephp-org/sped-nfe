@@ -7,7 +7,7 @@ namespace NFePHP\NFe\Factories;
  * Apenas para a versão 4.00 do layout
  * @category  NFePHP
  * @package   NFePHP\NFe\Factories\Make400
- * @copyright NFePHP Copyright (c) 2008 - 2017
+ * @copyright NFePHP Copyright (c) 2008-2017
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
  * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
@@ -16,9 +16,13 @@ namespace NFePHP\NFe\Factories;
  */
 
 use NFePHP\NFe\Factories\MakeBasic;
-use \DOMElement;
-use \DOMNode;
-use \DateTime;
+use NFePHP\Common\Strings;
+use NFePHP\Common\Keys;
+use NFePHP\Common\DOMImproved as Dom;
+use RuntimeException;
+use DOMElement;
+use DOMNode;
+use DateTime;
 
 class Make400 extends MakeBasic
 {

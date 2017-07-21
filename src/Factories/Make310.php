@@ -17,12 +17,13 @@ namespace NFePHP\NFe\Factories;
  */
 
 use NFePHP\NFe\Factories\MakeBasic;
+use NFePHP\Common\Strings;
 use NFePHP\Common\Keys;
 use NFePHP\Common\DOMImproved as Dom;
-use \RuntimeException;
-use \DOMDocument;
-use \DOMElement;
-use \DOMNode;
+use RuntimeException;
+use DOMDocument;
+use DOMElement;
+use DOMNode;
 
 class Make310 extends MakeBasic
 {
@@ -35,7 +36,6 @@ class Make310 extends MakeBasic
     {
         parent::__construct();
     }
-
     
     /**
      * Detalhamento de medicamentos K01 pai I90
