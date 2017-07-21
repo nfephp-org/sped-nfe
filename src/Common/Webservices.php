@@ -91,11 +91,12 @@ class Webservices
         $aWS = [];
         foreach ($resp->children() as $element) {
             $sigla = (string) $element->sigla;
+            $aWS[$sigla] = [];
             if (isset($element->homologacao)) {
-                $aWS[$sigla] = $this->extract($element->homologacao, 'homologacao');
+                $aWS[$sigla] += $this->extract($element->homologacao, 'homologacao');
             }
             if (isset($element->producao)) {
-                $aWS[$sigla] = $this->extract($element->producao, 'producao');
+                $aWS[$sigla] += $this->extract($element->producao, 'producao');
             }
         }
         $this->json = json_encode($aWS);
