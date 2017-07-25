@@ -23,6 +23,16 @@
         </homologacao>
     </UF>
     <UF>
+        <sigla>MG</sigla>
+        <homologacao>
+            <NfeStatusServico method="nfeStatusServicoNF" operation="NFeStatusServico4" version="4.00">https://hnfe.fazenda.mg.gov.br/nfe2/services/NFeStatusServico4</NfeStatusServico>
+            <NfeAutorizacao method="nfeAutorizacaoLote" operation="NFeAutorizacao4" version="4.00">https://hnfe.fazenda.mg.gov.br/nfe2/services/NFeAutorizacao4</NfeAutorizacao>
+            <NfeConsultaProtocolo method="nfeConsultaNF" operation="NFeConsultaProtocolo4" version="4.00">https://hnfe.fazenda.mg.gov.br/nfe2/services/NFeConsulta4</NfeConsultaProtocolo>
+            <NfeInutilizacao method="nfeInutilizacaoNF" operation="NFeInutilizacao4" version="4.00">https://hnfe.fazenda.mg.gov.br/nfe2/services/NFeInutilizacao4</NfeInutilizacao>
+            <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NFeRetAutorizacao4" version="4.00">https://hnfe.fazenda.mg.gov.br/nfe2/services/NFeRetAutorizacao4</NfeRetAutorizacao>
+        </homologacao>
+    </UF>
+    <UF>
         <sigla>MS</sigla>
         <homologacao>
             <NfeStatusServico method="nfeStatusServicoNF" operation="NFeStatusServico4" version="4.00">https://homologacao.nfe.ms.gov.br/ws/NFeStatusServico4</NfeStatusServico>
