@@ -2566,7 +2566,7 @@ class Make400 extends MakeBasic
 
     /**
      * Grupo de Formas de Pagamento YA01a pai YA01
-     * NOTA: Ajuste nt_2016_002_v1.20                                                                                                                                                                                                                                                                                                                                                                                                     do para NT2016_002_v1.00
+     * NOTA: Ajuste nt_2016_002_v1.20
      * tag NFe/infNFe/pag/detPag
      * @param  int $nItemDetPag
      * @param int $tPag
@@ -2785,7 +2785,8 @@ class Make400 extends MakeBasic
      * tag NFe/infNFe/pag/detPag[]
      * tag NFe/infNFe/pag/detPag[]/Card
      */
-    protected function buildTagPag() {
+    protected function buildTagPag()
+    {
         $this->dom->appChild($this->infNFe, $this->aPag[0], 'Falta tag "infNFe"');
         if (count($this->aDetPag)) {
             foreach ($this->aDetPag as $detPag) {
@@ -2795,7 +2796,6 @@ class Make400 extends MakeBasic
                 } else {
                     $this->dom->appChild($this->aPag[0], $detPag, 'Falta tag "Pag"');
                 }
-
             }
         }
     }
