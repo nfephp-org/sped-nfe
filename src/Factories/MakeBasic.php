@@ -272,7 +272,7 @@ abstract class MakeBasic
      * @var array of DOMElements
      */
     protected $aDeduc = [];
-    
+
     /**
      * Função construtora cria um objeto DOMDocument
      * que será carregado com o documento fiscal
@@ -283,7 +283,7 @@ abstract class MakeBasic
         $this->dom->preserveWhiteSpace = false;
         $this->dom->formatOutput = false;
     }
-    
+
     /**
      * Retorna o xml e monta se necessário
      * @return string
@@ -295,7 +295,7 @@ abstract class MakeBasic
         }
         return $this->xml;
     }
-    
+
     /**
      * Retorna o numero da chave da NFe
      * @return string
@@ -304,7 +304,7 @@ abstract class MakeBasic
     {
         return $this->chNFe;
     }
-    
+
     /**
      * Retrona o modelo de NFe 55 ou 65
      * @return int
@@ -360,9 +360,7 @@ abstract class MakeBasic
         $this->dom->appChild($this->infNFe, $this->cobr, 'Falta tag "infNFe"');
         //[42] tag pag (398a YA01)
         //processa aPag e coloca as tags na tag pag
-        foreach ($this->aPag as $pag) {
-            $this->dom->appChild($this->infNFe, $pag, 'Falta tag "infNFe"');
-        }
+        $this->buildTagPag();
         //[44] tag infAdic (399 Z01)
         $this->dom->appChild($this->infNFe, $this->infAdic, 'Falta tag "infNFe"');
         //[48] tag exporta (402 ZA01)
@@ -380,7 +378,7 @@ abstract class MakeBasic
         $this->xml = $this->dom->saveXML();
         return true;
     }
-    
+
     /**
      * Informações da NF-e A01 pai NFe
      * tag NFe/infNFe
@@ -399,7 +397,7 @@ abstract class MakeBasic
         $this->chNFe = $chave;
         return $this->infNFe;
     }
-    
+
     /**
      * Informações de identificação da NF-e B01 pai A01
      * tag NFe/infNFe/ide
@@ -625,7 +623,7 @@ abstract class MakeBasic
         $this->ide = $ide;
         return $ide;
     }
-    
+
     /**
      * Chave de acesso da NF-e referenciada BA02 pai BA01
      * tag NFe/infNFe/ide/NFref/refNFe
@@ -639,7 +637,7 @@ abstract class MakeBasic
         $this->dom->appChild($this->aNFref[$num-1], $refNFe);
         return $refNFe;
     }
-    
+
     /**
      * Informação da NF modelo 1/1A referenciada BA03 pai BA01
      * tag NFe/infNFe/ide/NFref/NF DOMNode
@@ -705,7 +703,7 @@ abstract class MakeBasic
         $this->dom->appChild($this->aNFref[$num-1], $refNF);
         return $refNF;
     }
-    
+
     /**
      * Informações da NF de produtor rural referenciada BA10 pai BA01
      * tag NFe/infNFe/ide/NFref/refNFP
@@ -791,7 +789,7 @@ abstract class MakeBasic
         $this->dom->appChild($this->aNFref[$num-1], $refNFP);
         return $refNFP;
     }
-    
+
     /**
      * Chave de acesso do CT-e referenciada BA19 pai BA01
      * tag NFe/infNFe/ide/NFref/refCTe
@@ -805,7 +803,7 @@ abstract class MakeBasic
         $this->dom->appChild($this->aNFref[$num-1], $refCTe);
         return $refCTe;
     }
-    
+
     /**
      * Informações do Cupom Fiscal referenciado BA20 pai BA01
      * tag NFe/infNFe/ide/NFref/refECF
@@ -846,7 +844,7 @@ abstract class MakeBasic
         $this->dom->appChild($this->aNFref[$num-1], $refECF);
         return $refECF;
     }
-    
+
     /**
      * Identificação do emitente da NF-e C01 pai A01
      * tag NFe/infNFe/emit
@@ -939,7 +937,7 @@ abstract class MakeBasic
         );
         return $this->emit;
     }
-    
+
     /**
      * Endereço do emitente C05 pai C01
      * tag NFe/infNFe/emit/endEmit
@@ -1052,7 +1050,7 @@ abstract class MakeBasic
         $this->emit->insertBefore($this->enderEmit, $node);
         return $this->enderEmit;
     }
-    
+
     /**
      * Identificação do Destinatário da NF-e E01 pai A01
      * tag NFe/infNFe/dest (opcional para modelo 65)
@@ -1165,7 +1163,7 @@ abstract class MakeBasic
         );
         return $this->dest;
     }
-    
+
     /**
      * Endereço do Destinatário da NF-e E05 pai E01
      * tag NFe/infNFe/dest/enderDest  (opcional para modelo 65)
@@ -1285,7 +1283,7 @@ abstract class MakeBasic
         $this->dest->insertBefore($this->enderDest, $node);
         return $this->enderDest;
     }
-    
+
     /**
      * Identificação do Local de retirada F01 pai A01
      * tag NFe/infNFe/retirada (opcional)
@@ -1378,7 +1376,7 @@ abstract class MakeBasic
         );
         return $this->retirada;
     }
-    
+
     /**
      * Identificação do Local de entrega G01 pai A01
      * tag NFe/infNFe/entrega (opcional)
@@ -1471,7 +1469,7 @@ abstract class MakeBasic
         );
         return $this->entrega;
     }
-    
+
     /**
      * Pessoas autorizadas para o download do XML da NF-e G50 pai A01
      * tag NFe/infNFe/autXML
@@ -1500,7 +1498,7 @@ abstract class MakeBasic
         $this->aAutXML[] = $autXML;
         return $autXML;
     }
-    
+
     /**
      * Detalhamento de Produtos e Serviços I01 pai H01
      * tag NFe/infNFe/det[]/prod
@@ -1720,7 +1718,7 @@ abstract class MakeBasic
         $this->aProd[$nItem] = $prod;
         return $prod;
     }
-    
+
     /**
      * NVE NOMENCLATURA DE VALOR ADUANEIRO E ESTATÍSTICA
      * Podem ser até 8 NVE's por item
@@ -1737,7 +1735,7 @@ abstract class MakeBasic
         $this->aNVE[$nItem][] = $nve;
         return $nve;
     }
-    
+
     /**
      * Código Especificador da Substituição Tributária – CEST,
      * que identifica a mercadoria sujeita aos regimes de substituição
@@ -1754,7 +1752,7 @@ abstract class MakeBasic
         $this->aCest[$nItem][] = $cest;
         return $cest;
     }
-    
+
     /**
      * tag NFe/infNFe/det[item]/prod/nRECOPI
      * @param  int $nItem
@@ -1767,7 +1765,7 @@ abstract class MakeBasic
         $this->aRECOPI[$nItem] = $recopi;
         return $recopi;
     }
-    
+
     /**
      * Informações adicionais do produto
      * tag NFe/infNFe/det[]/infAdProd
@@ -1784,7 +1782,7 @@ abstract class MakeBasic
         $this->aInfAdProd[$nItem] = $infAdProd;
         return $infAdProd;
     }
-    
+
     /**
      * Declaração de Importação I8 pai I01
      * tag NFe/infNFe/det[]/prod/DI
@@ -1859,7 +1857,7 @@ abstract class MakeBasic
             $tpViaTransp,
             true,
             $identificador . "[item $nItem] Via de transporte internacional informada na "
-                . "Declaração de Importação (DI)"
+            . "Declaração de Importação (DI)"
         );
         $this->dom->addChild(
             $tDI,
@@ -1899,7 +1897,7 @@ abstract class MakeBasic
         $this->aDI[$nItem][$nDI] = $tDI;
         return $tDI;
     }
-    
+
     /**
      * Adições I25 pai I18
      * tag NFe/infNFe/det[]/prod/DI/adi
@@ -1965,7 +1963,7 @@ abstract class MakeBasic
         $this->aDI[$nItem][$nDI] = $nodeDI;
         return $adi;
     }
-    
+
     /**
      * Grupo de informações de exportação para o item I50 pai I01
      * tag NFe/infNFe/det[]/prod/detExport
@@ -2019,7 +2017,7 @@ abstract class MakeBasic
         $this->aDetExport[$nItem] = $detExport;
         return $detExport;
     }
-    
+
     /**
      * Detalhamento de Veículos novos J01 pai I90
      * tag NFe/infNFe/det[]/prod/veicProd (opcional)
@@ -2250,7 +2248,7 @@ abstract class MakeBasic
         $this->aVeicProd[$nItem] = $veicProd;
         return $veicProd;
     }
-  
+
     /**
      * Detalhamento de armas L01 pai I90
      * tag NFe/infNFe/det[]/prod/arma (opcional)
@@ -2303,7 +2301,7 @@ abstract class MakeBasic
         $this->aArma[$nItem] = $arma;
         return $arma;
     }
-    
+
     /**
      * Detalhamento de combustiveis L101 pai I90
      * tag NFe/infNFe/det[]/prod/comb (opcional)
@@ -2388,7 +2386,7 @@ abstract class MakeBasic
         $this->aComb[$nItem] = $comb;
         return $comb;
     }
-    
+
     /**
      * informações relacionadas com as operações de combustíveis, subgrupo de
      * encerrante que permite o controle sobre as operações de venda de combustíveis
@@ -2444,7 +2442,7 @@ abstract class MakeBasic
         $this->aEncerrante[$nItem] = $encerrante;
         return $encerrante;
     }
-    
+
     /**
      * Impostos com o valor total tributado M01 pai H01
      * tag NFe/infNFe/det[]/imposto
@@ -2466,7 +2464,7 @@ abstract class MakeBasic
         $this->aImposto[$nItem] = $imposto;
         return $imposto;
     }
-    
+
     /**
      * Informações do ICMS da Operação própria e ST N01 pai M01
      * tag NFe/infNFe/det[]/imposto/ICMS
@@ -2621,34 +2619,34 @@ abstract class MakeBasic
                     false,
                     "$identificador [item $nItem] Percentual da margem de valor Adicionado do ICMS ST"
                 );
-                    $this->dom->addChild(
-                        $icms,
-                        'pRedBCST',
-                        $pRedBCST,
-                        false,
-                        "$identificador [item $nItem] Percentual da Redução de BC do ICMS ST"
-                    );
-                    $this->dom->addChild(
-                        $icms,
-                        'vBCST',
-                        $vBCST,
-                        true,
-                        "$identificador [item $nItem] Valor da BC do ICMS ST"
-                    );
-                    $this->dom->addChild(
-                        $icms,
-                        'pICMSST',
-                        $pICMSST,
-                        true,
-                        "$identificador [item $nItem] Alíquota do imposto do ICMS ST"
-                    );
-                    $this->dom->addChild(
-                        $icms,
-                        'vICMSST',
-                        $vICMSST,
-                        true,
-                        "$identificador [item $nItem] Valor do ICMS ST"
-                    );
+                $this->dom->addChild(
+                    $icms,
+                    'pRedBCST',
+                    $pRedBCST,
+                    false,
+                    "$identificador [item $nItem] Percentual da Redução de BC do ICMS ST"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'vBCST',
+                    $vBCST,
+                    true,
+                    "$identificador [item $nItem] Valor da BC do ICMS ST"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'pICMSST',
+                    $pICMSST,
+                    true,
+                    "$identificador [item $nItem] Alíquota do imposto do ICMS ST"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'vICMSST',
+                    $vICMSST,
+                    true,
+                    "$identificador [item $nItem] Valor do ICMS ST"
+                );
                 break;
             case '20':
                 $icms = $this->dom->createElement("ICMS20");
@@ -2746,48 +2744,48 @@ abstract class MakeBasic
                     false,
                     "$identificador [item $nItem] Percentual da margem de valor Adicionado do ICMS ST"
                 );
-                    $this->dom->addChild(
-                        $icms,
-                        'pRedBCST',
-                        $pRedBCST,
-                        false,
-                        "$identificador [item $nItem] Percentual da Redução de BC do ICMS ST"
-                    );
-                    $this->dom->addChild(
-                        $icms,
-                        'vBCST',
-                        $vBCST,
-                        true,
-                        "$identificador [item $nItem] Valor da BC do ICMS ST"
-                    );
-                    $this->dom->addChild(
-                        $icms,
-                        'pICMSST',
-                        $pICMSST,
-                        true,
-                        "$identificador [item $nItem] Alíquota do imposto do ICMS ST"
-                    );
-                    $this->dom->addChild(
-                        $icms,
-                        'vICMSST',
-                        $vICMSST,
-                        true,
-                        "$identificador [item $nItem] Valor do ICMS ST"
-                    );
-                    $this->dom->addChild(
-                        $icms,
-                        'vICMSDeson',
-                        $vICMSDeson,
-                        false,
-                        "$identificador [item $nItem] Valor do ICMS desonerado"
-                    );
-                    $this->dom->addChild(
-                        $icms,
-                        'motDesICMS',
-                        $motDesICMS,
-                        false,
-                        "$identificador [item $nItem] Motivo da desoneração do ICMS"
-                    );
+                $this->dom->addChild(
+                    $icms,
+                    'pRedBCST',
+                    $pRedBCST,
+                    false,
+                    "$identificador [item $nItem] Percentual da Redução de BC do ICMS ST"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'vBCST',
+                    $vBCST,
+                    true,
+                    "$identificador [item $nItem] Valor da BC do ICMS ST"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'pICMSST',
+                    $pICMSST,
+                    true,
+                    "$identificador [item $nItem] Alíquota do imposto do ICMS ST"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'vICMSST',
+                    $vICMSST,
+                    true,
+                    "$identificador [item $nItem] Valor do ICMS ST"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'vICMSDeson',
+                    $vICMSDeson,
+                    false,
+                    "$identificador [item $nItem] Valor do ICMS desonerado"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'motDesICMS',
+                    $motDesICMS,
+                    false,
+                    "$identificador [item $nItem] Motivo da desoneração do ICMS"
+                );
                 break;
             case '40':
             case '41':
@@ -2991,48 +2989,48 @@ abstract class MakeBasic
                     false,
                     "$identificador [item $nItem] Percentual da margem de valor Adicionado do ICMS ST"
                 );
-                    $this->dom->addChild(
-                        $icms,
-                        'pRedBCST',
-                        $pRedBCST,
-                        false,
-                        "$identificador [item $nItem] Percentual da Redução de BC do ICMS ST"
-                    );
-                    $this->dom->addChild(
-                        $icms,
-                        'vBCST',
-                        $vBCST,
-                        true,
-                        "$identificador [item $nItem] Valor da BC do ICMS ST"
-                    );
-                    $this->dom->addChild(
-                        $icms,
-                        'pICMSST',
-                        $pICMSST,
-                        true,
-                        "$identificador [item $nItem] Alíquota do imposto do ICMS ST"
-                    );
-                    $this->dom->addChild(
-                        $icms,
-                        'vICMSST',
-                        $vICMSST,
-                        true,
-                        "$identificador [item $nItem] Valor do ICMS ST"
-                    );
-                    $this->dom->addChild(
-                        $icms,
-                        'vICMSDeson',
-                        $vICMSDeson,
-                        false,
-                        "$identificador [item $nItem] Valor do ICMS desonerado"
-                    );
-                    $this->dom->addChild(
-                        $icms,
-                        'motDesICMS',
-                        $motDesICMS,
-                        false,
-                        "$identificador [item $nItem] Motivo da desoneração do ICMS"
-                    );
+                $this->dom->addChild(
+                    $icms,
+                    'pRedBCST',
+                    $pRedBCST,
+                    false,
+                    "$identificador [item $nItem] Percentual da Redução de BC do ICMS ST"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'vBCST',
+                    $vBCST,
+                    true,
+                    "$identificador [item $nItem] Valor da BC do ICMS ST"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'pICMSST',
+                    $pICMSST,
+                    true,
+                    "$identificador [item $nItem] Alíquota do imposto do ICMS ST"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'vICMSST',
+                    $vICMSST,
+                    true,
+                    "$identificador [item $nItem] Valor do ICMS ST"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'vICMSDeson',
+                    $vICMSDeson,
+                    false,
+                    "$identificador [item $nItem] Valor do ICMS desonerado"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'motDesICMS',
+                    $motDesICMS,
+                    false,
+                    "$identificador [item $nItem] Motivo da desoneração do ICMS"
+                );
                 break;
             case '90':
                 $icms = $this->dom->createElement("ICMS90");
@@ -3099,48 +3097,48 @@ abstract class MakeBasic
                     false,
                     "$identificador [item $nItem] Percentual da margem de valor Adicionado do ICMS ST"
                 );
-                    $this->dom->addChild(
-                        $icms,
-                        'pRedBCST',
-                        $pRedBCST,
-                        false,
-                        "$identificador [item $nItem] Percentual da Redução de BC do ICMS ST"
-                    );
-                    $this->dom->addChild(
-                        $icms,
-                        'vBCST',
-                        $vBCST,
-                        true,
-                        "$identificador [item $nItem] Valor da BC do ICMS ST"
-                    );
-                    $this->dom->addChild(
-                        $icms,
-                        'pICMSST',
-                        $pICMSST,
-                        true,
-                        "$identificador [item $nItem] Alíquota do imposto do ICMS ST"
-                    );
-                    $this->dom->addChild(
-                        $icms,
-                        'vICMSST',
-                        $vICMSST,
-                        true,
-                        "$identificador [item $nItem] Valor do ICMS ST"
-                    );
-                    $this->dom->addChild(
-                        $icms,
-                        'vICMSDeson',
-                        $vICMSDeson,
-                        false,
-                        "$identificador [item $nItem] Valor do ICMS desonerado"
-                    );
-                    $this->dom->addChild(
-                        $icms,
-                        'motDesICMS',
-                        $motDesICMS,
-                        false,
-                        "$identificador [item $nItem] Motivo da desoneração do ICMS"
-                    );
+                $this->dom->addChild(
+                    $icms,
+                    'pRedBCST',
+                    $pRedBCST,
+                    false,
+                    "$identificador [item $nItem] Percentual da Redução de BC do ICMS ST"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'vBCST',
+                    $vBCST,
+                    true,
+                    "$identificador [item $nItem] Valor da BC do ICMS ST"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'pICMSST',
+                    $pICMSST,
+                    true,
+                    "$identificador [item $nItem] Alíquota do imposto do ICMS ST"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'vICMSST',
+                    $vICMSST,
+                    true,
+                    "$identificador [item $nItem] Valor do ICMS ST"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'vICMSDeson',
+                    $vICMSDeson,
+                    false,
+                    "$identificador [item $nItem] Valor do ICMS desonerado"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'motDesICMS',
+                    $motDesICMS,
+                    false,
+                    "$identificador [item $nItem] Motivo da desoneração do ICMS"
+                );
                 break;
         }
         $tagIcms = $this->dom->createElement('ICMS');
@@ -3150,7 +3148,7 @@ abstract class MakeBasic
         $this->aICMS[$nItem] = $tagIcms;
         return $tagIcms;
     }
-    
+
     /**
      * Grupo de Partilha do ICMS entre a UF de origem e UF de destino ou
      * a UF definida na legislação. N10a pai N01
@@ -3307,7 +3305,7 @@ abstract class MakeBasic
         $this->aICMS[$nItem] = $tagIcms;
         return $tagIcms;
     }
-    
+
     /**
      * Grupo de Repasse de ICMS ST retido anteriormente em operações
      * interestaduais com repasses através do Substituto Tributário
@@ -3382,7 +3380,7 @@ abstract class MakeBasic
         $this->aICMS[$nItem] = $tagIcms;
         return $tagIcms;
     }
-    
+
     /**
      * Tributação ICMS pelo Simples Nacional N10c pai N01
      * @param  string $nItem
@@ -3442,21 +3440,21 @@ abstract class MakeBasic
                     true,
                     "[item $nItem] Código de Situação da Operação Simples Nacional"
                 );
-                    $this->dom->addChild(
-                        $icmsSN,
-                        'pCredSN',
-                        $pCredSN,
-                        true,
-                        "[item $nItem] Alíquota aplicável de cálculo do crédito (Simples Nacional)."
-                    );
-                    $this->dom->addChild(
-                        $icmsSN,
-                        'vCredICMSSN',
-                        $vCredICMSSN,
-                        true,
-                        "[item $nItem] Valor crédito do ICMS que pode ser aproveitado nos termos do"
-                            . " art. 23 da LC 123 (Simples Nacional)"
-                    );
+                $this->dom->addChild(
+                    $icmsSN,
+                    'pCredSN',
+                    $pCredSN,
+                    true,
+                    "[item $nItem] Alíquota aplicável de cálculo do crédito (Simples Nacional)."
+                );
+                $this->dom->addChild(
+                    $icmsSN,
+                    'vCredICMSSN',
+                    $vCredICMSSN,
+                    true,
+                    "[item $nItem] Valor crédito do ICMS que pode ser aproveitado nos termos do"
+                    . " art. 23 da LC 123 (Simples Nacional)"
+                );
                 break;
             case '102':
             case '103':
@@ -3494,63 +3492,63 @@ abstract class MakeBasic
                     true,
                     "[item $nItem] Código de Situação da Operação Simples Nacional"
                 );
-                    $this->dom->addChild(
-                        $icmsSN,
-                        'modBCST',
-                        $modBCST,
-                        true,
-                        "[item $nItem] Alíquota aplicável de cálculo do crédito (Simples Nacional)."
-                    );
-                    $this->dom->addChild(
-                        $icmsSN,
-                        'pMVAST',
-                        $pMVAST,
-                        false,
-                        "[item $nItem] Percentual da margem de valor Adicionado do ICMS ST"
-                    );
-                    $this->dom->addChild(
-                        $icmsSN,
-                        'pRedBCST',
-                        $pRedBCST,
-                        false,
-                        "[item $nItem] Percentual da Redução de BC do ICMS ST"
-                    );
-                    $this->dom->addChild(
-                        $icmsSN,
-                        'vBCST',
-                        $vBCST,
-                        true,
-                        "[item $nItem] Valor da BC do ICMS ST"
-                    );
-                    $this->dom->addChild(
-                        $icmsSN,
-                        'pICMSST',
-                        $pICMSST,
-                        true,
-                        "[item $nItem] Alíquota do imposto do ICMS ST"
-                    );
-                    $this->dom->addChild(
-                        $icmsSN,
-                        'vICMSST',
-                        $vICMSST,
-                        true,
-                        "[item $nItem] Valor do ICMS ST"
-                    );
-                    $this->dom->addChild(
-                        $icmsSN,
-                        'pCredSN',
-                        $pCredSN,
-                        true,
-                        "[item $nItem] Alíquota aplicável de cálculo do crédito (Simples Nacional)."
-                    );
-                    $this->dom->addChild(
-                        $icmsSN,
-                        'vCredICMSSN',
-                        $vCredICMSSN,
-                        true,
-                        "[item $nItem] Valor crédito do ICMS que pode ser aproveitado nos "
-                            . "termos do art. 23 da LC 123 (Simples Nacional)"
-                    );
+                $this->dom->addChild(
+                    $icmsSN,
+                    'modBCST',
+                    $modBCST,
+                    true,
+                    "[item $nItem] Alíquota aplicável de cálculo do crédito (Simples Nacional)."
+                );
+                $this->dom->addChild(
+                    $icmsSN,
+                    'pMVAST',
+                    $pMVAST,
+                    false,
+                    "[item $nItem] Percentual da margem de valor Adicionado do ICMS ST"
+                );
+                $this->dom->addChild(
+                    $icmsSN,
+                    'pRedBCST',
+                    $pRedBCST,
+                    false,
+                    "[item $nItem] Percentual da Redução de BC do ICMS ST"
+                );
+                $this->dom->addChild(
+                    $icmsSN,
+                    'vBCST',
+                    $vBCST,
+                    true,
+                    "[item $nItem] Valor da BC do ICMS ST"
+                );
+                $this->dom->addChild(
+                    $icmsSN,
+                    'pICMSST',
+                    $pICMSST,
+                    true,
+                    "[item $nItem] Alíquota do imposto do ICMS ST"
+                );
+                $this->dom->addChild(
+                    $icmsSN,
+                    'vICMSST',
+                    $vICMSST,
+                    true,
+                    "[item $nItem] Valor do ICMS ST"
+                );
+                $this->dom->addChild(
+                    $icmsSN,
+                    'pCredSN',
+                    $pCredSN,
+                    true,
+                    "[item $nItem] Alíquota aplicável de cálculo do crédito (Simples Nacional)."
+                );
+                $this->dom->addChild(
+                    $icmsSN,
+                    'vCredICMSSN',
+                    $vCredICMSSN,
+                    true,
+                    "[item $nItem] Valor crédito do ICMS que pode ser aproveitado nos "
+                    . "termos do art. 23 da LC 123 (Simples Nacional)"
+                );
                 break;
             case '202':
             case '203':
@@ -3576,41 +3574,41 @@ abstract class MakeBasic
                     true,
                     "[item $nItem] Alíquota aplicável de cálculo do crédito (Simples Nacional)."
                 );
-                    $this->dom->addChild(
-                        $icmsSN,
-                        'pMVAST',
-                        $pMVAST,
-                        false,
-                        "[item $nItem] Percentual da margem de valor Adicionado do ICMS ST"
-                    );
-                    $this->dom->addChild(
-                        $icmsSN,
-                        'pRedBCST',
-                        $pRedBCST,
-                        false,
-                        "[item $nItem] Percentual da Redução de BC do ICMS ST"
-                    );
-                    $this->dom->addChild(
-                        $icmsSN,
-                        'vBCST',
-                        $vBCST,
-                        true,
-                        "[item $nItem] Valor da BC do ICMS ST"
-                    );
-                    $this->dom->addChild(
-                        $icmsSN,
-                        'pICMSST',
-                        $pICMSST,
-                        true,
-                        "[item $nItem] Alíquota do imposto do ICMS ST"
-                    );
-                    $this->dom->addChild(
-                        $icmsSN,
-                        'vICMSST',
-                        $vICMSST,
-                        true,
-                        "[item $nItem] Valor do ICMS ST"
-                    );
+                $this->dom->addChild(
+                    $icmsSN,
+                    'pMVAST',
+                    $pMVAST,
+                    false,
+                    "[item $nItem] Percentual da margem de valor Adicionado do ICMS ST"
+                );
+                $this->dom->addChild(
+                    $icmsSN,
+                    'pRedBCST',
+                    $pRedBCST,
+                    false,
+                    "[item $nItem] Percentual da Redução de BC do ICMS ST"
+                );
+                $this->dom->addChild(
+                    $icmsSN,
+                    'vBCST',
+                    $vBCST,
+                    true,
+                    "[item $nItem] Valor da BC do ICMS ST"
+                );
+                $this->dom->addChild(
+                    $icmsSN,
+                    'pICMSST',
+                    $pICMSST,
+                    true,
+                    "[item $nItem] Alíquota do imposto do ICMS ST"
+                );
+                $this->dom->addChild(
+                    $icmsSN,
+                    'vICMSST',
+                    $vICMSST,
+                    true,
+                    "[item $nItem] Valor do ICMS ST"
+                );
                 break;
             case '500':
                 $icmsSN = $this->dom->createElement("ICMSSN500");
@@ -3628,20 +3626,20 @@ abstract class MakeBasic
                     true,
                     "[item $nItem] Código de Situação da Operação Simples Nacional"
                 );
-                    $this->dom->addChild(
-                        $icmsSN,
-                        'vBCSTRet',
-                        $vBCSTRet,
-                        false,
-                        "[item $nItem] Valor da BC do ICMS ST retido"
-                    );
-                    $this->dom->addChild(
-                        $icmsSN,
-                        'vICMSSTRet',
-                        $vICMSSTRet,
-                        false,
-                        "[item $nItem] Valor do ICMS ST retido"
-                    );
+                $this->dom->addChild(
+                    $icmsSN,
+                    'vBCSTRet',
+                    $vBCSTRet,
+                    false,
+                    "[item $nItem] Valor da BC do ICMS ST retido"
+                );
+                $this->dom->addChild(
+                    $icmsSN,
+                    'vICMSSTRet',
+                    $vICMSSTRet,
+                    false,
+                    "[item $nItem] Valor do ICMS ST retido"
+                );
                 break;
             case '900':
                 $icmsSN = $this->dom->createElement("ICMSSN900");
@@ -3701,56 +3699,56 @@ abstract class MakeBasic
                     false,
                     "[item $nItem] Alíquota aplicável de cálculo do crédito (Simples Nacional)."
                 );
-                    $this->dom->addChild(
-                        $icmsSN,
-                        'pMVAST',
-                        $pMVAST,
-                        false,
-                        "[item $nItem] Percentual da margem de valor Adicionado do ICMS ST"
-                    );
-                    $this->dom->addChild(
-                        $icmsSN,
-                        'pRedBCST',
-                        $pRedBCST,
-                        false,
-                        "[item $nItem] Percentual da Redução de BC do ICMS ST"
-                    );
-                    $this->dom->addChild(
-                        $icmsSN,
-                        'vBCST',
-                        $vBCST,
-                        false,
-                        "[item $nItem] Valor da BC do ICMS ST"
-                    );
-                    $this->dom->addChild(
-                        $icmsSN,
-                        'pICMSST',
-                        $pICMSST,
-                        false,
-                        "[item $nItem] Alíquota do imposto do ICMS ST"
-                    );
-                    $this->dom->addChild(
-                        $icmsSN,
-                        'vICMSST',
-                        $vICMSST,
-                        false,
-                        "[item $nItem] Valor do ICMS ST"
-                    );
-                    $this->dom->addChild(
-                        $icmsSN,
-                        'pCredSN',
-                        $pCredSN,
-                        false,
-                        "[item $nItem] Alíquota aplicável de cálculo do crédito (Simples Nacional)."
-                    );
-                    $this->dom->addChild(
-                        $icmsSN,
-                        'vCredICMSSN',
-                        $vCredICMSSN,
-                        false,
-                        "[item $nItem] Valor crédito do ICMS que pode ser aproveitado nos termos do"
-                            . " art. 23 da LC 123 (Simples Nacional)"
-                    );
+                $this->dom->addChild(
+                    $icmsSN,
+                    'pMVAST',
+                    $pMVAST,
+                    false,
+                    "[item $nItem] Percentual da margem de valor Adicionado do ICMS ST"
+                );
+                $this->dom->addChild(
+                    $icmsSN,
+                    'pRedBCST',
+                    $pRedBCST,
+                    false,
+                    "[item $nItem] Percentual da Redução de BC do ICMS ST"
+                );
+                $this->dom->addChild(
+                    $icmsSN,
+                    'vBCST',
+                    $vBCST,
+                    false,
+                    "[item $nItem] Valor da BC do ICMS ST"
+                );
+                $this->dom->addChild(
+                    $icmsSN,
+                    'pICMSST',
+                    $pICMSST,
+                    false,
+                    "[item $nItem] Alíquota do imposto do ICMS ST"
+                );
+                $this->dom->addChild(
+                    $icmsSN,
+                    'vICMSST',
+                    $vICMSST,
+                    false,
+                    "[item $nItem] Valor do ICMS ST"
+                );
+                $this->dom->addChild(
+                    $icmsSN,
+                    'pCredSN',
+                    $pCredSN,
+                    false,
+                    "[item $nItem] Alíquota aplicável de cálculo do crédito (Simples Nacional)."
+                );
+                $this->dom->addChild(
+                    $icmsSN,
+                    'vCredICMSSN',
+                    $vCredICMSSN,
+                    false,
+                    "[item $nItem] Valor crédito do ICMS que pode ser aproveitado nos termos do"
+                    . " art. 23 da LC 123 (Simples Nacional)"
+                );
                 break;
         }
         //caso exista a tag aICMS[$nItem] inserir nela caso contrario criar
@@ -3765,7 +3763,7 @@ abstract class MakeBasic
         $this->aICMS[$nItem] = $tagIcms;
         return $tagIcms;
     }
-    
+
     /**
      * Grupo ICMSUFDest NA01 pai M01
      * tag NFe/infNFe/det[]/imposto/ICMSUFDest (opcional)
@@ -3856,7 +3854,7 @@ abstract class MakeBasic
         $this->aTotICMSUFDest['vICMSUFRemet'] += $vICMSUFRemet;
         return $icmsUFDest;
     }
-    
+
     /**
      * Grupo IPI O01 pai M01
      * tag NFe/infNFe/det[]/imposto/IPI (opcional)
@@ -3954,7 +3952,7 @@ abstract class MakeBasic
                 $qUnid,
                 false,
                 "[item $nItem] Quantidade total na unidade padrão para tributação (somente para os "
-                    . "produtos tributados por unidade)"
+                . "produtos tributados por unidade)"
             );
             $this->dom->addChild(
                 $ipiTrib,
@@ -3985,7 +3983,7 @@ abstract class MakeBasic
         $this->aIPI[$nItem] = $ipi;
         return $ipi;
     }
-    
+
     /**
      * Grupo Imposto de Importação P01 pai M01
      * tag NFe/infNFe/det[]/imposto/II
@@ -4030,7 +4028,7 @@ abstract class MakeBasic
         $this->aII[$nItem] = $tii;
         return $tii;
     }
-    
+
     /**
      * Grupo PIS Q01 pai M01
      * tag NFe/infNFe/det[]/imposto/PIS
@@ -4207,7 +4205,7 @@ abstract class MakeBasic
         $this->aPIS[$nItem] = $pis;
         return $pis;
     }
-    
+
     /**
      * Grupo PIS Substituição Tributária R01 pai M01
      * tag NFe/infNFe/det[]/imposto/PISST (opcional)
@@ -4266,7 +4264,7 @@ abstract class MakeBasic
         $this->aPISST[$nItem] = $pisst;
         return $pisst;
     }
-    
+
     /**
      * Grupo COFINS S01 pai M01
      * tag det[item]/imposto/COFINS (opcional)
@@ -4366,7 +4364,7 @@ abstract class MakeBasic
         $this->aCOFINS[$nItem] = $confins;
         return $confins;
     }
-    
+
     /**
      * Grupo COFINS Substituição Tributária T01 pai M01
      * tag NFe/infNFe/det[]/imposto/COFINSST (opcional)
@@ -4425,7 +4423,7 @@ abstract class MakeBasic
         $this->aCOFINSST[$nItem] = $cofinsst;
         return $cofinsst;
     }
-    
+
     /**
      * Grupo ISSQN U01 pai M01
      * tag NFe/infNFe/det[]/imposto/ISSQN (opcional)
@@ -4583,7 +4581,7 @@ abstract class MakeBasic
         $this->aISSQN[$nItem] = $issqn;
         return $issqn;
     }
-    
+
     /**
      * Informação do Imposto devolvido U50 pai H01
      * tag NFe/infNFe/det[]/impostoDevol (opcional)
@@ -4614,7 +4612,7 @@ abstract class MakeBasic
         $this->aImpostoDevol[$nItem] = $impostoDevol;
         return $impostoDevol;
     }
-    
+
     /**
      * Grupo Totais referentes ao ICMS W02 pai W01
      * tag NFe/infNFe/total/ICMSTot
@@ -4677,14 +4675,14 @@ abstract class MakeBasic
             true,
             "Valor Total do ICMS desonerado"
         );
-        
+
         $this->dom->addChild(
             $ICMSTot,
             "vFCPUFDest",
             $this->aTotICMSUFDest['vFCPUFDest'],
             false,
             "Valor total do ICMS relativo ao Fundo de Combate à Pobreza(FCP) "
-                . "para a UF de destino"
+            . "para a UF de destino"
         );
         $this->dom->addChild(
             $ICMSTot,
@@ -4700,7 +4698,7 @@ abstract class MakeBasic
             false,
             "Valor total do ICMS de partilha para a UF do remetente"
         );
-        
+
         $this->dom->addChild(
             $ICMSTot,
             "vBCST",
@@ -4795,7 +4793,7 @@ abstract class MakeBasic
         $this->dom->appChild($this->total, $ICMSTot, '');
         return $ICMSTot;
     }
-    
+
     /**
      * Grupo Totais referentes ao ISSQN W17 pai W01
      * tag NFe/infNFe/total/ISSQNTot (opcional)
@@ -4921,7 +4919,7 @@ abstract class MakeBasic
         $this->dom->appChild($this->total, $ISSQNTot, '');
         return $ISSQNTot;
     }
-    
+
     /**
      * Grupo Retenções de Tributos W23 pai W01
      * tag NFe/infNFe/total/reTrib (opcional)
@@ -4996,7 +4994,7 @@ abstract class MakeBasic
         $this->dom->appChild($this->total, $retTrib, '');
         return $retTrib;
     }
-    
+
     /**
      * Grupo Informações do Transporte X01 pai A01
      * tag NFe/infNFe/transp (obrigatório)
@@ -5015,7 +5013,7 @@ abstract class MakeBasic
         );
         return $this->transp;
     }
-    
+
     /**
      * Grupo Transportador X03 pai X01
      * tag NFe/infNFe/transp/tranporta (opcional)
@@ -5094,7 +5092,7 @@ abstract class MakeBasic
         );
         return $transporta;
     }
-    
+
     /**
      * Grupo Veículo Transporte X18 pai X17.1
      * tag NFe/infNFe/transp/veicTransp (opcional)
@@ -5137,7 +5135,7 @@ abstract class MakeBasic
         );
         return $veicTransp;
     }
-    
+
     /**
      * Grupo Reboque X22 pai X17.1
      * tag NFe/infNFe/transp/reboque (opcional)
@@ -5199,7 +5197,7 @@ abstract class MakeBasic
         );
         return $reboque;
     }
-    
+
     /**
      * Grupo Retenção ICMS transporte X11 pai X01
      * tag NFe/infNFe/transp/retTransp (opcional)
@@ -5269,7 +5267,7 @@ abstract class MakeBasic
         );
         return $retTransp;
     }
-    
+
     /**
      * Grupo Volumes X26 pai X01
      * tag NFe/infNFe/transp/vol (opcional)
@@ -5350,7 +5348,7 @@ abstract class MakeBasic
         );
         return $vol;
     }
-    
+
     /**
      * Grupo Fatura Y02 pai Y01
      * tag NFe/infNFe/cobr/fat (opcional)
@@ -5375,7 +5373,7 @@ abstract class MakeBasic
         $this->dom->appChild($this->cobr, $fat);
         return $fat;
     }
-    
+
     /**
      * Grupo Duplicata Y07 pai Y02
      * tag NFe/infNFe/cobr/fat/dup (opcional)
@@ -5399,8 +5397,8 @@ abstract class MakeBasic
         $this->aDup[] = $dup;
         return $dup;
     }
-    
-  
+
+
     /**
      * Grupo de Cartões YA04 pai YA01
      * tag NFe/infNFe/pag/card
@@ -5451,7 +5449,7 @@ abstract class MakeBasic
             return $card;
         }
     }
-    
+
     /**
      * Grupo de Informações Adicionais Z01 pai A01
      * tag NFe/infNFe/infAdic (opcional)
@@ -5480,7 +5478,7 @@ abstract class MakeBasic
         );
         return $this->infAdic;
     }
-    
+
     /**
      * Grupo Campo de uso livre do contribuinte Z04 pai Z01
      * tag NFe/infNFe/infAdic/obsCont (opcional)
@@ -5501,7 +5499,7 @@ abstract class MakeBasic
         $this->dom->appChild($this->infAdic, $obsCont, '');
         return $obsCont;
     }
-    
+
     /**
      * Grupo Campo de uso livre do Fisco Z07 pai Z01
      * tag NFe/infNFe/infAdic/obsFisco (opcional)
@@ -5522,7 +5520,7 @@ abstract class MakeBasic
         $this->dom->appChild($this->infAdic, $obsFisco, '');
         return $obsFisco;
     }
-    
+
     /**
      * Grupo Processo referenciado Z10 pai Z01 (NT2012.003)
      * tag NFe/infNFe/procRef (opcional)
@@ -5555,7 +5553,7 @@ abstract class MakeBasic
         $this->dom->appChild($this->infAdic, $procRef, '');
         return $procRef;
     }
-    
+
     /**
      * Grupo Exportação ZA01 pai A01
      * tag NFe/infNFe/exporta (opcional)
@@ -5593,7 +5591,7 @@ abstract class MakeBasic
         );
         return $this->exporta;
     }
-    
+
     /**
      * Grupo Compra ZB01 pai A01
      * tag NFe/infNFe/compra (opcional)
@@ -5613,7 +5611,7 @@ abstract class MakeBasic
         $this->dom->addChild($this->compra, "xCont", $xCont, false, "Contrato");
         return $this->compra;
     }
-    
+
     /**
      * Grupo Cana ZC01 pai A01
      * tag NFe/infNFe/cana (opcional)
@@ -5630,7 +5628,7 @@ abstract class MakeBasic
         $this->dom->addChild($this->cana, "ref", $ref, true, "Mês e ano de referência");
         return $this->cana;
     }
-    
+
     /**
      * Grupo Fornecimento diário de cana ZC04 pai ZC01
      * tag NFe/infNFe/cana/forDia
@@ -5682,7 +5680,7 @@ abstract class MakeBasic
         $this->dom->appChild($this->cana, $forDia, 'O metodo tacana deveria ter sido chamado antes. [tagforDia]');
         return $forDia;
     }
-    
+
     /**
      * Grupo Deduções – Taxas e Contribuições ZC10 pai ZC01
      * tag NFe/infNFe/cana/deduc (opcional)
@@ -5744,7 +5742,7 @@ abstract class MakeBasic
         );
         return $deduc;
     }
-    
+
     /**
      * Tag raiz da NFe
      * tag NFe DOMNode
@@ -5760,7 +5758,7 @@ abstract class MakeBasic
         }
         return $this->NFe;
     }
-    
+
     /**
      * Informação de Documentos Fiscais referenciados BA01 pai B01
      * tag NFe/infNFe/ide/NFref
@@ -5773,7 +5771,7 @@ abstract class MakeBasic
         $this->aNFref[] = $this->dom->createElement("NFref");
         return count($this->aNFref);
     }
-    
+
     /**
      * Informação de pagamentos
      * tag NFe/infNFe/pag
@@ -5786,7 +5784,7 @@ abstract class MakeBasic
         $this->aPag[] = $this->dom->createElement("pag");
         return count($this->aPag);
     }
-    
+
     /**
      * Insere dentro dentro das tags imposto o ICMS IPI II PIS COFINS ISSQN
      * tag NFe/infNFe/det[]/imposto
@@ -5825,7 +5823,7 @@ abstract class MakeBasic
             $this->aImposto[$nItem] = $imposto;
         }
     }
-    
+
     /**
      * Grupo COFINS tributado pela alíquota S02 pai S01
      * tag det/imposto/COFINS/COFINSAliq (opcional)
@@ -5869,7 +5867,7 @@ abstract class MakeBasic
         );
         return $confinsAliq;
     }
-    
+
     /**
      * Grupo COFINS não tributado S04 pai S01
      * tag NFe/infNFe/det[]/imposto/COFINS/COFINSNT (opcional)
@@ -5889,7 +5887,7 @@ abstract class MakeBasic
         );
         return $confinsnt;
     }
-    
+
     /**
      * Grupo COFINS Outras Operações S05 pai S01
      * tag NFe/infNFe/det[]/imposto/COFINS/COFINSoutr (opcional)
@@ -5955,7 +5953,7 @@ abstract class MakeBasic
         );
         return $confinsoutr;
     }
-    
+
     /**
      * Insere dentro da tag det os produtos
      * tag NFe/infNFe/det[]
@@ -6068,7 +6066,7 @@ abstract class MakeBasic
             $det = null;
         }
     }
-    
+
     /**
      * Grupo Totais da NF-e W01 pai A01
      * tag NFe/infNFe/total
@@ -6085,7 +6083,7 @@ abstract class MakeBasic
             $this->aTotICMSUFDest['vFCPUFDest'] = number_format($this->aTotICMSUFDest['vFCPUFDest'], 2, '.', '');
         }
     }
-    
+
     /**
      * Grupo Lacres X33 pai X26
      * tag NFe/infNFe/transp/vol/lacres (opcional)
@@ -6098,7 +6096,7 @@ abstract class MakeBasic
         $this->dom->addChild($lacre, "nLacre", $nLacre, true, "Número dos Lacres");
         return $lacre;
     }
-    
+
     /**
      * Grupo Cobrança Y01 pai A01
      * tag NFe/infNFe/cobr (opcional)
@@ -6110,7 +6108,18 @@ abstract class MakeBasic
             $this->cobr = $this->dom->createElement("cobr");
         }
     }
-    
+
+    /**
+     * Grupo Cobrança YA01 pai A01
+     * tag NFe/infNFe/Pag (Versao 3.10)
+     */
+    protected function buildtagPag()
+    {
+        foreach ($this->aPag as $pag) {
+            $this->dom->appChild($this->infNFe, $pag, 'Falta tag "infNFe"');
+        }
+    }
+
     /**
      * Grupo de Informações Adicionais Z01 pai A01
      * tag NFe/infNFe/infAdic (opcional)
@@ -6125,7 +6134,7 @@ abstract class MakeBasic
         }
         return $this->infAdic;
     }
-    
+
     /**
      * Remonta a chave da NFe de 44 digitos com base em seus dados
      * já contidos na NFE.
@@ -6148,9 +6157,9 @@ abstract class MakeBasic
         $tpEmis = $ide->getElementsByTagName('tpEmis')->item(0)->nodeValue;
         $cNF = $ide->getElementsByTagName('cNF')->item(0)->nodeValue;
         $chave = str_replace('NFe', '', $infNFe->getAttribute("Id"));
-        
+
         $dt = new DateTime($dhEmi);
-        
+
         $chaveMontada = Keys::build(
             $cUF,
             $dt->format('y'),

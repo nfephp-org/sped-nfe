@@ -34,7 +34,7 @@ class Make400 extends MakeBasic
      * @var array of DOMElements
      */
     protected $aRastro = [];
-    
+
     /**
      * Função construtora cria um objeto DOMDocument
      * que será carregado com o documento fiscal
@@ -43,7 +43,7 @@ class Make400 extends MakeBasic
     {
         parent::__construct();
     }
-    
+
     /**
      * Informações de identificação da NF-e B01 pai A01
      * NOTA: Ajustado para NT2016_002_v1.00
@@ -262,8 +262,8 @@ class Make400 extends MakeBasic
         $this->ide = $ide;
         return $ide;
     }
-    
-        /**
+
+    /**
      * Código Especificador da Substituição Tributária – CEST,
      * que identifica a mercadoria sujeita aos regimes de substituição
      * tributária e de antecipação do recolhimento do imposto.
@@ -299,7 +299,7 @@ class Make400 extends MakeBasic
             Strings::onlyNumbers($cnpjFab),
             false,
             "$identificador [item $nItem] CNPJ do Fabricante da Mercadoria,"
-                . "obrigatório para produto em escala NÃO relevante."
+            . "obrigatório para produto em escala NÃO relevante."
         );
         $this->aCest[$nItem] = $ctrltST;
         return $ctrltST;
@@ -534,7 +534,7 @@ class Make400 extends MakeBasic
         return $prod;
     }
 
-    
+
     /**
      * Detalhamento de medicamentos K01 pai I90
      * NOTA: Ajustado para NT2016_002_v1.00
@@ -611,8 +611,8 @@ class Make400 extends MakeBasic
             $cProdANP,
             true,
             "$identificador [item $nItem] Utilizar a codificação de produtos do"
-                . " Sistema de Informações de Movimentação de Produtos - "
-                . "SIMP (http://www.anp.gov.br/simp/). (NT 2012/003)"
+            . " Sistema de Informações de Movimentação de Produtos - "
+            . "SIMP (http://www.anp.gov.br/simp/). (NT 2012/003)"
         );
         $this->dom->addChild(
             $comb,
@@ -620,8 +620,8 @@ class Make400 extends MakeBasic
             $descANP,
             true,
             "$identificador [item $nItem] Utilizar a descrição de produtos do "
-                . "Sistema de Informações de Movimentação de Produtos - "
-                . "SIMP (http://www.anp.gov.br/simp/"
+            . "Sistema de Informações de Movimentação de Produtos - "
+            . "SIMP (http://www.anp.gov.br/simp/"
         );
         $this->dom->addChild(
             $comb,
@@ -629,7 +629,7 @@ class Make400 extends MakeBasic
             $pGLP,
             false,
             "$identificador [item $nItem] Percentual do GLP derivado do "
-                . "petróleo no produto GLP (cProdANP=210203001) 1v4"
+            . "petróleo no produto GLP (cProdANP=210203001) 1v4"
         );
         $this->dom->addChild(
             $comb,
@@ -637,7 +637,7 @@ class Make400 extends MakeBasic
             $pGNn,
             false,
             "$identificador [item $nItem] Percentual de Gás Natural Nacional"
-                . " – GLGNn para o produto GLP (cProdANP=210203001) 1v4"
+            . " – GLGNn para o produto GLP (cProdANP=210203001) 1v4"
         );
         $this->dom->addChild(
             $comb,
@@ -645,7 +645,7 @@ class Make400 extends MakeBasic
             $pGNi,
             false,
             "$identificador [item $nItem] Percentual de Gás Natural Importado"
-                . " – GLGNi para o produto GLP (cProdANP=210203001) 1v4"
+            . " – GLGNi para o produto GLP (cProdANP=210203001) 1v4"
         );
         $this->dom->addChild(
             $comb,
@@ -660,7 +660,7 @@ class Make400 extends MakeBasic
             $codif,
             false,
             "$identificador [item $nItem] Código de autorização / registro do"
-                . " CODIF"
+            . " CODIF"
         );
         $this->dom->addChild(
             $comb,
@@ -698,7 +698,7 @@ class Make400 extends MakeBasic
         $this->aComb[$nItem] = $comb;
         return $comb;
     }
-    
+
     /**
      * Rastreabilidade do produto podem ser até 500 por item TAG I80 pai I01
      * NOTA: Ajustado para NT2016_002_v1.00
@@ -752,7 +752,7 @@ class Make400 extends MakeBasic
         $this->aRastro[$nItem][] = $rastro;
         return $rastro;
     }
-    
+
     /**
      * Informações do ICMS da Operação própria e ST N01 pai M01
      * NOTA: Ajustado para NT2016_002_v1.00
@@ -874,7 +874,7 @@ class Make400 extends MakeBasic
                     $pFCP,
                     false,
                     "$identificador [item $nItem] Percentual do ICMS "
-                        . "relativo ao Fundo de Combate à Pobreza (FCP)"
+                    . "relativo ao Fundo de Combate à Pobreza (FCP)"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -882,7 +882,7 @@ class Make400 extends MakeBasic
                     $vFCP,
                     false,
                     "$identificador [item $nItem] Valor do ICMS relativo "
-                        . "ao Fundo de Combate à Pobreza (FCP)"
+                    . "ao Fundo de Combate à Pobreza (FCP)"
                 );
                 break;
             case '10':
@@ -935,7 +935,7 @@ class Make400 extends MakeBasic
                     $vBCFCP,
                     false,
                     "$identificador [item $nItem] Valor da Base de calculo "
-                        . "relativo ao Fundo de Combate à Pobreza (FCP)"
+                    . "relativo ao Fundo de Combate à Pobreza (FCP)"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -943,7 +943,7 @@ class Make400 extends MakeBasic
                     $pFCP,
                     false,
                     "$identificador [item $nItem] Percentual do ICMS "
-                        . "relativo ao Fundo de Combate à Pobreza (FCP)"
+                    . "relativo ao Fundo de Combate à Pobreza (FCP)"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -951,7 +951,7 @@ class Make400 extends MakeBasic
                     $vFCP,
                     false,
                     "$identificador [item $nItem] Valor do ICMS relativo "
-                        . "ao Fundo de Combate à Pobreza (FCP)"
+                    . "ao Fundo de Combate à Pobreza (FCP)"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -1008,7 +1008,7 @@ class Make400 extends MakeBasic
                     $pFCPST,
                     false,
                     "[item $nItem] Percentual do FCP retido por "
-                        . "Substituição Tributária"
+                    . "Substituição Tributária"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -1016,7 +1016,7 @@ class Make400 extends MakeBasic
                     $vFCPST,
                     false,
                     "[item $nItem] Valor do FCP retido por "
-                        . "Substituição Tributária"
+                    . "Substituição Tributária"
                 );
                 break;
             case '20':
@@ -1076,7 +1076,7 @@ class Make400 extends MakeBasic
                     $vBCFCP,
                     false,
                     "$identificador [item $nItem] Valor da Base de calculo "
-                        . "relativo ao Fundo de Combate à Pobreza (FCP)"
+                    . "relativo ao Fundo de Combate à Pobreza (FCP)"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -1084,7 +1084,7 @@ class Make400 extends MakeBasic
                     $pFCP,
                     false,
                     "$identificador [item $nItem] Percentual do ICMS "
-                        . "relativo ao Fundo de Combate à Pobreza (FCP)"
+                    . "relativo ao Fundo de Combate à Pobreza (FCP)"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -1092,7 +1092,7 @@ class Make400 extends MakeBasic
                     $vFCP,
                     false,
                     "$identificador [item $nItem] Valor do ICMS relativo "
-                        . "ao Fundo de Combate à Pobreza (FCP)"
+                    . "ao Fundo de Combate à Pobreza (FCP)"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -1180,7 +1180,7 @@ class Make400 extends MakeBasic
                     $pFCPST,
                     false,
                     "[item $nItem] Percentual do FCP retido por "
-                        . "Substituição Tributária"
+                    . "Substituição Tributária"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -1188,7 +1188,7 @@ class Make400 extends MakeBasic
                     $vFCPST,
                     false,
                     "[item $nItem] Valor do FCP retido por "
-                        . "Substituição Tributária"
+                    . "Substituição Tributária"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -1316,7 +1316,7 @@ class Make400 extends MakeBasic
                     $vBCFCP,
                     false,
                     "$identificador [item $nItem] Valor da Base de calculo "
-                        . "relativo ao Fundo de Combate à Pobreza (FCP)"
+                    . "relativo ao Fundo de Combate à Pobreza (FCP)"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -1324,7 +1324,7 @@ class Make400 extends MakeBasic
                     $pFCP,
                     false,
                     "$identificador [item $nItem] Percentual do ICMS "
-                        . "relativo ao Fundo de Combate à Pobreza (FCP)"
+                    . "relativo ao Fundo de Combate à Pobreza (FCP)"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -1332,7 +1332,7 @@ class Make400 extends MakeBasic
                     $vFCP,
                     false,
                     "$identificador [item $nItem] Valor do ICMS relativo "
-                        . "ao Fundo de Combate à Pobreza (FCP)"
+                    . "ao Fundo de Combate à Pobreza (FCP)"
                 );
                 break;
             case '60':
@@ -1371,7 +1371,7 @@ class Make400 extends MakeBasic
                     $vBCFCPST,
                     false,
                     "[item $nItem] Valor da Base de Cálculo do FCP "
-                        . "retido anteriormente"
+                    . "retido anteriormente"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -1452,7 +1452,7 @@ class Make400 extends MakeBasic
                     $vBCFCP,
                     false,
                     "$identificador [item $nItem] Valor da Base de calculo "
-                        . "relativo ao Fundo de Combate à Pobreza (FCP)"
+                    . "relativo ao Fundo de Combate à Pobreza (FCP)"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -1460,7 +1460,7 @@ class Make400 extends MakeBasic
                     $pFCP,
                     false,
                     "$identificador [item $nItem] Percentual do ICMS "
-                        . "relativo ao Fundo de Combate à Pobreza (FCP)"
+                    . "relativo ao Fundo de Combate à Pobreza (FCP)"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -1468,7 +1468,7 @@ class Make400 extends MakeBasic
                     $vFCP,
                     false,
                     "$identificador [item $nItem] Valor do ICMS relativo "
-                        . "ao Fundo de Combate à Pobreza (FCP)"
+                    . "ao Fundo de Combate à Pobreza (FCP)"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -1525,7 +1525,7 @@ class Make400 extends MakeBasic
                     $pFCPST,
                     false,
                     "[item $nItem] Percentual do FCP retido por "
-                        . "Substituição Tributária"
+                    . "Substituição Tributária"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -1533,7 +1533,7 @@ class Make400 extends MakeBasic
                     $vFCPST,
                     false,
                     "[item $nItem] Valor do FCP retido por "
-                        . "Substituição Tributária"
+                    . "Substituição Tributária"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -1607,7 +1607,7 @@ class Make400 extends MakeBasic
                     $vBCFCP,
                     false,
                     "$identificador [item $nItem] Valor da Base de calculo "
-                        . "relativo ao Fundo de Combate à Pobreza (FCP)"
+                    . "relativo ao Fundo de Combate à Pobreza (FCP)"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -1615,7 +1615,7 @@ class Make400 extends MakeBasic
                     $pFCP,
                     false,
                     "$identificador [item $nItem] Percentual do ICMS "
-                        . "relativo ao Fundo de Combate à Pobreza (FCP)"
+                    . "relativo ao Fundo de Combate à Pobreza (FCP)"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -1623,7 +1623,7 @@ class Make400 extends MakeBasic
                     $vFCP,
                     false,
                     "$identificador [item $nItem] Valor do ICMS relativo "
-                        . "ao Fundo de Combate à Pobreza (FCP)"
+                    . "ao Fundo de Combate à Pobreza (FCP)"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -1680,7 +1680,7 @@ class Make400 extends MakeBasic
                     $pFCPST,
                     false,
                     "[item $nItem] Percentual do FCP retido por "
-                        . "Substituição Tributária"
+                    . "Substituição Tributária"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -1688,7 +1688,7 @@ class Make400 extends MakeBasic
                     $vFCPST,
                     false,
                     "[item $nItem] Valor do FCP retido por "
-                        . "Substituição Tributária"
+                    . "Substituição Tributária"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -1713,7 +1713,7 @@ class Make400 extends MakeBasic
         $this->aICMS[$nItem] = $tagIcms;
         return $tagIcms;
     }
-    
+
     /**
      * Tributação ICMS pelo Simples Nacional N10c pai N01
      * NOTA: Ajustado para NT2016_002_v1.00
@@ -1789,21 +1789,21 @@ class Make400 extends MakeBasic
                     true,
                     "[item $nItem] Código de Situação da Operação Simples Nacional"
                 );
-                    $this->dom->addChild(
-                        $icmsSN,
-                        'pCredSN',
-                        $pCredSN,
-                        true,
-                        "[item $nItem] Alíquota aplicável de cálculo do crédito (Simples Nacional)."
-                    );
-                    $this->dom->addChild(
-                        $icmsSN,
-                        'vCredICMSSN',
-                        $vCredICMSSN,
-                        true,
-                        "[item $nItem] Valor crédito do ICMS que pode ser aproveitado nos termos do"
-                            . " art. 23 da LC 123 (Simples Nacional)"
-                    );
+                $this->dom->addChild(
+                    $icmsSN,
+                    'pCredSN',
+                    $pCredSN,
+                    true,
+                    "[item $nItem] Alíquota aplicável de cálculo do crédito (Simples Nacional)."
+                );
+                $this->dom->addChild(
+                    $icmsSN,
+                    'vCredICMSSN',
+                    $vCredICMSSN,
+                    true,
+                    "[item $nItem] Valor crédito do ICMS que pode ser aproveitado nos termos do"
+                    . " art. 23 da LC 123 (Simples Nacional)"
+                );
                 break;
             case '102':
             case '103':
@@ -1889,7 +1889,7 @@ class Make400 extends MakeBasic
                     $pCredSN,
                     true,
                     "[item $nItem] Alíquota aplicável de cálculo do "
-                        . "crédito (Simples Nacional)."
+                    . "crédito (Simples Nacional)."
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -1897,7 +1897,7 @@ class Make400 extends MakeBasic
                     $vCredICMSSN,
                     true,
                     "[item $nItem] Valor crédito do ICMS que pode ser aproveitado nos "
-                        . "termos do art. 23 da LC 123 (Simples Nacional)"
+                    . "termos do art. 23 da LC 123 (Simples Nacional)"
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -1912,7 +1912,7 @@ class Make400 extends MakeBasic
                     $pFCPST,
                     false,
                     "[item $nItem] Percentual do FCP retido por "
-                        . "Substituição Tributária"
+                    . "Substituição Tributária"
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -1920,7 +1920,7 @@ class Make400 extends MakeBasic
                     $vFCPST,
                     false,
                     "[item $nItem] Valor do FCP retido por "
-                        . "Substituição Tributária"
+                    . "Substituição Tributária"
                 );
                 break;
             case '202':
@@ -1995,7 +1995,7 @@ class Make400 extends MakeBasic
                     $pFCPST,
                     false,
                     "[item $nItem] Percentual do FCP retido por "
-                        . "Substituição Tributária"
+                    . "Substituição Tributária"
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -2003,7 +2003,7 @@ class Make400 extends MakeBasic
                     $vFCPST,
                     false,
                     "[item $nItem] Valor do FCP retido por "
-                        . "Substituição Tributária"
+                    . "Substituição Tributária"
                 );
                 break;
             case '500':
@@ -2042,7 +2042,7 @@ class Make400 extends MakeBasic
                     $vBCFCPSTRet,
                     false,
                     "[item $nItem] Valor da Base de Cálculo do FCP "
-                        . "retido anteriormente"
+                    . "retido anteriormente"
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -2050,7 +2050,7 @@ class Make400 extends MakeBasic
                     $pFCPSTRet,
                     false,
                     "[item $nItem] Percentual do FCP retido anteriormente "
-                        . "por Substituição Tributária"
+                    . "por Substituição Tributária"
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -2058,7 +2058,7 @@ class Make400 extends MakeBasic
                     $vFCPSTRet,
                     false,
                     "[item $nItem] Valor do FCP retido anteriormente por "
-                        . "Substituição Tributária"
+                    . "Substituição Tributária"
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -2083,7 +2083,7 @@ class Make400 extends MakeBasic
                     $csosn,
                     true,
                     "[item $nItem] Código de Situação da Operação "
-                        . "Simples Nacional"
+                    . "Simples Nacional"
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -2175,7 +2175,7 @@ class Make400 extends MakeBasic
                     $pFCPST,
                     false,
                     "[item $nItem] Percentual do FCP retido por "
-                        . "Substituição Tributária"
+                    . "Substituição Tributária"
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -2183,7 +2183,7 @@ class Make400 extends MakeBasic
                     $vFCPST,
                     false,
                     "[item $nItem] Valor do FCP retido por "
-                        . "Substituição Tributária"
+                    . "Substituição Tributária"
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -2198,8 +2198,8 @@ class Make400 extends MakeBasic
                     $vCredICMSSN,
                     false,
                     "[item $nItem] Valor crédito do ICMS que pode ser "
-                        . "aproveitado nos termos do"
-                        . " art. 23 da LC 123 (Simples Nacional)"
+                    . "aproveitado nos termos do"
+                    . " art. 23 da LC 123 (Simples Nacional)"
                 );
                 break;
         }
@@ -2215,7 +2215,7 @@ class Make400 extends MakeBasic
         $this->aICMS[$nItem] = $tagIcms;
         return $tagIcms;
     }
-    
+
     /**
      * Grupo ICMSUFDest NA01 pai M01
      * NOTA: Ajustado para NT2016_002_v1.00
@@ -2267,7 +2267,7 @@ class Make400 extends MakeBasic
             $pFCPUFDest,
             true,
             "[item $nItem] Percentual do ICMS relativo ao Fundo de "
-                . "Combate à Pobreza (FCP) na UF de destino"
+            . "Combate à Pobreza (FCP) na UF de destino"
         );
         $this->dom->addChild(
             $icmsUFDest,
@@ -2296,7 +2296,7 @@ class Make400 extends MakeBasic
             $vFCPUFDest,
             true,
             "[item $nItem] Valor do ICMS relativo ao Fundo de Combate à "
-                . "Pobreza (FCP) da UF de destino"
+            . "Pobreza (FCP) da UF de destino"
         );
         $this->dom->addChild(
             $icmsUFDest,
@@ -2318,7 +2318,7 @@ class Make400 extends MakeBasic
         $this->aTotICMSUFDest['vICMSUFRemet'] += $vICMSUFRemet;
         return $icmsUFDest;
     }
-    
+
     /**
      * Grupo Totais referentes ao ICMS W02 pai W01
      * tag NFe/infNFe/total/ICMSTot
@@ -2394,31 +2394,31 @@ class Make400 extends MakeBasic
         );
         /**
         $this->dom->addChild(
-            $ICMSTot,
-            "vFCPUFDest",
-            $this->aTotICMSUFDest['vFCPUFDest'],
-            false,
-            "Valor total do ICMS relativo ao Fundo de Combate à Pobreza(FCP) para a UF de destino"
+        $ICMSTot,
+        "vFCPUFDest",
+        $this->aTotICMSUFDest['vFCPUFDest'],
+        false,
+        "Valor total do ICMS relativo ao Fundo de Combate à Pobreza(FCP) para a UF de destino"
         );
          *
          */
         /**
         $this->dom->addChild(
-            $ICMSTot,
-            "vICMSUFDest",
-            $this->aTotICMSUFDest['vICMSUFDest'],
-            false,
-            "Valor total do ICMS de partilha para a UF do destinatário"
+        $ICMSTot,
+        "vICMSUFDest",
+        $this->aTotICMSUFDest['vICMSUFDest'],
+        false,
+        "Valor total do ICMS de partilha para a UF do destinatário"
         );
          *
          */
         /**
         $this->dom->addChild(
-            $ICMSTot,
-            "vICMSUFRemet",
-            $this->aTotICMSUFDest['vICMSUFRemet'],
-            false,
-            "Valor total do ICMS de partilha para a UF do remetente"
+        $ICMSTot,
+        "vICMSUFRemet",
+        $this->aTotICMSUFDest['vICMSUFRemet'],
+        false,
+        "Valor total do ICMS de partilha para a UF do remetente"
         );
          *
          */
@@ -2442,7 +2442,7 @@ class Make400 extends MakeBasic
             $vFCPST,
             true,
             "Valor Total do FCP (Fundo de Combate à Pobreza) retido "
-                . "por substituição tributária"
+            . "por substituição tributária"
         );
         $this->dom->addChild(
             $ICMSTot,
@@ -2450,9 +2450,9 @@ class Make400 extends MakeBasic
             $vFCPSTRet,
             true,
             "Valor Total do FCP retido anteriormente por "
-                . "Substituição Tributária"
+            . "Substituição Tributária"
         );
-        
+
         $this->dom->addChild(
             $ICMSTot,
             "vProd",
@@ -2540,52 +2540,69 @@ class Make400 extends MakeBasic
         $this->dom->appChild($this->total, $ICMSTot, '');
         return $ICMSTot;
     }
-    
+
     /**
      * Grupo de Formas de Pagamento YA01 pai A01
-     * NOTA: Ajustado para NT2016_002_v1.00
-     * tag NFe/infNFe/pag (opcional)
+     * NOTA: Ajustado para NT2016_002_v1.20
+     * tag NFe/infNFe/pag (obrigatorio na NT2016_002_v1.20)
      * Apenas para o modelo 65 NFCe
-     * @param int $tPag
-     * @param float $vPag
      * @param float $vTroco
      * @return DOMElement
      */
     public function tagpag(
-        $tPag,
-        $vPag,
         $vTroco
     ) {
-        $num = $this->buildPag();
+        $this->buildPag();
         $pag = $this->dom->createElement("pag");
         $this->dom->addChild(
-            $this->aPag[$num - 1],
-            "tPag",
-            $tPag,
-            true,
-            "Forma de pagamento"
-        );
-        $this->dom->addChild(
-            $this->aPag[$num - 1],
-            "vPag",
-            $vPag,
-            true,
-            "Valor do Pagamento"
-        );
-        $this->dom->addChild(
-            $this->aPag[$num - 1],
+            $this->aPag[0],
             "vTroco",
             $vTroco,
-            true,
+            false,
             "Valor do troco"
         );
         return $pag;
     }
 
     /**
-     * Grupo de Cartões YA04 pai YA01
-     * NOTA: Ajustado para NT2016_002_v1.00
+     * Grupo de Formas de Pagamento YA01a pai YA01
+     * NOTA: Ajuste nt_2016_002_v1.20
+     * tag NFe/infNFe/pag/detPag
+     * @param  int $nItemDetPag
+     * @param int $tPag
+     * @param float $vPag
+     * @param float $vTroco
+     * @return DOMElement
+     */
+    public function tagDetPag(
+        $nItemDetPag,
+        $tPag,
+        $vPag
+    ) {
+        $this->aDetPag[$nItemDetPag] = $this->dom->createElement("detPag");
+        $detPag = $this->dom->createElement("detPag");
+        $this->dom->addChild(
+            $this->aDetPag[$nItemDetPag],
+            "tPag",
+            $tPag,
+            true,
+            "Forma de pagamento"
+        );
+        $this->dom->addChild(
+            $this->aDetPag[$nItemDetPag],
+            "vPag",
+            $vPag,
+            true,
+            "Valor do Pagamento"
+        );
+        return $detPag;
+    }
+
+    /**
+     * Grupo de Cartões YA04 pai YA01a
+     * NOTA: Ajustado para NT2016_002_v1.20
      * tag NFe/infNFe/pag/card
+     * @param  int $nItemDetPag
      * @param  string $cnpj
      * @param  string $tBand
      * @param  string $cAut
@@ -2593,6 +2610,7 @@ class Make400 extends MakeBasic
      * @return DOMElement
      */
     public function tagcard(
+        $nItemDetPag = 0,
         $cnpj = '',
         $tBand = '',
         $cAut = '',
@@ -2629,16 +2647,13 @@ class Make400 extends MakeBasic
                 true,
                 "Número de autorização da operação cartão de crédito e/ou débito"
             );
-            $this->dom->appChildBefore(
-                $this->aPag[count($this->aPag)-1],
-                $card,
-                'vTroco'
-            );
+            $this->dom->appChild($this->aDetPag[$nItemDetPag], $card, "Inclusão do node Card");
+
             return $card;
         }
     }
-    
-    
+
+
     /**
      * Insere dentro da tag det os produtos
      * NOTA: Ajustado para NT2016_002_v1.00
@@ -2760,6 +2775,28 @@ class Make400 extends MakeBasic
             }
             $this->aDet[] = $det;
             $det = null;
+        }
+    }
+
+    /**
+     * Insere a tag pag, os detalhamentos dos pagamentos e cartoes
+     * NOTA: Ajustado para NT2016_002_v1.20
+     * tag NFe/infNFe/pag/
+     * tag NFe/infNFe/pag/detPag[]
+     * tag NFe/infNFe/pag/detPag[]/Card
+     */
+    protected function buildTagPag()
+    {
+        $this->dom->appChild($this->infNFe, $this->aPag[0], 'Falta tag "infNFe"');
+        if (count($this->aDetPag)) {
+            foreach ($this->aDetPag as $detPag) {
+                $node = $this->aPag[0]->getElementsByTagName("vTroco")->item(0);
+                if (!empty($node)) {
+                    $this->aPag[0]->insertBefore($detPag, $node);
+                } else {
+                    $this->dom->appChild($this->aPag[0], $detPag, 'Falta tag "Pag"');
+                }
+            }
         }
     }
 }
