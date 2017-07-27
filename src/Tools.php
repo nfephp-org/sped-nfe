@@ -899,4 +899,225 @@ class Tools extends ToolsCommon
         }
         return $std;
     }
+    /**
+     * addProt
+     * Adiciona a tag do protocolo a NFe, preparando a mesma para impressão e envio ao destinatário.
+     * Também pode ser usada para substituir o protocolo de autorização
+     * pelo protocolo de cancelamento, nesse caso apenas para a gestão interna
+     * na empresa, esse arquivo com o cancelamento não deve ser enviado ao cliente.
+     * @name addProt
+     * @param string $xmlNfe xml da NFe enviada para receita
+     * @param string $xmlProt xml da resposta da receita
+     * @return string Retorna o xml da NFe com o protocolo
+     */
+
+    public function addProt($xmlNfe = '', $xmlProt = '')
+    {
+        try {
+            if ($xmlNfe == '' || $xmlProt == '') {
+                $msg = 'Para adicionar o protocolo, ambos os xmls devem ser passados.'
+                    .' Para a nota e para o protocolo!';
+                throw new RuntimeException($msg);
+            }
+            $docnfe = new \DOMDocument('1.0', 'utf-8'); //cria objeto DOM
+            $docnfe->formatOutput = false;
+            $docnfe->preserveWhiteSpace = false;
+
+            if (! $docnfe->loadXML($xmlNfe, LIBXML_NOBLANKS | LIBXML_NOEMPTYTAG)) {
+                $msg = 'Não foi indicado um xml valido para a NFE!';
+                throw new RuntimeException($msg);
+            }
+            $nfe = $docnfe->getElementsByTagName("NFe")->item(0);
+            if (!isset($nfe)) {
+                $msg = 'Não foi indicado um xml valido para a NFE!';
+                throw new RuntimeException($msg);
+            }
+
+            $nfeXmlns = '';
+            $nfeXmlns = $nfe->getAttribute('xmlns');
+            $infNFe = $docnfe->getElementsByTagName("infNFe")->item(0);
+            $versao = trim($infNFe->getAttribute("versao"));
+            $chaveId = trim($infNFe->getAttribute("Id"));
+            $chave = preg_replace('/[^0-9]/', '', $chaveId);
+            $DigestValue = !empty($docnfe->getElementsByTagName('DigestValue')->item(0)->nodeValue)
+                ? $docnfe->getElementsByTagName('DigestValue')->item(0)->nodeValue
+                : '';
+            if ($DigestValue == '') {
+                $msg = 'O XML da NFe não está assinado! ';
+                throw new RuntimeException($msg);
+            }
+            //carrega o protocolo e seus dados
+            //protocolo do lote enviado
+            $prot = new \DOMDocument('1.0', 'utf-8'); //cria objeto DOM
+            $prot->formatOutput = false;
+            $prot->preserveWhiteSpace = false;
+            if (! $prot->loadXML($xmlProt, LIBXML_NOBLANKS | LIBXML_NOEMPTYTAG)) {
+                $msg = 'Não foi indicado um xml valido para protocolar a NFE!';
+                throw new RuntimeException($msg);
+            }
+            //protocolo de autorização
+            $protNFe = $prot->getElementsByTagName("protNFe")->item(0);
+            if (isset($protNFe)) {
+                $protver     = trim($protNFe->getAttribute("versao"));
+                $tpAmb       = $protNFe->getElementsByTagName("tpAmb")->item(0)->nodeValue;
+                $verAplic    = $protNFe->getElementsByTagName("verAplic")->item(0)->nodeValue;
+                $chNFe       = $protNFe->getElementsByTagName("chNFe")->item(0)->nodeValue;
+                $dhRecbto    = $protNFe->getElementsByTagName("dhRecbto")->item(0)->nodeValue;
+                $nProt       = $protNFe->getElementsByTagName("nProt")->item(0)->nodeValue;
+                $digVal      = $protNFe->getElementsByTagName("digVal")->item(0)->nodeValue;
+                $cStat       = $protNFe->getElementsByTagName("cStat")->item(0)->nodeValue;
+                $xMotivo     = $protNFe->getElementsByTagName("xMotivo")->item(0)->nodeValue;
+                if ($DigestValue != $digVal) {
+                    $msg = 'Inconsistência! O DigestValue da NFe não combina com o do digVal do protocolo indicado!';
+                    throw new RuntimeException($msg);
+                }
+            }
+            //cancelamento antigo
+            $retCancNFe = $prot->getElementsByTagName("retCancNFe")->item(0);
+            if (isset($retCancNFe)) {
+                $protver     = trim($retCancNFe->getAttribute("versao"));
+                $tpAmb       = $retCancNFe->getElementsByTagName("tpAmb")->item(0)->nodeValue;
+                $verAplic    = $retCancNFe->getElementsByTagName("verAplic")->item(0)->nodeValue;
+                $chNFe       = $retCancNFe->getElementsByTagName("chNFe")->item(0)->nodeValue;
+                $dhRecbto    = $retCancNFe->getElementsByTagName("dhRecbto")->item(0)->nodeValue;
+                $nProt       = $retCancNFe->getElementsByTagName("nProt")->item(0)->nodeValue;
+                $cStat       = $retCancNFe->getElementsByTagName("cStat")->item(0)->nodeValue;
+                $xMotivo     = $retCancNFe->getElementsByTagName("xMotivo")->item(0)->nodeValue;
+                $digVal      = $DigestValue;
+            }
+            //cancelamento por evento NOVO
+            $retEvento = $prot->getElementsByTagName("retEvento")->item(0);
+            if (isset($retEvento)) {
+                //verificar se trata de cancelamento caso seja alterar o protocolo
+                //se não deixar
+                if ($retEvento->getElementsByTagName("tpEvento")->item(0)->nodeValue == '110111') {
+                    $protver     = trim($retEvento->getAttribute("versao"));
+                    $tpAmb       = $retEvento->getElementsByTagName("tpAmb")->item(0)->nodeValue;
+                    $verAplic    = $retEvento->getElementsByTagName("verAplic")->item(0)->nodeValue;
+                    $chNFe       = $retEvento->getElementsByTagName("chNFe")->item(0)->nodeValue;
+                    $dhRecbto    = $retEvento->getElementsByTagName("dhRegEvento")->item(0)->nodeValue;
+                    $nProt       = $retEvento->getElementsByTagName("nProt")->item(0)->nodeValue;
+                    $cStat       = $retEvento->getElementsByTagName("cStat")->item(0)->nodeValue;
+                    $tpEvento    = $retEvento->getElementsByTagName("tpEvento")->item(0)->nodeValue;
+                    $xMotivo     = $retEvento->getElementsByTagName("xMotivo")->item(0)->nodeValue;
+                    $digVal      = $DigestValue;
+                }
+            }
+            if (!isset($protNFe) && !isset($retCancNFe) && !isset($retEvento)) {
+                $msg = 'O arquivo indicado para ser protocolado a NFe invalido! ';
+                throw new RuntimeException($msg);
+            }
+            if ($chNFe != $chave) {
+                $msg = 'O protocolo indicado pertence a outra NFe ... os numeros das chaves não combinam !';
+                throw new RuntimeException($msg);
+            }
+            //cria a NFe processada com a tag do protocolo
+            $procnfe = new \DOMDocument('1.0', 'utf-8');
+            $procnfe->formatOutput = false;
+            $procnfe->preserveWhiteSpace = false;
+            //cria a tag nfeProc
+            $nfeProc = $procnfe->createElement('nfeProc');
+            $procnfe->appendChild($nfeProc);
+            //estabele o atributo de versão
+            $nfeProc_att1 = $nfeProc->appendChild($procnfe->createAttribute('versao'));
+            $nfeProc_att1->appendChild($procnfe->createTextNode($protver));
+            //estabelece o atributo xmlns
+            $nfeProc_att2 = $nfeProc->appendChild($procnfe->createAttribute('xmlns'));
+            $nfeProc_att2->appendChild($procnfe->createTextNode($nfeXmlns));
+            //inclui a tag NFe
+            $node = $procnfe->importNode($nfe, true);
+            $nfeProc->appendChild($node);
+            //cria tag protNFe
+            $protNFe = $procnfe->createElement('protNFe');
+            $nfeProc->appendChild($protNFe);
+            //estabele o atributo de versão
+            $protNFe_att1 = $protNFe->appendChild($procnfe->createAttribute('versao'));
+            $protNFe_att1->appendChild($procnfe->createTextNode($versao));
+            //cria tag infProt
+            $infProt = $procnfe->createElement('infProt');
+            $infProt_att1 = $infProt->appendChild($procnfe->createAttribute('Id'));
+            $infProt_att1->appendChild($procnfe->createTextNode('ID'.$nProt));
+            $protNFe->appendChild($infProt);
+            $infProt->appendChild($procnfe->createElement('tpAmb', $tpAmb));
+            $infProt->appendChild($procnfe->createElement('verAplic', $verAplic));
+            $infProt->appendChild($procnfe->createElement('chNFe', $chNFe));
+            $infProt->appendChild($procnfe->createElement('dhRecbto', $dhRecbto));
+            $infProt->appendChild($procnfe->createElement('nProt', $nProt));
+            $infProt->appendChild($procnfe->createElement('digVal', $digVal));
+            $infProt->appendChild($procnfe->createElement('cStat', $cStat));
+            $infProt->appendChild($procnfe->createElement('xMotivo', $xMotivo));
+            //salva o xml como string em uma variável
+            $procXML = $procnfe->saveXML();
+            //remove as informações indesejadas
+            $procXML = str_replace(
+                array('default:',':default',"\n","\r","\s"),
+                '',
+                $procXML
+            );
+            $procXML = str_replace(
+                'NFe xmlns="http://www.portalfiscal.inf.br/nfe" xmlns="http://www.w3.org/2000/09/xmldsig#"',
+                'NFe xmlns="http://www.portalfiscal.inf.br/nfe"',
+                $procXML
+            );
+        } catch (RuntimeException $e) {
+            $this->pSetError($e->getMessage());
+            if ($this->exceptions) {
+                throw $e;
+            }
+            return false;
+        }
+        return $procXML;
+    }
+
+    public function trataRetornoNfe($retorno)
+    {
+        $retNfe = new \DOMDocument('1.0', 'utf-8');
+        $retNfe->formatOutput = false;
+        $retNfe->preserveWhiteSpace = false;
+
+        if (! $retNfe->loadXML($retorno, LIBXML_NOBLANKS | LIBXML_NOEMPTYTAG)) {
+            $msg = 'Retorno não esperado, é necessario que o mesmo sejá um xml';
+            throw new RuntimeException($msg);
+        }
+
+        return $this->xmlToArray($retNfe->getElementsByTagName("nfeResultMsg")->item(0));
+    }
+
+    protected function xmlToArray($root)
+    {
+        $result = array();
+        if ($root->hasAttributes()) {
+            $attrs = $root->attributes;
+            foreach ($attrs as $attr) {
+                $result['@attributes'][$attr->name] = $attr->value;
+            }
+        }
+
+        if ($root->hasChildNodes()) {
+            $children = $root->childNodes;
+            if ($children->length == 1) {
+                $child = $children->item(0);
+                if ($child->nodeType == XML_TEXT_NODE) {
+                    $result['_value'] = $child->nodeValue;
+                    return count($result) == 1
+                        ? $result['_value']
+                        : $result;
+                }
+            }
+            $groups = array();
+            foreach ($children as $child) {
+                if (!isset($result[$child->nodeName])) {
+                    $result[$child->nodeName] = $this->xmlToArray($child);
+                } else {
+                    if (!isset($groups[$child->nodeName])) {
+                        $result[$child->nodeName] = array($result[$child->nodeName]);
+                        $groups[$child->nodeName] = 1;
+                    }
+                    $result[$child->nodeName][] = $this->xmlToArray($child);
+                }
+            }
+        }
+
+        return $result;
+    }
 }
