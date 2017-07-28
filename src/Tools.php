@@ -23,6 +23,7 @@ use NFePHP\NFe\Factories\QRCode;
 use NFePHP\NFe\Factories\Events;
 use NFePHP\NFe\Common\Tools as ToolsCommon;
 use RuntimeException;
+use InvalidArgumentException;
 
 class Tools extends ToolsCommon
 {
@@ -46,6 +47,9 @@ class Tools extends ToolsCommon
         $compactar = false,
         &$xmls = []
     ) {
+        if (!is_array($aXml)) {
+            throw new \InvalidArgumentException('Os XML das NFe devem ser passados em um array.');
+        }
         $servico = 'NfeAutorizacao';
         $this->checkContingencyForWebServices($servico);
         if (count($aXml) > 1) {
@@ -62,6 +66,7 @@ class Tools extends ToolsCommon
             }
             $aXml = $xmls;
         }
+        
         $sxml = implode("", $aXml);
         $sxml = preg_replace("/<\?xml.*?\?>/", "", $sxml);
         $this->servico(

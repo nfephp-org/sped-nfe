@@ -8,7 +8,7 @@ namespace NFePHP\NFe\Common;
  *
  * @category  NFePHP
  * @package   NFePHP\NFe\Common\Standardize
- * @copyright NFePHP Copyright (c) 2008 - 2017
+ * @copyright NFePHP Copyright (c) 2008-2017
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
  * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
@@ -16,10 +16,10 @@ namespace NFePHP\NFe\Common;
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
 
+use NFePHP\Common\Validator;
+use NFePHP\NFe\Exception\DocumentsException;
 use DOMDocument;
 use stdClass;
-use InvalidArgumentException;
-use NFePHP\Common\Validator;
 
 class Standardize
 {
@@ -76,9 +76,8 @@ class Standardize
     public function whichIs($xml)
     {
         if (!Validator::isXML($xml)) {
-            throw new \InvalidArgumentException(
-                "O argumento passado não é um XML válido."
-            );
+            //invalid document is not a XML
+            throw DocumentsException::wrongDocument(6);
         }
         $dom = new \DOMDocument('1.0', 'UTF-8');
         $dom->preserveWhiteSpace = false;
@@ -93,9 +92,8 @@ class Standardize
                 return $key;
             }
         }
-        throw new \InvalidArgumentException(
-            "Este xml não pertence ao projeto SPED-NFe."
-        );
+        //documento does not belong to the SPED-NFe project
+        throw DocumentsException::wrongDocument(7);
     }
     
     /**
