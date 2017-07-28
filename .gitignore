@@ -1,8 +1,6 @@
 .idea
 limpaTAB.php
 *~
-*.pfx
-*.pem
 messdetector.txt
 src/Tags
 src/NFe.php

@@ -19,7 +19,8 @@
     ],
     "require": {
         "php" : "~5.6|~7.0",
-        "nfephp-org/sped-common" : "^5.0"
+        "nfephp-org/sped-common" : "^5.0",
+        "justinrainbow/json-schema": "dev-6.0.0-dev"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^2.8",
