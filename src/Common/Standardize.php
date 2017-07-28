@@ -62,6 +62,10 @@ class Standardize
         'NFe'
     ];
     
+    /**
+     * Constructor
+     * @param string $xml
+     */
     public function __construct($xml = null)
     {
         $this->toStd($xml);
