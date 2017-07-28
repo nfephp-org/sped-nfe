@@ -582,7 +582,6 @@ class Tools
             $dom,
             $this->config->CSC,
             $this->config->CSCid,
-            $uf,
             $this->urlVersion,
             $this->urlService,
             $this->getURIConsultaNFCe($uf)

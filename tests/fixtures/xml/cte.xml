@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CTe xmlns="http://www.portalfiscal.inf.br/cte">
+    <infCte Id="CTe51121006145774000197570010000000131004100705" versao="1.04">
+        <ide>
+            <cUF>51</cUF>
+            <cCT>00410070</cCT>
+            <CFOP>5357</CFOP>
+            <natOp>PRESTACAO DE SERVICO DE TRANSPORTE INTERMUNICIPAIS</natOp>
+            <forPag>0</forPag>
+            <mod>57</mod>
+            <serie>1</serie>
+            <nCT>13</nCT>
+            <dhEmi>2012-10-02T16:13:00</dhEmi>
+            <tpImp>1</tpImp>
+            <tpEmis>1</tpEmis>
+            <cDV>5</cDV>
+            <tpAmb>2</tpAmb>
+            <tpCTe>0</tpCTe>
+            <procEmi>3</procEmi>
+            <verProc>1.2.0</verProc>
+            <cMunEnv>5107909</cMunEnv>
+            <xMunEnv>Sinop</xMunEnv>
+            <UFEnv>MT</UFEnv>
+            <modal>01</modal>
+            <tpServ>0</tpServ>
+            <cMunIni>5103205</cMunIni>
+            <xMunIni>Colider</xMunIni>
+            <UFIni>MT</UFIni>
+            <cMunFim>5103205</cMunFim>
+            <xMunFim>Colider</xMunFim>
+            <UFFim>MT</UFFim>
+            <retira>1</retira>
+            <toma03>
+                <toma>3</toma>
+            </toma03>
+        </ide>
+        <compl>
+            <fluxo/>
+            <xObs>SERVICO DE TRANSPORTE DE VALORES INTERMUNICIPAIS UNIDADES SICREDI NORTE BASE DE CALCULO R$ 59243,23 RETENCOES: ( - ) ISSQN 5%=2962,16 (-)IR=592,48 (-)INSS 11% = 6516,75 (-)PIS 0,65% = 385,08 (-)COFINS 3%= 1777,29 (-) CSLL 1%= 592,43.</xObs>
+        </compl>
+        <emit>
+            <CNPJ>06145774000197</CNPJ>
+            <IE>134297474</IE>
+            <xNome>INVIOSEG SEGURANCA PRIVADA LTDA</xNome>
+            <xFant>INVIOSEG SEGURANCA PRIVADA</xFant>
+            <enderEmit>
+                <xLgr>RUA DAS CAMELIAS</xLgr>
+                <nro>519</nro>
+                <xBairro>JARDIM MARINGA II</xBairro>
+                <cMun>5107909</cMun>
+                <xMun>Sinop</xMun>
+                <CEP>78556234</CEP>
+                <UF>MT</UF>
+                <fone>6635171000</fone>
+            </enderEmit>
+        </emit>
+        <rem>
+            <CNPJ>37442605000142</CNPJ>
+            <IE/>
+            <xNome>COOP DE CRED DE LIVRE ADMISSAO DE ASS NORTE MT</xNome>
+            <xFant>COOP DE CRED DE LIVRE ADMISSAO DE ASS NORTE MT</xFant>
+            <fone>6635411768</fone>
+            <enderReme>
+                <xLgr>RUA MARCIO BARBOSA DOS SANTOS</xLgr>
+                <nro>946</nro>
+                <xBairro>centro</xBairro>
+                <cMun>5103205</cMun>
+                <xMun>Colider</xMun>
+                <CEP>78535000</CEP>
+                <UF>MT</UF>
+                <cPais>1058</cPais>
+                <xPais>BRASIL</xPais>
+            </enderReme>
+            <infOutros>
+                <tpDoc>99</tpDoc>
+            </infOutros>
+        </rem>
+        <exped>
+            <CNPJ>06145774000197</CNPJ>
+            <IE>134297474</IE>
+            <xNome>INVIOSEG SEG PRIVADA LTDA</xNome>
+            <fone>6635171000</fone>
+            <enderExped>
+                <xLgr>RUA DAS CAMELIAS</xLgr>
+                <nro>519</nro>
+                <xBairro>JARDIM MARINGA II</xBairro>
+                <cMun>5107909</cMun>
+                <xMun>Sinop</xMun>
+                <CEP>78556248</CEP>
+                <UF>MT</UF>
+                <cPais>1058</cPais>
+                <xPais>BRASIL</xPais>
+            </enderExped>
+        </exped>
+        <dest>
+            <CNPJ>37442605000142</CNPJ>
+            <xNome>COOP DE CRED DE LIVRE ADMISSAO DE ASS NORTE MT</xNome>
+            <fone>6635411768</fone>
+            <enderDest>
+                <xLgr>RUA MARCIO BARBOSA DOS SANTOS</xLgr>
+                <nro>946</nro>
+                <xBairro>centro</xBairro>
+                <cMun>5103205</cMun>
+                <xMun>Colider</xMun>
+                <CEP>78535000</CEP>
+                <UF>MT</UF>
+                <cPais>1058</cPais>
+                <xPais>BRASIL</xPais>
+            </enderDest>
+        </dest>
+        <vPrest>
+            <vTPrest>50635.27</vTPrest>
+            <vRec>59243.23</vRec>
+        </vPrest>
+        <imp>
+            <ICMS>
+                <ICMS00>
+                    <CST>00</CST>
+                    <vBC>50635.27</vBC>
+                    <pICMS>17.00</pICMS>
+                    <vICMS>8608.00</vICMS>
+                </ICMS00>
+            </ICMS>
+        </imp>
+        <infCTeNorm>
+            <infCarga>
+                <vCarga>4340300.00</vCarga>
+                <proPred>VALORES E DOCUMENTOS</proPred>
+                <infQ>
+                    <cUnid>03</cUnid>
+                    <tpMed>UN</tpMed>
+                    <qCarga>1.0000</qCarga>
+                </infQ>
+            </infCarga>
+            <infModal versaoModal="1.04">
+                <rodo>
+                    <RNTRC>44954076</RNTRC>
+                    <dPrev>2012-10-02</dPrev>
+                    <lota>0</lota>
+                </rodo>
+            </infModal>
+        </infCTeNorm>
+    </infCte>
+    <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+        <SignedInfo>
+            <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+            <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+            <Reference URI="#CTe51121006145774000197570010000000131004100705">
+                <Transforms>
+                    <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                    <Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+                </Transforms>
+                <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+                <DigestValue>nv0udfIVKqN0WZmpHLGPDsSFMXU=</DigestValue>
+            </Reference>
+        </SignedInfo>
+        <SignatureValue>RZ90dMMsvQKTfTUCddzvqWxx0/BPLxzdwuE/ptmLYmSaHAQUVoJuvpf1ihObsWc3aWuZQMA3U7fRp0MWDRks76IFSWZ8mPF+0jkmqwlNPYHSQcqJBzjhVwI1h/rUFkbQUfABsBRbGQzJB70hwFkCtKIWs5EU5I01E4CWZ5g+tA2Li1iWIkTwoeDKUD5QTRF0PGDQlG2HGmYJI1BW0/at21+ceUF/UfZnyKAj6NXXTmSTC3egjyfGyTYLv+bpapbJ04vL9BeG+YPvSdl5f+0/WPo6yNA4emXD0y3xKbiMGtCZ0VFF9RRCGdBsW1CKmGRbAR7JtqOk+mD9cv6lQ4i5ew==</SignatureValue>
+        <KeyInfo>
+            <X509Data>
+                <X509Certificate>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</X509Certificate>
+            </X509Data>
+        </KeyInfo>
+    </Signature>
+</CTe>

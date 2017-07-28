@@ -48,13 +48,13 @@ Não deixe de se cadastrar no [grupo de discussão do NFePHP](http://groups.goog
 
 *Durante a fase de desenvolvimento e testes este pacote deve ser instalado com:*
 ```bash
-composer require nfephp-org/sped-nfe:v5.0.x-dev
+composer require nfephp-org/sped-nfe:dev-master
 ```
 
 *Ou ainda alterando o composer.json do seu aplicativo inserindo:*
 ```json
 "require": {
-    "nfephp-org/sped-nfe" : "v5.0.x-dev"
+    "nfephp-org/sped-nfe" : "dev-master"
 }
 ```
 

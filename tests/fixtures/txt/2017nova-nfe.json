@@ -1,0 +1,176 @@
+{
+    "infNFe": {
+        "attributes": {
+            "Id": "NFe35170358716523000119550010000000301000000300",
+            "versao": "3.10"
+        },
+        "ide": {
+            "cUF": "35",
+            "cNF": "00000030",
+            "natOp": "VENDA DE PRODUTO",
+            "indPag": "1",
+            "mod": "55",
+            "serie": "1",
+            "nNF": "30",
+            "dhEmi": "2017-03-15T18:10:30-03:00",
+            "dhSaiEnt": "2017-03-15T18:10:30-03:00",
+            "tpNF": "1",
+            "idDest": "1",
+            "cMunFG": "3550308",
+            "tpImp": "1",
+            "tpEmis": "1",
+            "cDV": "0",
+            "tpAmb": "2",
+            "finNFe": "1",
+            "indFinal": "0",
+            "indPres": "9",
+            "procEmi": "0",
+            "verProc": "4.0.50"
+        },
+        "emit": {
+            "CNPJ": "58716523000119",
+            "xNome": "FIMATEC TEXTIL LTDA",
+            "xFant": "FIMATEC",
+            "enderEmit": {
+                "xLgr": "RUA DOS PATRIOTAS",
+                "nro": "897",
+                "xCpl": "ARMAZEM 42",
+                "xBairro": "IPIRANGA",
+                "cMun": "3550308",
+                "xMun": "Sao Paulo",
+                "UF": "SP",
+                "CEP": "04207040",
+                "cPais": "1058",
+                "xPais": "BRASIL",
+                "fone": "1120677300"
+            },
+            "IE": "112006603110",
+            "IM": "95095870",
+            "CNAE": "0131380",
+            "CRT": "3"
+        },
+        "dest": {
+            "CNPJ": "02536490000170",
+            "xNome": "NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL",
+            "enderDest": {
+                "xLgr": "RUA PARAIBA",
+                "nro": "73",
+                "xBairro": "BRAS",
+                "cMun": "3550308",
+                "xMun": "Sao Paulo",
+                "UF": "SP",
+                "CEP": "03013030",
+                "cPais": "1058",
+                "xPais": "BRASIL",
+                "fone": "1122910590"
+            },
+            "indIEDest": "1",
+            "IE": "115399484115",
+            "email": "linux.rlm@gmail.com"
+        },
+        "det": {
+            "attributes": {
+                "nItem": "1"
+            },
+            "prod": {
+                "cProd": "2517BCB01",
+                "cEAN": "97899072659522",
+                "xProd": "DELFOS 80 MESCLA TINTO C\/ AMAC. S.T 1,78M",
+                "NCM": "60063310",
+                "CFOP": "5101",
+                "uCom": "KG",
+                "qCom": "389.9500",
+                "vUnCom": "49.9200000000",
+                "vProd": "19466.30",
+                "cEANTrib": {},
+                "uTrib": "KG",
+                "qTrib": "389.9500",
+                "vUnTrib": "49.9200000000",
+                "indTot": "1",
+                "xPed": "14972",
+                "nItemPed": "1"
+            },
+            "imposto": {
+                "ICMS": {
+                    "ICMS00": {
+                        "orig": "1",
+                        "CST": "00",
+                        "modBC": "3",
+                        "vBC": "19466.30",
+                        "pICMS": "12.00",
+                        "vICMS": "2335.96"
+                    }
+                },
+                "IPI": {
+                    "cEnq": "122",
+                    "IPINT": {
+                        "CST": "55"
+                    }
+                },
+                "PIS": {
+                    "PISAliq": {
+                        "CST": "01",
+                        "vBC": "19466.30",
+                        "pPIS": "1.65",
+                        "vPIS": "321.19"
+                    }
+                },
+                "COFINS": {
+                    "COFINSAliq": {
+                        "CST": "01",
+                        "vBC": "19466.30",
+                        "pCOFINS": "7.60",
+                        "vCOFINS": "1479.44"
+                    }
+                }
+            },
+            "infAdProd": "BRANCO_FIT F01516 ped. 14972 lote: 7755214\/C,7772214\/B,7772214\/C"
+        },
+        "total": {
+            "ICMSTot": {
+                "vBC": "19466.30",
+                "vICMS": "2335.96",
+                "vICMSDeson": "0.00",
+                "vBCST": "0.00",
+                "vST": "0.00",
+                "vProd": "19466.30",
+                "vFrete": "0.00",
+                "vSeg": "0.00",
+                "vDesc": "0.00",
+                "vII": "0.00",
+                "vIPI": "0.00",
+                "vPIS": "321.19",
+                "vCOFINS": "1479.44",
+                "vOutro": "0.00",
+                "vNF": "19466.30"
+            }
+        },
+        "transp": {
+            "modFrete": "1",
+            "transporta": {
+                "xNome": "retira"
+            },
+            "vol": {
+                "qVol": "24",
+                "esp": "VOLUMES",
+                "pesoL": "389.950",
+                "pesoB": "399.550"
+            }
+        },
+        "cobr": {
+            "fat": {
+                "nFat": "000030",
+                "vOrig": "19466.30",
+                "vLiq": "19466.30"
+            },
+            "dup": {
+                "nDup": "000030-1",
+                "dVenc": "2016-10-20",
+                "vDup": "19466.30"
+            }
+        },
+        "infAdic": {
+            "infAdFisco": "SAIDA COM SUSPENSAO DO IPI CONFORME ART 29 DA LEI 10.637"
+        }
+    }
+}

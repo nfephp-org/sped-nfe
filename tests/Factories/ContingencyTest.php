@@ -1,7 +1,8 @@
 <?php
-namespace NFePHP\NFe\Tests;
+namespace NFePHP\NFe\Tests\Factories;
 
 use NFePHP\NFe\Factories\Contingency;
+use NFePHP\NFe\Tests\NFeTestCase;
 
 class ContingencyTest extends NFeTestCase
 {

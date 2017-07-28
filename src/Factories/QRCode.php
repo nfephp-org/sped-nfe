@@ -17,7 +17,7 @@ namespace NFePHP\NFe\Factories;
  */
 
 use DOMDocument;
-use InvalidArgumentException;
+use NFePHP\NFe\Exception\DocumentsException;
 
 class QRCode
 {
@@ -27,45 +27,43 @@ class QRCode
      * @param DOMDocument $dom NFe
      * @param string $token CSC number
      * @param string $idToken CSC identification
-     * @param string $sigla UF alias
      * @param string $versao version of field
      * @param string $urlqr URL for search by QRCode
-     * @param string $urichave URL for search by chave
+     * @param string $urichave URL for search by chave layout 4.00 only
      * @return string
-     * @throws InvalidArgumentException
+     * @throws DocumentsException
      */
     public static function putQRTag(
         \DOMDocument $dom,
         $token,
         $idToken,
-        $sigla,
         $versao,
         $urlqr,
         $urichave = ''
     ) {
-        if (empty($token) || empty($idToken) || empty($urlqr)) {
-            if ($token == '') {
-                $msg = "Falta o CSC no config.json";
-            } elseif ($idToken == '') {
-                $msg = "Falta o CSCId no config.json";
-            } elseif ($urlqr == '') {
-                $msg = "Falta a URL do serviço NfeConsultaQR para a $sigla,"
-                    . " no arquivo wsnfe_3.10_mod65.xml";
-            }
-            throw new InvalidArgumentException($msg);
+        $token = trim($token);
+        $idToken = trim($idToken);
+        $versao = trim($versao);
+        $urlqr = trim($urlqr);
+        $urichave = trim($urichave);
+        if (empty($token)) {
+            //Falta o CSC no config.json
+            throw DocumentsException::wrongDocument(9);
         }
-        
+        if (empty($idToken)) {
+            //Falta o CSCId no config.json
+            throw DocumentsException::wrongDocument(10);
+        }
+        if (empty($urlqr)) {
+            //Falta a URL do serviço NfeConsultaQR
+            throw DocumentsException::wrongDocument(11);
+        }
+        if (empty($versao)) {
+            $versao = '100';
+        }
         $nfe = $dom->getElementsByTagName('NFe')->item(0);
         $infNFe = $dom->getElementsByTagName('infNFe')->item(0);
         $layoutver = $infNFe->getAttribute('versao');
-        
-        if (strtoupper(substr(trim($urlqr), 0, 5)) !== 'HTTPS') {
-            /*throw new InvalidArgumentException(
-                "A URL para a consulta do QRCode deve ser HTTPS e "
-                    . "foi fornecido um HTTP, verifique o registro em storage"
-                    . "/wsnfe_". $layoutver . "_mod65.xml."
-            );*/
-        }
         $ide = $dom->getElementsByTagName('ide')->item(0);
         $dest = $dom->getElementsByTagName('dest')->item(0);
         $icmsTot = $dom->getElementsByTagName('ICMSTot')->item(0);
@@ -76,9 +74,13 @@ class QRCode
         $dhEmi = $ide->getElementsByTagName('dhEmi')->item(0)->nodeValue;
         $cDest = '';
         if (!empty($dest)) {
-            $cDest = $dest->getElementsByTagName('CNPJ')->item(0)->nodeValue;
+            $cDest = !empty($dest->getElementsByTagName('CNPJ')->item(0)->nodeValue)
+                ? $dest->getElementsByTagName('CNPJ')->item(0)->nodeValue
+                : '';
             if (empty($cDest)) {
-                $cDest = $dest->getElementsByTagName('CPF')->item(0)->nodeValue;
+                $cDest = !empty($dest->getElementsByTagName('CPF')->item(0)->nodeValue)
+                    ? $dest->getElementsByTagName('CPF')->item(0)->nodeValue
+                    : '';
                 if (empty($cDest)) {
                     $cDest = $dest->getElementsByTagName('idEstrangeiro')->item(0)->nodeValue;
                 }

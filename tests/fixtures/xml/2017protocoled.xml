@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nfeProc versao="3.10" xmlns="http://www.portalfiscal.inf.br/nfe">
+    <NFe xmlns="http://www.portalfiscal.inf.br/nfe" >
+        <infNFe Id="NFe35170358716523000119550010000000301000000300" versao="3.10">
+            <ide>
+                <cUF>35</cUF>
+                <cNF>00000030</cNF>
+                <natOp>VENDA DE PRODUTO</natOp>
+                <indPag>1</indPag>
+                <mod>55</mod>
+                <serie>1</serie>
+                <nNF>30</nNF>
+                <dhEmi>2017-03-15T18:10:30-03:00</dhEmi>
+                <dhSaiEnt>2017-03-15T18:10:30-03:00</dhSaiEnt>
+                <tpNF>1</tpNF>
+                <idDest>1</idDest>
+                <cMunFG>3550308</cMunFG>
+                <tpImp>1</tpImp>
+                <tpEmis>1</tpEmis>
+                <cDV>0</cDV>
+                <tpAmb>2</tpAmb>
+                <finNFe>1</finNFe>
+                <indFinal>0</indFinal>
+                <indPres>9</indPres>
+                <procEmi>0</procEmi>
+                <verProc>4.0.50</verProc>
+            </ide>
+            <emit>
+                <CNPJ>58716523000119</CNPJ>
+                <xNome>FIMATEC TEXTIL LTDA</xNome>
+                <xFant>FIMATEC</xFant>
+                <enderEmit>
+                    <xLgr>RUA DOS PATRIOTAS</xLgr>
+                    <nro>897</nro>
+                    <xCpl>ARMAZEM 42</xCpl>
+                    <xBairro>IPIRANGA</xBairro>
+                    <cMun>3550308</cMun>
+                    <xMun>Sao Paulo</xMun>
+                    <UF>SP</UF>
+                    <CEP>04207040</CEP>
+                    <cPais>1058</cPais>
+                    <xPais>BRASIL</xPais>
+                    <fone>1120677300</fone>
+                </enderEmit>
+                <IE>112006603110</IE>
+                <IM>95095870</IM>
+                <CNAE>0131380</CNAE>
+                <CRT>3</CRT>
+            </emit>
+            <dest>
+                <CNPJ>02536490000170</CNPJ>
+                <xNome>NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL</xNome>
+                <enderDest>
+                    <xLgr>RUA PARAIBA</xLgr>
+                    <nro>73</nro>
+                    <xBairro>BRAS</xBairro>
+                    <cMun>3550308</cMun>
+                    <xMun>Sao Paulo</xMun>
+                    <UF>SP</UF>
+                    <CEP>03013030</CEP>
+                    <cPais>1058</cPais>
+                    <xPais>BRASIL</xPais>
+                    <fone>1122910590</fone>
+                </enderDest>
+                <indIEDest>1</indIEDest>
+                <IE>115399484115</IE>
+                <email>linux.rlm@gmail.com</email>
+            </dest>
+            <det nItem="1">
+                <prod>
+                    <cProd>2517BCB01</cProd>
+                    <cEAN>97899072659522</cEAN>
+                    <xProd>DELFOS 80 MESCLA TINTO C/ AMAC. S.T 1,78M</xProd>
+                    <NCM>60063310</NCM>
+                    <CFOP>5101</CFOP>
+                    <uCom>KG</uCom>
+                    <qCom>389.9500</qCom>
+                    <vUnCom>49.9200000000</vUnCom>
+                    <vProd>19466.30</vProd>
+                    <cEANTrib/>
+                    <uTrib>KG</uTrib>
+                    <qTrib>389.9500</qTrib>
+                    <vUnTrib>49.9200000000</vUnTrib>
+                    <indTot>1</indTot>
+                    <xPed>14972</xPed>
+                    <nItemPed>1</nItemPed>
+                </prod>
+                <imposto>
+                    <ICMS>
+                        <ICMS00>
+                            <orig>1</orig>
+                            <CST>00</CST>
+                            <modBC>3</modBC>
+                            <vBC>19466.30</vBC>
+                            <pICMS>12.00</pICMS>
+                            <vICMS>2335.96</vICMS>
+                        </ICMS00>
+                    </ICMS>
+                    <IPI>
+                        <cEnq>122</cEnq>
+                        <IPINT>
+                            <CST>55</CST>
+                        </IPINT>
+                    </IPI>
+                    <PIS>
+                        <PISAliq>
+                            <CST>01</CST>
+                            <vBC>19466.30</vBC>
+                            <pPIS>1.65</pPIS>
+                            <vPIS>321.19</vPIS>
+                        </PISAliq>
+                    </PIS>
+                    <COFINS>
+                        <COFINSAliq>
+                            <CST>01</CST>
+                            <vBC>19466.30</vBC>
+                            <pCOFINS>7.60</pCOFINS>
+                            <vCOFINS>1479.44</vCOFINS>
+                        </COFINSAliq>
+                    </COFINS>
+                </imposto>
+                <infAdProd>BRANCO_FIT F01516 ped. 14972 lote: 7755214/C,7772214/B,7772214/C</infAdProd>
+            </det>
+            <total>
+                <ICMSTot>
+                    <vBC>19466.30</vBC>
+                    <vICMS>2335.96</vICMS>
+                    <vICMSDeson>0.00</vICMSDeson>
+                    <vBCST>0.00</vBCST>
+                    <vST>0.00</vST>
+                    <vProd>19466.30</vProd>
+                    <vFrete>0.00</vFrete>
+                    <vSeg>0.00</vSeg>
+                    <vDesc>0.00</vDesc>
+                    <vII>0.00</vII>
+                    <vIPI>0.00</vIPI>
+                    <vPIS>321.19</vPIS>
+                    <vCOFINS>1479.44</vCOFINS>
+                    <vOutro>0.00</vOutro>
+                    <vNF>19466.30</vNF>
+                </ICMSTot>
+            </total>
+            <transp>
+                <modFrete>1</modFrete>
+                <transporta>
+                    <xNome>retira</xNome>
+                </transporta>
+                <vol>
+                    <qVol>24</qVol>
+                    <esp>VOLUMES</esp>
+                    <pesoL>389.950</pesoL>
+                    <pesoB>399.550</pesoB>
+                </vol>
+            </transp>
+            <cobr>
+                <fat>
+                    <nFat>000030</nFat>
+                    <vOrig>19466.30</vOrig>
+                    <vLiq>19466.30</vLiq>
+                </fat>
+                <dup>
+                    <nDup>000030-1</nDup>
+                    <dVenc>2016-10-20</dVenc>
+                    <vDup>19466.30</vDup>
+                </dup>
+            </cobr>
+            <infAdic>
+                <infAdFisco>SAIDA COM SUSPENSAO DO IPI CONFORME ART 29 DA LEI 10.637</infAdFisco>
+            </infAdic>
+        </infNFe>
+        <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+            <SignedInfo>
+                <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+                <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+                <Reference URI="#NFe35170358716523000119550010000000301000000300">
+                    <Transforms>
+                        <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                        <Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+                    </Transforms>
+                    <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+                    <DigestValue>EqYTTcw4JWqY8+nKOnqSvYh+LXA=</DigestValue>
+                </Reference>
+            </SignedInfo>
+            <SignatureValue>oFwbhxezloYMVxUFfyrRE3Ei8hSlHxFgUaXx+ceWJHED79cVKF5sZcZtmQ0l2CCAub9shY0trIg1Bx2ve4xOjC0fFgaMQkSvUvkOP/Hh7WrVIdN9jF2l+qWnTq2MJPYjQAqUAuLlHrPthe0ztPNE+9rx81tSOkEGtnm6ULA3HyO22h0QDlY3FS7edp5doZpIEJxcH8Tjhj/JaFatwk/CW0y2ByxkaKC7oYMggw+0FlTrmCTRiifBGj4TDZN9IQIzUWnug3TRNp2X4KU9cYM5GDYVOuzkUaRNZVR8Ho2+SeHIT1Qqisp4Df9ntyKXK83qPKx6+ZRh3TfSoZKWoyh7zg==</SignatureValue>
+            <KeyInfo>
+                <X509Data>
+                    <X509Certificate>MIIINTCCBh2gAwIBAgIQEABoI3FQdSnFVyEEKSwjtzANBgkqhkiG9w0BAQsFADB0MQswCQYDVQQGEwJCUjETMBEGA1UEChMKSUNQLUJyYXNpbDEtMCsGA1UECxMkQ2VydGlzaWduIENlcnRpZmljYWRvcmEgRGlnaXRhbCBTLkEuMSEwHwYDVQQDExhBQyBDZXJ0aXNpZ24gTXVsdGlwbGEgRzUwHhcNMTYwNDI1MDAwMDAwWhcNMTcwNDI0MjM1OTU5WjCBwzELMAkGA1UEBhMCQlIxEzARBgNVBAoUCklDUC1CcmFzaWwxIjAgBgNVBAsUGUF1dGVudGljYWRvIHBvciBBUiBEYXNjaGkxGzAZBgNVBAsUEkFzc2luYXR1cmEgVGlwbyBBMTEWMBQGA1UECxQNSUQgLSAxMDI4MzQzNjEcMBoGA1UEAxMTRklNQVRFQyBURVhUSUwgTFREQTEoMCYGCSqGSIb3DQEJARYZZmluYW5jZWlyb0BmaW1hdGVjLmNvbS5icjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANheJGu0qkiNGFY36IXp2Qokkzc9qViSEp55QXnKv0QKXvKgY+YDede5DDT9oOm7fI6GwVAt16nuZS5f9x3wufCcM5Kf4YPHkiqwDSQ02v4S7qDJIn9DqCl2R8EiKxBTmY4b8bKwqGupb1ZGs8Nq9D5seZahNAMEsKb5FYEEhavIi6sVEDzsTQyQfcMZMOuXcqgbSbdIGHrKqECfq7c6SaOi/UQcPAbTOmVFL6duxPmjCs+R9Uxu++8F/LKzUZg0zmyxDGQcGj9ev4ebBKMPJRLvQg/lujq/bDK5+VTkuHykV+Fjra4yrqf2EXh1846gcN9Vx3yiZb0I07xx5wF+yesCAwEAAaOCA3EwggNtMIG3BgNVHREEga8wgaygOAYFYEwBAwSgLwQtMjAxMDE5NTkwNTIyNTUzNzg4MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwoCEGBWBMAQMCoBgEFkZFUk5BTkRPIEpPU0UgS0FJUkFMTEGgGQYFYEwBAwOgEAQONTg3MTY1MjMwMDAxMTmgFwYFYEwBAwegDgQMMDAwMDAwMDAwMDAwgRlmaW5hbmNlaXJvQGZpbWF0ZWMuY29tLmJyMAkGA1UdEwQCMAAwHwYDVR0jBBgwFoAUnVDPvf8kyq+xM+sX4kJ6jmkqjlMwDgYDVR0PAQH/BAQDAgXgMIGJBgNVHSAEgYEwfzB9BgZgTAECAQswczBxBggrBgEFBQcCARZlaHR0cDovL2ljcC1icmFzaWwuY2VydGlzaWduLmNvbS5ici9yZXBvc2l0b3Jpby9kcGMvQUNfQ2VydGlzaWduX011bHRpcGxhL0RQQ19BQ19DZXJ0aVNpZ25NdWx0aXBsYS5wZGYwggElBgNVHR8EggEcMIIBGDBcoFqgWIZWaHR0cDovL2ljcC1icmFzaWwuY2VydGlzaWduLmNvbS5ici9yZXBvc2l0b3Jpby9sY3IvQUNDZXJ0aXNpZ25NdWx0aXBsYUc1L0xhdGVzdENSTC5jcmwwW6BZoFeGVWh0dHA6Ly9pY3AtYnJhc2lsLm91dHJhbGNyLmNvbS5ici9yZXBvc2l0b3Jpby9sY3IvQUNDZXJ0aXNpZ25NdWx0aXBsYUc1L0xhdGVzdENSTC5jcmwwW6BZoFeGVWh0dHA6Ly9yZXBvc2l0b3Jpby5pY3BicmFzaWwuZ292LmJyL2xjci9DZXJ0aXNpZ24vQUNDZXJ0aXNpZ25NdWx0aXBsYUc1L0xhdGVzdENSTC5jcmwwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMEMIGgBggrBgEFBQcBAQSBkzCBkDBkBggrBgEFBQcwAoZYaHR0cDovL2ljcC1icmFzaWwuY2VydGlzaWduLmNvbS5ici9yZXBvc2l0b3Jpby9jZXJ0aWZpY2Fkb3MvQUNfQ2VydGlzaWduX011bHRpcGxhX0c1LnA3YzAoBggrBgEFBQcwAYYcaHR0cDovL29jc3AuY2VydGlzaWduLmNvbS5icjANBgkqhkiG9w0BAQsFAAOCAgEAoKKStBShY9SJbz1kK/5QzqnVSFaPP2TrBBfJQG8IYVQXwghke/OqHmW4fr3LDMDMg/8I31xfYr20Kqu/o7myGV+ZnTLQckWUuODTVB7d/d22DNQaS4KLV9YB9R6l1csMr+KWl0dprechWlo7f90I62cZso/dLXW9Od/JXvbFPYiJrThwaIbY8LBFjYmHNodu1ILALBS8PhgfquOq3TEy2ZI8adfwEqPaGycVIqE5TdCMLKuhoXNf1EuuLPiXB7z6OjKHcJKsUXLrvdzHS4hGqVaGfRjBYkiSnA7m88/H9ab1H0SaxjZHC55ymVBYuQ/JHgNbjMKpGDGNSqyKD9difi4wjLV9H9RlS46FA0l8jUKgUomBzgBZJ4BVM2W2VhPqUUkupxturCJgeXV4nQaGraLLNpsmx6uK+DX+gHc21JDWmm57rguyLyZZC7iJSPioQomeJhA+ro/ReBAYp/8LVRlvFqSDgYqeB9ejFWKJep8Oh/EbHcVbkrqyJ0ZGGJgwCCYF8L55NuvocJVYJpPSJ2+dTDYjKrm062mlMI+w9amIHNy7ygIE15X/sWe+HOZCL9NNbUBb8gpe5xpdjNiym3Rx0YNX5vOa+pniNLjHFtoDIskgvWJYOB3QzygzcMD85zAzVzDX29jkqR22idGQ8kCqBbhmfLofh87czMj4Er4=</X509Certificate>
+                </X509Data>
+            </KeyInfo>
+        </Signature>
+    </NFe>
+    <protNFe xmlns="http://www.portalfiscal.inf.br/nfe" versao="3.10">
+        <infProt>
+            <tpAmb>2</tpAmb>
+            <verAplic>SP_NFE_PL_008i2</verAplic>
+            <chNFe>35170358716523000119550010000000301000000300</chNFe>
+            <dhRecbto>2017-03-16T15:50:02-03:00</dhRecbto>
+            <nProt>135170001136476</nProt>
+            <digVal>EqYTTcw4JWqY8+nKOnqSvYh+LXA=</digVal>
+            <cStat>100</cStat>
+            <xMotivo>Autorizado o uso da NF-e</xMotivo>
+        </infProt>
+    </protNFe>
+</nfeProc>
