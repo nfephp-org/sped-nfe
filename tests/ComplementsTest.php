@@ -3,12 +3,13 @@
 namespace NFePHP\NFe\Tests;
 
 use NFePHP\NFe\Complements;
+use NFePHP\NFe\Tests\NFeTestCase;
 
 class ComplementsTest extends NFeTestCase
 {
     public function testToAuthorizeNfe()
     {
-        
+        //$nfeprotocoled = Complements::toAuthorize($request, $response);
     }
     
     public function testToAuthorizeInut()
