@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <soap:Header>
+        <nfeCabecMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetAutorizacao">
+            <cUF>35</cUF>
+            <versaoDados>3.10</versaoDados>
+        </nfeCabecMsg>
+    </soap:Header>
+    <soap:Body>
+        <retInutNFe versao="3.10" xmlns="http://www.portalfiscal.inf.br/nfe">
+            <infInut>
+                <tpAmb>2</tpAmb>
+                <verAplic>SP_NFE_PL_006q</verAplic>
+                <cStat>102</cStat>
+                <xMotivo>Inutilização de número homologado</xMotivo>
+                <cUF>35</cUF>
+                <ano>17</ano>
+                <CNPJ>58716523000119</CNPJ>
+                <mod>55</mod>
+                <serie>2</serie>
+                <nNFIni>234</nNFIni>
+                <nNFFin>235</nNFFin>
+                <dhRecbto>2013-12-01T15:01:03</dhRecbto>
+                <nProt>135130006498891</nProt>
+            </infInut>
+        </retInutNFe>
+    </soap:Body>
+</soap:Envelope>
