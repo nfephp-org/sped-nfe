@@ -358,7 +358,7 @@ class Tools
     /**
      * Performs xml validation with its respective
      * XSD structure definition document
-     * NOTE: if dont existis the XSD file will return true
+     * NOTE: if dont exists the XSD file will return true
      * @param string $version layout version
      * @param string $body
      * @param string $method

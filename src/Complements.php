@@ -4,13 +4,13 @@ namespace NFePHP\NFe;
 
 use NFePHP\Common\Strings;
 use NFePHP\NFe\Common\Standardize;
+use NFePHP\NFe\Exception\DocumentsException;
 use DOMDocument;
-use InvalidArgumentException;
 
 class Complements
 {
     protected static $urlPortal = 'http://www.portalfiscal.inf.br/nfe';
-    
+
     /**
      * Authorize document adding his protocol
      * @param string $request
@@ -21,6 +21,10 @@ class Complements
     {
         $st = new Standardize();
         $key = ucfirst($st->whichIs($request));
+        if ($key != 'NFe' && $key != 'EnvEvento' && $key != 'InutNFe') {
+            //wrong document, this document is not able to recieve a protocol
+            throw DocumentsException::wrongDocument(0, $key);
+        }
         $func = "add".$key."Protocol";
         return self::$func($request, $response);
     }
@@ -41,9 +45,8 @@ class Complements
         $domnfe->loadXML($nfe);
         $nodenfe = $domnfe->getElementsByTagName('nfeProc')->item(0);
         if (empty($nodenfe)) {
-            $msg = "O arquivo indicado como NFe não está protocolado "
-                    . "ou não é uma NFe!!";
-            throw new InvalidArgumentException($msg);
+            //not is NFe or dont protocoladed doc
+            throw DocumentsException::wrongDocument(1);
         }
         //carrega o arquivo B2B
         $domb2b = new DOMDocument('1.0', 'UTF-8');
@@ -52,8 +55,8 @@ class Complements
         $domb2b->loadXML($b2b);
         $nodeb2b = $domnfe->getElementsByTagName($tagB2B)->item(0);
         if (empty($nodeb2b)) {
-            $msg = "O arquivo indicado como B2B não contêm a tagB2B indicada!!";
-            throw new InvalidArgumentException($msg);
+            //xml is not protocoladed or dont is a NFe
+            throw DocumentsException::wrongDocument(2);
         }
         //cria a NFe processada com a tag do protocolo
         $procb2b = new DOMDocument('1.0', 'UTF-8');
@@ -95,8 +98,8 @@ class Complements
         $nodenfe = $domnfe->getElementsByTagName('NFe')->item(0);
         $proNFe = $domnfe->getElementsByTagName('protNFe')->item(0);
         if (empty($proNFe)) {
-            $msg = "A NFe não está protocolada!";
-            throw new InvalidArgumentException($msg);
+            //not protocoladed NFe
+            throw DocumentsException::wrongDocument(1);
         }
         $chaveNFe = $proNFe->getElementsByTagName('chNFe')->item(0)->nodeValue;
         $tpAmb = $domnfe->getElementsByTagName('tpAmb')->item(0)->nodeValue;
@@ -168,18 +171,14 @@ class Complements
         $ret->loadXML($response);
         $retInutNFe = $ret->getElementsByTagName('retInutNFe')->item(0);
         if (!isset($retInutNFe)) {
-            throw new InvalidArgumentException(
-                'O documento de resposta não contêm o NODE "retInutNFe".'
-            );
+            throw DocumentsException::wrongDocument(3, "&lt;retInutNFe;");
         }
         $retversao = $retInutNFe->getAttribute("versao");
         $retInfInut = $ret->getElementsByTagName('infInut')->item(0);
         $cStat = $retInfInut->getElementsByTagName('cStat')->item(0)->nodeValue;
         $xMotivo = $retInfInut->getElementsByTagName('xMotivo')->item(0)->nodeValue;
         if ($cStat != 102) {
-            throw new InvalidArgumentException(
-                "Erro localizado [$cStat] $xMotivo."
-            );
+            throw DocumentsException::wrongDocument(4, "[$cStat] $xMotivo.");
         }
         $rettpAmb = $retInfInut->getElementsByTagName('tpAmb')->item(0)->nodeValue;
         $retcUF = $retInfInut->getElementsByTagName('cUF')->item(0)->nodeValue;
@@ -199,10 +198,7 @@ class Complements
             $nNFIni != $retnNFIni ||
             $nNFFin != $retnNFFin
         ) {
-            throw new InvalidArgumentException(
-                'Os documentos de referem a diferentes objetos.'
-                . ' Algum parametro é diferente do original.'
-            );
+            throw DocumentsException::wrongDocument(5);
         }
         return self::join(
             $req->saveXML($inutNFe),
@@ -240,9 +236,7 @@ class Complements
         $ret->loadXML($response);
         $retProt = $ret->getElementsByTagName('protNFe')->item(0);
         if (!isset($retProt)) {
-            throw new InvalidArgumentException(
-                'O documento de resposta não contêm o NODE "protNFe".'
-            );
+            throw DocumentsException::wrongDocument(3, "&lt;protNFe&gt;");
         }
         $infProt = $ret->getElementsByTagName('infProt')->item(0);
         $cStat  = $infProt->getElementsByTagName('cStat')->item(0)->nodeValue;
@@ -258,15 +252,10 @@ class Complements
         //205 NFe Denegada
         $cstatpermit = ['100', '150', '110', '205'];
         if (!in_array($cStat, $cstatpermit)) {
-            throw new InvalidArgumentException(
-                "Essa NFe não será protocolada [$cStat] $xMotivo."
-            );
+            throw DocumentsException::wrongDocument(4, "[$cStat] $xMotivo");
         }
         if ($digNFe !== $digProt) {
-            throw new InvalidArgumentException(
-                'Os documentos de referem a diferentes objetos.'
-                . ' O digest é diferente.'
-            );
+            throw DocumentsException::wrongDocument(5, "O digest é diferente");
         }
         return self::join(
             $req->saveXML($nfe),
@@ -306,13 +295,13 @@ class Complements
         $cStat  = $retEv->getElementsByTagName('cStat')->item(0)->nodeValue;
         $xMotivo = $retEv->getElementsByTagName('xMotivo')->item(0)->nodeValue;
         if ($cStat != '135') {
-            throw new \InvalidArgumentException(
-                "Erro localizado [$cStat] $xMotivo."
-            );
+            throw DocumentsException::wrongDocument(4, "[$cStat] $xMotivo");
         }
         if ($resLote !== $envLote) {
-            throw new \InvalidArgumentException('Os numeros de lote '
-                    . 'dos documentos são diferentes.');
+            throw DocumentsException::wrongDocument(
+                5,
+                "Os numeros de lote dos documentos são diferentes."
+            );
         }
         return self::join(
             $ev->saveXML($event),
@@ -322,6 +311,14 @@ class Complements
         );
     }
     
+    /**
+     * Join the pieces of the source document with those of the answer
+     * @param string $first
+     * @param string $second
+     * @param string $nodename
+     * @param string $versao
+     * @return string
+     */
     protected static function join($first, $second, $nodename, $versao)
     {
         $xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
