@@ -19,7 +19,9 @@ E também permite a *"marcação"* de NFe como cancelada, **este não é um requ
 Este método realiza a junção do protocolo de autorização com a requeiição original, criando um documentos VÁLIDO.
 
 Escopo: Publico
+
 Modo: Estático
+
 Retorna: String
 
 | Parametro | Tipo | Descrição |
