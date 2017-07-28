@@ -8,6 +8,12 @@ coding_style:
 filter:
     excluded_paths:
         - "vendor/*"
+        - "examples/*"
+        - "docs/*"
+        - "console/*"
+        - "schemes/*"
+        - "tests/*"
+        - "storage/*"
     paths:
         - "src/*"
 tools:
