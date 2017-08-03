@@ -983,7 +983,7 @@ class Convert
     
     /**
      * Carrega e cria a tag comb [LA]
-     * @param arry $fields
+     * @param array $fields
      */
     protected static function laEntity($fields)
     {
@@ -1435,7 +1435,7 @@ class Convert
     
     /**
      * Carrega e Cria a tag ICMSSN [N10c]
-     * @param type $fields
+     * @param array $fields
      */
     protected static function n10cEntity($fields)
     {
@@ -2220,7 +2220,7 @@ class Convert
     
     /**
      * Cria a tag retTrib [W23]
-     * @param type $fields
+     * @param array $fields
      */
     protected static function w23Entity($fields)
     {
