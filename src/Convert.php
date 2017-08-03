@@ -144,6 +144,7 @@ class Convert
      */
     protected static function sliceNotas($array)
     {
+        $aNotas = [];
         $annu = explode('|', $array[0]);
         $numnotas = $annu[1];
         unset($array[0]);
