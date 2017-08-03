@@ -805,7 +805,7 @@ class Tools extends ToolsCommon
         $protocol = $dom->getElementsByTagName('nProt')->item(0)->nodeValue;
         //consulta a NFe
         $response = $this->sefazConsultaChave($chNFe, $tpAmb);
-        $ret = new DOMDocument('1.0', 'UTF-8');
+        $ret = new \DOMDocument('1.0', 'UTF-8');
         $ret->preserveWhiteSpace = false;
         $ret->formatOutput = false;
         $ret->loadXML($response);
@@ -837,7 +837,7 @@ class Tools extends ToolsCommon
     /**
      *
      * @param  int $tpEvento
-     * @return stdClass
+     * @return \stdClass
      * @throws Exception
      */
     private function tpEv($tpEvento)
