@@ -139,6 +139,10 @@ abstract class MakeBasic
     /**
      * @var array of DOMElements
      */
+    protected $aDetPag = [];
+    /**
+     * @var array of DOMElements
+     */
     protected $aReboque = [];
     /**
      * @var array of DOMElements
