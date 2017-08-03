@@ -116,7 +116,7 @@ class Tools extends ToolsCommon
             $tpAmb
         );
         if ($this->urlService == '') {
-            $msg = "A consulta de NFe não está disponível na SEFAZ $siglaUF!!!";
+            $msg = "A consulta de NFe não está disponível na SEFAZ {$this->config->siglaUF}!!!";
             throw new RuntimeException($msg);
         }
         $request = "<consReciNFe xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
