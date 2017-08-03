@@ -404,7 +404,7 @@ abstract class MakeBasic
      * @param  int $cUF
      * @param  int $cNF
      * @param  string $natOp
-     * @param  ind $indPag
+     * @param  int $indPag
      * @param  int $mod
      * @param  int $serie
      * @param  int $nNF
@@ -5335,7 +5335,7 @@ abstract class MakeBasic
         if (!empty($aLacres)) {
             //tag transp/vol/lacres (opcional)
             foreach ($aLacres as $nLacre) {
-                $lacre = $this->zTaglacres($nLacre);
+                $lacre = $this->buildLacres($nLacre);
                 $vol->appendChild($lacre);
                 $lacre = null;
             }
@@ -6113,7 +6113,7 @@ abstract class MakeBasic
      * Grupo Cobrança YA01 pai A01
      * tag NFe/infNFe/Pag (Versao 3.10)
      */
-    protected function buildtagPag()
+    protected function buildTagPag()
     {
         foreach ($this->aPag as $pag) {
             $this->dom->appChild($this->infNFe, $pag, 'Falta tag "infNFe"');
