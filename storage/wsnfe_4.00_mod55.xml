@@ -74,6 +74,7 @@
             <NfeConsultaProtocolo method="nfeConsultaNF" operation="NfeConsulta4" version="4.00">https://homologacao.nfe.fazenda.sp.gov.br/ws/nfeconsulta4.asmx</NfeConsultaProtocolo>
             <NfeInutilizacao method="nfeInutilizacaoNF" operation="NfeInutilizacao4" version="4.00">https://homologacao.nfe.fazenda.sp.gov.br/ws/nfeinutilizacao4.asmx</NfeInutilizacao>
             <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NfeRetAutorizacao4" version="4.00">https://homologacao.nfe.fazenda.sp.gov.br/ws/nferetautorizacao4.asmx</NfeRetAutorizacao>
+            <RecepcaoEvento method="nfeRecepcaoEvento" operation="RecepcaoEvento4" version="1.00">https://homologacao.nfe.fazenda.sp.gov.br/ws/nferecepcaoevento4.asmx</RecepcaoEvento>
         </homologacao>
     </UF>
     <UF>
