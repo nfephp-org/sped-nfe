@@ -116,7 +116,7 @@ class Tools extends ToolsCommon
             $tpAmb
         );
         if ($this->urlService == '') {
-            $msg = "A consulta de NFe não está disponível na SEFAZ $siglaUF!!!";
+            $msg = "A consulta de NFe não está disponível na SEFAZ {$this->config->siglaUF}!!!";
             throw new RuntimeException($msg);
         }
         $request = "<consReciNFe xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
@@ -805,7 +805,7 @@ class Tools extends ToolsCommon
         $protocol = $dom->getElementsByTagName('nProt')->item(0)->nodeValue;
         //consulta a NFe
         $response = $this->sefazConsultaChave($chNFe, $tpAmb);
-        $ret = new DOMDocument('1.0', 'UTF-8');
+        $ret = new \DOMDocument('1.0', 'UTF-8');
         $ret->preserveWhiteSpace = false;
         $ret->formatOutput = false;
         $ret->loadXML($response);
@@ -837,7 +837,7 @@ class Tools extends ToolsCommon
     /**
      *
      * @param  int $tpEvento
-     * @return stdClass
+     * @return \stdClass
      * @throws Exception
      */
     private function tpEv($tpEvento)

@@ -267,7 +267,7 @@ class Make400 extends MakeBasic
      * Código Especificador da Substituição Tributária – CEST,
      * que identifica a mercadoria sujeita aos regimes de substituição
      * tributária e de antecipação do recolhimento do imposto.
-     * vide NT2015.003 e NT_2016.002_v1.20
+     * vide NT2015.003 e NT_2016.002_v1.20 I05b pai I01
      * tag NFe/infNFe/det[item]/prod/ctrltST (opcional)
      * @param  int $nItem
      * @param  string $codigo CEST
@@ -278,6 +278,7 @@ class Make400 extends MakeBasic
      */
     public function tagCEST($nItem, $codigo, $indEscala = '', $cnpjFab = '')
     {
+        $identificador = 'I05b <ctrltST> - ';
         $ctrltST = $this->dom->createElement("ctrltST");
         $this->dom->addChild(
             $ctrltST,
@@ -713,6 +714,7 @@ class Make400 extends MakeBasic
      */
     public function tagRastro($nItem, $nLote, $qLote, $dFab, $dVal, $cAgreg = '')
     {
+        $identificador = 'I80 <rastro> - ';
         $rastro = $this->dom->createElement("rastro");
         $this->dom->addChild(
             $rastro,
