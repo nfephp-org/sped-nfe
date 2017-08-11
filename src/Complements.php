@@ -61,7 +61,7 @@ class Complements
         //cria a NFe processada com a tag do protocolo
         $procb2b = new DOMDocument('1.0', 'UTF-8');
         $procb2b->preserveWhiteSpace = false;
-        $proc2b->formatOutput = false;
+        $procb2b->formatOutput = false;
         //cria a tag nfeProc
         $nfeProcB2B = $procb2b->createElement('nfeProcB2B');
         $procb2b->appendChild($nfeProcB2B);
