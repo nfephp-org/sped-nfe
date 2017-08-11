@@ -3,11 +3,11 @@
 namespace NFePHP\NFe\Common;
 
 /**
- * Class for identification of eletronic documents in xml
- * used for Sped NFe comunications
+ * Class for identification and convertion of eletronic documents in xml
+ * for documents used in sped-nfe, sped-esocial, sped-cte, sped-mdfe, etc.
  *
  * @category  NFePHP
- * @package   NFePHP\NFe\Common\Standardize
+ * @package   NFePHP\Common\Standardize
  * @copyright NFePHP Copyright (c) 2008-2017
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
@@ -18,6 +18,7 @@ namespace NFePHP\NFe\Common;
 
 use NFePHP\Common\Validator;
 use NFePHP\NFe\Exception\DocumentsException;
+use Symfony\Component\Yaml\Yaml;
 use DOMDocument;
 use stdClass;
 
@@ -31,6 +32,10 @@ class Standardize
      * @var string
      */
     public $json = '';
+    /**
+     * @var string
+     */
+    public $key = '';
     /**
      * @var array
      */
@@ -117,8 +122,9 @@ class Standardize
     public function toStd($xml = null)
     {
         if (!empty($xml)) {
-            $this->whichIs($xml);
+            $this->key = $this->whichIs($xml);
         }
+        
         $sxml = simplexml_load_string($this->node);
         $this->json = str_replace(
             '@attributes',
@@ -152,5 +158,19 @@ class Standardize
             $this->toStd($xml);
         }
         return json_decode($this->json, true);
+    }
+    
+    /**
+     * Returns YAML from XML
+     * @param string $xml
+     * @return string
+     */
+    public function toYaml($xml = null)
+    {
+        if (!empty($xml)) {
+            $this->toStd($xml);
+        }
+        $array = $this->toArray();
+        return Yaml::dump($array, 6, 4);
     }
 }
