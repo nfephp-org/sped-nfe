@@ -17,7 +17,7 @@ namespace NFePHP\NFe\Factories;
  */
 
 use DOMDocument;
-use InvalidArgumentException;
+use NFePHP\NFe\Exception\DocumentsException;
 
 class QRCode
 {
@@ -27,35 +27,43 @@ class QRCode
      * @param DOMDocument $dom NFe
      * @param string $token CSC number
      * @param string $idToken CSC identification
-     * @param string $sigla UF alias
      * @param string $versao version of field
      * @param string $urlqr URL for search by QRCode
-     * @param string $urichave URL for search by chave
+     * @param string $urichave URL for search by chave layout 4.00 only
      * @return string
-     * @throws InvalidArgumentException
+     * @throws DocumentsException
      */
     public static function putQRTag(
         \DOMDocument $dom,
         $token,
         $idToken,
-        $sigla,
         $versao,
-        $urlqr = '',
+        $urlqr,
         $urichave = ''
     ) {
-        if (empty($token) || empty($idToken) || empty($urlqr)) {
-            if ($token == '') {
-                $msg = "Falta o CSC no config.json";
-            } elseif ($idToken == '') {
-                $msg = "Falta o CSCId no config.json";
-            } elseif ($urlqr == '') {
-                $msg = "Falta a URL do serviço NfeConsultaQR para a $sigla,"
-                    . " no arquivo wsnfe_3.10_mod65.xml";
-            }
-            throw new InvalidArgumentException($msg);
+        $token = trim($token);
+        $idToken = trim($idToken);
+        $versao = trim($versao);
+        $urlqr = trim($urlqr);
+        $urichave = trim($urichave);
+        if (empty($token)) {
+            //Falta o CSC no config.json
+            throw DocumentsException::wrongDocument(9);
+        }
+        if (empty($idToken)) {
+            //Falta o CSCId no config.json
+            throw DocumentsException::wrongDocument(10);
+        }
+        if (empty($urlqr)) {
+            //Falta a URL do serviço NfeConsultaQR
+            throw DocumentsException::wrongDocument(11);
+        }
+        if (empty($versao)) {
+            $versao = '100';
         }
         $nfe = $dom->getElementsByTagName('NFe')->item(0);
         $infNFe = $dom->getElementsByTagName('infNFe')->item(0);
+        $layoutver = $infNFe->getAttribute('versao');
         $ide = $dom->getElementsByTagName('ide')->item(0);
         $dest = $dom->getElementsByTagName('dest')->item(0);
         $icmsTot = $dom->getElementsByTagName('ICMSTot')->item(0);
@@ -66,9 +74,13 @@ class QRCode
         $dhEmi = $ide->getElementsByTagName('dhEmi')->item(0)->nodeValue;
         $cDest = '';
         if (!empty($dest)) {
-            $cDest = $dest->getElementsByTagName('CNPJ')->item(0)->nodeValue;
+            $cDest = !empty($dest->getElementsByTagName('CNPJ')->item(0)->nodeValue)
+                ? $dest->getElementsByTagName('CNPJ')->item(0)->nodeValue
+                : '';
             if (empty($cDest)) {
-                $cDest = $dest->getElementsByTagName('CPF')->item(0)->nodeValue;
+                $cDest = !empty($dest->getElementsByTagName('CPF')->item(0)->nodeValue)
+                    ? $dest->getElementsByTagName('CPF')->item(0)->nodeValue
+                    : '';
                 if (empty($cDest)) {
                     $cDest = $dest->getElementsByTagName('idEstrangeiro')->item(0)->nodeValue;
                 }
@@ -79,7 +91,7 @@ class QRCode
         $digVal = $signedInfo->getElementsByTagName('DigestValue')->item(0)->nodeValue;
         $qrcode = self::get(
             $chNFe,
-            $url,
+            $urlqr,
             $tpAmb,
             $dhEmi,
             $vNF,
@@ -93,9 +105,9 @@ class QRCode
         $infNFeSupl = $dom->createElement("infNFeSupl");
         $nodeqr = $infNFeSupl->appendChild($dom->createElement('qrCode'));
         $nodeqr->appendChild($dom->createCDATASection($qrcode));
-        if (!empty($urichave)) {
+        if (!empty($urichave) && $layoutver > 3.10) {
             $infNFeSupl->appendChild(
-                $dom->createElement('urlChave', $std->$sigla)
+                $dom->createElement('urlChave', $urichave)
             );
         }
         $signature = $dom->getElementsByTagName('Signature')->item(0);
@@ -145,7 +157,7 @@ class QRCode
         $seq .= '&vNF=' . $vNF;
         $seq .= '&vICMS=' . $vICMS;
         $seq .= '&digVal=' . strtolower($digHex);
-        $seq .= '&cIdToken=' . $idToken;
+        $seq .= '&cIdToken=' . str_pad($idToken, 6, '0', STR_PAD_LEFT);
         $hash = sha1($seq.$token);
         $seq .= '&cHashQRCode='. strtoupper($hash);
         if (strpos($url, '?') === false) {

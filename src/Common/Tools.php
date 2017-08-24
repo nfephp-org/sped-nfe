@@ -94,6 +94,11 @@ class Tools
      */
     protected $algorithm = OPENSSL_ALGO_SHA1;
     /**
+     * Canonical conversion options
+     * @var array
+     */
+    protected $canonical = [true,false,null,null];
+    /**
      * Model of NFe 55 or 65
      * @var int
      */
@@ -164,28 +169,24 @@ class Tools
      * load Digital Certificate,
      * map all paths,
      * set timezone and
-     * check if is in contingency
+     * and instanciate Contingency::class
      * @param string $configJson content of config in json format
      * @param Certificate $certificate
      */
     public function __construct($configJson, Certificate $certificate)
     {
         $this->config = json_decode($configJson);
-        
         $this->pathwsfiles = realpath(
             __DIR__ . '/../../storage'
         ).'/';
-        
         $this->pathschemes = realpath(
             __DIR__ . '/../../schemes/'. $this->config->schemes
         ).'/';
-        
         $this->version($this->config->versao);
         $this->setEnvironmentTimeZone($this->config->siglaUF);
         $this->certificate = $certificate;
         $this->setEnvironment($this->config->tpAmb);
         $this->contingency = new Contingency();
-        $this->soap = new SoapCurl($certificate);
     }
     
     /**
@@ -209,7 +210,8 @@ class Tools
 
     /**
      * Load Soap Class
-     * Soap Class may be \NFePHP\Common\Soap\SoapNative or \NFePHP\Common\Soap\SoapCurl
+     * Soap Class may be \NFePHP\Common\Soap\SoapNative
+     * or \NFePHP\Common\Soap\SoapCurl
      * @param SoapInterface $soap
      * @return void
      */
@@ -243,8 +245,7 @@ class Tools
     }
     
     /**
-     * Set or get teh parameter versao do layout
-     * NOTE: for new layout this will be removed because it is no longer necessary
+     * Set or get parameter layout version
      * @param string $version
      * @return string
      */
@@ -269,7 +270,7 @@ class Tools
     }
     
     /**
-     * Recover cUF number from
+     * Recover cUF number from state acronym
      * @param string $acronym Sigla do estado
      * @return int number cUF
      */
@@ -279,7 +280,7 @@ class Tools
     }
     
     /**
-     * Recover Federation unit acronym by cUF number
+     * Recover state acronym from cUF number
      * @param int $cUF
      * @return string acronym sigla
      */
@@ -313,7 +314,7 @@ class Tools
      */
     public function signNFe($xml)
     {
-        //clear invalid strings
+        //remove all invalid strings
         $xml = Strings::clearXmlString($xml);
         $signed = Signer::sign(
             $this->certificate,
@@ -321,7 +322,7 @@ class Tools
             'infNFe',
             'Id',
             $this->algorithm,
-            [false,false,null,null]
+            $this->canonical
         );
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->preserveWhiteSpace = false;
@@ -331,13 +332,13 @@ class Tools
         if ($modelo == 65) {
             $signed = $this->addQRCode($dom);
         }
-        //exception se não for valido
+        //exception will be throw if NFe is not valid
         $this->isValid($this->versao, $signed, 'nfe');
         return $signed;
     }
     
     /**
-     * Corret NFe fields when in contingency mode
+     * Corret NFe fields when in contingency mode is set
      * @param string $xml NFe xml content
      * @return string
      */
@@ -353,7 +354,7 @@ class Tools
     /**
      * Performs xml validation with its respective
      * XSD structure definition document
-     * NOTE: if dont existis the XSD file will return true
+     * NOTE: if dont exists the XSD file will return true
      * @param string $version layout version
      * @param string $body
      * @param string $method
@@ -421,6 +422,19 @@ class Tools
         if ($tpAmb == 1) {
             $this->ambiente = 'producao';
         }
+    }
+    
+    /**
+     * Set option for canonical transformation see C14n
+     * @param array $opt
+     * @return array
+     */
+    public function canonicalOptions($opt = [true,false,null,null])
+    {
+        if (!empty($opt) && is_array($opt)) {
+            $this->canonical = $opt;
+        }
+        return $this->canonical;
     }
     
     /**
@@ -496,7 +510,7 @@ class Tools
             . "\"";
         //montagem do SOAP Header
         //para versões posteriores a 3.10 não incluir o SOAPHeader !!!!
-        if ($this->versao < 4.0) {
+        if ($this->versao < '4.00') {
             $this->objHeader = new \SOAPHeader(
                 $this->urlNamespace,
                 'nfeCabecMsg',
@@ -513,6 +527,7 @@ class Tools
      */
     protected function sendRequest($request, array $parameters = [])
     {
+        $this->checkSoap();
         return (string) $this->soap->send(
             $this->urlService,
             $this->urlMethod,
@@ -531,13 +546,16 @@ class Tools
      */
     protected function getXmlUrlPath()
     {
-        $file = "wsnfe_".$this->versao."_mod55.xml";
+        $file = $this->pathwsfiles
+            . DIRECTORY_SEPARATOR
+            . "wsnfe_".$this->versao."_mod55.xml";
         if ($this->modelo == 65) {
             $file = str_replace('55', '65', $file);
         }
-        return file_get_contents($this->pathwsfiles
-            . DIRECTORY_SEPARATOR
-            . $file);
+        if (! file_exists($file)) {
+            return '';
+        }
+        return file_get_contents($file);
     }
     
     /**
@@ -561,7 +579,6 @@ class Tools
             $dom,
             $this->config->CSC,
             $this->config->CSCid,
-            $uf,
             $this->urlVersion,
             $this->urlService,
             $this->getURIConsultaNFCe($uf)
@@ -572,12 +589,13 @@ class Tools
     
     /**
      * Get URI for search NFCe by chave
+     * NOTE: exists only in 4.00 layout
      * @param string $uf
      * @return string
      */
     protected function getURIConsultaNFCe($uf)
     {
-        if ($this->versao == '3.10') {
+        if ($this->versao < '4.00') {
             return '';
         }
         //existe no XML apenas para layout >= 4.x
@@ -588,5 +606,15 @@ class Tools
             )
         );
         return $std->$uf;
+    }
+    
+    /**
+     * Verify if SOAP class is loaded, if not, force load SoapCurl
+     */
+    protected function checkSoap()
+    {
+        if (empty($this->soap)) {
+            $this->soap = new SoapCurl($this->certificate);
+        }
     }
 }

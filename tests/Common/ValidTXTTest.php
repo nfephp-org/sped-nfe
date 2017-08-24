@@ -13,10 +13,10 @@ class ValidTXTTest extends NFeTestCase
     public function testIsValid()
     {
         $expected = json_decode(
-            file_get_contents($this->fixturesPath . 'nfe_errado.json'),
+            file_get_contents($this->fixturesPath . 'txt/nfe_errado.json'),
             true
         );
-        $txt = file_get_contents($this->fixturesPath . 'nfe_errado.txt');
+        $txt = file_get_contents($this->fixturesPath . 'txt/nfe_errado.txt');
         $actual = ValidTXT::isValid($txt);
         $this->assertEquals(
             $expected,

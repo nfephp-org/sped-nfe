@@ -1,12 +1,13 @@
 #!/bin/bash
 
 #-------------------------------------------------------------------
-# Este é um script bash desenvovido para obter os certificados dos 
-# servidores das unidades autorizadoras para NFe e NFCe
+# Este é um script bash desenvolvido para obter os certificados dos 
+# servidores das unidades autorizadoras para NFe, NFCe, MDFe e CTe
+# ouseja basicamente dos serviços do projeto SPED
 # Os certificados das autorizadoras são armazenados nos arquivos
 #
-# nfe_cacerts.crt -- no formato PEM para uso no Linux e PHP
-# NFeCacert       -- no formato Java Keystore para uso do Java  
+# cacerts.crt -- no formato PEM para uso no Linux e PHP
+# Cacert       -- no formato Java Keystore para uso do Java  
 # 
 # NOTA: Os certificados dos servidores tem validade e portanto 
 #       este script deve ser usado regularmente para manter os 
@@ -18,13 +19,13 @@
 #
 # userprompt$ ./makeCA sped_cacerts.pem SpedCacert autorizadores.list
 #
-# Os certificadospode ser colocados em /usr/share/ca-certificates e instalados
-# com o comando update-ca-certificates
-# Para os browsers em linux pode ser usado o comando
+# Em SO Linix (Debian Like) os certificados podem ser colocados em 
+# /usr/share/ca-certificates e instalados com o comando update-ca-certificates.
+# Para os browsers, em ambiente Linux, pode ser usado o comando
 # certutil -d sql:$HOME/.pki/nssdb -A -t "C,," -n <certificate nickname> -i <certificate filename>
 #
 # Author: Roberto L. Machado <linux dot rlm at gmail dot com>
-# Version: 0.2 de 2016-05-27
+# Version: 0.3 de 2017-05-03
 # Copyright (c) 2016 Roberto L. Machado
 # Lisence: LGPLv3, GPLv3 or MIT
 #-------------------------------------------------------------------
@@ -134,7 +135,7 @@ function cleanCert()
     if [ -f $1.crt ]
     then
         echo $1
-        # rm -f $1.crt
+        rm -f $1.crt
     fi  
 }
 
@@ -151,7 +152,7 @@ function displayUsage()
     echo -e "   [cacert file]   <nome do arquivo cacert>"
     echo -e "   [keystore file] <nome do arquivo keystore>"
     echo -e "   [url list file] <nome do arquivo com a lista de urls>\n"
-    echo -e " Exemplo: ./makecacert nfe_cacerts.crt NFeCacert nfe_autorizadores.list\n"
+    echo -e " Exemplo: ./makeCA cacerts.crt Cacert autorizadores.list\n"
 }
 
 # se menos de 3 algumentos foram passados

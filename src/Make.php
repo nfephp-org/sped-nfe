@@ -7,7 +7,7 @@ namespace NFePHP\NFe;
  *
  * @category  NFePHP
  * @package   NFePHP\NFe\Make
- * @copyright NFePHP Copyright (c) 2008 - 2017
+ * @copyright NFePHP Copyright (c) 2008-2017
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
  * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
@@ -17,7 +17,10 @@ namespace NFePHP\NFe;
 
 class Make
 {
-    
+    /**
+     * Layouts available
+     * @var array
+     */
     private static $available = [
         'v310'       => Factories\Make310::class,
         'v400'       => Factories\Make400::class

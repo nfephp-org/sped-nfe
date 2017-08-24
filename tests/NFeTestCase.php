@@ -13,17 +13,17 @@ class NFeTestCase extends \PHPUnit_Framework_TestCase
     {
         $this->fixturesPath = dirname(__FILE__) . '/fixtures/';
         $config = [
-            "atualizacao" => "2016-11-03 18:01:21",
-            "ambiente" => 2,
-            "razao" => "SUA RAZAO SOCIAL LTDA",
+            "atualizacao" => "2017-02-20 09:11:21",
+            "tpAmb" => 2,
+            "razaosocial" => "SUA RAZAO SOCIAL LTDA",
+            "siglaUF" => "SP",
             "cnpj" => "99999999999999",
-            "uf" => "SP",
-            "schemes" => "PL008i2",
-            "versao" => '3.10',
+            "schemes" => "PL_008i2",
+            "versao" => "3.10",
             "tokenIBPT" => "AAAAAAA",
             "CSC" => "GPB0JBWLUR6HWFTVEAS6RJ69GPCROFPBBB8G",
             "CSCid" => "000001",
-            "proxyConf" => [
+            "aProxyConf" => [
                 "proxyIp" => "",
                 "proxyPort" => "",
                 "proxyUser" => "",

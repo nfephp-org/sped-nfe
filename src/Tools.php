@@ -23,6 +23,7 @@ use NFePHP\NFe\Factories\QRCode;
 use NFePHP\NFe\Factories\Events;
 use NFePHP\NFe\Common\Tools as ToolsCommon;
 use RuntimeException;
+use InvalidArgumentException;
 
 class Tools extends ToolsCommon
 {
@@ -46,6 +47,9 @@ class Tools extends ToolsCommon
         $compactar = false,
         &$xmls = []
     ) {
+        if (!is_array($aXml)) {
+            throw new \InvalidArgumentException('Os XML das NFe devem ser passados em um array.');
+        }
         $servico = 'NfeAutorizacao';
         $this->checkContingencyForWebServices($servico);
         if (count($aXml) > 1) {
@@ -62,8 +66,9 @@ class Tools extends ToolsCommon
             }
             $aXml = $xmls;
         }
+        
         $sxml = implode("", $aXml);
-        $sxml = preg_replace("/<\?xml.*\?>/", "", $sxml);
+        $sxml = preg_replace("/<\?xml.*?\?>/", "", $sxml);
         $this->servico(
             $servico,
             $this->config->siglaUF,
@@ -226,7 +231,7 @@ class Tools extends ToolsCommon
             'infInut',
             'Id',
             $this->algorithm,
-            [false,false,null,null]
+            $this->canonical
         );
         $request = Strings::clearXmlString($request, true);
         $this->isValid($this->urlVersion, $request, 'inutNFe');
@@ -674,7 +679,7 @@ class Tools extends ToolsCommon
             'infEvento',
             'Id',
             $this->algorithm,
-            [false,false,null,null]
+            $this->canonical
         );
         $request = Strings::clearXmlString($request, true);
         $lote = $dt->format('YmdHis').rand(0, 9);
@@ -787,12 +792,12 @@ class Tools extends ToolsCommon
      */
     public function sefazValidate($nfe)
     {
+        //verifica a assinatura da NFe, exception caso de falha
+        Signer::isSigned($nfe);
         $dom = new \DOMDocument('1.0', 'utf-8');
         $dom->formatOutput = false;
         $dom->preserveWhiteSpace = false;
         $dom->loadXML($nfe);
-        //verifica a assinatura da NFe, exception caso de falha
-        Signer::isSigned($dom, 'infNFe');
         //verifica a validade no webservice da SEFAZ
         $tpAmb = $dom->getElementsByTagName('tpAmb')->item(0)->nodeValue;
         $infNFe  = $dom->getElementsByTagName('infNFe')->item(0);

@@ -43,7 +43,7 @@ Em até 24 horas da autorização de uso da NF-e objeto do cancelamento, no MT o
 
 [NFePHP\NFe\Common\Standardize::class](Standardize.md)
 
-[NFePHP\NFe\Common\Complements::class](Complements.md)
+[NFePHP\NFe\Complements::class](Complements.md)
 
 
 ## Exemplo de Uso
@@ -53,7 +53,7 @@ Em até 24 horas da autorização de uso da NF-e objeto do cancelamento, no MT o
 use NFePHP\NFe\Tools;
 use NFePHP\Common\Certificate;
 use NFePHP\NFe\Common\Standardize;
-use NFePHP\NFe\Common\Complements;
+use NFePHP\NFe\Complements;
 
 try {
 
