@@ -15,24 +15,21 @@ namespace NFePHP\NFe\Common;
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
 
-use DateTime;
 use DOMDocument;
-use Exception;
-use RuntimeException;
 use InvalidArgumentException;
-use NFePHP\Common\Strings;
-use NFePHP\Common\Keys;
 use NFePHP\Common\Certificate;
-use NFePHP\Common\Soap\SoapInterface;
-use NFePHP\Common\Soap\SoapCurl;
 use NFePHP\Common\Signer;
-use NFePHP\Common\Validator;
+use NFePHP\Common\Soap\SoapCurl;
+use NFePHP\Common\Soap\SoapInterface;
+use NFePHP\Common\Strings;
 use NFePHP\Common\TimeZoneByUF;
 use NFePHP\Common\UFList;
+use NFePHP\Common\Validator;
 use NFePHP\NFe\Factories\Contingency;
-use NFePHP\NFe\Common\Webservices;
-use NFePHP\NFe\Factories\Header;
 use NFePHP\NFe\Factories\ContingencyNFe;
+use NFePHP\NFe\Factories\Header;
+use NFePHP\NFe\Factories\QRCode;
+use RuntimeException;
 
 class Tools
 {
@@ -510,10 +507,11 @@ class Tools
     
     /**
      * Send request message to webservice
+     * @param array $parameters
      * @param string $request
      * @return string
      */
-    protected function sendRequest($request, $parameters = [])
+    protected function sendRequest($request, array $parameters = [])
     {
         return (string) $this->soap->send(
             $this->urlService,

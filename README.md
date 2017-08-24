@@ -6,15 +6,15 @@ Esta versão do pacote ainda está em desenvolvimento [FASE BETA TEST], pode nã
 
 ## Este release está sendo preparado para atender as verões 3.10 e 4.0 do layout da SEFAZ!
 
-> ### NOVA Versão 4.0 do layout da SEFAZ (ajustado NT_2016_002_v1.20 de 29/05/2017)
+> ### NOVA Versão 4.0 do layout da SEFAZ (ajustado NT_2016_002_v1.20 de 31/05/2017)
 
 >Ambiente SEFAZ de Homologação 4.0 (ambiente de teste das empresas): a partir de 03/07/2017;
 
->*Ambiente SEFAZ de Produção 4.0 : a pertir de 02/10/17;*
+>*Ambiente SEFAZ de Produção 4.0 : a partir de 02/10/17;*
 
 >*Desativação na SEFAZ da versão anterior 3.10: até 02/04/18.*
 
->**IMPORTANTE: Até 15/06/2017 esta versão será movida para master e as anteriores se tornam automaticamente OBSOLETAS e não mais receberão correções ou atualizações.**
+>**IMPORTANTE: até 31/08/2017 esta versão será movida para master e as anteriores se tornam automaticamente OBSOLETAS e não mais receberão correções ou atualizações.**
 
 *Utilize o chat do Gitter para iniciar discussões especificas sobre o desenvolvimento deste pacote.*
 
