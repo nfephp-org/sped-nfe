@@ -2,6 +2,8 @@
 
 namespace NFePHP\NFe;
 
+use NFePHP\NFe\Exception\InvalidArgumentException;
+
 /**
  * Statically loads the Make class to the specified version
  *
@@ -25,12 +27,12 @@ class Make
         'v310'       => Factories\Make310::class,
         'v400'       => Factories\Make400::class
     ];
-    
+
     /**
      * Call classes to build XML NFe
-     * @param type $name
+     * @param string $name
      * @param type $arguments
-     * @return \NFePHP\NFe\className
+     * @return mixed
      * @throws InvalidArgumentException
      */
     public static function __callStatic($name, $arguments)
