@@ -258,18 +258,6 @@ class Tools
     }
     
     /**
-     * Set environment for production or homologation
-     * @param int $tpAmb
-     */
-    public function environment($tpAmb = 2)
-    {
-        if (!empty($tpAmb) && ($tpAmb == 1 || $tpAmb == 2)) {
-            $this->tpAmb = $tpAmb;
-            $this->ambiente = ($tpAmb == 1) ? 'producao' : 'homologacao';
-        }
-    }
-    
-    /**
      * Recover cUF number from state acronym
      * @param string $acronym Sigla do estado
      * @return int number cUF
@@ -417,10 +405,9 @@ class Tools
      */
     public function setEnvironment($tpAmb = 2)
     {
-        $this->tpAmb = $tpAmb;
-        $this->ambiente = 'homologacao';
-        if ($tpAmb == 1) {
-            $this->ambiente = 'producao';
+        if (!empty($tpAmb) && ($tpAmb == 1 || $tpAmb == 2)) {
+            $this->tpAmb = $tpAmb;
+            $this->ambiente = ($tpAmb == 1) ? 'producao' : 'homologacao';
         }
     }
     
