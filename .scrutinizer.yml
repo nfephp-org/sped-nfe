@@ -1,4 +1,4 @@
-fchecks:
+checks:
     php: true
 coding_style:
     php:
