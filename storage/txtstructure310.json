@@ -1,5 +1,5 @@
 {
-	"NOTAFISCAL":"NOTAFISCAL|1|",
+    "NOTAFISCAL":"NOTAFISCAL|1|",
     "A":"A|versao|Id|pk_nItem|",
     "B":"B|cUF|cNF|natOp|indPag|mod|serie|nNF|dhEmi|dhSaiEnt|tpNF|idDest|cMunFG|tpImp|tpEmis|cDV|tpAmb|finNFe|indFinal|indPres|procEmi|verProc|dhCont|xJust|",
     "BA":"BA|",
