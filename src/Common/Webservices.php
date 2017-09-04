@@ -61,16 +61,16 @@ class Webservices
             $pad = !empty($this->std->$sigla->$ambiente) ? $this->std->$sigla->$ambiente : '';
             $pad = json_decode(json_encode($pad), true);
             if (!empty($pad)) {
-                foreach($pad as $key => $p) {
+                foreach ($pad as $key => $p) {
                     if (!empty($svw->$key)) {
                         $svw->$key->method = $p['method'];
                         $svw->$key->operation = $p['operation'];
                         $svw->$key->version = $p['version'];
                         $svw->$key->url = $p['url'];
-                    }    
+                    }
                 }
             }
-        }    
+        }
         return $svw;
     }
 
