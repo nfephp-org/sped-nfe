@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WS xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <UF>
+    <sigla>AC</sigla>
+    <homologacao>
+        <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00">https://cad.svrs.rs.gov.br/ws/cadconsultacadastro/cadconsultacadastro2.asmx</NfeConsultaCadastro>
+    </homologacao>
+    <producao>
+        <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00">https://cad.svrs.rs.gov.br/ws/cadconsultacadastro/cadconsultacadastro2.asmx</NfeConsultaCadastro>
+    </producao>  
+  </UF>
+  <UF>
+    <sigla>AL</sigla>
+    <homologacao>
+        <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00"></NfeConsultaCadastro>
+    </homologacao>
+    <producao>
+        <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00"></NfeConsultaCadastro>
+    </producao>  
+  </UF>
+  <UF>
     <sigla>AM</sigla>
     <homologacao>
       <NfeAutorizacao method="nfeAutorizacaoLote" operation="NfeAutorizacao" version="3.10">https://homnfe.sefaz.am.gov.br/services2/services/NfeAutorizacao</NfeAutorizacao>
@@ -37,6 +55,15 @@
       <RecepcaoEvento method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://www.nfe.fazenda.gov.br/RecepcaoEvento/RecepcaoEvento.asmx</RecepcaoEvento>
       <RecepcaoEPEC method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://www.nfe.fazenda.gov.br/RecepcaoEvento/RecepcaoEvento.asmx</RecepcaoEPEC>
     </producao>
+  </UF>
+  <UF>
+    <sigla>AP</sigla>
+    <homologacao>
+        <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00"></NfeConsultaCadastro>
+    </homologacao>
+    <producao>
+        <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00"></NfeConsultaCadastro>
+    </producao>  
   </UF>
   <UF>
     <sigla>BA</sigla>
@@ -83,6 +110,24 @@
     </producao>
   </UF>
   <UF>
+    <sigla>DF</sigla>
+    <homologacao>
+        <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00"></NfeConsultaCadastro>
+    </homologacao>
+    <producao>
+        <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00"></NfeConsultaCadastro>
+    </producao>
+  </UF>
+  <UF>
+    <sigla>ES</sigla>
+    <homologacao>
+        <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00"></NfeConsultaCadastro>
+    </homologacao>
+    <producao>
+        <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00"></NfeConsultaCadastro>
+    </producao>
+  </UF>
+  <UF>
     <sigla>GO</sigla>
     <homologacao>
        <RecepcaoEvento method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://homolog.sefaz.go.gov.br/nfe/services/v2/RecepcaoEvento</RecepcaoEvento>
@@ -113,6 +158,15 @@
        <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://www.nfe.go.gov.br/pagina/ver/10270/consulta-completa</NfeConsultaQR>
        <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="3.10"></NfeConsultaDest>
        <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="3.10"></NfeDownloadNF>
+    </producao>
+  </UF>
+  <UF>
+    <sigla>MA</sigla>
+    <homologacao>
+        <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00"></NfeConsultaCadastro>
+    </homologacao>
+    <producao>
+        <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00"></NfeConsultaCadastro>
     </producao>
   </UF>
   <UF>
@@ -181,11 +235,11 @@
   <UF>
     <sigla>PB</sigla>
     <homologacao>
-      <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00">https://svp-ws.sefazvirtual.rs.gov.br/ws/CadConsultaCadastro/CadConsultaCadastro2.asmx</NfeConsultaCadastro>
+        <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00">https://cad.svrs.rs.gov.br/ws/cadconsultacadastro/cadconsultacadastro2.asmx</NfeConsultaCadastro>
     </homologacao>
     <producao>
-      <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00">https://svp-ws.sefazvirtual.rs.gov.br/ws/CadConsultaCadastro/CadConsultaCadastro2.asmx</NfeConsultaCadastro>
-    </producao>
+        <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00">https://cad.svrs.rs.gov.br/ws/cadconsultacadastro/cadconsultacadastro2.asmx</NfeConsultaCadastro>
+    </producao>  
   </UF>
   <UF>
     <sigla>PE</sigla>
@@ -206,6 +260,15 @@
       <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NfeRetAutorizacao" version="3.10">https://nfe.sefaz.pe.gov.br/nfe-service/services/NfeRetAutorizacao</NfeRetAutorizacao>
       <NfeStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10">https://nfe.sefaz.pe.gov.br/nfe-service/services/NfeStatusServico2</NfeStatusServico>
       <RecepcaoEvento method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://nfe.sefaz.pe.gov.br/nfe-service/services/RecepcaoEvento</RecepcaoEvento>
+    </producao>
+  </UF>
+  <UF>
+    <sigla>PI</sigla>
+    <homologacao>
+        <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00"></NfeConsultaCadastro>
+    </homologacao>
+    <producao>
+        <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00"></NfeConsultaCadastro>
     </producao>
   </UF>
   <UF>
@@ -230,12 +293,39 @@
     </producao>
   </UF>
   <UF>
-    <sigla>RN</sigla>
+    <sigla>RJ</sigla>
     <homologacao>
-      <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00">https://svp-ws.sefazvirtual.rs.gov.br/ws/CadConsultaCadastro/CadConsultaCadastro2.asmx</NfeConsultaCadastro>
+        <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00"></NfeConsultaCadastro>
     </homologacao>
     <producao>
-      <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00">https://svp-ws.sefazvirtual.rs.gov.br/ws/CadConsultaCadastro/CadConsultaCadastro2.asmx</NfeConsultaCadastro>
+        <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00"></NfeConsultaCadastro>
+    </producao>  
+  </UF>
+  <UF>
+    <sigla>RO</sigla>
+    <homologacao>
+        <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00"></NfeConsultaCadastro>
+    </homologacao>
+    <producao>
+        <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00"></NfeConsultaCadastro>
+    </producao>
+  </UF>
+  <UF>
+    <sigla>RN</sigla>
+    <homologacao>
+        <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00">https://cad.svrs.rs.gov.br/ws/cadconsultacadastro/cadconsultacadastro2.asmx</NfeConsultaCadastro>
+    </homologacao>
+    <producao>
+        <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00">https://cad.svrs.rs.gov.br/ws/cadconsultacadastro/cadconsultacadastro2.asmx</NfeConsultaCadastro>
+    </producao>  
+  </UF>
+  <UF>
+    <sigla>RR</sigla>
+    <homologacao>
+        <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00"></NfeConsultaCadastro>
+    </homologacao>
+    <producao>
+        <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00"></NfeConsultaCadastro>
     </producao>
   </UF>
   <UF>
@@ -266,10 +356,19 @@
   <UF>
     <sigla>SC</sigla>
     <homologacao>
-      <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00">https://svp-ws.sefazvirtual.rs.gov.br/ws/CadConsultaCadastro/CadConsultaCadastro2.asmx</NfeConsultaCadastro>
+        <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00">https://cad.svrs.rs.gov.br/ws/cadconsultacadastro/cadconsultacadastro2.asmx</NfeConsultaCadastro>
     </homologacao>
     <producao>
-      <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00">https://svp-ws.sefazvirtual.rs.gov.br/ws/CadConsultaCadastro/CadConsultaCadastro2.asmx</NfeConsultaCadastro>
+        <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00">https://cad.svrs.rs.gov.br/ws/cadconsultacadastro/cadconsultacadastro2.asmx</NfeConsultaCadastro>
+    </producao>  
+  </UF>
+  <UF>
+    <sigla>SE</sigla>
+    <homologacao>
+        <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00"></NfeConsultaCadastro>
+    </homologacao>
+    <producao>
+        <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00"></NfeConsultaCadastro>
     </producao>
   </UF>
   <UF>
@@ -303,6 +402,7 @@
       <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NfeRetAutorizacao" version="3.10">https://hom.sefazvirtual.fazenda.gov.br/NfeRetAutorizacao/NfeRetAutorizacao.asmx</NfeRetAutorizacao>
       <NfeStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10">https://hom.sefazvirtual.fazenda.gov.br/NfeStatusServico2/NfeStatusServico2.asmx</NfeStatusServico>
       <RecepcaoEvento method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://hom.sefazvirtual.fazenda.gov.br/RecepcaoEvento/RecepcaoEvento.asmx</RecepcaoEvento>
+      <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00"></NfeConsultaCadastro>
     </homologacao>
     <producao>
       <NfeAutorizacao method="nfeAutorizacaoLote" operation="NfeAutorizacao" version="3.10">https://www.sefazvirtual.fazenda.gov.br/NfeAutorizacao/NfeAutorizacao.asmx</NfeAutorizacao>
@@ -312,6 +412,7 @@
       <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NfeRetAutorizacao" version="3.10">https://www.sefazvirtual.fazenda.gov.br/NfeRetAutorizacao/NfeRetAutorizacao.asmx</NfeRetAutorizacao>
       <NfeStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10">https://www.sefazvirtual.fazenda.gov.br/NfeStatusServico2/NfeStatusServico2.asmx</NfeStatusServico>
       <RecepcaoEvento method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://www.sefazvirtual.fazenda.gov.br/RecepcaoEvento/RecepcaoEvento.asmx</RecepcaoEvento>
+      <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00"></NfeConsultaCadastro>
     </producao>
   </UF>
   <UF>
@@ -325,7 +426,7 @@
         <RecepcaoEvento method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://nfe-homologacao.svrs.rs.gov.br/ws/recepcaoevento/recepcaoevento.asmx</RecepcaoEvento>
         <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="1.01"></NfeConsultaDest>
         <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="1.00"></NfeDownloadNF>        
-        <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00">https://cad.svrs.rs.gov.br/ws/cadconsultacadastro/cadconsultacadastro2.asmx</NfeConsultaCadastro>
+        <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00"></NfeConsultaCadastro>
     </homologacao>
     <producao>
         <NfeAutorizacao method="nfeAutorizacaoLote" operation="NfeAutorizacao" version="3.10">https://nfe.svrs.rs.gov.br/ws/NfeAutorizacao/NFeAutorizacao.asmx</NfeAutorizacao>
@@ -336,7 +437,7 @@
         <RecepcaoEvento method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://nfe.svrs.rs.gov.br/ws/recepcaoevento/recepcaoevento.asmx</RecepcaoEvento>
         <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="1.01"></NfeConsultaDest>
         <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="1.00"></NfeDownloadNF>
-        <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00">https://cad.svrs.rs.gov.br/ws/cadconsultacadastro/cadconsultacadastro2.asmx</NfeConsultaCadastro>
+        <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00"></NfeConsultaCadastro>
     </producao>
   </UF>    
   <UF>
@@ -347,6 +448,7 @@
       <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NfeRetAutorizacao" version="3.10">https://hom.svc.fazenda.gov.br/NfeRetAutorizacao/NfeRetAutorizacao.asmx</NfeRetAutorizacao>
       <NfeStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10">https://hom.svc.fazenda.gov.br/NfeStatusServico2/NfeStatusServico2.asmx</NfeStatusServico>
       <RecepcaoEvento method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://hom.svc.fazenda.gov.br/RecepcaoEvento/RecepcaoEvento.asmx</RecepcaoEvento>
+      <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00"></NfeConsultaCadastro>
     </homologacao>
     <producao>
       <NfeAutorizacao method="nfeAutorizacaoLote" operation="NfeAutorizacao" version="3.10">https://www.svc.fazenda.gov.br/NfeAutorizacao/NfeAutorizacao.asmx</NfeAutorizacao>
@@ -354,6 +456,7 @@
       <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NfeRetAutorizacao" version="3.10">https://www.svc.fazenda.gov.br/NfeRetAutorizacao/NfeRetAutorizacao.asmx</NfeRetAutorizacao>
       <NfeStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10">https://www.svc.fazenda.gov.br/NfeStatusServico2/NfeStatusServico2.asmx</NfeStatusServico>
       <RecepcaoEvento method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://www.svc.fazenda.gov.br/RecepcaoEvento/RecepcaoEvento.asmx</RecepcaoEvento>
+      <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00"></NfeConsultaCadastro>
     </producao>
   </UF>
   <UF>
@@ -365,6 +468,7 @@
       <NfeConsultaProtocolo method="nfeConsultaNF2" operation="NfeConsulta2" version="3.10">https://nfe-homologacao.svrs.rs.gov.br/ws/NfeConsulta/NfeConsulta2.asmx</NfeConsultaProtocolo>
       <NfeStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10">https://nfe-homologacao.svrs.rs.gov.br/ws/NfeStatusServico/NfeStatusServico2.asmx</NfeStatusServico>
       <RecepcaoEvento method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://nfe-homologacao.svrs.rs.gov.br/ws/recepcaoevento/recepcaoevento.asmx</RecepcaoEvento>
+      <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00"></NfeConsultaCadastro>
     </homologacao>
     <producao>
       <NfeAutorizacao method="nfeAutorizacaoLote" operation="NfeAutorizacao" version="3.10">https://nfe.svrs.rs.gov.br/ws/NfeAutorizacao/NFeAutorizacao.asmx</NfeAutorizacao>
@@ -373,6 +477,16 @@
       <NfeConsultaProtocolo method="nfeConsultaNF2" operation="NfeConsulta2" version="3.10">https://nfe.svrs.rs.gov.br/ws/NfeConsulta/NfeConsulta2.asmx</NfeConsultaProtocolo>
       <NfeStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="3.10">https://nfe.svrs.rs.gov.br/ws/NfeStatusServico/NfeStatusServico2.asmx</NfeStatusServico>
       <RecepcaoEvento method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://nfe.svrs.rs.gov.br/ws/recepcaoevento/recepcaoevento.asmx</RecepcaoEvento>
+      <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00"></NfeConsultaCadastro>
     </producao>
+  </UF>
+  <UF>
+    <sigla>TO</sigla>
+    <homologacao>
+        <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00"></NfeConsultaCadastro>
+    </homologacao>
+    <producao>
+        <NfeConsultaCadastro method="consultaCadastro2" operation="CadConsultaCadastro2" version="2.00"></NfeConsultaCadastro>
+    </producao>  
   </UF>
 </WS>

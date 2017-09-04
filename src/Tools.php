@@ -259,7 +259,6 @@ class Tools extends ToolsCommon
         $iest = '',
         $cpf = ''
     ) {
-        $cUF = UFList::getCodeByUF($uf);
         if ($cnpj != '') {
             $filter = "<CNPJ>$cnpj</CNPJ>";
             $txtFile = "CNPJ_$cnpj";
