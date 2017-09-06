@@ -123,7 +123,7 @@ abstract class MakeBasic
     /**
      * @var array
      */
-    protected $aTotICMSUFDest = ['vFCPUFDest' => '', 'vICMSUFDest' => '', 'vICMSUFRemet' => ''];
+    protected $aTotICMSUFDest = ['vFCPUFDest' => 0, 'vICMSUFDest' => 0, 'vICMSUFRemet' => 0];
     /**
      * @var array of DOMElements
      */
