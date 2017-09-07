@@ -172,7 +172,6 @@ class Convert
         }
         return $aNotas;
     }
-
     /**
      * Creates the instance of the constructor class
      */
@@ -2194,7 +2193,6 @@ class Convert
             $fields[16] //$vTotTrib
         );
     }
-
     /**
      * Cria a tag ISSQNTot [W17]
      * @param array $fields
