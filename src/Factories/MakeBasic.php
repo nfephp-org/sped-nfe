@@ -123,7 +123,7 @@ abstract class MakeBasic
     /**
      * @var array
      */
-    protected $aTotICMSUFDest = ['vFCPUFDest' => '', 'vICMSUFDest' => '', 'vICMSUFRemet' => ''];
+    protected $aTotICMSUFDest = ['vFCPUFDest' => null, 'vICMSUFDest' => null, 'vICMSUFRemet' => null];
     /**
      * @var array of DOMElements
      */
@@ -3853,9 +3853,9 @@ abstract class MakeBasic
             "[item $nItem] Valor do ICMS de partilha para a UF do remetente"
         );
         $this->aICMSUFDest[$nItem] = $icmsUFDest;
-        $this->aTotICMSUFDest['vICMSUFDest'] += $vICMSUFDest;
-        $this->aTotICMSUFDest['vFCPUFDest'] += $vFCPUFDest;
-        $this->aTotICMSUFDest['vICMSUFRemet'] += $vICMSUFRemet;
+        $this->aTotICMSUFDest['vICMSUFDest'] += (float) $vICMSUFDest;
+        $this->aTotICMSUFDest['vFCPUFDest'] += (float) $vFCPUFDest;
+        $this->aTotICMSUFDest['vICMSUFRemet'] += (float) $vICMSUFRemet;
         return $icmsUFDest;
     }
 
@@ -6081,7 +6081,7 @@ abstract class MakeBasic
             $this->total = $this->dom->createElement("total");
         }
         //ajuste de digitos dos campos totalizados
-        if ($this->aTotICMSUFDest['vICMSUFDest'] != '') {
+        if ($this->aTotICMSUFDest['vICMSUFDest'] > 0) {
             $this->aTotICMSUFDest['vICMSUFDest'] = number_format($this->aTotICMSUFDest['vICMSUFDest'], 2, '.', '');
             $this->aTotICMSUFDest['vICMSUFRemet'] = number_format($this->aTotICMSUFDest['vICMSUFRemet'], 2, '.', '');
             $this->aTotICMSUFDest['vFCPUFDest'] = number_format($this->aTotICMSUFDest['vFCPUFDest'], 2, '.', '');
