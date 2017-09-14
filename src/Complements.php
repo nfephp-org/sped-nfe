@@ -123,7 +123,7 @@ class Complements
             $tpEvento = $evento->getElementsByTagName('tpEvento')
                 ->item(0)
                 ->nodeValue;
-            if (($cStat == '135' || $cStat == '136' || $cStat == '155')
+            if (in_array($cStat, ['135', '136', '155'])
                 && $tpEvento == '110111'
                 && $chaveEvento == $chaveNFe
             ) {
@@ -294,7 +294,12 @@ class Complements
         $retEv = $ret->getElementsByTagName('retEvento')->item(0);
         $cStat  = $retEv->getElementsByTagName('cStat')->item(0)->nodeValue;
         $xMotivo = $retEv->getElementsByTagName('xMotivo')->item(0)->nodeValue;
-        if ($cStat != '135') {
+        $tpEvento = $retEv->getElementsByTagName('tpEvento')->item(0)->nodeValue;
+        $cStatValids = ['135', '136'];
+        if ($tpEvento == '110111') {
+            $cStatValids[] = '155';
+        }
+        if (!in_array($cStat, $cStatValids)) {
             throw DocumentsException::wrongDocument(4, "[$cStat] $xMotivo");
         }
         if ($resLote !== $envLote) {
