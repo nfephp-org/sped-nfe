@@ -49,7 +49,8 @@ $result = $nfe->montaNFe();
 ```
 
 ### function taginfNFe($std):DOMElement
-Node principal 
+Node principal
+ 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
@@ -65,7 +66,8 @@ $elem = $nfe->taginfNFe($std);
 ```
 
 ### function tagide($std):DOMElement
-Node de identificaçã da NFe
+Node de identificação da NFe
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
@@ -103,6 +105,7 @@ $elem = $nfe->tagide($std);
 
 ### function tagrefNFe($std):DOMElement
 Node referente a NFe referenciada
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
@@ -116,6 +119,7 @@ $elem = $nfe->tagrefNFe($std);
 
 ### function tagrefNF($std):DOMElement
 Node referente a Nota Fiscal referenciada modelo 1 ou 2
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
@@ -134,6 +138,7 @@ $elem = $nfe->tagrefNF($std);
 
 ### function tagrefNFP($std):DOMElement
 Node referente a Nota Fiscal referenciada de produtor rural
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
@@ -151,6 +156,7 @@ $elem = $nfe->tagrefNFP($std);
 ```
 ### function tagrefCTe($std):DOMElement
 Node referente aos CTe referenciados
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
@@ -163,6 +169,7 @@ $elem = $nfe->tagrefCTe($std);
 
 ### function tagrefECF($std):DOMElement
 Node referente aos ECF referenciados
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
@@ -176,296 +183,458 @@ $elem = $nfe->tagrefECF($std);
 ```
 
 ### function tagemit($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$std = new StdClass();
+$elem = $nfe->tagemit($std);
+```
 
 ### function tagenderEmit($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$std = new StdClass();
+$elem = $nfe->tagenderEmit($std);
+```
 
 ### function tagdest($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$std = new StdClass();
+$elem = $nfe->tagdest($std);
+```
 
 ### function tagenderDest($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$std = new StdClass();
+$elem = $nfe->tagenderDest($std);
+```
 
 ### function tagretirada($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$std = new StdClass();
+$elem = $nfe->tagretirada($std);
+```
+
 
 ### function tagentrega($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$std = new StdClass();
+$elem = $nfe->tagentrega($std);
+```
 
 ### function tagautXML($std):DOMElement
-| Parametro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
-### function taginfAdProd($std):DOMElement
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new StdClass();
+$elem = $nfe->tagautXML($std);
+```
 
 ### function tagprod($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new StdClass();
+$elem = $nfe->tagprod($std);
+```
+
+### function taginfAdProd($std):DOMElement
+
+
+| Parametro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new StdClass();
+$elem = $nfe->taginfAdProd($std);
+```
 
 ### function tagNVE($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagCEST($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagRECOPI($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagDI($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagadi($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagdetExport($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagRastro($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagveicProd($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagmed($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagarma($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagcomb($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagencerrante($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagimposto($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagICMS($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagICMSPart($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagICMSST($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagICMSSN($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagICMSUFDest($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagIPI($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagII($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagPIS($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagPISST($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagCOFINS($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagCOFINSST($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagISSQN($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagimpostoDevol($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagICMSTot($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagISSQNTot($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagretTrib($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagtransp($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagtransporta($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagretTransp($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagveicTransp($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagreboque($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagvol($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function taglacres($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagpag($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagdetPag($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagfat($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagdup($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function taginfAdic($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagobsCont($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagobsFisco($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagprocRef($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagexporta($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagcompra($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagcana($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagforDia($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagdeduc($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function taginfNFeSupl($std):DOMElement
+
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+
