@@ -527,53 +527,114 @@ $elem = $nfe->taginfAdProd($std);
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
 ### function tagvol($std):DOMElement
-
+Node com as informações dos volumes transportados
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->item = 1; //indicativo do numero do volume
+$std->qVol = 2;
+$std->esp = 'caixa';
+$std->marca = 'OLX';
+$std->nVol = '11111';
+$std->pesoL = 10.50;
+$std->pesoB = 11.00;
+
+$elem = $nfe->tagvol($std);
+```
 
 ### function taglacres($std):DOMElement
-
-
-| Parametro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
-
-### function tagpag($std):DOMElement
-
+Node com a identificação dos lacres, referentes ao volume 
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->item = 1; //indicativo do numero do volume
+$std->nLacre = 'ZZEX425365';
 
-### function tagdetPag($std):DOMElement
-
-
-| Parametro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+$elem = $nfe->taglacres($std);
+```
 
 ### function tagfat($std):DOMElement
-
+Node com os dados da fatura
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->nFat = '1233';
+$std->vOrig = 1254.22;
+$std->vDesc = null;
+$std->vLiq = 1254.22;
 
+$elem = $nfe->tagfat($std);
+```
 ### function tagdup($std):DOMElement
-
+Node de informações das duplicatas
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->nDup = '1233-1';
+$std->dVenc = '2017-08-22';
+$std->vDup = 1254.22;
+
+$elem = $nfe->tagdup($std);
+```
+
+### function tagpag($std):DOMElement
+Node referente as formas de pagamento **OBRIGATÓRIO para NFCe**
+
+| Parametro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->vTroco = null; //incluso no layout 4.00
+
+$elem = $nfe->tagpag($std);
+```
+
+### function tagdetPag($std):DOMElement
+Node com o detalhamento da forma de pagamento **OBRIGATÓRIO para NFCe**
+
+| Parametro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->tPag = '03';
+$std->vPag = 200.00
+$std->CNPJ = '12345678901234';
+$std->tBand = '01';
+$std->cAut = '3333333';
+
+$std->tpIntegra = 1; //incluso no layout 4.00
+
+$elem = $nfe->tagdetPag($std);
+```
 
 ### function taginfAdic($std):DOMElement
-
+Node referente as informações adicionais da NFe
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$std = new stdClass();
+$std->infAdFisco = 'informacoes para o fisco';
+$std->infCpl = 'informacoes complementares';
+
+$elem = $nfe->taginfAdic($std);
+```
 
 ### function tagobsCont($std):DOMElement
 Campo de uso livre do contribuinte, Informar o nome do campo no atributo xCampo e o conteúdo do campo no xTexto
@@ -688,7 +749,7 @@ $elem = $nfe->tagforDia($std);
 ```
 
 ### function tagdeduc($std):DOMElement
-Node das deduções Grupo Deduções – Taxas e Contribuições na pridução de cana 
+Node das deduções Grupo Deduções – Taxas e Contribuições da aquisição de cana 
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
