@@ -16,10 +16,11 @@ namespace NFePHP\NFe;
  */
 
 use NFePHP\NFe\Common\ValidTXT;
+use NFePHP\Common\Strings;
 use NFePHP\NFe\Exception\DocumentsException;
-use NFePHP\NFe\Factories\Parse;
+use NFePHP\NFe\Factories\Parser;
 
-class NewConvert
+class Convert
 {
     public $txt;
     public $dados;
@@ -50,7 +51,7 @@ class NewConvert
         if (!empty($txt)) {
             $this->txt = trim($txt);
         }
-        $txt = $this->rmCRfromTxt($this->txt);
+        $txt = Strings::removeSomeAlienCharsfromTxt($this->txt);
         if (!$this->isNFe($txt)) {
             throw DocumentsException::wrongDocument(12, '');
         }
@@ -59,77 +60,14 @@ class NewConvert
         $this->validNotas();
         $i = 0;
         foreach ($this->notas as $nota) {
-            $version = 'v'.str_replace(".", "", $this->layouts[$i]);
-            $conv = Parse::$version($nota);
-            $this->xmls[] = $conv->toXml();
+            $version = $this->layouts[$i];
+            $parser = new Parser($version);
+            $this->xmls[] = $parser->toXml($nota);
             $i++;
         }
         return $this->xmls;
     }
 
-    /**
-     * Read and set all layouts in NFes
-     * @param array $nota
-     */
-    protected function loadLayouts($nota)
-    {
-        foreach ($nota as $campo) {
-            $fields = explode('|', $campo);
-            if ($fields[0] == 'A') {
-                $this->layouts[] = $fields[1];
-                break;
-            }
-        }
-    }
-    
-    /**
-     * Verify number of NFe declared
-     * If different throws an exception
-     * @throws NFePHP\NFe\Exception\DocumentsException
-     */
-    protected function checkQtdNFe()
-    {
-        $num = count($this->notas);
-        if ($num != $this->numNFe) {
-            throw DocumentsException::wrongDocument(13, '');
-        }
-    }
-    
-    /**
-     * Remove CR from txt
-     * @param string $txt
-     * @return string
-     */
-    protected function rmCRfromTxt($txt)
-    {
-        $txt = str_replace("\r", "", $txt);
-        return $txt;
-    }
-    
-    /**
-     * Valid all NFes in txt and get layout version for each nfe
-     */
-    protected function validNotas()
-    {
-        foreach ($this->notas as $nota) {
-            $this->isValidTxt($nota);
-            $this->loadLayouts($nota);
-        }
-    }
-    
-    /**
-     * Valid txt structure
-     * @param array $nota
-     * @throws NFePHP\NFe\Exception\DocumentsException
-     */
-    protected function isValidTxt($nota)
-    {
-        $errors = ValidTXT::isValid(implode("\n", $nota));
-        if (!empty($errors)) {
-            throw DocumentsException::wrongDocument(14, implode("\n", $errors));
-        }
-    }
-    
     /**
      * Check if it is an NFe in TXT format
      * @param string $txt
@@ -148,7 +86,7 @@ class NewConvert
         }
         return false;
     }
-    
+
     /**
      * Separate nfe into elements of an array
      * @param  array $array
@@ -183,5 +121,57 @@ class NewConvert
             $aNotas[] = array_slice($array, $marc['init'], $length, false);
         }
         return $aNotas;
+    }
+
+    /**
+     * Verify number of NFe declared
+     * If different throws an exception
+     * @throws NFePHP\NFe\Exception\DocumentsException
+     */
+    protected function checkQtdNFe()
+    {
+        $num = count($this->notas);
+        if ($num != $this->numNFe) {
+            throw DocumentsException::wrongDocument(13, '');
+        }
+    }
+    
+    /**
+     * Valid all NFes in txt and get layout version for each nfe
+     */
+    protected function validNotas()
+    {
+        foreach ($this->notas as $nota) {
+            $this->loadLayouts($nota);
+            $this->isValidTxt($nota);
+        }
+    }
+
+    /**
+     * Read and set all layouts in NFes
+     * @param array $nota
+     */
+    protected function loadLayouts($nota)
+    {
+        foreach ($nota as $campo) {
+            $fields = explode('|', $campo);
+            if ($fields[0] == 'A') {
+                $this->layouts[] = $fields[1];
+                break;
+            }
+        }
+    }
+
+    /**
+     * Valid txt structure
+     * @param array $nota
+     * @throws NFePHP\NFe\Exception\DocumentsException
+     */
+    protected function isValidTxt($nota)
+    {
+        $errors = ValidTXT::isValid(implode("\n", $nota));
+        if (!empty($errors)) {
+            throw DocumentsException::wrongDocument(14, implode("\n", $errors));
+        }
     }
 }

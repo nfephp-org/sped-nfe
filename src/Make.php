@@ -1,14 +1,14 @@
 <?php
 
-namespace NFePHP\NFe\Factories;
+namespace NFePHP\NFe;
 
 /**
  * Classe a construção do xml da NFe modelo 55 e modelo 65
  * Esta classe basica está estruturada para montar XML da NFe para o
  * layout versão 3.10, os demais modelos serão derivados deste
  *
- * @category  NFePHP
- * @package   NFePHP\NFe\Factories\MakeBasic
+ * @category  API
+ * @package   NFePHP\NFe\
  * @copyright Copyright (c) 2008-2017
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
@@ -20,13 +20,14 @@ namespace NFePHP\NFe\Factories;
 use NFePHP\Common\Keys;
 use NFePHP\Common\DOMImproved as Dom;
 use NFePHP\Common\Strings;
+use stdClass;
 use RuntimeException;
 use DOMDocument;
 use DOMElement;
 use DOMNode;
 use DateTime;
 
-abstract class MakeBasic
+class Make
 {
     /**
      * @var array
@@ -39,11 +40,11 @@ abstract class MakeBasic
     /**
      * @var string
      */
-    public $xml = '';
+    public $xml;
     /**
      * @var string
      */
-    protected $versao = '3.10';
+    protected $version;
     /**
      * @var integer
      */
@@ -51,7 +52,7 @@ abstract class MakeBasic
     /**
      * @var \NFePHP\Common\DOMImproved
      */
-    protected $dom;
+    public $dom;
     /**
      * @var integer
      */
@@ -121,9 +122,9 @@ abstract class MakeBasic
      */
     protected $cana;
     /**
-     * @var array
+     * @var DOMElement
      */
-    protected $aTotICMSUFDest = ['vFCPUFDest' => '', 'vICMSUFDest' => '', 'vICMSUFRemet' => ''];
+    protected $infNFeSupl;
     /**
      * @var array of DOMElements
      */
@@ -269,13 +270,9 @@ abstract class MakeBasic
      */
     protected $aProcRef = [];
     /**
-     * @var array of DOMElements
+     * @var stdClass
      */
-    protected $aForDia = [];
-    /**
-     * @var array of DOMElements
-     */
-    protected $aDeduc = [];
+    protected $stdTot;
 
     /**
      * Função construtora cria um objeto DOMDocument
@@ -286,6 +283,31 @@ abstract class MakeBasic
         $this->dom = new Dom('1.0', 'UTF-8');
         $this->dom->preserveWhiteSpace = false;
         $this->dom->formatOutput = false;
+        //elemento totalizador
+        $this->stdTot = new \stdClass();
+        $this->stdTot->vBC = 0;
+        $this->stdTot->vICMS = 0;
+        $this->stdTot->vICMSDeson = 0;
+        $this->stdTot->vFCP = 0;
+        $this->stdTot->vFCPUFDest = 0;
+        $this->stdTot->vICMSUFDest = 0;
+        $this->stdTot->vICMSUFRemet = 0;
+        $this->stdTot->vBCST = 0;
+        $this->stdTot->vST = 0;
+        $this->stdTot->vFCPST = 0;
+        $this->stdTot->vFCPSTRet = 0;
+        $this->stdTot->vProd = 0;
+        $this->stdTot->vFrete = 0;
+        $this->stdTot->vSeg = 0;
+        $this->stdTot->vDesc = 0;
+        $this->stdTot->vII = 0;
+        $this->stdTot->vIPI = 0;
+        $this->stdTot->vIPIDevol = 0;
+        $this->stdTot->vPIS = 0;
+        $this->stdTot->vCOFINS = 0;
+        $this->stdTot->vOutro = 0;
+        $this->stdTot->vNF = 0;
+        $this->stdTot->vTotTrib = 0;
     }
 
     /**
@@ -317,7 +339,16 @@ abstract class MakeBasic
     {
         return $this->mod;
     }
-
+    
+    /**
+     * Chama metodo de montagem. Para compatibilidade apenas.
+     * @return boolean
+     */
+    public function montaNFe()
+    {
+        return $this->monta();
+    }
+    
     /**
      * Método de montagem do xml da NFe
      * essa função retorna TRUE em caso de sucesso ou FALSE se houve erro
@@ -325,7 +356,7 @@ abstract class MakeBasic
      * propriedade publica $xml
      * @return boolean
      */
-    public function montaNFe()
+    public function monta()
     {
         if (count($this->erros) > 0) {
             return false;
@@ -358,6 +389,8 @@ abstract class MakeBasic
         }
         //[28a] tag total (326 W01)
         $this->dom->appChild($this->infNFe, $this->total, 'Falta tag "infNFe"');
+        //mota a tag vol
+        $this->buildVol();
         //[32] tag transp (356 X01)
         $this->dom->appChild($this->infNFe, $this->transp, 'Falta tag "infNFe"');
         //[39a] tag cobr (389 Y01)
@@ -386,139 +419,102 @@ abstract class MakeBasic
     /**
      * Informações da NF-e A01 pai NFe
      * tag NFe/infNFe
-     * @param  string $chave
+     * @param  stdClass $std
      * @return DOMElement
      */
-    public function taginfNFe($chave = '')
+    public function taginfNFe($std)
     {
+        $chave = preg_replace('/[^0-9]/', '', $std->Id);
         $this->infNFe = $this->dom->createElement("infNFe");
         $this->infNFe->setAttribute("Id", 'NFe'.$chave);
         $this->infNFe->setAttribute(
             "versao",
-            $this->versao
+            $std->versao
         );
-        //$this->infNFe->setAttribute("pk_nItem",'');
+        $this->version = $std->versao;
+        if (!empty($std->pk_nItem)) {
+            $this->infNFe->setAttribute("pk_nItem", $std->pk_nItem);
+        }
         $this->chNFe = $chave;
         return $this->infNFe;
     }
-
+    
     /**
      * Informações de identificação da NF-e B01 pai A01
+     * NOTA: Ajustado para NT2016_002_v1.30
      * tag NFe/infNFe/ide
-     * @param  int $cUF
-     * @param  int $cNF
-     * @param  string $natOp
-     * @param  int $indPag
-     * @param  int $mod
-     * @param  int $serie
-     * @param  int $nNF
-     * @param  string $dhEmi
-     * @param  string $dhSaiEnt
-     * @param  int $tpNF
-     * @param  int $idDest
-     * @param  string $cMunFG
-     * @param  int $tpImp
-     * @param  int $tpEmis
-     * @param  int $cDV
-     * @param  int $tpAmb
-     * @param  int $finNFe
-     * @param  int $indFinal
-     * @param  int $indPres
-     * @param  int $procEmi
-     * @param  string $verProc
-     * @param  string $dhCont
-     * @param  string $xJust
+     * @param  stdClass $fields
      * @return DOMElement
      */
-    public function tagide(
-        $cUF,
-        $cNF,
-        $natOp,
-        $indPag,
-        $mod,
-        $serie,
-        $nNF,
-        $dhEmi,
-        $dhSaiEnt,
-        $tpNF,
-        $idDest,
-        $cMunFG,
-        $tpImp,
-        $tpEmis,
-        $cDV,
-        $tpAmb,
-        $finNFe,
-        $indFinal,
-        $indPres,
-        $procEmi = 0,
-        $verProc = '',
-        $dhCont = '',
-        $xJust = ''
-    ) {
-        $this->tpAmb = $tpAmb;
+    public function tagide($std)
+    {
+        $this->tpAmb = $std->tpAmb;
+        $this->mod = $std->mod;
         $identificador = 'B01 <ide> - ';
         $ide = $this->dom->createElement("ide");
         $this->dom->addChild(
             $ide,
             "cUF",
-            $cUF,
+            $std->cUF,
             true,
             $identificador . "Código da UF do emitente do Documento Fiscal"
         );
         $this->dom->addChild(
             $ide,
             "cNF",
-            str_pad($cNF, 8, '0', STR_PAD_LEFT),
+            str_pad($std->cNF, 8, '0', STR_PAD_LEFT),
             true,
             $identificador . "Código Numérico que compõe a Chave de Acesso"
         );
         $this->dom->addChild(
             $ide,
             "natOp",
-            Strings::replaceSpecialsChars(substr(trim($natOp), 0, 60)),
+            Strings::replaceSpecialsChars(substr(trim($std->natOp), 0, 60)),
             true,
             $identificador . "Descrição da Natureza da Operaçãoo"
         );
+        //removido no layout 4.00
+        $std->indPag = isset($std->indPag) ? $std->indPag : null;
         $this->dom->addChild(
             $ide,
             "indPag",
-            $indPag,
-            true,
+            $std->indPag,
+            false,
             $identificador . "Indicador da forma de pagamento"
         );
         $this->dom->addChild(
             $ide,
             "mod",
-            $mod,
+            $std->mod,
             true,
             $identificador . "Código do Modelo do Documento Fiscal"
         );
         $this->dom->addChild(
             $ide,
             "serie",
-            $serie,
+            $std->serie,
             true,
             $identificador . "Série do Documento Fiscal"
         );
         $this->dom->addChild(
             $ide,
             "nNF",
-            $nNF,
+            $std->nNF,
             true,
             $identificador . "Número do Documento Fiscal"
         );
         $this->dom->addChild(
             $ide,
             "dhEmi",
-            $dhEmi,
+            $std->dhEmi,
             true,
             $identificador . "Data e hora de emissão do Documento Fiscal"
         );
-        if ($mod == '55' && !empty($dhSaiEnt)) {
+        if ($std->mod == '55' && !empty($std->dhSaiEnt)) {
             $this->dom->addChild(
                 $ide,
                 "dhSaiEnt",
-                $dhSaiEnt,
+                $std->dhSaiEnt,
                 false,
                 $identificador . "Data e hora de Saída ou da Entrada da Mercadoria/Produto"
             );
@@ -526,104 +522,103 @@ abstract class MakeBasic
         $this->dom->addChild(
             $ide,
             "tpNF",
-            $tpNF,
+            $std->tpNF,
             true,
             $identificador . "Tipo de Operação"
         );
         $this->dom->addChild(
             $ide,
             "idDest",
-            $idDest,
+            $std->idDest,
             true,
             $identificador . "Identificador de local de destino da operação"
         );
         $this->dom->addChild(
             $ide,
             "cMunFG",
-            $cMunFG,
+            $std->cMunFG,
             true,
             $identificador . "Código do Município de Ocorrência do Fato Gerador"
         );
         $this->dom->addChild(
             $ide,
             "tpImp",
-            $tpImp,
+            $std->tpImp,
             true,
             $identificador . "Formato de Impressão do DANFE"
         );
         $this->dom->addChild(
             $ide,
             "tpEmis",
-            $tpEmis,
+            $std->tpEmis,
             true,
             $identificador . "Tipo de Emissão da NF-e"
         );
         $this->dom->addChild(
             $ide,
             "cDV",
-            $cDV,
+            $std->cDV,
             true,
             $identificador . "Dígito Verificador da Chave de Acesso da NF-e"
         );
         $this->dom->addChild(
             $ide,
             "tpAmb",
-            $tpAmb,
+            $std->tpAmb,
             true,
             $identificador . "Identificação do Ambiente"
         );
         $this->dom->addChild(
             $ide,
             "finNFe",
-            $finNFe,
+            $std->finNFe,
             true,
             $identificador . "Finalidade de emissão da NF-e"
         );
         $this->dom->addChild(
             $ide,
             "indFinal",
-            $indFinal,
+            $std->indFinal,
             true,
             $identificador . "Indica operação com Consumidor final"
         );
         $this->dom->addChild(
             $ide,
             "indPres",
-            $indPres,
+            $std->indPres,
             true,
             $identificador . "Indicador de presença do comprador no estabelecimento comercial no momento da operação"
         );
         $this->dom->addChild(
             $ide,
             "procEmi",
-            $procEmi,
+            $std->procEmi,
             true,
             $identificador . "Processo de emissão da NF-e"
         );
         $this->dom->addChild(
             $ide,
             "verProc",
-            $verProc,
+            $std->verProc,
             true,
             $identificador . "Versão do Processo de emissão da NF-e"
         );
-        if ($dhCont != '' && $xJust != '') {
+        if (!empty($std->dhCont) && !empty($std->xJust)) {
             $this->dom->addChild(
                 $ide,
                 "dhCont",
-                $dhCont,
+                $std->dhCont,
                 true,
                 $identificador . "Data e Hora da entrada em contingência"
             );
             $this->dom->addChild(
                 $ide,
                 "xJust",
-                Strings::replaceSpecialsChars(substr(trim($xJust), 0, 256)),
+                Strings::replaceSpecialsChars(substr(trim($std->xJust), 0, 256)),
                 true,
                 $identificador . "Justificativa da entrada em contingência"
             );
         }
-        $this->mod = $mod;
         $this->ide = $ide;
         return $ide;
     }
@@ -631,13 +626,13 @@ abstract class MakeBasic
     /**
      * Chave de acesso da NF-e referenciada BA02 pai BA01
      * tag NFe/infNFe/ide/NFref/refNFe
-     * @param  string $chave
+     * @param  stdClass $std
      * @return DOMElement
      */
-    public function tagrefNFe($chave)
+    public function tagrefNFe($std)
     {
         $num = $this->buildNFref();
-        $refNFe = $this->dom->createElement("refNFe", $chave);
+        $refNFe = $this->dom->createElement("refNFe", $std->refNFe);
         $this->dom->appChild($this->aNFref[$num-1], $refNFe);
         return $refNFe;
     }
@@ -645,148 +640,124 @@ abstract class MakeBasic
     /**
      * Informação da NF modelo 1/1A referenciada BA03 pai BA01
      * tag NFe/infNFe/ide/NFref/NF DOMNode
-     * @param  int $cUF
-     * @param  int $aamm
-     * @param  string $cnpj
-     * @param  int $serie
-     * @param  int $nNF
+     * @param  stdClass $std
      * @return DOMElement
      */
-    public function tagrefNF(
-        $cUF,
-        $aamm,
-        $cnpj,
-        $serie,
-        $nNF
-    ) {
+    public function tagrefNF($std)
+    {
         $identificador = 'BA03 <refNF> - ';
         $num = $this->buildNFref();
         $refNF = $this->dom->createElement("refNF");
         $this->dom->addChild(
             $refNF,
             "cUF",
-            $cUF,
+            $std->cUF,
             true,
             $identificador . "Código da UF do emitente"
         );
         $this->dom->addChild(
             $refNF,
             "AAMM",
-            $aamm,
+            $std->AAMM,
             true,
             $identificador . "Ano e Mês de emissão da NF-e"
         );
         $this->dom->addChild(
             $refNF,
             "CNPJ",
-            $cnpj,
+            $std->CNPJ,
             true,
             $identificador . "CNPJ do emitente"
         );
         $this->dom->addChild(
             $refNF,
             "mod",
-            '01',
+            $std->mod,
             true,
             $identificador . "Modelo do Documento Fiscal"
         );
         $this->dom->addChild(
             $refNF,
             "serie",
-            $serie,
+            $std->serie,
             true,
             $identificador . "Série do Documento Fiscal"
         );
         $this->dom->addChild(
             $refNF,
             "nNF",
-            $nNF,
+            $std->nNF,
             true,
             $identificador . "Número do Documento Fiscal"
         );
         $this->dom->appChild($this->aNFref[$num-1], $refNF);
         return $refNF;
     }
-
+    
     /**
      * Informações da NF de produtor rural referenciada BA10 pai BA01
      * tag NFe/infNFe/ide/NFref/refNFP
-     * @param  int $cUF
-     * @param  int $aamm
-     * @param  string $cnpj
-     * @param  string $cpf
-     * @param  string $ie
-     * @param  int $mod
-     * @param  int $serie
-     * @param  int $nNF
+     * @param  stdClass std
      * @return DOMElement
      */
-    public function tagrefNFP(
-        $cUF,
-        $aamm,
-        $cnpj,
-        $cpf,
-        $ie,
-        $mod,
-        $serie,
-        $nNF
-    ) {
+    public function tagrefNFP($std)
+    {
         $identificador = 'BA10 <refNFP> - ';
         $num = $this->buildNFref();
         $refNFP = $this->dom->createElement("refNFP");
         $this->dom->addChild(
             $refNFP,
             "cUF",
-            $cUF,
+            $std->cUF,
             true,
             $identificador . "Código da UF do emitente"
         );
         $this->dom->addChild(
             $refNFP,
             "AAMM",
-            $aamm,
+            $std->AAMM,
             true,
             $identificador . "AAMM da emissão da NF de produtor"
         );
         $this->dom->addChild(
             $refNFP,
             "CNPJ",
-            $cnpj,
+            $std->CNPJ,
             false,
             $identificador . "Informar o CNPJ do emitente da NF de produtor"
         );
         $this->dom->addChild(
             $refNFP,
             "CPF",
-            $cpf,
+            $std->CPF,
             false,
             $identificador . "Informar o CPF do emitente da NF de produtor"
         );
         $this->dom->addChild(
             $refNFP,
             "IE",
-            $ie,
+            $std->IE,
             true,
             $identificador . "Informar a IE do emitente da NF de Produtor ou o literal 'ISENTO'"
         );
         $this->dom->addChild(
             $refNFP,
             "mod",
-            str_pad($mod, 2, '0', STR_PAD_LEFT),
+            str_pad($std->mod, 2, '0', STR_PAD_LEFT),
             true,
             $identificador . "Modelo do Documento Fiscal"
         );
         $this->dom->addChild(
             $refNFP,
             "serie",
-            $serie,
+            $std->serie,
             true,
             $identificador . "Série do Documento Fiscal"
         );
         $this->dom->addChild(
             $refNFP,
             "nNF",
-            $nNF,
+            $std->nNF,
             true,
             $identificador . "Número do Documento Fiscal"
         );
@@ -797,13 +768,13 @@ abstract class MakeBasic
     /**
      * Chave de acesso do CT-e referenciada BA19 pai BA01
      * tag NFe/infNFe/ide/NFref/refCTe
-     * @param  string $refCTe
+     * @param  stdClass $std
      * @return DOMElement
      */
-    public function tagrefCTe($chave)
+    public function tagrefCTe($std)
     {
         $num = $this->buildNFref();
-        $refCTe = $this->dom->createElement("refCTe", $chave);
+        $refCTe = $this->dom->createElement("refCTe", $std->refCTe);
         $this->dom->appChild($this->aNFref[$num-1], $refCTe);
         return $refCTe;
     }
@@ -811,37 +782,32 @@ abstract class MakeBasic
     /**
      * Informações do Cupom Fiscal referenciado BA20 pai BA01
      * tag NFe/infNFe/ide/NFref/refECF
-     * @param  string $mod
-     * @param  int $nECF
-     * @param  int $nCOO
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagrefECF(
-        $mod,
-        $nECF,
-        $nCOO
-    ) {
+    public function tagrefECF($std)
+    {
         $identificador = 'BA20 <refECF> - ';
         $num = $this->buildNFref();
         $refECF = $this->dom->createElement("refECF");
         $this->dom->addChild(
             $refECF,
             "mod",
-            $mod,
+            $std->mod,
             true,
             $identificador . "Modelo do Documento Fiscal"
         );
         $this->dom->addChild(
             $refECF,
             "nECF",
-            str_pad($nECF, 3, '0', STR_PAD_LEFT),
+            str_pad($std->nECF, 3, '0', STR_PAD_LEFT),
             true,
             $identificador . "Número de ordem sequencial do ECF"
         );
         $this->dom->addChild(
             $refECF,
             "nCOO",
-            str_pad($nCOO, 6, '0', STR_PAD_LEFT),
+            str_pad($std->nCOO, 6, '0', STR_PAD_LEFT),
             true,
             $identificador . "Número do Contador de Ordem de Operação - COO"
         );
@@ -852,90 +818,73 @@ abstract class MakeBasic
     /**
      * Identificação do emitente da NF-e C01 pai A01
      * tag NFe/infNFe/emit
-     * @param  string $cnpj
-     * @param  string $cpf
-     * @param  string $xNome
-     * @param  string $xFant
-     * @param  string $ie
-     * @param  string $iest
-     * @param  string $im
-     * @param  string $cnae
-     * @param  int $crt
+     * @param  stdClass $std
      * @return DOMElement
      */
-    public function tagemit(
-        $cnpj,
-        $cpf,
-        $xNome,
-        $xFant,
-        $ie,
-        $iest,
-        $im,
-        $cnae,
-        $crt
-    ) {
+    public function tagemit($std)
+    {
         $identificador = 'C01 <emit> - ';
         $this->emit = $this->dom->createElement("emit");
         $this->dom->addChild(
             $this->emit,
             "CNPJ",
-            Strings::onlyNumbers($cnpj),
+            Strings::onlyNumbers($std->CNPJ),
             false,
             $identificador . "CNPJ do emitente"
         );
         $this->dom->addChild(
             $this->emit,
             "CPF",
-            Strings::onlyNumbers($cpf),
+            Strings::onlyNumbers($std->CPF),
             false,
             $identificador . "CPF do remetente"
         );
         $this->dom->addChild(
             $this->emit,
             "xNome",
-            Strings::replaceSpecialsChars(substr(trim($xNome), 0, 60)),
+            Strings::replaceSpecialsChars(substr(trim($std->xNome), 0, 60)),
             true,
             $identificador . "Razão Social ou Nome do emitente"
         );
         $this->dom->addChild(
             $this->emit,
             "xFant",
-            Strings::replaceSpecialsChars(substr(trim($xFant), 0, 60)),
+            Strings::replaceSpecialsChars(substr(trim($std->xFant), 0, 60)),
             false,
             $identificador . "Nome fantasia do emitente"
         );
         $this->dom->addChild(
             $this->emit,
             "IE",
-            Strings::onlyNumbers($ie),
+            Strings::onlyNumbers($std->IE),
             true,
             $identificador . "Inscrição Estadual do emitente"
         );
         $this->dom->addChild(
             $this->emit,
             "IEST",
-            Strings::onlyNumbers($iest),
+            Strings::onlyNumbers($std->IEST),
             false,
             $identificador . "IE do Substituto Tributário do emitente"
         );
         $this->dom->addChild(
             $this->emit,
             "IM",
-            Strings::onlyNumbers($im),
+            Strings::onlyNumbers($std->IM),
             false,
             $identificador . "Inscrição Municipal do Prestador de Serviço do emitente"
         );
         $this->dom->addChild(
             $this->emit,
             "CNAE",
-            Strings::onlyNumbers($cnae),
+            Strings::onlyNumbers($std->CNAE),
             false,
             $identificador . "CNAE fiscal do emitente"
         );
         $this->dom->addChild(
             $this->emit,
             "CRT",
-            $crt,
+            $std->CRT,
             true,
             $identificador . "Código de Regime Tributário do emitente"
         );
@@ -945,108 +894,87 @@ abstract class MakeBasic
     /**
      * Endereço do emitente C05 pai C01
      * tag NFe/infNFe/emit/endEmit
-     * @param  string $xLgr
-     * @param  string $nro
-     * @param  string $xCpl
-     * @param  string $xBairro
-     * @param  string $cMun
-     * @param  string $xMun
-     * @param  string $uf
-     * @param  string $cep
-     * @param  string $cPais
-     * @param  string $xPais
-     * @param  string $fone
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagenderEmit(
-        $xLgr,
-        $nro,
-        $xCpl,
-        $xBairro,
-        $cMun,
-        $xMun,
-        $uf,
-        $cep,
-        $cPais,
-        $xPais,
-        $fone
-    ) {
+    public function tagenderEmit($std)
+    {
         $identificador = 'C05 <enderEmit> - ';
         $this->enderEmit = $this->dom->createElement("enderEmit");
         $this->dom->addChild(
             $this->enderEmit,
             "xLgr",
-            Strings::replaceSpecialsChars(substr(trim($xLgr), 0, 60)),
+            Strings::replaceSpecialsChars(substr(trim($std->xLgr), 0, 60)),
             true,
             $identificador . "Logradouro do Endereço do emitente"
         );
         $this->dom->addChild(
             $this->enderEmit,
             "nro",
-            Strings::replaceSpecialsChars(substr(trim($nro), 0, 60)),
+            Strings::replaceSpecialsChars(substr(trim($std->nro), 0, 60)),
             true,
             $identificador . "Número do Endereço do emitente"
         );
         $this->dom->addChild(
             $this->enderEmit,
             "xCpl",
-            Strings::replaceSpecialsChars(substr(trim($xCpl), 0, 60)),
+            Strings::replaceSpecialsChars(substr(trim($std->xCpl), 0, 60)),
             false,
             $identificador . "Complemento do Endereço do emitente"
         );
         $this->dom->addChild(
             $this->enderEmit,
             "xBairro",
-            Strings::replaceSpecialsChars(substr(trim($xBairro), 0, 60)),
+            Strings::replaceSpecialsChars(substr(trim($std->xBairro), 0, 60)),
             true,
             $identificador . "Bairro do Endereço do emitente"
         );
         $this->dom->addChild(
             $this->enderEmit,
             "cMun",
-            Strings::onlyNumbers($cMun),
+            Strings::onlyNumbers($std->cMun),
             true,
             $identificador . "Código do município do Endereço do emitente"
         );
         $this->dom->addChild(
             $this->enderEmit,
             "xMun",
-            Strings::replaceSpecialsChars(substr(trim($xMun), 0, 60)),
+            Strings::replaceSpecialsChars(substr(trim($std->xMun), 0, 60)),
             true,
             $identificador . "Nome do município do Endereço do emitente"
         );
         $this->dom->addChild(
             $this->enderEmit,
             "UF",
-            strtoupper(trim($uf)),
+            strtoupper(trim($std->UF)),
             true,
             $identificador . "Sigla da UF do Endereço do emitente"
         );
         $this->dom->addChild(
             $this->enderEmit,
             "CEP",
-            Strings::onlyNumbers($cep),
+            Strings::onlyNumbers($std->CEP),
             true,
             $identificador . "Código do CEP do Endereço do emitente"
         );
         $this->dom->addChild(
             $this->enderEmit,
             "cPais",
-            Strings::onlyNumbers($cPais),
+            Strings::onlyNumbers($std->cPais),
             false,
             $identificador . "Código do País do Endereço do emitente"
         );
         $this->dom->addChild(
             $this->enderEmit,
             "xPais",
-            Strings::replaceSpecialsChars(substr(trim($xPais), 0, 60)),
+            Strings::replaceSpecialsChars(substr(trim($std->xPais), 0, 60)),
             false,
             $identificador . "Nome do País do Endereço do emitente"
         );
         $this->dom->addChild(
             $this->enderEmit,
             "fone",
-            trim($fone),
+            trim($std->fone),
             false,
             $identificador . "Telefone do Endereço do emitente"
         );
@@ -1058,38 +986,21 @@ abstract class MakeBasic
     /**
      * Identificação do Destinatário da NF-e E01 pai A01
      * tag NFe/infNFe/dest (opcional para modelo 65)
-     * @param  string $cnpj
-     * @param  string $cpf
-     * @param  string $idEstrangeiro
-     * @param  string $xNome
-     * @param  int $indIEDest
-     * @param  string $numIE
-     * @param  string $isUF
-     * @param  string $numIM
-     * @param  string $email
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagdest(
-        $cnpj = '',
-        $cpf = '',
-        $idEstrangeiro = '',
-        $xNome = '',
-        $indIEDest = null,
-        $ie = '',
-        $isUF = '',
-        $im = '',
-        $email = ''
-    ) {
+    public function tagdest($std)
+    {
         $identificador = 'E01 <dest> - ';
         $flagNome = true;//marca se xNome é ou não obrigatório
-        $temIE = $ie != '' && $ie != 'ISENTO'; // Tem inscrição municipal
+        $temIE = $std->IE != '' && $std->IE != 'ISENTO'; // Tem inscrição municipal
         $this->dest = $this->dom->createElement("dest");
-        if (!$temIE && $indIEDest == 1) {
-            $indIEDest = 2;
+        if (!$temIE && $std->indIEDest == 1) {
+            $std->indIEDest = 2;
         }
         if ($this->mod == '65') {
-            $indIEDest = 9;
-            if ($xNome == '') {
+            $std->indIEDest = 9;
+            if ($std->xNome == '') {
                 $flagNome = false;//marca se xNome é ou não obrigatório
             }
         }
@@ -1100,38 +1011,38 @@ abstract class MakeBasic
         $this->dom->addChild(
             $this->dest,
             "CNPJ",
-            Strings::onlyNumbers($cnpj),
+            Strings::onlyNumbers($std->CNPJ),
             false,
             $identificador . "CNPJ do destinatário"
         );
         $this->dom->addChild(
             $this->dest,
             "CPF",
-            Strings::onlyNumbers($cpf),
+            Strings::onlyNumbers($std->CPF),
             false,
             $identificador . "CPF do destinatário"
         );
         $this->dom->addChild(
             $this->dest,
             "idEstrangeiro",
-            Strings::onlyNumbers($idEstrangeiro),
+            Strings::onlyNumbers($std->idEstrangeiro),
             false,
             $identificador . "Identificação do destinatário no caso de comprador estrangeiro"
         );
-        if ($idEstrangeiro != '') {
-            $indIEDest = '9';
+        if ($std->idEstrangeiro != '') {
+            $std->indIEDest = '9';
         }
         $this->dom->addChild(
             $this->dest,
             "xNome",
-            Strings::replaceSpecialsChars(substr(trim($xNome), 0, 60)),
+            Strings::replaceSpecialsChars(substr(trim($std->xNome), 0, 60)),
             $flagNome, //se mod 55 true ou mod 65 false
             $identificador . "Razão Social ou nome do destinatário"
         );
         $this->dom->addChild(
             $this->dest,
             "indIEDest",
-            Strings::onlyNumbers($indIEDest),
+            Strings::onlyNumbers($std->indIEDest),
             true,
             $identificador . "Indicador da IE do Destinatário"
         );
@@ -1139,7 +1050,7 @@ abstract class MakeBasic
             $this->dom->addChild(
                 $this->dest,
                 "IE",
-                Strings::onlyNumbers($ie),
+                Strings::onlyNumbers($std->IE),
                 true,
                 $identificador . "Inscrição Estadual do Destinatário"
             );
@@ -1147,21 +1058,21 @@ abstract class MakeBasic
         $this->dom->addChild(
             $this->dest,
             "ISUF",
-            Strings::onlyNumbers($isUF),
+            Strings::onlyNumbers($std->ISUF),
             false,
             $identificador . "Inscrição na SUFRAMA do destinatário"
         );
         $this->dom->addChild(
             $this->dest,
             "IM",
-            Strings::onlyNumbers($im),
+            Strings::onlyNumbers($std->IM),
             false,
             $identificador . "Inscrição Municipal do Tomador do Serviço do destinatário"
         );
         $this->dom->addChild(
             $this->dest,
             "email",
-            Strings::replaceSpecialsChars(substr(trim($email), 0, 60)),
+            Strings::replaceSpecialsChars(substr(trim($std->email), 0, 60)),
             false,
             $identificador . "Email do destinatário"
         );
@@ -1172,32 +1083,11 @@ abstract class MakeBasic
      * Endereço do Destinatário da NF-e E05 pai E01
      * tag NFe/infNFe/dest/enderDest  (opcional para modelo 65)
      * Os dados do destinatário devem ser inseridos antes deste método
-     * @param  string $xLgr
-     * @param  string $nro
-     * @param  string $xCpl
-     * @param  string $xBairro
-     * @param  string $cMun
-     * @param  string $xMun
-     * @param  string $siglaUF
-     * @param  string $cep
-     * @param  string $cPais
-     * @param  string $xPais
-     * @param  string $fone
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagenderDest(
-        $xLgr = '',
-        $nro = '',
-        $xCpl = '',
-        $xBairro = '',
-        $cMun = '',
-        $xMun = '',
-        $siglaUF = '',
-        $cep = '',
-        $cPais = '',
-        $xPais = '',
-        $fone = ''
-    ) {
+    public function tagenderDest($std)
+    {
         $identificador = 'E05 <enderDest> - ';
         if (empty($this->dest)) {
             throw new RuntimeException('A TAG dest deve ser criada antes do endereço do mesmo.');
@@ -1206,77 +1096,77 @@ abstract class MakeBasic
         $this->dom->addChild(
             $this->enderDest,
             "xLgr",
-            $xLgr,
+            $std->xLgr,
             true,
             $identificador . "Logradouro do Endereço do Destinatário"
         );
         $this->dom->addChild(
             $this->enderDest,
             "nro",
-            $nro,
+            $std->nro,
             true,
             $identificador . "Número do Endereço do Destinatário"
         );
         $this->dom->addChild(
             $this->enderDest,
             "xCpl",
-            $xCpl,
+            $std->xCpl,
             false,
             $identificador . "Complemento do Endereço do Destinatário"
         );
         $this->dom->addChild(
             $this->enderDest,
             "xBairro",
-            $xBairro,
+            $std->xBairro,
             true,
             $identificador . "Bairro do Endereço do Destinatário"
         );
         $this->dom->addChild(
             $this->enderDest,
             "cMun",
-            $cMun,
+            $std->cMun,
             true,
             $identificador . "Código do município do Endereço do Destinatário"
         );
         $this->dom->addChild(
             $this->enderDest,
             "xMun",
-            $xMun,
+            $std->xMun,
             true,
             $identificador . "Nome do município do Endereço do Destinatário"
         );
         $this->dom->addChild(
             $this->enderDest,
             "UF",
-            $siglaUF,
+            $std->UF,
             true,
             $identificador . "Sigla da UF do Endereço do Destinatário"
         );
         $this->dom->addChild(
             $this->enderDest,
             "CEP",
-            $cep,
+            $std->CEP,
             false,
             $identificador . "Código do CEP do Endereço do Destinatário"
         );
         $this->dom->addChild(
             $this->enderDest,
             "cPais",
-            $cPais,
+            $std->cPais,
             false,
             $identificador . "Código do País do Endereço do Destinatário"
         );
         $this->dom->addChild(
             $this->enderDest,
             "xPais",
-            $xPais,
+            $std->xPais,
             false,
             $identificador . "Nome do País do Endereço do Destinatário"
         );
         $this->dom->addChild(
             $this->enderDest,
             "fone",
-            $fone,
+            $std->fone,
             false,
             $identificador . "Telefone do Endereço do Destinatário"
         );
@@ -1291,90 +1181,73 @@ abstract class MakeBasic
     /**
      * Identificação do Local de retirada F01 pai A01
      * tag NFe/infNFe/retirada (opcional)
-     * @param  string $cnpj
-     * @param  string $cpf
-     * @param  string $xLgr
-     * @param  string $nro
-     * @param  string $xCpl
-     * @param  string $xBairro
-     * @param  string $cMun
-     * @param  string $xMun
-     * @param  string $siglaUF
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagretirada(
-        $cnpj = '',
-        $cpf = '',
-        $xLgr = '',
-        $nro = '',
-        $xCpl = '',
-        $xBairro = '',
-        $cMun = '',
-        $xMun = '',
-        $siglaUF = ''
-    ) {
+    public function tagretirada($std)
+    {
         $identificador = 'F01 <retirada> - ';
         $this->retirada = $this->dom->createElement("retirada");
         $this->dom->addChild(
             $this->retirada,
             "CNPJ",
-            $cnpj,
+            $std->CNPJ,
             false,
             $identificador . "CNPJ do Cliente da Retirada"
         );
         $this->dom->addChild(
             $this->retirada,
             "CPF",
-            $cpf,
+            $std->CPF,
             false,
             $identificador . "CPF do Cliente da Retirada"
         );
         $this->dom->addChild(
             $this->retirada,
             "xLgr",
-            $xLgr,
+            $std->xLgr,
             true,
             $identificador . "Logradouro do Endereco do Cliente da Retirada"
         );
         $this->dom->addChild(
             $this->retirada,
             "nro",
-            $nro,
+            $std->nro,
             true,
             $identificador . "Número do Endereco do Cliente da Retirada"
         );
         $this->dom->addChild(
             $this->retirada,
             "xCpl",
-            $xCpl,
+            $std->xCpl,
             false,
             $identificador . "Complemento do Endereco do Cliente da Retirada"
         );
         $this->dom->addChild(
             $this->retirada,
             "xBairro",
-            $xBairro,
+            $std->xBairro,
             true,
             $identificador . "Bairro do Endereco do Cliente da Retirada"
         );
         $this->dom->addChild(
             $this->retirada,
             "cMun",
-            $cMun,
+            $std->cMun,
             true,
             $identificador . "Código do município do Endereco do Cliente da Retirada"
         );
         $this->dom->addChild(
             $this->retirada,
             "xMun",
-            $xMun,
+            $std->xMun,
             true,
             $identificador . "Nome do município do Endereco do Cliente da Retirada"
         );
         $this->dom->addChild(
             $this->retirada,
             "UF",
-            $siglaUF,
+            $std->UF,
             true,
             $identificador . "Sigla da UF do Endereco do Cliente da Retirada"
         );
@@ -1384,90 +1257,73 @@ abstract class MakeBasic
     /**
      * Identificação do Local de entrega G01 pai A01
      * tag NFe/infNFe/entrega (opcional)
-     * @param  string $cnpj
-     * @param  string $cpf
-     * @param  string $xLgr
-     * @param  string $nro
-     * @param  string $xCpl
-     * @param  string $xBairro
-     * @param  string $cMun
-     * @param  string $xMun
-     * @param  string $siglaUF
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagentrega(
-        $cnpj = '',
-        $cpf = '',
-        $xLgr = '',
-        $nro = '',
-        $xCpl = '',
-        $xBairro = '',
-        $cMun = '',
-        $xMun = '',
-        $siglaUF = ''
-    ) {
+    public function tagentrega($std)
+    {
         $identificador = 'G01 <entrega> - ';
         $this->entrega = $this->dom->createElement("entrega");
         $this->dom->addChild(
             $this->entrega,
             "CNPJ",
-            $cnpj,
+            $std->CNPJ,
             false,
             $identificador . "CNPJ do Cliente da Entrega"
         );
         $this->dom->addChild(
             $this->entrega,
             "CPF",
-            $cpf,
+            $std->CPF,
             false,
             $identificador . "CPF do Cliente da Entrega"
         );
         $this->dom->addChild(
             $this->entrega,
             "xLgr",
-            $xLgr,
+            $std->xLgr,
             true,
             $identificador . "Logradouro do Endereco do Cliente da Entrega"
         );
         $this->dom->addChild(
             $this->entrega,
             "nro",
-            $nro,
+            $std->nro,
             true,
             $identificador . "Número do Endereco do Cliente da Entrega"
         );
         $this->dom->addChild(
             $this->entrega,
             "xCpl",
-            $xCpl,
+            $std->xCpl,
             false,
             $identificador . "Complemento do Endereco do Cliente da Entrega"
         );
         $this->dom->addChild(
             $this->entrega,
             "xBairro",
-            $xBairro,
+            $std->xBairro,
             true,
             $identificador . "Bairro do Endereco do Cliente da Entrega"
         );
         $this->dom->addChild(
             $this->entrega,
             "cMun",
-            $cMun,
+            $std->cMun,
             true,
             $identificador . "Código do município do Endereco do Cliente da Entrega"
         );
         $this->dom->addChild(
             $this->entrega,
             "xMun",
-            $xMun,
+            $std->xMun,
             true,
             $identificador . "Nome do município do Endereco do Cliente da Entrega"
         );
         $this->dom->addChild(
             $this->entrega,
             "UF",
-            $siglaUF,
+            $std->UF,
             true,
             $identificador . "Sigla da UF do Endereco do Cliente da Entrega"
         );
@@ -1477,25 +1333,26 @@ abstract class MakeBasic
     /**
      * Pessoas autorizadas para o download do XML da NF-e G50 pai A01
      * tag NFe/infNFe/autXML
-     * @param  string $cnpj
-     * @param  string $cpf
+     * @param stdclass $std
      * @return array
      */
-    public function tagautXML($cnpj = '', $cpf = '')
+    public function tagautXML($std)
     {
         $identificador = 'G50 <autXML> - ';
+        $std->CNPJ = !empty($std->CNPJ) ? $std->CNPJ : null;
+        $std->CPF = !empty($std->CPF) ? $std->CPF : null;
         $autXML = $this->dom->createElement("autXML");
         $this->dom->addChild(
             $autXML,
             "CNPJ",
-            $cnpj,
+            $std->CNPJ,
             false,
             $identificador . "CNPJ do Cliente Autorizado"
         );
         $this->dom->addChild(
             $autXML,
             "CPF",
-            $cpf,
+            $std->CPF,
             false,
             $identificador . "CPF do Cliente Autorizado"
         );
@@ -1504,73 +1361,52 @@ abstract class MakeBasic
     }
 
     /**
-     * Detalhamento de Produtos e Serviços I01 pai H01
-     * tag NFe/infNFe/det[]/prod
-     * @param  string $nItem
-     * @param  string $cProd
-     * @param  string $cEAN
-     * @param  string $xProd
-     * @param  string $NCM
-     * @param  string $EXTIPI
-     * @param  string $CFOP
-     * @param  string $uCom
-     * @param  string $qCom
-     * @param  string $vUnCom
-     * @param  string $vProd
-     * @param  string $cEANTrib
-     * @param  string $uTrib
-     * @param  string $qTrib
-     * @param  string $vUnTrib
-     * @param  string $vFrete
-     * @param  string $vSeg
-     * @param  string $vDesc
-     * @param  string $vOutro
-     * @param  string $indTot
-     * @param  string $xPed
-     * @param  string $nItemPed
-     * @param  string $nFCI
+     * Informações adicionais do produto V01 pai H01
+     * tag NFe/infNFe/det[]/infAdProd
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagprod(
-        $nItem = '',
-        $cProd = '',
-        $cEAN = '',
-        $xProd = '',
-        $NCM = '',
-        $EXTIPI = '',
-        $CFOP = '',
-        $uCom = '',
-        $qCom = '',
-        $vUnCom = '',
-        $vProd = '',
-        $cEANTrib = '',
-        $uTrib = '',
-        $qTrib = '',
-        $vUnTrib = '',
-        $vFrete = '',
-        $vSeg = '',
-        $vDesc = '',
-        $vOutro = '',
-        $indTot = '',
-        $xPed = '',
-        $nItemPed = '',
-        $nFCI = ''
-    ) {
+    public function taginfAdProd($std)
+    {
+        $infAdProd = $this->dom->createElement(
+            "infAdProd",
+            Strings::replaceSpecialsChars(substr(trim($std->infAdProd), 0, 500))
+        );
+        $this->aInfAdProd[$std->item] = $infAdProd;
+        return $infAdProd;
+    }
+    
+    /**
+     * Detalhamento de Produtos e Serviços I01 pai H01
+     * tag NFe/infNFe/det[]/prod
+     * NOTA: Ajustado para NT2016_002_v1.30
+     * @param stdClass $std
+     * @return DOMElement
+     */
+    public function tagprod($std)
+    {
+        //totalizador
+        $this->stdTot->vProd += (float) $std->vProd;
+        $this->stdTot->vFrete += (float) $std->vFrete;
+        $this->stdTot->vSeg += (float) $std->vSeg;
+        $this->stdTot->vDesc += (float) $std->vDesc;
+        $this->stdTot->vOutro += (float) $std->vOutro;
+        
         $identificador = 'I01 <prod> - ';
         $prod = $this->dom->createElement("prod");
         $this->dom->addChild(
             $prod,
             "cProd",
-            $cProd,
+            $std->cProd,
             true,
-            $identificador . "[item $nItem] Código do produto ou serviço"
+            $identificador . "[item $std->item] Código do produto ou serviço"
         );
         $this->dom->addChild(
             $prod,
             "cEAN",
-            $cEAN,
+            $std->cEAN,
             true,
-            $identificador . "[item $nItem] GTIN (Global Trade Item Number) do produto, antigo "
+            $identificador . "[item $std->item] GTIN (Global Trade Item Number) do produto, antigo "
             . "código EAN ou código de barras",
             true
         );
@@ -1580,163 +1416,171 @@ abstract class MakeBasic
         $this->dom->addChild(
             $prod,
             "xProd",
-            $xProd,
+            $std->xProd,
             true,
-            $identificador . "[item $nItem] Descrição do produto ou serviço"
+            $identificador . "[item $std->item] Descrição do produto ou serviço"
         );
         $this->dom->addChild(
             $prod,
             "NCM",
-            $NCM,
+            $std->NCM,
             true,
-            $identificador . "[item $nItem] Código NCM com 8 dígitos ou 2 dígitos (gênero)"
+            $identificador . "[item $std->item] Código NCM com 8 dígitos ou 2 dígitos (gênero)"
+        );
+        //incluido no layout 4.00
+        $std->cBenef = !empty($std->cBenef) ? $std->cBenef : null;
+        $this->dom->addChild(
+            $prod,
+            "cBenef",
+            $std->cBenef,
+            false,
+            $identificador . "[item $std->item] Código de Benefício Fiscal utilizado pela UF"
         );
         $this->dom->addChild(
             $prod,
             "EXTIPI",
-            $EXTIPI,
+            $std->EXTIPI,
             false,
-            $identificador . "[item $nItem] Preencher de acordo com o código EX da TIPI"
+            $identificador . "[item $std->item] Preencher de acordo com o código EX da TIPI"
         );
         $this->dom->addChild(
             $prod,
             "CFOP",
-            $CFOP,
+            $std->CFOP,
             true,
-            $identificador . "[item $nItem] Código Fiscal de Operações e Prestações"
+            $identificador . "[item $std->item] Código Fiscal de Operações e Prestações"
         );
         $this->dom->addChild(
             $prod,
             "uCom",
-            $uCom,
+            $std->uCom,
             true,
-            $identificador . "[item $nItem] Unidade Comercial do produto"
+            $identificador . "[item $std->item] Unidade Comercial do produto"
         );
         $this->dom->addChild(
             $prod,
             "qCom",
-            $qCom,
+            $std->qCom,
             true,
-            $identificador . "[item $nItem] Quantidade Comercial do produto"
+            $identificador . "[item $std->item] Quantidade Comercial do produto"
         );
         $this->dom->addChild(
             $prod,
             "vUnCom",
-            $vUnCom,
+            $std->vUnCom,
             true,
-            $identificador . "[item $nItem] Valor Unitário de Comercialização do produto"
+            $identificador . "[item $std->item] Valor Unitário de Comercialização do produto"
         );
         $this->dom->addChild(
             $prod,
             "vProd",
-            $vProd,
+            $std->vProd,
             true,
-            $identificador . "[item $nItem] Valor Total Bruto dos Produtos ou Serviços"
+            $identificador . "[item $std->item] Valor Total Bruto dos Produtos ou Serviços"
         );
         $this->dom->addChild(
             $prod,
             "cEANTrib",
-            $cEANTrib,
+            $std->cEANTrib,
             true,
-            $identificador . "[item $nItem] GTIN (Global Trade Item Number) da unidade tributável, antigo "
+            $identificador . "[item $std->item] GTIN (Global Trade Item Number) da unidade tributável, antigo "
             . "código EAN ou código de barras",
             true
         );
         $this->dom->addChild(
             $prod,
             "uTrib",
-            $uTrib,
+            $std->uTrib,
             true,
-            $identificador . "[item $nItem] Unidade Tributável do produto"
+            $identificador . "[item $std->item] Unidade Tributável do produto"
         );
         $this->dom->addChild(
             $prod,
             "qTrib",
-            $qTrib,
+            $std->qTrib,
             true,
-            $identificador . "[item $nItem] Quantidade Tributável do produto"
+            $identificador . "[item $std->item] Quantidade Tributável do produto"
         );
         $this->dom->addChild(
             $prod,
             "vUnTrib",
-            $vUnTrib,
+            $std->vUnTrib,
             true,
-            $identificador . "[item $nItem] Valor Unitário de tributação do produto"
+            $identificador . "[item $std->item] Valor Unitário de tributação do produto"
         );
         $this->dom->addChild(
             $prod,
             "vFrete",
-            $vFrete,
+            $std->vFrete,
             false,
-            $identificador . "[item $nItem] Valor Total do Frete"
+            $identificador . "[item $std->item] Valor Total do Frete"
         );
         $this->dom->addChild(
             $prod,
             "vSeg",
-            $vSeg,
+            $std->vSeg,
             false,
-            $identificador . "[item $nItem] Valor Total do Seguro"
+            $identificador . "[item $std->item] Valor Total do Seguro"
         );
         $this->dom->addChild(
             $prod,
             "vDesc",
-            $vDesc,
+            $std->vDesc,
             false,
-            $identificador . "[item $nItem] Valor do Desconto"
+            $identificador . "[item $std->item] Valor do Desconto"
         );
         $this->dom->addChild(
             $prod,
             "vOutro",
-            $vOutro,
+            $std->vOutro,
             false,
-            $identificador . "[item $nItem] Outras despesas acessórias"
+            $identificador . "[item $std->item] Outras despesas acessórias"
         );
         $this->dom->addChild(
             $prod,
             "indTot",
-            $indTot,
+            $std->indTot,
             true,
-            $identificador . "[item $nItem] Indica se valor do Item (vProd) entra no valor total da NF-e (vProd)"
+            $identificador . "[item $std->item] Indica se valor do Item (vProd) entra no valor total da NF-e (vProd)"
         );
         $this->dom->addChild(
             $prod,
             "xPed",
-            $xPed,
+            $std->xPed,
             false,
-            $identificador . "[item $nItem] Número do Pedido de Compra"
+            $identificador . "[item $std->item] Número do Pedido de Compra"
         );
         $this->dom->addChild(
             $prod,
             "nItemPed",
-            $nItemPed,
+            $std->nItemPed,
             false,
-            $identificador . "[item $nItem] Item do Pedido de Compra"
+            $identificador . "[item $std->item] Item do Pedido de Compra"
         );
         $this->dom->addChild(
             $prod,
             "nFCI",
-            $nFCI,
+            $std->nFCI,
             false,
-            $identificador . "[item $nItem] Número de controle da FCI - Ficha de Conteúdo de Importação"
+            $identificador . "[item $std->item] Número de controle da FCI - Ficha de Conteúdo de Importação"
         );
-        $this->aProd[$nItem] = $prod;
+        $this->aProd[$std->item] = $prod;
         return $prod;
     }
-
+    
     /**
      * NVE NOMENCLATURA DE VALOR ADUANEIRO E ESTATÍSTICA
      * Podem ser até 8 NVE's por item
-     * @param  string $nItem
-     * @param  string $texto
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagNVE($nItem = '', $texto = '')
+    public function tagNVE($std)
     {
-        if ($texto == '') {
+        if ($std->NVE == '') {
             return '';
         }
-        $nve = $this->dom->createElement("NVE", $texto);
-        $this->aNVE[$nItem][] = $nve;
+        $nve = $this->dom->createElement("NVE", $std->NVE);
+        $this->aNVE[$std->item][] = $nve;
         return $nve;
     }
 
@@ -1744,225 +1588,199 @@ abstract class MakeBasic
      * Código Especificador da Substituição Tributária – CEST,
      * que identifica a mercadoria sujeita aos regimes de substituição
      * tributária e de antecipação do recolhimento do imposto.
-     * vide NT2015.003
+     * vide NT2015.003  I05C pai
      * tag NFe/infNFe/det[item]/prod/CEST (opcional)
-     * @param  int $nItem
-     * @param  string $codigo
+     * NOTA: Ajustado para NT2016_002_v1.30
+     * @param  stdClass $std
      * @return DOMElement
      */
-    public function tagCEST($nItem, $codigo)
+    public function tagCEST($std)
     {
-        $cest = $this->dom->createElement("CEST", $codigo);
-        $this->aCest[$nItem][] = $cest;
+        $identificador = 'I05b <ctrltST> - ';
+        $ctrltST = $this->dom->createElement("ctrltST");
+        $this->dom->addChild(
+            $ctrltST,
+            "CEST",
+            Strings::onlyNumbers($std->CEST),
+            true,
+            "$identificador [item $std->item] Numero CEST"
+        );
+        //incluido no layout 4.00
+        $std->CNPJFab = !empty($std->CNPJFab) ? $std->CNPJFab : null;
+        $this->dom->addChild(
+            $ctrltST,
+            "indEscala",
+            trim($std->indEscala),
+            false,
+            "$identificador [item $std->item] Indicador de Produção em escala relevante"
+        );
+        //incluido no layout 4.00
+        $std->CNPJFab = !empty($std->CNPJFab) ? $std->CNPJFab : null;
+        $this->dom->addChild(
+            $ctrltST,
+            "CNPJFab",
+            Strings::onlyNumbers($std->CNPJFab),
+            false,
+            "$identificador [item $std->item] CNPJ do Fabricante da Mercadoria,"
+            . "obrigatório para produto em escala NÃO relevante."
+        );
+        $this->aCest[$std->item][] = $std->CEST;
         return $cest;
     }
 
     /**
      * tag NFe/infNFe/det[item]/prod/nRECOPI
-     * @param  int $nItem
-     * @param  string $codigo
+     * @param  stdClass $std
      * @return DOMElement
      */
-    public function tagRECOPI($nItem, $codigo)
+    public function tagRECOPI($std)
     {
-        $recopi = $this->dom->createElement("nRECOPI", $codigo);
-        $this->aRECOPI[$nItem] = $recopi;
+        $recopi = $this->dom->createElement("nRECOPI", $std->nRECOPI);
+        $this->aRECOPI[$std->item] = $recopi;
         return $recopi;
-    }
-
-    /**
-     * Informações adicionais do produto
-     * tag NFe/infNFe/det[]/infAdProd
-     * @param  string $nItem
-     * @param  string $texto
-     * @return DOMElement
-     */
-    public function taginfAdProd($nItem, $texto)
-    {
-        $infAdProd = $this->dom->createElement(
-            "infAdProd",
-            Strings::replaceSpecialsChars(substr(trim($texto), 0, 500))
-        );
-        $this->aInfAdProd[$nItem] = $infAdProd;
-        return $infAdProd;
     }
 
     /**
      * Declaração de Importação I8 pai I01
      * tag NFe/infNFe/det[]/prod/DI
-     * @param  string $nItem
-     * @param  string $nDI
-     * @param  string $dDI
-     * @param  string $xLocDesemb
-     * @param  string $UFDesemb
-     * @param  string $dDesemb
-     * @param  string $tpViaTransp
-     * @param  string $vAFRMM
-     * @param  string $tpIntermedio
-     * @param  string $CNPJ
-     * @param  string $UFTerceiro
-     * @param  string $cExportador
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagDI(
-        $nItem = '',
-        $nDI = '',
-        $dDI = '',
-        $xLocDesemb = '',
-        $UFDesemb = '',
-        $dDesemb = '',
-        $tpViaTransp = '',
-        $vAFRMM = '',
-        $tpIntermedio = '',
-        $CNPJ = '',
-        $UFTerceiro = '',
-        $cExportador = ''
-    ) {
+    public function tagDI($std)
+    {
         $identificador = 'I8 <DI> - ';
         $tDI = $this->dom->createElement("DI");
         $this->dom->addChild(
             $tDI,
             "nDI",
-            $nDI,
+            $std->nDI,
             true,
-            $identificador . "[item $nItem] Número do Documento de Importação (DI, DSI, DIRE, ...)"
+            $identificador . "[item $std->item] Número do Documento de Importação (DI, DSI, DIRE, ...)"
         );
         $this->dom->addChild(
             $tDI,
             "dDI",
-            $dDI,
+            $std->dDI,
             true,
-            $identificador . "[item $nItem] Data de Registro do documento"
+            $identificador . "[item $std->item] Data de Registro do documento"
         );
         $this->dom->addChild(
             $tDI,
             "xLocDesemb",
-            $xLocDesemb,
+            $std->xLocDesemb,
             true,
-            $identificador . "[item $nItem] Local de desembaraço"
+            $identificador . "[item $std->item] Local de desembaraço"
         );
         $this->dom->addChild(
             $tDI,
             "UFDesemb",
-            $UFDesemb,
+            $std->UFDesemb,
             true,
-            $identificador . "[item $nItem] Sigla da UF onde ocorreu o Desembaraço Aduaneiro"
+            $identificador . "[item $std->item] Sigla da UF onde ocorreu o Desembaraço Aduaneiro"
         );
         $this->dom->addChild(
             $tDI,
             "dDesemb",
-            $dDesemb,
+            $std->dDesemb,
             true,
-            $identificador . "[item $nItem] Data do Desembaraço Aduaneiro"
+            $identificador . "[item $std->item] Data do Desembaraço Aduaneiro"
         );
         $this->dom->addChild(
             $tDI,
             "tpViaTransp",
-            $tpViaTransp,
+            $std->tpViaTransp,
             true,
-            $identificador . "[item $nItem] Via de transporte internacional informada na "
-            . "Declaração de Importação (DI)"
+            $identificador . "[item $std->item] Via de transporte internacional "
+                . "informada na Declaração de Importação (DI)"
         );
         $this->dom->addChild(
             $tDI,
             "vAFRMM",
-            $vAFRMM,
+            $std->vAFRMM,
             false,
-            $identificador . "[item $nItem] Valor da AFRMM - Adicional ao Frete para Renovação da Marinha Mercante"
+            $identificador . "[item $std->item] Valor da AFRMM "
+                . "- Adicional ao Frete para Renovação da Marinha Mercante"
         );
         $this->dom->addChild(
             $tDI,
             "tpIntermedio",
-            $tpIntermedio,
+            $std->tpIntermedio,
             true,
-            $identificador . "[item $nItem] Forma de importação quanto a intermediação"
+            $identificador . "[item $std->item] Forma de importação quanto a intermediação"
         );
         $this->dom->addChild(
             $tDI,
             "CNPJ",
-            $CNPJ,
+            $std->CNPJ,
             false,
-            $identificador . "[item $nItem] CNPJ do adquirente ou do encomendante"
+            $identificador . "[item $std->item] CNPJ do adquirente ou do encomendante"
         );
         $this->dom->addChild(
             $tDI,
             "UFTerceiro",
-            $UFTerceiro,
+            $std->UFTerceiro,
             false,
-            $identificador . "[item $nItem] Sigla da UF do adquirente ou do encomendante"
+            $identificador . "[item $std->item] Sigla da UF do adquirente ou do encomendante"
         );
         $this->dom->addChild(
             $tDI,
             "cExportador",
-            $cExportador,
+            $std->cExportador,
             true,
-            $identificador . "[item $nItem] Código do Exportador"
+            $identificador . "[item $std->item] Código do Exportador"
         );
-        $this->aDI[$nItem][$nDI] = $tDI;
+        $this->aDI[$nItem][$std->nDI] = $tDI;
         return $tDI;
     }
 
     /**
      * Adições I25 pai I18
      * tag NFe/infNFe/det[]/prod/DI/adi
-     * @param  string $nItem
-     * @param  string $nDI
-     * @param  string $nAdicao
-     * @param  string $nSeqAdic
-     * @param  string $cFabricante
-     * @param  string $vDescDI
-     * @param  string $nDraw
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagadi(
-        $nItem = '',
-        $nDI = '',
-        $nAdicao = '',
-        $nSeqAdic = '',
-        $cFabricante = '',
-        $vDescDI = '',
-        $nDraw = ''
-    ) {
+    public function tagadi($std)
+    {
         $identificador = 'I25 <adi> - ';
         $adi = $this->dom->createElement("adi");
         $this->dom->addChild(
             $adi,
             "nAdicao",
-            $nAdicao,
+            $std->nAdicao,
             true,
-            $identificador . "[item $nItem] Número da Adição"
+            $identificador . "[item $std->item] Número da Adição"
         );
         $this->dom->addChild(
             $adi,
             "nSeqAdic",
-            $nSeqAdic,
+            $std->nSeqAdic,
             true,
-            $identificador . "[item $nItem] Número sequencial do item dentro da Adição"
+            $identificador . "[item $std->item] Número sequencial do item dentro da Adição"
         );
         $this->dom->addChild(
             $adi,
             "cFabricante",
-            $cFabricante,
+            $std->cFabricante,
             true,
-            $identificador . "[item $nItem] Código do fabricante estrangeiro"
+            $identificador . "[item $std->item] Código do fabricante estrangeiro"
         );
         $this->dom->addChild(
             $adi,
             "vDescDI",
-            $vDescDI,
+            $std->vDescDI,
             false,
-            $identificador . "[item $nItem] Valor do desconto do item da DI Adição"
+            $identificador . "[item $std->item] Valor do desconto do item da DI Adição"
         );
         $this->dom->addChild(
             $adi,
             "nDraw",
-            $nDraw,
+            $std->nDraw,
             false,
-            $identificador . "[item $nItem] Número do ato concessório de Drawback"
+            $identificador . "[item $std->item] Número do ato concessório de Drawback"
         );
-        $this->aAdi[$nItem][$nDI][] = $adi;
+        $this->aAdi[$std->item][$std->nDI][] = $adi;
         //colocar a adi em seu DI respectivo
-        $nodeDI = $this->aDI[$nItem][$nDI];
+        $nodeDI = $this->aDI[$std->item][$std->nDI];
         $this->dom->appChild($nodeDI, $adi);
         $this->aDI[$nItem][$nDI] = $nodeDI;
         return $adi;
@@ -1971,423 +1789,520 @@ abstract class MakeBasic
     /**
      * Grupo de informações de exportação para o item I50 pai I01
      * tag NFe/infNFe/det[]/prod/detExport
-     * @param  string $nItem
-     * @param  string $nDraw
-     * @param  string $exportInd
-     * @param  string $nRE
-     * @param  string $chNFe
-     * @param  string $qExport
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagdetExport(
-        $nItem = '',
-        $nDraw = '',
-        $nRE = '',
-        $chNFe = '',
-        $qExport = ''
-    ) {
+    public function tagdetExport($std)
+    {
         $identificador = 'I50 <detExport> - ';
         $detExport = $this->dom->createElement("detExport");
         $this->dom->addChild(
             $detExport,
             "nDraw",
-            $nDraw,
+            $std->nDraw,
             false,
-            $identificador . "[item $nItem] Número do ato concessório de Drawback"
+            $identificador . "[item $std->item] Número do ato concessório de Drawback"
         );
-        $exportInd = $this->dom->createElement("exportInd");
-        $this->dom->addChild(
-            $exportInd,
-            "nRE",
-            $nRE,
-            true,
-            $identificador . "[item $nItem] Número do Registro de Exportação"
-        );
-        $this->dom->addChild(
-            $exportInd,
-            "chNFe",
-            $chNFe,
-            true,
-            $identificador . "[item $nItem] Chave de Acesso da NF-e recebida para exportação"
-        );
-        $this->dom->addChild(
-            $exportInd,
-            "qExport",
-            $qExport,
-            true,
-            $identificador . "[item $nItem] Quantidade do item realmente exportado"
-        );
-        $detExport->appendChild($exportInd);
-        $this->aDetExport[$nItem] = $detExport;
+        if (!empty($std->nRE)) {
+            $exportInd = $this->dom->createElement("exportInd");
+            $this->dom->addChild(
+                $exportInd,
+                "nRE",
+                $std->nRE,
+                true,
+                $identificador . "[item $std->item] Número do Registro de Exportação"
+            );
+            $this->dom->addChild(
+                $exportInd,
+                "chNFe",
+                $std->chNFe,
+                true,
+                $identificador . "[item $std->item] Chave de Acesso da NF-e recebida para exportação"
+            );
+            $this->dom->addChild(
+                $exportInd,
+                "qExport",
+                $std->qExport,
+                true,
+                $identificador . "[item $std->item] Quantidade do item realmente exportado"
+            );
+            $detExport->appendChild($exportInd);
+        }
+        $this->aDetExport[$std->item] = $detExport;
         return $detExport;
     }
 
     /**
-     * Detalhamento de Veículos novos J01 pai I90
-     * tag NFe/infNFe/det[]/prod/veicProd (opcional)
-     * @param  string $nItem
-     * @param  string $tpOp
-     * @param  string $chassi
-     * @param  string $cCor
-     * @param  string $xCor
-     * @param  string $pot
-     * @param  string $cilin
-     * @param  string $pesoL
-     * @param  string $pesoB
-     * @param  string $nSerie
-     * @param  string $tpComb
-     * @param  string $nMotor
-     * @param  string $CMT
-     * @param  string $dist
-     * @param  string $anoMod
-     * @param  string $anoFab
-     * @param  string $tpPint
-     * @param  string $tpVeic
-     * @param  string $espVeic
-     * @param  string $VIN
-     * @param  string $condVeic
-     * @param  string $cMod
-     * @param  string $cCorDENATRAN
-     * @param  string $lota
-     * @param  string $tpRest
+     * Rastreabilidade do produto podem ser até 500 por item TAG I80 pai I01
+     * NOTA: Ajustado para NT2016_002_v1.00
+     * tag NFe/infNFe/det[]/prod/rastro
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagveicProd(
-        $nItem = '',
-        $tpOp = '',
-        $chassi = '',
-        $cCor = '',
-        $xCor = '',
-        $pot = '',
-        $cilin = '',
-        $pesoL = '',
-        $pesoB = '',
-        $nSerie = '',
-        $tpComb = '',
-        $nMotor = '',
-        $CMT = '',
-        $dist = '',
-        $anoMod = '',
-        $anoFab = '',
-        $tpPint = '',
-        $tpVeic = '',
-        $espVeic = '',
-        $VIN = '',
-        $condVeic = '',
-        $cMod = '',
-        $cCorDENATRAN = '',
-        $lota = '',
-        $tpRest = ''
-    ) {
+    public function tagRastro($std)
+    {
+        $identificador = 'I80 <rastro> - ';
+        $rastro = $this->dom->createElement("rastro");
+        $this->dom->addChild(
+            $rastro,
+            "nLote",
+            substr(trim($std->nLote), 0, 20),
+            true,
+            $identificador . "[item $std->item] Número do lote"
+        );
+        $this->dom->addChild(
+            $rastro,
+            "qLote",
+            number_format($std->qLote, 3, '.', ''),
+            true,
+            $identificador . "[item $std->item] Quantidade do lote"
+        );
+        $this->dom->addChild(
+            $rastro,
+            "dFab",
+            trim($std->dFab),
+            true,
+            $identificador . "[item $std->item] Data de fabricação"
+        );
+        $this->dom->addChild(
+            $rastro,
+            "dVal",
+            trim($std->dVal),
+            true,
+            $identificador . "[item $std->item] Data da validade"
+        );
+        $this->dom->addChild(
+            $rastro,
+            "cAgreg",
+            Strings::onlyNumbers($std->cAgreg),
+            false,
+            $identificador . "[item $std->item] Código de Agregação"
+        );
+        $this->aRastro[$std->item][] = $rastro;
+        return $rastro;
+    }
+    
+    /**
+     * Detalhamento de Veículos novos J01 pai I90
+     * tag NFe/infNFe/det[]/prod/veicProd (opcional)
+     * @param stdClass std
+     * @return DOMElement
+     */
+    public function tagveicProd($std)
+    {
         $identificador = 'J01 <veicProd> - ';
         $veicProd = $this->dom->createElement("veicProd");
         $this->dom->addChild(
             $veicProd,
             "tpOp",
-            $tpOp,
+            $std->tpOp,
             true,
-            "$identificador [item $nItem] Tipo da operação do veículo"
+            "$identificador [item $std->item] Tipo da operação do veículo"
         );
         $this->dom->addChild(
             $veicProd,
             "chassi",
-            $chassi,
+            $std->chassi,
             true,
-            "$identificador [item $nItem] Chassi do veículo"
+            "$identificador [item $std->item] Chassi do veículo"
         );
         $this->dom->addChild(
             $veicProd,
             "cCor",
-            $cCor,
+            $std->cCor,
             true,
-            "$identificador [item $nItem] Cor do veículo"
+            "$identificador [item $std->item] Cor do veículo"
         );
         $this->dom->addChild(
             $veicProd,
             "xCor",
-            $xCor,
+            $std->xCor,
             true,
-            "$identificador [item $nItem] Descrição da Cor do veículo"
+            "$identificador [item $std->item] Descrição da Cor do veículo"
         );
         $this->dom->addChild(
             $veicProd,
             "pot",
-            $pot,
+            $std->pot,
             true,
-            "$identificador [item $nItem] Potência Motor (CV) do veículo"
+            "$identificador [item $std->item] Potência Motor (CV) do veículo"
         );
         $this->dom->addChild(
             $veicProd,
             "cilin",
-            $cilin,
+            $std->cilin,
             true,
-            "$identificador [item $nItem] Cilindradas do veículo"
+            "$identificador [item $std->item] Cilindradas do veículo"
         );
         $this->dom->addChild(
             $veicProd,
             "pesoL",
-            $pesoL,
+            $std->pesoL,
             true,
-            "$identificador [item $nItem] Peso Líquido do veículo"
+            "$identificador [item $std->item] Peso Líquido do veículo"
         );
         $this->dom->addChild(
             $veicProd,
             "pesoB",
-            $pesoB,
+            $std->pesoB,
             true,
-            "$identificador [item $nItem] Peso Bruto do veículo"
+            "$identificador [item $std->item] Peso Bruto do veículo"
         );
         $this->dom->addChild(
             $veicProd,
             "nSerie",
-            $nSerie,
+            $std->nSerie,
             true,
-            "$identificador [item $nItem] Serial (série) do veículo"
+            "$identificador [item $std->item] Serial (série) do veículo"
         );
         $this->dom->addChild(
             $veicProd,
             "tpComb",
-            $tpComb,
+            $std->tpComb,
             true,
-            "$identificador [item $nItem] Tipo de combustível do veículo"
+            "$identificador [item $std->item] Tipo de combustível do veículo"
         );
         $this->dom->addChild(
             $veicProd,
             "nMotor",
-            $nMotor,
+            $std->nMotor,
             true,
-            "$identificador [item $nItem] Número de Motor do veículo"
+            "$identificador [item $std->item] Número de Motor do veículo"
         );
         $this->dom->addChild(
             $veicProd,
             "CMT",
-            $CMT,
+            $std->CMT,
             true,
-            "$identificador [item $nItem] Capacidade Máxima de Tração do veículo"
+            "$identificador [item $std->item] Capacidade Máxima de Tração do veículo"
         );
         $this->dom->addChild(
             $veicProd,
             "dist",
-            $dist,
+            $std->dist,
             true,
-            "$identificador [item $nItem] Distância entre eixos do veículo"
+            "$identificador [item $std->item] Distância entre eixos do veículo"
         );
         $this->dom->addChild(
             $veicProd,
             "anoMod",
-            $anoMod,
+            $std->anoMod,
             true,
-            "$identificador [item $nItem] Ano Modelo de Fabricação do veículo"
+            "$identificador [item $std->item] Ano Modelo de Fabricação do veículo"
         );
         $this->dom->addChild(
             $veicProd,
             "anoFab",
-            $anoFab,
+            $std->anoFab,
             true,
-            "$identificador [item $nItem] Ano de Fabricação do veículo"
+            "$identificador [item $std->item] Ano de Fabricação do veículo"
         );
         $this->dom->addChild(
             $veicProd,
             "tpPint",
-            $tpPint,
+            $std->tpPint,
             true,
-            "$identificador [item $nItem] Tipo de Pintura do veículo"
+            "$identificador [item $std->item] Tipo de Pintura do veículo"
         );
         $this->dom->addChild(
             $veicProd,
             "tpVeic",
-            $tpVeic,
+            $std->tpVeic,
             true,
-            "$identificador [item $nItem] Tipo de Veículo"
+            "$identificador [item $std->item] Tipo de Veículo"
         );
         $this->dom->addChild(
             $veicProd,
             "espVeic",
-            $espVeic,
+            $std->espVeic,
             true,
-            "$identificador [item $nItem] Espécie de Veículo"
+            "$identificador [item $std->item] Espécie de Veículo"
         );
         $this->dom->addChild(
             $veicProd,
             "VIN",
-            $VIN,
+            $std->VIN,
             true,
-            "$identificador [item $nItem] Condição do VIN do veículo"
+            "$identificador [item $std->item] Condição do VIN do veículo"
         );
         $this->dom->addChild(
             $veicProd,
             "condVeic",
-            $condVeic,
+            $std->condVeic,
             true,
-            "$identificador [item $nItem] Condição do Veículo"
+            "$identificador [item $std->item] Condição do Veículo"
         );
         $this->dom->addChild(
             $veicProd,
             "cMod",
-            $cMod,
+            $std->cMod,
             true,
-            "$identificador [item $nItem] Código Marca Modelo do veículo"
+            "$identificador [item $std->item] Código Marca Modelo do veículo"
         );
         $this->dom->addChild(
             $veicProd,
             "cCorDENATRAN",
-            $cCorDENATRAN,
+            $std->cCorDENATRAN,
             true,
-            "$identificador [item $nItem] Código da Cor do veículo"
+            "$identificador [item $std->item] Código da Cor do veículo"
         );
         $this->dom->addChild(
             $veicProd,
             "lota",
-            $lota,
+            $std->lota,
             true,
-            "$identificador [item $nItem] Capacidade máxima de lotação do veículo"
+            "$identificador [item $std->item] Capacidade máxima de lotação do veículo"
         );
         $this->dom->addChild(
             $veicProd,
             "tpRest",
-            $tpRest,
+            $std->tpRest,
             true,
-            "$identificador [item $nItem] Restrição do veículo"
+            "$identificador [item $std->item] Restrição do veículo"
         );
-        $this->aVeicProd[$nItem] = $veicProd;
+        $this->aVeicProd[$std->item] = $veicProd;
         return $veicProd;
+    }
+
+    /**
+     * Detalhamento de medicamentos K01 pai I90
+     * NOTA: Ajustado para NT2016_002_v1.00
+     * tag NFe/infNFe/det[]/prod/med (opcional)
+     * @param stdClass $std
+     * @return DOMElement
+     */
+    public function tagmed($std)
+    {
+        $identificador = 'K01 <med> - ';
+        $med = $this->dom->createElement("med");
+        //incluso no layout 4.00
+        $std->cProdANVISA = !empty($std->cProdANVISA) ? $std->cProdANVISA : null;
+        $this->dom->addChild(
+            $med,
+            "cProdANVISA",
+            $std->cProdANVISA,
+            false,
+            "$identificador [item $std->item] Numero ANVISA"
+        );
+        //removido no layout 4.00
+        $std->nLote = !empty($std->nLote) ? $std->nLote : null;
+        $this->dom->addChild(
+            $med,
+            "nLote",
+            $std->nLote,
+            false,
+            "$identificador [item $std->item] Número do Lote de medicamentos ou de matérias-primas farmacêuticas"
+        );
+        //removido no layout 4.00
+        $std->qLote = !empty($std->qLote) ? $std->qLote : null;
+        $this->dom->addChild(
+            $med,
+            "qLote",
+            $std->qLote,
+            false,
+            "$identificador [item $std->item] Quantidade de produto no Lote de medicamentos "
+                . "ou de matérias-primas farmacêuticas"
+        );
+        //removido no layout 4.00
+        $std->dFab = !empty($std->dFab) ? $std->dFab : null;
+        $this->dom->addChild(
+            $med,
+            "dFab",
+            $std->dFab,
+            false,
+            "$identificador [item $std->item] Data de fabricação"
+        );
+        //removido no layout 4.00
+        $std->dVal = !empty($std->dVal) ? $std->dVal : null;
+        $this->dom->addChild(
+            $med,
+            "dVal",
+            $std->dVal,
+            false,
+            "$identificador [item $std->item] Data de validade"
+        );
+        $this->dom->addChild(
+            $med,
+            "vPMC",
+            number_format($std->vPMC, 2, '.', ''),
+            true,
+            "$identificador [item $std->item] Preço máximo consumidor"
+        );
+        $this->aMed[$std->item] = $med;
+        return $med;
     }
 
     /**
      * Detalhamento de armas L01 pai I90
      * tag NFe/infNFe/det[]/prod/arma (opcional)
-     * @param  string $nItem
-     * @param  string $tpArma
-     * @param  string $nSerie
-     * @param  string $nCano
-     * @param  string $descr
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagarma(
-        $nItem = '',
-        $tpArma = '',
-        $nSerie = '',
-        $nCano = '',
-        $descr = ''
-    ) {
+    public function tagarma($std)
+    {
         $identificador = 'L01 <arma> - ';
         $arma = $this->dom->createElement("arma");
         $this->dom->addChild(
             $arma,
             "tpArma",
-            $tpArma,
+            $std->tpArma,
             true,
-            "$identificador [item $nItem] Indicador do tipo de arma de fogo"
+            "$identificador [item $std->item] Indicador do tipo de arma de fogo"
         );
         $this->dom->addChild(
             $arma,
             "nSerie",
-            $nSerie,
+            $std->nSerie,
             true,
-            "$identificador [item $nItem] Número de série da arma"
+            "$identificador [item $std->item] Número de série da arma"
         );
         $this->dom->addChild(
             $arma,
             "nCano",
-            $nCano,
+            $std->nCano,
             true,
-            "$identificador [item $nItem] Número de série do cano"
+            "$identificador [item $std->item] Número de série do cano"
         );
         $this->dom->addChild(
             $arma,
             "descr",
-            $descr,
+            $std->descr,
             true,
-            "$identificador [item $nItem] Descrição completa da arma, compreendendo: calibre, marca, capacidade, "
+            "$identificador [item $std->item] Descrição completa da arma, compreendendo: calibre, marca, capacidade, "
             . "tipo de funcionamento, comprimento e demais elementos que "
             . "permitam a sua perfeita identificação."
         );
-        $this->aArma[$nItem] = $arma;
+        $this->aArma[$std->item] = $arma;
         return $arma;
     }
 
     /**
      * Detalhamento de combustiveis L101 pai I90
      * tag NFe/infNFe/det[]/prod/comb (opcional)
-     * @param  string $nItem
-     * @param  string $cProdANP
-     * @param  string $pMixGN
-     * @param  string $codif
-     * @param  string $qTemp
-     * @param  string $ufCons
-     * @param  string $qBCProd
-     * @param  string $vAliqProd
-     * @param  string $vCIDE
+     * LA|cProdANP|pMixGN|CODIF|qTemp|UFCons|
+     *
+     * NOTA: Ajustado para NT2016_002_v1.30
+     * LA|cProdANP|descANP|pGLP|pGNn|pGNi|vPart|CODIF|qTemp|UFCons|
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagcomb(
-        $nItem = '',
-        $cProdANP = '',
-        $pMixGN = '',
-        $codif = '',
-        $qTemp = '',
-        $ufCons = '',
-        $qBCProd = '',
-        $vAliqProd = '',
-        $vCIDE = ''
-    ) {
+    public function tagcomb($std)
+    {
         $identificador = 'L101 <comb> - ';
         $comb = $this->dom->createElement("comb");
         $this->dom->addChild(
             $comb,
             "cProdANP",
-            $cProdANP,
+            $std->cProdANP,
             true,
-            "$identificador [item $nItem] Código de produto da ANP"
+            "$identificador [item $std->item] Código de produto da ANP"
         );
+        //removido do layout 4.00
+        $std->pMixGN = !empty($std->pMixGN) ? $std->pMixGN : null;
         $this->dom->addChild(
             $comb,
             "pMixGN",
-            $pMixGN,
+            $std->pMixGN,
             false,
-            "$identificador [item $nItem] Percentual de Gás Natural para o produto GLP (cProdANP=210203001)"
+            "$identificador [item $std->item] Percentual de Gás Natural para o produto GLP (cProdANP=210203001)"
+        );
+        //incluso no layout 4.00
+        $std->descANP = !empty($std->descANP) ? $std->descANP : null;
+        $this->dom->addChild(
+            $comb,
+            "descANP",
+            $std->descANP,
+            false,
+            "$identificador [item $std->item] Utilizar a descrição de produtos do "
+            . "Sistema de Informações de Movimentação de Produtos - "
+            . "SIMP (http://www.anp.gov.br/simp/"
+        );
+        //incluso no layout 4.00
+        $std->pGLP = !empty($std->pGLP) ? $std->pGLP : null;
+        $this->dom->addChild(
+            $comb,
+            "pGLP",
+            $std->pGLP,
+            false,
+            "$identificador [item $std->item] Percentual do GLP derivado do "
+            . "petróleo no produto GLP (cProdANP=210203001) 1v4"
+        );
+        //incluso no layout 4.00
+        $std->pGNn = !empty($std->pGNn) ? $std->pGNn : null;
+        $this->dom->addChild(
+            $comb,
+            "pGNn",
+            $std->pGNn,
+            false,
+            "$identificador [item $std->item] Percentual de Gás Natural Nacional"
+            . " – GLGNn para o produto GLP (cProdANP=210203001) 1v4"
+        );
+        //incluso no layout 4.00
+        $std->pGNi = !empty($std->pGNi) ? $std->pGNi : null;
+        $this->dom->addChild(
+            $comb,
+            "pGNi",
+            $std->pGNi,
+            false,
+            "$identificador [item $std->item] Percentual de Gás Natural Importado"
+            . " – GLGNi para o produto GLP (cProdANP=210203001) 1v4"
+        );
+        //incluso no layout 4.00
+        $std->vPart = !empty($std->vPart) ? $std->vPart : null;
+        $this->dom->addChild(
+            $comb,
+            "vPart",
+            $std->vPart,
+            false,
+            "$identificador [item $std->item] Valor de partida (cProdANP=210203001) "
         );
         $this->dom->addChild(
             $comb,
             "CODIF",
-            $codif,
+            $std->CODIF,
             false,
-            "[item $nItem] Código de autorização / registro do CODIF"
+            "[item $std->item] Código de autorização / registro do CODIF"
         );
         $this->dom->addChild(
             $comb,
             "qTemp",
-            $qTemp,
+            $std->qTemp,
             false,
-            "$identificador [item $nItem] Quantidade de combustível faturada à temperatura ambiente."
+            "$identificador [item $std->item] Quantidade de combustível faturada à temperatura ambiente."
         );
-        $this->dom->addChild($comb, "UFCons", $ufCons, true, "[item $nItem] Sigla da UF de consumo");
-        if ($qBCProd != "") {
+        $this->dom->addChild(
+            $comb,
+            "UFCons",
+            $std->UFCons,
+            true,
+            "[item $std->item] Sigla da UF de consumo"
+        );
+        if ($std->qBCProd != "") {
             $tagCIDE = $this->dom->createElement("CIDE");
             $this->dom->addChild(
                 $tagCIDE,
                 "qBCProd",
-                $qBCProd,
+                $std->qBCProd,
                 true,
-                "$identificador [item $nItem] BC da CIDE"
+                "$identificador [item $std->item] BC da CIDE"
             );
             $this->dom->addChild(
                 $tagCIDE,
                 "vAliqProd",
-                $vAliqProd,
+                $std->vAliqProd,
                 true,
-                "$identificador [item $nItem] Valor da alíquota da CIDE"
+                "$identificador [item $std->item] Valor da alíquota da CIDE"
             );
             $this->dom->addChild(
                 $tagCIDE,
                 "vCIDE",
-                $vCIDE,
+                $std->vCIDE,
                 true,
-                "$identificador [item $nItem] Valor da CIDE"
+                "$identificador [item $std->item] Valor da CIDE"
             );
             $this->dom->appChild($comb, $tagCIDE);
         }
-        $this->aComb[$nItem] = $comb;
+        $this->aComb[$std->item] = $comb;
         return $comb;
     }
 
@@ -2396,173 +2311,136 @@ abstract class MakeBasic
      * encerrante que permite o controle sobre as operações de venda de combustíveis
      * LA11 pai LA01
      * tag NFe/infNFe/det[]/prod/comb/encerrante (opcional)
-     * @param  string $nItem
-     * @param  string $nBico
-     * @param  string $nBomba
-     * @param  string $nTanque
-     * @param  string $vEncIni
-     * @param  string $vEncFin
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagencerrante($nItem = '', $nBico = '', $nBomba = '', $nTanque = '', $vEncIni = '', $vEncFin = '')
+    public function tagencerrante($std)
     {
         $identificador = 'LA11 <encerrante> - ';
         $encerrante = $this->dom->createElement("encerrante");
         $this->dom->addChild(
             $encerrante,
             "nBico",
-            $nBico,
+            $std->nBico,
             true,
-            "$identificador [item $nItem] Número de identificação do bico utilizado no abastecimento"
+            "$identificador [item $std->item] Número de identificação do bico utilizado no abastecimento"
         );
         $this->dom->addChild(
             $encerrante,
             "nBomba",
-            $nBomba,
+            $std->nBomba,
             false,
-            "$identificador [item $nItem] Número de identificação da bomba ao qual o bico está interligado"
+            "$identificador [item $std->item] Número de identificação da bomba ao qual o bico está interligado"
         );
         $this->dom->addChild(
             $encerrante,
             "nTanque",
-            $nTanque,
+            $std->nTanque,
             true,
-            "$identificador [item $nItem] Número de identificação do tanque ao qual o bico está interligado"
+            "$identificador [item $std->item] Número de identificação do tanque ao qual o bico está interligado"
         );
         $this->dom->addChild(
             $encerrante,
             "vEncIni",
-            $vEncIni,
+            $std->vEncIni,
             true,
-            "$identificador [item $nItem] Valor do Encerrante no início do abastecimento"
+            "$identificador [item $std->item] Valor do Encerrante no início do abastecimento"
         );
         $this->dom->addChild(
             $encerrante,
             "vEncFin",
-            $vEncFin,
+            $std->vEncFin,
             true,
-            "$identificador [item $nItem] Valor do Encerrante no final do abastecimento"
+            "$identificador [item $std->item] Valor do Encerrante no final do abastecimento"
         );
-        $this->aEncerrante[$nItem] = $encerrante;
+        $this->aEncerrante[$std->item] = $encerrante;
         return $encerrante;
     }
 
     /**
      * Impostos com o valor total tributado M01 pai H01
      * tag NFe/infNFe/det[]/imposto
-     * @param  string $nItem
-     * @param  string $vTotTrib
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagimposto($nItem = '', $vTotTrib = '')
+    public function tagimposto($std)
     {
+        //totalizador dos valores dos itens
+        $this->stdTot->vTotTrib += (float) $std->vTotTrib;
+        
         $identificador = 'M01 <imposto> - ';
         $imposto = $this->dom->createElement("imposto");
         $this->dom->addChild(
             $imposto,
             "vTotTrib",
-            $vTotTrib,
+            $std->vTotTrib,
             false,
-            "$identificador [item $nItem] Valor aproximado total de tributos federais, estaduais e municipais."
+            "$identificador [item $std->item] Valor aproximado total de tributos federais, estaduais e municipais."
         );
-        $this->aImposto[$nItem] = $imposto;
+        $this->aImposto[$std->item] = $imposto;
         return $imposto;
     }
 
     /**
      * Informações do ICMS da Operação própria e ST N01 pai M01
      * tag NFe/infNFe/det[]/imposto/ICMS
-     * @param  string $nItem
-     * @param  string $orig
-     * @param  string $CST
-     * @param  string $modBC
-     * @param  string $pRedBC
-     * @param  string $vBC
-     * @param  string $pICMS
-     * @param  string $vICMS
-     * @param  string $vICMSDeson
-     * @param  string $motDesICMS
-     * @param  string $modBCST
-     * @param  string $pMVAST
-     * @param  string $pRedBCST
-     * @param  string $vBCST
-     * @param  string $pICMSST
-     * @param  string $vICMSST
-     * @param  string $pDif
-     * @param  string $vICMSDif
-     * @param  string $vICMSOp
-     * @param  string $vBCSTRet
-     * @param  string $vICMSSTRet
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagICMS(
-        $nItem = '',
-        $orig = '',
-        $CST = '',
-        $modBC = '',
-        $pRedBC = '',
-        $vBC = '',
-        $pICMS = '',
-        $vICMS = '',
-        $vICMSDeson = '',
-        $motDesICMS = '',
-        $modBCST = '',
-        $pMVAST = '',
-        $pRedBCST = '',
-        $vBCST = '',
-        $pICMSST = '',
-        $vICMSST = '',
-        $pDif = '',
-        $vICMSDif = '',
-        $vICMSOp = '',
-        $vBCSTRet = '',
-        $vICMSSTRet = ''
-    ) {
+    public function tagICMS($std)
+    {
+        //totalizador
+        $this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
+        $this->stdTot->vICMS += (float) !empty($std->vICMS) ? $std->vICMS : 0;
+        $this->stdTot->vICMSDeson += (float) !empty($std->vICMSDeson) ? $std->vICMSDeson : 0;
+        $this->stdTot->vBCST += (float) !empty($std->vBCST) ? $std->vBCST : 0;
+        $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
+        
         $identificador = 'N01 <ICMSxx> - ';
-        switch ($CST) {
+        switch ($std->CST) {
             case '00':
                 $icms = $this->dom->createElement("ICMS00");
                 $this->dom->addChild(
                     $icms,
                     'orig',
-                    $orig,
+                    $std->orig,
                     true,
-                    "$identificador [item $nItem] Origem da mercadoria"
+                    "$identificador [item $std->item] Origem da mercadoria"
                 );
                 $this->dom->addChild(
                     $icms,
                     'CST',
-                    $CST,
+                    $std->CST,
                     true,
-                    "$identificador [item $nItem] Tributação do ICMS = 00"
+                    "$identificador [item $std->item] Tributação do ICMS = 00"
                 );
                 $this->dom->addChild(
                     $icms,
                     'modBC',
-                    $modBC,
+                    $std->modBC,
                     true,
-                    "$identificador [item $nItem] Modalidade de determinação da BC do ICMS"
+                    "$identificador [item $std->item] Modalidade de determinação da BC do ICMS"
                 );
                 $this->dom->addChild(
                     $icms,
                     'vBC',
-                    $vBC,
+                    $std->vBC,
                     true,
-                    "$identificador [item $nItem] Valor da BC do ICMS"
+                    "$identificador [item $std->item] Valor da BC do ICMS"
                 );
                 $this->dom->addChild(
                     $icms,
                     'pICMS',
-                    $pICMS,
+                    $std->pICMS,
                     true,
-                    "$identificador [item $nItem] Alíquota do imposto"
+                    "$identificador [item $std->item] Alíquota do imposto"
                 );
                 $this->dom->addChild(
                     $icms,
                     'vICMS',
-                    $vICMS,
+                    $std->vICMS,
                     true,
-                    "$identificador [item $nItem] Valor do ICMS"
+                    "$identificador [item $std->item] Valor do ICMS"
                 );
                 break;
             case '10':
@@ -2570,86 +2448,86 @@ abstract class MakeBasic
                 $this->dom->addChild(
                     $icms,
                     'orig',
-                    $orig,
+                    $std->orig,
                     true,
-                    "$identificador [item $nItem] Origem da mercadoria"
+                    "$identificador [item $std->item] Origem da mercadoria"
                 );
                 $this->dom->addChild(
                     $icms,
                     'CST',
-                    $CST,
+                    $std->CST,
                     true,
-                    "$identificador [item $nItem] Tributação do ICMS = 10"
+                    "$identificador [item $std->item] Tributação do ICMS = 10"
                 );
                 $this->dom->addChild(
                     $icms,
                     'modBC',
-                    $modBC,
+                    $std->modBC,
                     true,
-                    "$identificador [item $nItem] Modalidade de determinação da BC do ICMS"
+                    "$identificador [item $std->item] Modalidade de determinação da BC do ICMS"
                 );
                 $this->dom->addChild(
                     $icms,
                     'vBC',
-                    $vBC,
+                    $std->vBC,
                     true,
-                    "$identificador [item $nItem] Valor da BC do ICMS"
+                    "$identificador [item $std->item] Valor da BC do ICMS"
                 );
                 $this->dom->addChild(
                     $icms,
                     'pICMS',
-                    $pICMS,
+                    $std->pICMS,
                     true,
-                    "$identificador [item $nItem] Alíquota do imposto"
+                    "$identificador [item $std->item] Alíquota do imposto"
                 );
                 $this->dom->addChild(
                     $icms,
                     'vICMS',
-                    $vICMS,
+                    $std->vICMS,
                     true,
-                    "$identificador [item $nItem] Valor do ICMS"
+                    "$identificador [item $std->item] Valor do ICMS"
                 );
                 $this->dom->addChild(
                     $icms,
                     'modBCST',
-                    $modBCST,
+                    $std->modBCST,
                     true,
-                    "$identificador [item $nItem] Modalidade de determinação da BC do ICMS ST"
+                    "$identificador [item $std->item] Modalidade de determinação da BC do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icms,
                     'pMVAST',
-                    $pMVAST,
+                    $std->pMVAST,
                     false,
-                    "$identificador [item $nItem] Percentual da margem de valor Adicionado do ICMS ST"
+                    "$identificador [item $std->item] Percentual da margem de valor Adicionado do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icms,
                     'pRedBCST',
-                    $pRedBCST,
+                    $std->pRedBCST,
                     false,
-                    "$identificador [item $nItem] Percentual da Redução de BC do ICMS ST"
+                    "$identificador [item $std->item] Percentual da Redução de BC do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icms,
                     'vBCST',
-                    $vBCST,
+                    $std->vBCST,
                     true,
-                    "$identificador [item $nItem] Valor da BC do ICMS ST"
+                    "$identificador [item $std->item] Valor da BC do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icms,
                     'pICMSST',
-                    $pICMSST,
+                    $std->pICMSST,
                     true,
-                    "$identificador [item $nItem] Alíquota do imposto do ICMS ST"
+                    "$identificador [item $std->item] Alíquota do imposto do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icms,
                     'vICMSST',
-                    $vICMSST,
+                    $std->vICMSST,
                     true,
-                    "$identificador [item $nItem] Valor do ICMS ST"
+                    "$identificador [item $std->item] Valor do ICMS ST"
                 );
                 break;
             case '20':
@@ -2657,65 +2535,65 @@ abstract class MakeBasic
                 $this->dom->addChild(
                     $icms,
                     'orig',
-                    $orig,
+                    $std->orig,
                     true,
-                    "$identificador [item $nItem] Origem da mercadoria"
+                    "$identificador [item $std->item] Origem da mercadoria"
                 );
                 $this->dom->addChild(
                     $icms,
                     'CST',
-                    $CST,
+                    $std->CST,
                     true,
-                    "$identificador [item $nItem] Tributação do ICMS = 20"
+                    "$identificador [item $std->item] Tributação do ICMS = 20"
                 );
                 $this->dom->addChild(
                     $icms,
                     'modBC',
-                    $modBC,
+                    $std->modBC,
                     true,
-                    "$identificador [item $nItem] Modalidade de determinação da BC do ICMS"
+                    "$identificador [item $std->item] Modalidade de determinação da BC do ICMS"
                 );
                 $this->dom->addChild(
                     $icms,
                     'pRedBC',
-                    $pRedBC,
+                    $std->pRedBC,
                     true,
-                    "$identificador [item $nItem] Percentual da Redução de BC"
+                    "$identificador [item $std->item] Percentual da Redução de BC"
                 );
                 $this->dom->addChild(
                     $icms,
                     'vBC',
-                    $vBC,
+                    $std->vBC,
                     true,
-                    "$identificador [item $nItem] Valor da BC do ICMS"
+                    "$identificador [item $std->item] Valor da BC do ICMS"
                 );
                 $this->dom->addChild(
                     $icms,
                     'pICMS',
-                    $pICMS,
+                    $std->pICMS,
                     true,
-                    "$identificador [item $nItem] Alíquota do imposto"
+                    "$identificador [item $std->item] Alíquota do imposto"
                 );
                 $this->dom->addChild(
                     $icms,
                     'vICMS',
-                    $vICMS,
+                    $std->vICMS,
                     true,
-                    "$identificador [item $nItem] Valor do ICMS"
+                    "$identificador [item $std->item] Valor do ICMS"
                 );
                 $this->dom->addChild(
                     $icms,
                     'vICMSDeson',
-                    $vICMSDeson,
+                    $std->vICMSDeson,
                     false,
-                    "$identificador [item $nItem] Valor do ICMS desonerado"
+                    "$identificador [item $std->item] Valor do ICMS desonerado"
                 );
                 $this->dom->addChild(
                     $icms,
                     'motDesICMS',
-                    $motDesICMS,
+                    $std->motDesICMS,
                     false,
-                    "$identificador [item $nItem] Motivo da desoneração do ICMS"
+                    "$identificador [item $std->item] Motivo da desoneração do ICMS"
                 );
                 break;
             case '30':
@@ -2723,72 +2601,72 @@ abstract class MakeBasic
                 $this->dom->addChild(
                     $icms,
                     'orig',
-                    $orig,
+                    $std->orig,
                     true,
-                    "$identificador [item $nItem] Origem da mercadoria"
+                    "$identificador [item $std->item] Origem da mercadoria"
                 );
                 $this->dom->addChild(
                     $icms,
                     'CST',
-                    $CST,
+                    $std->CST,
                     true,
-                    "$identificador [item $nItem] Tributação do ICMS = 30"
+                    "$identificador [item $std->item] Tributação do ICMS = 30"
                 );
                 $this->dom->addChild(
                     $icms,
                     'modBCST',
-                    $modBCST,
+                    $std->modBCST,
                     true,
-                    "$identificador [item $nItem] Modalidade de determinação da BC do ICMS ST"
+                    "$identificador [item $std->item] Modalidade de determinação da BC do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icms,
                     'pMVAST',
-                    $pMVAST,
+                    $std->pMVAST,
                     false,
-                    "$identificador [item $nItem] Percentual da margem de valor Adicionado do ICMS ST"
+                    "$identificador [item $std->item] Percentual da margem de valor Adicionado do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icms,
                     'pRedBCST',
-                    $pRedBCST,
+                    $std->pRedBCST,
                     false,
-                    "$identificador [item $nItem] Percentual da Redução de BC do ICMS ST"
+                    "$identificador [item $std->item] Percentual da Redução de BC do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icms,
                     'vBCST',
-                    $vBCST,
+                    $std->vBCST,
                     true,
-                    "$identificador [item $nItem] Valor da BC do ICMS ST"
+                    "$identificador [item $std->item] Valor da BC do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icms,
                     'pICMSST',
-                    $pICMSST,
+                    $std->pICMSST,
                     true,
-                    "$identificador [item $nItem] Alíquota do imposto do ICMS ST"
+                    "$identificador [item $std->item] Alíquota do imposto do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icms,
                     'vICMSST',
-                    $vICMSST,
+                    $std->vICMSST,
                     true,
-                    "$identificador [item $nItem] Valor do ICMS ST"
+                    "$identificador [item $std->item] Valor do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icms,
                     'vICMSDeson',
-                    $vICMSDeson,
+                    $std->vICMSDeson,
                     false,
-                    "$identificador [item $nItem] Valor do ICMS desonerado"
+                    "$identificador [item $std->item] Valor do ICMS desonerado"
                 );
                 $this->dom->addChild(
                     $icms,
                     'motDesICMS',
-                    $motDesICMS,
+                    $std->motDesICMS,
                     false,
-                    "$identificador [item $nItem] Motivo da desoneração do ICMS"
+                    "$identificador [item $std->item] Motivo da desoneração do ICMS"
                 );
                 break;
             case '40':
@@ -2798,30 +2676,30 @@ abstract class MakeBasic
                 $this->dom->addChild(
                     $icms,
                     'orig',
-                    $orig,
+                    $std->orig,
                     true,
-                    "$identificador [item $nItem] Origem da mercadoria"
+                    "$identificador [item $std->item] Origem da mercadoria"
                 );
                 $this->dom->addChild(
                     $icms,
                     'CST',
-                    $CST,
+                    $std->CST,
                     true,
-                    "$identificador [item $nItem] Tributação do ICMS $CST"
+                    "$identificador [item $std->item] Tributação do ICMS $CST"
                 );
                 $this->dom->addChild(
                     $icms,
                     'vICMSDeson',
-                    $vICMSDeson,
+                    $std->vICMSDeson,
                     false,
-                    "$identificador [item $nItem] Valor do ICMS desonerado"
+                    "$identificador [item $std->item] Valor do ICMS desonerado"
                 );
                 $this->dom->addChild(
                     $icms,
                     'motDesICMS',
-                    $motDesICMS,
+                    $std->motDesICMS,
                     false,
-                    "$identificador [item $nItem] Motivo da desoneração do ICMS"
+                    "$identificador [item $std->item] Motivo da desoneração do ICMS"
                 );
                 break;
             case '51':
@@ -2829,72 +2707,72 @@ abstract class MakeBasic
                 $this->dom->addChild(
                     $icms,
                     'orig',
-                    $orig,
+                    $std->orig,
                     true,
-                    "$identificador [item $nItem] Origem da mercadoria"
+                    "$identificador [item $std->item] Origem da mercadoria"
                 );
                 $this->dom->addChild(
                     $icms,
                     'CST',
-                    $CST,
+                    $std->CST,
                     true,
-                    "$identificador [item $nItem] Tributação do ICMS = 51"
+                    "$identificador [item $std->item] Tributação do ICMS = 51"
                 );
                 $this->dom->addChild(
                     $icms,
                     'modBC',
-                    $modBC,
+                    $std->modBC,
                     false,
-                    "$identificador [item $nItem] Modalidade de determinação da BC do ICMS"
+                    "$identificador [item $std->item] Modalidade de determinação da BC do ICMS"
                 );
                 $this->dom->addChild(
                     $icms,
                     'pRedBC',
-                    $pRedBC,
+                    $std->pRedBC,
                     false,
-                    "$identificador [item $nItem] Percentual da Redução de BC"
+                    "$identificador [item $std->item] Percentual da Redução de BC"
                 );
                 $this->dom->addChild(
                     $icms,
                     'vBC',
-                    $vBC,
+                    $std->vBC,
                     false,
-                    "$identificador [item $nItem] Valor da BC do ICMS"
+                    "$identificador [item $std->item] Valor da BC do ICMS"
                 );
                 $this->dom->addChild(
                     $icms,
                     'pICMS',
-                    $pICMS,
+                    $std->pICMS,
                     false,
-                    "$identificador [item $nItem] Alíquota do imposto"
+                    "$identificador [item $std->item] Alíquota do imposto"
                 );
                 $this->dom->addChild(
                     $icms,
                     'vICMSOp',
-                    $vICMSOp,
+                    $std->vICMSOp,
                     false,
-                    "$identificador [item $nItem] Valor do ICMS da Operação"
+                    "$identificador [item $std->item] Valor do ICMS da Operação"
                 );
                 $this->dom->addChild(
                     $icms,
                     'pDif',
-                    $pDif,
+                    $std->pDif,
                     false,
-                    "$identificador [item $nItem] Percentual do diferimento"
+                    "$identificador [item $std->item] Percentual do diferimento"
                 );
                 $this->dom->addChild(
                     $icms,
                     'vICMSDif',
-                    $vICMSDif,
+                    $std->vICMSDif,
                     false,
-                    "$identificador [item $nItem] Valor do ICMS diferido"
+                    "$identificador [item $std->item] Valor do ICMS diferido"
                 );
                 $this->dom->addChild(
                     $icms,
                     'vICMS',
-                    $vICMS,
+                    $std->vICMS,
                     false,
-                    "$identificador [item $nItem] Valor do ICMS realmente devido"
+                    "$identificador [item $std->item] Valor do ICMS realmente devido"
                 );
                 break;
             case '60':
@@ -2902,30 +2780,30 @@ abstract class MakeBasic
                 $this->dom->addChild(
                     $icms,
                     'orig',
-                    $orig,
+                    $std->orig,
                     true,
-                    "$identificador [item $nItem] Origem da mercadoria"
+                    "$identificador [item $std->item] Origem da mercadoria"
                 );
                 $this->dom->addChild(
                     $icms,
                     'CST',
-                    $CST,
+                    $std->CST,
                     true,
-                    "$identificador [item $nItem] Tributação do ICMS = 60"
+                    "$identificador [item $std->item] Tributação do ICMS = 60"
                 );
                 $this->dom->addChild(
                     $icms,
                     'vBCSTRet',
-                    $vBCSTRet,
+                    $std->vBCSTRet,
                     false,
-                    "$identificador [item $nItem] Valor da BC do ICMS ST retido"
+                    "$identificador [item $std->item] Valor da BC do ICMS ST retido"
                 );
                 $this->dom->addChild(
                     $icms,
                     'vICMSSTRet',
-                    $vICMSSTRet,
+                    $std->vICMSSTRet,
                     false,
-                    "$identificador [item $nItem] Valor do ICMS ST retido"
+                    "$identificador [item $std->item] Valor do ICMS ST retido"
                 );
                 break;
             case '70':
@@ -2933,107 +2811,107 @@ abstract class MakeBasic
                 $this->dom->addChild(
                     $icms,
                     'orig',
-                    $orig,
+                    $std->orig,
                     true,
-                    "$identificador [item $nItem] Origem da mercadoria"
+                    "$identificador [item $std->item] Origem da mercadoria"
                 );
                 $this->dom->addChild(
                     $icms,
                     'CST',
-                    $CST,
+                    $std->CST,
                     true,
-                    "$identificador [item $nItem] Tributação do ICMS = 70"
+                    "$identificador [item $std->item] Tributação do ICMS = 70"
                 );
                 $this->dom->addChild(
                     $icms,
                     'modBC',
-                    $modBC,
+                    $std->modBC,
                     true,
-                    "$identificador [item $nItem] Modalidade de determinação da BC do ICMS"
+                    "$identificador [item $std->item] Modalidade de determinação da BC do ICMS"
                 );
                 $this->dom->addChild(
                     $icms,
                     'pRedBC',
-                    $pRedBC,
+                    $std->pRedBC,
                     true,
-                    "$identificador [item $nItem] Percentual da Redução de BC"
+                    "$identificador [item $std->item] Percentual da Redução de BC"
                 );
                 $this->dom->addChild(
                     $icms,
                     'vBC',
-                    $vBC,
+                    $std->vBC,
                     true,
-                    "$identificador [item $nItem] Valor da BC do ICMS"
+                    "$identificador [item $std->item] Valor da BC do ICMS"
                 );
                 $this->dom->addChild(
                     $icms,
                     'pICMS',
-                    $pICMS,
+                    $std->pICMS,
                     true,
-                    "$identificador [item $nItem] Alíquota do imposto"
+                    "$identificador [item $std->item] Alíquota do imposto"
                 );
                 $this->dom->addChild(
                     $icms,
                     'vICMS',
-                    $vICMS,
+                    $std->vICMS,
                     true,
-                    "$identificador [item $nItem] Valor do ICMS"
+                    "$identificador [item $std->item] Valor do ICMS"
                 );
                 $this->dom->addChild(
                     $icms,
                     'modBCST',
-                    $modBCST,
+                    $std->modBCST,
                     true,
-                    "$identificador [item $nItem] Modalidade de determinação da BC do ICMS ST"
+                    "$identificador [item $std->item] Modalidade de determinação da BC do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icms,
                     'pMVAST',
-                    $pMVAST,
+                    $std->pMVAST,
                     false,
-                    "$identificador [item $nItem] Percentual da margem de valor Adicionado do ICMS ST"
+                    "$identificador [item $std->item] Percentual da margem de valor Adicionado do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icms,
                     'pRedBCST',
-                    $pRedBCST,
+                    $std->pRedBCST,
                     false,
-                    "$identificador [item $nItem] Percentual da Redução de BC do ICMS ST"
+                    "$identificador [item $std->item] Percentual da Redução de BC do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icms,
                     'vBCST',
-                    $vBCST,
+                    $std->vBCST,
                     true,
-                    "$identificador [item $nItem] Valor da BC do ICMS ST"
+                    "$identificador [item $std->item] Valor da BC do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icms,
                     'pICMSST',
-                    $pICMSST,
+                    $std->pICMSST,
                     true,
-                    "$identificador [item $nItem] Alíquota do imposto do ICMS ST"
+                    "$identificador [item $std->item] Alíquota do imposto do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icms,
                     'vICMSST',
-                    $vICMSST,
+                    $std->vICMSST,
                     true,
-                    "$identificador [item $nItem] Valor do ICMS ST"
+                    "$identificador [item $std->item] Valor do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icms,
                     'vICMSDeson',
-                    $vICMSDeson,
+                    $std->vICMSDeson,
                     false,
-                    "$identificador [item $nItem] Valor do ICMS desonerado"
+                    "$identificador [item $std->item] Valor do ICMS desonerado"
                 );
                 $this->dom->addChild(
                     $icms,
                     'motDesICMS',
-                    $motDesICMS,
+                    $std->motDesICMS,
                     false,
-                    "$identificador [item $nItem] Motivo da desoneração do ICMS"
+                    "$identificador [item $std->item] Motivo da desoneração do ICMS"
                 );
                 break;
             case '90':
@@ -3041,107 +2919,107 @@ abstract class MakeBasic
                 $this->dom->addChild(
                     $icms,
                     'orig',
-                    $orig,
+                    $std->orig,
                     true,
-                    "$identificador [item $nItem] Origem da mercadoria"
+                    "$identificador [item $std->item] Origem da mercadoria"
                 );
                 $this->dom->addChild(
                     $icms,
                     'CST',
-                    $CST,
+                    $std->CST,
                     true,
-                    "$identificador [item $nItem] Tributação do ICMS = 90"
+                    "$identificador [item $std->item] Tributação do ICMS = 90"
                 );
                 $this->dom->addChild(
                     $icms,
                     'modBC',
-                    $modBC,
+                    $std->modBC,
                     true,
-                    "$identificador [item $nItem] Modalidade de determinação da BC do ICMS"
+                    "$identificador [item $std->item] Modalidade de determinação da BC do ICMS"
                 );
                 $this->dom->addChild(
                     $icms,
                     'vBC',
-                    $vBC,
+                    $std->vBC,
                     true,
-                    "$identificador [item $nItem] Valor da BC do ICMS"
+                    "$identificador [item $std->item] Valor da BC do ICMS"
                 );
                 $this->dom->addChild(
                     $icms,
                     'pRedBC',
-                    $pRedBC,
+                    $std->pRedBC,
                     false,
-                    "$identificador [item $nItem] Percentual da Redução de BC"
+                    "$identificador [item $std->item] Percentual da Redução de BC"
                 );
                 $this->dom->addChild(
                     $icms,
                     'pICMS',
-                    $pICMS,
+                    $std->pICMS,
                     true,
-                    "$identificador [item $nItem] Alíquota do imposto"
+                    "$identificador [item $std->item] Alíquota do imposto"
                 );
                 $this->dom->addChild(
                     $icms,
                     'vICMS',
-                    $vICMS,
+                    $std->vICMS,
                     true,
-                    "$identificador [item $nItem] Valor do ICMS"
+                    "$identificador [item $std->item] Valor do ICMS"
                 );
                 $this->dom->addChild(
                     $icms,
                     'modBCST',
-                    $modBCST,
+                    $std->modBCST,
                     true,
-                    "$identificador [item $nItem] Modalidade de determinação da BC do ICMS ST"
+                    "$identificador [item $std->item] Modalidade de determinação da BC do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icms,
                     'pMVAST',
-                    $pMVAST,
+                    $std->pMVAST,
                     false,
-                    "$identificador [item $nItem] Percentual da margem de valor Adicionado do ICMS ST"
+                    "$identificador [item $std->item] Percentual da margem de valor Adicionado do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icms,
                     'pRedBCST',
-                    $pRedBCST,
+                    $std->pRedBCST,
                     false,
-                    "$identificador [item $nItem] Percentual da Redução de BC do ICMS ST"
+                    "$identificador [item $std->item] Percentual da Redução de BC do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icms,
                     'vBCST',
-                    $vBCST,
+                    $std->vBCST,
                     true,
-                    "$identificador [item $nItem] Valor da BC do ICMS ST"
+                    "$identificador [item $std->item] Valor da BC do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icms,
                     'pICMSST',
-                    $pICMSST,
+                    $std->pICMSST,
                     true,
-                    "$identificador [item $nItem] Alíquota do imposto do ICMS ST"
+                    "$identificador [item $std->item] Alíquota do imposto do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icms,
                     'vICMSST',
-                    $vICMSST,
+                    $std->vICMSST,
                     true,
-                    "$identificador [item $nItem] Valor do ICMS ST"
+                    "$identificador [item $std->item] Valor do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icms,
                     'vICMSDeson',
-                    $vICMSDeson,
+                    $std->vICMSDeson,
                     false,
-                    "$identificador [item $nItem] Valor do ICMS desonerado"
+                    "$identificador [item $std->item] Valor do ICMS desonerado"
                 );
                 $this->dom->addChild(
                     $icms,
                     'motDesICMS',
-                    $motDesICMS,
+                    $std->motDesICMS,
                     false,
-                    "$identificador [item $nItem] Motivo da desoneração do ICMS"
+                    "$identificador [item $std->item] Motivo da desoneração do ICMS"
                 );
                 break;
         }
@@ -3149,7 +3027,7 @@ abstract class MakeBasic
         if (isset($icms)) {
             $tagIcms->appendChild($icms);
         }
-        $this->aICMS[$nItem] = $tagIcms;
+        $this->aICMS[$std->item] = $tagIcms;
         return $tagIcms;
     }
 
@@ -3199,105 +3077,105 @@ abstract class MakeBasic
             'orig',
             $orig,
             true,
-            "[item $nItem] Origem da mercadoria"
+            "[item $std->item] Origem da mercadoria"
         );
         $this->dom->addChild(
             $icmsPart,
             'CST',
             $cst,
             true,
-            "[item $nItem] Tributação do ICMS 10 ou 90"
+            "[item $std->item] Tributação do ICMS 10 ou 90"
         );
         $this->dom->addChild(
             $icmsPart,
             'modBC',
             $modBC,
             true,
-            "[item $nItem] Modalidade de determinação da BC do ICMS"
+            "[item $std->item] Modalidade de determinação da BC do ICMS"
         );
         $this->dom->addChild(
             $icmsPart,
             'vBC',
             $vBC,
             true,
-            "[item $nItem] Valor da BC do ICMS"
+            "[item $std->item] Valor da BC do ICMS"
         );
         $this->dom->addChild(
             $icmsPart,
             'pRedBC',
             $pRedBC,
             false,
-            "[item $nItem] Percentual da Redução de BC"
+            "[item $std->item] Percentual da Redução de BC"
         );
         $this->dom->addChild(
             $icmsPart,
             'pICMS',
             $pICMS,
             true,
-            "[item $nItem] Alíquota do imposto"
+            "[item $std->item] Alíquota do imposto"
         );
         $this->dom->addChild(
             $icmsPart,
             'vICMS',
             $vICMS,
             true,
-            "[item $nItem] Valor do ICMS"
+            "[item $std->item] Valor do ICMS"
         );
         $this->dom->addChild(
             $icmsPart,
             'modBCST',
             $modBCST,
             true,
-            "[item $nItem] Modalidade de determinação da BC do ICMS ST"
+            "[item $std->item] Modalidade de determinação da BC do ICMS ST"
         );
         $this->dom->addChild(
             $icmsPart,
             'pMVAST',
             $pMVAST,
             false,
-            "[item $nItem] Percentual da margem de valor Adicionado do ICMS ST"
+            "[item $std->item] Percentual da margem de valor Adicionado do ICMS ST"
         );
         $this->dom->addChild(
             $icmsPart,
             'pRedBCST',
             $pRedBCST,
             false,
-            "[item $nItem] Percentual da Redução de BC do ICMS ST"
+            "[item $std->item] Percentual da Redução de BC do ICMS ST"
         );
         $this->dom->addChild(
             $icmsPart,
             'vBCST',
             $vBCST,
             true,
-            "[item $nItem] Valor da BC do ICMS ST"
+            "[item $std->item] Valor da BC do ICMS ST"
         );
         $this->dom->addChild(
             $icmsPart,
             'pICMSST',
             $pICMSST,
             true,
-            "[item $nItem] Alíquota do imposto do ICMS ST"
+            "[item $std->item] Alíquota do imposto do ICMS ST"
         );
         $this->dom->addChild(
             $icmsPart,
             'vICMSST',
             $vICMSST,
             true,
-            "[item $nItem] Valor do ICMS ST"
+            "[item $std->item] Valor do ICMS ST"
         );
         $this->dom->addChild(
             $icmsPart,
             'pBCOp',
             $pBCOp,
             true,
-            "[item $nItem] Percentual da BC operação própria"
+            "[item $std->item] Percentual da BC operação própria"
         );
         $this->dom->addChild(
             $icmsPart,
             'UFST',
             $ufST,
             true,
-            "[item $nItem] UF para qual é devido o ICMS ST"
+            "[item $std->item] UF para qual é devido o ICMS ST"
         );
         //caso exista a tag aICMS[$nItem] inserir nela caso contrario criar
         if (!empty($this->aICMS[$nItem])) {
@@ -3337,42 +3215,42 @@ abstract class MakeBasic
             'orig',
             $orig,
             true,
-            "[item $nItem] Origem da mercadoria"
+            "[item $std->item] Origem da mercadoria"
         );
         $this->dom->addChild(
             $icmsST,
             'CST',
             $cst,
             true,
-            "[item $nItem] Tributação do ICMS 41"
+            "[item $std->item] Tributação do ICMS 41"
         );
         $this->dom->addChild(
             $icmsST,
             'vBCSTRet',
             $vBCSTRet,
             true,
-            "[item $nItem] Valor do BC do ICMS ST retido na UF remetente"
+            "[item $std->item] Valor do BC do ICMS ST retido na UF remetente"
         );
         $this->dom->addChild(
             $icmsST,
             'vICMSSTRet',
             $vICMSSTRet,
             false,
-            "[item $nItem] Valor do ICMS ST retido na UF remetente"
+            "[item $std->item] Valor do ICMS ST retido na UF remetente"
         );
         $this->dom->addChild(
             $icmsST,
             'vBCSTDest',
             $vBCSTDest,
             true,
-            "[item $nItem] Valor da BC do ICMS ST da UF destino"
+            "[item $std->item] Valor da BC do ICMS ST da UF destino"
         );
         $this->dom->addChild(
             $icmsST,
             'vICMSSTDest',
             $vICMSSTDest,
             true,
-            "[item $nItem] Valor do ICMS ST da UF destino"
+            "[item $std->item] Valor do ICMS ST da UF destino"
         );
         //caso exista a tag aICMS[$nItem] inserir nela caso contrario criar
         if (!empty($this->aICMS[$nItem])) {
@@ -3408,25 +3286,31 @@ abstract class MakeBasic
      * @return DOMElement
      */
     public function tagICMSSN(
-        $nItem = '',
-        $orig = '',
-        $csosn = '',
-        $modBC = '',
-        $vBC = '',
-        $pRedBC = '',
-        $pICMS = '',
-        $vICMS = '',
-        $pCredSN = '',
-        $vCredICMSSN = '',
-        $modBCST = '',
-        $pMVAST = '',
-        $pRedBCST = '',
-        $vBCST = '',
-        $pICMSST = '',
-        $vICMSST = '',
-        $vBCSTRet = '',
-        $vICMSSTRet = ''
+        $nItem,
+        $orig,
+        $csosn,
+        $modBC = null,
+        $vBC = null,
+        $pRedBC = null,
+        $pICMS = null,
+        $vICMS = null,
+        $pCredSN = null,
+        $vCredICMSSN = null,
+        $modBCST = null,
+        $pMVAST = null,
+        $pRedBCST = null,
+        $vBCST = null,
+        $pICMSST = null,
+        $vICMSST = null,
+        $vBCSTRet = null,
+        $vICMSSTRet = null
     ) {
+        //totalizador
+        $this->stdTot->vBC += (float) $vBC;
+        $this->stdTot->vICMS += (float) $vICMS;
+        $this->stdTot->vBCST += (float) $vBCST;
+        $this->stdTot->vST += (float) $vICMSST;
+        
         switch ($csosn) {
             case '101':
                 $icmsSN = $this->dom->createElement("ICMSSN101");
@@ -3435,28 +3319,28 @@ abstract class MakeBasic
                     'orig',
                     $orig,
                     true,
-                    "[item $nItem] Origem da mercadoria"
+                    "[item $std->item] Origem da mercadoria"
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'CSOSN',
                     $csosn,
                     true,
-                    "[item $nItem] Código de Situação da Operação Simples Nacional"
+                    "[item $std->item] Código de Situação da Operação Simples Nacional"
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'pCredSN',
                     $pCredSN,
                     true,
-                    "[item $nItem] Alíquota aplicável de cálculo do crédito (Simples Nacional)."
+                    "[item $std->item] Alíquota aplicável de cálculo do crédito (Simples Nacional)."
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'vCredICMSSN',
                     $vCredICMSSN,
                     true,
-                    "[item $nItem] Valor crédito do ICMS que pode ser aproveitado nos termos do"
+                    "[item $std->item] Valor crédito do ICMS que pode ser aproveitado nos termos do"
                     . " art. 23 da LC 123 (Simples Nacional)"
                 );
                 break;
@@ -3470,14 +3354,14 @@ abstract class MakeBasic
                     'orig',
                     $orig,
                     true,
-                    "[item $nItem] Origem da mercadoria"
+                    "[item $std->item] Origem da mercadoria"
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'CSOSN',
                     $csosn,
                     true,
-                    "[item $nItem] Código de Situação da Operação Simples Nacional"
+                    "[item $std->item] Código de Situação da Operação Simples Nacional"
                 );
                 break;
             case '201':
@@ -3487,70 +3371,70 @@ abstract class MakeBasic
                     'orig',
                     $orig,
                     true,
-                    "[item $nItem] Origem da mercadoria"
+                    "[item $std->item] Origem da mercadoria"
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'CSOSN',
                     $csosn,
                     true,
-                    "[item $nItem] Código de Situação da Operação Simples Nacional"
+                    "[item $std->item] Código de Situação da Operação Simples Nacional"
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'modBCST',
                     $modBCST,
                     true,
-                    "[item $nItem] Alíquota aplicável de cálculo do crédito (Simples Nacional)."
+                    "[item $std->item] Alíquota aplicável de cálculo do crédito (Simples Nacional)."
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'pMVAST',
                     $pMVAST,
                     false,
-                    "[item $nItem] Percentual da margem de valor Adicionado do ICMS ST"
+                    "[item $std->item] Percentual da margem de valor Adicionado do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'pRedBCST',
                     $pRedBCST,
                     false,
-                    "[item $nItem] Percentual da Redução de BC do ICMS ST"
+                    "[item $std->item] Percentual da Redução de BC do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'vBCST',
                     $vBCST,
                     true,
-                    "[item $nItem] Valor da BC do ICMS ST"
+                    "[item $std->item] Valor da BC do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'pICMSST',
                     $pICMSST,
                     true,
-                    "[item $nItem] Alíquota do imposto do ICMS ST"
+                    "[item $std->item] Alíquota do imposto do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'vICMSST',
                     $vICMSST,
                     true,
-                    "[item $nItem] Valor do ICMS ST"
+                    "[item $std->item] Valor do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'pCredSN',
                     $pCredSN,
                     true,
-                    "[item $nItem] Alíquota aplicável de cálculo do crédito (Simples Nacional)."
+                    "[item $std->item] Alíquota aplicável de cálculo do crédito (Simples Nacional)."
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'vCredICMSSN',
                     $vCredICMSSN,
                     true,
-                    "[item $nItem] Valor crédito do ICMS que pode ser aproveitado nos "
+                    "[item $std->item] Valor crédito do ICMS que pode ser aproveitado nos "
                     . "termos do art. 23 da LC 123 (Simples Nacional)"
                 );
                 break;
@@ -3562,56 +3446,56 @@ abstract class MakeBasic
                     'orig',
                     $orig,
                     true,
-                    "[item $nItem] Origem da mercadoria"
+                    "[item $std->item] Origem da mercadoria"
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'CSOSN',
                     $csosn,
                     true,
-                    "[item $nItem] Código de Situação da Operação Simples Nacional"
+                    "[item $std->item] Código de Situação da Operação Simples Nacional"
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'modBCST',
                     $modBCST,
                     true,
-                    "[item $nItem] Alíquota aplicável de cálculo do crédito (Simples Nacional)."
+                    "[item $std->item] Alíquota aplicável de cálculo do crédito (Simples Nacional)."
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'pMVAST',
                     $pMVAST,
                     false,
-                    "[item $nItem] Percentual da margem de valor Adicionado do ICMS ST"
+                    "[item $std->item] Percentual da margem de valor Adicionado do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'pRedBCST',
                     $pRedBCST,
                     false,
-                    "[item $nItem] Percentual da Redução de BC do ICMS ST"
+                    "[item $std->item] Percentual da Redução de BC do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'vBCST',
                     $vBCST,
                     true,
-                    "[item $nItem] Valor da BC do ICMS ST"
+                    "[item $std->item] Valor da BC do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'pICMSST',
                     $pICMSST,
                     true,
-                    "[item $nItem] Alíquota do imposto do ICMS ST"
+                    "[item $std->item] Alíquota do imposto do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'vICMSST',
                     $vICMSST,
                     true,
-                    "[item $nItem] Valor do ICMS ST"
+                    "[item $std->item] Valor do ICMS ST"
                 );
                 break;
             case '500':
@@ -3621,28 +3505,28 @@ abstract class MakeBasic
                     'orig',
                     $orig,
                     true,
-                    "[item $nItem] Origem da mercadoria"
+                    "[item $std->item] Origem da mercadoria"
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'CSOSN',
                     $csosn,
                     true,
-                    "[item $nItem] Código de Situação da Operação Simples Nacional"
+                    "[item $std->item] Código de Situação da Operação Simples Nacional"
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'vBCSTRet',
                     $vBCSTRet,
                     false,
-                    "[item $nItem] Valor da BC do ICMS ST retido"
+                    "[item $std->item] Valor da BC do ICMS ST retido"
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'vICMSSTRet',
                     $vICMSSTRet,
                     false,
-                    "[item $nItem] Valor do ICMS ST retido"
+                    "[item $std->item] Valor do ICMS ST retido"
                 );
                 break;
             case '900':
@@ -3652,105 +3536,105 @@ abstract class MakeBasic
                     'orig',
                     $orig,
                     true,
-                    "[item $nItem] Origem da mercadoria"
+                    "[item $std->item] Origem da mercadoria"
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'CSOSN',
                     $csosn,
                     true,
-                    "[item $nItem] Código de Situação da Operação Simples Nacional"
+                    "[item $std->item] Código de Situação da Operação Simples Nacional"
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'modBC',
                     $modBC,
                     false,
-                    "[item $nItem] Modalidade de determinação da BC do ICMS"
+                    "[item $std->item] Modalidade de determinação da BC do ICMS"
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'vBC',
                     $vBC,
                     false,
-                    "[item $nItem] Valor da BC do ICMS"
+                    "[item $std->item] Valor da BC do ICMS"
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'pRedBC',
                     $pRedBC,
                     false,
-                    "[item $nItem] Percentual da Redução de BC"
+                    "[item $std->item] Percentual da Redução de BC"
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'pICMS',
                     $pICMS,
                     false,
-                    "[item $nItem] Alíquota do imposto"
+                    "[item $std->item] Alíquota do imposto"
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'vICMS',
                     $vICMS,
                     false,
-                    "[item $nItem] Valor do ICMS"
+                    "[item $std->item] Valor do ICMS"
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'modBCST',
                     $modBCST,
                     false,
-                    "[item $nItem] Alíquota aplicável de cálculo do crédito (Simples Nacional)."
+                    "[item $std->item] Alíquota aplicável de cálculo do crédito (Simples Nacional)."
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'pMVAST',
                     $pMVAST,
                     false,
-                    "[item $nItem] Percentual da margem de valor Adicionado do ICMS ST"
+                    "[item $std->item] Percentual da margem de valor Adicionado do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'pRedBCST',
                     $pRedBCST,
                     false,
-                    "[item $nItem] Percentual da Redução de BC do ICMS ST"
+                    "[item $std->item] Percentual da Redução de BC do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'vBCST',
                     $vBCST,
                     false,
-                    "[item $nItem] Valor da BC do ICMS ST"
+                    "[item $std->item] Valor da BC do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'pICMSST',
                     $pICMSST,
                     false,
-                    "[item $nItem] Alíquota do imposto do ICMS ST"
+                    "[item $std->item] Alíquota do imposto do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'vICMSST',
                     $vICMSST,
                     false,
-                    "[item $nItem] Valor do ICMS ST"
+                    "[item $std->item] Valor do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'pCredSN',
                     $pCredSN,
                     false,
-                    "[item $nItem] Alíquota aplicável de cálculo do crédito (Simples Nacional)."
+                    "[item $std->item] Alíquota aplicável de cálculo do crédito (Simples Nacional)."
                 );
                 $this->dom->addChild(
                     $icmsSN,
                     'vCredICMSSN',
                     $vCredICMSSN,
                     false,
-                    "[item $nItem] Valor crédito do ICMS que pode ser aproveitado nos termos do"
+                    "[item $std->item] Valor crédito do ICMS que pode ser aproveitado nos termos do"
                     . " art. 23 da LC 123 (Simples Nacional)"
                 );
                 break;
@@ -3801,176 +3685,156 @@ abstract class MakeBasic
             "vBCUFDest",
             $vBCUFDest,
             true,
-            "[item $nItem] Valor da BC do ICMS na UF do destinatário"
+            "[item $std->item] Valor da BC do ICMS na UF do destinatário"
         );
         $this->dom->addChild(
             $icmsUFDest,
             "pFCPUFDest",
             $pFCPUFDest,
             true,
-            "[item $nItem] Percentual do ICMS relativo ao Fundo de Combate à Pobreza (FCP) na UF de destino"
+            "[item $std->item] Percentual do ICMS relativo ao Fundo de Combate à Pobreza (FCP) na UF de destino"
         );
         $this->dom->addChild(
             $icmsUFDest,
             "pICMSUFDest",
             $pICMSUFDest,
             true,
-            "[item $nItem] Alíquota interna da UF do destinatário"
+            "[item $std->item] Alíquota interna da UF do destinatário"
         );
         $this->dom->addChild(
             $icmsUFDest,
             "pICMSInter",
             $pICMSInter,
             true,
-            "[item $nItem] Alíquota interestadual das UF envolvidas"
+            "[item $std->item] Alíquota interestadual das UF envolvidas"
         );
         $this->dom->addChild(
             $icmsUFDest,
             "pICMSInterPart",
             $pICMSInterPart,
             true,
-            "[item $nItem] Percentual provisório de partilha entre os Estados"
+            "[item $std->item] Percentual provisório de partilha entre os Estados"
         );
         $this->dom->addChild(
             $icmsUFDest,
             "vFCPUFDest",
             $vFCPUFDest,
             true,
-            "[item $nItem] Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP) da UF de destino"
+            "[item $std->item] Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP) da UF de destino"
         );
         $this->dom->addChild(
             $icmsUFDest,
             "vICMSUFDest",
             $vICMSUFDest,
             true,
-            "[item $nItem] Valor do ICMS de partilha para a UF do destinatário"
+            "[item $std->item] Valor do ICMS de partilha para a UF do destinatário"
         );
         $this->dom->addChild(
             $icmsUFDest,
             "vICMSUFRemet",
             $vICMSUFRemet,
             true,
-            "[item $nItem] Valor do ICMS de partilha para a UF do remetente"
+            "[item $std->item] Valor do ICMS de partilha para a UF do remetente"
         );
         $this->aICMSUFDest[$nItem] = $icmsUFDest;
-        $this->aTotICMSUFDest['vICMSUFDest'] += $vICMSUFDest;
-        $this->aTotICMSUFDest['vFCPUFDest'] += $vFCPUFDest;
-        $this->aTotICMSUFDest['vICMSUFRemet'] += $vICMSUFRemet;
+        $this->aTotICMSUFDest['vICMSUFDest'] += (float) $vICMSUFDest;
+        $this->aTotICMSUFDest['vFCPUFDest'] += (float) $vFCPUFDest;
+        $this->aTotICMSUFDest['vICMSUFRemet'] += (float) $vICMSUFRemet;
         return $icmsUFDest;
     }
 
     /**
      * Grupo IPI O01 pai M01
      * tag NFe/infNFe/det[]/imposto/IPI (opcional)
-     * @param  string $nItem
-     * @param  string $cst
-     * @param  string $clEnq
-     * @param  string $cnpjProd
-     * @param  string $cSelo
-     * @param  string $qSelo
-     * @param  string $cEnq
-     * @param  string $vBC
-     * @param  string $pIPI
-     * @param  string $qUnid
-     * @param  string $vUnid
-     * @param  string $vIPI
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagIPI(
-        $nItem = '',
-        $cst = '',
-        $clEnq = '',
-        $cnpjProd = '',
-        $cSelo = '',
-        $qSelo = '',
-        $cEnq = '',
-        $vBC = '',
-        $pIPI = '',
-        $qUnid = '',
-        $vUnid = '',
-        $vIPI = ''
-    ) {
+    public function tagIPI($std)
+    {
+        //totalizador
+        $this->stdTot->vIPI += (float) !empty($std->vIPI) ? $std->vIPI : 0;
+        
         $ipi = $this->dom->createElement('IPI');
         $this->dom->addChild(
             $ipi,
             "clEnq",
-            $clEnq,
+            $std->clEnq,
             false,
-            "[item $nItem] Classe de enquadramento do IPI para Cigarros e Bebidas"
+            "[item $std->item] Classe de enquadramento do IPI para Cigarros e Bebidas"
         );
         $this->dom->addChild(
             $ipi,
             "CNPJProd",
-            $cnpjProd,
+            $std->CNPJProd,
             false,
-            "[item $nItem] CNPJ do produtor da mercadoria, quando diferente do emitente. "
+            "[item $std->item] CNPJ do produtor da mercadoria, quando diferente do emitente. "
             . "Somente para os casos de exportação direta ou indireta."
         );
         $this->dom->addChild(
             $ipi,
             "cSelo",
-            $cSelo,
+            $std->cSelo,
             false,
-            "[item $nItem] Código do selo de controle IPI"
+            "[item $std->item] Código do selo de controle IPI"
         );
         $this->dom->addChild(
             $ipi,
             "qSelo",
-            $qSelo,
+            $std->qSelo,
             false,
-            "[item $nItem] Quantidade de selo de controle"
+            "[item $std->item] Quantidade de selo de controle"
         );
         $this->dom->addChild(
             $ipi,
             "cEnq",
-            $cEnq,
+            $std->cEnq,
             true,
-            "[item $nItem] Código de Enquadramento Legal do IPI"
+            "[item $std->item] Código de Enquadramento Legal do IPI"
         );
-        if ($cst == '00' || $cst == '49'|| $cst == '50' || $cst == '99') {
+        if ($std->CST == '00' || $std->CST == '49'|| $std->CST == '50' || $std->CST == '99') {
             $ipiTrib = $this->dom->createElement('IPITrib');
             $this->dom->addChild(
                 $ipiTrib,
                 "CST",
-                $cst,
+                $std->CST,
                 true,
-                "[item $nItem] Código da situação tributária do IPI"
+                "[item $std->item] Código da situação tributária do IPI"
             );
             $this->dom->addChild(
                 $ipiTrib,
                 "vBC",
-                $vBC,
+                $std->vBC,
                 false,
-                "[item $nItem] Valor da BC do IPI"
+                "[item $std->item] Valor da BC do IPI"
             );
             $this->dom->addChild(
                 $ipiTrib,
                 "pIPI",
-                $pIPI,
+                $std->pIPI,
                 false,
-                "[item $nItem] Alíquota do IPI"
+                "[item $std->item] Alíquota do IPI"
             );
             $this->dom->addChild(
                 $ipiTrib,
                 "qUnid",
-                $qUnid,
+                $std->qUnid,
                 false,
-                "[item $nItem] Quantidade total na unidade padrão para tributação (somente para os "
+                "[item $std->item] Quantidade total na unidade padrão para tributação (somente para os "
                 . "produtos tributados por unidade)"
             );
             $this->dom->addChild(
                 $ipiTrib,
                 "vUnid",
-                $vUnid,
+                $std->vUnid,
                 false,
-                "[item $nItem] Valor por Unidade Tributável"
+                "[item $std->item] Valor por Unidade Tributável"
             );
             $this->dom->addChild(
                 $ipiTrib,
                 "vIPI",
-                $vIPI,
+                $std->vIPI,
                 true,
-                "[item $nItem] Valor do IPI"
+                "[item $std->item] Valor do IPI"
             );
             $ipi->appendChild($ipiTrib);
         } else {
@@ -3978,113 +3842,102 @@ abstract class MakeBasic
             $this->dom->addChild(
                 $ipINT,
                 "CST",
-                $cst,
+                $std->CST,
                 true,
-                "[item $nItem] Código da situação tributária do IPINT"
+                "[item $std->item] Código da situação tributária do IPINT"
             );
             $ipi->appendChild($ipINT);
         }
-        $this->aIPI[$nItem] = $ipi;
+        $this->aIPI[$std->item] = $ipi;
         return $ipi;
     }
 
     /**
      * Grupo Imposto de Importação P01 pai M01
      * tag NFe/infNFe/det[]/imposto/II
-     * @param  string $nItem
-     * @param  string $vBC
-     * @param  string $vDespAdu
-     * @param  string $vII
-     * @param  string $vIOF
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagII($nItem = '', $vBC = '', $vDespAdu = '', $vII = '', $vIOF = '')
+    public function tagII($std)
     {
+        //totalizador
+        $this->stdTot->vII += (float) $std->vII;
+        
         $tii = $this->dom->createElement('II');
         $this->dom->addChild(
             $tii,
             "vBC",
-            $vBC,
+            $std->vBC,
             true,
-            "[item $nItem] Valor BC do Imposto de Importação"
+            "[item $std->item] Valor BC do Imposto de Importação"
         );
         $this->dom->addChild(
             $tii,
             "vDespAdu",
-            $vDespAdu,
+            $std->vDespAdu,
             true,
-            "[item $nItem] Valor despesas aduaneiras"
+            "[item $std->item] Valor despesas aduaneiras"
         );
         $this->dom->addChild(
             $tii,
             "vII",
-            $vII,
+            $std->vII,
             true,
-            "[item $nItem] Valor Imposto de Importação"
+            "[item $std->item] Valor Imposto de Importação"
         );
         $this->dom->addChild(
             $tii,
             "vIOF",
-            $vIOF,
+            $std->vIOF,
             true,
-            "[item $nItem] Valor Imposto sobre Operações Financeiras"
+            "[item $std->item] Valor Imposto sobre Operações Financeiras"
         );
-        $this->aII[$nItem] = $tii;
+        $this->aII[$std->item] = $tii;
         return $tii;
     }
 
     /**
      * Grupo PIS Q01 pai M01
      * tag NFe/infNFe/det[]/imposto/PIS
-     * @param  string $nItem
-     * @param  string $cst
-     * @param  string $vBC
-     * @param  string $pPIS
-     * @param  string $vPIS
-     * @param  string $qBCProd
-     * @param  string $vAliqProd
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagPIS(
-        $nItem = '',
-        $cst = '',
-        $vBC = '',
-        $pPIS = '',
-        $vPIS = '',
-        $qBCProd = '',
-        $vAliqProd = ''
-    ) {
-        switch ($cst) {
+    public function tagPIS($std)
+    {
+        //totalizador
+        $this->stdTot->vPIS += !empty($std->vPIS) ? $std->vPIS : 0;
+        
+        switch ($std->CST) {
             case '01':
             case '02':
                 $pisItem = $this->dom->createElement('PISAliq');
                 $this->dom->addChild(
                     $pisItem,
                     'CST',
-                    $cst,
+                    $std->CST,
                     true,
-                    "[item $nItem] Código de Situação Tributária do PIS"
+                    "[item $std->item] Código de Situação Tributária do PIS"
                 );
                 $this->dom->addChild(
                     $pisItem,
                     'vBC',
-                    $vBC,
+                    $std->vBC,
                     true,
-                    "[item $nItem] Valor da Base de Cálculo do PIS"
+                    "[item $std->item] Valor da Base de Cálculo do PIS"
                 );
                 $this->dom->addChild(
                     $pisItem,
                     'pPIS',
-                    $pPIS,
+                    $std->pPIS,
                     true,
-                    "[item $nItem] Alíquota do PIS (em percentual)"
+                    "[item $std->item] Alíquota do PIS (em percentual)"
                 );
                 $this->dom->addChild(
                     $pisItem,
                     'vPIS',
-                    $vPIS,
+                    $std->vPIS,
                     true,
-                    "[item $nItem] Valor do PIS"
+                    "[item $std->item] Valor do PIS"
                 );
                 break;
             case '03':
@@ -4092,30 +3945,30 @@ abstract class MakeBasic
                 $this->dom->addChild(
                     $pisItem,
                     'CST',
-                    $cst,
+                    $std->CST,
                     true,
-                    "[item $nItem] Código de Situação Tributária do PIS"
+                    "[item $std->item] Código de Situação Tributária do PIS"
                 );
                 $this->dom->addChild(
                     $pisItem,
                     'qBCProd',
-                    $qBCProd,
+                    $std->qBCProd,
                     true,
-                    "[item $nItem] Quantidade Vendida"
+                    "[item $std->item] Quantidade Vendida"
                 );
                 $this->dom->addChild(
                     $pisItem,
                     'vAliqProd',
-                    $vAliqProd,
+                    $std->vAliqProd,
                     true,
-                    "[item $nItem] Alíquota do PIS (em reais)"
+                    "[item $std->item] Alíquota do PIS (em reais)"
                 );
                 $this->dom->addChild(
                     $pisItem,
                     'vPIS',
-                    $vPIS,
+                    $std->vPIS,
                     true,
-                    "[item $nItem] Valor do PIS"
+                    "[item $std->item] Valor do PIS"
                 );
                 break;
             case '04':
@@ -4128,9 +3981,9 @@ abstract class MakeBasic
                 $this->dom->addChild(
                     $pisItem,
                     'CST',
-                    $cst,
+                    $std->CST,
                     true,
-                    "[item $nItem] Código de Situação Tributária do PIS"
+                    "[item $std->item] Código de Situação Tributária do PIS"
                 );
                 break;
             case '49':
@@ -4161,44 +4014,44 @@ abstract class MakeBasic
                 $this->dom->addChild(
                     $pisItem,
                     'CST',
-                    $cst,
+                    $std->CST,
                     true,
-                    "[item $nItem] Código de Situação Tributária do PIS"
+                    "[item $std->item] Código de Situação Tributária do PIS"
                 );
                 $this->dom->addChild(
                     $pisItem,
                     'vBC',
-                    $vBC,
+                    $std->vBC,
                     false,
-                    "[item $nItem] Valor da Base de Cálculo do PIS"
+                    "[item $std->item] Valor da Base de Cálculo do PIS"
                 );
                 $this->dom->addChild(
                     $pisItem,
                     'pPIS',
-                    $pPIS,
+                    $std->pPIS,
                     false,
-                    "[item $nItem] Alíquota do PIS (em percentual)"
+                    "[item $std->item] Alíquota do PIS (em percentual)"
                 );
                 $this->dom->addChild(
                     $pisItem,
                     'qBCProd',
-                    $qBCProd,
+                    $std->qBCProd,
                     false,
-                    "[item $nItem] Quantidade Vendida"
+                    "[item $std->item] Quantidade Vendida"
                 );
                 $this->dom->addChild(
                     $pisItem,
                     'vAliqProd',
-                    $vAliqProd,
+                    $std->vAliqProd,
                     false,
-                    "[item $nItem] Alíquota do PIS (em reais)"
+                    "[item $std->item] Alíquota do PIS (em reais)"
                 );
                 $this->dom->addChild(
                     $pisItem,
                     'vPIS',
-                    $vPIS,
+                    $std->vPIS,
                     true,
-                    "[item $nItem] Valor do PIS"
+                    "[item $std->item] Valor do PIS"
                 );
                 break;
         }
@@ -4206,124 +4059,103 @@ abstract class MakeBasic
         if (isset($pisItem)) {
             $pis->appendChild($pisItem);
         }
-        $this->aPIS[$nItem] = $pis;
+        $this->aPIS[$std->item] = $pis;
         return $pis;
     }
 
     /**
      * Grupo PIS Substituição Tributária R01 pai M01
      * tag NFe/infNFe/det[]/imposto/PISST (opcional)
-     * @param  string $nItem
-     * @param  string $vBC
-     * @param  string $pPIS
-     * @param  string $qBCProd
-     * @param  string $vAliqProd
-     * @param  string $vPIS
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagPISST(
-        $nItem = '',
-        $vBC = '',
-        $pPIS = '',
-        $qBCProd = '',
-        $vAliqProd = '',
-        $vPIS = ''
-    ) {
+    public function tagPISST($std)
+    {
         $pisst = $this->dom->createElement('PISST');
         $this->dom->addChild(
             $pisst,
             'vBC',
-            $vBC,
+            $std->vBC,
             true,
-            "[item $nItem] Valor da Base de Cálculo do PIS"
+            "[item $std->item] Valor da Base de Cálculo do PIS"
         );
         $this->dom->addChild(
             $pisst,
             'pPIS',
-            $pPIS,
+            $std->pPIS,
             true,
-            "[item $nItem] Alíquota do PIS (em percentual)"
+            "[item $std->item] Alíquota do PIS (em percentual)"
         );
         $this->dom->addChild(
             $pisst,
             'qBCProd',
-            $qBCProd,
+            $std->qBCProd,
             true,
-            "[item $nItem] Quantidade Vendida"
+            "[item $std->item] Quantidade Vendida"
         );
         $this->dom->addChild(
             $pisst,
             'vAliqProd',
-            $vAliqProd,
+            $std->vAliqProd,
             true,
-            "[item $nItem] Alíquota do PIS (em reais)"
+            "[item $std->item] Alíquota do PIS (em reais)"
         );
         $this->dom->addChild(
             $pisst,
             'vPIS',
-            $vPIS,
+            $std->vPIS,
             true,
-            "[item $nItem] Valor do PIS"
+            "[item $std->item] Valor do PIS"
         );
-        $this->aPISST[$nItem] = $pisst;
+        $this->aPISST[$std->item] = $pisst;
         return $pisst;
     }
 
     /**
      * Grupo COFINS S01 pai M01
      * tag det[item]/imposto/COFINS (opcional)
-     * @param  int $nItem
-     * @param  string $cst
-     * @param  string $vBC
-     * @param  string $pCOFINS
-     * @param  string $vCOFINS
-     * @param  string $qBCProd
-     * @param  string $vAliqProd
+     * @param  stdClass $std
      * @return DOMElement
      */
-    public function tagCOFINS(
-        $nItem = '',
-        $cst = '',
-        $vBC = '',
-        $pCOFINS = '',
-        $vCOFINS = '',
-        $qBCProd = '',
-        $vAliqProd = ''
-    ) {
-        switch ($cst) {
+    public function tagCOFINS($std)
+    {
+        //totalizador
+        $this->stdTot->vCOFINS += (float) !empty($std->vCOFINS) ? $std->vCOFINS : 0;
+        
+        switch ($std->CST) {
             case '01':
             case '02':
-                $confinsItem = $this->buildCOFINSAliq($cst, $vBC, $pCOFINS, $vCOFINS);
+                $confinsItem = $this->buildCOFINSAliq($std);
                 break;
             case '03':
                 $confinsItem = $this->dom->createElement('COFINSQtde');
                 $this->dom->addChild(
                     $confinsItem,
                     'CST',
-                    $cst,
+                    $std->CST,
                     true,
-                    "[item $nItem] Código de Situação Tributária da COFINS"
+                    "[item $std->item] Código de Situação Tributária da COFINS"
                 );
                 $this->dom->addChild(
                     $confinsItem,
                     'qBCProd',
-                    $qBCProd,
+                    $std->qBCProd,
                     true,
-                    "[item $nItem] Quantidade Vendida"
+                    "[item $std->item] Quantidade Vendida"
                 );
                 $this->dom->addChild(
                     $confinsItem,
                     'vAliqProd',
-                    $vAliqProd,
+                    $std->vAliqProd,
                     true,
-                    "[item $nItem] Alíquota do COFINS (em reais)"
+                    "[item $std->item] Alíquota do COFINS (em reais)"
                 );
                 $this->dom->addChild(
                     $confinsItem,
                     'vCOFINS',
-                    $vCOFINS,
+                    $std->vCOFINS,
                     true,
-                    "[item $nItem] Valor do COFINS"
+                    "[item $std->item] Valor do COFINS"
                 );
                 break;
             case '04':
@@ -4332,7 +4164,7 @@ abstract class MakeBasic
             case '07':
             case '08':
             case '09':
-                $confinsItem = $this->buildCOFINSNT($cst);
+                $confinsItem = $this->buildCOFINSNT($std);
                 break;
             case '49':
             case '50':
@@ -4358,439 +4190,424 @@ abstract class MakeBasic
             case '75':
             case '98':
             case '99':
-                $confinsItem = $this->buildCOFINSoutr($cst, $vBC, $pCOFINS, $qBCProd, $vAliqProd, $vCOFINS);
+                $confinsItem = $this->buildCOFINSoutr($std);
                 break;
         }
         $confins = $this->dom->createElement('COFINS');
         if (isset($confinsItem)) {
             $confins->appendChild($confinsItem);
         }
-        $this->aCOFINS[$nItem] = $confins;
+        $this->aCOFINS[$std->item] = $confins;
         return $confins;
     }
 
     /**
      * Grupo COFINS Substituição Tributária T01 pai M01
      * tag NFe/infNFe/det[]/imposto/COFINSST (opcional)
-     * @param  string $nItem
-     * @param  string $vBC
-     * @param  string $pCOFINS
-     * @param  string $qBCProd
-     * @param  string $vAliqProd
-     * @param  string $vCOFINS
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagCOFINSST(
-        $nItem = '',
-        $vBC = '',
-        $pCOFINS = '',
-        $qBCProd = '',
-        $vAliqProd = '',
-        $vCOFINS = ''
-    ) {
+    public function tagCOFINSST($std)
+    {
         $cofinsst = $this->dom->createElement("COFINSST");
         $this->dom->addChild(
             $cofinsst,
             "vBC",
-            $vBC,
+            $std->vBC,
             true,
-            "[item $nItem] Valor da Base de Cálculo da COFINS"
+            "[item $std->item] Valor da Base de Cálculo da COFINS"
         );
         $this->dom->addChild(
             $cofinsst,
             "pCOFINS",
-            $pCOFINS,
+            $std->pCOFINS,
             true,
-            "[item $nItem] Alíquota da COFINS (em percentual)"
+            "[item $std->item] Alíquota da COFINS (em percentual)"
         );
         $this->dom->addChild(
             $cofinsst,
             "qBCProd",
-            $qBCProd,
+            $std->qBCProd,
             true,
-            "[item $nItem] Quantidade Vendida"
+            "[item $std->item] Quantidade Vendida"
         );
         $this->dom->addChild(
             $cofinsst,
             "vAliqProd",
-            $vAliqProd,
+            $std->vAliqProd,
             true,
-            "[item $nItem] Alíquota da COFINS (em reais)"
+            "[item $std->item] Alíquota da COFINS (em reais)"
         );
         $this->dom->addChild(
             $cofinsst,
             "vCOFINS",
-            $vCOFINS,
+            $std->vCOFINS,
             true,
-            "[item $nItem] Valor da COFINS"
+            "[item $std->item] Valor da COFINS"
         );
-        $this->aCOFINSST[$nItem] = $cofinsst;
+        $this->aCOFINSST[$std->item] = $cofinsst;
         return $cofinsst;
     }
 
     /**
      * Grupo ISSQN U01 pai M01
      * tag NFe/infNFe/det[]/imposto/ISSQN (opcional)
-     * @param  string $nItem
-     * @param  string $vBC
-     * @param  string $vAliq
-     * @param  string $vISSQN
-     * @param  string $cMunFG
-     * @param  string $cListServ
-     * @param  string $vDeducao
-     * @param  string $vOutro
-     * @param  string $vDescIncond
-     * @param  string $vDescCond
-     * @param  string $vISSRet
-     * @param  string $indISS
-     * @param  string $cServico
-     * @param  string $cMun
-     * @param  string $cPais
-     * @param  string $nProcesso
-     * @param  string $indIncentivo
+     * @param  string stdClass $std
      * @return DOMElement
      */
-    public function tagISSQN(
-        $nItem = '',
-        $vBC = '',
-        $vAliq = '',
-        $vISSQN = '',
-        $cMunFG = '',
-        $cListServ = '',
-        $vDeducao = '',
-        $vOutro = '',
-        $vDescIncond = '',
-        $vDescCond = '',
-        $vISSRet = '',
-        $indISS = '',
-        $cServico = '',
-        $cMun = '',
-        $cPais = '',
-        $nProcesso = '',
-        $indIncentivo = ''
-    ) {
+    public function tagISSQN($std)
+    {
         $issqn = $this->dom->createElement("ISSQN");
         $this->dom->addChild(
             $issqn,
             "vBC",
-            $vBC,
+            $std->vBC,
             true,
-            "[item $nItem] Valor da Base de Cálculo do ISSQN"
+            "[item $std->item] Valor da Base de Cálculo do ISSQN"
         );
         $this->dom->addChild(
             $issqn,
             "vAliq",
-            $vAliq,
+            $std->vAliq,
             true,
-            "[item $nItem] Alíquota do ISSQN"
+            "[item $std->item] Alíquota do ISSQN"
         );
         $this->dom->addChild(
             $issqn,
             "vISSQN",
-            $vISSQN,
+            $std->vISSQN,
             true,
-            "[item $nItem] Valor do ISSQN"
+            "[item $std->item] Valor do ISSQN"
         );
         $this->dom->addChild(
             $issqn,
             "cMunFG",
-            $cMunFG,
+            $std->cMunFG,
             true,
-            "[item $nItem] Código do município de ocorrência do fato gerador do ISSQN"
+            "[item $std->item] Código do município de ocorrência do fato gerador do ISSQN"
         );
         $this->dom->addChild(
             $issqn,
             "cListServ",
-            $cListServ,
+            $std->cListServ,
             true,
-            "[item $nItem] Item da Lista de Serviços"
+            "[item $std->item] Item da Lista de Serviços"
         );
         $this->dom->addChild(
             $issqn,
             "vDeducao",
-            $vDeducao,
+            $std->vDeducao,
             false,
-            "[item $nItem] Valor dedução para redução da Base de Cálculo"
+            "[item $std->item] Valor dedução para redução da Base de Cálculo"
         );
         $this->dom->addChild(
             $issqn,
             "vOutro",
-            $vOutro,
+            $std->vOutro,
             false,
-            "[item $nItem] Valor outras retenções"
+            "[item $std->item] Valor outras retenções"
         );
         $this->dom->addChild(
             $issqn,
             "vDescIncond",
-            $vDescIncond,
+            $std->vDescIncond,
             false,
-            "[item $nItem] Valor desconto incondicionado"
+            "[item $std->item] Valor desconto incondicionado"
         );
         $this->dom->addChild(
             $issqn,
             "vDescCond",
-            $vDescCond,
+            $std->vDescCond,
             false,
-            "[item $nItem] Valor desconto condicionado"
+            "[item $std->item] Valor desconto condicionado"
         );
         $this->dom->addChild(
             $issqn,
             "vISSRet",
-            $vISSRet,
+            $std->vISSRet,
             false,
-            "[item $nItem] Valor retenção ISS"
+            "[item $std->item] Valor retenção ISS"
         );
         $this->dom->addChild(
             $issqn,
             "indISS",
-            $indISS,
+            $std->indISS,
             true,
-            "[item $nItem] Indicador da exigibilidade do ISS"
+            "[item $std->item] Indicador da exigibilidade do ISS"
         );
         $this->dom->addChild(
             $issqn,
             "cServico",
-            $cServico,
+            $std->cServico,
             false,
-            "[item $nItem] Código do serviço prestado dentro do município"
+            "[item $std->item] Código do serviço prestado dentro do município"
         );
         $this->dom->addChild(
             $issqn,
             "cMun",
-            $cMun,
+            $std->cMun,
             false,
-            "[item $nItem] Código do Município de incidência do imposto"
+            "[item $std->item] Código do Município de incidência do imposto"
         );
         $this->dom->addChild(
             $issqn,
             "cPais",
-            $cPais,
+            $std->cPais,
             false,
-            "[item $nItem] Código do País onde o serviço foi prestado"
+            "[item $std->item] Código do País onde o serviço foi prestado"
         );
         $this->dom->addChild(
             $issqn,
             "nProcesso",
-            $nProcesso,
+            $std->nProcesso,
             false,
-            "[item $nItem] Número do processo judicial ou administrativo de suspensão da exigibilidade"
+            "[item $std->item] Número do processo judicial ou administrativo de suspensão da exigibilidade"
         );
         $this->dom->addChild(
             $issqn,
             "indIncentivo",
-            $indIncentivo,
+            $std->indIncentivo,
             true,
-            "[item $nItem] Indicador de incentivo Fiscal"
+            "[item $std->item] Indicador de incentivo Fiscal"
         );
-        $this->aISSQN[$nItem] = $issqn;
+        $this->aISSQN[$std->item] = $issqn;
         return $issqn;
     }
 
     /**
      * Informação do Imposto devolvido U50 pai H01
      * tag NFe/infNFe/det[]/impostoDevol (opcional)
-     * @param string $nItem
-     * @param  string $pDevol
-     * @param  string $vIPIDevol
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagimpostoDevol($nItem = '', $pDevol = '', $vIPIDevol = '')
+    public function tagimpostoDevol($std)
     {
+        //totalizador
+        $this->stdTot->vIPIDevol += (float) $std->vIPIDevol;
+        
         $impostoDevol = $this->dom->createElement("impostoDevol");
         $this->dom->addChild(
             $impostoDevol,
             "pDevol",
-            $pDevol,
+            $std->pDevol,
             true,
-            "[item $nItem] Percentual da mercadoria devolvida"
+            "[item $std->item] Percentual da mercadoria devolvida"
         );
         $parent = $this->dom->createElement("IPI");
         $this->dom->addChild(
             $parent,
             "vIPIDevol",
-            $vIPIDevol,
+            $std->vIPIDevol,
             true,
-            "[item $nItem] Valor do IPI devolvido"
+            "[item $std->item] Valor do IPI devolvido"
         );
         $impostoDevol->appendChild($parent);
-        $this->aImpostoDevol[$nItem] = $impostoDevol;
+        $this->aImpostoDevol[$std->item] = $impostoDevol;
         return $impostoDevol;
     }
 
     /**
      * Grupo Totais referentes ao ICMS W02 pai W01
      * tag NFe/infNFe/total/ICMSTot
-     * @param  string $vBC
-     * @param  string $vICMS
-     * @param  string $vICMSDeson
-     * @param  string $vBCST
-     * @param  string $vST
-     * @param  string $vProd
-     * @param  string $vFrete
-     * @param  string $vSeg
-     * @param  string $vDesc
-     * @param  string $vII
-     * @param  string $vIPI
-     * @param  string $vPIS
-     * @param  string $vCOFINS
-     * @param  string $vOutro
-     * @param  string $vNF
-     * @param  string $vTotTrib
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagICMSTot(
-        $vBC = '',
-        $vICMS = '',
-        $vICMSDeson = '',
-        $vBCST = '',
-        $vST = '',
-        $vProd = '',
-        $vFrete = '',
-        $vSeg = '',
-        $vDesc = '',
-        $vII = '',
-        $vIPI = '',
-        $vPIS = '',
-        $vCOFINS = '',
-        $vOutro = '',
-        $vNF = '',
-        $vTotTrib = ''
-    ) {
+    public function tagICMSTot($std)
+    {
         $this->buildTotal();
+        $vBC = !empty($std->vBC) ? $std->vBC : $this->stdTot->vBC;
+        $vICMS = !empty($std->vICMS) ? $std->vICMS : $this->stdTot->vICMS;
+        $vICMSDeson = !empty($std->vICMSDeson) ? $std->vICMSDeson : $this->stdTot->vICMSDeson;
+        $vBCST = !empty($std->vBCST) ? $std->vBCST : $this->stdTot->vBCST;
+        $vST = !empty($std->vST) ? $std->vST : $this->stdTot->vST;
+        $vProd = !empty($std->vProd) ? $std->vProd : $this->stdTot->vProd;
+        $vFrete = !empty($std->vFrete) ? $std->vFrete : $this->stdTot->vFrete;
+        $vSeg = !empty($std->vSeg) ? $std->vSeg : $this->stdTot->vSeg;
+        $vDesc = !empty($std->vDesc) ? $std->vDesc : $this->stdTot->vDesc;
+        $vII = !empty($std->vII) ? $std->vII : $this->stdTot->vII;
+        $vIPI = !empty($std->vIPI) ? $std->vIPI : $this->stdTot->vIPI;
+        $vPIS = !empty($std->vPIS) ? $std->vPIS : $this->stdTot->vPIS;
+        $vCOFINS = !empty($std->vCOFINS) ? $std->vCOFINS : $this->stdTot->vCOFINS;
+        $vOutro = !empty($std->vOutro) ? $std->vOutro : $this->stdTot->vOutro;
+        $vNF = !empty($std->vNF) ? $std->vNF : $this->stdTot->vNF;
+        $vIPIDevol = !empty($std->vIPIDevol) ? $std->vIPIDevol : $this->stdTot->vIPIDevol;
+        $vTotTrib = !empty($std->vTotTrib) ? $std->vTotTrib : $this->stdTot->vTotTrib;
+        $vFCP = !empty($std->vFCP) ? $std->vFCP : $this->stdTot->vFCP;
+        $vFCPST = !empty($std->vFCPST) ? $std->vFCPST : $this->stdTot->vFCPST;
+        $vFCPSTRet = !empty($std->vFCPSTRet) ? $std->vFCPSTRet : $this->stdTot->vFCPSTRet;
+        $vFCPUFDest = !empty($std->vFCPUFDest) ? $std->vFCPUFDest : $this->stdTot->vFCPUFDest;
+        
         $ICMSTot = $this->dom->createElement("ICMSTot");
         $this->dom->addChild(
             $ICMSTot,
             "vBC",
-            $vBC,
+            number_format($vBC, 2, '.', ''),
             true,
             "Base de Cálculo do ICMS"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vICMS",
-            $vICMS,
+            number_format($vICMS, 2, '.', ''),
             true,
             "Valor Total do ICMS"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vICMSDeson",
-            $vICMSDeson,
+            number_format($vICMSDeson, 2, '.', ''),
             true,
             "Valor Total do ICMS desonerado"
         );
-
-        $this->dom->addChild(
-            $ICMSTot,
-            "vFCPUFDest",
-            $this->aTotICMSUFDest['vFCPUFDest'],
-            false,
-            "Valor total do ICMS relativo ao Fundo de Combate à Pobreza(FCP) "
-            . "para a UF de destino"
-        );
-        $this->dom->addChild(
-            $ICMSTot,
-            "vICMSUFDest",
-            $this->aTotICMSUFDest['vICMSUFDest'],
-            false,
-            "Valor total do ICMS de partilha para a UF do destinatário"
-        );
-        $this->dom->addChild(
-            $ICMSTot,
-            "vICMSUFRemet",
-            $this->aTotICMSUFDest['vICMSUFRemet'],
-            false,
-            "Valor total do ICMS de partilha para a UF do remetente"
-        );
-
+        if ($this->version != '3.10') {
+            $this->dom->addChild(
+                $ICMSTot,
+                "vFCP",
+                number_format($vFCP, 2, '.', ''),
+                true,
+                "Valor total do ICMS relativo ao Fundo de Combate à Pobreza(FCP) "
+                . "para a UF de destino"
+            );
+            if ($vFCPUFDest > 0) {
+                $this->dom->addChild(
+                    $ICMSTot,
+                    "vFCPUFDest",
+                    number_format($vFCPUFDest, 2, '.', ''),
+                    false,
+                    "Valor total do ICMS relativo ao Fundo de Combate à Pobreza(FCP) "
+                    . "para a UF de destino"
+                );
+                $this->dom->addChild(
+                    $ICMSTot,
+                    "vICMSUFDest",
+                    number_format($vICMSUFDest, 2, '.', ''),
+                    false,
+                    "Valor total do ICMS de partilha para a UF do destinatário"
+                );
+                $this->dom->addChild(
+                    $ICMSTot,
+                    "vICMSUFRemet",
+                    number_format($vICMSUFRemet, 2, '.', ''),
+                    false,
+                    "Valor total do ICMS de partilha para a UF do remetente"
+                );
+            }
+        }
         $this->dom->addChild(
             $ICMSTot,
             "vBCST",
-            $vBCST,
+            number_format($vBCST, 2, '.', ''),
             true,
             "Base de Cálculo do ICMS ST"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vST",
-            $vST,
+            number_format($vST, 2, '.', ''),
             true,
             "Valor Total do ICMS ST"
         );
+        if ($this->version != '3.10') {
+            $this->dom->addChild(
+                $ICMSTot,
+                "vFCPST",
+                number_format($vFCPST, 2, '.', ''),
+                true,
+                "Valor Total do FCP (Fundo de Combate à Pobreza) "
+                . "retido por substituição tributária"
+            );
+            $this->dom->addChild(
+                $ICMSTot,
+                "vFCPSTRet",
+                number_format($vFCPSTRet, 2, '.', ''),
+                true,
+                "Valor Total do FCP retido anteriormente por "
+                . "Substituição Tributária"
+            );
+        }
         $this->dom->addChild(
             $ICMSTot,
             "vProd",
-            $vProd,
+            number_format($vProd, 2, '.', ''),
             true,
             "Valor Total dos produtos e serviços"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vFrete",
-            $vFrete,
+            number_format($vFrete, 2, '.', ''),
             true,
             "Valor Total do Frete"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vSeg",
-            $vSeg,
+            number_format($vSeg, 2, '.', ''),
             true,
             "Valor Total do Seguro"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vDesc",
-            $vDesc,
+            number_format($vDesc, 2, '.', ''),
             true,
             "Valor Total do Desconto"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vII",
-            $vII,
+            number_format($vII, 2, '.', ''),
             true,
             "Valor Total do II"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vIPI",
-            $vIPI,
+            number_format($vIPI, 2, '.', ''),
             true,
             "Valor Total do IPI"
         );
+        if ($this->version != '3.10') {
+            $this->dom->addChild(
+                $ICMSTot,
+                "vIPIDevol",
+                number_format($vIPIDevol, 2, '.', ''),
+                true,
+                "Valor Total do IPI"
+            );
+        }
         $this->dom->addChild(
             $ICMSTot,
             "vPIS",
-            $vPIS,
+            number_format($vPIS, 2, '.', ''),
             true,
             "Valor do PIS"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vCOFINS",
-            $vCOFINS,
+            number_format($vCOFINS, 2, '.', ''),
             true,
             "Valor da COFINS"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vOutro",
-            $vOutro,
+            number_format($vOutro, 2, '.', ''),
             true,
             "Outras Despesas acessórias"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vNF",
-            $vNF,
+            number_format($vNF, 2, '.', ''),
             true,
             "Valor Total da NF-e"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vTotTrib",
-            $vTotTrib,
+            number_format($vTotTrib, 2, '.', ''),
             false,
             "Valor aproximado total de tributos federais, estaduais e municipais."
         );
@@ -4801,122 +4618,94 @@ abstract class MakeBasic
     /**
      * Grupo Totais referentes ao ISSQN W17 pai W01
      * tag NFe/infNFe/total/ISSQNTot (opcional)
-     * @param  string $vServ
-     * @param  string $vBC
-     * @param  string $vISS
-     * @param  string $vPIS
-     * @param  string $vCOFINS
-     * @param  string $dCompet
-     * @param  string $vDeducao
-     * @param  string $vOutro
-     * @param  string $vDescIncond
-     * @param  string $vDescCond
-     * @param  string $vISSRet
-     * @param  string $cRegTrib
-     * @param  string $vOutro
-     * @param  string $vDescIncond
-     * @param  string $vDescCond
-     * @param  string $vISSRet
-     * @param  string $cRegTrib
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagISSQNTot(
-        $vServ = '',
-        $vBC = '',
-        $vISS = '',
-        $vPIS = '',
-        $vCOFINS = '',
-        $dCompet = '',
-        $vDeducao = '',
-        $vOutro = '',
-        $vDescIncond = '',
-        $vDescCond = '',
-        $vISSRet = '',
-        $cRegTrib = ''
-    ) {
+    public function tagISSQNTot($std)
+    {
         $this->buildTotal();
         $ISSQNTot = $this->dom->createElement("ISSQNtot");
         $this->dom->addChild(
             $ISSQNTot,
             "vServ",
-            $vServ,
+            $std->vServ,
             false,
             "Valor total dos Serviços sob não incidência ou não tributados pelo ICMS"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vBC",
-            $vBC,
+            $std->vBC,
             false,
             "Valor total Base de Cálculo do ISS"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vISS",
-            $vISS,
+            $std->vISS,
             false,
             "Valor total do ISS"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vPIS",
-            $vPIS,
+            $std->vPIS,
             false,
             "Valor total do PIS sobre serviços"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vCOFINS",
-            $vCOFINS,
+            $std->vCOFINS,
             false,
             "Valor total da COFINS sobre serviços"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "dCompet",
-            $dCompet,
+            $std->dCompet,
             true,
             "Data da prestação do serviço"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vDeducao",
-            $vDeducao,
+            $std->vDeducao,
             false,
             "Valor total dedução para redução da Base de Cálculo"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vOutro",
-            $vOutro,
+            $std->vOutro,
             false,
             "Valor total outras retenções"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vDescIncond",
-            $vDescIncond,
+            $std->vDescIncond,
             false,
             "Valor total desconto incondicionado"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vDescCond",
-            $vDescCond,
+            $std->vDescCond,
             false,
             "Valor total desconto condicionado"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vISSRet",
-            $vISSRet,
+            $std->vISSRet,
             false,
             "Valor total retenção ISS"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "cRegTrib",
-            $cRegTrib,
+            $std->cRegTrib,
             false,
             "Código do Regime Especial de Tributação"
         );
@@ -4927,71 +4716,58 @@ abstract class MakeBasic
     /**
      * Grupo Retenções de Tributos W23 pai W01
      * tag NFe/infNFe/total/reTrib (opcional)
-     * @param  string $vRetPIS
-     * @param  string $vRetCOFINS
-     * @param  string $vRetCSLL
-     * @param  string $vBCIRRF
-     * @param  string $vIRRF
-     * @param  string $vBCRetPrev
-     * @param  string $vRetPrev
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagretTrib(
-        $vRetPIS = '',
-        $vRetCOFINS = '',
-        $vRetCSLL = '',
-        $vBCIRRF = '',
-        $vIRRF = '',
-        $vBCRetPrev = '',
-        $vRetPrev = ''
-    ) {
+    public function tagretTrib($std)
+    {
         $retTrib = $this->dom->createElement("retTrib");
         $this->dom->addChild(
             $retTrib,
             "vRetPIS",
-            $vRetPIS,
+            $std->vRetPIS,
             false,
             "Valor Retido de PIS"
         );
         $this->dom->addChild(
             $retTrib,
             "vRetCOFINS",
-            $vRetCOFINS,
+            $std->vRetCOFINS,
             false,
             "Valor Retido de COFINS"
         );
         $this->dom->addChild(
             $retTrib,
             "vRetCSLL",
-            $vRetCSLL,
+            $std->vRetCSLL,
             false,
             "Valor Retido de CSLL"
         );
         $this->dom->addChild(
             $retTrib,
             "vBCIRRF",
-            $vBCIRRF,
+            $std->vBCIRRF,
             false,
             "Base de Cálculo do IRRF"
         );
         $this->dom->addChild(
             $retTrib,
             "vIRRF",
-            $vIRRF,
+            $std->vIRRF,
             false,
             "Valor Retido do IRRF"
         );
         $this->dom->addChild(
             $retTrib,
             "vBCRetPrev",
-            $vBCRetPrev,
+            $std->vBCRetPrev,
             false,
             "Base de Cálculo da Retenção da Previdência Social"
         );
         $this->dom->addChild(
             $retTrib,
             "vRetPrev",
-            $vRetPrev,
+            $std->vRetPrev,
             false,
             "Valor da Retenção da Previdência Social"
         );
@@ -5002,16 +4778,16 @@ abstract class MakeBasic
     /**
      * Grupo Informações do Transporte X01 pai A01
      * tag NFe/infNFe/transp (obrigatório)
-     * @param  string $modFrete
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagtransp($modFrete = '')
+    public function tagtransp($std)
     {
         $this->transp = $this->dom->createElement("transp");
         $this->dom->addChild(
             $this->transp,
             "modFrete",
-            $modFrete,
+            $std->modFrete,
             true,
             "Modalidade do frete"
         );
@@ -5021,71 +4797,58 @@ abstract class MakeBasic
     /**
      * Grupo Transportador X03 pai X01
      * tag NFe/infNFe/transp/tranporta (opcional)
-     * @param  string $numCNPJ
-     * @param  string $numCPF
-     * @param  string $xNome
-     * @param  string $numIE
-     * @param  string $xEnder
-     * @param  string $xMun
-     * @param  string $siglaUF
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagtransporta(
-        $numCNPJ = '',
-        $numCPF = '',
-        $xNome = '',
-        $numIE = '',
-        $xEnder = '',
-        $xMun = '',
-        $siglaUF = ''
-    ) {
+    public function tagtransporta($std)
+    {
         $transporta = $this->dom->createElement("transporta");
         $this->dom->addChild(
             $transporta,
             "CNPJ",
-            $numCNPJ,
+            $std->CNPJ,
             false,
             "CNPJ do Transportador"
         );
         $this->dom->addChild(
             $transporta,
             "CPF",
-            $numCPF,
+            $std->CPF,
             false,
             "CPF do Transportador"
         );
         $this->dom->addChild(
             $transporta,
             "xNome",
-            $xNome,
+            $std->xNome,
             false,
             "Razão Social ou nome do Transportador"
         );
         $this->dom->addChild(
             $transporta,
             "IE",
-            $numIE,
+            $std->IE,
             false,
             "Inscrição Estadual do Transportador"
         );
         $this->dom->addChild(
             $transporta,
             "xEnder",
-            $xEnder,
+            $std->xEnder,
             false,
             "Endereço Completo do Transportador"
         );
         $this->dom->addChild(
             $transporta,
             "xMun",
-            $xMun,
+            $std->xMun,
             false,
             "Nome do município do Transportador"
         );
         $this->dom->addChild(
             $transporta,
             "UF",
-            $siglaUF,
+            $std->UF,
             false,
             "Sigla da UF do Transportador"
         );
@@ -5094,41 +4857,96 @@ abstract class MakeBasic
             $transporta,
             'A tag transp deveria ter sido carregada primeiro.'
         );
+        $this->dom->appChild($this->transp, $transporta, "Inclusão do node vol");
         return $transporta;
+    }
+    
+    /**
+     * Grupo Retenção ICMS transporte X11 pai X01
+     * tag NFe/infNFe/transp/retTransp (opcional)
+     * @param stdClass $std
+     * @return DOMElement
+     */
+    public function tagretTransp($std)
+    {
+        $retTransp = $this->dom->createElement("retTransp");
+        $this->dom->addChild(
+            $retTransp,
+            "vServ",
+            $std->vServ,
+            true,
+            "Valor do Serviço"
+        );
+        $this->dom->addChild(
+            $retTransp,
+            "vBCRet",
+            $std->vBCRet,
+            true,
+            "BC da Retenção do ICMS"
+        );
+        $this->dom->addChild(
+            $retTransp,
+            "pICMSRet",
+            $std->pICMSRet,
+            true,
+            "Alíquota da Retenção"
+        );
+        $this->dom->addChild(
+            $retTransp,
+            "vICMSRet",
+            $std->vICMSRet,
+            true,
+            "Valor do ICMS Retido"
+        );
+        $this->dom->addChild(
+            $retTransp,
+            "CFOP",
+            $std->CFOP,
+            true,
+            "CFOP"
+        );
+        $this->dom->addChild(
+            $retTransp,
+            "cMunFG",
+            $std->cMunFG,
+            true,
+            "Código do município de ocorrência do fato gerador do ICMS do transporte"
+        );
+        $this->dom->appChild(
+            $this->transp,
+            $retTransp,
+            'A tag transp deveria ter sido carregada primeiro.'
+        );
+        return $retTransp;
     }
 
     /**
      * Grupo Veículo Transporte X18 pai X17.1
      * tag NFe/infNFe/transp/veicTransp (opcional)
-     * @param  string $placa
-     * @param  string $siglaUF
-     * @param  string $rntc
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagveicTransp(
-        $placa = '',
-        $siglaUF = '',
-        $rntc = ''
-    ) {
+    public function tagveicTransp($std)
+    {
         $veicTransp = $this->dom->createElement("veicTransp");
         $this->dom->addChild(
             $veicTransp,
             "placa",
-            $placa,
+            $std->placa,
             true,
             "Placa do Veículo"
         );
         $this->dom->addChild(
             $veicTransp,
             "UF",
-            $siglaUF,
+            $std->UF,
             true,
             "Sigla da UF do Veículo"
         );
         $this->dom->addChild(
             $veicTransp,
             "RNTC",
-            $rntc,
+            $std->RNTC,
             false,
             "Registro Nacional de Transportador de Carga (ANTT) do Veículo"
         );
@@ -5143,57 +4961,47 @@ abstract class MakeBasic
     /**
      * Grupo Reboque X22 pai X17.1
      * tag NFe/infNFe/transp/reboque (opcional)
-     * @param  string $placa
-     * @param  string $siglaUF
-     * @param  string $rntc
-     * @param  string $vagao
-     * @param  string $balsa
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagreboque(
-        $placa = '',
-        $siglaUF = '',
-        $rntc = '',
-        $vagao = '',
-        $balsa = ''
-    ) {
+    public function tagreboque($std)
+    {
         $reboque = $this->dom->createElement("reboque");
         $this->dom->addChild(
             $reboque,
             "placa",
-            $placa,
+            $std->placa,
             true,
             "Placa do Veículo Reboque"
         );
         $this->dom->addChild(
             $reboque,
             "UF",
-            $siglaUF,
+            $std->UF,
             true,
             "Sigla da UF do Veículo Reboque"
         );
         $this->dom->addChild(
             $reboque,
             "RNTC",
-            $rntc,
+            $std->RNTC,
             false,
             "Registro Nacional de Transportador de Carga (ANTT) do Veículo Reboque"
         );
         $this->dom->addChild(
             $reboque,
             "vagao",
-            $vagao,
+            $std->vagao,
             false,
             "Identificação do vagão do Veículo Reboque"
         );
         $this->dom->addChild(
             $reboque,
             "balsa",
-            $balsa,
+            $std->balsa,
             false,
             "Identificação da balsa do Veículo Reboque"
         );
-        $this->aReboque[] = $reboque;
         $this->dom->appChild(
             $this->transp,
             $reboque,
@@ -5203,177 +5011,217 @@ abstract class MakeBasic
     }
 
     /**
-     * Grupo Retenção ICMS transporte X11 pai X01
-     * tag NFe/infNFe/transp/retTransp (opcional)
-     * @param  string $vServ
-     * @param  string $vBCRet
-     * @param  string $pICMSRet
-     * @param  string $vICMSRet
-     * @param  string $cfop
-     * @param  string $cMunFG
-     * @return DOMElement
-     */
-    public function tagretTransp(
-        $vServ = '',
-        $vBCRet = '',
-        $pICMSRet = '',
-        $vICMSRet = '',
-        $cfop = '',
-        $cMunFG = ''
-    ) {
-        $retTransp = $this->dom->createElement("retTransp");
-        $this->dom->addChild(
-            $retTransp,
-            "vServ",
-            $vServ,
-            true,
-            "Valor do Serviço"
-        );
-        $this->dom->addChild(
-            $retTransp,
-            "vBCRet",
-            $vBCRet,
-            true,
-            "BC da Retenção do ICMS"
-        );
-        $this->dom->addChild(
-            $retTransp,
-            "pICMSRet",
-            $pICMSRet,
-            true,
-            "Alíquota da Retenção"
-        );
-        $this->dom->addChild(
-            $retTransp,
-            "vICMSRet",
-            $vICMSRet,
-            true,
-            "Valor do ICMS Retido"
-        );
-        $this->dom->addChild(
-            $retTransp,
-            "CFOP",
-            $cfop,
-            true,
-            "CFOP"
-        );
-        $this->dom->addChild(
-            $retTransp,
-            "cMunFG",
-            $cMunFG,
-            true,
-            "Código do município de ocorrência do fato gerador do ICMS do transporte"
-        );
-        $this->dom->appChild(
-            $this->transp,
-            $retTransp,
-            'A tag transp deveria ter sido carregada primeiro.'
-        );
-        return $retTransp;
-    }
-
-    /**
      * Grupo Volumes X26 pai X01
      * tag NFe/infNFe/transp/vol (opcional)
-     * @param  string $qVol
-     * @param  string $esp
-     * @param  string $marca
-     * @param  string $nVol
-     * @param  string $pesoL
-     * @param  string $pesoB
-     * @param  array  $aLacres
+     * @param  stdClass $std
      * @return DOMElement
      */
-    public function tagvol(
-        $qVol = '',
-        $esp = '',
-        $marca = '',
-        $nVol = '',
-        $pesoL = '',
-        $pesoB = '',
-        $aLacres = array()
-    ) {
+    public function tagvol($std)
+    {
         $vol = $this->dom->createElement("vol");
         $this->dom->addChild(
             $vol,
             "qVol",
-            $qVol,
+            $std->qVol,
             false,
             "Quantidade de volumes transportados"
         );
         $this->dom->addChild(
             $vol,
             "esp",
-            $esp,
+            $std->esp,
             false,
             "Espécie dos volumes transportados"
         );
         $this->dom->addChild(
             $vol,
             "marca",
-            $marca,
+            $std->marca,
             false,
             "Marca dos volumes transportados"
         );
         $this->dom->addChild(
             $vol,
             "nVol",
-            $nVol,
+            $std->nVol,
             false,
             "Numeração dos volumes transportados"
         );
         $this->dom->addChild(
             $vol,
             "pesoL",
-            $pesoL,
+            $std->pesoL,
             false,
             "Peso Líquido (em kg) dos volumes transportados"
         );
         $this->dom->addChild(
             $vol,
             "pesoB",
-            $pesoB,
+            $std->pesoB,
             false,
             "Peso Bruto (em kg) dos volumes transportados"
         );
-        if (!empty($aLacres)) {
-            //tag transp/vol/lacres (opcional)
-            foreach ($aLacres as $nLacre) {
-                $lacre = $this->buildLacres($nLacre);
-                $vol->appendChild($lacre);
-                $lacre = null;
-            }
-        }
-        $this->aVol[] = $vol;
-        $this->dom->appChild(
-            $this->transp,
-            $vol,
-            'A tag transp deveria ter sido carregada primeiro.'
-        );
+        $this->aVol[$std->item] = $vol;
         return $vol;
+    }
+    
+    /**
+     * Grupo Lacres X33 pai X26
+     * tag NFe/infNFe/transp/vol/lacres (opcional)
+     * @param stdClass $std
+     * @return DOMElement
+     */
+    protected function taglacres($std)
+    {
+        $lacre = $this->dom->createElement("lacres");
+        $this->dom->addChild(
+            $lacre,
+            "nLacre",
+            $std->nLacre,
+            true,
+            "Número dos Lacres"
+        );
+        $this->dom->appChild($this->aVol[$std->item], $lacre, "Inclusão do node lacres");
+        return $lacre;
+    }
+    
+    /**
+     * Node vol
+     */
+    protected function buildVol()
+    {
+        foreach ($this->aVol as $num => $vol) {
+            $this->dom->appChild($this->transp, $vol, "Inclusão do node vol");
+        }
+    }
+
+    /**
+     * Grupo de Formas de Pagamento YA01 pai A01
+     * NOTA: Ajustado para NT2016_002_v1.30
+     * tag NFe/infNFe/pag (obrigatorio na NT2016_002_v1.30)
+     * Apenas para o modelo 65 NFCe
+     * @param stdClass $std
+     * @return DOMElement
+     */
+    public function tagpag($std)
+    {
+        $pag = $this->dom->createElement("pag");
+        //incluso no layout 4.00
+        $vTroco = !empty($std->vTroco) ? $std->vTroco : null;
+        $this->dom->addChild(
+            $pag,
+            "vTroco",
+            $vTroco,
+            false,
+            "Valor do troco"
+        );
+        return $this->aPag[] = $pag;
+    }
+    
+    /**
+     * Grupo de Formas de Pagamento YA01a pai YA01
+     * NOTA: Ajuste nt_2016_002_v1.20
+     * tag NFe/infNFe/pag/detPag
+     * @param stdClass $std
+     * @return DOMElement
+     */
+    public function tagdetPag($std)
+    {
+        $detPag = $this->dom->createElement("detPag");
+        $this->dom->addChild(
+            $detPag,
+            "tPag",
+            $std->tPag,
+            true,
+            "Forma de pagamento"
+        );
+        $this->dom->addChild(
+            $detPag,
+            "vPag",
+            $std->vPag,
+            true,
+            "Valor do Pagamento"
+        );
+        if ($std->tBand != '') {
+            $card = $this->dom->createElement("card");
+            $this->dom->addChild(
+                $card,
+                "tpIntegra",
+                $std->tpIntegra,
+                false,
+                "Tipo de Integração para pagamento"
+            );
+            $this->dom->addChild(
+                $card,
+                "CNPJ",
+                $std->CNPJ,
+                true,
+                "CNPJ da Credenciadora de cartão de crédito e/ou débito"
+            );
+            $this->dom->addChild(
+                $card,
+                "tBand",
+                $std->tBand,
+                true,
+                "Bandeira da operadora de cartão de crédito e/ou débito"
+            );
+            $this->dom->addChild(
+                $card,
+                "cAut",
+                $std->cAut,
+                true,
+                "Número de autorização da operação cartão de crédito e/ou débito"
+            );
+            $this->dom->appChild($detPag, $card, "Inclusão do node Card");
+        }
+        $n = count($this->aPag);
+        $node = $this->aPag[$n-1]->getElementsByTagName("vTroco")->item(0);
+        if (!empty($node)) {
+            $this->aPag[$n-1]->insertBefore($detPag, $node);
+        } else {
+            $this->dom->appChild($this->aPag[$n-1], $detPag, 'Falta tag "Pag"');
+        }
+        return $detPag;
     }
 
     /**
      * Grupo Fatura Y02 pai Y01
      * tag NFe/infNFe/cobr/fat (opcional)
-     * @param  string $nFat
-     * @param  string $vOrig
-     * @param  string $vDesc
-     * @param  string $vLiq
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagfat(
-        $nFat = '',
-        $vOrig = '',
-        $vDesc = '',
-        $vLiq = ''
-    ) {
+    public function tagfat($std)
+    {
         $this->buildCobr();
         $fat = $this->dom->createElement("fat");
-        $this->dom->addChild($fat, "nFat", $nFat, false, "Número da Fatura");
-        $this->dom->addChild($fat, "vOrig", $vOrig, false, "Valor Original da Fatura");
-        $this->dom->addChild($fat, "vDesc", $vDesc, false, "Valor do desconto");
-        $this->dom->addChild($fat, "vLiq", $vLiq, false, "Valor Líquido da Fatura");
+        $this->dom->addChild(
+            $fat,
+            "nFat",
+            $std->nFat,
+            false,
+            "Número da Fatura"
+        );
+        $this->dom->addChild(
+            $fat,
+            "vOrig",
+            $std->vOrig,
+            false,
+            "Valor Original da Fatura"
+        );
+        $this->dom->addChild(
+            $fat,
+            "vDesc",
+            $std->vDesc,
+            false,
+            "Valor do desconto"
+        );
+        $this->dom->addChild(
+            $fat,
+            "vLiq",
+            $std->vLiq,
+            false,
+            "Valor Líquido da Fatura"
+        );
         $this->dom->appChild($this->cobr, $fat);
         return $fat;
     }
@@ -5382,101 +5230,58 @@ abstract class MakeBasic
      * Grupo Duplicata Y07 pai Y02
      * tag NFe/infNFe/cobr/fat/dup (opcional)
      * É necessário criar a tag fat antes de criar as duplicatas
-     * @param  string $nDup
-     * @param  string $dVenc
-     * @param  string $vDup
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagdup(
-        $nDup = '',
-        $dVenc = '',
-        $vDup = ''
-    ) {
+    public function tagdup($std)
+    {
         $this->buildCobr();
         $dup = $this->dom->createElement("dup");
-        $this->dom->addChild($dup, "nDup", $nDup, false, "Número da Duplicata");
-        $this->dom->addChild($dup, "dVenc", $dVenc, false, "Data de vencimento");
-        $this->dom->addChild($dup, "vDup", $vDup, true, "Valor da duplicata");
+        $this->dom->addChild(
+            $dup,
+            "nDup",
+            $std->nDup,
+            false,
+            "Número da Duplicata"
+        );
+        $this->dom->addChild(
+            $dup,
+            "dVenc",
+            $std->dVenc,
+            false,
+            "Data de vencimento"
+        );
+        $this->dom->addChild(
+            $dup,
+            "vDup",
+            $std->vDup,
+            true,
+            "Valor da duplicata"
+        );
         $this->dom->appChild($this->cobr, $dup, 'Inclui duplicata na tag cobr');
-        $this->aDup[] = $dup;
         return $dup;
     }
-
-
-    /**
-     * Grupo de Cartões YA04 pai YA01
-     * tag NFe/infNFe/pag/card
-     * @param  string $cnpj
-     * @param  string $tBand
-     * @param  string $cAut
-     * @param  string $tpIntegra
-     * @return DOMElement
-     */
-    public function tagcard(
-        $cnpj = '',
-        $tBand = '',
-        $cAut = '',
-        $tpIntegra = ''
-    ) {
-        //apenas para modelo 65
-        if ($this->mod == '65' && $tBand != '') {
-            $card = $this->dom->createElement("card");
-            $this->dom->addChild(
-                $card,
-                "tpIntegra",
-                $tpIntegra,
-                false,
-                "Tipo de Integração para pagamento"
-            );
-            $this->dom->addChild(
-                $card,
-                "CNPJ",
-                $cnpj,
-                true,
-                "CNPJ da Credenciadora de cartão de crédito e/ou débito"
-            );
-            $this->dom->addChild(
-                $card,
-                "tBand",
-                $tBand,
-                true,
-                "Bandeira da operadora de cartão de crédito e/ou débito"
-            );
-            $this->dom->addChild(
-                $card,
-                "cAut",
-                $cAut,
-                true,
-                "Número de autorização da operação cartão de crédito e/ou débito"
-            );
-            $this->dom->appChild($this->aPag[count($this->aPag)-1], $card, '');
-            return $card;
-        }
-    }
-
+    
     /**
      * Grupo de Informações Adicionais Z01 pai A01
      * tag NFe/infNFe/infAdic (opcional)
-     * @param  string $infAdFisco
-     * @param  string $infCpl
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function taginfAdic(
-        $infAdFisco = '',
-        $infCpl = ''
-    ) {
+    public function taginfAdic($std)
+    {
         $this->buildInfAdic();
         $this->dom->addChild(
             $this->infAdic,
             "infAdFisco",
-            $infAdFisco,
+            $std->infAdFisco,
             false,
             "Informações Adicionais de Interesse do Fisco"
         );
         $this->dom->addChild(
             $this->infAdic,
             "infCpl",
-            $infCpl,
+            $std->infCpl,
             false,
             "Informações Complementares de interesse do Contribuinte"
         );
@@ -5487,19 +5292,21 @@ abstract class MakeBasic
      * Grupo Campo de uso livre do contribuinte Z04 pai Z01
      * tag NFe/infNFe/infAdic/obsCont (opcional)
      * O método taginfAdic deve ter sido carregado antes
-     * @param  string $xCampo
-     * @param  string $xTexto
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagobsCont(
-        $xCampo = '',
-        $xTexto = ''
-    ) {
+    public function tagobsCont($std)
+    {
         $this->buildInfAdic();
         $obsCont = $this->dom->createElement("obsCont");
-        $obsCont->setAttribute("xCampo", $xCampo);
-        $this->dom->addChild($obsCont, "xTexto", $xTexto, true, "Conteúdo do campo");
-        $this->aObsCont[] = $obsCont;
+        $obsCont->setAttribute("xCampo", $std->xCampo);
+        $this->dom->addChild(
+            $obsCont,
+            "xTexto",
+            $std->xTexto,
+            true,
+            "Conteúdo do campo"
+        );
         $this->dom->appChild($this->infAdic, $obsCont, '');
         return $obsCont;
     }
@@ -5508,19 +5315,21 @@ abstract class MakeBasic
      * Grupo Campo de uso livre do Fisco Z07 pai Z01
      * tag NFe/infNFe/infAdic/obsFisco (opcional)
      * O método taginfAdic deve ter sido carregado antes
-     * @param  string $xCampo
-     * @param  string $xTexto
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagobsFisco(
-        $xCampo = '',
-        $xTexto = ''
-    ) {
+    public function tagobsFisco($std)
+    {
         $this->buildInfAdic();
         $obsFisco = $this->dom->createElement("obsFisco");
-        $obsFisco->setAttribute("xCampo", $xCampo);
-        $this->dom->addChild($obsFisco, "xTexto", $xTexto, true, "Conteúdo do campo");
-        $this->aObsFisco[] = $obsFisco;
+        $obsFisco->setAttribute("xCampo", $std->xCampo);
+        $this->dom->addChild(
+            $obsFisco,
+            "xTexto",
+            $std->xTexto,
+            true,
+            "Conteúdo do campo"
+        );
         $this->dom->appChild($this->infAdic, $obsFisco, '');
         return $obsFisco;
     }
@@ -5529,31 +5338,27 @@ abstract class MakeBasic
      * Grupo Processo referenciado Z10 pai Z01 (NT2012.003)
      * tag NFe/infNFe/procRef (opcional)
      * O método taginfAdic deve ter sido carregado antes
-     * @param  string $nProc
-     * @param  string $indProc
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagprocRef(
-        $nProc = '',
-        $indProc = ''
-    ) {
+    public function tagprocRef($std)
+    {
         $this->buildInfAdic();
         $procRef = $this->dom->createElement("procRef");
         $this->dom->addChild(
             $procRef,
             "nProc",
-            $nProc,
+            $std->nProc,
             true,
             "Identificador do processo ou ato concessório"
         );
         $this->dom->addChild(
             $procRef,
             "indProc",
-            $indProc,
+            $std->indProc,
             true,
             "Indicador da origem do processo"
         );
-        $this->aProcRef[] = $procRef;
         $this->dom->appChild($this->infAdic, $procRef, '');
         return $procRef;
     }
@@ -5561,35 +5366,30 @@ abstract class MakeBasic
     /**
      * Grupo Exportação ZA01 pai A01
      * tag NFe/infNFe/exporta (opcional)
-     * @param  string $ufSaidaPais
-     * @param  string $xLocExporta
-     * @param  string $xLocDespacho
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagexporta(
-        $ufSaidaPais = '',
-        $xLocExporta = '',
-        $xLocDespacho = ''
-    ) {
+    public function tagexporta($std)
+    {
         $this->exporta = $this->dom->createElement("exporta");
         $this->dom->addChild(
             $this->exporta,
             "UFSaidaPais",
-            $ufSaidaPais,
+            $std->UFSaidaPais,
             true,
             "Sigla da UF de Embarque ou de transposição de fronteira"
         );
         $this->dom->addChild(
             $this->exporta,
             "xLocExporta",
-            $xLocExporta,
+            $std->xLocExporta,
             true,
             "Descrição do Local de Embarque ou de transposição de fronteira"
         );
         $this->dom->addChild(
             $this->exporta,
             "xLocDespacho",
-            $xLocDespacho,
+            $std->xLocDespacho,
             false,
             "Descrição do local de despacho"
         );
@@ -5599,152 +5399,175 @@ abstract class MakeBasic
     /**
      * Grupo Compra ZB01 pai A01
      * tag NFe/infNFe/compra (opcional)
-     * @param  string $xNEmp
-     * @param  string $xPed
-     * @param  string $xCont
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagcompra(
-        $xNEmp = '',
-        $xPed = '',
-        $xCont = ''
-    ) {
+    public function tagcompra($std)
+    {
         $this->compra = $this->dom->createElement("compra");
-        $this->dom->addChild($this->compra, "xNEmp", $xNEmp, false, "Nota de Empenho");
-        $this->dom->addChild($this->compra, "xPed", $xPed, false, "Pedido");
-        $this->dom->addChild($this->compra, "xCont", $xCont, false, "Contrato");
+        $this->dom->addChild(
+            $this->compra,
+            "xNEmp",
+            $std->xNEmp,
+            false,
+            "Nota de Empenho"
+        );
+        $this->dom->addChild(
+            $this->compra,
+            "xPed",
+            $std->xPed,
+            false,
+            "Pedido"
+        );
+        $this->dom->addChild(
+            $this->compra,
+            "xCont",
+            $std->xCont,
+            false,
+            "Contrato"
+        );
         return $this->compra;
     }
 
     /**
      * Grupo Cana ZC01 pai A01
      * tag NFe/infNFe/cana (opcional)
-     * @param  string $safra
-     * @param  string $ref
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagcana(
-        $safra = '',
-        $ref = ''
-    ) {
+    public function tagcana($std)
+    {
         $this->cana = $this->dom->createElement("cana");
-        $this->dom->addChild($this->cana, "safra", $safra, true, "Identificação da safra");
-        $this->dom->addChild($this->cana, "ref", $ref, true, "Mês e ano de referência");
+        $this->dom->addChild(
+            $this->cana,
+            "safra",
+            $std->safra,
+            true,
+            "Identificação da safra"
+        );
+        $this->dom->addChild(
+            $this->cana,
+            "ref",
+            $std->ref,
+            true,
+            "Mês e ano de referência"
+        );
+        $this->dom->addChild(
+            $this->cana,
+            "qTotMes",
+            $std->qTotMes,
+            true,
+            "Quantidade Total do Mês"
+        );
+        $this->dom->addChild(
+            $this->cana,
+            "qTotAnt",
+            $std->qTotAnt,
+            true,
+            "Quantidade Total Anterior"
+        );
+        $this->dom->addChild(
+            $this->cana,
+            "qTotGer",
+            $std->qTotGer,
+            true,
+            "Quantidade Total Geral"
+        );
+        $this->dom->addChild(
+            $this->cana,
+            "vFor",
+            $std->vFor,
+            true,
+            "Valor dos Fornecimentos"
+        );
+        $this->dom->addChild(
+            $this->cana,
+            "vTotDed",
+            $std->vTotDed,
+            true,
+            "Valor Total da Dedução"
+        );
+        $this->dom->addChild(
+            $this->cana,
+            "vLiqFor",
+            $std->vLiqFor,
+            true,
+            "Valor Líquido dos Fornecimentos"
+        );
         return $this->cana;
     }
 
     /**
      * Grupo Fornecimento diário de cana ZC04 pai ZC01
      * tag NFe/infNFe/cana/forDia
-     * @param  string $dia
-     * @param  string $qtde
-     * @param  string $qTotMes
-     * @param  string $qTotAnt
-     * @param  string $qTotGer
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagforDia(
-        $dia = '',
-        $qtde = '',
-        $qTotMes = '',
-        $qTotAnt = '',
-        $qTotGer = ''
-    ) {
+    public function tagforDia($std)
+    {
         $forDia = $this->dom->createElement("forDia");
-        $forDia->setAttribute("dia", $dia);
+        $forDia->setAttribute("dia", $std->dia);
         $this->dom->addChild(
             $forDia,
             "qtde",
-            $qtde,
+            $std->qtde,
             true,
             "Quantidade"
         );
-        $this->dom->addChild(
-            $forDia,
-            "qTotMes",
-            $qTotMes,
-            true,
-            "Quantidade Total do Mês"
-        );
-        $this->dom->addChild(
-            $forDia,
-            "qTotAnt",
-            $qTotAnt,
-            true,
-            "Quantidade Total Anterior"
-        );
-        $this->dom->addChild(
-            $forDia,
-            "qTotGer",
-            $qTotGer,
-            true,
-            "Quantidade Total Geral"
-        );
-        $this->aForDia[] = $forDia;
-        $this->dom->appChild($this->cana, $forDia, 'O metodo tacana deveria ter sido chamado antes. [tagforDia]');
+        $qTotMes = $this->cana->getElementsByTagName('qTotMes')->item(0);
+        $this->cana->insertBefore($forDia, $qTotMes);
         return $forDia;
     }
 
     /**
      * Grupo Deduções – Taxas e Contribuições ZC10 pai ZC01
      * tag NFe/infNFe/cana/deduc (opcional)
-     * @param  string $xDed
-     * @param  float $vDed
-     * @param  float $vFor
-     * @param  float $vTotDed
-     * @param  float $vLiqFor
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagdeduc(
-        $xDed,
-        $vDed,
-        $vFor,
-        $vTotDed,
-        $vLiqFor
-    ) {
+    public function tagdeduc($std)
+    {
         $deduc = $this->dom->createElement("deduc");
         $this->dom->addChild(
             $deduc,
             "xDed",
-            $xDed,
+            $std->xDed,
             true,
             "Descrição da Dedução"
         );
         $this->dom->addChild(
             $deduc,
             "vDed",
-            $vDed,
+            $std->vDed,
             true,
             "Valor da Dedução"
         );
+        $vFor = $this->cana->getElementsByTagName('vFor')->item(0);
+        $this->cana->insertBefore($deduc, $vFor);
+        return $deduc;
+    }
+    
+    /**
+     * Informações suplementares da Nota Fiscal
+     * @param stdClass $std
+     * @return DOMElement
+     */
+    public function taginfNFeSupl($std)
+    {
+        $infNFeSupl = $dom->createElement("infNFeSupl");
+        $nodeqr = $infNFeSupl->appendChild($dom->createElement('qrCode'));
+        $nodeqr->appendChild($dom->createCDATASection($std->qrcode));
+        //incluido no layout 4.00
+        $std->urlChave = !empty($std->urlChave) ? $std->urlChave : null;
         $this->dom->addChild(
-            $deduc,
-            "vFor",
-            $vFor,
-            true,
-            "Valor dos Fornecimentos"
-        );
-        $this->dom->addChild(
-            $deduc,
-            "vTotDed",
-            $vTotDed,
-            true,
-            "Valor Total da Dedução"
-        );
-        $this->dom->addChild(
-            $deduc,
-            "vLiqFor",
-            $vLiqFor,
-            true,
+            $infNFeSupl,
+            "urlChave",
+            $std->urlChave,
+            false,
             "Valor Líquido dos Fornecimentos"
         );
-        $this->aDeduc[] = $deduc;
-        $this->dom->appChild(
-            $this->cana,
-            $deduc,
-            'O metodo tagcana deveria ter sido chamado antes. [tagdeduc]'
-        );
-        return $deduc;
+        $this->infNFeSupl = $infNFeSupl;
+        return $infNFeSupl;
     }
 
     /**
@@ -5774,19 +5597,6 @@ abstract class MakeBasic
     {
         $this->aNFref[] = $this->dom->createElement("NFref");
         return count($this->aNFref);
-    }
-
-    /**
-     * Informação de pagamentos
-     * tag NFe/infNFe/pag
-     * Podem ser criados até 100 desses Nodes por NFe
-     * Função chamada pelo método [tagPag]
-     * @return int Total registros
-     */
-    protected function buildPag()
-    {
-        $this->aPag[] = $this->dom->createElement("pag");
-        return count($this->aPag);
     }
 
     /**
@@ -5832,40 +5642,37 @@ abstract class MakeBasic
      * Grupo COFINS tributado pela alíquota S02 pai S01
      * tag det/imposto/COFINS/COFINSAliq (opcional)
      * Função chamada pelo método [ tagCOFINS ]
-     * @param  string $cst
-     * @param  string $vBC
-     * @param  string $pCOFINS
-     * @param  string $vCOFINS
+     * @param stdClass $std
      * @return DOMElement
      */
-    protected function buildCOFINSAliq($cst, $vBC, $pCOFINS, $vCOFINS)
+    protected function buildCOFINSAliq($std)
     {
         $confinsAliq = $this->dom->createElement('COFINSAliq');
         $this->dom->addChild(
             $confinsAliq,
             'CST',
-            $cst,
+            $std->CST,
             true,
             "Código de Situação Tributária da COFINS"
         );
         $this->dom->addChild(
             $confinsAliq,
             'vBC',
-            $vBC,
+            $std->vBC,
             true,
             "Valor da Base de Cálculo da COFINS"
         );
         $this->dom->addChild(
             $confinsAliq,
             'pCOFINS',
-            $pCOFINS,
+            $std->pCOFINS,
             true,
             "Alíquota da COFINS (em percentual)"
         );
         $this->dom->addChild(
             $confinsAliq,
             'vCOFINS',
-            $vCOFINS,
+            $std->vCOFINS,
             true,
             "Valor da COFINS"
         );
@@ -5876,16 +5683,16 @@ abstract class MakeBasic
      * Grupo COFINS não tributado S04 pai S01
      * tag NFe/infNFe/det[]/imposto/COFINS/COFINSNT (opcional)
      * Função chamada pelo método [ tagCOFINS ]
-     * @param  string $cst
+     * @param stdClass $std
      * @return DOMElement
      */
-    protected function buildCOFINSNT($cst)
+    protected function buildCOFINSNT($std)
     {
         $confinsnt = $this->dom->createElement('COFINSNT');
         $this->dom->addChild(
             $confinsnt,
             "CST",
-            $cst,
+            $std->CST,
             true,
             "Código de Situação Tributária da COFINS"
         );
@@ -5896,62 +5703,51 @@ abstract class MakeBasic
      * Grupo COFINS Outras Operações S05 pai S01
      * tag NFe/infNFe/det[]/imposto/COFINS/COFINSoutr (opcional)
      * Função chamada pelo método [ tagCOFINS ]
-     * @param  string $cst
-     * @param  string $vBC
-     * @param  string $pCOFINS
-     * @param  string $qBCProd
-     * @param  string $vAliqProd
-     * @param  string $vCOFINS
+     * @param stdClass $std
      * @return DOMElement
      */
-    protected function buildCOFINSoutr(
-        $cst = '',
-        $vBC = '',
-        $pCOFINS = '',
-        $qBCProd = '',
-        $vAliqProd = '',
-        $vCOFINS = ''
-    ) {
+    protected function buildCOFINSoutr($std)
+    {
         $confinsoutr = $this->dom->createElement('COFINSOutr');
         $this->dom->addChild(
             $confinsoutr,
             "CST",
-            $cst,
+            $std->CST,
             true,
             "Código de Situação Tributária da COFINS"
         );
         $this->dom->addChild(
             $confinsoutr,
             "vBC",
-            $vBC,
+            $std->vBC,
             false,
             "Valor da Base de Cálculo da COFINS"
         );
         $this->dom->addChild(
             $confinsoutr,
             "pCOFINS",
-            $pCOFINS,
+            $std->pCOFINS,
             false,
             "Alíquota da COFINS (em percentual)"
         );
         $this->dom->addChild(
             $confinsoutr,
             "qBCProd",
-            $qBCProd,
+            $std->qBCProd,
             false,
             "Quantidade Vendida"
         );
         $this->dom->addChild(
             $confinsoutr,
             "vAliqProd",
-            $vAliqProd,
+            $std->vAliqProd,
             false,
             "Alíquota da COFINS (em reais)"
         );
         $this->dom->addChild(
             $confinsoutr,
             "vCOFINS",
-            $vCOFINS,
+            $std->vCOFINS,
             true,
             "Valor da COFINS"
         );
@@ -6070,6 +5866,27 @@ abstract class MakeBasic
             $det = null;
         }
     }
+    
+
+    /**
+     * Insere a tag pag, os detalhamentos dos pagamentos e cartoes
+     * NOTA: Ajustado para NT2016_002_v1.30
+     * Somente para modelo 65
+     * tag NFe/infNFe/pag/
+     * tag NFe/infNFe/pag/detPag[]
+     * tag NFe/infNFe/pag/detPag[]/Card
+     */
+    protected function buildTagPag()
+    {
+        if ($this->mod == '55') {
+            return;
+        }
+        if (count($this->aPag) > 0) {
+            foreach ($this->aPag as $pag) {
+                $this->dom->appChild($this->infNFe, $pag, 'Falta tag "infNFe"');
+            }
+        }
+    }
 
     /**
      * Grupo Totais da NF-e W01 pai A01
@@ -6080,27 +5897,43 @@ abstract class MakeBasic
         if (empty($this->total)) {
             $this->total = $this->dom->createElement("total");
         }
-        //ajuste de digitos dos campos totalizados
-        if ($this->aTotICMSUFDest['vICMSUFDest'] != '') {
-            $this->aTotICMSUFDest['vICMSUFDest'] = number_format($this->aTotICMSUFDest['vICMSUFDest'], 2, '.', '');
-            $this->aTotICMSUFDest['vICMSUFRemet'] = number_format($this->aTotICMSUFDest['vICMSUFRemet'], 2, '.', '');
-            $this->aTotICMSUFDest['vFCPUFDest'] = number_format($this->aTotICMSUFDest['vFCPUFDest'], 2, '.', '');
-        }
+        
+        $this->stdTot->vNF = $this->stdTot->vProd
+            - $this->stdTot->vDesc
+            + $this->stdTot->vST
+            + $this->stdTot->vFrete
+            + $this->stdTot->vSeg
+            + $this->stdTot->vOutro
+            + $this->stdTot->vII
+            + $this->stdTot->vIPI;
+        
+        //round all values
+        $this->stdTot->vBC = round($this->stdTot->vBC, 2);
+        $this->stdTot->vICMS = round($this->stdTot->vICMS, 2);
+        $this->stdTot->vICMSDeson = round($this->stdTot->vICMSDeson, 2);
+        $this->stdTot->vFCP = round($this->stdTot->vFCP, 2);
+        $this->stdTot->vFCPUFDest = round($this->stdTot->vFCPUFDest, 2);
+        $this->stdTot->vICMSUFDest = round($this->stdTot->vICMSUFDest, 2);
+        $this->stdTot->vICMSUFRemet = round($this->stdTot->vICMSUFRemet, 2);
+        $this->stdTot->vBCST = round($this->stdTot->vBCST, 2);
+        $this->stdTot->vST = round($this->stdTot->vST, 2);
+        $this->stdTot->vFCPST = round($this->stdTot->vFCPST, 2);
+        $this->stdTot->vFCPSTRet = round($this->stdTot->vFCPSTRet, 2);
+        $this->stdTot->vProd = round($this->stdTot->vProd, 2);
+        $this->stdTot->vFrete = round($this->stdTot->vFrete, 2);
+        $this->stdTot->vSeg = round($this->stdTot->vSeg, 2);
+        $this->stdTot->vDesc = round($this->stdTot->vDesc, 2);
+        $this->stdTot->vII = round($this->stdTot->vII, 2);
+        $this->stdTot->vIPI = round($this->stdTot->vIPI, 2);
+        $this->stdTot->vIPIDevol = round($this->stdTot->vIPIDevol, 2);
+        $this->stdTot->vPIS = round($this->stdTot->vPIS, 2);
+        $this->stdTot->vCOFINS = round($this->stdTot->vCOFINS, 2);
+        $this->stdTot->vOutro = round($this->stdTot->vOutro, 2);
+        $this->stdTot->vNF = round($this->stdTot->vNF, 2);
+        $this->stdTot->vTotTrib = round($this->stdTot->vTotTrib, 2);
     }
 
-    /**
-     * Grupo Lacres X33 pai X26
-     * tag NFe/infNFe/transp/vol/lacres (opcional)
-     * @param  string $nLacre
-     * @return DOMElement
-     */
-    protected function buildLacres($nLacre = '')
-    {
-        $lacre = $this->dom->createElement("lacres");
-        $this->dom->addChild($lacre, "nLacre", $nLacre, true, "Número dos Lacres");
-        return $lacre;
-    }
-
+    
     /**
      * Grupo Cobrança Y01 pai A01
      * tag NFe/infNFe/cobr (opcional)
@@ -6110,17 +5943,6 @@ abstract class MakeBasic
     {
         if (empty($this->cobr)) {
             $this->cobr = $this->dom->createElement("cobr");
-        }
-    }
-
-    /**
-     * Grupo Cobrança YA01 pai A01
-     * tag NFe/infNFe/Pag (Versao 3.10)
-     */
-    protected function buildTagPag()
-    {
-        foreach ($this->aPag as $pag) {
-            $this->dom->appChild($this->infNFe, $pag, 'Falta tag "infNFe"');
         }
     }
 
