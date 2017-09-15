@@ -311,10 +311,10 @@ class Make
     }
 
     /**
-     * Retorna o xml e monta se necessário
+     * Returns xml string and assembly it is necessary
      * @return string
      */
-    public function getXMl()
+    public function getXML()
     {
         if (empty($this->xml)) {
             $this->montaNFe();
@@ -323,7 +323,7 @@ class Make
     }
 
     /**
-     * Retorna o numero da chave da NFe
+     * Retorns the key number of NFe (44 digits)
      * @return string
      */
     public function getChave()
@@ -332,7 +332,7 @@ class Make
     }
 
     /**
-     * Retrona o modelo de NFe 55 ou 65
+     * Returns the model of NFe 55 or 65
      * @return int
      */
     public function getModelo()
@@ -341,7 +341,7 @@ class Make
     }
     
     /**
-     * Chama metodo de montagem. Para compatibilidade apenas.
+     * Call method of xml assembly. For compatibility only.
      * @return boolean
      */
     public function montaNFe()
@@ -350,10 +350,10 @@ class Make
     }
     
     /**
-     * Método de montagem do xml da NFe
-     * essa função retorna TRUE em caso de sucesso ou FALSE se houve erro
-     * O xml da NFe deve ser recuperado pela funçao getXML() ou diretamente pela
-     * propriedade publica $xml
+     * NFe xml mount method
+     * this function returns TRUE on success or FALSE on error
+     * The xml of the NFe must be retrieved by the getXML() function or 
+     * directly by the public property $xml
      * @return boolean
      */
     public function monta()

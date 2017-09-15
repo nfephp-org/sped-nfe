@@ -7,37 +7,52 @@ Para construir o XML da NFe (ou da NFCe) deve ser usada a classe Make::class
 ## Métodos
 
 ### function __construct()
+Método construtor
 
+```php
+$nfe = new Make();
+```
 
-### function getXMl($std)
-| Parametro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+### function getXMl()
+Este método retorna o XML em uma string
 
-### function getChave($std)
-| Parametro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$xml = $nfe->getXML();
+```
 
-### function getModelo($std)
-| Parametro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+### function getChave()
+Este método retorna o numero da chave da NFe
+
+```php
+$xml = $nfe->geChave();
+```
+
+### function getModelo()
+Este método retorna o modelo de NFe 55 ou 65
+
+```php
+$xml = $nfe->getModelo();
+```
 
 ### function montaNFe($std)
-| Parametro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+Este método chama o metodo monta(), mantido apenas para compatibilidade.
 
 ### function monta($std)
-| Parametro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+Este método executa a montagem do XML
 
 ### function taginfNFe($std)
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+
+```
+$std = new StdClass();
+$std->versao;
+$std->Id;
+$std->pk_nItem
+
+ 
+```
 
 ### function tagide($std)
 | Parametro | Tipo | Descrição |
