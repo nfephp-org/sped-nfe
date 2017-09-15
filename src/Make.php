@@ -5027,7 +5027,7 @@ class Make
     
     /**
      * Grupo de Formas de Pagamento YA01a pai YA01
-     * NOTA: Ajuste nt_2016_002_v1.20
+     * NOTA: Ajuste nt_2016_002_v1.30
      * tag NFe/infNFe/pag/detPag
      * @param stdClass $std
      * @return DOMElement
