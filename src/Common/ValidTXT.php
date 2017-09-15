@@ -15,6 +15,8 @@ namespace NFePHP\NFe\Common;
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
 
+use NFePHP\Common\Strings;
+
 class ValidTXT
 {
     public static $errors = [];
@@ -43,6 +45,7 @@ class ValidTXT
     public static function isValid($txt)
     {
         self::loadStructure();
+        $txt = Strings::removeSomeAlienCharsfromTxt($txt);
         $rows = explode("\n", $txt);
         foreach ($rows as $row) {
             $fields = explode('|', $row);
@@ -57,8 +60,17 @@ class ValidTXT
             if (empty($ref)) {
                 continue;
             }
-            if (substr($row, -1) != '|') {
-                self::$errors[] = "ERRO: Todas as linhas devem terminar com 'pipe'. [$row]";
+            $lastChar = substr($row, -1);
+            $char = '';
+            if ($lastChar != '|') {
+                if ($lastChar == ' ') {
+                    $char = '[ESP]';
+                } elseif ($lastChar == "\r") {
+                    $char = '[CR]';
+                } elseif ($lastChar == "\t") {
+                    $char = '[TAB]';
+                }
+                self::$errors[] = "ERRO: $char Todas as linhas devem terminar com 'pipe'. [$row]";
                 continue;
             }
             if (!array_key_exists($ref, self::$entities)) {
@@ -68,7 +80,7 @@ class ValidTXT
             $default = count(explode('|', self::$entities[$ref]));
             if ($default != $count) {
                 self::$errors[] = "ERRO: O número de parâmetros na linha "
-                    . "está errado. [ $row ] Esperado [ "
+                    . "está errado (esperado #$default) -> (encontrado #$count). [ $row ] Esperado [ "
                     . self::$entities[$ref]." ]";
             }
             foreach ($fields as $field) {
@@ -77,10 +89,10 @@ class ValidTXT
                         . "campo dos dados. [$row]";
                     continue;
                 }
-                $newfield = preg_replace("/[^a-zA-Z0-9 @,-.;:\/]/", "", $field);
+                $newfield = preg_replace("/[^a-zA-Z0-9 @,-.;:%$\/\[\]()]/", "", $field);
                 if ($field != $newfield) {
                     self::$errors[] = "ERRO: Existem caracteres especiais, "
-                        . "acentos ou aspas em algum campo dos dados. [$row]";
+                        . "acentos ou aspas em algum campo dos dados. [" . htmlentities($row) . "]";
                     continue;
                 }
             }
