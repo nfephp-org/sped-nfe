@@ -352,7 +352,7 @@ class Make
     /**
      * NFe xml mount method
      * this function returns TRUE on success or FALSE on error
-     * The xml of the NFe must be retrieved by the getXML() function or 
+     * The xml of the NFe must be retrieved by the getXML() function or
      * directly by the public property $xml
      * @return boolean
      */
