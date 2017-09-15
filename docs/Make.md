@@ -13,34 +13,42 @@ Método construtor
 $nfe = new Make();
 ```
 
-### function getXMl()
+### function getXMl():string
 Este método retorna o XML em uma string
 
 ```php
 $xml = $nfe->getXML();
 ```
 
-### function getChave()
+### function getChave():string
 Este método retorna o numero da chave da NFe
 
 ```php
-$xml = $nfe->geChave();
+$chave = $nfe->geChave();
 ```
 
-### function getModelo()
+### function getModelo():int
 Este método retorna o modelo de NFe 55 ou 65
 
 ```php
-$xml = $nfe->getModelo();
+$modelo = $nfe->getModelo();
 ```
 
-### function montaNFe($std)
+### function montaNFe():boolean
 Este método chama o metodo monta(), mantido apenas para compatibilidade.
 
-### function monta($std)
+```php
+$result = $nfe->montaNFe();
+```
+
+### function monta()
 Este método executa a montagem do XML
 
-### function taginfNFe($std)
+```php
+$result = $nfe->montaNFe();
+```
+
+### function taginfNFe($std):DOMElement
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
@@ -51,13 +59,22 @@ $std->versao;
 $std->Id;
 $std->pk_nItem
 
+$elem = $nfe->taginfNFe($std);
  
 ```
 
-### function tagide($std)
+### function tagide($std):DOMElement
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+
+```
+$std = new StdClass();
+$std->cUF|cNF|natOp|indPag|mod|serie|nNF|dhEmi|dhSaiEnt|tpNF|idDest|cMunFG|tpImp|tpEmis|cDV|tp Amb|finNFe|indFinal|indPres|procEmi|verProc|dhCont|xJust|
+
+$elem = $nfe->tagide($std);
+ 
+```
 
 ### function tagrefNFe($std)
 | Parametro | Tipo | Descrição |

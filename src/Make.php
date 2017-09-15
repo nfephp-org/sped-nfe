@@ -1606,7 +1606,7 @@ class Make
             "$identificador [item $std->item] Numero CEST"
         );
         //incluido no layout 4.00
-        $std->CNPJFab = !empty($std->CNPJFab) ? $std->CNPJFab : null;
+        $std->indEscala = !empty($std->indEscala) ? $std->indEscala : null;
         $this->dom->addChild(
             $ctrltST,
             "indEscala",
@@ -1624,8 +1624,8 @@ class Make
             "$identificador [item $std->item] CNPJ do Fabricante da Mercadoria,"
             . "obrigatório para produto em escala NÃO relevante."
         );
-        $this->aCest[$std->item][] = $std->CEST;
-        return $cest;
+        $this->aCest[$std->item][] = $ctrltST;
+        return $ctrltST;
     }
 
     /**
