@@ -141,7 +141,13 @@ class Parser
             $this->$metodo($std);
         }
     }
-
+    
+    /**
+     * Creates stdClass for tag fields
+     * @param array $dfls
+     * @param string $struct
+     * @return stdClass
+     */
     protected static function fieldsToStd($dfls, $struct)
     {
         $sfls = explode('|', $struct);
@@ -195,7 +201,7 @@ class Parser
      *  |tpImp|tpEmis|cDV|tp Amb|finNFe|indFinal|indPres|procEmi|verProc|dhCont|xJust|
      * NOTA: Ajustado para NT2016_002_v1.30
      * B|cUF|cNF|natOp|mod|serie|nNF|dhEmi|dhSaiEnt|tpNF|idDest|cMunFG|tpImp
-     *  |tpEmis|cDV|tp Amb|finNFe|indFinal|indPres|procEmi|verProc|dhCont|xJust|
+     *  |tpEmis|cDV|tpAmb|finNFe|indFinal|indPres|procEmi|verProc|dhCont|xJust|
      * @param stdClass $std
      */
     protected function bEntity($std)

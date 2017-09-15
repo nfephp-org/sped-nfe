@@ -5071,7 +5071,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    protected function taglacres($std)
+    public function taglacres($std)
     {
         $lacre = $this->dom->createElement("lacres");
         $this->dom->addChild(
