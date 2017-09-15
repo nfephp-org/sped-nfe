@@ -8,10 +8,6 @@ use NFePHP\NFe\Common\ValidTXT;
 $txt = file_get_contents('fixtures/nfe_errado.txt');
 $errors = ValidTXT::isValid($txt);
 
+echo "<pre>";
 print_r($errors);
-
-/*
-foreach($errors as $error) {
-    echo $error.'<br>';
-}
-*/
+echo "</pre>";

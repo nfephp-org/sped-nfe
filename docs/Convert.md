@@ -32,6 +32,7 @@ try {
     }
 } catch (\Exception $e) {
     //tratar exceptions
+    echo str_replace("\n", "<br/>", $e->getMessage());
 }
 ```
 
