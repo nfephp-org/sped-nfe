@@ -3035,156 +3035,125 @@ class Make
      * Grupo de Partilha do ICMS entre a UF de origem e UF de destino ou
      * a UF definida na legislação. N10a pai N01
      * tag NFe/infNFe/det[]/imposto/ICMS/ICMSPart
-     * @param  string $nItem
-     * @param  string $orig
-     * @param  string $cst
-     * @param  string $modBC
-     * @param  string $vBC
-     * @param  string $pRedBC
-     * @param  string $pICMS
-     * @param  string $vICMS
-     * @param  string $modBCST
-     * @param  string $pMVAST
-     * @param  string $pRedBCST
-     * @param  string $vBCST
-     * @param  string $pICMSST
-     * @param  string $vICMSST
-     * @param  string $pBCOp
-     * @param  string $ufST
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagICMSPart(
-        $nItem = '',
-        $orig = '',
-        $cst = '',
-        $modBC = '',
-        $vBC = '',
-        $pRedBC = '',
-        $pICMS = '',
-        $vICMS = '',
-        $modBCST = '',
-        $pMVAST = '',
-        $pRedBCST = '',
-        $vBCST = '',
-        $pICMSST = '',
-        $vICMSST = '',
-        $pBCOp = '',
-        $ufST = ''
-    ) {
+    public function tagICMSPart($std)
+    {
         $icmsPart = $this->dom->createElement("ICMSPart");
         $this->dom->addChild(
             $icmsPart,
             'orig',
-            $orig,
+            $std->orig,
             true,
             "[item $std->item] Origem da mercadoria"
         );
         $this->dom->addChild(
             $icmsPart,
             'CST',
-            $cst,
+            $std->CST,
             true,
             "[item $std->item] Tributação do ICMS 10 ou 90"
         );
         $this->dom->addChild(
             $icmsPart,
             'modBC',
-            $modBC,
+            $std->modBC,
             true,
             "[item $std->item] Modalidade de determinação da BC do ICMS"
         );
         $this->dom->addChild(
             $icmsPart,
             'vBC',
-            $vBC,
+            $std->vBC,
             true,
             "[item $std->item] Valor da BC do ICMS"
         );
         $this->dom->addChild(
             $icmsPart,
             'pRedBC',
-            $pRedBC,
+            $std->pRedBC,
             false,
             "[item $std->item] Percentual da Redução de BC"
         );
         $this->dom->addChild(
             $icmsPart,
             'pICMS',
-            $pICMS,
+            $std->pICMS,
             true,
             "[item $std->item] Alíquota do imposto"
         );
         $this->dom->addChild(
             $icmsPart,
             'vICMS',
-            $vICMS,
+            $std->vICMS,
             true,
             "[item $std->item] Valor do ICMS"
         );
         $this->dom->addChild(
             $icmsPart,
             'modBCST',
-            $modBCST,
+            $std->modBCST,
             true,
             "[item $std->item] Modalidade de determinação da BC do ICMS ST"
         );
         $this->dom->addChild(
             $icmsPart,
             'pMVAST',
-            $pMVAST,
+            $std->pMVAST,
             false,
             "[item $std->item] Percentual da margem de valor Adicionado do ICMS ST"
         );
         $this->dom->addChild(
             $icmsPart,
             'pRedBCST',
-            $pRedBCST,
+            $std->pRedBCST,
             false,
             "[item $std->item] Percentual da Redução de BC do ICMS ST"
         );
         $this->dom->addChild(
             $icmsPart,
             'vBCST',
-            $vBCST,
+            $std->vBCST,
             true,
             "[item $std->item] Valor da BC do ICMS ST"
         );
         $this->dom->addChild(
             $icmsPart,
             'pICMSST',
-            $pICMSST,
+            $std->pICMSST,
             true,
             "[item $std->item] Alíquota do imposto do ICMS ST"
         );
         $this->dom->addChild(
             $icmsPart,
             'vICMSST',
-            $vICMSST,
+            $std->vICMSST,
             true,
             "[item $std->item] Valor do ICMS ST"
         );
         $this->dom->addChild(
             $icmsPart,
             'pBCOp',
-            $pBCOp,
+            $std->pBCOp,
             true,
             "[item $std->item] Percentual da BC operação própria"
         );
         $this->dom->addChild(
             $icmsPart,
             'UFST',
-            $ufST,
+            $std->UFST,
             true,
             "[item $std->item] UF para qual é devido o ICMS ST"
         );
         //caso exista a tag aICMS[$nItem] inserir nela caso contrario criar
-        if (!empty($this->aICMS[$nItem])) {
-            $tagIcms = $this->aICMS[$nItem];
+        if (!empty($this->aICMS[$std->item])) {
+            $tagIcms = $this->aICMS[$std->item];
         } else {
             $tagIcms = $this->dom->createElement('ICMS');
         }
-        $this->dom->appChild($tagIcms, $icmsPart, "Inserindo ICMSPart em ICMS[$nItem]");
-        $this->aICMS[$nItem] = $tagIcms;
+        $this->dom->appChild($tagIcms, $icmsPart, "Inserindo ICMSPart em ICMS[$std->item]");
+        $this->aICMS[$std->item] = $tagIcms;
         return $tagIcms;
     }
 
@@ -5767,9 +5736,12 @@ class Make
         foreach ($this->aNVE as $nItem => $nve) {
             $prod = $this->aProd[$nItem];
             foreach ($nve as $child) {
-                $node = $prod->getElementsByTagName("EXTIPI")->item(0);
+                $node = $prod->getElementsByTagName("cBenef")->item(0);
                 if (empty($node)) {
-                    $node = $prod->getElementsByTagName("CFOP")->item(0);
+                    $node = $prod->getElementsByTagName("EXTIPI")->item(0);
+                    if (empty($node)) {
+                        $node = $prod->getElementsByTagName("CFOP")->item(0);
+                    }
                 }
                 $prod->insertBefore($child, $node);
             }
@@ -5778,11 +5750,23 @@ class Make
         foreach ($this->aCest as $nItem => $cest) {
             $prod = $this->aProd[$nItem];
             foreach ($cest as $child) {
-                $node = $prod->getElementsByTagName("EXTIPI")->item(0);
+                $node = $prod->getElementsByTagName("cBenef")->item(0);
                 if (empty($node)) {
-                    $node = $prod->getElementsByTagName("CFOP")->item(0);
+                    $node = $prod->getElementsByTagName("EXTIPI")->item(0);
+                    if (empty($node)) {
+                        $node = $prod->getElementsByTagName("CFOP")->item(0);
+                    }
                 }
-                $prod->insertBefore($child, $node);
+                $cchild = $child->getElementsByTagName("CEST")->item(0);
+                $prod->insertBefore($cchild, $node);
+                $cchild = $child->getElementsByTagName("indEscala")->item(0);
+                if (!empty($cchild)) {
+                    $prod->insertBefore($cchild, $node);
+                }
+                $cchild = $child->getElementsByTagName("CNPJFab")->item(0);
+                if (!empty($cchild)) {
+                    $prod->insertBefore($cchild, $node);
+                }
             }
         }
         //insere DI
@@ -5866,7 +5850,6 @@ class Make
             $det = null;
         }
     }
-    
 
     /**
      * Insere a tag pag, os detalhamentos dos pagamentos e cartoes
