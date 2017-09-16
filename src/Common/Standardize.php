@@ -41,6 +41,8 @@ class Standardize
      */
     public $rootTagList = [
         'distDFeInt',
+        'resNFe',
+        'resEvento',
         'envEvento',
         'ConsCad',
         'consSitNFe',
