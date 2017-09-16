@@ -15,6 +15,7 @@ namespace NFePHP\NFe\Factories;
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
 
+use NFePHP\Common\Strings;
 use NFePHP\NFe\Make;
 use stdClass;
 
@@ -88,7 +89,15 @@ class Parser
      * @var stdClass
      */
     protected $stdCOFINSST;
-    
+    /**
+     * @var stdClass
+     */
+    protected $stdTransporta;
+    /**
+     * @var
+     */
+    private $limparString = false;
+
     /**
      * Configure environment to correct NFe layout
      * @param string $version
@@ -100,11 +109,11 @@ class Parser
         $this->structure = json_decode(file_get_contents($path), true);
         $this->make = new Make();
     }
-    
+
     /**
      *
      * @param array $nota
-     * @return type
+     * @return string
      */
     public function toXml($nota)
     {
@@ -116,13 +125,15 @@ class Parser
         if ($this->make->monta()) {
             return $this->make->getXML();
         }
-        return [];
+        return null;
     }
 
     /**
      * Converte uma Nota Fiscal em um array de txt em um xml
-     * @return string
-     * @throws Exception\RuntimeException
+     *
+     * @param $nota
+     *
+     * @return void
      */
     protected function array2xml($nota)
     {
@@ -141,7 +152,7 @@ class Parser
             $this->$metodo($std);
         }
     }
-    
+
     /**
      * Creates stdClass for tag fields
      * @param array $dfls
@@ -168,12 +179,15 @@ class Parser
      * Will remove all duplicated spaces and if wanted
      * replace all accented characters by their originals
      * and all the special ones
-     * @param string $field string to be cleaned
+     *
+     * @param $std
+     *
+     * @return array
      */
     protected function clearFieldsString($std)
     {
         $n = [];
-        foreach ($fields as $field) {
+        foreach ($std as $field) {
             if ($this->limparString) {
                 $field = Strings::replaceSpecialsChars($field);
             }
@@ -184,7 +198,7 @@ class Parser
         }
         return $n;
     }
-    
+
     /**
      * Cria a tag infNFe [A]
      * A|versao|Id|pk_nItem|
@@ -194,7 +208,7 @@ class Parser
     {
         $this->make->taginfNFe($std);
     }
-    
+
     /**
      * Cria a tag ide [B]
      * B|cUF|cNF|natOp|indPag|mod|serie|nNF|dhEmi|dhSaiEnt|tpNF|idDest|cMunFG
@@ -208,7 +222,7 @@ class Parser
     {
         $this->make->tagide($std);
     }
-    
+
     /**
      * Cria a tag nfref [BA]
      * BA|
@@ -217,9 +231,8 @@ class Parser
     protected function baEntity($std)
     {
         //fake não faz nada
-        $fields = [];
     }
-    
+
     /**
      * Cria a tag refNFe [BA02]
      * BA02|refNFe|
@@ -229,7 +242,7 @@ class Parser
     {
         $this->make->tagrefNFe($std);
     }
-    
+
     /**
      * Cria a tag refNF [BA03]
      * BA03|cUF|AAMM|CNPJ|mod|serie|nNF|
@@ -239,7 +252,7 @@ class Parser
     {
         $this->make->tagrefNF($std);
     }
-    
+
     /**
      * Carrega a tag refNFP [BA10]
      * BA10|cUF|AAMM|IE|mod|serie|nNF|
@@ -251,7 +264,7 @@ class Parser
         $this->stdNFP->CNPJ = null;
         $this->stdNFP->CPF = null;
     }
-    
+
     /**
      * CNPJ para a tag refNFP [BA13], pertence a BA10
      * BA13|CNPJ|
@@ -263,7 +276,7 @@ class Parser
         $this->buildBA10Entity();
         $this->stdNFP = null;
     }
-    
+
     /**
      * CPF para a tag refNFP [BA14], pertence a BA10
      * BA14|CPF|
@@ -275,7 +288,7 @@ class Parser
         $this->buildBA10Entity();
         $this->stdNFP = null;
     }
-    
+
     /**
      * Cria a tag refNFP [BA10]
      */
@@ -283,7 +296,7 @@ class Parser
     {
         $this->make->tagrefNFP($this->stdNFP);
     }
-    
+
     /**
      * Cria a tag refCTe [BA19]
      * B19|refCTe|
@@ -293,7 +306,7 @@ class Parser
     {
         $this->make->tagrefCTe($std);
     }
-    
+
     /**
      * Cria a tag refECF [BA20]
      * BA20|mod|nECF|nCOO|
@@ -303,7 +316,7 @@ class Parser
     {
         $this->make->tagrefECF($std);
     }
-    
+
     /**
      * Carrega a tag emit [C]
      * C|XNome|XFant|IE|IEST|IM|CNAE|CRT|
@@ -315,7 +328,7 @@ class Parser
         $this->stdEmit->CNPJ = null;
         $this->stdEmit->CPF = null;
     }
-    
+
     /**
      * CNPJ da tag emit [C02], pertence a C
      * C02|CNPJ|
@@ -327,7 +340,7 @@ class Parser
         $this->buildCEntity();
         $this->stdEmit = null;
     }
-    
+
     /**
      * CPF da tag emit [C02a], pertence a C
      * C02a|CPF|
@@ -336,10 +349,10 @@ class Parser
     protected function c02aEntity($std)
     {
         $this->stdEmit->CPF = $std->CPF;
-        $this->linhaCEntity();
+        $this->buildCEntity();
         $this->stdEmit = null;
     }
-    
+
     /**
      * Cria a tag emit [C]
      */
@@ -347,7 +360,7 @@ class Parser
     {
         $this->make->tagemit($this->stdEmit);
     }
-    
+
     /**
      * Cria a tag enderEmit [C05]
      * C05|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|CEP|cPais|xPais|fone|
@@ -357,7 +370,7 @@ class Parser
     {
         $this->make->tagenderEmit($std);
     }
-    
+
     /**
      * Carrega a tag dest [E]
      * E|xNome|indIEDest|IE|ISUF|IM|email|
@@ -370,7 +383,7 @@ class Parser
         $this->stdDest->CPF = null;
         $this->stdDest->idEstrangeiro = null;
     }
-    
+
     /**
      * CNPJ para a tag dest [E02], pertene a E
      * E02|CNPJ|
@@ -382,7 +395,7 @@ class Parser
         $this->buildEEntity();
         $this->stdDest = null;
     }
-    
+
     /**
      * CPF para a tag dest [E03], pertene a E
      * E03|CPF|
@@ -394,7 +407,7 @@ class Parser
         $this->buildEEntity();
         $this->stdDest = null;
     }
-    
+
     /**
      * idEstrangeiro para a tag dest [E03a], pertene a E
      * E03a|idEstrangeiro|
@@ -406,7 +419,7 @@ class Parser
         $this->buildEEntity();
         $this->stdDest = null;
     }
-    
+
     /**
      * Cria a tag dest [E]
      */
@@ -414,7 +427,7 @@ class Parser
     {
         $this->make->tagdest($this->stdDest);
     }
-    
+
     /**
      * Cria a tag enderDest [E05]
      * E05|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|CEP|cPais|xPais|fone|
@@ -424,7 +437,7 @@ class Parser
     {
         $this->make->tagenderDest($std);
     }
-    
+
     /**
      * Carrega a tag retirada [F]
      * F|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|
@@ -436,7 +449,7 @@ class Parser
         $this->stdRetirada->CNPJ = null;
         $this->stdRetirada->CPF = null;
     }
-    
+
     /**
      * CNPJ para a tag retirada [F02], pertence a F
      * F02|CNPJ|
@@ -448,7 +461,7 @@ class Parser
         $this->buildFEntity();
         $this->stdRetirada = null;
     }
-    
+
     /**
      * CPF para a tag retirada [F02a], pertence a F
      * F02a|CPF|
@@ -460,7 +473,7 @@ class Parser
         $this->buildFEntity();
         $this->stdRetirada = null;
     }
-    
+
     /**
      * Cria a tag retirada [F]
      */
@@ -468,7 +481,7 @@ class Parser
     {
         $this->make->tagretirada($this->stdRetirada);
     }
-    
+
     /**
      * Carrega e cria a tag entrega [G]
      * G|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|
@@ -480,7 +493,7 @@ class Parser
         $this->stdEntrega->CNPJ = null;
         $this->stdEntrega->CPF = null;
     }
-    
+
     /**
      * CNPJ para a tag entrega [G02], pertence a G
      * G02|CNPJ|
@@ -492,7 +505,7 @@ class Parser
         $this->buildGEntity();
         $this->stdEntrega = null;
     }
-    
+
     /**
      * CPF para a tag entrega [G02a], pertence a G
      * G02a|CPF|
@@ -504,7 +517,7 @@ class Parser
         $this->buildGEntity();
         $this->stdEntrega = null;
     }
-    
+
     /**
      * Cria a tag entrega [G]
      */
@@ -512,7 +525,7 @@ class Parser
     {
         $this->make->tagentrega($this->stdEntrega);
     }
-    
+
     /**
      * Cria a tag autXML [GA]
      * GA|
@@ -521,9 +534,8 @@ class Parser
     protected function gaEntity($std)
     {
         //fake não faz nada
-        $fields = [];
     }
-    
+
     /**
      * Cria a tag autXML com CNPJ [GA02], pertence a GA
      * GA02|CNPJ|
@@ -533,7 +545,7 @@ class Parser
     {
         $this->make->tagautXML($std);
     }
-    
+
     /**
      * Cria a tag autXML com CPF [GA03], pertence a GA
      * GA03|CPF|
@@ -543,7 +555,7 @@ class Parser
     {
         $this->make->tagautXML($std);
     }
-    
+
     /**
      * Cria a tag det/infAdProd [H]
      * H|item|infAdProd|
@@ -556,7 +568,7 @@ class Parser
         }
         $this->item = (integer) $std->item;
     }
-    
+
     /**
      * Cria a tag prod [I]
      * I|cProd|cEAN|xProd|NCM|EXTIPI|CFOP|uCom|qCom|vUnCom|vProd|cEANTrib|uTrib|qTrib|vUnTrib|vFrete|vSeg|vDesc|vOutro|indTot|xPed|nItemPed|nFCI|
@@ -594,7 +606,7 @@ class Parser
         $std->item = $this->item;
         $this->make->tagCEST($std);
     }
- 
+
     /**
      * Cria a tag DI [I18]
      * I18|nDI|dDI|xLocDesemb|UFDesemb|dDesemb|tpViaTransp|vAFRMM|tpIntermedio|CNPJ|UFTerceiro|cExportador|
@@ -606,7 +618,7 @@ class Parser
         $this->make->tagDI($std);
         $this->nDI = $std->nDI;
     }
-    
+
     /**
      * Cria a tag adi [I25], pertence a I18
      * I25|nAdicao|nSeqAdicC|cFabricante|vDescDI|nDraw|
@@ -618,7 +630,7 @@ class Parser
         $std->nDI = $this->nDI;
         $this->make->tagadi($std);
     }
-    
+
     /**
      * Carrega e cria a tag detExport [I50]
      * I50|nDraw|
@@ -632,7 +644,7 @@ class Parser
         $std->qExport = null;
         $this->make->tagdetExport($std);
     }
-    
+
     /**
      * Carrega e cria a tag detExport/exportInd [I52]
      * I52|nRE|chNFe|qExport|
@@ -644,7 +656,7 @@ class Parser
         $std->nDraw = null;
         $this->make->tagdetExport($std);
     }
-    
+
     /**
      * Cria a tag RASTRO [I80]
      * NOTA: Ajustado para NT2016_002_v1.30
@@ -667,7 +679,7 @@ class Parser
         $std->item = $this->item;
         $this->make->tagveicProd($std);
     }
-    
+
     /**
      * Cria a tag med [K]
      * K|nLote|qLote|dFab|dVal|vPMC|
@@ -685,7 +697,7 @@ class Parser
         $std->cProdANVISA = !empty($std->cProdANVISA) ? $std->cProdANVISA : null;
         $this->make->tagmed($std);
     }
-    
+
     /**
      * Cria a tag arma [L]
      * L|tpArma|nSerie|nCano|descr|
@@ -696,7 +708,7 @@ class Parser
         $std->item = $this->item;
         $this->make->tagarma($std);
     }
-   
+
     /**
      * Carrega e cria a tag comb [LA]
      * LA|cProdANP|pMixGN|CODIF|qTemp|UFCons|
@@ -712,7 +724,7 @@ class Parser
         //se o mesmo existe ou não então
         //invocar na montagem final buildLAEntity()
     }
-    
+
     /**
      * Carrega e cria a tag comb [LA07]
      * LA07|qBCProd|vAliqProd|vCIDE|
@@ -726,7 +738,7 @@ class Parser
         //como este campo é opcional, pode ser que não exista então
         //invocar na montagem final buildLAEntity()
     }
-    
+
     /**
      * Carrega e cria a tag encerrante [LA11]
      * LA11|nBico|nBomba|nTanque|vEncIni|vEncFin|
@@ -747,7 +759,7 @@ class Parser
         $std->item = $this->item;
         $this->make->tagcomb($this->stdComb);
     }
-    
+
     /**
      * Cria a tag RECOPI [LB]
      * LB|nRECOPI|
@@ -758,7 +770,7 @@ class Parser
         $std->item = $this->item;
         $this->make->tagRECOPI($std);
     }
-    
+
     /**
      * Cria a tag imposto [M]
      * M|vTotTrib|
@@ -769,7 +781,7 @@ class Parser
         $std->item = $this->item;
         $this->make->tagimposto($std);
     }
-    
+
     /**
      * Carrega a tag ICMS [N]
      * N|
@@ -778,9 +790,8 @@ class Parser
     protected function nEntity($std)
     {
         //fake não faz nada
-        $fields = [];
     }
-  
+
     /**
      * Carrega e cria a tag ICMS [N02]
      * N02|orig|CST|modBC|vBC|pICMS|vICMS|
@@ -793,7 +804,7 @@ class Parser
     {
         $this->buildNEntity($std);
     }
-    
+
     /**
      * Carrega e cria a tag ICMS [N03]
      * N03|orig|CST|modBC|vBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|
@@ -806,7 +817,7 @@ class Parser
     {
         $this->buildNEntity($std);
     }
-    
+
     /**
      * Carrega e cria a tag ICMS [N04]
      * N04|orig|CST|modBC|pRedBC|vBC|pICMS|vICMS|vICMSDeson|motDesICMS|
@@ -832,7 +843,7 @@ class Parser
     {
         $this->buildNEntity($std);
     }
-    
+
     /**
      * Carrega e cria a tag ICMS [N06]
      * N06|orig|CST|vICMSDeson|motDesICMS|
@@ -842,7 +853,7 @@ class Parser
     {
         $this->buildNEntity($std);
     }
-    
+
     /**
      * Carrega e cria a tag ICMS [N07]
      * N07|orig|CST|modBC|pRedBC|vBC|pICMS|vICMSOp|pDif|vICMSDif|vICMS|
@@ -855,7 +866,7 @@ class Parser
     {
         $this->buildNEntity($std);
     }
-    
+
     /**
      * Carrega e cria a tag ICMS [N08]
      * N08|orig|CST|vBCSTRet|vICMSSTRet|
@@ -868,7 +879,7 @@ class Parser
     {
         $this->buildNEntity($std);
     }
-    
+
     /**
      * Carrega e cria a tag ICMS [N09]
      * N09|orig|CST|modBC|pRedBC|vBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vICMSDeson|motDesICMS|
@@ -881,7 +892,7 @@ class Parser
     {
         $this->buildNEntity($std);
     }
-    
+
     /**
      * Carrega e cria a tag ICMS [N10]
      * N10|orig|CST|modBC|vBC|pRedBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vICMSDeson|motDesICMS|
@@ -899,14 +910,14 @@ class Parser
     /**
      * Cria a tag ICMS [N]
      * NOTA: Ajustado para NT2016_002_v1.30
-     * @param array $fields
+     * @param \stdClass $std
      */
     protected function buildNEntity($std)
     {
         $std->item = $this->item;
         $this->make->tagICMS($std);
     }
-    
+
     /**
      * Cria a tag ICMSPart [N10a]
      * N10a|orig|CST|modBC|vBC|pRedBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|pBCOp|UFST|
@@ -917,7 +928,7 @@ class Parser
         $std->item = $this->item;
         $this->make->tagICMSPart($std);
     }
-    
+
     /**
      * Cria a tag ICMSST [N10b]
      * N10b|orig|CST|vBCSTRet|vICMSSTRet|vBCSTDest|vICMSSTDest|
@@ -928,7 +939,7 @@ class Parser
         $std->item = $this->item;
         $this->make->tagICMSST($std);
     }
-    
+
     /**
      * Carrega e Cria a tag ICMSSN [N10c]
      * N10c|orig|CSOSN|pCredSN|vCredICMSSN|
@@ -938,7 +949,7 @@ class Parser
     {
         $this->buildNSNEntity($std);
     }
-    
+
     /**
      * Carrega e Cria a tag ICMSSN [N10d]
      * N10d|orig|CSOSN|
@@ -948,7 +959,7 @@ class Parser
     {
         $this->buildNSNEntity($std);
     }
-    
+
 
     /**
      * Carrega e Cria a tag ICMSSN [N10e]
@@ -974,7 +985,7 @@ class Parser
     {
         $this->buildNSNEntity($std);
     }
-    
+
     /**
      * Carrega e Cria a tag ICMSSN [N10g]
      * N10g|orig|CSOSN|vBCSTRet|vICMSSTRet|
@@ -987,7 +998,7 @@ class Parser
     {
         $this->buildNSNEntity($std);
     }
-    
+
     /**
      * Carrega e Cria a tag ICMSSN [N10h]
      * N10h|orig|CSOSN|modBC|vBC|pRedBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|pCredSN|vCredICMSSN|
@@ -1000,17 +1011,17 @@ class Parser
     {
         $this->buildNSNEntity($std);
     }
-   
+
     /**
      * Nsn|orig|CSOSN|modBC|vBC|pRedBC|pICMS|vICMS|pCredSN|vCredICMSSN|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCSTRet|vICMSSTRet|vBCFCPST|pFCPST|vFCPST|
-     * @param type $std
+     * @param \stdClass $std
      */
     protected function buildNSNEntity($std)
     {
         $std->item = $this->item;
         $this->make->tagICMSSN($std);
     }
-   
+
     /**
      * Carrega a tag IPI [O]
      * O|clEnq|CNPJProd|cSelo|qSelo|cEnq|
@@ -1027,7 +1038,7 @@ class Parser
         $this->stdIPI->qUnid = null;
         $this->stdIPI->vUnid = null;
     }
-    
+
     /**
      * Carrega e cria a tag IPI [O07]
      * O07|CST|vIPI|
@@ -1038,7 +1049,7 @@ class Parser
         $this->stdIPI->CST = $std->CST;
         $this->stdIPI->vIPI = $std->vIPI;
     }
-    
+
     /**
      * Carrega e cria a tag IPI [O08]
      * O08|CST|
@@ -1049,7 +1060,7 @@ class Parser
         $this->stdIPI->CST = $std->CST;
         $this->buildOEntity();
     }
-    
+
     /**
      * Carrega e cria a tag IPI [O10]
      * O10|vBC|pIPI|
@@ -1061,7 +1072,7 @@ class Parser
         $this->stdIPI->pIPI = $std->pIPI;
         $this->buildOEntity();
     }
-    
+
     /**
      * Carrega e cria a tag IPI [O11]
      * O11|qUnid|vUnid|
@@ -1073,7 +1084,7 @@ class Parser
         $this->stdIPI->vUnid = $std->vUnid;
         $this->buildOEntity();
     }
-    
+
     /**
      * Cria a tag IPI [O]
      * Oxx|cst|clEnq|cnpjProd|cSelo|qSelo|cEnq|vBC|pIPI|qUnid|vUnid|vIPI|
@@ -1082,7 +1093,7 @@ class Parser
     {
         $this->make->tagIPI($this->stdIPI);
     }
-    
+
     /**
      * Cria a tag II [P]
      * P|vBC|vDespAdu|vII|vIOF|
@@ -1093,7 +1104,7 @@ class Parser
         $std->item = $this->item;
         $this->make->tagII($std);
     }
-    
+
     /**
      * Carrega a tag PIS [Q]
      * Q|
@@ -1104,8 +1115,13 @@ class Parser
         //carrega numero do item
         $std->item = $this->item;
         $this->stdPIS = $std;
+        $this->stdPIS->vBC = null;
+        $this->stdPIS->pPIS = null;
+        $this->stdPIS->vPIS = null;
+        $this->stdPIS->qBCProd = null;
+        $this->stdPIS->vAliqProd = null;
     }
-    
+
     /**
      * Carrega e cria a tag PIS [Q02]
      * Q02|CST|vBC|pPIS|vPIS|
@@ -1119,7 +1135,7 @@ class Parser
         $this->stdPIS->vPIS = $std->vPIS;
         $this->buildQEntity();
     }
-    
+
     /**
      * Carrega e cria a tag PIS [Q03]
      * Q03|CST|qBCProd|vAliqProd|vPIS|
@@ -1133,7 +1149,7 @@ class Parser
         $this->stdPIS->vAliqProd  = $std->vAliqProd;
         $this->buildQEntity();
     }
-    
+
     /**
      * Carrega e cria a tag PIS [Q04]
      * Q04|CST|
@@ -1144,7 +1160,7 @@ class Parser
         $this->stdPIS->CST = $std->CST;
         $this->buildQEntity();
     }
-    
+
     /**
      * Carrega e cria a tag PIS [Q05]
      * Q05|CST|vPIS|
@@ -1156,7 +1172,7 @@ class Parser
         $this->stdPIS->vPIS = $std->vPIS;
         $this->buildQEntity();
     }
-    
+
     /**
      * Carrega e cria a tag PIS [Q07]
      * Q07|vBC|pPIS|
@@ -1168,7 +1184,7 @@ class Parser
         $this->stdPIS->pPIS = $std->pPIS;
         $this->buildQEntity();
     }
-    
+
     /**
      * Carrega e cria a tag PIS [Q10]
      * Q10|qBCProd|vAliqProd|
@@ -1180,7 +1196,7 @@ class Parser
         $this->stdPIS->vAliqProd  = $std->vAliqProd;
         $this->buildQEntity();
     }
-    
+
     /**
      * Cria a tag PIS [Q]
      * Qxx|CST|vBC|pPIS|vPIS|qBCProd|vAliqProd|
@@ -1189,7 +1205,7 @@ class Parser
     {
         $this->make->tagPIS($this->stdPIS);
     }
-    
+
     /**
      * Carrega tag PISST [R]
      * R|vPIS|
@@ -1200,8 +1216,13 @@ class Parser
         //carrega numero do item
         $std->item = $this->item;
         $this->stdPISST = $std;
+        $this->stdPISST->vBC = null;
+        $this->stdPISST->pPIS = null;
+        $this->stdPISST->vPIS = null;
+        $this->stdPISST->qBCProd = null;
+        $this->stdPISST->vAliqProd = null;
     }
-    
+
     /**
      * Carrega e cria tag PISST [R02]
      * R02|vBC|pPIS|
@@ -1213,7 +1234,7 @@ class Parser
         $this->stdPISST->pPIS = $std->pPIS;
         $this->buildREntity();
     }
-    
+
     /**
      * Carrega e cria tag PISST [R04]
      * R04|qBCProd|vAliqProd|vPIS|
@@ -1226,7 +1247,7 @@ class Parser
         $this->stdPISST->vPIS = $std->vPIS;
         $this->buildREntity();
     }
-    
+
     /**
      * Cria a tag PISST
      * Rxx|vBC|pPIS|qBCProd|vAliqProd|vPIS|
@@ -1235,7 +1256,7 @@ class Parser
     {
         $this->make->tagPISST($this->stdPISST);
     }
-    
+
     /**
      * Carrega COFINS [S]
      * S|
@@ -1246,8 +1267,13 @@ class Parser
         //carrega numero do item
         $std->item = $this->item;
         $this->stdCOFINS = $std;
+        $this->stdCOFINS->vBC = null;
+        $this->stdCOFINS->pCOFINS = null;
+        $this->stdCOFINS->vCOFINS = null;
+        $this->stdCOFINS->qBCProd = null;
+        $this->stdCOFINS->vAliqProd = null;
     }
-    
+
     /**
      * Carrega COFINS [S02]
      * S02|CST|vBC|pCOFINS|vCOFINS|
@@ -1261,7 +1287,7 @@ class Parser
         $this->stdCOFINS->vCOFINS = $std->vCOFINS;
         $this->buildSEntity();
     }
-    
+
     /**
      * Carrega COFINS [S03]
      * S03|CST|qBCProd|vAliqProd|vCOFINS|
@@ -1275,7 +1301,7 @@ class Parser
         $this->stdCOFINS->vCOFINS = $std->vCOFINS;
         $this->buildSEntity();
     }
-    
+
     /**
      * Carrega COFINS [S04]
      * S04|CST|
@@ -1286,7 +1312,7 @@ class Parser
         $this->stdCOFINS->CST = $std->CST;
         $this->buildSEntity();
     }
-    
+
     /**
      * Carrega COFINS [S05]
      * S05|CST|vCOFINS|
@@ -1297,7 +1323,7 @@ class Parser
         $this->stdCOFINS->CST = $std->CST;
         $this->stdCOFINS->vCOFINS = $std->vCOFINS;
     }
-    
+
     /**
      * Carrega e cria a tag COFINS [S07]
      * S07|vBC|pCOFINS|
@@ -1309,7 +1335,7 @@ class Parser
         $this->stdCOFINS->pCOFINS = $std->pCOFINS;
         $this->buildSEntity();
     }
-    
+
     /**
      * Carrega e cria a tag COFINS [S09]
      * S09|qBCProd|vAliqProd|
@@ -1321,7 +1347,7 @@ class Parser
         $this->stdCOFINS->vAliqProd = $std->vAliqProd;
         $this->buildSEntity();
     }
-    
+
     /**
      * Cria a tag COFINS
      * Sxx|CST|vBC|pCOFINS|vCOFINS|qBCProd|vAliqProd|
@@ -1330,7 +1356,7 @@ class Parser
     {
         $this->make->tagCOFINS($this->stdCOFINS);
     }
-    
+
     /**
      * COFINSST [T]
      * T|vCOFINS|
@@ -1341,8 +1367,13 @@ class Parser
         //carrega numero do item
         $std->item = $this->item;
         $this->stdCOFINSST = $std;
+        $this->stdCOFINSST->vBC = null;
+        $this->stdCOFINSST->pCOFINS = null;
+        $this->stdCOFINSST->vCOFINS = null;
+        $this->stdCOFINSST->qBCProd = null;
+        $this->stdCOFINSST->vAliqProd = null;
     }
-    
+
     /**
      * Carrega e cria COFINSST [T02]
      * T02|vBC|pCOFINS|
@@ -1354,7 +1385,7 @@ class Parser
         $this->stdCOFINSST->pCOFINS = $std->pCOFINS;
         $this->buildTEntity();
     }
-    
+
     /**
      * Carrega e cria COFINSST [T04]
      * T04|qBCProd|vAliqProd|
@@ -1366,18 +1397,17 @@ class Parser
         $this->stdCOFINSST->vAliqProd = $std->vAliqProd;
         $this->buildTEntity();
     }
-    
+
     /**
      * Cria a tag COFINSST
      * Txx|vBC|pCOFINS|qBCProd|vAliqProd|vCOFINS|
-     * @param stdClass $std
      */
     protected function buildTEntity()
     {
-        $std->item = $this->item;
+        $this->stdCOFINSST->item = $this->item;
         $this->make->tagCOFINSST($this->stdCOFINSST);
     }
-    
+
     /**
      * Cria a tag ISSQN [U]
      * U|vBC|vAliq|vISSQN|cMunFG|cListServ|vDeducao|vOutro|vDescIncond
@@ -1389,7 +1419,7 @@ class Parser
         $std->item = $this->item;
         $this->make->tagISSQN($std);
     }
-    
+
     /**
      * Cria a tag tagimpostoDevol [UA]
      * UA|pDevol|vIPIDevol|
@@ -1400,7 +1430,7 @@ class Parser
         $std->item = $this->item;
         $this->make->tagimpostoDevol($std);
     }
-    
+
     /**
      * Linha W [W]
      * W|
@@ -1409,9 +1439,8 @@ class Parser
     protected function wEntity($std)
     {
         //fake não faz nada
-        $fields = [];
     }
-    
+
     /**
      * Cria tag ICMSTot [W02]
      * W02|vBC|vICMS|vICMSDeson|vBCST|vST|vProd|vFrete|vSeg|vDesc|vII|vIPI|vPIS|vCOFINS|vOutro|vNF|vTotTrib|
@@ -1424,7 +1453,7 @@ class Parser
         $this->make->tagICMSTot($std);
     }
 
-    
+
     /**
      * Cria a tag ISSQNTot [W17]
      * W17|vServ|vBC|vISS|vPIS|vCOFINS|dCompet|vDeducao|vOutro|vDescIncond
@@ -1435,7 +1464,7 @@ class Parser
     {
         $this->make->tagISSQNTot($std);
     }
-    
+
     /**
      * Cria a tag retTrib [W23]
      * W23|vRetPIS|vRetCOFINS|vRetCSLL|vBCIRRF|vIRRF|vBCRetPrev|vRetPrev|
@@ -1445,7 +1474,7 @@ class Parser
     {
         $this->make->tagretTrib($std);
     }
-    
+
     /**
      * Cria a tag transp [X]
      * X|modFrete|
@@ -1455,7 +1484,7 @@ class Parser
     {
         $this->make->tagtransp($std);
     }
-    
+
     /**
      * Carrega endereço tranpotadora [X03]
      * X03|xNome|IE|xEnder|xMun|UF|
@@ -1465,7 +1494,7 @@ class Parser
     {
         $this->stdTransporta = $std;
     }
-    
+
     /**
      * Carrega e cria transp com CNPJ [X04]
      * X04|CNPJ|
@@ -1478,7 +1507,7 @@ class Parser
         $this->make->tagtransporta($this->stdTransporta);
         $this->stdTransporta = null;
     }
-    
+
     /**
      * Carrega e cria transp com CPF [X05]
      * X05|CPF|
@@ -1491,7 +1520,7 @@ class Parser
         $this->make->tagtransporta($this->stdTransporta);
         $this->stdTransporta = null;
     }
-    
+
     /**
      * Carrega impostos transportadora [X11]
      * X11|vServ|vBCRet|pICMSRet|vICMSRet|CFOP|cMunFG|
@@ -1501,7 +1530,7 @@ class Parser
     {
         $this->make->tagretTransp($std);
     }
-    
+
     /**
      * Cria a tag veicTransp [X18]
      * X18|placa|UF|RNTC|
@@ -1511,7 +1540,7 @@ class Parser
     {
         $this->make->tagveicTransp($std);
     }
-    
+
     /**
      * Cria a tag reboque [X22]
      * X22|placa|UF|RNTC|vagao|balsa|
@@ -1521,7 +1550,7 @@ class Parser
     {
         $this->make->tagreboque($std);
     }
-    
+
     /**
      * Carrega volumes [X26]
      * X26|qVol|esp|marca|nVol|pesoL|pesoB|
@@ -1533,7 +1562,7 @@ class Parser
         $std->item = $this->volId;
         $this->make->tagvol($std);
     }
-    
+
     /**
      * Carrega o lacre [X33]
      * X33|nLacre|
@@ -1544,7 +1573,7 @@ class Parser
         $std->item = $this->volId;
         $this->make->taglacres($std);
     }
-    
+
     /**
      * Cria a tag vol
      * @param stdClass $std
@@ -1553,7 +1582,7 @@ class Parser
     {
         $this->make->tagvol($std);
     }
-   
+
     /**
      * yEntity [Y]
      * Y|
@@ -1565,7 +1594,7 @@ class Parser
     {
         $this->make->tagpag($std);
     }
-    
+
 
     /**
      * Cria as tags pag e card [YA]
@@ -1576,7 +1605,7 @@ class Parser
     {
         $this->make->tagdetPag($std);
     }
-    
+
     /**
      * Cria a tag fat [Y02]
      * Y02|nFat|vOrig|vDesc|vLiq|
@@ -1586,7 +1615,7 @@ class Parser
     {
         $this->make->tagfat($std);
     }
-    
+
     /**
      * Cria a tag dup [Y07]
      * Y07|nDup|dVenc|vDup|
@@ -1596,7 +1625,7 @@ class Parser
     {
         $this->make->tagdup($std);
     }
-    
+
     /**
      * Cria a a tag infAdic [Z]
      * Z|infAdFisco|infCpl|
@@ -1606,7 +1635,7 @@ class Parser
     {
         $this->make->taginfAdic($std);
     }
-    
+
     /**
      * Cria a tag obsCont [Z04]
      * Z04|xCampo|xTexto|
@@ -1616,7 +1645,7 @@ class Parser
     {
         $this->make->tagobsCont($std);
     }
-    
+
     /**
      * Cria a tag obsFisco [Z07]
      * Z07|xCampo|xTexto|
@@ -1626,7 +1655,7 @@ class Parser
     {
         $this->make->tagobsFisco($std);
     }
-    
+
     /**
      * Cria a tag procRef [Z10]
      * Z10|nProc|indProc|
@@ -1636,7 +1665,7 @@ class Parser
     {
         $this->make->tagprocRef($std);
     }
-    
+
     /**
      * Cria a tag exporta [ZA]
      * ZA|UFSaidaPais|xLocExporta|xLocDespacho|
@@ -1646,7 +1675,7 @@ class Parser
     {
         $this->make->tagexporta($std);
     }
-    
+
     /**
      * Cria a tag compra [ZB]
      * ZB|xNEmp|xPed|xCont|
@@ -1656,7 +1685,7 @@ class Parser
     {
         $this->make->tagcompra($std);
     }
-    
+
     /**
      * Cria a tag cana [ZC]
      * ZC|safra|ref|qTotMes|qTotAnt|qTotGer|vFor|vTotDed|vLiqFor|
@@ -1666,7 +1695,7 @@ class Parser
     {
         $this->make->tagcana($std);
     }
-    
+
     /**
      * Cria a tag forDia [ZC04]
      * ZC04|dia|qtde|
@@ -1676,7 +1705,7 @@ class Parser
     {
         $this->make->tagforDia($std);
     }
-    
+
     /**
      * Cria a tag deduc [ZC10]
      * ZC10|xDed|vDed|
@@ -1686,7 +1715,7 @@ class Parser
     {
         $this->make->tagdeduc($std);
     }
-    
+
     /**
      * Cria a tag infNFeSupl com o qrCode para impressão da DANFCE [ZX01]
      * ZX01|qrcode|
