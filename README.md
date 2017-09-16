@@ -19,12 +19,11 @@ Esta versão do pacote ainda está em desenvolvimento [FASE BETA TEST], pode nã
 *Utilize o chat do Gitter para iniciar discussões especificas sobre o desenvolvimento deste pacote.*
 
 [![Chat][ico-gitter]][link-gitter]
-
-
-[![Latest Stable Version][ico-stable]][link-packagist]
 [![Build Status][ico-travis]][link-travis]
 [![Coverage Status][ico-scrutinizer]][link-scrutinizer]
 [![Quality Score][ico-code-quality]][link-code-quality]
+
+[![Latest Stable Version][ico-stable]][link-packagist]
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![License][ico-license]][link-packagist]
 [![Total Downloads][ico-downloads]][link-downloads]
