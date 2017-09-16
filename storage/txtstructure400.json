@@ -33,7 +33,7 @@
     "I05A":"I05A|NVE|",
     "I05C":"I05C|CEST|indEscala|CNPJFab|",
     "I18":"I18|nDI|dDI|xLocDesemb|UFDesemb|dDesemb|tpViaTransp|vAFRMM|tpIntermedio|CNPJ|UFTerceiro|cExportador|",
-    "I25":"I25|nAdicao|nSeqAdicC|cFabricante|vDescDI|nDraw|",
+    "I25":"I25|nAdicao|nSeqAdic|cFabricante|vDescDI|nDraw|",
     "I50":"I50|nDraw|",
     "I52":"I52|nRE|chNFe|qExport|",
     "I80":"I80|nLote|qLote|dFab|dVal|cAgreg|",
