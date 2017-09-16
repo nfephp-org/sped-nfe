@@ -22,9 +22,7 @@ use NFePHP\Common\DOMImproved as Dom;
 use NFePHP\Common\Strings;
 use stdClass;
 use RuntimeException;
-use DOMDocument;
 use DOMElement;
-use DOMNode;
 use DateTime;
 
 class Make
@@ -33,6 +31,10 @@ class Make
      * @var array
      */
     public $erros = [];
+    /**
+     * @var array
+     */
+    public $aTotICMSUFDest = ['vICMSUFDest' => null, 'vFCPUFDest' => null, 'vICMSUFRemet' => null,];
     /**
      * @var string
      */
@@ -443,7 +445,7 @@ class Make
      * Informações de identificação da NF-e B01 pai A01
      * NOTA: Ajustado para NT2016_002_v1.30
      * tag NFe/infNFe/ide
-     * @param  stdClass $fields
+     * @param  stdClass $std
      * @return DOMElement
      */
     public function tagide($std)
@@ -697,7 +699,7 @@ class Make
     /**
      * Informações da NF de produtor rural referenciada BA10 pai BA01
      * tag NFe/infNFe/ide/NFref/refNFP
-     * @param  stdClass std
+     * @param  stdClass $std
      * @return DOMElement
      */
     public function tagrefNFP($std)
@@ -1004,6 +1006,7 @@ class Make
                 $flagNome = false;//marca se xNome é ou não obrigatório
             }
         }
+        $xNome = $std->xNome;
         if ($this->tpAmb == '2') {
             $xNome = 'NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
             //a exigência do CNPJ 99999999000191 não existe mais
@@ -1035,7 +1038,7 @@ class Make
         $this->dom->addChild(
             $this->dest,
             "xNome",
-            Strings::replaceSpecialsChars(substr(trim($std->xNome), 0, 60)),
+            Strings::replaceSpecialsChars(substr(trim($xNome), 0, 60)),
             $flagNome, //se mod 55 true ou mod 65 false
             $identificador . "Razão Social ou nome do destinatário"
         );
@@ -1333,8 +1336,10 @@ class Make
     /**
      * Pessoas autorizadas para o download do XML da NF-e G50 pai A01
      * tag NFe/infNFe/autXML
+     *
      * @param stdclass $std
-     * @return array
+     *
+     * @return DOMElement
      */
     public function tagautXML($std)
     {
@@ -1410,13 +1415,14 @@ class Make
             . "código EAN ou código de barras",
             true
         );
+        $xProd = $std->xProd;
         if ($this->tpAmb == '2' && $this->mod == '65') {
             $xProd = 'NOTA FISCAL EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
         }
         $this->dom->addChild(
             $prod,
             "xProd",
-            $std->xProd,
+            $xProd,
             true,
             $identificador . "[item $std->item] Descrição do produto ou serviço"
         );
@@ -1567,17 +1573,19 @@ class Make
         $this->aProd[$std->item] = $prod;
         return $prod;
     }
-    
+
     /**
      * NVE NOMENCLATURA DE VALOR ADUANEIRO E ESTATÍSTICA
      * Podem ser até 8 NVE's por item
+     *
      * @param stdClass $std
-     * @return DOMElement
+     *
+     * @return DOMElement|null
      */
     public function tagNVE($std)
     {
         if ($std->NVE == '') {
-            return '';
+            return null;
         }
         $nve = $this->dom->createElement("NVE", $std->NVE);
         $this->aNVE[$std->item][] = $nve;
@@ -1729,7 +1737,7 @@ class Make
             true,
             $identificador . "[item $std->item] Código do Exportador"
         );
-        $this->aDI[$nItem][$std->nDI] = $tDI;
+        $this->aDI[$std->item][$std->nDI] = $tDI;
         return $tDI;
     }
 
@@ -1885,7 +1893,7 @@ class Make
     /**
      * Detalhamento de Veículos novos J01 pai I90
      * tag NFe/infNFe/det[]/prod/veicProd (opcional)
-     * @param stdClass std
+     * @param stdClass $std
      * @return DOMElement
      */
     public function tagveicProd($std)
@@ -2685,7 +2693,7 @@ class Make
                     'CST',
                     $std->CST,
                     true,
-                    "$identificador [item $std->item] Tributação do ICMS $CST"
+                    "$identificador [item $std->item] Tributação do ICMS $std->CST"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -3234,7 +3242,7 @@ class Make
         $this->stdTot->vBCST += (float) !empty($std->vBCST) ? : 0;
         $this->stdTot->vST += (float) !empty($std->vICMSST) ? : 0;
         
-        switch ($csosn) {
+        switch ($std->CSOSN) {
             case '101':
                 $icmsSN = $this->dom->createElement("ICMSSN101");
                 $this->dom->addChild(
@@ -4343,7 +4351,9 @@ class Make
         $vFCPST = !empty($std->vFCPST) ? $std->vFCPST : $this->stdTot->vFCPST;
         $vFCPSTRet = !empty($std->vFCPSTRet) ? $std->vFCPSTRet : $this->stdTot->vFCPSTRet;
         $vFCPUFDest = !empty($std->vFCPUFDest) ? $std->vFCPUFDest : $this->stdTot->vFCPUFDest;
-        
+        $vICMSUFDest = !empty($std->vICMSUFDest) ? $std->vICMSUFDest : $this->stdTot->vICMSUFDest;
+        $vICMSUFRemet = !empty($std->vICMSUFRemet) ? $std->vICMSUFRemet : $this->stdTot->vICMSUFRemet;
+
         $ICMSTot = $this->dom->createElement("ICMSTot");
         $this->dom->addChild(
             $ICMSTot,
@@ -5461,9 +5471,9 @@ class Make
      */
     public function taginfNFeSupl($std)
     {
-        $infNFeSupl = $dom->createElement("infNFeSupl");
-        $nodeqr = $infNFeSupl->appendChild($dom->createElement('qrCode'));
-        $nodeqr->appendChild($dom->createCDATASection($std->qrcode));
+        $infNFeSupl = $this->dom->createElement("infNFeSupl");
+        $nodeqr = $infNFeSupl->appendChild($this->dom->createElement('qrCode'));
+        $nodeqr->appendChild($this->dom->createCDATASection($std->qrcode));
         //incluido no layout 4.00
         $std->urlChave = !empty($std->urlChave) ? $std->urlChave : null;
         $this->dom->addChild(
@@ -5664,6 +5674,7 @@ class Make
     /**
      * Insere dentro da tag det os produtos
      * tag NFe/infNFe/det[]
+     * @return array|string
      */
     protected function buildDet()
     {
@@ -5687,6 +5698,7 @@ class Make
         //insere CEST
         foreach ($this->aCest as $nItem => $cest) {
             $prod = $this->aProd[$nItem];
+            /** @var \DOMElement $child */
             foreach ($cest as $child) {
                 $node = $prod->getElementsByTagName("cBenef")->item(0);
                 if (empty($node)) {
@@ -5787,6 +5799,7 @@ class Make
             $this->aDet[] = $det;
             $det = null;
         }
+        return $this->aProd;
     }
 
     /**

@@ -39,12 +39,14 @@ class Convert
             $this->txt = trim($txt);
         }
     }
-    
+
     /**
      * Convert all nfe in XML, one by one
+     *
      * @param string $txt
+     *
      * @return array
-     * @throws NFePHP\NFe\Exception\DocumentsException
+     * @throws \NFePHP\NFe\Exception\DocumentsException
      */
     public function toXml($txt = '')
     {
@@ -126,7 +128,7 @@ class Convert
     /**
      * Verify number of NFe declared
      * If different throws an exception
-     * @throws NFePHP\NFe\Exception\DocumentsException
+     * @throws \NFePHP\NFe\Exception\DocumentsException
      */
     protected function checkQtdNFe()
     {
@@ -165,7 +167,7 @@ class Convert
     /**
      * Valid txt structure
      * @param array $nota
-     * @throws NFePHP\NFe\Exception\DocumentsException
+     * @throws \NFePHP\NFe\Exception\DocumentsException
      */
     protected function isValidTxt($nota)
     {
