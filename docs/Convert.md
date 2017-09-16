@@ -17,7 +17,7 @@ public static function toXML($txt)
 | $txt | String com o conteúdo do arquivo TXT (OBRIGATÓRIO) |
 | $axml | ARRAY contendo uma ou mais NFe em formato XML |
 
-> NOTA: O TXT poderá conter uma ou mais notas, conforme a estrutura definida.
+> NOTA: O TXT poderá conter uma ou mais notas, conforme a estrutura definida pela SEFAZ.
 
 ## Forma de Uso
 
@@ -43,3 +43,10 @@ O TXT passado como parametro, será VALIDADO, com referência as [regras estabel
 Se alguma falha for detectada será disparada uma Exception com o motivo.
 
 > NOTA: não devem ser gerados ERROS, se forem, por favor nos informe.
+
+Poderão ser retornados erros referentes a estrutura do TXT, como:
+
+- Número de campos da linha não corresponder ao padrão estabelecido
+- Denominação da chave de busca (primeiro conjunto de caracteres de cada linha) não corresponder ao padrão estabelecido.
+
+> NOTA: Para ajudar os desavisados e aqueles que usam recurursos em windows, a classe já executa uma higeinização prévia do conteúdo do TXT,  removendo [Carriage Retruns], [TAB], espaços duplos, espaços antes e após as marcas separadoras de campos (pipe) "|" .
