@@ -23,13 +23,13 @@ B19|refCTe|
 
 BA20|mod|nECF|nCOO|
 
-C|XNome|XFant|IE|IEST|IM|CNAE|CRT|
+C|xNome|xFant|IE|IEST|IM|CNAE|CRT|
 
-C02|cnpj|
+C02|CNPJ|
 
-C02a|cpf|
+C02a|CPF|
 
-C05|XLgr|Nro|Cpl|Bairro|CMun|XMun|UF|CEP|cPais|xPais|fone|
+C05|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|CEP|cPais|xPais|fone|
 
 E|xNome|indIEDest|IE|ISUF|IM|email|
 
@@ -69,7 +69,7 @@ I05C|CEST|indEscala|CNPJFab|
 
 I18|nDI|dDI|xLocDesemb|UFDesemb|dDesemb|tpViaTransp|vAFRMM|tpIntermedio|CNPJ|UFTerceiro|cExportador|
 
-I25|nAdicao|nSeqAdicC|cFabricante|vDescDI|nDraw|
+I25|nAdicao|nSeqAdic|cFabricante|vDescDI|nDraw|
 
 I50|nDraw|
 
@@ -86,6 +86,8 @@ L|tpArma|nSerie|nCano|descr|
 LA|cProdANP|descANP|pGLP|pGNn|pGNi|vPart|CODIF|qTemp|UFCons|
 
 LA07|qBCProd|vAliqProd|vCIDE|
+
+LA11|nBico|nBomba|nTanque|vEncIni|vEncFin|
 
 LB|nRECOPI|
 
