@@ -172,6 +172,16 @@ Nod ecom os dados do emitente
 
 ```php
 $std = new stdClass();
+$std->xNome;
+$std->xFant;
+$std->IE;
+$std->IEST;
+$std->IM;
+$std->CNAE;
+$std->CRT;
+$std->CNPJ; //indicar apenas um CNPJ ou CPF
+$std->CPF;
+
 $elem = $nfe->tagemit($std);
 ```
 
@@ -184,6 +194,18 @@ Node com o endereço do emitente
 
 ```php
 $std = new stdClass();
+$std->xLgr;
+$std->nro;
+$std->xCpl;
+$std->xBairro;
+$std->cMun;
+$std->xMun;
+$std->UF;
+$std->CEP;
+$std->cPais;
+$std->xPais;
+$std->fone;
+
 $elem = $nfe->tagenderEmit($std);
 ```
 
@@ -196,6 +218,16 @@ Node com os dados do destinatário
 
 ```php
 $std = new stdClass();
+$std->xNome;
+$std->indIEDest;
+$std->IE;
+$std->ISUF;
+$std->IM;
+$std->email;
+$std->CNPJ; //indicar apenas um CNPJ ou CPF ou idEstrangeiro
+$std->CPF;
+$std->idEstrangeiro;
+
 $elem = $nfe->tagdest($std);
 ```
 
@@ -208,6 +240,18 @@ Node de endereço do destinatário
 
 ```php
 $std = new stdClass();
+$std->xLgr;
+$std->nro;
+$std->xCpl;
+$std->xBairro;
+$std->cMun;
+$std->xMun;
+$std->UF;
+$std->CEP;
+$std->cPais;
+$std->xPais;
+$std->fone;
+
 $elem = $nfe->tagenderDest($std);
 ```
 
@@ -220,6 +264,16 @@ Node indicativo de local de retirada diferente do endereço do emitente
 
 ```php
 $std = new stdClass();
+$std->xLgr;
+$std->nro;
+$std->xCpl;
+$std->xBairro;
+$std->cMun;
+$std->xMun;
+$std->UF;
+$std->CNPJ; //indicar apenas um CNPJ ou CPF
+$std->CPF = null;
+
 $elem = $nfe->tagretirada($std);
 ```
 
@@ -230,9 +284,18 @@ Node indicativo de local de entraga diferente do endereço do destinatário
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
-
 ```php
 $std = new stdClass();
+$std->xLgr;
+$std->nro;
+$std->xCpl;
+$std->xBairro;
+$std->cMun;
+$std->xMun;
+$std->UF;
+$std->CNPJ; //indicar um CNPJ ou CPF
+$std->CPF = null;
+
 $elem = $nfe->tagentrega($std);
 ```
 
@@ -244,6 +307,8 @@ Node de registro de pessoas autorizadas a acessar a NFe
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
+$std->CNPJ = '12345678901234'; //indicar um CNPJ ou CPF
+$std->CPF = null;
 $elem = $nfe->tagautXML($std);
 ```
 
@@ -255,6 +320,33 @@ Node de dados do produto/serviço
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
+$std->item = 1; //item da NFe
+$std->cProd;
+$std->cEAN;
+$std->xProd;
+$std->NCM;
+
+$std->cBenf; //incluido no layout 4.00
+
+$std->EXTIPI;
+$std->CFOP;
+$std->uCom;
+$std->qCom;
+$std->vUnCom;
+$std->vProd;
+$std->cEANTrib;
+$std->uTrib;
+$std->qTrib;
+$std->vUnTrib;
+$std->vFrete;
+$std->vSeg;
+$std->vDesc;
+$std->vOutro;
+$std->indTot;
+$std->xPed;
+$std->nItemPed;
+$std->nFCI;
+
 $elem = $nfe->tagprod($std);
 ```
 
@@ -266,121 +358,364 @@ Node de informações adicionais do produto
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
+$std->item = 1; //item da NFe
+
+$std->infAdProd = 'informacao adicional do item';
+
 $elem = $nfe->taginfAdProd($std);
 ```
 
 ### function tagNVE($std):DOMElement
-
+Node com a Nomenclatura de Valor Aduaneiro e Estatística do item da NFe
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->item = 1; //item da NFe
+$std->NVE;
+
+$elem = $nfe->tagNVE($std);
+```
 
 ### function tagCEST($std):DOMElement
-
+Node de detalhamento do Especificador da Substituição Tributária do item da NFe
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->item = 1; //item da NFe
+$std->CEST;
+$std->indEscala; //incluido no layout 4.00
+$std->CNPJFab; //incluido no layout 4.00
+
+$elem = $nfe->tagCEST($std);
+```
 
 ### function tagRECOPI($std):DOMElement
-
+Node com o numero do RECOPI
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->item = 1; //item da NFe
+$std->nRECOPI;
+
+$elem = $nfe->tagRECOPI($std);
+```
 
 ### function tagDI($std):DOMElement
-
+Node com informações da Declaração de Importação do item da NFe
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->item = 1; //item da NFe
+$std->nDI;
+$std->dDI;
+$std->xLocDesemb;
+$std->UFDesemb;
+$std->dDesemb;
+$std->tpViaTransp;
+$std->vAFRMM;
+$std->tpIntermedio;
+$std->CNPJ;
+$std->UFTerceiro;
+$std->cExportador;
+
+$elem = $nfe->tagDI($std);
+```
 
 ### function tagadi($std):DOMElement
-
+Node de Adições relativas as DI do item
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->item = 1; //item da NFe
+$std->nDI; //numero da DI
+$std->nAdicao;
+$std->nSeqAdic
+$std->cFabricante
+$std->vDescDI;
+$std->nDraw;
+
+$elem = $nfe->tagadi($std);
+```
 
 ### function tagdetExport($std):DOMElement
-
+Node com informações de exportação para o item
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->item = 1; //item da NFe
+$std->nRE;
+$std->chNFe;
+$std->qExport;
+$std->nDraw;
+
+$elem = $nfe->tagdetExport($std);
+```
 
 ### function tagRastro($std):DOMElement
+Node com os dados de rastreabilidade do item da NFe
 
+*Método Incluso para atender layout 4.00*
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->item = 1; //item da NFe
+$std->nLote;
+$std->qLote;
+$std->dFab;
+$std->dVal;
+$std->cAgreg;
+
+$elem = $nfe->tagRastro($std);
+```
 
 ### function tagveicProd($std):DOMElement
-
+Node com o detalhamento de Veículos novos do item da NFe
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->item = 1; //item da NFe
+$std->tpOp;
+$std->chassi;
+$std->cCor;
+$std->xCor;
+$std->pot;
+$std->cilin;
+$std->pesoL;
+$std->pesoB;
+$std->nSerie;
+$std->tpComb;
+$std->nMotor;
+$std->CMT;
+$std->dist;
+$std->anoMod;
+$std->anoFab;
+$std->tpPint;
+$std->tpVeic;
+$std->espVeic;
+$std->VIN;
+$std->condVeic;
+$std->cMod;
+$std->cCorDENATRAN;
+$std->lota;
+$std->tpRest;
+
+$elem = $nfe->tagveicProd($std);
+```
 
 ### function tagmed($std):DOMElement
-
+Node com o detalhamento de Medicamentos e de matérias-primas farmacêuticas
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->item = 1; //item da NFe
+
+$std->nLote; //removido no layout 4.00
+$std->qLote; //removido no layout 4.00
+$std->dFab; //removido no layout 4.00
+$std->dVal; //removido no layout 4.00
+
+$std->vPMC;
+
+$std->cProdANVISA; //incluido no layout 4.00
+
+$elem = $nfe->tagmed($std);
+```
 
 ### function tagarma($std):DOMElement
-
+Node com informações e detalhamento de Armamento do item da NFe
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->item = 1; //item da NFe
+$std->tpArma;
+$std->nSerie;
+$std->nCano;
+$std->descr;
+
+$elem = $nfe->tagarma($std);
+```
 
 ### function tagcomb($std):DOMElement
-
+Node das informações específicas para combustíveis líquidos e lubrificantes do item da NFe
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->item = 1; //item da NFe
+$std->cProdANP;
+
+$std->pMixGN; //removido no layout 4.00
+
+$std->descANP; //incluido no layout 4.00
+$std->pGLP; //incluido no layout 4.00
+$std->pGNn; //incluido no layout 4.00
+$std->pGNi; //incluido no layout 4.00
+$std->vPart; //incluido no layout 4.00
+
+$std->CODIF;
+$std->qTemp;
+$std->UFCons;
+$std->qBCProd;
+$std->vAliqProd
+$std->vCIDE
+
+$elem = $nfe->tagcomb($std);
+```
 
 ### function tagencerrante($std):DOMElement
-
+Node das informações do grupo de “encerrante” disponibilizado por hardware específico acoplado à bomba de Combustível, definido no controle da venda do Posto Revendedor de Combustível.
+Referente ao item da NFe
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->item = 1; //item da NFe
+$std->nBico;
+$std->nBomba;
+$std->nTanque;
+$std->vEncIni;
+$std->vEncFin;
+
+$elem = $nfe->tagencerrante($std);
+```
 
 ### function tagimposto($std):DOMElement
-
+Node inicial dos Tributos incidentes no Produto ou Serviço do item da NFe
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->item = 1; //item da NFe
+$std->vTotTrib = 1000.00;
+
+$elem = $nfe->tagimposto($std);
+```
 
 ### function tagICMS($std):DOMElement
-
+Node com informações do ICMS do item da NFe
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->item = 1; //item da NFe
+$std->orig;
+$std->CST;
+$std->modBC
+$std->vBC;
+$std->pICMS;
+$std->vICMS;
+$std->pFCP;
+$std->vFCP;
+$std->vBCFCP;
+$std->modBCST;
+$std->pMVAST;
+$std->pRedBCST;
+$std->vBCST;
+$std->pICMSST;
+$std->vICMSST;
+$std->vBCFCPST;
+$std->pFCPST;
+$std->vFCPST;
+$std->vICMSDeson;
+$std->motDesICMS;
+$std->pRedBC;
+$std->vICMSOp;
+$std->pDif;
+$std->vICMSDif;
+$std->vBCSTRet;
+$std->pST;
+$std->vICMSSTRet;
+$std->vBCFCPSTRet;
+$std->pFCPSTRet;
+$std->vFCPSTRet;
+
+$elem = $nfe->tagICMS($std);
+```
 
 ### function tagICMSPart($std):DOMElement
-
+Node com informações da partilha do ICMS entre a UF de origem e UF de destino ou a UF definida na legislação.
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->item = 1; //item da NFe
+$std->orig = 0;
+$std->CST = '90';
+$std->modBC = 0;
+$std->vBC = 1000.00;
+$std->pRedBC = null;
+$std->pICMS = 18.00;
+$std->vICMS = 180.00;
+$std->modBCST = 1000.00;
+$std->pMVAST = 40.00;
+$std->pRedBCST = null;
+$std->vBCST = 1400.00;
+$std->pICMSST = 10.00;
+$std->vICMSST = 140.00;
+$std->pBCOp = 10.00;
+$std->UFST = 'RJ';
+
+$elem = $nfe->tagICMSPart($std);
+```
 
 ### function tagICMSST($std):DOMElement
-
+Node Repasse de ICMS ST retido anteriormente em operações interestaduais com repasses através do Substituto Tributário
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->item = 1; //item da NFe
+$std->orig = 0;
+$std->CST = '60';
+$std->vBCSTRet = 1000.00;
+$std->vICMSSTRet = 190.00;
+$std->vBCSTDest = 1000.00;
+$std->vICMSSTDest = 1.00;
 
+$elem = $nfe->tagICMSSN($std);
+```
 
 ### function tagICMSSN($std):DOMElement
 Node referente Tributação ICMS pelo Simples Nacional do item da NFe
@@ -401,9 +736,9 @@ $std->pRedBCST = null;
 $std->vBCST = null;
 $std->pICMSST = null;
 $std->vICMSST = null;
-$std->vBCFCPST = null;
-$std->pFCPST = null;
-$std->vFCPST = null;
+$std->vBCFCPST = null; //incluso no layout 4.00
+$std->pFCPST = null; //incluso no layout 4.00
+$std->vFCPST = null; //incluso no layout 4.00
 $std->pCredSN = null;
 $std->vCredICMSSN = null;
 $std->pCredSN = null;
@@ -411,9 +746,9 @@ $std->vCredICMSSN = null;
 $std->vBCSTRet = null;
 $std->pST = null;
 $std->vICMSSTRet = null;
-$std->vBCFCPSTRet = null;
-$std->pFCPSTRet = null;
-$std->vFCPSTRet = null;
+$std->vBCFCPSTRet = null; //incluso no layout 4.00
+$std->pFCPSTRet = null; //incluso no layout 4.00
+$std->vFCPSTRet = null; //incluso no layout 4.00
 $std->modBC = null;
 $std->vBC = null;
 $std->pRedBC = null;
@@ -423,9 +758,8 @@ $std->vICMS = null;
 $elem = $nfe->tagICMSSN($std);
 ```
 
-
 ### function tagICMSUFDest($std):DOMElement
-
+Node de informação do ICMS Interestadual do item na NFe
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
@@ -433,15 +767,15 @@ $elem = $nfe->tagICMSSN($std);
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
-$std->vBCUFDest 
-$std->vBCFCPUFDest
-$std->pFCPUFDest
-$std->pICMSUFDest
-$std->pICMSInter
-$std->pICMSInterPart
-$std->vFCPUFDest
-$std->vICMSUFDest
-$std->vICMSFRemet
+$std->vBCUFDest = 100.00;
+$std->vBCFCPUFDest = 100.00;
+$std->pFCPUFDest = 1.00;
+$std->pICMSUFDest = 18.00;
+$std->pICMSInter = 12.00;
+$std->pICMSInterPart = 80.00; 
+$std->vFCPUFDest = 1.00;
+$std->vICMSUFDest = 14.44;
+$std->vICMSFRemet = 3.56;
 
 $elem = $nfe->tagICMSUFDest($std);
 ```
