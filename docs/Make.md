@@ -2,50 +2,31 @@
 
 Para construir o XML da NFe (ou da NFCe) deve ser usada a classe Make::class
 
-## NOTA: Esta classe agora recebe os parâmetros dos métodos em forma de stdClass e não mais com variáveis individuais. É importante salientar que os campos do stdClass devem ser nomeados com a EXATA nomenclatura contida no manual ou conforme a nomenclatura das estruturas do TXT, observando as letras maiuscula se minusculas. 
+## *NOTA: Esta classe agora recebe os parâmetros dos métodos em forma de stdClass e não mais com variáveis individuais. É importante salientar que os campos do stdClass devem ser nomeados com a EXATA nomenclatura contida no manual ou conforme a nomenclatura das estruturas do TXT, observando as letras maiuscula se minusculas.*
+## *NOTA: Procure observar a ordem em os métodos devem ser usados. Carregar os dados em sequencia errada pode causar problemas, especialmente em nodes dependentes.*
 
-## Métodos
+Esses stdClass pode ser criados diretamente como demonstrado nos exemplos abaixo, mas também podem ser criados a partir de matrizes.
+
+```php
+//criando o stdClass a partir de um array
+$array = [
+    'versao' => '3.10',
+    'Id' => 'NFe35150271780456000160550010000000021800700082',
+    'pk_nItem' => null
+];
+
+$std = json_decode(json_encode($array));
+```
+
+> NOTA: Muitos campos não são obrigatórios nesse caso caso não haja nenhum valor a ser informado, devem ser criados como NULL. 
+
+# Métodos
 
 ### function __construct()
-Método construtor
+Método construtor. Instancia a classe
 
 ```php
 $nfe = new Make();
-```
-
-### function getXMl():string
-Este método retorna o XML em uma string
-
-```php
-$xml = $nfe->getXML();
-```
-
-### function getChave():string
-Este método retorna o numero da chave da NFe
-
-```php
-$chave = $nfe->geChave();
-```
-
-### function getModelo():int
-Este método retorna o modelo de NFe 55 ou 65
-
-```php
-$modelo = $nfe->getModelo();
-```
-
-### function montaNFe():boolean
-Este método chama o metodo monta(), mantido apenas para compatibilidade.
-
-```php
-$result = $nfe->montaNFe();
-```
-
-### function monta()
-Este método executa a montagem do XML
-
-```php
-$result = $nfe->montaNFe();
 ```
 
 ### function taginfNFe($std):DOMElement
@@ -400,12 +381,48 @@ $elem = $nfe->taginfAdProd($std);
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
-### function tagICMSSN($std):DOMElement
 
+### function tagICMSSN($std):DOMElement
+Node referente Tributação ICMS pelo Simples Nacional do item da NFe
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->item = 1; //item da NFe
+$std->orig = 0;
+$std->CSOSN = '101';
+$std->pCredSN = 2.00;
+$std->vCredICMSSN = 20.00;
+$std->modBCST = null;
+$std->pMVAST = null;
+$std->pRedBCST = null;
+$std->vBCST = null;
+$std->pICMSST = null;
+$std->vICMSST = null;
+$std->vBCFCPST = null;
+$std->pFCPST = null;
+$std->vFCPST = null;
+$std->pCredSN = null;
+$std->vCredICMSSN = null;
+$std->pCredSN = null;
+$std->vCredICMSSN = null;
+$std->vBCSTRet = null;
+$std->pST = null;
+$std->vICMSSTRet = null;
+$std->vBCFCPSTRet = null;
+$std->pFCPSTRet = null;
+$std->vFCPSTRet = null;
+$std->modBC = null;
+$std->vBC = null;
+$std->pRedBC = null;
+$std->pICMS = null;
+$std->vICMS = null;
+
+$elem = $nfe->tagICMSSN($std);
+```
+
 
 ### function tagICMSUFDest($std):DOMElement
 
@@ -413,118 +430,350 @@ $elem = $nfe->taginfAdProd($std);
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->item = 1; //item da NFe
+$std->vBCUFDest 
+$std->vBCFCPUFDest
+$std->pFCPUFDest
+$std->pICMSUFDest
+$std->pICMSInter
+$std->pICMSInterPart
+$std->vFCPUFDest
+$std->vICMSUFDest
+$std->vICMSFRemet
+
+$elem = $nfe->tagICMSUFDest($std);
+```
 
 ### function tagIPI($std):DOMElement
-
+Node referente ao IPI do item da NFe
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->item = 1; //item da NFe
+$std->clEnq = null;
+$std->CNPJProd = null;
+$std->cSelo = null;
+$std->qSelo = null;
+$std->cEnq = '999'
+$std->CST = '50'
+$std->vIPI = 150.00;
+$std->vBC = 1000.00;
+$std->pIPI = 15.00;
+$std->qUnid = null;
+$std->vUnid = null;
+
+$elem = $nfe->tagIPI($std);
+```
 
 ### function tagII($std):DOMElement
-
+Node Imposto de Importação do item da NFe
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->item = 1; //item da NFe
+$std->vBC = 1000.00;
+$std->vDespAdu = 100.00;
+$std->vII = 220.00;
+$std->vIOF = null;
+
+$elem = $nfe->tagPIS($std);
+```
 
 ### function tagPIS($std):DOMElement
-
+Node PIS do item da NFe
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->item = 1; //item da NFe
+$std->CST = '07';
+$std->vBC = null;
+$std->pPIS = null;
+$std->vPIS = null;
+$std->qBCProd = null;
+$std->vAliqProd = null;
+
+$elem = $nfe->tagPIS($std);
+```
 
 ### function tagPISST($std):DOMElement
-
+Node PIS Substituição Tributária do item da NFe
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->item = 1; //item da NFe
+$std->vPIS =  16.00;
+$std->vBC = 1000.00
+$std->pPIS = 1.60;
+$std->qBCProd = null;
+$std->vAliqProd = null;
+
+$elem = $nfe->tagPISST($std);
+```
 
 ### function tagCOFINS($std):DOMElement
-
+Node COFINS do item da NFe
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->item = 1; //item da NFe
+$std->CST = '07'
+$std->vBC = null;
+$std->pCOFINS = null;
+$std->vCOFINS = null;
+$std->qBCProd = null;
+$std->vAliqProd = null;
+
+$elem = $nfe->tagCOFINS($std);
+```
 
 ### function tagCOFINSST($std):DOMElement
-
+Node COFINS Substituição Tributária do item da NFe
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->item = 1; //item da NFe
+$std->vCOFINS = 289.30;
+$std->vBC = 2893.00;
+$std->pCOFINS = 10.00;
+$std->qBCProd = null;
+$std->vAliqProd = null;
+
+$elem = $nfe->tagCOFINSST($std);
+```
 
 ### function tagISSQN($std):DOMElement
-
+Node ISSQN do item da NFe
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->item = 1; //item da NFe
+$std->vBC = 1000.00;
+$std->vAliq = 5.00;
+$std->vISSQN = 50.00;
+$std->cMunFG = '3518800'
+$std->cListServ = '12.23'
+$std->vDeducao = null;
+$std->vOutro = null;
+$std->vDescIncond = null;
+$std->vDescCond = null;
+$std->vISSRet = null;
+$std->indISS = 2;
+$std->cServico = '123';
+$std->cMun = '3518800';
+$std->cPais = '1058';
+$std->nProcesso = null;
+$std->indIncentivo = 2;
+
+$elem = $nfe->tagISSQN($std);
+```
 
 ### function tagimpostoDevol($std):DOMElement
+Node referente a informação do Imposto devolvido
 
+> NOTA: O motivo da devolução deverá ser informado pela empresa no campo de Informações Adicionais do Produto (tag:infAdProd).
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->pDevol = 2.00;
+$std->vIPIDevol = 123.36;
+
+$elem = $nfe->tagICMSTot($std);
+```
 
 ### function tagICMSTot($std):DOMElement
+Node dos totais referentes ao ICMS
 
+> NOTA: Esta tag não necessita que sejam passados valores, pois a classe irá calcular esses totais e irá usar essa totalização para complementar e gerar esse node, caso nenhum valor seja passado como parâmetro.
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->vBC = 1000.00;
+$std->vICMS = 1000.00;
+$std->vICMSDesonv = 1000.00;
+$std->vFCP = 1000.00; //incluso no layout 4.00
+$std->vBCST = 1000.00;
+$std->vST = 1000.00;
+$std->vFCPST = 1000.00; //incluso no layout 4.00
+$std->vFCPSTRet = 1000.00; //incluso no layout 4.00
+$std->vProd = 1000.00;
+$std->vFrete = 1000.00;
+$std->vSeg = 1000.00;
+$std->vDesc = 1000.00;
+$std->vII = 1000.00;
+$std->vIPI = 1000.00;
+$std->vIPIDevol = 1000.00; //incluso no layout 4.00
+$std->vPIS = 1000.00;
+$std->vCOFINS = 1000.00;
+$std->vOutro = 1000.00;
+$std->vNF = 1000.00;
+$std->vTotTrib = 1000.00;
+
+$elem = $nfe->tagICMSTot($std);
+```
 
 ### function tagISSQNTot($std):DOMElement
+Node de Totais referentes ao ISSQN
 
+> NOTA: caso os valores não existam indique "null". Se for indocado 0.00 esse numero será incluso no XML o que poderá causar sua rejeição.
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->vServ = 1000.00;
+$std->vBC = 1000.00;
+$std->vISS = 10.00;
+$std->vPIS = 2.00;
+$std->vCOFINS = 6.00;
+$std->dCompet = '2017-09-12';
+$std->vDeducao = 10.00;
+$std->vOutro = 10.00;
+$std->vDescIncond = null;
+$std->vDescCond = null;
+$std->vISSRet = null;
+$std->cRegTrib = 5;
+
+$elem = $nfe->tagISSQNTot($std);
+```
 
 ### function tagretTrib($std):DOMElement
+Node referente a retenções de tributos
 
+> Exemplos de atos normativos que definem obrigatoriedade da retenção de contribuições:
+
+> a) IRPJ/CSLL/PIS/COFINS - Fonte - Recebimentos de Órgão Público Federal, Lei no 9.430, de 27 de dezembro de 1996, art. 64, Lei no 10.833/2003, art. 34, como normas infralegais, temos como exemplo: IN SRF 480/2004 e IN 539, de 25/04/05.
+
+> b) Retenção do Imposto de Renda pelas Fontes Pagadoras, REMUNERAÇÃO DE SERVIÇOS PROFISSIONAIS PRESTADOS POR PESSOA JURÍDICA, Lei no 7.450/85, art. 52
+
+> c) IRPJ, CSLL, COFINS e PIS - Serviços Prestados por Pessoas Jurídicas - Retenção na Fonte, Lei no 10.833 de 29.12.2003, art. 30, 31, 32, 35 e 36
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->vRetPIS = 100.00;
+$std->vRetCOFINS = 100.00;
+$std->vRetCSLL = 100.00;
+$std->vBCIRRF = 100.00;
+$std->vIRRF = 100.00;
+$std->vBCRetPrev = 100.00;
+$std->vRetPrev = 100.00;
+
+$elem = $nfe->tagtransp($std);
+```
 
 ### function tagtransp($std):DOMElement
-
+Node indicativo da forma de frete
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->modFrete = 1;
+
+$elem = $nfe->tagtransp($std);
+```
 
 ### function tagtransporta($std):DOMElement
-
+Node com os dados da tranportadora
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->xNome = 'Rodo Fulano';
+$std->IE = '12345678901';
+$std->xEnder = 'Rua Um, sem numero'
+$std->xMun = 'Cotia';
+$std->UF = 'SP';
+$std->CNPJ = '12345678901234';//só pode haver um ou CNPJ ou CPF, se um deles é especificado o outro deverá ser null
+$std->CPF = null;
+
+$elem = $nfe->tagtransporta($std);
+```
 
 ### function tagretTransp($std):DOMElement
-
+Node referente a retenção de ICMS do serviço de transporte
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->vServ = 240.00
+$std->vBCRet = 240.00;
+$std->pICMSRet = 1.00;
+$std->vICMSRet = 2.40;
+$std->CFOP = '5353'
+$std->cMunFG = '3518800';
+
+$elem = $nfe->tagveicTransp($std);
+```
 
 ### function tagveicTransp($std):DOMElement
-
+Node para informação do veículo trator
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->placa = 'ABC1111'
+$std->UF = 'RJ'
+$std->RNTC = '999999'
+
+$elem = $nfe->tagveicTransp($std);
+```
 
 ### function tagreboque($std):DOMElement
-
+Node para informar os reboques/Dolly
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->placa = 'BCB0897'
+$std->UF = 'SP'
+$std->RNTC = '123456'
+$std->vagao = null;
+$std->balsa = null;
+
+$elem = $nfe->tagreboque($std);
+```
 
 ### function tagvol($std):DOMElement
 Node com as informações dos volumes transportados
@@ -776,4 +1025,39 @@ $std->qrcode;
 $std->urlChave;
 
 $elem = $nfe->taginfNFeSupl($std);
+```
+
+### function montaNFe():boolean
+Este método chama o metodo monta(), mantido apenas para compatibilidade.
+
+```php
+$result = $nfe->montaNFe();
+```
+
+### function monta()
+Este método executa a montagem do XML
+
+```php
+$result = $nfe->montaNFe();
+```
+
+### function getXMl():string
+Este método retorna o XML em uma string
+
+```php
+$xml = $nfe->getXML();
+```
+
+### function getChave():string
+Este método retorna o numero da chave da NFe
+
+```php
+$chave = $nfe->geChave();
+```
+
+### function getModelo():int
+Este método retorna o modelo de NFe 55 ou 65
+
+```php
+$modelo = $nfe->getModelo();
 ```
