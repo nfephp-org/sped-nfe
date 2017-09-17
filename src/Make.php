@@ -5811,6 +5811,9 @@ class Make
      */
     protected function buildTagPag()
     {
+        if ($this->mod == 55 && $this->version == '3.10') {
+            return;
+        }
         if (count($this->aPag) > 0) {
             foreach ($this->aPag as $pag) {
                 $this->dom->appChild($this->infNFe, $pag, 'Falta tag "infNFe"');
