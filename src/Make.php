@@ -5805,16 +5805,12 @@ class Make
     /**
      * Insere a tag pag, os detalhamentos dos pagamentos e cartoes
      * NOTA: Ajustado para NT2016_002_v1.30
-     * Somente para modelo 65
      * tag NFe/infNFe/pag/
      * tag NFe/infNFe/pag/detPag[]
      * tag NFe/infNFe/pag/detPag[]/Card
      */
     protected function buildTagPag()
     {
-        if ($this->mod == '55') {
-            return;
-        }
         if (count($this->aPag) > 0) {
             foreach ($this->aPag as $pag) {
                 $this->dom->appChild($this->infNFe, $pag, 'Falta tag "infNFe"');
