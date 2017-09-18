@@ -1023,6 +1023,27 @@ class Parser
     }
 
     /**
+     * Carrega e Cria a tag ICMSUFDest [NA]
+     * NA|vBCUFDest|pFCPUFDest|pICMSUFDest|pICMSInter|pICMSInterPart|vFCPUFDest|vICMSUFDest|vICMSFRemet|
+     * @param stdClass $std
+     */
+    protected function naEntity($std)
+    {
+        $this->buildNAEntity($std);
+    }
+
+    /**
+     * Carrega a tag IPI [O]
+     * O|clEnq|CNPJProd|cSelo|qSelo|cEnq|
+     * @param stdClass $std
+     */
+    protected function buildNAEntity($std)
+    {
+        $std->item = $this->item;
+        $this->make->tagICMSUFDest($std);
+    }
+
+    /**
      * Carrega a tag IPI [O]
      * O|clEnq|CNPJProd|cSelo|qSelo|cEnq|
      * @param stdClass $std
