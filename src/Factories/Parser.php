@@ -17,6 +17,7 @@ namespace NFePHP\NFe\Factories;
 
 use NFePHP\Common\Strings;
 use NFePHP\NFe\Make;
+use NFePHP\NFe\Exception\DocumentsException;
 use stdClass;
 
 class Parser
@@ -64,6 +65,10 @@ class Parser
     /**
      * @var stdClass
      */
+    protected $stdAutXML;
+    /**
+     * @var stdClass
+     */
     protected $stdComb;
     /**
      * @var stdClass
@@ -93,10 +98,6 @@ class Parser
      * @var stdClass
      */
     protected $stdTransporta;
-    /**
-     * @var
-     */
-    private $limparString = false;
 
     /**
      * Configure environment to correct NFe layout
@@ -111,17 +112,13 @@ class Parser
     }
 
     /**
-     *
+     * Convert txt to XML
      * @param array $nota
      * @return string
      */
     public function toXml($nota)
     {
         $this->array2xml($nota);
-        //monta a tag combustíveis se existir
-        if (!empty($this->stdComb)) {
-            $this->make->tagcomb($this->stdComb);
-        }
         if ($this->make->monta()) {
             return $this->make->getXML();
         }
@@ -129,10 +126,8 @@ class Parser
     }
 
     /**
-     * Converte uma Nota Fiscal em um array de txt em um xml
-     *
-     * @param $nota
-     *
+     * Converte txt array to xml
+     * @param array $nota
      * @return void
      */
     protected function array2xml($nota)
@@ -144,8 +139,8 @@ class Parser
             }
             $metodo = strtolower(str_replace(' ', '', $fields[0])).'Entity';
             if (!method_exists(__CLASS__, $metodo)) {
-                $msg = "O txt tem um metodo não definido!! $lin";
-                throw new \RuntimeException($msg);
+                //campo não definido
+                throw DocumentsException::wrongDocument(16, $lin);
             }
             $struct = $this->structure[strtoupper($fields[0])];
             $std = $this->fieldsToStd($fields, $struct);
@@ -154,7 +149,7 @@ class Parser
     }
 
     /**
-     * Creates stdClass for tag fields
+     * Creates stdClass for all tag fields
      * @param array $dfls
      * @param string $struct
      * @return stdClass
@@ -175,34 +170,10 @@ class Parser
     }
 
     /**
-     * Clear the string of unwanted characters
-     * Will remove all duplicated spaces and if wanted
-     * replace all accented characters by their originals
-     * and all the special ones
-     *
-     * @param $std
-     *
-     * @return array
-     */
-    protected function clearFieldsString($std)
-    {
-        $n = [];
-        foreach ($std as $field) {
-            if ($this->limparString) {
-                $field = Strings::replaceSpecialsChars($field);
-            }
-            $n[] = $field;
-        }
-        if (empty($n[count($n)-1])) {
-            unset($n[count($n)-1]);
-        }
-        return $n;
-    }
-
-    /**
-     * Cria a tag infNFe [A]
+     * Create tag infNFe [A]
      * A|versao|Id|pk_nItem|
      * @param stdClass $std
+     * @return void
      */
     protected function aEntity($std)
     {
@@ -210,13 +181,15 @@ class Parser
     }
 
     /**
-     * Cria a tag ide [B]
+     * Create tag ide [B]
      * B|cUF|cNF|natOp|indPag|mod|serie|nNF|dhEmi|dhSaiEnt|tpNF|idDest|cMunFG
      *  |tpImp|tpEmis|cDV|tp Amb|finNFe|indFinal|indPres|procEmi|verProc|dhCont|xJust|
-     * NOTA: Ajustado para NT2016_002_v1.30
+     *
+     * NOTE: adjusted for NT2016_002_v1.30
      * B|cUF|cNF|natOp|mod|serie|nNF|dhEmi|dhSaiEnt|tpNF|idDest|cMunFG|tpImp
      *  |tpEmis|cDV|tpAmb|finNFe|indFinal|indPres|procEmi|verProc|dhCont|xJust|
      * @param stdClass $std
+     * @return void
      */
     protected function bEntity($std)
     {
@@ -224,19 +197,22 @@ class Parser
     }
 
     /**
-     * Cria a tag nfref [BA]
+     * Create tag nfref [BA]
      * BA|
      * @param stdClass $std
+     * @return void
      */
     protected function baEntity($std)
     {
         //fake não faz nada
+        $field = null;
     }
 
     /**
-     * Cria a tag refNFe [BA02]
+     * Create tag refNFe [BA02]
      * BA02|refNFe|
      * @param stdClass $std
+     * @return void
      */
     protected function ba02Entity($std)
     {
@@ -244,9 +220,10 @@ class Parser
     }
 
     /**
-     * Cria a tag refNF [BA03]
+     * Create tag refNF [BA03]
      * BA03|cUF|AAMM|CNPJ|mod|serie|nNF|
      * @param stdClass $std
+     * @return void
      */
     protected function ba03Entity($std)
     {
@@ -254,9 +231,10 @@ class Parser
     }
 
     /**
-     * Carrega a tag refNFP [BA10]
+     * Load fields for tag refNFP [BA10]
      * BA10|cUF|AAMM|IE|mod|serie|nNF|
      * @param stdClass $std
+     * @return void
      */
     protected function ba10Entity($std)
     {
@@ -266,9 +244,10 @@ class Parser
     }
 
     /**
-     * CNPJ para a tag refNFP [BA13], pertence a BA10
+     * Create tag refNFP [BA13], with CNPJ belongs to [BA10]
      * BA13|CNPJ|
      * @param stdClass $std
+     * @return void
      */
     protected function ba13Entity($std)
     {
@@ -278,9 +257,10 @@ class Parser
     }
 
     /**
-     * CPF para a tag refNFP [BA14], pertence a BA10
+     * Create tag refNFP [BA14], with CPF belongs to [BA10]
      * BA14|CPF|
      * @param stdClass $std
+     * @return void
      */
     protected function ba14Entity($std)
     {
@@ -290,7 +270,8 @@ class Parser
     }
 
     /**
-     * Cria a tag refNFP [BA10]
+     * Create tag refNFP [BA10]
+     * @return void
      */
     protected function buildBA10Entity()
     {
@@ -298,9 +279,10 @@ class Parser
     }
 
     /**
-     * Cria a tag refCTe [BA19]
+     * Create tag refCTe [BA19]
      * B19|refCTe|
      * @param stdClass $std
+     * @return void
      */
     protected function ba19Entity($std)
     {
@@ -308,9 +290,10 @@ class Parser
     }
 
     /**
-     * Cria a tag refECF [BA20]
+     * Create tag refECF [BA20]
      * BA20|mod|nECF|nCOO|
      * @param stdClass $std
+     * @return void
      */
     protected function ba20Entity($std)
     {
@@ -318,9 +301,10 @@ class Parser
     }
 
     /**
-     * Carrega a tag emit [C]
+     * Load fields for tag emit [C]
      * C|XNome|XFant|IE|IEST|IM|CNAE|CRT|
      * @param stdClass $std
+     * @return void
      */
     protected function cEntity($std)
     {
@@ -330,9 +314,10 @@ class Parser
     }
 
     /**
-     * CNPJ da tag emit [C02], pertence a C
+     * Create tag emit [C02], with CNPJ belongs to [C]
      * C02|CNPJ|
      * @param stdClass $std
+     * @return void
      */
     protected function c02Entity($std)
     {
@@ -342,9 +327,10 @@ class Parser
     }
 
     /**
-     * CPF da tag emit [C02a], pertence a C
+     * Create tag emit [C02a], with CPF belongs to [C]
      * C02a|CPF|
      * @param stdClass $std
+     * @return void
      */
     protected function c02aEntity($std)
     {
@@ -354,7 +340,8 @@ class Parser
     }
 
     /**
-     * Cria a tag emit [C]
+     * Create tag emit [C]
+     * @return void
      */
     protected function buildCEntity()
     {
@@ -362,9 +349,10 @@ class Parser
     }
 
     /**
-     * Cria a tag enderEmit [C05]
+     * Create tag enderEmit [C05]
      * C05|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|CEP|cPais|xPais|fone|
      * @param stdClass $std
+     * @return void
      */
     protected function c05Entity($std)
     {
@@ -372,9 +360,10 @@ class Parser
     }
 
     /**
-     * Carrega a tag dest [E]
+     * Load fields for tag dest [E]
      * E|xNome|indIEDest|IE|ISUF|IM|email|
      * @param stdClass $std
+     * @return void
      */
     protected function eEntity($std)
     {
@@ -385,9 +374,10 @@ class Parser
     }
 
     /**
-     * CNPJ para a tag dest [E02], pertene a E
+     * Create tag dest [E02], with CNPJ belongs to [E]
      * E02|CNPJ|
      * @param stdClass $std
+     * @return void
      */
     protected function e02Entity($std)
     {
@@ -397,9 +387,10 @@ class Parser
     }
 
     /**
-     * CPF para a tag dest [E03], pertene a E
+     * Create tag dest [E03], with CPF belongs to [E]
      * E03|CPF|
      * @param stdClass $std
+     * @return void
      */
     protected function e03Entity($std)
     {
@@ -409,9 +400,10 @@ class Parser
     }
 
     /**
-     * idEstrangeiro para a tag dest [E03a], pertene a E
+     * Create tag dest [E03a], with idEstrangeiro belongs to [E]
      * E03a|idEstrangeiro|
      * @param stdClass $std
+     * @return void
      */
     protected function e03aEntity($std)
     {
@@ -421,7 +413,8 @@ class Parser
     }
 
     /**
-     * Cria a tag dest [E]
+     * Create tag dest [E]
+     * @return void
      */
     protected function buildEEntity()
     {
@@ -429,9 +422,10 @@ class Parser
     }
 
     /**
-     * Cria a tag enderDest [E05]
+     * Create tag enderDest [E05]
      * E05|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|CEP|cPais|xPais|fone|
      * @param stdClass $std
+     * @return void
      */
     protected function e05Entity($std)
     {
@@ -439,9 +433,10 @@ class Parser
     }
 
     /**
-     * Carrega a tag retirada [F]
+     * Load fields for tag retirada [F]
      * F|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|
      * @param stdClass $std
+     * @return void
      */
     protected function fEntity($std)
     {
@@ -451,9 +446,10 @@ class Parser
     }
 
     /**
-     * CNPJ para a tag retirada [F02], pertence a F
+     * Create tag retirada [F02], with CNPJ belongs to [F]
      * F02|CNPJ|
      * @param stdClass $std
+     * @return void
      */
     protected function f02Entity($std)
     {
@@ -463,9 +459,10 @@ class Parser
     }
 
     /**
-     * CPF para a tag retirada [F02a], pertence a F
+     * Create tag retirada [F02a], with CPF belongs to [F]
      * F02a|CPF|
      * @param stdClass $std
+     * @return void
      */
     protected function f02aEntity($std)
     {
@@ -475,7 +472,8 @@ class Parser
     }
 
     /**
-     * Cria a tag retirada [F]
+     * Create tag retirada [F]
+     * @return void
      */
     protected function buildFEntity()
     {
@@ -483,9 +481,10 @@ class Parser
     }
 
     /**
-     * Carrega e cria a tag entrega [G]
+     * Load fields for tag entrega [G]
      * G|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|
      * @param stdClass $std
+     * @return void
      */
     protected function gEntity($std)
     {
@@ -495,9 +494,10 @@ class Parser
     }
 
     /**
-     * CNPJ para a tag entrega [G02], pertence a G
+     * Create tag entrega [G02], with CNPJ belongs to [G]
      * G02|CNPJ|
      * @param stdClass $std
+     * @return void
      */
     protected function g02Entity($std)
     {
@@ -507,19 +507,21 @@ class Parser
     }
 
     /**
-     * CPF para a tag entrega [G02a], pertence a G
+     * Create tag entrega [G02a], with CPF belongs to [G]
      * G02a|CPF|
      * @param stdClass $std
+     * @return void
      */
     protected function g02aEntity($std)
     {
-        $this->stdEntrega->CPF = $std->CPFJ;
+        $this->stdEntrega->CPF = $std->CPF;
         $this->buildGEntity();
         $this->stdEntrega = null;
     }
 
     /**
-     * Cria a tag entrega [G]
+     * Create tag entrega [G]
+     * @return void
      */
     protected function buildGEntity()
     {
@@ -527,37 +529,47 @@ class Parser
     }
 
     /**
-     * Cria a tag autXML [GA]
+     * Create tag autXML [GA]
      * GA|
      * @param stdClass $std
+     * @return void
      */
     protected function gaEntity($std)
     {
         //fake não faz nada
+        $std->CNPJ = null;
+        $std->CPF = null;
+        $this->stdAutXML = $std;
     }
 
     /**
-     * Cria a tag autXML com CNPJ [GA02], pertence a GA
+     * Create tag autXML with CNPJ [GA02], belongs to [GA]
      * GA02|CNPJ|
      * @param stdClass $std
+     * @return void
      */
     protected function ga02Entity($std)
     {
-        $this->make->tagautXML($std);
+        $this->stdAutXML->CNPJ = $std->CNPJ;
+        $this->make->tagautXML($this->stdAutXML);
+        $this->stdAutXML = null;
     }
 
     /**
-     * Cria a tag autXML com CPF [GA03], pertence a GA
+     * Create tag autXML with CPF [GA03], belongs to GA
      * GA03|CPF|
      * @param stdClass $std
+     * @return void
      */
     protected function ga03Entity($std)
     {
-        $this->make->tagautXML($std);
+        $this->stdAutXML->CPF = $std->CPF;
+        $this->make->tagautXML($this->stdAutXML);
+        $this->stdAutXML = null;
     }
 
     /**
-     * Cria a tag det/infAdProd [H]
+     * Create tag det/infAdProd [H]
      * H|item|infAdProd|
      * @param stdClass $std
      */
@@ -570,12 +582,13 @@ class Parser
     }
 
     /**
-     * Cria a tag prod [I]
+     * Create tag prod [I]
      * I|cProd|cEAN|xProd|NCM|EXTIPI|CFOP|uCom|qCom|vUnCom|vProd|cEANTrib|uTrib|qTrib|vUnTrib|vFrete|vSeg|vDesc|vOutro|indTot|xPed|nItemPed|nFCI|
      *
-     * NOTA: Ajustado para NT2016_002_v1.30
+     * NOTE: adjusted for NT2016_002_v1.30
      * I|cProd|cEAN|xProd|NCM|cBenf|EXTIPI|CFOP|uCom|qCom|vUnCom|vProd|cEANTrib|uTrib|qTrib|vUnTrib|vFrete|vSeg|vDesc|vOutro|indTot|xPed|nItemPed|nFCI|
      * @param stdClass $std
+     * @return void
      */
     protected function iEntity($std)
     {
@@ -584,9 +597,10 @@ class Parser
     }
 
     /**
-     * Cria a tag NVE [I05A]
+     * Create tag NVE [I05A]
      * I05A|NVE|
      * @param stdClass $std
+     * @return void
      */
     protected function i05aEntity($std)
     {
@@ -595,11 +609,12 @@ class Parser
     }
 
     /**
-     * Cria a tag CEST [I05C]
+     * Create tag CEST [I05C]
      * I05C|CEST|
-     * NOTA: Ajustado para NT2016_002_v1.30
+     * NOTE: adjusted for NT2016_002_v1.30
      * I05C|CEST|indEscala|CNPJFab|
      * @param stdClass $std
+     * @return void
      */
     protected function i05cEntity($std)
     {
@@ -608,9 +623,10 @@ class Parser
     }
 
     /**
-     * Cria a tag DI [I18]
+     * Create tag DI [I18]
      * I18|nDI|dDI|xLocDesemb|UFDesemb|dDesemb|tpViaTransp|vAFRMM|tpIntermedio|CNPJ|UFTerceiro|cExportador|
      * @param stdClass $std
+     * @return void
      */
     protected function i18Entity($std)
     {
@@ -620,9 +636,10 @@ class Parser
     }
 
     /**
-     * Cria a tag adi [I25], pertence a I18
+     * Create tag adi [I25], belongs to [I18]
      * I25|nAdicao|nSeqAdicC|cFabricante|vDescDI|nDraw|
      * @param stdClass $std
+     * @return void
      */
     protected function i25Entity($std)
     {
@@ -632,36 +649,35 @@ class Parser
     }
 
     /**
-     * Carrega e cria a tag detExport [I50]
+     * Load fields for tag detExport [I50]
      * I50|nDraw|
      * @param stdClass $std
+     * @return void
      */
     protected function i50Entity($std)
     {
         $std->item = $this->item;
-        $std->nRE = null;
-        $std->chNFe = null;
-        $std->qExport = null;
         $this->make->tagdetExport($std);
     }
 
     /**
-     * Carrega e cria a tag detExport/exportInd [I52]
+     * Create tag detExport/exportInd [I52], belongs to [I50]
      * I52|nRE|chNFe|qExport|
      * @param stdClass $std
+     * @return void
      */
     protected function i52Entity($std)
     {
         $std->item = $this->item;
-        $std->nDraw = null;
         $this->make->tagdetExportInd($std);
     }
-
+    
     /**
-     * Cria a tag RASTRO [I80]
-     * NOTA: Ajustado para NT2016_002_v1.30
+     * Create tag RASTRO [I80]
+     * NOTE: adjusted for NT2016_002_v1.30
      * I80|nLote|qLote|dFab|dVal|cAgreg|
      * @param stdClass $std
+     * @return void
      */
     protected function i80Entity($std)
     {
@@ -670,9 +686,10 @@ class Parser
     }
 
     /**
-     * Cria a tag veicProd [JA]
+     * Create tag veicProd [JA]
      * JA|tpOp|chassi|cCor|xCor|pot|cilin|pesoL|pesoB|nSerie|tpComb|nMotor|CMT|dist|anoMod|anoFab|tpPint|tpVeic|espVeic|VIN|condVeic|cMod|cCorDENATRAN|lota|tpRest|
      * @param stdClass $std
+     * @return void
      */
     protected function jaEntity($std)
     {
@@ -681,11 +698,13 @@ class Parser
     }
 
     /**
-     * Cria a tag med [K]
+     * Create tag med [K]
      * K|nLote|qLote|dFab|dVal|vPMC|
-     * NOTA: Ajustado para NT2016_002_v1.30
+     *
+     * NOTE: adjusted for NT2016_002_v1.30
      * K|cProdANVISA|vPMC|
      * @param stdClass $std
+     * @return void
      */
     protected function kEntity($std)
     {
@@ -699,9 +718,10 @@ class Parser
     }
 
     /**
-     * Cria a tag arma [L]
+     * Create tag arma [L]
      * L|tpArma|nSerie|nCano|descr|
      * @param stdClass $std
+     * @return void
      */
     protected function lEntity($std)
     {
@@ -710,25 +730,28 @@ class Parser
     }
 
     /**
-     * Carrega e cria a tag comb [LA]
+     * Load fields for tag comb [LA]
      * LA|cProdANP|pMixGN|CODIF|qTemp|UFCons|
      *
-     * NOTA: Ajustado para NT2016_002_v1.30
+     * NOTE: adjusted for NT2016_002_v1.30
      * LA|cProdANP|descANP|pGLP|pGNn|pGNi|vPart|CODIF|qTemp|UFCons|
      * @param stdClass $std
+     * @return void
      */
     protected function laEntity($std)
     {
+        $std->item = $this->item;
         $this->stdComb = $std;
-        //como o campo abaixo é opcional não é possivel saber de antemão
+        //como o campo abaixo é opcional não é possível saber de antemão
         //se o mesmo existe ou não então
-        //invocar na montagem final buildLAEntity()
+        //invocar montagem buildLAEntity() na proxima tag obrigatória [M]
     }
 
     /**
-     * Carrega e cria a tag comb [LA07]
+     * Load fields for tag comb [LA07], belongs to [LA]
      * LA07|qBCProd|vAliqProd|vCIDE|
      * @param stdClass $std
+     * @return void
      */
     protected function la07Entity($std)
     {
@@ -736,13 +759,14 @@ class Parser
         $this->stdComb->vAliqProd = $std->vAliqProd;
         $this->stdComb->vCIDE = $std->vCIDE;
         //como este campo é opcional, pode ser que não exista então
-        //invocar na montagem final buildLAEntity()
+        //invocar montagem buildLAEntity() na proxima tag obrigatória [M]
     }
 
     /**
-     * Carrega e cria a tag encerrante [LA11]
+     * Load fields for tag encerrante [LA11]
      * LA11|nBico|nBomba|nTanque|vEncIni|vEncFin|
      * @param stdClass $std
+     * @return void
      */
     protected function la11Entity($std)
     {
@@ -751,19 +775,22 @@ class Parser
     }
 
     /**
-     * Cria a tag comb [LA]
+     * Create tag comb [LA]
      * @param stdClass $std
+     * @return void
      */
-    protected function buildLAEntity($std)
+    protected function buildLAEntity()
     {
-        $std->item = $this->item;
-        $this->make->tagcomb($this->stdComb);
+        if (!empty($this->stdComb)) {
+            $this->make->tagcomb($this->stdComb);
+        }
     }
 
     /**
-     * Cria a tag RECOPI [LB]
+     * Create tag RECOPI [LB]
      * LB|nRECOPI|
      * @param stdClass $std
+     * @return void
      */
     protected function lbEntity($std)
     {
@@ -772,12 +799,16 @@ class Parser
     }
 
     /**
-     * Cria a tag imposto [M]
+     * Create tag imposto [M]
      * M|vTotTrib|
      * @param stdClass $std
+     * @return void
      */
     protected function mEntity($std)
     {
+        //create tag comb [LA]
+        $this->buildLAEntity();
+        
         $std->item = $this->item;
         $this->make->tagimposto($std);
     }
@@ -786,19 +817,22 @@ class Parser
      * Carrega a tag ICMS [N]
      * N|
      * @param stdClass $std
+     * @return void
      */
     protected function nEntity($std)
     {
         //fake não faz nada
+        $field = null;
     }
 
     /**
-     * Carrega e cria a tag ICMS [N02]
+     * Load fields for tag ICMS [N02]
      * N02|orig|CST|modBC|vBC|pICMS|vICMS|
      *
-     * NOTA: Ajustado para NT2016_002_v1.30
+     * NOTE: adjusted for NT2016_002_v1.30
      * N02|orig|CST|modBC|vBC|pICMS|vICMS|pFCP|vFCP|
      * @param stdClass $std
+     * @return void
      */
     protected function n02Entity($std)
     {
@@ -806,12 +840,13 @@ class Parser
     }
 
     /**
-     * Carrega e cria a tag ICMS [N03]
+     * Load fields for tag ICMS [N03]
      * N03|orig|CST|modBC|vBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|
      *
-     * NOTA: Ajustado para NT2016_002_v1.30
+     * NOTE: adjusted for NT2016_002_v1.30
      * N03|orig|CST|modBC|vBC|pICMS|vICMS|vBCFCP|pFCP|vFCP|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|
      * @param stdClass $std
+     * @return void
      */
     protected function n03Entity($std)
     {
@@ -819,12 +854,13 @@ class Parser
     }
 
     /**
-     * Carrega e cria a tag ICMS [N04]
+     * Load fields for tag ICMS [N04]
      * N04|orig|CST|modBC|pRedBC|vBC|pICMS|vICMS|vICMSDeson|motDesICMS|
      *
-     * NOTA: Ajustado para NT2016_002_v1.30
+     * NOTE: adjusted for NT2016_002_v1.30
      * N04|orig|CST|modBC|pRedBC|vBC|pICMS|vICMS|BCFCP|pFCP|vFCP|vICMSDeson|motDesICMS|
      * @param stdClass $std
+     * @return void
      */
     protected function n04Entity($std)
     {
@@ -832,12 +868,13 @@ class Parser
     }
 
     /**
-     * Carrega e cria a tag ICMS [N05]
+     * Load fields for tag ICMS [N05]
      * N05|orig|CST|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vICMSDeson|motDesICMS|
      *
-     * NOTA: Ajustado para NT2016_002_v1.30
+     * NOTE: adjusted for NT2016_002_v1.30
      * N05|orig|CST|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|vICMSDeson|motDesICMS|
      * @param stdClass $std
+     * @return void
      */
     protected function n05Entity($std)
     {
@@ -845,9 +882,10 @@ class Parser
     }
 
     /**
-     * Carrega e cria a tag ICMS [N06]
+     * Load fields for tag ICMS [N06]
      * N06|orig|CST|vICMSDeson|motDesICMS|
      * @param stdClass $std
+     * @return void
      */
     protected function n06Entity($std)
     {
@@ -855,12 +893,13 @@ class Parser
     }
 
     /**
-     * Carrega e cria a tag ICMS [N07]
+     * Load fields for tag ICMS [N07]
      * N07|orig|CST|modBC|pRedBC|vBC|pICMS|vICMSOp|pDif|vICMSDif|vICMS|
      *
-     * NOTA: Ajustado para NT2016_002_v1.30
+     * NOTE: adjusted for NT2016_002_v1.30
      * N07|orig|CST|modBC|pRedBC|vBC|pICMS|vICMSOp|pDif|vICMSDif|vICMS|vBCFCP|pFCP|vFCP|
      * @param stdClass $std
+     * @return void
      */
     protected function n07Entity($std)
     {
@@ -868,12 +907,13 @@ class Parser
     }
 
     /**
-     * Carrega e cria a tag ICMS [N08]
+     * Load fields for tag ICMS [N08]
      * N08|orig|CST|vBCSTRet|vICMSSTRet|
      *
-     * NOTA: Ajustado para NT2016_002_v1.30
+     * NOTE: adjusted for NT2016_002_v1.30
      * N08|orig|CST|vBCSTRet|pST|vICMSSTRet|vBCFCPSTRet|pFCPSTRet|vFCPSTRet|
      * @param stdClass $std
+     * @return void
      */
     protected function n08Entity($std)
     {
@@ -881,12 +921,13 @@ class Parser
     }
 
     /**
-     * Carrega e cria a tag ICMS [N09]
+     * Load fields for tag ICMS [N09]
      * N09|orig|CST|modBC|pRedBC|vBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vICMSDeson|motDesICMS|
      *
-     * NOTA: Ajustado para NT2016_002_v1.30
+     * NOTE: adjusted for NT2016_002_v1.30
      * N09|orig|CST|modBC|pRedBC|vBC|pICMS|vICMS|vBCFCP|pFCP|vFCP|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|vICMSDeson|motDesICMS|
      * @param stdClass $std
+     * @return void
      */
     protected function n09Entity($std)
     {
@@ -894,23 +935,24 @@ class Parser
     }
 
     /**
-     * Carrega e cria a tag ICMS [N10]
+     * Load fields for tag ICMS [N10]
      * N10|orig|CST|modBC|vBC|pRedBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vICMSDeson|motDesICMS|
      *
-     * NOTA: Ajustado para NT2016_002_v1.30
+     * NOTE: adjusted for NT2016_002_v1.30
      * N10|orig|CST|modBC|vBC|pRedBC|pICMS|vICMS|vBCFCP|pFCP|vFCP|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|vICMSDeson|motDesICMS|
      * @param stdClass $std
+     * @return void
      */
     protected function n10Entity($std)
     {
         $this->buildNEntity($std);
     }
 
-
     /**
-     * Cria a tag ICMS [N]
-     * NOTA: Ajustado para NT2016_002_v1.30
+     * Create tag ICMS [N]
+     * NOTE: adjusted for NT2016_002_v1.30
      * @param \stdClass $std
+     * @return void
      */
     protected function buildNEntity($std)
     {
@@ -919,9 +961,10 @@ class Parser
     }
 
     /**
-     * Cria a tag ICMSPart [N10a]
+     * Create tag ICMSPart [N10a]
      * N10a|orig|CST|modBC|vBC|pRedBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|pBCOp|UFST|
      * @param stdClass $std
+     * @return void
      */
     protected function n10aEntity($std)
     {
@@ -930,9 +973,10 @@ class Parser
     }
 
     /**
-     * Cria a tag ICMSST [N10b]
+     * Create tag ICMSST [N10b]
      * N10b|orig|CST|vBCSTRet|vICMSSTRet|vBCSTDest|vICMSSTDest|
      * @param stdClass $std
+     * @return void
      */
     protected function n10bEntity($std)
     {
@@ -941,9 +985,10 @@ class Parser
     }
 
     /**
-     * Carrega e Cria a tag ICMSSN [N10c]
+     * Carrega e Create tag ICMSSN [N10c]
      * N10c|orig|CSOSN|pCredSN|vCredICMSSN|
      * @param stdClass $std
+     * @return void
      */
     protected function n10cEntity($std)
     {
@@ -951,9 +996,10 @@ class Parser
     }
 
     /**
-     * Carrega e Cria a tag ICMSSN [N10d]
+     * Carrega e Create tag ICMSSN [N10d]
      * N10d|orig|CSOSN|
      * @param stdClass $std
+     * @return void
      */
     protected function n10dEntity($std)
     {
@@ -962,24 +1008,26 @@ class Parser
 
 
     /**
-     * Carrega e Cria a tag ICMSSN [N10e]
+     * Carrega e Create tag ICMSSN [N10e]
      * N10e|orig|CSOSN|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|pCredSN|vCredICMSSN|
      *
-     * NOTA: Ajustado para NT2016_002_v1.30
+     * NOTE: adjusted for NT2016_002_v1.30
      * N10e|orig|CSOSN|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|pCredSN|vCredICMSSN|pCredSN|vCredICMSSN|
      * @param stdClass $std
+     * @return void
      */
     protected function n10eEntity($std)
     {
         $this->buildNSNEntity($std);
     }
     /**
-     * Carrega e Cria a tag ICMSSN [N10f]
+     * Carrega e Create tag ICMSSN [N10f]
      * N10f|orig|CSOSN|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|
      *
-     * NOTA: Ajustado para NT2016_002_v1.30
+     * NOTE: adjusted for NT2016_002_v1.30
      * N10f|orig|CSOSN|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|
      * @param stdClass $std
+     * @return void
      */
     protected function n10fEntity($std)
     {
@@ -987,12 +1035,13 @@ class Parser
     }
 
     /**
-     * Carrega e Cria a tag ICMSSN [N10g]
+     * Carrega e Create tag ICMSSN [N10g]
      * N10g|orig|CSOSN|vBCSTRet|vICMSSTRet|
      *
-     * NOTA: Ajustado para NT2016_002_v1.30
+     * NOTE: adjusted for NT2016_002_v1.30
      * N10g|orig|CSOSN|vBCSTRet|pST|vICMSSTRet|vBCFCPSTRet|pFCPSTRet|vFCPSTRet|
      * @param stdClass $std
+     * @return void
      */
     protected function n10gEntity($std)
     {
@@ -1000,12 +1049,13 @@ class Parser
     }
 
     /**
-     * Carrega e Cria a tag ICMSSN [N10h]
+     * Carrega e Create tag ICMSSN [N10h]
      * N10h|orig|CSOSN|modBC|vBC|pRedBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|pCredSN|vCredICMSSN|
      *
-     * NOTA: Ajustado para NT2016_002_v1.30
+     * NOTE: adjusted for NT2016_002_v1.30
      * N10h|orig|CSOSN|modBC|vBC|pRedBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|pCredSN|vCredICMSSN|
      * @param stdClass $std
+     * @return void
      */
     protected function n10hEntity($std)
     {
@@ -1013,8 +1063,10 @@ class Parser
     }
 
     /**
+     * Create tag ICMSSN [NS]
      * Nsn|orig|CSOSN|modBC|vBC|pRedBC|pICMS|vICMS|pCredSN|vCredICMSSN|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCSTRet|vICMSSTRet|vBCFCPST|pFCPST|vFCPST|
-     * @param \stdClass $std
+     * @param stdClass $std
+     * @return void
      */
     protected function buildNSNEntity($std)
     {
@@ -1023,9 +1075,10 @@ class Parser
     }
 
     /**
-     * Carrega e Cria a tag ICMSUFDest [NA]
+     * Load field fot tag ICMSUFDest [NA]
      * NA|vBCUFDest|pFCPUFDest|pICMSUFDest|pICMSInter|pICMSInterPart|vFCPUFDest|vICMSUFDest|vICMSFRemet|
      * @param stdClass $std
+     * @return void
      */
     protected function naEntity($std)
     {
@@ -1033,8 +1086,9 @@ class Parser
     }
 
     /**
-     * Cria a tag ICMSUFDest [NA]
+     * Create tag ICMSUFDest [NA]
      * @param stdClass $std
+     * @return void
      */
     protected function buildNAEntity($std)
     {
@@ -1043,9 +1097,10 @@ class Parser
     }
 
     /**
-     * Carrega a tag IPI [O]
+     * Load fields for tag IPI [O]
      * O|clEnq|CNPJProd|cSelo|qSelo|cEnq|
      * @param stdClass $std
+     * @return void
      */
     protected function oEntity($std)
     {
@@ -1060,9 +1115,10 @@ class Parser
     }
 
     /**
-     * Carrega e cria a tag IPI [O07]
+     * Load fields for tag IPI [O07], belongs to [O]
      * O07|CST|vIPI|
      * @param stdClass $std
+     * @return void
      */
     protected function o07Entity($std)
     {
@@ -1071,9 +1127,10 @@ class Parser
     }
 
     /**
-     * Carrega e cria a tag IPI [O08]
+     * Load fields for tag IPI [O08], belongs to [O]
      * O08|CST|
      * @param stdClass $std
+     * @return void
      */
     protected function o08Entity($std)
     {
@@ -1082,9 +1139,10 @@ class Parser
     }
 
     /**
-     * Carrega e cria a tag IPI [O10]
+     * Load fields for tag IPI [O10], belongs to [O]
      * O10|vBC|pIPI|
      * @param stdClass $std
+     * @return void
      */
     protected function o10Entity($std)
     {
@@ -1094,9 +1152,10 @@ class Parser
     }
 
     /**
-     * Carrega e cria a tag IPI [O11]
+     * Load fields for tag IPI [O11], belongs to [O]
      * O11|qUnid|vUnid|
      * @param stdClass $std
+     * @return void
      */
     protected function o11Entity($std)
     {
@@ -1106,8 +1165,9 @@ class Parser
     }
 
     /**
-     * Cria a tag IPI [O]
+     * Create tag IPI [O]
      * Oxx|cst|clEnq|cnpjProd|cSelo|qSelo|cEnq|vBC|pIPI|qUnid|vUnid|vIPI|
+     * @return void
      */
     protected function buildOEntity()
     {
@@ -1115,9 +1175,10 @@ class Parser
     }
 
     /**
-     * Cria a tag II [P]
+     * Create tag II [P]
      * P|vBC|vDespAdu|vII|vIOF|
      * @param stdClass $std
+     * @return void
      */
     protected function pEntity($std)
     {
@@ -1126,9 +1187,10 @@ class Parser
     }
 
     /**
-     * Carrega a tag PIS [Q]
+     * Load fields for tag PIS [Q]
      * Q|
      * @param stdClass $std
+     * @return void
      */
     protected function qEntity($std)
     {
@@ -1143,9 +1205,10 @@ class Parser
     }
 
     /**
-     * Carrega e cria a tag PIS [Q02]
+     * Load fields for tag PIS [Q02], belongs to [Q]
      * Q02|CST|vBC|pPIS|vPIS|
      * @param stdClass $std
+     * @return void
      */
     protected function q02Entity($std)
     {
@@ -1157,9 +1220,10 @@ class Parser
     }
 
     /**
-     * Carrega e cria a tag PIS [Q03]
+     * Load fields for tag PIS [Q03], belongs to [Q]
      * Q03|CST|qBCProd|vAliqProd|vPIS|
      * @param stdClass $std
+     * @return void
      */
     protected function q03Entity($std)
     {
@@ -1171,9 +1235,10 @@ class Parser
     }
 
     /**
-     * Carrega e cria a tag PIS [Q04]
+     * Load fields for tag PIS [Q04], belongs to [Q]
      * Q04|CST|
      * @param stdClass $std
+     * @return void
      */
     protected function q04Entity($std)
     {
@@ -1182,9 +1247,10 @@ class Parser
     }
 
     /**
-     * Carrega e cria a tag PIS [Q05]
+     * Load fields for tag PIS [Q05], belongs to [Q]
      * Q05|CST|vPIS|
      * @param stdClass $std
+     * @return void
      */
     protected function q05Entity($std)
     {
@@ -1194,9 +1260,10 @@ class Parser
     }
 
     /**
-     * Carrega e cria a tag PIS [Q07]
+     * Load fields for tag PIS [Q07], belongs to [Q]
      * Q07|vBC|pPIS|
      * @param stdClass $std
+     * @return void
      */
     protected function q07Entity($std)
     {
@@ -1206,9 +1273,10 @@ class Parser
     }
 
     /**
-     * Carrega e cria a tag PIS [Q10]
+     * Load fields for tag PIS [Q10], belongs to [Q]
      * Q10|qBCProd|vAliqProd|
      * @param stdClass $std
+     * @return void
      */
     protected function q10Entity($std)
     {
@@ -1218,8 +1286,9 @@ class Parser
     }
 
     /**
-     * Cria a tag PIS [Q]
+     * Create tag PIS [Q]
      * Qxx|CST|vBC|pPIS|vPIS|qBCProd|vAliqProd|
+     * @return void
      */
     protected function buildQEntity()
     {
@@ -1227,9 +1296,10 @@ class Parser
     }
 
     /**
-     * Carrega tag PISST [R]
+     * Load fields for tag PISST [R]
      * R|vPIS|
      * @param stdClass $std
+     * @return void
      */
     protected function rEntity($std)
     {
@@ -1244,9 +1314,10 @@ class Parser
     }
 
     /**
-     * Carrega e cria tag PISST [R02]
+     * Load fields for tag PISST [R02], belongs to [R]
      * R02|vBC|pPIS|
      * @param stdClass $std
+     * @return void
      */
     protected function r02Entity($std)
     {
@@ -1256,9 +1327,10 @@ class Parser
     }
 
     /**
-     * Carrega e cria tag PISST [R04]
+     * Load fields for tag PISST [R04], belongs to [R]
      * R04|qBCProd|vAliqProd|vPIS|
      * @param stdClass $std
+     * @return void
      */
     protected function r04Entity($std)
     {
@@ -1269,8 +1341,9 @@ class Parser
     }
 
     /**
-     * Cria a tag PISST
+     * Create tag PISST
      * Rxx|vBC|pPIS|qBCProd|vAliqProd|vPIS|
+     * @return void
      */
     protected function buildREntity()
     {
@@ -1278,9 +1351,10 @@ class Parser
     }
 
     /**
-     * Carrega COFINS [S]
+     * Load fields for tag COFINS [S]
      * S|
      * @param stdClass $std
+     * @return void
      */
     protected function sEntity($std)
     {
@@ -1295,9 +1369,10 @@ class Parser
     }
 
     /**
-     * Carrega COFINS [S02]
+     * Load fields for tag COFINS [S02], belongs to [S]
      * S02|CST|vBC|pCOFINS|vCOFINS|
      * @param stdClass $std
+     * @return void
      */
     protected function s02Entity($std)
     {
@@ -1309,9 +1384,10 @@ class Parser
     }
 
     /**
-     * Carrega COFINS [S03]
+     * Load fields for tag COFINS [S03], belongs to [S]
      * S03|CST|qBCProd|vAliqProd|vCOFINS|
      * @param stdClass $std
+     * @return void
      */
     protected function s03Entity($std)
     {
@@ -1323,9 +1399,10 @@ class Parser
     }
 
     /**
-     * Carrega COFINS [S04]
+     * Load fields for tag COFINS [S04], belongs to [S]
      * S04|CST|
      * @param stdClass $std
+     * @return void
      */
     protected function s04Entity($std)
     {
@@ -1334,9 +1411,10 @@ class Parser
     }
 
     /**
-     * Carrega COFINS [S05]
+     * Load fields for tag COFINS [S05], belongs to [S]
      * S05|CST|vCOFINS|
      * @param stdClass $std
+     * @return void
      */
     protected function s05Entity($std)
     {
@@ -1345,9 +1423,10 @@ class Parser
     }
 
     /**
-     * Carrega e cria a tag COFINS [S07]
+     * Load fields for tag COFINS [S07], belongs to [S]
      * S07|vBC|pCOFINS|
      * @param stdClass $std
+     * @return void
      */
     protected function s07Entity($std)
     {
@@ -1357,9 +1436,10 @@ class Parser
     }
 
     /**
-     * Carrega e cria a tag COFINS [S09]
+     * Load fields for tag COFINS [S09], belongs to [S]
      * S09|qBCProd|vAliqProd|
      * @param stdClass $std
+     * @return void
      */
     protected function s09Entity($std)
     {
@@ -1369,8 +1449,9 @@ class Parser
     }
 
     /**
-     * Cria a tag COFINS
+     * Create tag COFINS [S]
      * Sxx|CST|vBC|pCOFINS|vCOFINS|qBCProd|vAliqProd|
+     * @return void
      */
     protected function buildSEntity()
     {
@@ -1378,9 +1459,10 @@ class Parser
     }
 
     /**
-     * COFINSST [T]
+     * Load fields for tag COFINSST [T]
      * T|vCOFINS|
      * @param stdClass $std
+     * @return void
      */
     protected function tEntity($std)
     {
@@ -1395,9 +1477,10 @@ class Parser
     }
 
     /**
-     * Carrega e cria COFINSST [T02]
+     * Load fields for tag COFINSST [T02], belongs to [T]
      * T02|vBC|pCOFINS|
      * @param stdClass $std
+     * @return void
      */
     protected function t02Entity($std)
     {
@@ -1407,9 +1490,10 @@ class Parser
     }
 
     /**
-     * Carrega e cria COFINSST [T04]
+     * Load fields for tag COFINSST [T04], belongs to [T]
      * T04|qBCProd|vAliqProd|
      * @param stdClass $std
+     * @return void
      */
     protected function t04Entity($std)
     {
@@ -1419,8 +1503,9 @@ class Parser
     }
 
     /**
-     * Cria a tag COFINSST
+     * Create tag COFINSST [T]
      * Txx|vBC|pCOFINS|qBCProd|vAliqProd|vCOFINS|
+     * @return void
      */
     protected function buildTEntity()
     {
@@ -1429,10 +1514,11 @@ class Parser
     }
 
     /**
-     * Cria a tag ISSQN [U]
+     * Create tag ISSQN [U]
      * U|vBC|vAliq|vISSQN|cMunFG|cListServ|vDeducao|vOutro|vDescIncond
      *  |vDescCond|vISSRet|indISS|cServico|cMun|cPais|nProcesso|indIncentivo|
      * @param stdClass $std
+     * @return void
      */
     protected function uEntity($std)
     {
@@ -1441,9 +1527,10 @@ class Parser
     }
 
     /**
-     * Cria a tag tagimpostoDevol [UA]
+     * Create tag tagimpostoDevol [UA]
      * UA|pDevol|vIPIDevol|
      * @param stdClass $std
+     * @return void
      */
     protected function uaEntity($std)
     {
@@ -1455,30 +1542,34 @@ class Parser
      * Linha W [W]
      * W|
      * @param stdClass $std
+     * @return void
      */
     protected function wEntity($std)
     {
         //fake não faz nada
+        $field = null;
     }
 
     /**
-     * Cria tag ICMSTot [W02]
+     * Cria tag ICMSTot [W02], belongs to [W]
      * W02|vBC|vICMS|vICMSDeson|vBCST|vST|vProd|vFrete|vSeg|vDesc|vII|vIPI|vPIS|vCOFINS|vOutro|vNF|vTotTrib|
-     * NOTA: Ajustado para NT2016_002_v1.30
+     *
+     * NOTE: adjusted for NT2016_002_v1.30
      * W02|vBC|vICMS|vICMSDeson|vFCP|vBCST|vST|vFCPST|vFCPSTRet|vProd|vFrete|vSeg|vDesc|vII|vIPI|vIPIDevol|vPIS|vCOFINS|vOutro|vNF|vTotTrib|
      * @param stdClass $std
+     * @return void
      */
     protected function w02Entity($std)
     {
         $this->make->tagICMSTot($std);
     }
 
-
     /**
-     * Cria a tag ISSQNTot [W17]
+     * Create tag ISSQNTot [W17], belongs to [W]
      * W17|vServ|vBC|vISS|vPIS|vCOFINS|dCompet|vDeducao|vOutro|vDescIncond
      *    |vDescCond|vISSRet|cRegTrib|
      * @param stdClass $std
+     * @return void
      */
     protected function w17Entity($std)
     {
@@ -1486,9 +1577,10 @@ class Parser
     }
 
     /**
-     * Cria a tag retTrib [W23]
+     * Create tag retTrib [W23], belongs to [W]
      * W23|vRetPIS|vRetCOFINS|vRetCSLL|vBCIRRF|vIRRF|vBCRetPrev|vRetPrev|
      * @param stdClass $std
+     * @return void
      */
     protected function w23Entity($std)
     {
@@ -1496,9 +1588,10 @@ class Parser
     }
 
     /**
-     * Cria a tag transp [X]
+     * Create tag transp [X]
      * X|modFrete|
      * @param stdClass $std
+     * @return void
      */
     protected function xEntity($std)
     {
@@ -1506,9 +1599,10 @@ class Parser
     }
 
     /**
-     * Carrega endereço tranpotadora [X03]
+     * Load fields for tag transporta [X03], belongs to [X]
      * X03|xNome|IE|xEnder|xMun|UF|
      * @param stdClass $std
+     * @return void
      */
     protected function x03Entity($std)
     {
@@ -1516,9 +1610,10 @@ class Parser
     }
 
     /**
-     * Carrega e cria transp com CNPJ [X04]
+     * Load fields for tag transporta [X04], with CNPJ, belonsgs to [X03]
      * X04|CNPJ|
      * @param stdClass $std
+     * @return void
      */
     protected function x04Entity($std)
     {
@@ -1529,9 +1624,10 @@ class Parser
     }
 
     /**
-     * Carrega e cria transp com CPF [X05]
+     * Load fields for tag transporta [X05], with CPF, belonsgs to [X03]
      * X05|CPF|
      * @param stdClass $std
+     * @return void
      */
     protected function x05Entity($std)
     {
@@ -1542,9 +1638,10 @@ class Parser
     }
 
     /**
-     * Carrega impostos transportadora [X11]
+     * Load fields for tag retTransp [X11], belongs to [X]
      * X11|vServ|vBCRet|pICMSRet|vICMSRet|CFOP|cMunFG|
      * @param stdClass $std
+     * @return void
      */
     protected function x11Entity($std)
     {
@@ -1552,9 +1649,10 @@ class Parser
     }
 
     /**
-     * Cria a tag veicTransp [X18]
+     * Create tag veicTransp [X18], belongs to [X]
      * X18|placa|UF|RNTC|
      * @param stdClass $std
+     * @return void
      */
     protected function x18Entity($std)
     {
@@ -1562,9 +1660,10 @@ class Parser
     }
 
     /**
-     * Cria a tag reboque [X22]
+     * Create tag reboque [X22], belogns to [X]
      * X22|placa|UF|RNTC|vagao|balsa|
      * @param stdClass $std
+     * @return void
      */
     protected function x22Entity($std)
     {
@@ -1572,9 +1671,10 @@ class Parser
     }
 
     /**
-     * Carrega volumes [X26]
+     * Create tag vol [X26], belongs to [X]
      * X26|qVol|esp|marca|nVol|pesoL|pesoB|
      * @param stdClass $std
+     * @return void
      */
     protected function x26Entity($std)
     {
@@ -1584,9 +1684,10 @@ class Parser
     }
 
     /**
-     * Carrega o lacre [X33]
+     * Create tag lacre [X33], belongs to [X]
      * X33|nLacre|
      * @param stdClass $std
+     * @return void
      */
     protected function x33Entity($std)
     {
@@ -1595,8 +1696,9 @@ class Parser
     }
 
     /**
-     * Cria a tag vol
+     * Create tag vol
      * @param stdClass $std
+     * @return void
      */
     protected function buildVolEntity($std)
     {
@@ -1606,20 +1708,22 @@ class Parser
     /**
      * yEntity [Y]
      * Y|
-     * NOTA: Ajustado para NT2016_002_v1.30
+     *
+     * NOTE: adjusted for NT2016_002_v1.30
      * Y|vTroco|
      * @param stdClass $std
+     * @return void
      */
     protected function yEntity($std)
     {
         $this->make->tagpag($std);
     }
 
-
     /**
-     * Cria as tags pag e card [YA]
+     * Creates tag detPag and card [YA]
      * YA|tPag|vPag|CNPJ|tBand|cAut|tpIntegra|
      * @param stdClass $std
+     * @return void
      */
     protected function yaEntity($std)
     {
@@ -1627,9 +1731,10 @@ class Parser
     }
 
     /**
-     * Cria a tag fat [Y02]
+     * Create tag fat [Y02]
      * Y02|nFat|vOrig|vDesc|vLiq|
      * @param stdClass $std
+     * @return void
      */
     protected function y02Entity($std)
     {
@@ -1637,9 +1742,10 @@ class Parser
     }
 
     /**
-     * Cria a tag dup [Y07]
+     * Create tag dup [Y07]
      * Y07|nDup|dVenc|vDup|
      * @param stdClass $std
+     * @return void
      */
     protected function y07Entity($std)
     {
@@ -1647,9 +1753,10 @@ class Parser
     }
 
     /**
-     * Cria a a tag infAdic [Z]
+     * Create a tag infAdic [Z]
      * Z|infAdFisco|infCpl|
      * @param stdClass $std
+     * @return void
      */
     protected function zEntity($std)
     {
@@ -1657,9 +1764,10 @@ class Parser
     }
 
     /**
-     * Cria a tag obsCont [Z04]
+     * Create tag obsCont [Z04]
      * Z04|xCampo|xTexto|
      * @param stdClass $std
+     * @return void
      */
     protected function z04Entity($std)
     {
@@ -1667,9 +1775,10 @@ class Parser
     }
 
     /**
-     * Cria a tag obsFisco [Z07]
+     * Create tag obsFisco [Z07]
      * Z07|xCampo|xTexto|
      * @param stdClass $std
+     * @return void
      */
     protected function z07Entity($std)
     {
@@ -1677,9 +1786,10 @@ class Parser
     }
 
     /**
-     * Cria a tag procRef [Z10]
+     * Create tag procRef [Z10]
      * Z10|nProc|indProc|
      * @param stdClass $std
+     * @return void
      */
     protected function z10Entity($std)
     {
@@ -1687,9 +1797,10 @@ class Parser
     }
 
     /**
-     * Cria a tag exporta [ZA]
+     * Create tag exporta [ZA]
      * ZA|UFSaidaPais|xLocExporta|xLocDespacho|
      * @param stdClass $std
+     * @return void
      */
     protected function zaEntity($std)
     {
@@ -1697,9 +1808,10 @@ class Parser
     }
 
     /**
-     * Cria a tag compra [ZB]
+     * Create tag compra [ZB]
      * ZB|xNEmp|xPed|xCont|
      * @param stdClass $std
+     * @return void
      */
     protected function zbEntity($std)
     {
@@ -1707,9 +1819,10 @@ class Parser
     }
 
     /**
-     * Cria a tag cana [ZC]
+     * Create tag cana [ZC]
      * ZC|safra|ref|qTotMes|qTotAnt|qTotGer|vFor|vTotDed|vLiqFor|
      * @param stdClass $std
+     * @return void
      */
     protected function zcEntity($std)
     {
@@ -1717,9 +1830,10 @@ class Parser
     }
 
     /**
-     * Cria a tag forDia [ZC04]
+     * Create tag forDia [ZC04]
      * ZC04|dia|qtde|
      * @param stdClass $std
+     * @return void
      */
     protected function zc04Entity($std)
     {
@@ -1727,9 +1841,10 @@ class Parser
     }
 
     /**
-     * Cria a tag deduc [ZC10]
+     * Create tag deduc [ZC10]
      * ZC10|xDed|vDed|
      * @param stdClass $std
+     * @return void
      */
     protected function zc10Entity($std)
     {
@@ -1737,11 +1852,13 @@ class Parser
     }
 
     /**
-     * Cria a tag infNFeSupl com o qrCode para impressão da DANFCE [ZX01]
+     * Create tag infNFeSupl com o qrCode para impressão da DANFCE [ZX01]
      * ZX01|qrcode|
-     * NOTA: Ajustado para NT2016_002_v1.20
+     *
+     * NOTE: Adjusted for NT2016_002_v1.30
      * ZX01|qrcode|urlChave|
      * @param stdClass $std
+     * @return void
      */
     protected function zx01Entity($std)
     {
