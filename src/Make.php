@@ -5828,7 +5828,7 @@ class Make
      */
     protected function buildTagPag()
     {
-        if ($this->mod == '55') {
+        if ($this->mod == '55' && $this->version == '3.10') {
             return;
         }
         if (count($this->aPag) > 0) {
