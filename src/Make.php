@@ -1823,35 +1823,31 @@ class Make
      */
     public function tagdetExportInd($std)
     {
-        if (!empty($std->nRE)) {
-            $identificador = 'I52 <exportInd> - ';
-            $exportInd = $this->dom->createElement("exportInd");
-            $this->dom->addChild(
-                $exportInd,
-                "nRE",
-                $std->nRE,
-                true,
-                $identificador . "[item $std->item] Número do Registro de Exportação"
-            );
-            $this->dom->addChild(
-                $exportInd,
-                "chNFe",
-                $std->chNFe,
-                true,
-                $identificador . "[item $std->item] Chave de Acesso da NF-e recebida para exportação"
-            );
-            $this->dom->addChild(
-                $exportInd,
-                "qExport",
-                $std->qExport,
-                true,
-                $identificador . "[item $std->item] Quantidade do item realmente exportado"
-            );
-            $detExport = $this->aDetExport[$std->item];
-            $detExport->appendChild($exportInd);
-            return $exportInd;
-        }
-        return null;
+        $identificador = 'I52 <exportInd> - ';
+        $exportInd = $this->dom->createElement("exportInd");
+        $this->dom->addChild(
+            $exportInd,
+            "nRE",
+            $std->nRE,
+            true,
+            $identificador . "[item $std->item] Número do Registro de Exportação"
+        );
+        $this->dom->addChild(
+            $exportInd,
+            "chNFe",
+            $std->chNFe,
+            true,
+            $identificador . "[item $std->item] Chave de Acesso da NF-e recebida para exportação"
+        );
+        $this->dom->addChild(
+            $exportInd,
+            "qExport",
+            $std->qExport,
+            true,
+            $identificador . "[item $std->item] Quantidade do item realmente exportado"
+        );
+        $this->aDetExport[$std->item]->appendChild($exportInd);
+        return $exportInd;
     }
 
     /**
