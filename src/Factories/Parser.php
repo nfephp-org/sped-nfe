@@ -1033,8 +1033,7 @@ class Parser
     }
 
     /**
-     * Carrega a tag IPI [O]
-     * O|clEnq|CNPJProd|cSelo|qSelo|cEnq|
+     * Cria a tag ICMSUFDest [NA]
      * @param stdClass $std
      */
     protected function buildNAEntity($std)
