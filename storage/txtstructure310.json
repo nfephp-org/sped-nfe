@@ -62,7 +62,7 @@
     "N10F":"N10f|orig|CSOSN|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|",
     "N10G":"N10g|orig|CSOSN|vBCSTRet|vICMSSTRet|",
     "N10H":"N10h|orig|CSOSN|modBC|vBC|pRedBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|pCredSN|vCredICMSSN|",
-    "NA":"NA|vBCUFDest|pFCPUFDest|pICMSUFDest|pICMSInter|pICMSInterPart|vFCPUFDest|vICMSUFDest|vICMSFRemet|",
+    "NA":"NA|vBCUFDest|pFCPUFDest|pICMSUFDest|pICMSInter|pICMSInterPart|vFCPUFDest|vICMSUFDest|vICMSUFRemet|",
     "O":"O|clEnq|CNPJProd|cSelo|qSelo|cEnq|",
     "O07":"O07|CST|vIPI|",
     "O08":"O08|CST|",

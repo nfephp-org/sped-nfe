@@ -654,7 +654,7 @@ class Parser
     {
         $std->item = $this->item;
         $std->nDraw = null;
-        $this->make->tagdetExport($std);
+        $this->make->tagdetExportInd($std);
     }
 
     /**
@@ -1020,6 +1020,26 @@ class Parser
     {
         $std->item = $this->item;
         $this->make->tagICMSSN($std);
+    }
+
+    /**
+     * Carrega e Cria a tag ICMSUFDest [NA]
+     * NA|vBCUFDest|pFCPUFDest|pICMSUFDest|pICMSInter|pICMSInterPart|vFCPUFDest|vICMSUFDest|vICMSFRemet|
+     * @param stdClass $std
+     */
+    protected function naEntity($std)
+    {
+        $this->buildNAEntity($std);
+    }
+
+    /**
+     * Cria a tag ICMSUFDest [NA]
+     * @param stdClass $std
+     */
+    protected function buildNAEntity($std)
+    {
+        $std->item = $this->item;
+        $this->make->tagICMSUFDest($std);
     }
 
     /**
