@@ -341,7 +341,7 @@ class Make
     {
         return $this->mod;
     }
-    
+
     /**
      * Call method of xml assembly. For compatibility only.
      * @return boolean
@@ -350,11 +350,11 @@ class Make
     {
         return $this->monta();
     }
-    
+
     /**
      * NFe xml mount method
-     * this function returns TRUE on success or FALSE on error
-     * The xml of the NFe must be retrieved by the getXML() function or
+         * this function returns TRUE on success or FALSE on error
+         * The xml of the NFe must be retrieved by the getXML() function or
      * directly by the public property $xml
      * @return boolean
      */
@@ -440,7 +440,7 @@ class Make
         $this->chNFe = $chave;
         return $this->infNFe;
     }
-    
+
     /**
      * Informações de identificação da NF-e B01 pai A01
      * NOTA: Ajustado para NT2016_002_v1.30
@@ -695,7 +695,7 @@ class Make
         $this->dom->appChild($this->aNFref[$num-1], $refNF);
         return $refNF;
     }
-    
+
     /**
      * Informações da NF de produtor rural referenciada BA10 pai BA01
      * tag NFe/infNFe/ide/NFref/refNFP
@@ -1380,7 +1380,7 @@ class Make
         $this->aInfAdProd[$std->item] = $infAdProd;
         return $infAdProd;
     }
-    
+
     /**
      * Detalhamento de Produtos e Serviços I01 pai H01
      * tag NFe/infNFe/det[]/prod
@@ -1396,7 +1396,7 @@ class Make
         $this->stdTot->vSeg += (float) $std->vSeg;
         $this->stdTot->vDesc += (float) $std->vDesc;
         $this->stdTot->vOutro += (float) $std->vOutro;
-        
+
         $identificador = 'I01 <prod> - ';
         $prod = $this->dom->createElement("prod");
         $this->dom->addChild(
@@ -1699,7 +1699,7 @@ class Make
             $std->tpViaTransp,
             true,
             $identificador . "[item $std->item] Via de transporte internacional "
-                . "informada na Declaração de Importação (DI)"
+            . "informada na Declaração de Importação (DI)"
         );
         $this->dom->addChild(
             $tDI,
@@ -1707,7 +1707,7 @@ class Make
             $std->vAFRMM,
             false,
             $identificador . "[item $std->item] Valor da AFRMM "
-                . "- Adicional ao Frete para Renovação da Marinha Mercante"
+            . "- Adicional ao Frete para Renovação da Marinha Mercante"
         );
         $this->dom->addChild(
             $tDI,
@@ -1811,7 +1811,20 @@ class Make
             false,
             $identificador . "[item $std->item] Número do ato concessório de Drawback"
         );
+        $this->aDetExport[$std->item] = $detExport;
+        return $detExport;
+    }
+
+    /**
+     * Grupo de informações de exportação para o item I52 pai i50
+     * tag NFe/infNFe/det[]/prod/detExport
+     * @param stdClass $std
+     * @return DOMElement
+     */
+    public function tagdetExportInd($std)
+    {
         if (!empty($std->nRE)) {
+            $identificador = 'I52 <detExport> - ';
             $exportInd = $this->dom->createElement("exportInd");
             $this->dom->addChild(
                 $exportInd,
@@ -1834,10 +1847,11 @@ class Make
                 true,
                 $identificador . "[item $std->item] Quantidade do item realmente exportado"
             );
+            $detExport = $this->aDetExport[$std->item];
             $detExport->appendChild($exportInd);
+            return $exportInd;
         }
-        $this->aDetExport[$std->item] = $detExport;
-        return $detExport;
+        return null;
     }
 
     /**
@@ -1889,7 +1903,7 @@ class Make
         $this->aRastro[$std->item][] = $rastro;
         return $rastro;
     }
-    
+
     /**
      * Detalhamento de Veículos novos J01 pai I90
      * tag NFe/infNFe/det[]/prod/veicProd (opcional)
@@ -2109,7 +2123,7 @@ class Make
             $std->qLote,
             false,
             "$identificador [item $std->item] Quantidade de produto no Lote de medicamentos "
-                . "ou de matérias-primas farmacêuticas"
+            . "ou de matérias-primas farmacêuticas"
         );
         //removido no layout 4.00
         $std->dFab = !empty($std->dFab) ? $std->dFab : null;
@@ -2375,7 +2389,7 @@ class Make
     {
         //totalizador dos valores dos itens
         $this->stdTot->vTotTrib += (float) $std->vTotTrib;
-        
+
         $identificador = 'M01 <imposto> - ';
         $imposto = $this->dom->createElement("imposto");
         $this->dom->addChild(
@@ -2403,7 +2417,7 @@ class Make
         $this->stdTot->vICMSDeson += (float) !empty($std->vICMSDeson) ? $std->vICMSDeson : 0;
         $this->stdTot->vBCST += (float) !empty($std->vBCST) ? $std->vBCST : 0;
         $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
-        
+
         $identificador = 'N01 <ICMSxx> - ';
         switch ($std->CST) {
             case '00':
@@ -3241,7 +3255,7 @@ class Make
         $this->stdTot->vICMS += (float) !empty($std->vICMS) ? : 0;
         $this->stdTot->vBCST += (float) !empty($std->vBCST) ? : 0;
         $this->stdTot->vST += (float) !empty($std->vICMSST) ? : 0;
-        
+
         switch ($std->CSOSN) {
             case '101':
                 $icmsSN = $this->dom->createElement("ICMSSN101");
@@ -3668,7 +3682,7 @@ class Make
     {
         //totalizador
         $this->stdTot->vIPI += (float) !empty($std->vIPI) ? $std->vIPI : 0;
-        
+
         $ipi = $this->dom->createElement('IPI');
         $this->dom->addChild(
             $ipi,
@@ -3777,7 +3791,7 @@ class Make
     {
         //totalizador
         $this->stdTot->vII += (float) $std->vII;
-        
+
         $tii = $this->dom->createElement('II');
         $this->dom->addChild(
             $tii,
@@ -3821,7 +3835,7 @@ class Make
     {
         //totalizador
         $this->stdTot->vPIS += !empty($std->vPIS) ? $std->vPIS : 0;
-        
+
         switch ($std->CST) {
             case '01':
             case '02':
@@ -4036,7 +4050,7 @@ class Make
     {
         //totalizador
         $this->stdTot->vCOFINS += (float) !empty($std->vCOFINS) ? $std->vCOFINS : 0;
-        
+
         switch ($std->CST) {
             case '01':
             case '02':
@@ -4299,7 +4313,7 @@ class Make
     {
         //totalizador
         $this->stdTot->vIPIDevol += (float) $std->vIPIDevol;
-        
+
         $impostoDevol = $this->dom->createElement("impostoDevol");
         $this->dom->addChild(
             $impostoDevol,
@@ -4777,7 +4791,7 @@ class Make
         $this->dom->appChild($this->transp, $transporta, "Inclusão do node vol");
         return $transporta;
     }
-    
+
     /**
      * Grupo Retenção ICMS transporte X11 pai X01
      * tag NFe/infNFe/transp/retTransp (opcional)
@@ -4981,7 +4995,7 @@ class Make
         $this->aVol[$std->item] = $vol;
         return $vol;
     }
-    
+
     /**
      * Grupo Lacres X33 pai X26
      * tag NFe/infNFe/transp/vol/lacres (opcional)
@@ -5001,7 +5015,7 @@ class Make
         $this->dom->appChild($this->aVol[$std->item], $lacre, "Inclusão do node lacres");
         return $lacre;
     }
-    
+
     /**
      * Node vol
      */
@@ -5034,7 +5048,7 @@ class Make
         );
         return $this->aPag[] = $pag;
     }
-    
+
     /**
      * Grupo de Formas de Pagamento YA01a pai YA01
      * NOTA: Ajuste nt_2016_002_v1.30
@@ -5178,7 +5192,7 @@ class Make
         $this->dom->appChild($this->cobr, $dup, 'Inclui duplicata na tag cobr');
         return $dup;
     }
-    
+
     /**
      * Grupo de Informações Adicionais Z01 pai A01
      * tag NFe/infNFe/infAdic (opcional)
@@ -5463,7 +5477,7 @@ class Make
         $this->cana->insertBefore($deduc, $vFor);
         return $deduc;
     }
-    
+
     /**
      * Informações suplementares da Nota Fiscal
      * @param stdClass $std
@@ -5735,7 +5749,9 @@ class Make
         //insere detExport
         foreach ($this->aDetExport as $nItem => $child) {
             $prod = $this->aProd[$nItem];
-            $this->dom->appChild($prod, $child, "Inclusão do node detExport");
+            $node = $prod->getElementsByTagName("indTot")->item(0);
+            $prod->insertBefore($child, $node->nextSibling);
+//            $this->dom->appChild($prod, $child, "Inclusão do node detExport");
             $this->aProd[$nItem] = $prod;
         }
         //insere veiculo
@@ -5805,13 +5821,14 @@ class Make
     /**
      * Insere a tag pag, os detalhamentos dos pagamentos e cartoes
      * NOTA: Ajustado para NT2016_002_v1.30
+     * Somente para modelo 65
      * tag NFe/infNFe/pag/
      * tag NFe/infNFe/pag/detPag[]
      * tag NFe/infNFe/pag/detPag[]/Card
      */
     protected function buildTagPag()
     {
-        if ($this->mod == 55 && $this->version == '3.10') {
+        if ($this->mod == '55') {
             return;
         }
         if (count($this->aPag) > 0) {
@@ -5830,7 +5847,7 @@ class Make
         if (empty($this->total)) {
             $this->total = $this->dom->createElement("total");
         }
-        
+
         $this->stdTot->vNF = $this->stdTot->vProd
             - $this->stdTot->vDesc
             + $this->stdTot->vST
@@ -5839,7 +5856,7 @@ class Make
             + $this->stdTot->vOutro
             + $this->stdTot->vII
             + $this->stdTot->vIPI;
-        
+
         //round all values
         $this->stdTot->vBC = round($this->stdTot->vBC, 2);
         $this->stdTot->vICMS = round($this->stdTot->vICMS, 2);
@@ -5866,7 +5883,7 @@ class Make
         $this->stdTot->vTotTrib = round($this->stdTot->vTotTrib, 2);
     }
 
-    
+
     /**
      * Grupo Cobrança Y01 pai A01
      * tag NFe/infNFe/cobr (opcional)

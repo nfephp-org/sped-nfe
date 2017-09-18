@@ -654,7 +654,7 @@ class Parser
     {
         $std->item = $this->item;
         $std->nDraw = null;
-        $this->make->tagdetExport($std);
+        $this->make->tagdetExportInd($std);
     }
 
     /**
