@@ -1816,7 +1816,7 @@ class Make
     }
 
     /**
-     * Grupo de informações de exportação para o item I52 pai i50
+     * Grupo de informações de exportação para o item I52 pai I52
      * tag NFe/infNFe/det[]/prod/detExport
      * @param stdClass $std
      * @return DOMElement
@@ -1824,7 +1824,7 @@ class Make
     public function tagdetExportInd($std)
     {
         if (!empty($std->nRE)) {
-            $identificador = 'I52 <detExport> - ';
+            $identificador = 'I52 <exportInd> - ';
             $exportInd = $this->dom->createElement("exportInd");
             $this->dom->addChild(
                 $exportInd,
