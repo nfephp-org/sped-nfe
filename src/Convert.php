@@ -3,8 +3,7 @@
 namespace NFePHP\NFe;
 
 /**
- * Classe principal para a conversão do TXT para XML
- * Esta classe identifica, valida e invoca o processamento da conversão
+ * Converts NFe from text format to xml
  * @category  API
  * @package   NFePHP\NFe
  * @copyright NFePHP Copyright (c) 2008-2017
@@ -39,12 +38,21 @@ class Convert
             $this->txt = trim($txt);
         }
     }
-
+    
+    /**
+     * Static method to convert Txt to Xml
+     * @param string $txt
+     * @return array
+     */
+    public static function parse($txt)
+    {
+        $conv = new static($txt);
+        return $conv->toXml();
+    }
+    
     /**
      * Convert all nfe in XML, one by one
-     *
      * @param string $txt
-     *
      * @return array
      * @throws \NFePHP\NFe\Exception\DocumentsException
      */
