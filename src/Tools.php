@@ -709,14 +709,14 @@ class Tools extends ToolsCommon
         $this->servico(
             $servico,
             'AN',
-            1,
+            $this->tpAmb,
             true
         );
         $cUF = UFList::getCodeByUF($this->config->siglaUF);
         $tagChave = "<consChNFe><chNFe>$chave</chNFe></consChNFe>";
         //monta a consulta
         $consulta = "<distDFeInt xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
-            . "<tpAmb>1</tpAmb>"
+            . "<tpAmb>".$this->tpAmb."</tpAmb>"
             . "<cUFAutor>$cUF</cUFAutor>"
             . "<CNPJ>".$this->config->cnpj."</CNPJ>$tagChave</distDFeInt>";
         //valida o xml da requisição
