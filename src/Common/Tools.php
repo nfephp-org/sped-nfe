@@ -17,6 +17,7 @@ namespace NFePHP\NFe\Common;
 
 use DOMDocument;
 use InvalidArgumentException;
+use RuntimeException;
 use NFePHP\Common\Certificate;
 use NFePHP\Common\Signer;
 use NFePHP\Common\Soap\SoapCurl;
@@ -29,7 +30,6 @@ use NFePHP\NFe\Factories\Contingency;
 use NFePHP\NFe\Factories\ContingencyNFe;
 use NFePHP\NFe\Factories\Header;
 use NFePHP\NFe\Factories\QRCode;
-use RuntimeException;
 
 class Tools
 {
@@ -162,6 +162,13 @@ class Tools
         'xmlns:xsd' => "http://www.w3.org/2001/XMLSchema",
         'xmlns:soap' => "http://www.w3.org/2003/05/soap-envelope"
     ];
+    /**
+     * @var array
+     */
+    protected $availableVersions = [
+        '3.10' => 'PL_008i2',
+        '4.00' => 'PL_009_V4'
+    ];
 
     /**
      * Constructor
@@ -178,9 +185,6 @@ class Tools
         $this->config = json_decode($configJson);
         $this->pathwsfiles = realpath(
             __DIR__ . '/../../storage'
-        ).'/';
-        $this->pathschemes = realpath(
-            __DIR__ . '/../../schemes/'. $this->config->schemes
         ).'/';
         $this->version($this->config->versao);
         $this->setEnvironmentTimeZone($this->config->siglaUF);
@@ -248,11 +252,19 @@ class Tools
      * Set or get parameter layout version
      * @param string $version
      * @return string
+     * @throws InvalidArgumentException
      */
     public function version($version = '')
     {
         if (!empty($version)) {
+            if (!array_key_exists($version,$this->availableVersions)) {
+                throw new \InvalidArgumentException('Essa versão de layout não está disponível');
+            }    
             $this->versao = $version;
+            $this->config->schemes = $this->availableVersions[$version];
+            $this->pathschemes = realpath(
+                __DIR__ . '/../../schemes/'. $this->config->schemes
+            ).'/';
         }
         return $this->versao;
     }
