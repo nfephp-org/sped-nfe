@@ -66,7 +66,7 @@ class Tools extends ToolsCommon
             }
             $aXml = $xmls;
         }
-        
+
         $sxml = implode("", $aXml);
         $sxml = preg_replace("/<\?xml.*?\?>/", "", $sxml);
         $this->servico(
@@ -95,7 +95,7 @@ class Tools extends ToolsCommon
         $this->lastResponse = $this->sendRequest($body, $parameters);
         return $this->lastResponse;
     }
-    
+
     /**
      * Check status of Batch of NFe sent by receipt of this shipment
      * @param string $recibo
@@ -130,7 +130,7 @@ class Tools extends ToolsCommon
         $this->lastResponse = $this->sendRequest($body, $parameters);
         return $this->lastResponse;
     }
-    
+
     /**
      * Check the NFe status for the 44-digit key and retrieve the protocol
      * @param string $chave
@@ -241,7 +241,7 @@ class Tools extends ToolsCommon
         $this->lastResponse = $this->sendRequest($body, $parameters);
         return $this->lastResponse;
     }
-    
+
     /**
      * Search for the registration data of an NFe issuer,
      * if in contingency mode this service will cause a
@@ -412,7 +412,7 @@ class Tools extends ToolsCommon
             $tagAdic
         );
     }
-    
+
     /**
      * Request extension of the term of return of products of an NF-e of
      * consignment for industrialization to order with suspension of ICMS
@@ -452,7 +452,7 @@ class Tools extends ToolsCommon
             $tagAdic
         );
     }
-    
+
     /**
      * Request the cancellation of the request for an extension of the term
      * of return of products of an NF-e of consignment for industrialization
@@ -488,7 +488,7 @@ class Tools extends ToolsCommon
             $tagAdic
         );
     }
-        
+
     /**
      * Requires nfe cancellation
      * @param  string $chave key of NFe
@@ -513,7 +513,7 @@ class Tools extends ToolsCommon
             $tagAdic
         );
     }
-    
+
     /**
      * Request the registration of the manifestation of recipient
      * @param string $chNFe
@@ -541,7 +541,7 @@ class Tools extends ToolsCommon
             $tagAdic
         );
     }
-    
+
     /**
      * Request authorization for issuance in contingency EPEC
      * @param  string $xml
@@ -608,7 +608,7 @@ class Tools extends ToolsCommon
             . "<vICMS>$vICMS</vICMS>"
             . "<vST>$vST</vST>"
             . "</dest>";
-        
+
         return $this->sefazEvento(
             'AN',
             $chNFe,
@@ -617,7 +617,7 @@ class Tools extends ToolsCommon
             $tagAdic
         );
     }
-    
+
     /**
      * Send event to SEFAZ
      * @param string $uf
@@ -693,7 +693,7 @@ class Tools extends ToolsCommon
         $this->lastResponse = $this->sendRequest($body, $parameters);
         return $this->lastResponse;
     }
-    
+
     /**
      * Request the NFe download already manifested by its recipient, by the key
      * using new service in NfeDistribuicaoDFe
@@ -733,7 +733,7 @@ class Tools extends ToolsCommon
         $this->lastResponse = $this->sendRequest($body, $parameters);
         return $this->lastResponse;
     }
-    
+
     /**
      * Maintenance of the Taxpayer Security Code - CSC (Old Token)
      * @param int $indOp Identificador do tipo de operação:
@@ -783,7 +783,7 @@ class Tools extends ToolsCommon
         $this->lastResponse = $this->sendRequest($body, $parameters);
         return $this->lastResponse;
     }
-    
+
     /**
      * Checks the validity of an NFe, normally used for received NFe
      * @param  string $nfe
@@ -802,6 +802,7 @@ class Tools extends ToolsCommon
         $infNFe  = $dom->getElementsByTagName('infNFe')->item(0);
         $chNFe = preg_replace('/[^0-9]/', '', $infNFe->getAttribute("Id"));
         $protocol = $dom->getElementsByTagName('nProt')->item(0)->nodeValue;
+        $digval = $dom->getElementsByTagName('DigestValue')->item(0)->nodeValue;
         //consulta a NFe
         $response = $this->sefazConsultaChave($chNFe, $tpAmb);
         $ret = new \DOMDocument('1.0', 'UTF-8');
@@ -832,7 +833,7 @@ class Tools extends ToolsCommon
         }
         return false;
     }
-    
+
     /**
      *
      * @param  int $tpEvento
