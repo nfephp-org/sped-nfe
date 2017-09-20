@@ -32,10 +32,6 @@ class Make
      */
     public $erros = [];
     /**
-     * @var array
-     */
-    public $aTotICMSUFDest = ['vICMSUFDest' => null, 'vFCPUFDest' => null, 'vICMSUFRemet' => null,];
-    /**
      * @var string
      */
     public $chNFe;
@@ -3603,9 +3599,9 @@ class Make
      */
     public function tagICMSUFDest($std)
     {
-        $this->aTotICMSUFDest['vICMSUFDest'] += (float) !empty($std->vICMSUFDest) ? $std->vICMSUFDest : 0;
-        $this->aTotICMSUFDest['vFCPUFDest'] += (float) !empty($std->vFCPUFDest) ? $std->vFCPUFDest : 0;
-        $this->aTotICMSUFDest['vICMSUFRemet'] += (float) !empty($std->vICMSUFRemet) ? $std->vICMSUFRemet : 0;
+        $this->stdTot->vICMSUFDest += (float) !empty($std->vICMSUFDest) ? $std->vICMSUFDest : 0;
+        $this->stdTot->vFCPUFDest += (float) !empty($std->vFCPUFDest) ? $std->vFCPUFDest : 0;
+        $this->stdTot->vICMSUFRemet += (float) !empty($std->vICMSUFRemet) ? $std->vICMSUFRemet : 0;
 
         $icmsUFDest = $this->dom->createElement('ICMSUFDest');
         $this->dom->addChild(
@@ -4395,30 +4391,30 @@ class Make
                 "Valor total do ICMS relativo ao Fundo de Combate à Pobreza(FCP) "
                 . "para a UF de destino"
             );
-            if ($vFCPUFDest > 0) {
-                $this->dom->addChild(
-                    $ICMSTot,
-                    "vFCPUFDest",
-                    number_format($vFCPUFDest, 2, '.', ''),
-                    false,
-                    "Valor total do ICMS relativo ao Fundo de Combate à Pobreza(FCP) "
-                    . "para a UF de destino"
-                );
-                $this->dom->addChild(
-                    $ICMSTot,
-                    "vICMSUFDest",
-                    number_format($vICMSUFDest, 2, '.', ''),
-                    false,
-                    "Valor total do ICMS de partilha para a UF do destinatário"
-                );
-                $this->dom->addChild(
-                    $ICMSTot,
-                    "vICMSUFRemet",
-                    number_format($vICMSUFRemet, 2, '.', ''),
-                    false,
-                    "Valor total do ICMS de partilha para a UF do remetente"
-                );
-            }
+        }
+        if ($vFCPUFDest > 0) {
+            $this->dom->addChild(
+                $ICMSTot,
+                "vFCPUFDest",
+                number_format($vFCPUFDest, 2, '.', ''),
+                false,
+                "Valor total do ICMS relativo ao Fundo de Combate à Pobreza(FCP) "
+                . "para a UF de destino"
+            );
+            $this->dom->addChild(
+                $ICMSTot,
+                "vICMSUFDest",
+                number_format($vICMSUFDest, 2, '.', ''),
+                false,
+                "Valor total do ICMS de partilha para a UF do destinatário"
+            );
+            $this->dom->addChild(
+                $ICMSTot,
+                "vICMSUFRemet",
+                number_format($vICMSUFRemet, 2, '.', ''),
+                false,
+                "Valor total do ICMS de partilha para a UF do remetente"
+            );
         }
         $this->dom->addChild(
             $ICMSTot,
