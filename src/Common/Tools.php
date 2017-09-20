@@ -257,9 +257,9 @@ class Tools
     public function version($version = '')
     {
         if (!empty($version)) {
-            if (!array_key_exists($version,$this->availableVersions)) {
+            if (!array_key_exists($version, $this->availableVersions)) {
                 throw new \InvalidArgumentException('Essa versão de layout não está disponível');
-            }    
+            }
             $this->versao = $version;
             $this->config->schemes = $this->availableVersions[$version];
             $this->pathschemes = realpath(
