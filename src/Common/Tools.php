@@ -583,9 +583,9 @@ class Tools
             $this->getURIConsultaNFCe($uf)
         );
         $this->modelo = $memmod;
-        return $signed;
+		return Strings::clearXmlString($signed);
     }
-    
+
     /**
      * Get URI for search NFCe by chave
      * NOTE: exists only in 4.00 layout
