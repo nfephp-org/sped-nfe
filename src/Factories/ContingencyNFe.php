@@ -21,11 +21,12 @@ class ContingencyNFe
         if ($contingency->type == '') {
             return $xml;
         }
+        $xml = Signer::removeSignature($xml);
+
         $dom = new \DOMDocument('1.0', 'UTF-8');
         $dom->preserveWhiteSpace = false;
         $dom->formatOutput = false;
         $dom->loadXML($xml);
-        $dom = Signer::removeSignature($dom);
         
         $ide = $dom->getElementsByTagName('ide')->item(0);
         $cUF = $ide->getElementsByTagName('cUF')->item(0)->nodeValue;
@@ -73,6 +74,7 @@ class ContingencyNFe
             $tpEmis,
             $cNF
         );
+        $ide->getElementsByTagName('cDV')->item(0)->nodeValue = substr($chave, -1);
         $infNFe->setAttribute('Id', 'NFe'.$chave);
         return Strings::clearXmlString($dom->saveXML(), true);
     }
