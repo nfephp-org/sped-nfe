@@ -74,8 +74,7 @@ class ContingencyNFe
             $tpEmis,
             $cNF
         );
-		$ide->getElementsByTagName('cDV')->item(0)->nodeValue = substr($chave, -1);
-
+        $ide->getElementsByTagName('cDV')->item(0)->nodeValue = substr($chave, -1);
         $infNFe->setAttribute('Id', 'NFe'.$chave);
         return Strings::clearXmlString($dom->saveXML(), true);
     }
