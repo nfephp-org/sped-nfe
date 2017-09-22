@@ -2,3169 +2,3169 @@
 
 ## 100 - SUCESSO
 
-> Autorizado o uso da NF-e
+### 100 - Autorizado o uso da NF-e
 
-> 
+> Correção : **
 
 ## 101 - SUCESSO
 
-> Cancelamento de NF-e homologado
+### 101 - Cancelamento de NF-e homologado
 
-> 
+> Correção : **
 
 ## 102 - SUCESSO
 
-> Inutilização de número homologado
+### 102 - Inutilização de número homologado
 
-> 
+> Correção : **
 
 ## 103 - SUCESSO
 
-> Lote recebido com sucesso
+### 103 - Lote recebido com sucesso
 
-> 
+> Correção : **
 
 ## 104 - SUCESSO
 
-> Lote processado
+### 104 - Lote processado
 
-> 
+> Correção : **
 
 ## 105 - SUCESSO
 
-> Lote em processamento
+### 105 - Lote em processamento
 
-> 
+> Correção : **
 
 ## 106 - REJEIÇÃO
 
-> Lote não localizado
+### 106 - Lote não localizado
 
-> O numero de recibo não foi localizado, confira
+> Correção : *O numero de recibo não foi localizado, confira*
 
 ## 107 - SUCESSO
 
-> Serviço em Operação
+### 107 - Serviço em Operação
 
-> 
+> Correção : **
 
 ## 108 - REJEIÇÃO
 
-> Serviço Paralisado Momentaneamente (curto prazo)
+### 108 - Serviço Paralisado Momentaneamente (curto prazo)
 
-> Fora do ar AGUARDE!
+> Correção : *Fora do ar AGUARDE!*
 
 ## 109 - REJEIÇÃO
 
-> Serviço Paralisado sem Previsão
+### 109 - Serviço Paralisado sem Previsão
 
-> Fora do ar tente usar CONTINGÊNCIA
+> Correção : *Fora do ar tente usar CONTINGÊNCIA*
 
 ## 110 - REJEIÇÃO
 
-> Uso Denegado
+### 110 - Uso Denegado
 
-> Cuidado algo errado com o registro da empresa na SEFAZ
+> Correção : *Cuidado algo errado com o registro da empresa na SEFAZ*
 
 ## 111 - SUCESSO
 
-> Consulta cadastro com uma ocorrência
+### 111 - Consulta cadastro com uma ocorrência
 
-> 
+> Correção : **
 
 ## 112 - SUCESSO
 
-> Consulta cadastro com mais de uma ocorrência
+### 112 - Consulta cadastro com mais de uma ocorrência
 
-> 
+> Correção : **
 
 ## 113 - REJEIÇÃO
 
-> SVC em processo de desativação SVC será  desabilitada para a SEFAZ-XX em dd/mm/aa às hh:mm horas
+### 113 - SVC em processo de desativação SVC será  desabilitada para a SEFAZ-XX em dd/mm/aa às hh:mm horas
 
-> Contingência indisponível
+> Correção : *Contingência indisponível*
 
 ## 114 - REJEIÇÃO
 
-> SVC-RS desabilitada pela SEFAZ de Origem
+### 114 - SVC-RS desabilitada pela SEFAZ de Origem
 
-> Contingência indisponível
+> Correção : *Contingência indisponível*
 
 ## 124 - SUCESSO
 
-> EPEC Autorizado
+### 124 - EPEC Autorizado
 
-> 
+> Correção : **
 
 ## 128 - SUCESSO
 
-> Lote de Evento Processado
+### 128 - Lote de Evento Processado
 
-> 
+> Correção : **
 
 ## 135 - SUCESSO
 
-> Evento registrado e vinculado a NF-e
+### 135 - Evento registrado e vinculado a NF-e
 
-> 
+> Correção : **
 
 ## 136 - SUCESSO
 
-> Evento registrado, mas não vinculado a NF-e
+### 136 - Evento registrado, mas não vinculado a NF-e
 
-> 
+> Correção : **
 
 ## 137 - SUCESSO
 
-> Nenhum documento localizado para o Destinatário
+### 137 - Nenhum documento localizado para o Destinatário
 
-> 
+> Correção : **
 
 ## 138 - SUCESSO
 
-> Documento localizado para o Destinatário
+### 138 - Documento localizado para o Destinatário
 
-> 
+> Correção : **
 
 ## 139 - SUCESSO
 
-> Pedido de Download processado
+### 139 - Pedido de Download processado
 
-> 
+> Correção : **
 
 ## 140 - SUCESSO
 
-> Download disponibilizado
+### 140 - Download disponibilizado
 
-> 
+> Correção : **
 
 ## 142 - REJEIÇÃO
 
-> Ambiente de Contingência EPEC bloqueado para o Emitente
+### 142 - Ambiente de Contingência EPEC bloqueado para o Emitente
 
-> EPEC bloqueado consultar a SEFAZ
+> Correção : *EPEC bloqueado consultar a SEFAZ*
 
 ## 150 - SUCESSO
 
-> Autorizado o uso da NF-e, autorização fora de prazo
+### 150 - Autorizado o uso da NF-e, autorização fora de prazo
 
-> 
+> Correção : **
 
 ## 151 - SUCESSO
 
-> Cancelamento de NF-e homologado fora de prazo
+### 151 - Cancelamento de NF-e homologado fora de prazo
 
-> 
+> Correção : **
 
 ## 155 - SUCESSO
 
-> Cancelamento homologado fora de prazo
+### 155 - Cancelamento homologado fora de prazo
 
-> 
+> Correção : **
 
 ## 201 - REJEIÇÃO
 
-> Rejeição: Número máximo de numeração a inutilizar ultrapassou o limite
+### 201 - Rejeição: Número máximo de numeração a inutilizar ultrapassou o limite
 
-> Não podem ser inutilizados tantos numeros
+> Correção : *Não podem ser inutilizados tantos numeros*
 
 ## 202 - REJEIÇÃO
 
-> Rejeição: Falha no reconhecimento da autoria ou integridade do arquivo digital
+### 202 - Rejeição: Falha no reconhecimento da autoria ou integridade do arquivo digital
 
-> Algo não esta correto no formato do arquivo
+> Correção : *Algo não esta correto no formato do arquivo*
 
 ## 203 - REJEIÇÃO
 
-> Rejeição: Emissor não habilitado para emissão de NF-e
+### 203 - Rejeição: Emissor não habilitado para emissão de NF-e
 
-> Você não está credenciado para usar esse serviço
+> Correção : *Você não está credenciado para usar esse serviço*
 
 ## 204 - REJEIÇÃO
 
-> Duplicidade de NF-e [nRec:999999999999999]
+### 204 - Duplicidade de NF-e [nRec:999999999999999]
 
-> Já existe outra NFe autorizada com esse mesmo numero
+> Correção : *Já existe outra NFe autorizada com esse mesmo numero*
 
 ## 205 - REJEIÇÃO
 
-> NF-e está denegada na base de dados da SEFAZ [nRec:999999999999999]
+### 205 - NF-e está denegada na base de dados da SEFAZ [nRec:999999999999999]
 
-> Essa nota já existe e foi DENEGADA
+> Correção : *Essa nota já existe e foi DENEGADA*
 
 ## 206 - REJEIÇÃO
 
-> Rejeição: NF-e já está inutilizada na Base de dados da SEFAZ
+### 206 - Rejeição: NF-e já está inutilizada na Base de dados da SEFAZ
 
-> Esse numero de NFe foi inutilizado anteriormente
+> Correção : *Esse numero de NFe foi inutilizado anteriormente*
 
 ## 207 - REJEIÇÃO
 
-> Rejeição: CNPJ do emitente inválido
+### 207 - Rejeição: CNPJ do emitente inválido
 
-> Erro no CNPJ do emitente
+> Correção : *Erro no CNPJ do emitente*
 
 ## 208 - REJEIÇÃO
 
-> Rejeição: CNPJ do destinatário inválido
+### 208 - Rejeição: CNPJ do destinatário inválido
 
-> Erro no CNPJ do destinatário
+> Correção : *Erro no CNPJ do destinatário*
 
 ## 209 - REJEIÇÃO
 
-> Rejeição: IE do emitente inválida
+### 209 - Rejeição: IE do emitente inválida
 
-> IE incorreta do emitente
+> Correção : *IE incorreta do emitente*
 
 ## 210 - REJEIÇÃO
 
-> Rejeição: IE do destinatário inválida
+### 210 - Rejeição: IE do destinatário inválida
 
-> IE incorreta do destinatário
+> Correção : *IE incorreta do destinatário*
 
 ## 211 - REJEIÇÃO
 
-> Rejeição: IE do substituto inválida
+### 211 - Rejeição: IE do substituto inválida
 
-> IE do substituto incorreta
+> Correção : *IE do substituto incorreta*
 
 ## 212 - REJEIÇÃO
 
-> Rejeição: Data de emissão NF-e posterior a data de recebimento
+### 212 - Rejeição: Data de emissão NF-e posterior a data de recebimento
 
-> Verifique o relogio do sistema ou a zona de tempo ou o horário de verão
+> Correção : *Verifique o relogio do sistema ou a zona de tempo ou o horário de verão*
 
 ## 213 - REJEIÇÃO
 
-> Rejeição: CNPJ-Base do Emitente difere do CNPJ-Base do Certificado Digital
+### 213 - Rejeição: CNPJ-Base do Emitente difere do CNPJ-Base do Certificado Digital
 
-> Você está usando um certificado de outro CNPJ
+> Correção : *Você está usando um certificado de outro CNPJ*
 
 ## 214 - REJEIÇÃO
 
-> Rejeição: Tamanho da mensagem excedeu o limite estabelecido
+### 214 - Rejeição: Tamanho da mensagem excedeu o limite estabelecido
 
-> O tamanho da mensagem é maior que o aceitável, reduza o numero de NFe ou de itens
+> Correção : *O tamanho da mensagem é maior que o aceitável, reduza o numero de NFe ou de itens*
 
 ## 215 - REJEIÇÃO
 
-> Rejeição: Falha no schema XML
+### 215 - Rejeição: Falha no schema XML
 
-> Provavelmente foram encontrados caracteres estranhos e não suportados
+> Correção : *Provavelmente foram encontrados caracteres estranhos e não suportados*
 
 ## 216 - REJEIÇÃO
 
-> Rejeição: Chave de Acesso difere da cadastrada
+### 216 - Rejeição: Chave de Acesso difere da cadastrada
 
-> A chave de acesso indicada está difernete a registra na SEFAZ
+> Correção : *A chave de acesso indicada está difernete a registra na SEFAZ*
 
 ## 217 - REJEIÇÃO
 
-> Rejeição: NF-e não consta na base de dados da SEFAZ
+### 217 - Rejeição: NF-e não consta na base de dados da SEFAZ
 
-> Essa NFe não está registrada, ou não foi enviada ou foi rejetada
+> Correção : *Essa NFe não está registrada, ou não foi enviada ou foi rejetada*
 
 ## 218 - REJEIÇÃO
 
-> NF-e já está cancelada na base de dados da SEFAZ [nRec:999999999999999]
+### 218 - NF-e já está cancelada na base de dados da SEFAZ [nRec:999999999999999]
 
-> Não é possivel realizar mais operações com a NFE já cancelada
+> Correção : *Não é possivel realizar mais operações com a NFE já cancelada*
 
 ## 219 - REJEIÇÃO
 
-> Rejeição: Circulação da NF-e verificada
+### 219 - Rejeição: Circulação da NF-e verificada
 
-> O cancelamento não é mais possivel a circulação já foi identificada
+> Correção : *O cancelamento não é mais possivel a circulação já foi identificada*
 
 ## 220 - REJEIÇÃO
 
-> Rejeição: Prazo de Cancelamento superior ao previsto na Legislação
+### 220 - Rejeição: Prazo de Cancelamento superior ao previsto na Legislação
 
-> As notas somente podem ser canceladas dentro do prazo
+> Correção : *As notas somente podem ser canceladas dentro do prazo*
 
 ## 221 - REJEIÇÃO
 
-> Rejeição: Confirmado o recebimento da NF-e pelo destinatário
+### 221 - Rejeição: Confirmado o recebimento da NF-e pelo destinatário
 
-> O recebimento já foi feito pelo destinatário não pode mais ser cancelada
+> Correção : *O recebimento já foi feito pelo destinatário não pode mais ser cancelada*
 
 ## 222 - REJEIÇÃO
 
-> Rejeição: Protocolo de Autorização de Uso difere do cadastrado
+### 222 - Rejeição: Protocolo de Autorização de Uso difere do cadastrado
 
-> O numero do protocolo indicado é diferente do registrado
+> Correção : *O numero do protocolo indicado é diferente do registrado*
 
 ## 223 - REJEIÇÃO
 
-> Rejeição: CNPJ do transmissor do lote difere do CNPJ do transmissor da consulta
+### 223 - Rejeição: CNPJ do transmissor do lote difere do CNPJ do transmissor da consulta
 
-> O certificado usado para autenticar a comunicação não é o mesmo usado para assinar a NF-e
+> Correção : *O certificado usado para autenticar a comunicação não é o mesmo usado para assinar a NF-e*
 
 ## 224 - REJEIÇÃO
 
-> Rejeição: A faixa inicial é maior que a faixa final
+### 224 - Rejeição: A faixa inicial é maior que a faixa final
 
-> Preste atenção aos numeros para inutilizar
+> Correção : *Preste atenção aos numeros para inutilizar*
 
 ## 225 - REJEIÇÃO
 
-> Rejeição: Falha no Schema XML do lote de NFe
+### 225 - Rejeição: Falha no Schema XML do lote de NFe
 
-> Podem ser Espaços entre as TAGs do XML; Quebras de Linhas; Caracteres especiais; Nome de TAGs errados; Versão do XML diferente do esperado pelo WebService
+> Correção : *Podem ser Espaços entre as TAGs do XML; Quebras de Linhas; Caracteres especiais; Nome de TAGs errados; Versão do XML diferente do esperado pelo WebService*
 
 ## 226 - REJEIÇÃO
 
-> Rejeição: Código da UF do Emitente diverge da UF autorizadora
+### 226 - Rejeição: Código da UF do Emitente diverge da UF autorizadora
 
-> O cUF indicado não corresponde a UF, avise o administrador
+> Correção : *O cUF indicado não corresponde a UF, avise o administrador*
 
 ## 227 - REJEIÇÃO
 
-> Rejeição: Erro na Chave de Acesso - Campo Id – falta a literal NFe
+### 227 - Rejeição: Erro na Chave de Acesso - Campo Id – falta a literal NFe
 
-> Falha no atributo Id, avise o administrador
+> Correção : *Falha no atributo Id, avise o administrador*
 
 ## 228 - REJEIÇÃO
 
-> Rejeição: Data de Emissão muito atrasada
+### 228 - Rejeição: Data de Emissão muito atrasada
 
-> Existe um limite de tempo para enviar uma solicitação e foi ultrapassado. Refaça e reenvie
+> Correção : *Existe um limite de tempo para enviar uma solicitação e foi ultrapassado. Refaça e reenvie*
 
 ## 229 - REJEIÇÃO
 
-> Rejeição: IE do emitente não informada
+### 229 - Rejeição: IE do emitente não informada
 
-> A IE do emitente é obrigatória
+> Correção : *A IE do emitente é obrigatória*
 
 ## 230 - REJEIÇÃO
 
-> Rejeição: IE do emitente não cadastrada
+### 230 - Rejeição: IE do emitente não cadastrada
 
-> Emitente não cadastrado, verifique com a SEFAZ
+> Correção : *Emitente não cadastrado, verifique com a SEFAZ*
 
 ## 231 - REJEIÇÃO
 
-> Rejeição: IE do emitente não vinculada ao CNPJ
+### 231 - Rejeição: IE do emitente não vinculada ao CNPJ
 
-> A IE não pertence ao CNPJ, corrija
+> Correção : *A IE não pertence ao CNPJ, corrija*
 
 ## 232 - REJEIÇÃO
 
-> Rejeição: IE do destinatário não informada
+### 232 - Rejeição: IE do destinatário não informada
 
-> IE do destinatário deve ser informada nesse caso
+> Correção : *IE do destinatário deve ser informada nesse caso*
 
 ## 233 - REJEIÇÃO
 
-> Rejeição: IE do destinatário não cadastrada
+### 233 - Rejeição: IE do destinatário não cadastrada
 
-> A IE do destinatário deve estar incorreta, verifique
+> Correção : *A IE do destinatário deve estar incorreta, verifique*
 
 ## 234 - REJEIÇÃO
 
-> Rejeição: IE do destinatário não vinculada ao CNPJ
+### 234 - Rejeição: IE do destinatário não vinculada ao CNPJ
 
-> A IE do destinatário não pertence ao CNPJ do mesmo, verifique
+> Correção : *A IE do destinatário não pertence ao CNPJ do mesmo, verifique*
 
 ## 235 - REJEIÇÃO
 
-> Rejeição: Inscrição SUFRAMA inválida
+### 235 - Rejeição: Inscrição SUFRAMA inválida
 
-> Numero da SUFRAMA incorreto, correija
+> Correção : *Numero da SUFRAMA incorreto, correija*
 
 ## 236 - REJEIÇÃO
 
-> Rejeição: Chave de Acesso com dígito verificador inválido
+### 236 - Rejeição: Chave de Acesso com dígito verificador inválido
 
-> O digito verificar é calculado e está incorreto, informe o administrador
+> Correção : *O digito verificar é calculado e está incorreto, informe o administrador*
 
 ## 237 - REJEIÇÃO
 
-> Rejeição: CPF do destinatário inválido
+### 237 - Rejeição: CPF do destinatário inválido
 
-> O CFP do destinatário está errdo, corrija
+> Correção : *O CFP do destinatário está errdo, corrija*
 
 ## 238 - REJEIÇÃO
 
-> Rejeição: Cabeçalho - Versão do arquivo XML superior a Versão vigente
+### 238 - Rejeição: Cabeçalho - Versão do arquivo XML superior a Versão vigente
 
-> O numero da versão está incorreto, informe o administrador
+> Correção : *O numero da versão está incorreto, informe o administrador*
 
 ## 239 - REJEIÇÃO
 
-> Rejeição: Cabeçalho - Versão do arquivo XML não suportada
+### 239 - Rejeição: Cabeçalho - Versão do arquivo XML não suportada
 
-> Versão do documento errada, informe o adminstrador
+> Correção : *Versão do documento errada, informe o adminstrador*
 
 ## 240 - REJEIÇÃO
 
-> Rejeição: Cancelamento/Inutilização - Irregularidade Fiscal do Emitente
+### 240 - Rejeição: Cancelamento/Inutilização - Irregularidade Fiscal do Emitente
 
-> Consulte a SEFAZ
+> Correção : *Consulte a SEFAZ*
 
 ## 241 - REJEIÇÃO
 
-> Rejeição: Um número da faixa já foi utilizado
+### 241 - Rejeição: Um número da faixa já foi utilizado
 
-> Essa inutilização já foi realizada.
+> Correção : *Essa inutilização já foi realizada.*
 
 ## 242 - REJEIÇÃO
 
-> Rejeição: Cabeçalho - Falha no Schema XML
+### 242 - Rejeição: Cabeçalho - Falha no Schema XML
 
-> Normalmente causado por caracteres inválidos, informe o administrador
+> Correção : *Normalmente causado por caracteres inválidos, informe o administrador*
 
 ## 243 - REJEIÇÃO
 
-> Rejeição: XML Mal Formado
+### 243 - Rejeição: XML Mal Formado
 
-> Erro na montagem do XML, informe o administrador
+> Correção : *Erro na montagem do XML, informe o administrador*
 
 ## 244 - REJEIÇÃO
 
-> Rejeição: CNPJ do Certificado Digital difere do CNPJ da Matriz e do CNPJ do Emitente
+### 244 - Rejeição: CNPJ do Certificado Digital difere do CNPJ da Matriz e do CNPJ do Emitente
 
-> O certificado utilizado é incorreto
+> Correção : *O certificado utilizado é incorreto*
 
 ## 245 - REJEIÇÃO
 
-> Rejeição: CNPJ Emitente não cadastrado
+### 245 - Rejeição: CNPJ Emitente não cadastrado
 
-> Confira o CNPJ do emitente está errado
+> Correção : *Confira o CNPJ do emitente está errado*
 
 ## 246 - REJEIÇÃO
 
-> Rejeição: CNPJ Destinatário não cadastrado
+### 246 - Rejeição: CNPJ Destinatário não cadastrado
 
-> Confira o CNPJ do destinatário está errado
+> Correção : *Confira o CNPJ do destinatário está errado*
 
 ## 247 - REJEIÇÃO
 
-> Rejeição: Sigla da UF do Emitente diverge da UF autorizadora
+### 247 - Rejeição: Sigla da UF do Emitente diverge da UF autorizadora
 
-> O sistema está enviando para outro autorizador diverso da UF do emitente 
+> Correção : *O sistema está enviando para outro autorizador diverso da UF do emitente *
 
 ## 248 - REJEIÇÃO
 
-> Rejeição: UF do Recibo diverge da UF autorizadora
+### 248 - Rejeição: UF do Recibo diverge da UF autorizadora
 
-> O recibo usado é de outra autoriazadora, verifique qual é o recibo correto
+> Correção : *O recibo usado é de outra autoriazadora, verifique qual é o recibo correto*
 
 ## 249 - REJEIÇÃO
 
-> Rejeição: UF da Chave de Acesso diverge da UF autorizadora
+### 249 - Rejeição: UF da Chave de Acesso diverge da UF autorizadora
 
-> A chave de acesso é de outra autorizadora
+> Correção : *A chave de acesso é de outra autorizadora*
 
 ## 250 - REJEIÇÃO
 
-> Rejeição: UF diverge da UF autorizadora
+### 250 - Rejeição: UF diverge da UF autorizadora
 
-> 
+> Correção : **
 
 ## 251 - REJEIÇÃO
 
-> Rejeição: UF/Município destinatário não pertence a SUFRAMA
+### 251 - Rejeição: UF/Município destinatário não pertence a SUFRAMA
 
-> 
+> Correção : **
 
 ## 252 - REJEIÇÃO
 
-> Rejeição: Ambiente informado diverge do Ambiente de recebimento
+### 252 - Rejeição: Ambiente informado diverge do Ambiente de recebimento
 
-> 
+> Correção : **
 
 ## 253 - REJEIÇÃO
 
-> Rejeição: Digito Verificador da chave de acesso composta inválida
+### 253 - Rejeição: Digito Verificador da chave de acesso composta inválida
 
-> 
+> Correção : **
 
 ## 254 - REJEIÇÃO
 
-> Rejeição: NF-e complementar não possui NF referenciada
+### 254 - Rejeição: NF-e complementar não possui NF referenciada
 
-> 
+> Correção : **
 
 ## 255 - REJEIÇÃO
 
-> Rejeição: NF-e complementar possui mais de uma NF referenciada
+### 255 - Rejeição: NF-e complementar possui mais de uma NF referenciada
 
-> 
+> Correção : **
 
 ## 256 - REJEIÇÃO
 
-> Rejeição: Uma NF-e da faixa já está inutilizada na Base de dados da SEFAZ
+### 256 - Rejeição: Uma NF-e da faixa já está inutilizada na Base de dados da SEFAZ
 
-> 
+> Correção : **
 
 ## 257 - REJEIÇÃO
 
-> Rejeição: Solicitante não habilitado para emissão da NF-e
+### 257 - Rejeição: Solicitante não habilitado para emissão da NF-e
 
-> 
+> Correção : **
 
 ## 258 - REJEIÇÃO
 
-> Rejeição: CNPJ da consulta inválido
+### 258 - Rejeição: CNPJ da consulta inválido
 
-> 
+> Correção : **
 
 ## 259 - REJEIÇÃO
 
-> Rejeição: CNPJ da consulta não cadastrado como contribuinte na UF
+### 259 - Rejeição: CNPJ da consulta não cadastrado como contribuinte na UF
 
-> 
+> Correção : **
 
 ## 260 - REJEIÇÃO
 
-> Rejeição: IE da consulta inválida
+### 260 - Rejeição: IE da consulta inválida
 
-> 
+> Correção : **
 
 ## 261 - REJEIÇÃO
 
-> Rejeição: IE da consulta não cadastrada como contribuinte na UF
+### 261 - Rejeição: IE da consulta não cadastrada como contribuinte na UF
 
-> 
+> Correção : **
 
 ## 262 - REJEIÇÃO
 
-> Rejeição: UF não fornece consulta por CPF
+### 262 - Rejeição: UF não fornece consulta por CPF
 
-> 
+> Correção : **
 
 ## 263 - REJEIÇÃO
 
-> Rejeição: CPF da consulta inválido
+### 263 - Rejeição: CPF da consulta inválido
 
-> 
+> Correção : **
 
 ## 264 - REJEIÇÃO
 
-> Rejeição: CPF da consulta não cadastrado como contribuinte na UF
+### 264 - Rejeição: CPF da consulta não cadastrado como contribuinte na UF
 
-> 
+> Correção : **
 
 ## 265 - REJEIÇÃO
 
-> Rejeição: Sigla da UF da consulta difere da UF do Web Service
+### 265 - Rejeição: Sigla da UF da consulta difere da UF do Web Service
 
-> 
+> Correção : **
 
 ## 266 - REJEIÇÃO
 
-> Rejeição: Série utilizada não permitida no Web Service
+### 266 - Rejeição: Série utilizada não permitida no Web Service
 
-> 
+> Correção : **
 
 ## 267 - REJEIÇÃO
 
-> Rejeição: NF Complementar referencia uma NF-e inexistente
+### 267 - Rejeição: NF Complementar referencia uma NF-e inexistente
 
-> 
+> Correção : **
 
 ## 268 - REJEIÇÃO
 
-> Rejeição: NF Complementar referencia outra NF-e Complementar
+### 268 - Rejeição: NF Complementar referencia outra NF-e Complementar
 
-> 
+> Correção : **
 
 ## 269 - REJEIÇÃO
 
-> Rejeição: CNPJ Emitente da NF Complementar difere do CNPJ da NF Referenciada
+### 269 - Rejeição: CNPJ Emitente da NF Complementar difere do CNPJ da NF Referenciada
 
-> 
+> Correção : **
 
 ## 270 - REJEIÇÃO
 
-> Rejeição: Código Município do Fato Gerador: dígito inválido
+### 270 - Rejeição: Código Município do Fato Gerador: dígito inválido
 
-> 
+> Correção : **
 
 ## 271 - REJEIÇÃO
 
-> Rejeição: Código Município do Fato Gerador: difere da UF do emitente
+### 271 - Rejeição: Código Município do Fato Gerador: difere da UF do emitente
 
-> 
+> Correção : **
 
 ## 272 - REJEIÇÃO
 
-> Rejeição: Código Município do Emitente: dígito inválido
+### 272 - Rejeição: Código Município do Emitente: dígito inválido
 
-> 
+> Correção : **
 
 ## 273 - REJEIÇÃO
 
-> Rejeição: Código Município do Emitente: difere da UF do emitente
+### 273 - Rejeição: Código Município do Emitente: difere da UF do emitente
 
-> 
+> Correção : **
 
 ## 274 - REJEIÇÃO
 
-> Rejeição: Código Município do Destinatário: dígito inválido
+### 274 - Rejeição: Código Município do Destinatário: dígito inválido
 
-> 
+> Correção : **
 
 ## 275 - REJEIÇÃO
 
-> Rejeição: Código Município do Destinatário: difere da UF do Destinatário
+### 275 - Rejeição: Código Município do Destinatário: difere da UF do Destinatário
 
-> 
+> Correção : **
 
 ## 276 - REJEIÇÃO
 
-> Rejeição: Código Município do Local de Retirada: dígito inválido
+### 276 - Rejeição: Código Município do Local de Retirada: dígito inválido
 
-> 
+> Correção : **
 
 ## 277 - REJEIÇÃO
 
-> Rejeição: Código Município do Local de Retirada: difere da UF do Local de Retirada
+### 277 - Rejeição: Código Município do Local de Retirada: difere da UF do Local de Retirada
 
-> 
+> Correção : **
 
 ## 278 - REJEIÇÃO
 
-> Rejeição: Código Município do Local de Entrega: dígito inválido
+### 278 - Rejeição: Código Município do Local de Entrega: dígito inválido
 
-> 
+> Correção : **
 
 ## 279 - REJEIÇÃO
 
-> Rejeição: Código Município do Local de Entrega: difere da UF do Local de Entrega
+### 279 - Rejeição: Código Município do Local de Entrega: difere da UF do Local de Entrega
 
-> 
+> Correção : **
 
 ## 280 - REJEIÇÃO
 
-> Rejeição: Certificado Transmissor inválido
+### 280 - Rejeição: Certificado Transmissor inválido
 
-> 
+> Correção : **
 
 ## 281 - REJEIÇÃO
 
-> Rejeição: Certificado Transmissor Data Validade
+### 281 - Rejeição: Certificado Transmissor Data Validade
 
-> 
+> Correção : **
 
 ## 282 - REJEIÇÃO
 
-> Rejeição: Certificado Transmissor sem CNPJ
+### 282 - Rejeição: Certificado Transmissor sem CNPJ
 
-> 
+> Correção : **
 
 ## 283 - REJEIÇÃO
 
-> Rejeição: Certificado Transmissor - erro Cadeia de Certificação
+### 283 - Rejeição: Certificado Transmissor - erro Cadeia de Certificação
 
-> 
+> Correção : **
 
 ## 284 - REJEIÇÃO
 
-> Rejeição: Certificado Transmissor revogado
+### 284 - Rejeição: Certificado Transmissor revogado
 
-> 
+> Correção : **
 
 ## 285 - REJEIÇÃO
 
-> Rejeição: Certificado Transmissor difere ICP-Brasil
+### 285 - Rejeição: Certificado Transmissor difere ICP-Brasil
 
-> 
+> Correção : **
 
 ## 286 - REJEIÇÃO
 
-> Rejeição: Certificado Transmissor erro no acesso a LCR
+### 286 - Rejeição: Certificado Transmissor erro no acesso a LCR
 
-> 
+> Correção : **
 
 ## 287 - REJEIÇÃO
 
-> Rejeição: Código Município do FG - ISSQN: dígito inválido
+### 287 - Rejeição: Código Município do FG - ISSQN: dígito inválido
 
-> 
+> Correção : **
 
 ## 288 - REJEIÇÃO
 
-> Rejeição: Código Município do FG - Transporte: dígito inválido
+### 288 - Rejeição: Código Município do FG - Transporte: dígito inválido
 
-> 
+> Correção : **
 
 ## 289 - REJEIÇÃO
 
-> Rejeição: Código da UF informada diverge da UF solicitada
+### 289 - Rejeição: Código da UF informada diverge da UF solicitada
 
-> 
+> Correção : **
 
 ## 290 - REJEIÇÃO
 
-> Rejeição: Certificado Assinatura inválido
+### 290 - Rejeição: Certificado Assinatura inválido
 
-> 
+> Correção : **
 
 ## 291 - REJEIÇÃO
 
-> Rejeição: Certificado Assinatura Data Validade
+### 291 - Rejeição: Certificado Assinatura Data Validade
 
-> 
+> Correção : **
 
 ## 292 - REJEIÇÃO
 
-> Rejeição: Certificado Assinatura sem CNPJ
+### 292 - Rejeição: Certificado Assinatura sem CNPJ
 
-> 
+> Correção : **
 
 ## 293 - REJEIÇÃO
 
-> Rejeição: Certificado Assinatura - erro Cadeia de Certificação
+### 293 - Rejeição: Certificado Assinatura - erro Cadeia de Certificação
 
-> 
+> Correção : **
 
 ## 294 - REJEIÇÃO
 
-> Rejeição: Certificado Assinatura revogado
+### 294 - Rejeição: Certificado Assinatura revogado
 
-> 
+> Correção : **
 
 ## 295 - REJEIÇÃO
 
-> Rejeição: Certificado Assinatura difere ICP-Brasil
+### 295 - Rejeição: Certificado Assinatura difere ICP-Brasil
 
-> 
+> Correção : **
 
 ## 296 - REJEIÇÃO
 
-> Rejeição: Certificado Assinatura erro no acesso a LCR
+### 296 - Rejeição: Certificado Assinatura erro no acesso a LCR
 
-> 
+> Correção : **
 
 ## 297 - REJEIÇÃO
 
-> Rejeição: Assinatura difere do calculado
+### 297 - Rejeição: Assinatura difere do calculado
 
-> 
+> Correção : **
 
 ## 298 - REJEIÇÃO
 
-> Rejeição: Assinatura difere do padrão do Sistema
+### 298 - Rejeição: Assinatura difere do padrão do Sistema
 
-> 
+> Correção : **
 
 ## 299 - REJEIÇÃO
 
-> Rejeição: XML da área de cabeçalho com codificação diferente de UTF-8
+### 299 - Rejeição: XML da área de cabeçalho com codificação diferente de UTF-8
 
-> 
+> Correção : **
 
 ## 301 - REJEIÇÃO
 
-> Uso Denegado: Irregularidade fiscal do emitente
+### 301 - Uso Denegado: Irregularidade fiscal do emitente
 
-> 
+> Correção : **
 
 ## 302 - REJEIÇÃO
 
-> Uso Denegado: Irregularidade fiscal do destinatário
+### 302 - Uso Denegado: Irregularidade fiscal do destinatário
 
-> 
+> Correção : **
 
 ## 303 - REJEIÇÃO
 
-> Uso Denegado: Destinatário não habilitado a operar na UF
+### 303 - Uso Denegado: Destinatário não habilitado a operar na UF
 
-> 
+> Correção : **
 
 ## 304 - REJEIÇÃO
 
-> Rejeição: Pedido de Cancelamento para NF-e com evento da Suframa
+### 304 - Rejeição: Pedido de Cancelamento para NF-e com evento da Suframa
 
-> 
+> Correção : **
 
 ## 315 - REJEIÇÃO
 
-> Data de Emissão anterior ao início da autorização de Nota Fiscal na UF
+### 315 - Data de Emissão anterior ao início da autorização de Nota Fiscal na UF
 
-> 
+> Correção : **
 
 ## 316 - REJEIÇÃO
 
-> Nota Fiscal referenciada com a mesma Chave de Acesso da Nota Fiscal atual
+### 316 - Nota Fiscal referenciada com a mesma Chave de Acesso da Nota Fiscal atual
 
-> 
+> Correção : **
 
 ## 317 - REJEIÇÃO
 
-> NF modelo 1 referenciada com data de emissão inválida
+### 317 - NF modelo 1 referenciada com data de emissão inválida
 
-> 
+> Correção : **
 
 ## 318 - REJEIÇÃO
 
-> Contranota de Produtor sem Nota Fiscal referenciada
+### 318 - Contranota de Produtor sem Nota Fiscal referenciada
 
-> 
+> Correção : **
 
 ## 319 - REJEIÇÃO
 
-> Contranota de Produtor não pode referenciar somente Nota Fiscal de entrada
+### 319 - Contranota de Produtor não pode referenciar somente Nota Fiscal de entrada
 
-> 
+> Correção : **
 
 ## 320 - REJEIÇÃO
 
-> Contranota de Produtor referencia somente NF de outro emitente
+### 320 - Contranota de Produtor referencia somente NF de outro emitente
 
-> 
+> Correção : **
 
 ## 321 - REJEIÇÃO
 
-> Rejeição: NF-e de devolução de mercadoria não possui documento fiscal referenciado
+### 321 - Rejeição: NF-e de devolução de mercadoria não possui documento fiscal referenciado
 
-> 
+> Correção : **
 
 ## 322 - REJEIÇÃO
 
-> NF-e de devolução com mais de um documento fiscal referenciado
+### 322 - NF-e de devolução com mais de um documento fiscal referenciado
 
-> 
+> Correção : **
 
 ## 323 - REJEIÇÃO
 
-> Rejeição: CNPJ autorizado para download inválido
+### 323 - Rejeição: CNPJ autorizado para download inválido
 
-> 
+> Correção : **
 
 ## 324 - REJEIÇÃO
 
-> Rejeição: CNPJ do destinatário já autorizado para download
+### 324 - Rejeição: CNPJ do destinatário já autorizado para download
 
-> 
+> Correção : **
 
 ## 325 - REJEIÇÃO
 
-> Rejeição: CPF autorizado para download inválido
+### 325 - Rejeição: CPF autorizado para download inválido
 
-> 
+> Correção : **
 
 ## 326 - REJEIÇÃO
 
-> Rejeição: CPF do destinatário já autorizado para download
+### 326 - Rejeição: CPF do destinatário já autorizado para download
 
-> 
+> Correção : **
 
 ## 327 - REJEIÇÃO
 
-> Rejeição: CFOP inválido para NF-e com finalidade de devolução de mercadoria
+### 327 - Rejeição: CFOP inválido para NF-e com finalidade de devolução de mercadoria
 
-> 
+> Correção : **
 
 ## 328 - REJEIÇÃO
 
-> Rejeição: CFOP de devolução de mercadoria para NF-e que não tem finalidade de devolução de mercadoria
+### 328 - Rejeição: CFOP de devolução de mercadoria para NF-e que não tem finalidade de devolução de mercadoria
 
-> 
+> Correção : **
 
 ## 329 - REJEIÇÃO
 
-> Rejeição: Número da DI /DSI inválido
+### 329 - Rejeição: Número da DI /DSI inválido
 
-> 
+> Correção : **
 
 ## 330 - REJEIÇÃO
 
-> Rejeição: Informar o Valor da AFRMM na importação por via marítima
+### 330 - Rejeição: Informar o Valor da AFRMM na importação por via marítima
 
-> 
+> Correção : **
 
 ## 331 - REJEIÇÃO
 
-> Rejeição: Informar o CNPJ do adquirente ou do encomendante nesta forma de importação
+### 331 - Rejeição: Informar o CNPJ do adquirente ou do encomendante nesta forma de importação
 
-> 
+> Correção : **
 
 ## 332 - REJEIÇÃO
 
-> Rejeição: CNPJ do adquirente ou do encomendante da importação inválido
+### 332 - Rejeição: CNPJ do adquirente ou do encomendante da importação inválido
 
-> 
+> Correção : **
 
 ## 333 - REJEIÇÃO
 
-> Rejeição: Informar a UF do adquirente ou do encomendante nesta forma de importação
+### 333 - Rejeição: Informar a UF do adquirente ou do encomendante nesta forma de importação
 
-> 
+> Correção : **
 
 ## 334 - REJEIÇÃO
 
-> Rejeição: Número do processo de drawback não informado na importação
+### 334 - Rejeição: Número do processo de drawback não informado na importação
 
-> 
+> Correção : **
 
 ## 335 - REJEIÇÃO
 
-> Rejeição: Número do processo de drawback na importação inválido
+### 335 - Rejeição: Número do processo de drawback na importação inválido
 
-> 
+> Correção : **
 
 ## 336 - REJEIÇÃO
 
-> Rejeição: Informado o grupo de exportação no item para CFOP que não é de exportação
+### 336 - Rejeição: Informado o grupo de exportação no item para CFOP que não é de exportação
 
-> 
+> Correção : **
 
 ## 337 - REJEIÇÃO
 
-> Rejeição: Não informado o grupo de exportação no item
+### 337 - Rejeição: Não informado o grupo de exportação no item
 
-> 
+> Correção : **
 
 ## 338 - REJEIÇÃO
 
-> Rejeição: Número do processo de drawback não informado na exportação
+### 338 - Rejeição: Número do processo de drawback não informado na exportação
 
-> 
+> Correção : **
 
 ## 339 - REJEIÇÃO
 
-> Rejeição: Número do processo de drawback na exportação inválido
+### 339 - Rejeição: Número do processo de drawback na exportação inválido
 
-> 
+> Correção : **
 
 ## 340 - REJEIÇÃO
 
-> Rejeição: Não informado o grupo de exportação indireta no item
+### 340 - Rejeição: Não informado o grupo de exportação indireta no item
 
-> 
+> Correção : **
 
 ## 341 - REJEIÇÃO
 
-> Rejeição: Número do registro de exportação inválido
+### 341 - Rejeição: Número do registro de exportação inválido
 
-> 
+> Correção : **
 
 ## 342 - REJEIÇÃO
 
-> Rejeição: Chave de Acesso informada na Exportação Indireta com DV inválido
+### 342 - Rejeição: Chave de Acesso informada na Exportação Indireta com DV inválido
 
-> 
+> Correção : **
 
 ## 343 - REJEIÇÃO
 
-> Rejeição: Modelo da NF-e informada na Exportação Indireta diferente de 55
+### 343 - Rejeição: Modelo da NF-e informada na Exportação Indireta diferente de 55
 
-> 
+> Correção : **
 
 ## 344 - REJEIÇÃO
 
-> Rejeição: Duplicidade de NF-e informada na Exportação Indireta (Chave de Acesso informada mais de uma vez)
+### 344 - Rejeição: Duplicidade de NF-e informada na Exportação Indireta (Chave de Acesso informada mais de uma vez)
 
-> 
+> Correção : **
 
 ## 345 - REJEIÇÃO
 
-> Rejeição: Chave de Acesso informada na Exportação Indireta não consta como NF-e referenciada
+### 345 - Rejeição: Chave de Acesso informada na Exportação Indireta não consta como NF-e referenciada
 
-> 
+> Correção : **
 
 ## 346 - REJEIÇÃO
 
-> Rejeição: Somatório das quantidades informadas na Exportação Indireta não corresponde a quantidade total do item
+### 346 - Rejeição: Somatório das quantidades informadas na Exportação Indireta não corresponde a quantidade total do item
 
-> 
+> Correção : **
 
 ## 347 - REJEIÇÃO
 
-> Rejeição: Descrição do Combustível diverge da descrição adotada pela ANP
+### 347 - Rejeição: Descrição do Combustível diverge da descrição adotada pela ANP
 
-> 
+> Correção : **
 
 ## 348 - REJEIÇÃO
 
-> Rejeição: NFC-e com grupo RECOPI
+### 348 - Rejeição: NFC-e com grupo RECOPI
 
-> 
+> Correção : **
 
 ## 349 - REJEIÇÃO
 
-> Rejeição: Número RECOPI não informado
+### 349 - Rejeição: Número RECOPI não informado
 
-> 
+> Correção : **
 
 ## 350 - REJEIÇÃO
 
-> Rejeição: Número RECOPI inválido
+### 350 - Rejeição: Número RECOPI inválido
 
-> 
+> Correção : **
 
 ## 351 - REJEIÇÃO
 
-> Rejeição: Valor do ICMS da Operação no CST=51 difere do produto BC e Alíquota
+### 351 - Rejeição: Valor do ICMS da Operação no CST=51 difere do produto BC e Alíquota
 
-> 
+> Correção : **
 
 ## 352 - REJEIÇÃO
 
-> Rejeição: Valor do ICMS Diferido no CST=51 difere do produto Valor ICMS Operação e percentual diferimento
+### 352 - Rejeição: Valor do ICMS Diferido no CST=51 difere do produto Valor ICMS Operação e percentual diferimento
 
-> 
+> Correção : **
 
 ## 353 - REJEIÇÃO
 
-> Rejeição: Valor do ICMS no CST=51 não corresponde a diferença do ICMS operação e ICMS diferido
+### 353 - Rejeição: Valor do ICMS no CST=51 não corresponde a diferença do ICMS operação e ICMS diferido
 
-> 
+> Correção : **
 
 ## 354 - REJEIÇÃO
 
-> Rejeição: Informado grupo de devolução de tributos para NF-e que não tem finalidade de devolução de mercadoria
+### 354 - Rejeição: Informado grupo de devolução de tributos para NF-e que não tem finalidade de devolução de mercadoria
 
-> 
+> Correção : **
 
 ## 355 - REJEIÇÃO
 
-> Rejeição: Informar o local de saída do Pais no caso da exportação
+### 355 - Rejeição: Informar o local de saída do Pais no caso da exportação
 
-> 
+> Correção : **
 
 ## 356 - REJEIÇÃO
 
-> Rejeição: Informar o local de saída do Pais somente no caso da exportação
+### 356 - Rejeição: Informar o local de saída do Pais somente no caso da exportação
 
-> 
+> Correção : **
 
 ## 357 - REJEIÇÃO
 
-> Rejeição: Chave de Acesso do grupo de Exportação Indireta inexistente [nRef: xxx]
+### 357 - Rejeição: Chave de Acesso do grupo de Exportação Indireta inexistente [nRef: xxx]
 
-> 
+> Correção : **
 
 ## 358 - REJEIÇÃO
 
-> Rejeição: Chave de Acesso do grupo de Exportação Indireta cancelada ou denegada [nRef: xxx]
+### 358 - Rejeição: Chave de Acesso do grupo de Exportação Indireta cancelada ou denegada [nRef: xxx]
 
-> 
+> Correção : **
 
 ## 359 - REJEIÇÃO
 
-> Rejeição: NF-e de venda a Órgão Público sem informar a Nota de Empenho
+### 359 - Rejeição: NF-e de venda a Órgão Público sem informar a Nota de Empenho
 
-> 
+> Correção : **
 
 ## 360 - REJEIÇÃO
 
-> Rejeição: NF-e com Nota de Empenho inválida para a UF.
+### 360 - Rejeição: NF-e com Nota de Empenho inválida para a UF.
 
-> 
+> Correção : **
 
 ## 361 - REJEIÇÃO
 
-> Rejeição: NF-e com Nota de Empenho inexistente na UF.
+### 361 - Rejeição: NF-e com Nota de Empenho inexistente na UF.
 
-> 
+> Correção : **
 
 ## 362 - REJEIÇÃO
 
-> Rejeição: Venda de combustível sem informação do Transportador
+### 362 - Rejeição: Venda de combustível sem informação do Transportador
 
-> 
+> Correção : **
 
 ## 363 - REJEIÇÃO
 
-> Total do ISS difere do somatório dos itens
+### 363 - Total do ISS difere do somatório dos itens
 
-> 
+> Correção : **
 
 ## 364 - REJEIÇÃO
 
-> Rejeição: Total do valor da dedução do ISS difere do somatório dos itens
+### 364 - Rejeição: Total do valor da dedução do ISS difere do somatório dos itens
 
-> 
+> Correção : **
 
 ## 365 - REJEIÇÃO
 
-> Rejeição: Total de outras retenções difere do somatório dos itens
+### 365 - Rejeição: Total de outras retenções difere do somatório dos itens
 
-> 
+> Correção : **
 
 ## 366 - REJEIÇÃO
 
-> Rejeição: Total do desconto incondicionado ISS difere do somatório dos itens
+### 366 - Rejeição: Total do desconto incondicionado ISS difere do somatório dos itens
 
-> 
+> Correção : **
 
 ## 367 - REJEIÇÃO
 
-> Rejeição: Total do desconto condicionado ISS difere do somatório dos itens
+### 367 - Rejeição: Total do desconto condicionado ISS difere do somatório dos itens
 
-> 
+> Correção : **
 
 ## 368 - REJEIÇÃO
 
-> Rejeição: Total de ISS retido difere do somatório dos itens
+### 368 - Rejeição: Total de ISS retido difere do somatório dos itens
 
-> 
+> Correção : **
 
 ## 369 - REJEIÇÃO
 
-> Rejeição: Não informado o grupo avulsa na emissão pelo Fisco
+### 369 - Rejeição: Não informado o grupo avulsa na emissão pelo Fisco
 
-> 
+> Correção : **
 
 ## 370 - REJEIÇÃO
 
-> Rejeição: Nota Fiscal Avulsa com tipo de emissão inválido
+### 370 - Rejeição: Nota Fiscal Avulsa com tipo de emissão inválido
 
-> 
+> Correção : **
 
 ## 372 - REJEIÇÃO
 
-> Destinatário com identificação de estrangeiro com caracteres inválidos
+### 372 - Destinatário com identificação de estrangeiro com caracteres inválidos
 
-> 
+> Correção : **
 
 ## 373 - REJEIÇÃO
 
-> Descricao do primeiro item diferente de NOTA FISCAL EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL
+### 373 - Descricao do primeiro item diferente de NOTA FISCAL EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL
 
-> 
+> Correção : **
 
 ## 374 - REJEIÇÃO
 
-> CFOP incompatível com o grupo de tributação [nItem:nnn]
+### 374 - CFOP incompatível com o grupo de tributação [nItem:nnn]
 
-> 
+> Correção : **
 
 ## 375 - REJEIÇÃO
 
-> Informe no passo 1 a chave da NF-e referenciada.NF-e com CFOP 5929 (Lançamento relativo a Cupom Fiscal) referencia uma NFC-e [nItem:nnn]
+### 375 - Informe no passo 1 a chave da NF-e referenciada.NF-e com CFOP 5929 (Lançamento relativo a Cupom Fiscal) referencia uma NFC-e [nItem:nnn]
 
-> 
+> Correção : **
 
 ## 376 - REJEIÇÃO
 
-> Data do Desembaraço Aduaneiro inválida [nItem:nnn]
+### 376 - Data do Desembaraço Aduaneiro inválida [nItem:nnn]
 
-> 
+> Correção : **
 
 ## 378 - REJEIÇÃO
 
-> Grupo de Combustível sem a informação de Encerrante [nItem:nnn]
+### 378 - Grupo de Combustível sem a informação de Encerrante [nItem:nnn]
 
-> 
+> Correção : **
 
 ## 379 - REJEIÇÃO
 
-> Grupo de Encerrante na NF-e (modelo 55) para CFOP diferente de venda de combustível para consumidor final [nItem:nnn]
+### 379 - Grupo de Encerrante na NF-e (modelo 55) para CFOP diferente de venda de combustível para consumidor final [nItem:nnn]
 
-> 
+> Correção : **
 
 ## 380 - REJEIÇÃO
 
-> Valor do Encerrante final não é superior ao Encerrante inicial [nItem:nnn]
+### 380 - Valor do Encerrante final não é superior ao Encerrante inicial [nItem:nnn]
 
-> 
+> Correção : **
 
 ## 381 - REJEIÇÃO
 
-> Grupo de tributação ICMS90, informando dados do ICMS-ST [nItem:nnn]
+### 381 - Grupo de tributação ICMS90, informando dados do ICMS-ST [nItem:nnn]
 
-> 
+> Correção : **
 
 ## 382 - REJEIÇÃO
 
-> CFOP não permitido para o CST informado [nItem:nnn]
+### 382 - CFOP não permitido para o CST informado [nItem:nnn]
 
-> 
+> Correção : **
 
 ## 383 - REJEIÇÃO
 
-> Item com CSOSN indevido [nItem:nnn]
+### 383 - Item com CSOSN indevido [nItem:nnn]
 
-> 
+> Correção : **
 
 ## 384 - REJEIÇÃO
 
-> CSOSN não permitido para a UF [nItem:nnn]
+### 384 - CSOSN não permitido para a UF [nItem:nnn]
 
-> 
+> Correção : **
 
 ## 385 - REJEIÇÃO
 
-> Grupo de tributação ICMS900, informando dados do ICMS-ST [nItem:nnn]
+### 385 - Grupo de tributação ICMS900, informando dados do ICMS-ST [nItem:nnn]
 
-> 
+> Correção : **
 
 ## 386 - REJEIÇÃO
 
-> CFOP não permitido para o CSOSN informado [nItem:nnn]
+### 386 - CFOP não permitido para o CSOSN informado [nItem:nnn]
 
-> 
+> Correção : **
 
 ## 387 - REJEIÇÃO
 
-> Código de Enquadramento Legal do IPI inválido [nItem:nnn]
+### 387 - Código de Enquadramento Legal do IPI inválido [nItem:nnn]
 
-> 
+> Correção : **
 
 ## 388 - REJEIÇÃO
 
-> Código de Situação Tributária do IPI incompatível com o Código de Enquadramento Legal do IPI [nItem:nnn]
+### 388 - Código de Situação Tributária do IPI incompatível com o Código de Enquadramento Legal do IPI [nItem:nnn]
 
-> 
+> Correção : **
 
 ## 389 - REJEIÇÃO
 
-> Código Município ISSQN inexistente [nItem:nnn]
+### 389 - Código Município ISSQN inexistente [nItem:nnn]
 
-> 
+> Correção : **
 
 ## 390 - REJEIÇÃO
 
-> Nota Fiscal com grupo de devolução de tributos [nItem:nnn]
+### 390 - Nota Fiscal com grupo de devolução de tributos [nItem:nnn]
 
-> 
+> Correção : **
 
 ## 391 - REJEIÇÃO
 
-> Não informados os dados do cartão de crédito / débito nas Formas de Pagamento da Nota Fiscal
+### 391 - Não informados os dados do cartão de crédito / débito nas Formas de Pagamento da Nota Fiscal
 
-> 
+> Correção : **
 
 ## 392 - REJEIÇÃO
 
-> Não informados os dados da operação de pagamento por cartão de crédito / débito
+### 392 - Não informados os dados da operação de pagamento por cartão de crédito / débito
 
-> 
+> Correção : **
 
 ## 393 - REJEIÇÃO
 
-> NF-e com o grupo de Informações Suplementares
+### 393 - NF-e com o grupo de Informações Suplementares
 
-> 
+> Correção : **
 
 ## 394 - REJEIÇÃO
 
-> Nota Fiscal sem a informação do QR-Code
+### 394 - Nota Fiscal sem a informação do QR-Code
 
-> 
+> Correção : **
 
 ## 395 - REJEIÇÃO
 
-> Endereço do site da UF da Consulta via QRCode diverge do previsto
+### 395 - Endereço do site da UF da Consulta via QRCode diverge do previsto
 
-> 
+> Correção : **
 
 ## 396 - REJEIÇÃO
 
-> Parâmetro do QR-Code inexistente (chAcesso)
+### 396 - Parâmetro do QR-Code inexistente (chAcesso)
 
-> 
+> Correção : **
 
 ## 397 - REJEIÇÃO
 
-> Parâmetro do QR-Code divergente da Nota Fiscal (chAcesso)
+### 397 - Parâmetro do QR-Code divergente da Nota Fiscal (chAcesso)
 
-> 
+> Correção : **
 
 ## 398 - REJEIÇÃO
 
-> Parâmetro nVersao do QR-Code difere do previsto
+### 398 - Parâmetro nVersao do QR-Code difere do previsto
 
-> 
+> Correção : **
 
 ## 399 - REJEIÇÃO
 
-> Parâmetro de Identificação do destinatário no QR-Code para Nota Fiscal sem identificação do destinatário
+### 399 - Parâmetro de Identificação do destinatário no QR-Code para Nota Fiscal sem identificação do destinatário
 
-> 
+> Correção : **
 
 ## 401 - REJEIÇÃO
 
-> Rejeição: CPF do remetente inválido
+### 401 - Rejeição: CPF do remetente inválido
 
-> 
+> Correção : **
 
 ## 402 - REJEIÇÃO
 
-> Rejeição: XML da área de dados com codificação diferente de UTF-8
+### 402 - Rejeição: XML da área de dados com codificação diferente de UTF-8
 
-> 
+> Correção : **
 
 ## 403 - REJEIÇÃO
 
-> Rejeição: O grupo de informações da NF-e avulsa é de uso exclusivo do Fisco
+### 403 - Rejeição: O grupo de informações da NF-e avulsa é de uso exclusivo do Fisco
 
-> 
+> Correção : **
 
 ## 404 - REJEIÇÃO
 
-> Rejeição: Uso de prefixo de namespace não permitido
+### 404 - Rejeição: Uso de prefixo de namespace não permitido
 
-> 
+> Correção : **
 
 ## 405 - REJEIÇÃO
 
-> Rejeição: Código do país do emitente: dígito inválido
+### 405 - Rejeição: Código do país do emitente: dígito inválido
 
-> 
+> Correção : **
 
 ## 406 - REJEIÇÃO
 
-> Rejeição: Código do país do destinatário: dígito inválido
+### 406 - Rejeição: Código do país do destinatário: dígito inválido
 
-> 
+> Correção : **
 
 ## 407 - REJEIÇÃO
 
-> Rejeição: O CPF só pode ser informado no campo emitente para a NF-e avulsa
+### 407 - Rejeição: O CPF só pode ser informado no campo emitente para a NF-e avulsa
 
-> 
+> Correção : **
 
 ## 408 - REJEIÇÃO
 
-> Rejeição: Evento não disponível para Autor pessoa física
+### 408 - Rejeição: Evento não disponível para Autor pessoa física
 
-> 
+> Correção : **
 
 ## 409 - REJEIÇÃO
 
-> Rejeição: Campo cUF inexistente no elemento nfeCabecMsg do SOAP Header
+### 409 - Rejeição: Campo cUF inexistente no elemento nfeCabecMsg do SOAP Header
 
-> 
+> Correção : **
 
 ## 410 - REJEIÇÃO
 
-> Rejeição: UF informada no campo cUF não é atendida pelo Web Service
+### 410 - Rejeição: UF informada no campo cUF não é atendida pelo Web Service
 
-> 
+> Correção : **
 
 ## 411 - REJEIÇÃO
 
-> Rejeição: Campo versaoDados inexistente no elemento nfeCabecMsg do SOAP Header
+### 411 - Rejeição: Campo versaoDados inexistente no elemento nfeCabecMsg do SOAP Header
 
-> 
+> Correção : **
 
 ## 416 - REJEIÇÃO
 
-> Rejeição: Falha na descompactação da área de dados
+### 416 - Rejeição: Falha na descompactação da área de dados
 
-> 
+> Correção : **
 
 ## 417 - REJEIÇÃO
 
-> Rejeição: Total do ICMS superior ao valor limite estabelecido
+### 417 - Rejeição: Total do ICMS superior ao valor limite estabelecido
 
-> 
+> Correção : **
 
 ## 418 - REJEIÇÃO
 
-> Rejeição: Total do ICMS ST superior ao valor limite estabelecido
+### 418 - Rejeição: Total do ICMS ST superior ao valor limite estabelecido
 
-> 
+> Correção : **
 
 ## 420 - REJEIÇÃO
 
-> Rejeição: Cancelamento para NF-e já cancelada
+### 420 - Rejeição: Cancelamento para NF-e já cancelada
 
-> 
+> Correção : **
 
 ## 450 - REJEIÇÃO
 
-> Rejeição: Modelo da NF-e diferente de 55
+### 450 - Rejeição: Modelo da NF-e diferente de 55
 
-> 
+> Correção : **
 
 ## 451 - REJEIÇÃO
 
-> Rejeição: Processo de emissão informado inválido
+### 451 - Rejeição: Processo de emissão informado inválido
 
-> 
+> Correção : **
 
 ## 452 - REJEIÇÃO
 
-> Rejeição: Tipo Autorizador do Recibo diverge do Órgão Autorizador
+### 452 - Rejeição: Tipo Autorizador do Recibo diverge do Órgão Autorizador
 
-> 
+> Correção : **
 
 ## 453 - REJEIÇÃO
 
-> Rejeição: Ano de inutilização não pode ser superior ao Ano atual
+### 453 - Rejeição: Ano de inutilização não pode ser superior ao Ano atual
 
-> 
+> Correção : **
 
 ## 454 - REJEIÇÃO
 
-> Rejeição: Ano de inutilização não pode ser inferior a 2006
+### 454 - Rejeição: Ano de inutilização não pode ser inferior a 2006
 
-> 
+> Correção : **
 
 ## 455 - REJEIÇÃO
 
-> Rejeição: Órgão Autor do evento diferente da UF da Chave de Acesso
+### 455 - Rejeição: Órgão Autor do evento diferente da UF da Chave de Acesso
 
-> 
+> Correção : **
 
 ## 461 - REJEIÇÃO
 
-> Rejeição: Informado percentual de Gás Natural na mistura para produto diferente de GLP
+### 461 - Rejeição: Informado percentual de Gás Natural na mistura para produto diferente de GLP
 
-> 
+> Correção : **
 
 ## 462 - REJEIÇÃO
 
-> Código Identificador do CSC no QR-Code não cadastrado na SEFAZ
+### 462 - Código Identificador do CSC no QR-Code não cadastrado na SEFAZ
 
-> 
+> Correção : **
 
 ## 463 - REJEIÇÃO
 
-> Código Identificador do CSC no QR-Code foi revogado pela empresa
+### 463 - Código Identificador do CSC no QR-Code foi revogado pela empresa
 
-> 
+> Correção : **
 
 ## 464 - REJEIÇÃO
 
-> Código de Hash no QR-Code difere do calculado
+### 464 - Código de Hash no QR-Code difere do calculado
 
-> 
+> Correção : **
 
 ## 465 - REJEIÇÃO
 
-> Rejeição: Número de Controle da FCI inexistente
+### 465 - Rejeição: Número de Controle da FCI inexistente
 
-> 
+> Correção : **
 
 ## 466 - REJEIÇÃO
 
-> Rejeição: Evento com Tipo de Autor incompatível
+### 466 - Rejeição: Evento com Tipo de Autor incompatível
 
-> 
+> Correção : **
 
 ## 467 - REJEIÇÃO
 
-> Rejeição: Dados da NF-e divergentes do EPEC
+### 467 - Rejeição: Dados da NF-e divergentes do EPEC
 
-> 
+> Correção : **
 
 ## 468 - REJEIÇÃO
 
-> Rejeição: NF-e com Tipo Emissão = 4, sem EPEC correspondente
+### 468 - Rejeição: NF-e com Tipo Emissão = 4, sem EPEC correspondente
 
-> 
+> Correção : **
 
 ## 471 - REJEIÇÃO
 
-> Rejeição: Informado NCM=00 indevidamente
+### 471 - Rejeição: Informado NCM=00 indevidamente
 
-> 
+> Correção : **
 
 ## 476 - REJEIÇÃO
 
-> Rejeição: Código da UF diverge da UF da primeira NF-e do Lote
+### 476 - Rejeição: Código da UF diverge da UF da primeira NF-e do Lote
 
-> 
+> Correção : **
 
 ## 477 - REJEIÇÃO
 
-> Rejeição: Código do órgão diverge do órgão do primeiro evento do Lote
+### 477 - Rejeição: Código do órgão diverge do órgão do primeiro evento do Lote
 
-> 
+> Correção : **
 
 ## 478 - REJEIÇÃO
 
-> Rejeição: Local da entrega não informado para faturamento direto de veículos novos
+### 478 - Rejeição: Local da entrega não informado para faturamento direto de veículos novos
 
-> 
+> Correção : **
 
 ## 479 - REJEIÇÃO
 
-> Emissor em situação irregular perante o fisco
+### 479 - Emissor em situação irregular perante o fisco
 
-> 
+> Correção : **
 
 ## 480 - REJEIÇÃO
 
-> CNPJ da Chave de acesso da NF-e informada diverge do CNPJ do emitente
+### 480 - CNPJ da Chave de acesso da NF-e informada diverge do CNPJ do emitente
 
-> 
+> Correção : **
 
 ## 481 - REJEIÇÃO
 
-> UF da Chave de acesso diverge do código da UF informada
+### 481 - UF da Chave de acesso diverge do código da UF informada
 
-> 
+> Correção : **
 
 ## 482 - REJEIÇÃO
 
-> AA da Chave de acesso inválida
+### 482 - AA da Chave de acesso inválida
 
-> 
+> Correção : **
 
 ## 483 - REJEIÇÃO
 
-> MM da chave de acesso inválido
+### 483 - MM da chave de acesso inválido
 
-> 
+> Correção : **
 
 ## 484 - REJEIÇÃO
 
-> Rejeição: Chave de Acesso com tipo de emissão diferente de 4 (posição 35 da Chave de Acesso)
+### 484 - Rejeição: Chave de Acesso com tipo de emissão diferente de 4 (posição 35 da Chave de Acesso)
 
-> 
+> Correção : **
 
 ## 485 - REJEIÇÃO
 
-> Rejeição: Duplicidade de numeração do EPEC (Modelo, CNPJ, Série e Número)
+### 485 - Rejeição: Duplicidade de numeração do EPEC (Modelo, CNPJ, Série e Número)
 
-> 
+> Correção : **
 
 ## 486 - REJEIÇÃO
 
-> DPEC não localizada para o número de registro de DPEC informado
+### 486 - DPEC não localizada para o número de registro de DPEC informado
 
-> 
+> Correção : **
 
 ## 487 - REJEIÇÃO
 
-> Nenhuma DPEC localizada para a chave de acesso informada
+### 487 - Nenhuma DPEC localizada para a chave de acesso informada
 
-> 
+> Correção : **
 
 ## 488 - REJEIÇÃO
 
-> Requisitante de Consulta não tem o mesmo CNPJ base do emissor da DPEC
+### 488 - Requisitante de Consulta não tem o mesmo CNPJ base do emissor da DPEC
 
-> 
+> Correção : **
 
 ## 489 - REJEIÇÃO
 
-> Rejeição: CNPJ informado inválido (DV ou zeros)
+### 489 - Rejeição: CNPJ informado inválido (DV ou zeros)
 
-> 
+> Correção : **
 
 ## 490 - REJEIÇÃO
 
-> Rejeição: CPF informado inválido (DV ou zeros)
+### 490 - Rejeição: CPF informado inválido (DV ou zeros)
 
-> 
+> Correção : **
 
 ## 491 - REJEIÇÃO
 
-> Rejeição: O tpEvento informado inválido
+### 491 - Rejeição: O tpEvento informado inválido
 
-> 
+> Correção : **
 
 ## 492 - REJEIÇÃO
 
-> Rejeição: O verEvento informado inválido
+### 492 - Rejeição: O verEvento informado inválido
 
-> 
+> Correção : **
 
 ## 493 - REJEIÇÃO
 
-> Rejeição: Evento não atende o Schema XML específico
+### 493 - Rejeição: Evento não atende o Schema XML específico
 
-> 
+> Correção : **
 
 ## 494 - REJEIÇÃO
 
-> Rejeição: Chave de Acesso inexistente
+### 494 - Rejeição: Chave de Acesso inexistente
 
-> 
+> Correção : **
 
 ## 496 - REJEIÇÃO
 
-> Não informado o tipo de integração no pagamento com cartão de crédito / débito
+### 496 - Não informado o tipo de integração no pagamento com cartão de crédito / débito
 
-> 
+> Correção : **
 
 ## 501 - REJEIÇÃO
 
-> Rejeição: Pedido de Cancelamento intempestivo (NF-e autorizada a mais de 7 dias)
+### 501 - Rejeição: Pedido de Cancelamento intempestivo (NF-e autorizada a mais de 7 dias)
 
-> 
+> Correção : **
 
 ## 502 - REJEIÇÃO
 
-> Rejeição: Erro na Chave de Acesso - Campo Id não corresponde à concatenação dos campos correspondentes
+### 502 - Rejeição: Erro na Chave de Acesso - Campo Id não corresponde à concatenação dos campos correspondentes
 
-> 
+> Correção : **
 
 ## 503 - REJEIÇÃO
 
-> Rejeição: Série utilizada fora da faixa permitida no SCAN (900-999)
+### 503 - Rejeição: Série utilizada fora da faixa permitida no SCAN (900-999)
 
-> 
+> Correção : **
 
 ## 504 - REJEIÇÃO
 
-> Rejeição: Data de Entrada/Saída posterior ao permitido
+### 504 - Rejeição: Data de Entrada/Saída posterior ao permitido
 
-> 
+> Correção : **
 
 ## 505 - REJEIÇÃO
 
-> Rejeição: Data de Entrada/Saída anterior ao permitido
+### 505 - Rejeição: Data de Entrada/Saída anterior ao permitido
 
-> 
+> Correção : **
 
 ## 506 - REJEIÇÃO
 
-> Rejeição: Data de Saída menor que a Data de Emissão
+### 506 - Rejeição: Data de Saída menor que a Data de Emissão
 
-> 
+> Correção : **
 
 ## 507 - REJEIÇÃO
 
-> Rejeição: O CNPJ do destinatário/remetente não deve ser informado em operação com o exterior
+### 507 - Rejeição: O CNPJ do destinatário/remetente não deve ser informado em operação com o exterior
 
-> 
+> Correção : **
 
 ## 508 - REJEIÇÃO
 
-> Rejeição: CNPJ do destinatário com conteúdo nulo só é válido em operação com exterior
+### 508 - Rejeição: CNPJ do destinatário com conteúdo nulo só é válido em operação com exterior
 
-> 
+> Correção : **
 
 ## 509 - REJEIÇÃO
 
-> Rejeição: Informado código de município diferente de “9999999” para operação com o exterior
+### 509 - Rejeição: Informado código de município diferente de “9999999” para operação com o exterior
 
-> 
+> Correção : **
 
 ## 510 - REJEIÇÃO
 
-> Rejeição: Operação com Exterior e Código País destinatário é 1058 (Brasil) ou não informado
+### 510 - Rejeição: Operação com Exterior e Código País destinatário é 1058 (Brasil) ou não informado
 
-> 
+> Correção : **
 
 ## 511 - REJEIÇÃO
 
-> Rejeição: Não é de Operação com Exterior e Código País destinatário difere de 1058 (Brasil)
+### 511 - Rejeição: Não é de Operação com Exterior e Código País destinatário difere de 1058 (Brasil)
 
-> 
+> Correção : **
 
 ## 512 - REJEIÇÃO
 
-> Rejeição: CNPJ do Local de Retirada inválido
+### 512 - Rejeição: CNPJ do Local de Retirada inválido
 
-> 
+> Correção : **
 
 ## 513 - REJEIÇÃO
 
-> Rejeição: Código Município do Local de Retirada deve ser 9999999 para UF retirada = EX
+### 513 - Rejeição: Código Município do Local de Retirada deve ser 9999999 para UF retirada = EX
 
-> 
+> Correção : **
 
 ## 514 - REJEIÇÃO
 
-> Rejeição: CNPJ do Local de Entrega inválido
+### 514 - Rejeição: CNPJ do Local de Entrega inválido
 
-> 
+> Correção : **
 
 ## 515 - REJEIÇÃO
 
-> Rejeição: Código Município do Local de Entrega deve ser 9999999 para UF entrega = EX
+### 515 - Rejeição: Código Município do Local de Entrega deve ser 9999999 para UF entrega = EX
 
-> 
+> Correção : **
 
 ## 516 - REJEIÇÃO
 
-> Rejeição: Falha no schema XML – inexiste a tag raiz esperada para a mensagem
+### 516 - Rejeição: Falha no schema XML – inexiste a tag raiz esperada para a mensagem
 
-> 
+> Correção : **
 
 ## 517 - REJEIÇÃO
 
-> Rejeição: Falha no schema XML – inexiste atributo versao na tag raiz da mensagem
+### 517 - Rejeição: Falha no schema XML – inexiste atributo versao na tag raiz da mensagem
 
-> 
+> Correção : **
 
 ## 518 - REJEIÇÃO
 
-> Rejeição: CFOP de entrada para NF-e de saída
+### 518 - Rejeição: CFOP de entrada para NF-e de saída
 
-> 
+> Correção : **
 
 ## 519 - REJEIÇÃO
 
-> Rejeição: CFOP de saída para NF-e de entrada
+### 519 - Rejeição: CFOP de saída para NF-e de entrada
 
-> 
+> Correção : **
 
 ## 520 - REJEIÇÃO
 
-> Rejeição: CFOP de Operação com Exterior e UF destinatário difere de EX
+### 520 - Rejeição: CFOP de Operação com Exterior e UF destinatário difere de EX
 
-> 
+> Correção : **
 
 ## 521 - REJEIÇÃO
 
-> Rejeição: CFOP de Operação Estadual e UF do emitente difere da UF do destinatário para destinatário contribuinte do ICMS.
+### 521 - Rejeição: CFOP de Operação Estadual e UF do emitente difere da UF do destinatário para destinatário contribuinte do ICMS.
 
-> 
+> Correção : **
 
 ## 522 - REJEIÇÃO
 
-> Rejeição: CFOP de Operação Estadual e UF emitente difere da UF remetente para remetente contribuinte do ICMS.
+### 522 - Rejeição: CFOP de Operação Estadual e UF emitente difere da UF remetente para remetente contribuinte do ICMS.
 
-> 
+> Correção : **
 
 ## 523 - REJEIÇÃO
 
-> Rejeição: CFOP não é de Operação Estadual e UF emitente igual a UF destinatário.
+### 523 - Rejeição: CFOP não é de Operação Estadual e UF emitente igual a UF destinatário.
 
-> 
+> Correção : **
 
 ## 524 - REJEIÇÃO
 
-> Rejeição: CFOP de Operação com Exterior e não informado NCM
+### 524 - Rejeição: CFOP de Operação com Exterior e não informado NCM
 
-> 
+> Correção : **
 
 ## 525 - REJEIÇÃO
 
-> Rejeição: CFOP de Importação e não informado dados da DI
+### 525 - Rejeição: CFOP de Importação e não informado dados da DI
 
-> 
+> Correção : **
 
 ## 526 - REJEIÇÃO
 
-> Ano-Mes da Chave de Acesso com atraso superior a 6 meses em relacao ao Ano-Mes atual
+### 526 - Ano-Mes da Chave de Acesso com atraso superior a 6 meses em relacao ao Ano-Mes atual
 
-> 
+> Correção : **
 
 ## 527 - REJEIÇÃO
 
-> Rejeição: Operação de Exportação com informação de ICMS incompatível
+### 527 - Rejeição: Operação de Exportação com informação de ICMS incompatível
 
-> 
+> Correção : **
 
 ## 528 - REJEIÇÃO
 
-> Rejeição: Valor do ICMS difere do produto BC e Alíquota
+### 528 - Rejeição: Valor do ICMS difere do produto BC e Alíquota
 
-> 
+> Correção : **
 
 ## 529 - REJEIÇÃO
 
-> Rejeição: NCM de informação obrigatória para produto tributado pelo IPI
+### 529 - Rejeição: NCM de informação obrigatória para produto tributado pelo IPI
 
-> 
+> Correção : **
 
 ## 530 - REJEIÇÃO
 
-> Rejeição: Operação com tributação de ISSQN sem informar a Inscrição Municipal
+### 530 - Rejeição: Operação com tributação de ISSQN sem informar a Inscrição Municipal
 
-> 
+> Correção : **
 
 ## 531 - REJEIÇÃO
 
-> Rejeição: Total da BC ICMS difere do somatório dos itens
+### 531 - Rejeição: Total da BC ICMS difere do somatório dos itens
 
-> 
+> Correção : **
 
 ## 532 - REJEIÇÃO
 
-> Rejeição: Total do ICMS difere do somatório dos itens
+### 532 - Rejeição: Total do ICMS difere do somatório dos itens
 
-> 
+> Correção : **
 
 ## 533 - REJEIÇÃO
 
-> Rejeição: Total da BC ICMS-ST difere do somatório dos itens
+### 533 - Rejeição: Total da BC ICMS-ST difere do somatório dos itens
 
-> 
+> Correção : **
 
 ## 534 - REJEIÇÃO
 
-> Rejeição: Total do ICMS-ST difere do somatório dos itens
+### 534 - Rejeição: Total do ICMS-ST difere do somatório dos itens
 
-> 
+> Correção : **
 
 ## 535 - REJEIÇÃO
 
-> Rejeição: Total do Frete difere do somatório dos itens
+### 535 - Rejeição: Total do Frete difere do somatório dos itens
 
-> 
+> Correção : **
 
 ## 536 - REJEIÇÃO
 
-> Rejeição: Total do Seguro difere do somatório dos itens
+### 536 - Rejeição: Total do Seguro difere do somatório dos itens
 
-> 
+> Correção : **
 
 ## 537 - REJEIÇÃO
 
-> Rejeição: Total do Desconto difere do somatório dos itens
+### 537 - Rejeição: Total do Desconto difere do somatório dos itens
 
-> 
+> Correção : **
 
 ## 538 - REJEIÇÃO
 
-> Rejeição: Total do IPI difere do somatório dos itens
+### 538 - Rejeição: Total do IPI difere do somatório dos itens
 
-> 
+> Correção : **
 
 ## 539 - REJEIÇÃO
 
-> Duplicidade de NF-e com diferença na Chave de Acesso [chNFe: 99999999999999999999999999999999999999999999][nRec:999999999999999]
+### 539 - Duplicidade de NF-e com diferença na Chave de Acesso [chNFe: 99999999999999999999999999999999999999999999][nRec:999999999999999]
 
-> 
+> Correção : **
 
 ## 540 - REJEIÇÃO
 
-> Rejeição: CPF do Local de Retirada inválido
+### 540 - Rejeição: CPF do Local de Retirada inválido
 
-> 
+> Correção : **
 
 ## 541 - REJEIÇÃO
 
-> Rejeição: CPF do Local de Entrega inválido
+### 541 - Rejeição: CPF do Local de Entrega inválido
 
-> 
+> Correção : **
 
 ## 542 - REJEIÇÃO
 
-> Rejeição: CNPJ do Transportador inválido
+### 542 - Rejeição: CNPJ do Transportador inválido
 
-> 
+> Correção : **
 
 ## 543 - REJEIÇÃO
 
-> Rejeição: CPF do Transportador inválido
+### 543 - Rejeição: CPF do Transportador inválido
 
-> 
+> Correção : **
 
 ## 544 - REJEIÇÃO
 
-> Rejeição: IE do Transportador inválida
+### 544 - Rejeição: IE do Transportador inválida
 
-> 
+> Correção : **
 
 ## 545 - REJEIÇÃO
 
-> Rejeição: Falha no schema XML – versão informada na versaoDados do SOAPHeader diverge da versão da mensagem
+### 545 - Rejeição: Falha no schema XML – versão informada na versaoDados do SOAPHeader diverge da versão da mensagem
 
-> 
+> Correção : **
 
 ## 546 - REJEIÇÃO
 
-> Rejeição: Erro na Chave de Acesso – Campo Id – falta a literal NFe
+### 546 - Rejeição: Erro na Chave de Acesso – Campo Id – falta a literal NFe
 
-> 
+> Correção : **
 
 ## 547 - REJEIÇÃO
 
-> Rejeição: Dígito Verificador da Chave de Acesso da NF-e Referenciada inválido
+### 547 - Rejeição: Dígito Verificador da Chave de Acesso da NF-e Referenciada inválido
 
-> 
+> Correção : **
 
 ## 548 - REJEIÇÃO
 
-> Rejeição: CNPJ da NF referenciada inválido.
+### 548 - Rejeição: CNPJ da NF referenciada inválido.
 
-> 
+> Correção : **
 
 ## 549 - REJEIÇÃO
 
-> Rejeição: CNPJ da NF referenciada de produtor inválido.
+### 549 - Rejeição: CNPJ da NF referenciada de produtor inválido.
 
-> 
+> Correção : **
 
 ## 550 - REJEIÇÃO
 
-> Rejeição: CPF da NF referenciada de produtor inválido.
+### 550 - Rejeição: CPF da NF referenciada de produtor inválido.
 
-> 
+> Correção : **
 
 ## 551 - REJEIÇÃO
 
-> Rejeição: IE da NF referenciada de produtor inválido.
+### 551 - Rejeição: IE da NF referenciada de produtor inválido.
 
-> 
+> Correção : **
 
 ## 552 - REJEIÇÃO
 
-> Rejeição: Dígito Verificador da Chave de Acesso do CT-e Referenciado inválido
+### 552 - Rejeição: Dígito Verificador da Chave de Acesso do CT-e Referenciado inválido
 
-> 
+> Correção : **
 
 ## 553 - REJEIÇÃO
 
-> Rejeição: Tipo autorizador do recibo diverge do Órgão Autorizador.
+### 553 - Rejeição: Tipo autorizador do recibo diverge do Órgão Autorizador.
 
-> 
+> Correção : **
 
 ## 554 - REJEIÇÃO
 
-> Rejeição: Série difere da faixa 0-899
+### 554 - Rejeição: Série difere da faixa 0-899
 
-> 
+> Correção : **
 
 ## 555 - REJEIÇÃO
 
-> Rejeição: Tipo autorizador do protocolo diverge do Órgão Autorizador.
+### 555 - Rejeição: Tipo autorizador do protocolo diverge do Órgão Autorizador.
 
-> 
+> Correção : **
 
 ## 556 - REJEIÇÃO
 
-> Rejeição: Justificativa de entrada em contingência não deve ser informada para tipo de emissão normal
+### 556 - Rejeição: Justificativa de entrada em contingência não deve ser informada para tipo de emissão normal
 
-> 
+> Correção : **
 
 ## 557 - REJEIÇÃO
 
-> Rejeição: A Justificativa de entrada em contingência deve ser informada.
+### 557 - Rejeição: A Justificativa de entrada em contingência deve ser informada.
 
-> 
+> Correção : **
 
 ## 558 - REJEIÇÃO
 
-> Rejeição: Data de entrada em contingência posterior a data de recebimento.
+### 558 - Rejeição: Data de entrada em contingência posterior a data de recebimento.
 
-> 
+> Correção : **
 
 ## 559 - REJEIÇÃO
 
-> Rejeição: UF do Transportador não informada
+### 559 - Rejeição: UF do Transportador não informada
 
-> 
+> Correção : **
 
 ## 560 - REJEIÇÃO
 
-> Rejeição: CNPJ base do emitente difere do CNPJ base da primeira NF-e do lote recebido
+### 560 - Rejeição: CNPJ base do emitente difere do CNPJ base da primeira NF-e do lote recebido
 
-> 
+> Correção : **
 
 ## 561 - REJEIÇÃO
 
-> Rejeição: Mês de Emissão informado na Chave de Acesso difere do Mês de Emissão da NF-e
+### 561 - Rejeição: Mês de Emissão informado na Chave de Acesso difere do Mês de Emissão da NF-e
 
-> 
+> Correção : **
 
 ## 562 - REJEIÇÃO
 
-> Rejeição: Código Numérico informado na Chave de Acesso difere do Código Numérico da NF-e [chNFe:99999999999999999999999999999999999999999999]
+### 562 - Rejeição: Código Numérico informado na Chave de Acesso difere do Código Numérico da NF-e [chNFe:99999999999999999999999999999999999999999999]
 
-> 
+> Correção : **
 
 ## 563 - REJEIÇÃO
 
-> Rejeição: Já existe pedido de Inutilização com a mesma faixa de inutilização
+### 563 - Rejeição: Já existe pedido de Inutilização com a mesma faixa de inutilização
 
-> 
+> Correção : **
 
 ## 564 - REJEIÇÃO
 
-> Rejeição: Total do Produto / Serviço difere do somatório dos itens
+### 564 - Rejeição: Total do Produto / Serviço difere do somatório dos itens
 
-> 
+> Correção : **
 
 ## 565 - REJEIÇÃO
 
-> Rejeição: Falha no schema XML – inexiste a tag raiz esperada para o lote de NF-e
+### 565 - Rejeição: Falha no schema XML – inexiste a tag raiz esperada para o lote de NF-e
 
-> 
+> Correção : **
 
 ## 567 - REJEIÇÃO
 
-> Rejeição: Falha no schema XML – versão informada na versaoDados do SOAPHeader diverge da versão do lote de NF-e
+### 567 - Rejeição: Falha no schema XML – versão informada na versaoDados do SOAPHeader diverge da versão do lote de NF-e
 
-> 
+> Correção : **
 
 ## 568 - REJEIÇÃO
 
-> Rejeição: Falha no schema XML – inexiste atributo versao na tag raiz do lote de NF-e
+### 568 - Rejeição: Falha no schema XML – inexiste atributo versao na tag raiz do lote de NF-e
 
-> 
+> Correção : **
 
 ## 569 - REJEIÇÃO
 
-> Rejeição: Data de entrada em contingência muito atrasada
+### 569 - Rejeição: Data de entrada em contingência muito atrasada
 
-> 
+> Correção : **
 
 ## 570 - REJEIÇÃO
 
-> Rejeição: Tipo de Emissão 3, 6 ou 7 só é válido nas contingências SCAN/SVC
+### 570 - Rejeição: Tipo de Emissão 3, 6 ou 7 só é válido nas contingências SCAN/SVC
 
-> 
+> Correção : **
 
 ## 571 - REJEIÇÃO
 
-> Rejeição: O tpEmis informado diferente de 3 para contingência SCAN
+### 571 - Rejeição: O tpEmis informado diferente de 3 para contingência SCAN
 
-> 
+> Correção : **
 
 ## 572 - REJEIÇÃO
 
-> Rejeição: Erro Atributo ID do evento não corresponde a concatenação dos campos (“ID” + tpEvento + chNFe + nSeqEvento)
+### 572 - Rejeição: Erro Atributo ID do evento não corresponde a concatenação dos campos (“ID” + tpEvento + chNFe + nSeqEvento)
 
-> 
+> Correção : **
 
 ## 573 - REJEIÇÃO
 
-> Rejeição: Duplicidade de Evento
+### 573 - Rejeição: Duplicidade de Evento
 
-> 
+> Correção : **
 
 ## 574 - REJEIÇÃO
 
-> Rejeição: O autor do evento diverge do emissor da NF-e
+### 574 - Rejeição: O autor do evento diverge do emissor da NF-e
 
-> 
+> Correção : **
 
 ## 575 - REJEIÇÃO
 
-> Rejeição: O autor do evento diverge do destinatário da NF-e
+### 575 - Rejeição: O autor do evento diverge do destinatário da NF-e
 
-> 
+> Correção : **
 
 ## 576 - REJEIÇÃO
 
-> Rejeição: O autor do evento não é um órgão autorizado a gerar o evento
+### 576 - Rejeição: O autor do evento não é um órgão autorizado a gerar o evento
 
-> 
+> Correção : **
 
 ## 577 - REJEIÇÃO
 
-> Rejeição: A data do evento não pode ser menor que a data de emissão da NF-e
+### 577 - Rejeição: A data do evento não pode ser menor que a data de emissão da NF-e
 
-> 
+> Correção : **
 
 ## 578 - REJEIÇÃO
 
-> Rejeição: A data do evento não pode ser maior que a data do processamento
+### 578 - Rejeição: A data do evento não pode ser maior que a data do processamento
 
-> 
+> Correção : **
 
 ## 579 - REJEIÇÃO
 
-> Rejeição: A data do evento não pode ser menor que a data de autorização para NF-e não emitida em contingência
+### 579 - Rejeição: A data do evento não pode ser menor que a data de autorização para NF-e não emitida em contingência
 
-> 
+> Correção : **
 
 ## 580 - REJEIÇÃO
 
-> Rejeição: O evento exige uma NF-e autorizada
+### 580 - Rejeição: O evento exige uma NF-e autorizada
 
-> 
+> Correção : **
 
 ## 587 - REJEIÇÃO
 
-> Rejeição: Usar somente o namespace padrão da NF-e
+### 587 - Rejeição: Usar somente o namespace padrão da NF-e
 
-> 
+> Correção : **
 
 ## 588 - REJEIÇÃO
 
-> Rejeição: Não é permitida a presença de caracteres de edição no início/fim da mensagem ou entre as tags da mensagem
+### 588 - Rejeição: Não é permitida a presença de caracteres de edição no início/fim da mensagem ou entre as tags da mensagem
 
-> 
+> Correção : **
 
 ## 589 - REJEIÇÃO
 
-> Rejeição: Número do NSU informado superior ao maior NSU da base de dados da SEFAZ
+### 589 - Rejeição: Número do NSU informado superior ao maior NSU da base de dados da SEFAZ
 
-> 
+> Correção : **
 
 ## 590 - REJEIÇÃO
 
-> Rejeição: Informado CST para emissor do Simples Nacional (CRT=1)
+### 590 - Rejeição: Informado CST para emissor do Simples Nacional (CRT=1)
 
-> 
+> Correção : **
 
 ## 591 - REJEIÇÃO
 
-> Rejeição: Informado CSOSN para emissor que não é do Simples Nacional (CRT diferente de 1)
+### 591 - Rejeição: Informado CSOSN para emissor que não é do Simples Nacional (CRT diferente de 1)
 
-> 
+> Correção : **
 
 ## 592 - REJEIÇÃO
 
-> Rejeição: A NF-e deve ter pelo menos um item de produto sujeito ao ICMS
+### 592 - Rejeição: A NF-e deve ter pelo menos um item de produto sujeito ao ICMS
 
-> 
+> Correção : **
 
 ## 593 - REJEIÇÃO
 
-> Rejeição: CNPJ-Base consultado difere do CNPJ-Base do Certificado Digital
+### 593 - Rejeição: CNPJ-Base consultado difere do CNPJ-Base do Certificado Digital
 
-> 
+> Correção : **
 
 ## 594 - REJEIÇÃO
 
-> Rejeição: O número de sequencia do evento informado é maior que o permitido
+### 594 - Rejeição: O número de sequencia do evento informado é maior que o permitido
 
-> 
+> Correção : **
 
 ## 595 - REJEIÇÃO
 
-> Rejeição: Obrigatória a informação da justificativa do evento.
+### 595 - Rejeição: Obrigatória a informação da justificativa do evento.
 
-> 
+> Correção : **
 
 ## 596 - REJEIÇÃO
 
-> Rejeição: Evento apresentado fora do prazo: [prazo vigente]
+### 596 - Rejeição: Evento apresentado fora do prazo: [prazo vigente]
 
-> 
+> Correção : **
 
 ## 597 - REJEIÇÃO
 
-> Rejeição: CFOP de Importação e não informado dados de IPI
+### 597 - Rejeição: CFOP de Importação e não informado dados de IPI
 
-> 
+> Correção : **
 
 ## 598 - REJEIÇÃO
 
-> Rejeição: NF-e emitida em ambiente de homologação com Razão Social do destinatário diferente de NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL
+### 598 - Rejeição: NF-e emitida em ambiente de homologação com Razão Social do destinatário diferente de NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL
 
-> 
+> Correção : **
 
 ## 599 - REJEIÇÃO
 
-> Rejeição: CFOP de Importação e não informado dados de II
+### 599 - Rejeição: CFOP de Importação e não informado dados de II
 
-> 
+> Correção : **
 
 ## 600 - REJEIÇÃO
 
-> CSOSN incompativel na operacao com Nao Contribuinte
+### 600 - CSOSN incompativel na operacao com Nao Contribuinte
 
-> 
+> Correção : **
 
 ## 601 - REJEIÇÃO
 
-> Rejeição: Total do II difere do somatório dos itens
+### 601 - Rejeição: Total do II difere do somatório dos itens
 
-> 
+> Correção : **
 
 ## 602 - REJEIÇÃO
 
-> Rejeição: Total do PIS difere do somatório dos itens sujeitos ao ICMS
+### 602 - Rejeição: Total do PIS difere do somatório dos itens sujeitos ao ICMS
 
-> 
+> Correção : **
 
 ## 603 - REJEIÇÃO
 
-> Rejeição: Total do COFINS difere do somatório dos itens sujeitos ao ICMS
+### 603 - Rejeição: Total do COFINS difere do somatório dos itens sujeitos ao ICMS
 
-> 
+> Correção : **
 
 ## 604 - REJEIÇÃO
 
-> Rejeição: Total do vOutro difere do somatório dos itens
+### 604 - Rejeição: Total do vOutro difere do somatório dos itens
 
-> 
+> Correção : **
 
 ## 605 - REJEIÇÃO
 
-> Rejeição: Total do vISS difere do somatório do vProd dos itens sujeitos ao ISSQN
+### 605 - Rejeição: Total do vISS difere do somatório do vProd dos itens sujeitos ao ISSQN
 
-> 
+> Correção : **
 
 ## 606 - REJEIÇÃO
 
-> Rejeição: Total do vBC do ISS difere do somatório dos itens
+### 606 - Rejeição: Total do vBC do ISS difere do somatório dos itens
 
-> 
+> Correção : **
 
 ## 607 - REJEIÇÃO
 
-> Rejeição: Total do ISS difere do somatório dos itens
+### 607 - Rejeição: Total do ISS difere do somatório dos itens
 
-> 
+> Correção : **
 
 ## 608 - REJEIÇÃO
 
-> Rejeição: Total do PIS difere do somatório dos itens sujeitos ao ISSQN
+### 608 - Rejeição: Total do PIS difere do somatório dos itens sujeitos ao ISSQN
 
-> 
+> Correção : **
 
 ## 609 - REJEIÇÃO
 
-> Rejeição: Total do COFINS difere do somatório dos itens sujeitos ao ISSQN
+### 609 - Rejeição: Total do COFINS difere do somatório dos itens sujeitos ao ISSQN
 
-> 
+> Correção : **
 
 ## 610 - REJEIÇÃO
 
-> Rejeição: Total da NF difere do somatório dos Valores compõe o valor Total da NF.
+### 610 - Rejeição: Total da NF difere do somatório dos Valores compõe o valor Total da NF.
 
-> 
+> Correção : **
 
 ## 611 - REJEIÇÃO
 
-> Rejeição: cEAN inválido
+### 611 - Rejeição: cEAN inválido
 
-> 
+> Correção : **
 
 ## 612 - REJEIÇÃO
 
-> Rejeição: cEANTrib inválido
+### 612 - Rejeição: cEANTrib inválido
 
-> 
+> Correção : **
 
 ## 613 - REJEIÇÃO
 
-> Rejeição: Chave de Acesso difere da existente em BD
+### 613 - Rejeição: Chave de Acesso difere da existente em BD
 
-> 
+> Correção : **
 
 ## 614 - REJEIÇÃO
 
-> Rejeição: Chave de Acesso inválida (Código UF inválido)
+### 614 - Rejeição: Chave de Acesso inválida (Código UF inválido)
 
-> 
+> Correção : **
 
 ## 615 - REJEIÇÃO
 
-> Rejeição: Chave de Acesso inválida (Ano menor que 06 ou Ano maior que Ano corrente)
+### 615 - Rejeição: Chave de Acesso inválida (Ano menor que 06 ou Ano maior que Ano corrente)
 
-> 
+> Correção : **
 
 ## 616 - REJEIÇÃO
 
-> Rejeição: Chave de Acesso inválida (Mês menor que 1 ou Mês maior que 12)
+### 616 - Rejeição: Chave de Acesso inválida (Mês menor que 1 ou Mês maior que 12)
 
-> 
+> Correção : **
 
 ## 617 - REJEIÇÃO
 
-> Rejeição: Chave de Acesso inválida (CNPJ zerado ou dígito inválido)
+### 617 - Rejeição: Chave de Acesso inválida (CNPJ zerado ou dígito inválido)
 
-> 
+> Correção : **
 
 ## 618 - REJEIÇÃO
 
-> Rejeição: Chave de Acesso inválida (modelo diferente de 55 e 65)
+### 618 - Rejeição: Chave de Acesso inválida (modelo diferente de 55 e 65)
 
-> 
+> Correção : **
 
 ## 619 - REJEIÇÃO
 
-> Rejeição: Chave de Acesso inválida (número NF = 0)
+### 619 - Rejeição: Chave de Acesso inválida (número NF = 0)
 
-> 
+> Correção : **
 
 ## 620 - REJEIÇÃO
 
-> Rejeição: Chave de Acesso difere da existente em BD
+### 620 - Rejeição: Chave de Acesso difere da existente em BD
 
-> 
+> Correção : **
 
 ## 621 - REJEIÇÃO
 
-> Rejeição: CPF Emitente não cadastrado
+### 621 - Rejeição: CPF Emitente não cadastrado
 
-> 
+> Correção : **
 
 ## 622 - REJEIÇÃO
 
-> Rejeição: IE emitente não vinculada ao CPF
+### 622 - Rejeição: IE emitente não vinculada ao CPF
 
-> 
+> Correção : **
 
 ## 623 - REJEIÇÃO
 
-> Rejeição: CPF Destinatário não cadastrado
+### 623 - Rejeição: CPF Destinatário não cadastrado
 
-> 
+> Correção : **
 
 ## 624 - REJEIÇÃO
 
-> Rejeição: IE Destinatário não vinculada ao CPF
+### 624 - Rejeição: IE Destinatário não vinculada ao CPF
 
-> 
+> Correção : **
 
 ## 625 - REJEIÇÃO
 
-> Rejeição: Inscrição SUFRAMA deve ser informada na venda com isenção para ZFM
+### 625 - Rejeição: Inscrição SUFRAMA deve ser informada na venda com isenção para ZFM
 
-> 
+> Correção : **
 
 ## 626 - REJEIÇÃO
 
-> Rejeição: CFOP de operação isenta para ZFM diferente do previsto
+### 626 - Rejeição: CFOP de operação isenta para ZFM diferente do previsto
 
-> 
+> Correção : **
 
 ## 627 - REJEIÇÃO
 
-> Rejeição: O valor do ICMS desonerado deve ser informado
+### 627 - Rejeição: O valor do ICMS desonerado deve ser informado
 
-> 
+> Correção : **
 
 ## 628 - REJEIÇÃO
 
-> Rejeição: Total da NF superior ao valor limite estabelecido pela SEFAZ [Limite]
+### 628 - Rejeição: Total da NF superior ao valor limite estabelecido pela SEFAZ [Limite]
 
-> 
+> Correção : **
 
 ## 629 - REJEIÇÃO
 
-> Rejeição: Valor do Produto difere do produto Valor Unitário de Comercialização e Quantidade Comercial
+### 629 - Rejeição: Valor do Produto difere do produto Valor Unitário de Comercialização e Quantidade Comercial
 
-> 
+> Correção : **
 
 ## 630 - REJEIÇÃO
 
-> Rejeição: Valor do Produto difere do produto Valor Unitário de Tributação e Quantidade Tributável
+### 630 - Rejeição: Valor do Produto difere do produto Valor Unitário de Tributação e Quantidade Tributável
 
-> 
+> Correção : **
 
 ## 631 - REJEIÇÃO
 
-> Rejeição: CNPJ-Base do Destinatário difere do CNPJ-Base do Certificado Digital
+### 631 - Rejeição: CNPJ-Base do Destinatário difere do CNPJ-Base do Certificado Digital
 
-> 
+> Correção : **
 
 ## 632 - REJEIÇÃO
 
-> Rejeição: Solicitação fora de prazo, a NF-e não está mais disponível para download
+### 632 - Rejeição: Solicitação fora de prazo, a NF-e não está mais disponível para download
 
-> 
+> Correção : **
 
 ## 633 - REJEIÇÃO
 
-> Rejeição: NF-e indisponível para download devido a ausência de Manifestação do Destinatário
+### 633 - Rejeição: NF-e indisponível para download devido a ausência de Manifestação do Destinatário
 
-> 
+> Correção : **
 
 ## 634 - REJEIÇÃO
 
-> Rejeição: Destinatário da NF-e não tem o mesmo CNPJ raiz do solicitante do download
+### 634 - Rejeição: Destinatário da NF-e não tem o mesmo CNPJ raiz do solicitante do download
 
-> 
+> Correção : **
 
 ## 635 - REJEIÇÃO
 
-> Rejeição: NF-e com mesmo número e série já transmitida e aguardando processamento
+### 635 - Rejeição: NF-e com mesmo número e série já transmitida e aguardando processamento
 
-> 
+> Correção : **
 
 ## 650 - REJEIÇÃO
 
-> Rejeição: Evento de "Ciência da Emissão" para NF-e Cancelada ou Denegada
+### 650 - Rejeição: Evento de "Ciência da Emissão" para NF-e Cancelada ou Denegada
 
-> 
+> Correção : **
 
 ## 651 - REJEIÇÃO
 
-> Rejeição: Evento de "Desconhecimento da Operação" para NF-e Cancelada ou Denegada
+### 651 - Rejeição: Evento de "Desconhecimento da Operação" para NF-e Cancelada ou Denegada
 
-> 
+> Correção : **
 
 ## 653 - REJEIÇÃO
 
-> Rejeição: NF-e Cancelada, arquivo indisponível para download
+### 653 - Rejeição: NF-e Cancelada, arquivo indisponível para download
 
-> 
+> Correção : **
 
 ## 654 - REJEIÇÃO
 
-> Rejeição: NF-e Denegada, arquivo indisponível para download
+### 654 - Rejeição: NF-e Denegada, arquivo indisponível para download
 
-> 
+> Correção : **
 
 ## 655 - REJEIÇÃO
 
-> Rejeição: Evento de Ciência da Emissão informado após a manifestação final do destinatário
+### 655 - Rejeição: Evento de Ciência da Emissão informado após a manifestação final do destinatário
 
-> 
+> Correção : **
 
 ## 656 - REJEIÇÃO
 
-> Rejeição: Consumo Indevido
+### 656 - Rejeição: Consumo Indevido
 
-> 
+> Correção : **
 
 ## 657 - REJEIÇÃO
 
-> Rejeição: Código do Órgão diverge do órgão autorizador
+### 657 - Rejeição: Código do Órgão diverge do órgão autorizador
 
-> 
+> Correção : **
 
 ## 658 - REJEIÇÃO
 
-> Rejeição: UF do destinatário da Chave de Acesso diverge da UF autorizadora
+### 658 - Rejeição: UF do destinatário da Chave de Acesso diverge da UF autorizadora
 
-> 
+> Correção : **
 
 ## 660 - REJEIÇÃO
 
-> Rejeição: CFOP de Combustível e não informado grupo de combustível da NF-e
+### 660 - Rejeição: CFOP de Combustível e não informado grupo de combustível da NF-e
 
-> 
+> Correção : **
 
 ## 661 - REJEIÇÃO
 
-> Rejeição: NF-e já existente para o número do EPEC informado
+### 661 - Rejeição: NF-e já existente para o número do EPEC informado
 
-> 
+> Correção : **
 
 ## 662 - REJEIÇÃO
 
-> Rejeição: Numeração do EPEC está inutilizada na Base de Dados da SEFAZ
+### 662 - Rejeição: Numeração do EPEC está inutilizada na Base de Dados da SEFAZ
 
-> 
+> Correção : **
 
 ## 663 - REJEIÇÃO
 
-> Rejeição: Alíquota do ICMS com valor superior a 4 por cento na operação de saída interestadual com produtos importados
+### 663 - Rejeição: Alíquota do ICMS com valor superior a 4 por cento na operação de saída interestadual com produtos importados
 
-> 
+> Correção : **
 
 ## 678 - REJEIÇÃO
 
-> Rejeição: NF referenciada com UF diferente da NF-e complementar
+### 678 - Rejeição: NF referenciada com UF diferente da NF-e complementar
 
-> 
+> Correção : **
 
 ## 679 - REJEIÇÃO
 
-> Rejeição: Modelo da NF-e referenciada diferente de 55/65
+### 679 - Rejeição: Modelo da NF-e referenciada diferente de 55/65
 
-> 
+> Correção : **
 
 ## 680 - REJEIÇÃO
 
-> Rejeição: Duplicidade de NF-e referenciada (Chave de Acesso referenciada mais de uma vez)
+### 680 - Rejeição: Duplicidade de NF-e referenciada (Chave de Acesso referenciada mais de uma vez)
 
-> 
+> Correção : **
 
 ## 681 - REJEIÇÃO
 
-> Rejeição: Duplicidade de NF Modelo 1 referenciada (CNPJ, Modelo, Série e Número)
+### 681 - Rejeição: Duplicidade de NF Modelo 1 referenciada (CNPJ, Modelo, Série e Número)
 
-> 
+> Correção : **
 
 ## 682 - REJEIÇÃO
 
-> Rejeição: Duplicidade de NF de Produtor referenciada (IE, Modelo, Série e Número)
+### 682 - Rejeição: Duplicidade de NF de Produtor referenciada (IE, Modelo, Série e Número)
 
-> 
+> Correção : **
 
 ## 683 - REJEIÇÃO
 
-> Rejeição: Modelo do CT-e referenciado diferente de 57
+### 683 - Rejeição: Modelo do CT-e referenciado diferente de 57
 
-> 
+> Correção : **
 
 ## 684 - REJEIÇÃO
 
-> Rejeição: Duplicidade de Cupom Fiscal referenciado (Modelo, Número de Ordem e COO)
+### 684 - Rejeição: Duplicidade de Cupom Fiscal referenciado (Modelo, Número de Ordem e COO)
 
-> 
+> Correção : **
 
 ## 685 - REJEIÇÃO
 
-> Rejeição: Total do Valor Aproximado dos Tributos difere do somatório dos itens
+### 685 - Rejeição: Total do Valor Aproximado dos Tributos difere do somatório dos itens
 
-> 
+> Correção : **
 
 ## 686 - REJEIÇÃO
 
-> Rejeição: NF Complementar referencia uma NF-e cancelada
+### 686 - Rejeição: NF Complementar referencia uma NF-e cancelada
 
-> 
+> Correção : **
 
 ## 687 - REJEIÇÃO
 
-> Rejeição: NF Complementar referencia uma NF-e denegada
+### 687 - Rejeição: NF Complementar referencia uma NF-e denegada
 
-> 
+> Correção : **
 
 ## 688 - REJEIÇÃO
 
-> Rejeição: NF referenciada de Produtor com IE inexistente [nRef: xxx]
+### 688 - Rejeição: NF referenciada de Produtor com IE inexistente [nRef: xxx]
 
-> 
+> Correção : **
 
 ## 689 - REJEIÇÃO
 
-> Rejeição: NF referenciada de Produtor com IE não vinculada ao CNPJ/CPF informado [nRef: xxx]
+### 689 - Rejeição: NF referenciada de Produtor com IE não vinculada ao CNPJ/CPF informado [nRef: xxx]
 
-> 
+> Correção : **
 
 ## 690 - REJEIÇÃO
 
-> Rejeição: Pedido de Cancelamento para NF-e com CT-e
+### 690 - Rejeição: Pedido de Cancelamento para NF-e com CT-e
 
-> 
+> Correção : **
 
 ## 691 - REJEIÇÃO
 
-> Rejeição: Chave de Acesso da NF-e diverge da Chave de Acesso do EPEC
+### 691 - Rejeição: Chave de Acesso da NF-e diverge da Chave de Acesso do EPEC
 
-> 
+> Correção : **
 
 ## 692 - REJEIÇÃO
 
-> 692-Rejeição: Existe EPEC registrado para esta Série e Número [Chave EPEC: xxxxxxxxxxx]
+### 692 - 692-Rejeição: Existe EPEC registrado para esta Série e Número [Chave EPEC: xxxxxxxxxxx]
 
-> 
+> Correção : **
 
 ## 693 - REJEIÇÃO
 
-> Alíquota de ICMS superior a definida para a operação interestadual [nItem:999]
+### 693 - Alíquota de ICMS superior a definida para a operação interestadual [nItem:999]
 
-> 
+> Correção : **
 
 ## 694 - REJEIÇÃO
 
-> Peça orientação ao seu contador sobre a partilha de ICMS entre estados. No caso da operação ser com consumidor final (= 1 Sim), a UF do destinatário ser outra que a UF do emitente, e o tipo de contribuinte ser 9 - Não Contribuinte, que pode ou não possuir Inscrição Estadual no Cadastro de Contribuintes do ICMS, as informações de partilha de ICMS devem ser informadas no passo 3, como: pFCPUFDest, pICMSInter, pICMSInterPart, pICMSUFDest, vBCUFDest, vFCPUFDest, vICMSUFDest e vICMSUFRemet. Não informado o grupo de ICMS para a UF de destino [nItem:999]
+### 694 - Peça orientação ao seu contador sobre a partilha de ICMS entre estados. No caso da operação ser com consumidor final (= 1 Sim), a UF do destinatário ser outra que a UF do emitente, e o tipo de contribuinte ser 9 - Não Contribuinte, que pode ou não possuir Inscrição Estadual no Cadastro de Contribuintes do ICMS, as informações de partilha de ICMS devem ser informadas no passo 3, como: pFCPUFDest, pICMSInter, pICMSInterPart, pICMSUFDest, vBCUFDest, vFCPUFDest, vICMSUFDest e vICMSUFRemet. Não informado o grupo de ICMS para a UF de destino [nItem:999]
 
-> 
+> Correção : **
 
 ## 695 - REJEIÇÃO
 
->  Informado indevidamente o grupo de ICMS para a UF de destino [nItem:999]
+### 695 -  Informado indevidamente o grupo de ICMS para a UF de destino [nItem:999]
 
-> 
+> Correção : **
 
 ## 696 - REJEIÇÃO
 
-> No passo 1, mude "Consumidor Final" para "1 - Sim"Operacao com nao contribuinte deve indicar operacao com consumidor final
+### 696 - No passo 1, mude "Consumidor Final" para "1 - Sim"Operacao com nao contribuinte deve indicar operacao com consumidor final
 
-> 
+> Correção : **
 
 ## 697 - REJEIÇÃO
 
-> Alíquota interestadual do ICMS com origem diferente do previsto [nItem:999]
+### 697 - Alíquota interestadual do ICMS com origem diferente do previsto [nItem:999]
 
-> 
+> Correção : **
 
 ## 698 - REJEIÇÃO
 
-> Peça orientação ao seu contador sobre a partilha de ICMS entre estados. No caso da operação ser com consumidor final (= 1 Sim), a UF do destinatário ser outra que a UF do emitente, e o tipo de contribuinte ser 9 - Não Contribuinte, que pode ou não possuir Inscrição Estadual no Cadastro de Contribuintes do ICMS, as informações de partilha de ICMS devem ser informadas no passo 3, como: pFCPUFDest, pICMSInter, pICMSInterPart, pICMSUFDest, vBCUFDest, vFCPUFDest, vICMSUFDest e vICMSUFRemet. Alíquota interestadual do ICMS incompatível com as UF envolvidas na operação [nItem:999]
+### 698 - Peça orientação ao seu contador sobre a partilha de ICMS entre estados. No caso da operação ser com consumidor final (= 1 Sim), a UF do destinatário ser outra que a UF do emitente, e o tipo de contribuinte ser 9 - Não Contribuinte, que pode ou não possuir Inscrição Estadual no Cadastro de Contribuintes do ICMS, as informações de partilha de ICMS devem ser informadas no passo 3, como: pFCPUFDest, pICMSInter, pICMSInterPart, pICMSUFDest, vBCUFDest, vFCPUFDest, vICMSUFDest e vICMSUFRemet. Alíquota interestadual do ICMS incompatível com as UF envolvidas na operação [nItem:999]
 
-> 
+> Correção : **
 
 ## 699 - REJEIÇÃO
 
-> Percentual do ICMS Interestadual para a UF de destino difere do previsto para o ano da Data de Emissão [nItem:999]
+### 699 - Percentual do ICMS Interestadual para a UF de destino difere do previsto para o ano da Data de Emissão [nItem:999]
 
-> 
+> Correção : **
 
 ## 700 - REJEIÇÃO
 
-> Rejeição: Mensagem de Lote versão 3.xx. Enviar para o Web Service nfeAutorizacao
+### 700 - Rejeição: Mensagem de Lote versão 3.xx. Enviar para o Web Service nfeAutorizacao
 
-> 
+> Correção : **
 
 ## 701 - REJEIÇÃO
 
-> Rejeição: NF-e não pode utilizar a versão 3.00
+### 701 - Rejeição: NF-e não pode utilizar a versão 3.00
 
-> 
+> Correção : **
 
 ## 702 - REJEIÇÃO
 
-> Rejeição: NFC-e não é aceita pela UF do Emitente
+### 702 - Rejeição: NFC-e não é aceita pela UF do Emitente
 
-> 
+> Correção : **
 
 ## 703 - REJEIÇÃO
 
-> Rejeição: Data-Hora de Emissão posterior ao horário de recebimento
+### 703 - Rejeição: Data-Hora de Emissão posterior ao horário de recebimento
 
-> 
+> Correção : **
 
 ## 704 - REJEIÇÃO
 
-> Rejeição: NFC-e com Data-Hora de emissão atrasada
+### 704 - Rejeição: NFC-e com Data-Hora de emissão atrasada
 
-> 
+> Correção : **
 
 ## 705 - REJEIÇÃO
 
-> Rejeição: NFC-e com data de entrada/saída
+### 705 - Rejeição: NFC-e com data de entrada/saída
 
-> 
+> Correção : **
 
 ## 706 - REJEIÇÃO
 
-> Rejeição: NFC-e para operação de entrada
+### 706 - Rejeição: NFC-e para operação de entrada
 
-> 
+> Correção : **
 
 ## 707 - REJEIÇÃO
 
-> Rejeição: NFC-e para operação interestadual ou com o exterior
+### 707 - Rejeição: NFC-e para operação interestadual ou com o exterior
 
-> 
+> Correção : **
 
 ## 708 - REJEIÇÃO
 
-> Rejeição: NFC-e não pode referenciar documento fiscal
+### 708 - Rejeição: NFC-e não pode referenciar documento fiscal
 
-> 
+> Correção : **
 
 ## 709 - REJEIÇÃO
 
-> Rejeição: NFC-e com formato de DANFE inválido
+### 709 - Rejeição: NFC-e com formato de DANFE inválido
 
-> 
+> Correção : **
 
 ## 710 - REJEIÇÃO
 
-> Rejeição: NF-e com formato de DANFE inválido
+### 710 - Rejeição: NF-e com formato de DANFE inválido
 
-> 
+> Correção : **
 
 ## 711 - REJEIÇÃO
 
-> Rejeição: NF-e com contingência off-line
+### 711 - Rejeição: NF-e com contingência off-line
 
-> 
+> Correção : **
 
 ## 712 - REJEIÇÃO
 
-> Rejeição: NFC-e com contingência off-line para a UF
+### 712 - Rejeição: NFC-e com contingência off-line para a UF
 
-> 
+> Correção : **
 
 ## 713 - REJEIÇÃO
 
-> Rejeição: Tipo de Emissão diferente de 6 ou 7 para contingência da SVC acessada
+### 713 - Rejeição: Tipo de Emissão diferente de 6 ou 7 para contingência da SVC acessada
 
-> 
+> Correção : **
 
 ## 714 - REJEIÇÃO
 
-> Rejeição: NFC-e com contingência DPEC inexistente
+### 714 - Rejeição: NFC-e com contingência DPEC inexistente
 
-> 
+> Correção : **
 
 ## 715 - REJEIÇÃO
 
-> Rejeição: NFC-e com finalidade inválida
+### 715 - Rejeição: NFC-e com finalidade inválida
 
-> 
+> Correção : **
 
 ## 716 - REJEIÇÃO
 
-> Rejeição: NFC-e em operação não destinada a consumidor final
+### 716 - Rejeição: NFC-e em operação não destinada a consumidor final
 
-> 
+> Correção : **
 
 ## 717 - REJEIÇÃO
 
-> Rejeição: NFC-e em operação não presencial
+### 717 - Rejeição: NFC-e em operação não presencial
 
-> 
+> Correção : **
 
 ## 718 - REJEIÇÃO
 
-> Rejeição: NFC-e não deve informar IE de Substituto Tributário
+### 718 - Rejeição: NFC-e não deve informar IE de Substituto Tributário
 
-> 
+> Correção : **
 
 ## 719 - REJEIÇÃO
 
-> Rejeição: NF-e sem a identificação do destinatário
+### 719 - Rejeição: NF-e sem a identificação do destinatário
 
-> 
+> Correção : **
 
 ## 720 - REJEIÇÃO
 
-> Rejeição: Na operação com Exterior deve ser informada tag idEstrangeiro
+### 720 - Rejeição: Na operação com Exterior deve ser informada tag idEstrangeiro
 
-> 
+> Correção : **
 
 ## 721 - REJEIÇÃO
 
-> Rejeição: Operação interestadual deve informar CNPJ ou CPF.
+### 721 - Rejeição: Operação interestadual deve informar CNPJ ou CPF.
 
-> 
+> Correção : **
 
 ## 722 - REJEIÇÃO
 
-> Operação interna com idEstrangeiro informado deve ser presencial
+### 722 - Operação interna com idEstrangeiro informado deve ser presencial
 
-> 
+> Correção : **
 
 ## 723 - REJEIÇÃO
 
-> Rejeição: Operação interna com idEstrangeiro informado deve ser para consumidor final
+### 723 - Rejeição: Operação interna com idEstrangeiro informado deve ser para consumidor final
 
-> 
+> Correção : **
 
 ## 724 - REJEIÇÃO
 
-> Rejeição: NF-e sem o nome do destinatário
+### 724 - Rejeição: NF-e sem o nome do destinatário
 
-> 
+> Correção : **
 
 ## 725 - REJEIÇÃO
 
-> Rejeição: NFC-e com CFOP inválido
+### 725 - Rejeição: NFC-e com CFOP inválido
 
-> 
+> Correção : **
 
 ## 726 - REJEIÇÃO
 
-> Rejeição: NF-e sem a informação de endereço do destinatário
+### 726 - Rejeição: NF-e sem a informação de endereço do destinatário
 
-> 
+> Correção : **
 
 ## 727 - REJEIÇÃO
 
-> Rejeição: Operação com Exterior e UF diferente de EX
+### 727 - Rejeição: Operação com Exterior e UF diferente de EX
 
-> 
+> Correção : **
 
 ## 728 - REJEIÇÃO
 
-> Rejeição: NF-e sem informação da IE do destinatário
+### 728 - Rejeição: NF-e sem informação da IE do destinatário
 
-> 
+> Correção : **
 
 ## 729 - REJEIÇÃO
 
-> Rejeição: NFC-e com informação da IE do destinatário
+### 729 - Rejeição: NFC-e com informação da IE do destinatário
 
-> 
+> Correção : **
 
 ## 730 - REJEIÇÃO
 
-> Rejeição: NFC-e com Inscrição Suframa
+### 730 - Rejeição: NFC-e com Inscrição Suframa
 
-> 
+> Correção : **
 
 ## 731 - REJEIÇÃO
 
-> Rejeição: CFOP de operação com Exterior e idDest <> 3
+### 731 - Rejeição: CFOP de operação com Exterior e idDest <> 3
 
-> 
+> Correção : **
 
 ## 732 - REJEIÇÃO
 
-> Rejeição: CFOP de operação interestadual e idDest <> 2
+### 732 - Rejeição: CFOP de operação interestadual e idDest <> 2
 
-> 
+> Correção : **
 
 ## 733 - REJEIÇÃO
 
-> Rejeição: CFOP de operação interna e idDest <> 1
+### 733 - Rejeição: CFOP de operação interna e idDest <> 1
 
-> 
+> Correção : **
 
 ## 734 - REJEIÇÃO
 
-> Rejeição: NFC-e com Unidade de Comercialização inválida
+### 734 - Rejeição: NFC-e com Unidade de Comercialização inválida
 
-> 
+> Correção : **
 
 ## 735 - REJEIÇÃO
 
-> Rejeição: NFC-e com Unidade de Tributação inválida
+### 735 - Rejeição: NFC-e com Unidade de Tributação inválida
 
-> 
+> Correção : **
 
 ## 736 - REJEIÇÃO
 
-> Rejeição: NFC-e com grupo de Veículos novos
+### 736 - Rejeição: NFC-e com grupo de Veículos novos
 
-> 
+> Correção : **
 
 ## 737 - REJEIÇÃO
 
-> Rejeição: NFC-e com grupo de Medicamentos
+### 737 - Rejeição: NFC-e com grupo de Medicamentos
 
-> 
+> Correção : **
 
 ## 738 - REJEIÇÃO
 
-> Rejeição: NFC-e com grupo de Armamentos
+### 738 - Rejeição: NFC-e com grupo de Armamentos
 
-> 
+> Correção : **
 
 ## 739 - REJEIÇÃO
 
-> Rejeição: NFC-e com grupo de Combustível
+### 739 - Rejeição: NFC-e com grupo de Combustível
 
-> 
+> Correção : **
 
 ## 740 - REJEIÇÃO
 
-> Rejeição: NFC-e com CST 51-Diferimento
+### 740 - Rejeição: NFC-e com CST 51-Diferimento
 
-> 
+> Correção : **
 
 ## 741 - REJEIÇÃO
 
-> Rejeição: NFC-e com Partilha de ICMS entre UF
+### 741 - Rejeição: NFC-e com Partilha de ICMS entre UF
 
-> 
+> Correção : **
 
 ## 742 - REJEIÇÃO
 
-> Rejeição: NFC-e com grupo do IPI
+### 742 - Rejeição: NFC-e com grupo do IPI
 
-> 
+> Correção : **
 
 ## 743 - REJEIÇÃO
 
-> Rejeição: NFC-e com grupo do II
+### 743 - Rejeição: NFC-e com grupo do II
 
-> 
+> Correção : **
 
 ## 745 - REJEIÇÃO
 
-> Rejeição: NF-e sem grupo do PIS
+### 745 - Rejeição: NF-e sem grupo do PIS
 
-> 
+> Correção : **
 
 ## 746 - REJEIÇÃO
 
-> Rejeição: NFC-e com grupo do PIS-ST
+### 746 - Rejeição: NFC-e com grupo do PIS-ST
 
-> 
+> Correção : **
 
 ## 748 - REJEIÇÃO
 
-> Rejeição: NF-e sem grupo da COFINS
+### 748 - Rejeição: NF-e sem grupo da COFINS
 
-> 
+> Correção : **
 
 ## 749 - REJEIÇÃO
 
-> Rejeição: NFC-e com grupo da COFINS-ST
+### 749 - Rejeição: NFC-e com grupo da COFINS-ST
 
-> 
+> Correção : **
 
 ## 750 - REJEIÇÃO
 
-> Rejeição: NFC-e com valor total superior ao permitido para destinatário não identificado (Código)
+### 750 - Rejeição: NFC-e com valor total superior ao permitido para destinatário não identificado (Código)
 
-> 
+> Correção : **
 
 ## 751 - REJEIÇÃO
 
-> Rejeição: NFC-e com valor total superior ao permitido para destinatário não identificado (Nome)
+### 751 - Rejeição: NFC-e com valor total superior ao permitido para destinatário não identificado (Nome)
 
-> 
-
-## 752 - REJEIÇÃO
-
-> Rejeição: NFC-e com valor total superior ao permitido para destinatário não identificado (Endereço)
-
-> 
+> Correção : **
 
 ## 752 - REJEIÇÃO
 
-> Rejeição: NFC-e com Frete
+### 752 - Rejeição: NFC-e com valor total superior ao permitido para destinatário não identificado (Endereço)
 
-> 
+> Correção : **
+
+## 752 - REJEIÇÃO
+
+### 752 - Rejeição: NFC-e com Frete
+
+> Correção : **
 
 ## 754 - REJEIÇÃO
 
-> Rejeição: NFC-e com dados do Transportador
+### 754 - Rejeição: NFC-e com dados do Transportador
 
-> 
+> Correção : **
 
 ## 755 - REJEIÇÃO
 
-> Rejeição: NFC-e com dados de Retenção do ICMS no Transporte
+### 755 - Rejeição: NFC-e com dados de Retenção do ICMS no Transporte
 
-> 
+> Correção : **
 
 ## 756 - REJEIÇÃO
 
-> Rejeição: NFC-e com dados do veículo de Transporte
+### 756 - Rejeição: NFC-e com dados do veículo de Transporte
 
-> 
+> Correção : **
 
 ## 757 - REJEIÇÃO
 
-> Rejeição: NFC-e com dados de Reboque do veículo de Transporte
+### 757 - Rejeição: NFC-e com dados de Reboque do veículo de Transporte
 
-> 
+> Correção : **
 
 ## 758 - REJEIÇÃO
 
-> Rejeição: NFC-e com dados do Vagão de Transporte
+### 758 - Rejeição: NFC-e com dados do Vagão de Transporte
 
-> 
+> Correção : **
 
 ## 759 - REJEIÇÃO
 
-> Rejeição: NFC-e com dados da Balsa de Transporte
+### 759 - Rejeição: NFC-e com dados da Balsa de Transporte
 
-> 
+> Correção : **
 
 ## 760 - REJEIÇÃO
 
-> Rejeição: NFC-e com dados de cobrança (Fatura, Duplicata)
+### 760 - Rejeição: NFC-e com dados de cobrança (Fatura, Duplicata)
 
-> 
+> Correção : **
 
 ## 762 - REJEIÇÃO
 
-> Rejeição: NFC-e com dados de compras (Empenho, Pedido, Contrato)
+### 762 - Rejeição: NFC-e com dados de compras (Empenho, Pedido, Contrato)
 
-> 
+> Correção : **
 
 ## 763 - REJEIÇÃO
 
-> Rejeição: NFC-e com dados de aquisição de Cana
+### 763 - Rejeição: NFC-e com dados de aquisição de Cana
 
-> 
+> Correção : **
 
 ## 764 - REJEIÇÃO
 
-> Rejeição: Solicitada resposta síncrona para Lote com mais de uma NF-e (indSinc=1)
+### 764 - Rejeição: Solicitada resposta síncrona para Lote com mais de uma NF-e (indSinc=1)
 
-> 
+> Correção : **
 
 ## 765 - REJEIÇÃO
 
-> Rejeição: Lote só poderá conter NF-e ou NFC-e
+### 765 - Rejeição: Lote só poderá conter NF-e ou NFC-e
 
-> 
+> Correção : **
 
 ## 766 - REJEIÇÃO
 
-> Rejeição: NFC-e com CST 50-Suspensão
+### 766 - Rejeição: NFC-e com CST 50-Suspensão
 
-> 
+> Correção : **
 
 ## 767 - REJEIÇÃO
 
-> Rejeição: NFC-e com somatório dos pagamentos diferente do total da Nota Fiscal
+### 767 - Rejeição: NFC-e com somatório dos pagamentos diferente do total da Nota Fiscal
 
-> 
+> Correção : **
 
 ## 768 - REJEIÇÃO
 
-> Rejeição: NF-e não deve possuir o grupo de Formas de Pagamento
+### 768 - Rejeição: NF-e não deve possuir o grupo de Formas de Pagamento
 
-> 
+> Correção : **
 
 ## 769 - REJEIÇÃO
 
-> Rejeição: A critério da UF NFC-e deve possuir o grupo de Formas de Pagamento
+### 769 - Rejeição: A critério da UF NFC-e deve possuir o grupo de Formas de Pagamento
 
-> 
+> Correção : **
 
 ## 770 - REJEIÇÃO
 
-> Rejeição: NFC-e autorizada há mais de 24 horas.
+### 770 - Rejeição: NFC-e autorizada há mais de 24 horas.
 
-> 
+> Correção : **
 
 ## 771 - REJEIÇÃO
 
-> Rejeição: Operação Interestadual e UF de destino com EX
+### 771 - Rejeição: Operação Interestadual e UF de destino com EX
 
-> 
+> Correção : **
 
 ## 772 - REJEIÇÃO
 
-> Rejeição: Operação Interestadual e UF de destino igual à UF do emitente
+### 772 - Rejeição: Operação Interestadual e UF de destino igual à UF do emitente
 
-> Operação indicada como interestadual mas a UF do destinatário é a mesmo do emitente.
+> Correção : *Operação indicada como interestadual mas a UF do destinatário é a mesmo do emitente.*
 
 ## 773 - REJEIÇÃO
 
-> Rejeição: Operação Interna e UF de destino difere da UF do emitente
+### 773 - Rejeição: Operação Interna e UF de destino difere da UF do emitente
 
-> A UF do destinatário é diferente do emitente
+> Correção : *A UF do destinatário é diferente do emitente*
 
 ## 774 - REJEIÇÃO
 
-> Rejeição: NFC-e com indicador de item não participante do total
+### 774 - Rejeição: NFC-e com indicador de item não participante do total
 
-> Em NFCe todos os itens da notas integram o total, algum item não está dessa forma.
+> Correção : *Em NFCe todos os itens da notas integram o total, algum item não está dessa forma.*
 
 ## 775 - REJEIÇÃO
 
-> Rejeição: Modelo da NFC-e diferente de 65
+### 775 - Rejeição: Modelo da NFC-e diferente de 65
 
-> NFCe deve ter modelo 65 apenas, , informe o administrador do sistema
+> Correção : *NFCe deve ter modelo 65 apenas, , informe o administrador do sistema*
 
 ## 776 - REJEIÇÃO
 
-> Rejeição: Solicitada resposta síncrona para UF que não disponibiliza este atendimento (indSinc=1)
+### 776 - Rejeição: Solicitada resposta síncrona para UF que não disponibiliza este atendimento (indSinc=1)
 
-> Não existe opereção sincrona, informe o administrador do sistema
+> Correção : *Não existe opereção sincrona, informe o administrador do sistema*
 
 ## 777 - REJEIÇÃO
 
-> Rejeição: Obrigatória a informação do NCM completo
+### 777 - Rejeição: Obrigatória a informação do NCM completo
 
-> NCM incompleto, esse numero deve ter 8 digitos
+> Correção : *NCM incompleto, esse numero deve ter 8 digitos*
 
 ## 778 - REJEIÇÃO
 
-> Rejeição: Informado NCM inexistente
+### 778 - Rejeição: Informado NCM inexistente
 
-> Verifique o código NCM está errado. Lembre-se que esses códigos mudam e ninguém te avisa disso
+> Correção : *Verifique o código NCM está errado. Lembre-se que esses códigos mudam e ninguém te avisa disso*
 
 ## 779 - REJEIÇÃO
 
-> Rejeição: NFC-e com NCM incompatível
+### 779 - Rejeição: NFC-e com NCM incompatível
 
-> NCM do produto incompatível com NFCe
+> Correção : *NCM do produto incompatível com NFCe*
 
 ## 780 - REJEIÇÃO
 
-> Rejeição: Total da NFC-e superior ao valor limite estabelecido pela SEFAZ [Limite]
+### 780 - Rejeição: Total da NFC-e superior ao valor limite estabelecido pela SEFAZ [Limite]
 
-> A NFCe indica um valor muito alto, acima do permitido
+> Correção : *A NFCe indica um valor muito alto, acima do permitido*
 
 ## 781 - REJEIÇÃO
 
-> Rejeição: Emissor não habilitado para emissão da NFC-e
+### 781 - Rejeição: Emissor não habilitado para emissão da NFC-e
 
-> CNPJ não habilitado, entre em contado com SEFAZ
+> Correção : *CNPJ não habilitado, entre em contado com SEFAZ*
 
 ## 782 - REJEIÇÃO
 
-> Rejeição: NFC-e não é autorizada pelo SCAN
+### 782 - Rejeição: NFC-e não é autorizada pelo SCAN
 
-> NFCe não pode usar essa contingêcia
+> Correção : *NFCe não pode usar essa contingêcia*
 
 ## 783 - REJEIÇÃO
 
-> Rejeição: NFC-e não é autorizada pela SVC
+### 783 - Rejeição: NFC-e não é autorizada pela SVC
 
-> NFCe não pode usar essa contingêcia
+> Correção : *NFCe não pode usar essa contingêcia*
 
 ## 784 - REJEIÇÃO
 
-> Rejeição: NFC-e não permite o evento de Carta de Correção
+### 784 - Rejeição: NFC-e não permite o evento de Carta de Correção
 
-> NFCe não aceita carta de correção, se existe erro cancele e emita outra NFCe
+> Correção : *NFCe não aceita carta de correção, se existe erro cancele e emita outra NFCe*
 
 ## 785 - REJEIÇÃO
 
-> Rejeição: NFC-e com entrega a domicílio não permitida pela UF
+### 785 - Rejeição: NFC-e com entrega a domicílio não permitida pela UF
 
-> Esta UF não permite essa operação com entrega em domicilio
+> Correção : *Esta UF não permite essa operação com entrega em domicilio*
 
 ## 786 - REJEIÇÃO
 
-> Rejeição: NFC-e de entrega a domicílio sem dados do Transportador
+### 786 - Rejeição: NFC-e de entrega a domicílio sem dados do Transportador
 
-> Entrega em domicilio sem dados do transportador
+> Correção : *Entrega em domicilio sem dados do transportador*
 
 ## 787 - REJEIÇÃO
 
-> Rejeição: NFC-e de entrega a domicílio sem a identificação do destinatário
+### 787 - Rejeição: NFC-e de entrega a domicílio sem a identificação do destinatário
 
-> Entrega em domicilio sem a identificação do destinatário
+> Correção : *Entrega em domicilio sem a identificação do destinatário*
 
 ## 788 - REJEIÇÃO
 
-> Rejeição: NFC-e de entrega a domicílio sem o endereço do destinatário
+### 788 - Rejeição: NFC-e de entrega a domicílio sem o endereço do destinatário
 
-> Indicada entrega em domicilio sem o endereço do destinatário
+> Correção : *Indicada entrega em domicilio sem o endereço do destinatário*
 
 ## 789 - REJEIÇÃO
 
-> Rejeição: NFC-e para destinatário contribuinte de ICMS
+### 789 - Rejeição: NFC-e para destinatário contribuinte de ICMS
 
-> NFCe é apenas para consumidores e não para contribuintes
+> Correção : *NFCe é apenas para consumidores e não para contribuintes*
 
 ## 790 - REJEIÇÃO
 
-> Rejeição: Operação com Exterior para destinatário Contribuinte de ICMS
+### 790 - Rejeição: Operação com Exterior para destinatário Contribuinte de ICMS
 
-> Exportação não pode ter um contribuinte do ICMS no exterior
+> Correção : *Exportação não pode ter um contribuinte do ICMS no exterior*
 
 ## 791 - REJEIÇÃO
 
-> Rejeição: NF-e com indicação de destinatário isento de IE, com a informação da IE do destinatário
+### 791 - Rejeição: NF-e com indicação de destinatário isento de IE, com a informação da IE do destinatário
 
-> Foi indicada operação com Contribuinte isento de Inscrição no cadastro de Contribuintes do ICMS e informada a IE do destinatário
+> Correção : *Foi indicada operação com Contribuinte isento de Inscrição no cadastro de Contribuintes do ICMS e informada a IE do destinatário*
 
 ## 792 - REJEIÇÃO
 
-> Rejeição: Informada a IE do destinatário para operação com destinatário no Exterior
+### 792 - Rejeição: Informada a IE do destinatário para operação com destinatário no Exterior
 
-> Em operações de exportação não pode ser indicado um IE
+> Correção : *Em operações de exportação não pode ser indicado um IE*
 
 ## 793 - REJEIÇÃO
 
-> Rejeição: Informado Capítulo do NCM inexistente
+### 793 - Rejeição: Informado Capítulo do NCM inexistente
 
-> Confira o NCM está incorreto
+> Correção : *Confira o NCM está incorreto*
 
 ## 794 - REJEIÇÃO
 
-> Rejeição: NF-e com indicativo de NFC-e com entrega a domicílio
+### 794 - Rejeição: NF-e com indicativo de NFC-e com entrega a domicílio
 
-> NFC-e em operação com entrega a domicílio e não foram informados os dados do destinatário
+> Correção : *NFC-e em operação com entrega a domicílio e não foram informados os dados do destinatário*
 
 ## 795 - REJEIÇÃO
 
-> Rejeição: Total do ICMS desonerado difere do somatório dos itens
+### 795 - Rejeição: Total do ICMS desonerado difere do somatório dos itens
 
-> Valor da soma do ICMS desonerado dos itens não está igual ao valor do ICMS desonerado no total da nota. Verifique se o CST da nota está correto, caso esteja como por exemplo '00 - Tributado Integralmente' o valor do ICMS desonerado por item não será destacado, gerado assim essa rejeição no envio.
+> Correção : *Valor da soma do ICMS desonerado dos itens não está igual ao valor do ICMS desonerado no total da nota. Verifique se o CST da nota está correto, caso esteja como por exemplo '00 - Tributado Integralmente' o valor do ICMS desonerado por item não será destacado, gerado assim essa rejeição no envio.*
 
 ## 796 - REJEIÇÃO
 
-> Rejeição: Empresa sem Chave de Segurança para o QR-Code
+### 796 - Rejeição: Empresa sem Chave de Segurança para o QR-Code
 
-> Confira o CSC e o CSCid
+> Correção : *Confira o CSC e o CSCid*
 
 ## 798 - REJEIÇÃO
 
-> Valor total do ICMS relativo Fundo de Combate à Pobreza (FCP) da UF de destino difere do somatório do valor dos itens
+### 798 - Valor total do ICMS relativo Fundo de Combate à Pobreza (FCP) da UF de destino difere do somatório do valor dos itens
 
-> 
+> Correção : **
 
 ## 799 - REJEIÇÃO
 
-> Valor total do ICMS Interestadual da UF de destino difere do somatório dos itens
+### 799 - Valor total do ICMS Interestadual da UF de destino difere do somatório dos itens
 
-> 
+> Correção : **
 
 ## 800 - REJEIÇÃO
 
-> Valor total do ICMS Interestadual da UF do remetente difere do somatório dos itens
+### 800 - Valor total do ICMS Interestadual da UF do remetente difere do somatório dos itens
 
-> 
+> Correção : **
 
 ## 805 - REJEIÇÃO
 
-> A SEFAZ do destinatário não permite Contribuinte Isento de Inscrição Estadual
+### 805 - A SEFAZ do destinatário não permite Contribuinte Isento de Inscrição Estadual
 
-> 
+> Correção : **
 
 ## 806 - REJEIÇÃO
 
-> A partir de 01.10.2016 é obrigatória a informação do CEST, Código Especificador de Substituição Tributária, um código composto por 6 algarimos. No painel editar o produto você tem um botão "Tabela CEST" que exibe uma lista completa dos CESTs.Operação com ICMS-ST sem informação do CEST
+### 806 - A partir de 01.10.2016 é obrigatória a informação do CEST, Código Especificador de Substituição Tributária, um código composto por 6 algarimos. No painel editar o produto você tem um botão "Tabela CEST" que exibe uma lista completa dos CESTs.Operação com ICMS-ST sem informação do CEST
 
-> 
+> Correção : **
 
 ## 807 - REJEIÇÃO
 
-> NFC-e com grupo de ICMS para a UF do destinatário
+### 807 - NFC-e com grupo de ICMS para a UF do destinatário
 
-> 
+> Correção : **
 
 ## 817 - REJEIÇÃO
 
-> Unidade Tributavel incompativel com o NCM informado na operacao com Comercio Exterior
+### 817 - Unidade Tributavel incompativel com o NCM informado na operacao com Comercio Exterior
 
-> 
+> Correção : **
 
 ## 999 - REJEIÇÃO
 
-> Rejeição: Erro não catalogado (informar a mensagem de erro capturado no tratamento da exceção)
+### 999 - Rejeição: Erro não catalogado (informar a mensagem de erro capturado no tratamento da exceção)
 
-> Isso é um problema provavelmente da SEFAZ
+> Correção : *Isso é um problema provavelmente da SEFAZ*
 
 ##  - REJEIÇÃO
 
-> 
+###  - 
 
-> 
+> Correção : **
 
