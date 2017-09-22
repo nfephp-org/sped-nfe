@@ -583,7 +583,7 @@ class Tools
             $this->getURIConsultaNFCe($uf)
         );
         $this->modelo = $memmod;
-		return Strings::clearXmlString($signed);
+        return Strings::clearXmlString($signed);
     }
 
     /**
