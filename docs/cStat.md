@@ -2,34 +2,16 @@
 
 ## 100 - SUCESSO
 ### 100 - Autorizado o uso da NF-e
-> Correção : 
-
-
 ## 101 - SUCESSO
 ### 101 - Cancelamento de NF-e homologado
-> Correção : 
-
-
 ## 102 - SUCESSO
 ### 102 - Inutilização de número homologado
-> Correção : 
-
-
 ## 103 - SUCESSO
 ### 103 - Lote recebido com sucesso
-> Correção : 
-
-
 ## 104 - SUCESSO
 ### 104 - Lote processado
-> Correção : 
-
-
 ## 105 - SUCESSO
 ### 105 - Lote em processamento
-> Correção : 
-
-
 ## 106 - REJEIÇÃO
 ### 106 - Lote não localizado
 > Correção : *O numero de recibo não foi localizado, confira*
@@ -37,9 +19,6 @@
 
 ## 107 - SUCESSO
 ### 107 - Serviço em Operação
-> Correção : *O numero de recibo não foi localizado, confira*
-
-
 ## 108 - REJEIÇÃO
 ### 108 - Serviço Paralisado Momentaneamente (curto prazo)
 > Correção : *Fora do ar AGUARDE!*
@@ -57,14 +36,8 @@
 
 ## 111 - SUCESSO
 ### 111 - Consulta cadastro com uma ocorrência
-> Correção : *Cuidado algo errado com o registro da empresa na SEFAZ*
-
-
 ## 112 - SUCESSO
 ### 112 - Consulta cadastro com mais de uma ocorrência
-> Correção : *Cuidado algo errado com o registro da empresa na SEFAZ*
-
-
 ## 113 - REJEIÇÃO
 ### 113 - SVC em processo de desativação SVC será  desabilitada para a SEFAZ-XX em dd/mm/aa às hh:mm horas
 > Correção : *Contingência indisponível*
@@ -77,44 +50,20 @@
 
 ## 124 - SUCESSO
 ### 124 - EPEC Autorizado
-> Correção : *Contingência indisponível*
-
-
 ## 128 - SUCESSO
 ### 128 - Lote de Evento Processado
-> Correção : *Contingência indisponível*
-
-
 ## 135 - SUCESSO
 ### 135 - Evento registrado e vinculado a NF-e
-> Correção : *Contingência indisponível*
-
-
 ## 136 - SUCESSO
 ### 136 - Evento registrado, mas não vinculado a NF-e
-> Correção : *Contingência indisponível*
-
-
 ## 137 - SUCESSO
 ### 137 - Nenhum documento localizado para o Destinatário
-> Correção : *Contingência indisponível*
-
-
 ## 138 - SUCESSO
 ### 138 - Documento localizado para o Destinatário
-> Correção : *Contingência indisponível*
-
-
 ## 139 - SUCESSO
 ### 139 - Pedido de Download processado
-> Correção : *Contingência indisponível*
-
-
 ## 140 - SUCESSO
 ### 140 - Download disponibilizado
-> Correção : *Contingência indisponível*
-
-
 ## 142 - REJEIÇÃO
 ### 142 - Ambiente de Contingência EPEC bloqueado para o Emitente
 > Correção : *EPEC bloqueado consultar a SEFAZ*
@@ -122,19 +71,10 @@
 
 ## 150 - SUCESSO
 ### 150 - Autorizado o uso da NF-e, autorização fora de prazo
-> Correção : *EPEC bloqueado consultar a SEFAZ*
-
-
 ## 151 - SUCESSO
 ### 151 - Cancelamento de NF-e homologado fora de prazo
-> Correção : *EPEC bloqueado consultar a SEFAZ*
-
-
 ## 155 - SUCESSO
 ### 155 - Cancelamento homologado fora de prazo
-> Correção : *EPEC bloqueado consultar a SEFAZ*
-
-
 ## 201 - REJEIÇÃO
 ### 201 - Rejeição: Número máximo de numeração a inutilizar ultrapassou o limite
 > Correção : *Não podem ser inutilizados tantos numeros*
