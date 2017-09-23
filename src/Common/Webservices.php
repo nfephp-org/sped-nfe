@@ -56,6 +56,11 @@ class Webservices
         if (empty($auto) || empty($this->std)) {
             return false;
         }
+        if (empty($this->std->$auto)) {
+            throw new \RuntimeException(
+                "Não existem webservices cadastrados para  [$sigla] no modelo [$modelo]"
+            );
+        }
         $svw = $this->std->$auto->$ambiente;
         if ($auto == 'SVRS' || $auto == 'SVAN') {
             $pad = !empty($this->std->$sigla->$ambiente) ? $this->std->$sigla->$ambiente : '';
