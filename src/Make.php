@@ -5029,6 +5029,57 @@ class Make
     public function tagpag($std)
     {
         $pag = $this->dom->createElement("pag");
+        //removido no layout 4.00
+        $tPag = !empty($std->tPag) ? $std->tPag : null;
+        $this->dom->addChild(
+            $pag,
+            "tPag",
+            $tPag,
+            true,
+            "Tipo do Pagamento"
+        );
+        //removido no layout 4.00
+        $vPag = !empty($std->vPag) ? $std->vPag : null;
+        $this->dom->addChild(
+            $pag,
+            "vPag",
+            $vPag,
+            true,
+            "Valor do Pagamento"
+        );
+        //removido no layout 4.00
+        $tBand = !empty($std->tBand) ? $std->tBand : null;
+        if ($tBand != '') {
+            $card = $this->dom->createElement("card");
+            //removido no layout 4.00
+            $CNPJ = !empty($std->CNPJ) ? $std->CNPJ : null;
+            $this->dom->addChild(
+                $card,
+                "CNPJ",
+                $CNPJ,
+                true,
+                "CNPJ da Credenciadora de cartão de crédito e/ou débito"
+            );
+            //removido no layout 4.00
+            $tBand = !empty($std->tBand) ? $std->tBand : null;
+            $this->dom->addChild(
+                $card,
+                "tBand",
+                $tBand,
+                true,
+                "Bandeira da operadora de cartão de crédito e/ou débito"
+            );
+            //removido no layout 4.00
+            $cAut = !empty($std->cAut) ? $std->cAut : null;
+            $this->dom->addChild(
+                $card,
+                "cAut",
+                $cAut,
+                true,
+                "Número de autorização da operação cartão de crédito e/ou débito"
+            );
+            $this->dom->appChild($Pag, $card, "Inclusão do node Card");
+        }
         //incluso no layout 4.00
         $vTroco = !empty($std->vTroco) ? $std->vTroco : null;
         $this->dom->addChild(
