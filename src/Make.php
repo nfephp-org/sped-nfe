@@ -5037,7 +5037,7 @@ class Make
             $tPag,
             true,
             "Tipo do Pagamento"
-            );
+        );
         //removido no layout 4.00
         $vPag = !empty($std->vPag) ? $std->vPag : null;
         $this->dom->addChild(
@@ -5046,7 +5046,7 @@ class Make
             $vPag,
             true,
             "Valor do Pagamento"
-            );
+        );
         //removido no layout 4.00
         $tBand = !empty($std->tBand) ? $std->tBand : null;
         if ($tBand != '') {
@@ -5059,7 +5059,7 @@ class Make
                 $CNPJ,
                 true,
                 "CNPJ da Credenciadora de cartão de crédito e/ou débito"
-                );
+            );
             //removido no layout 4.00
             $tBand = !empty($std->tBand) ? $std->tBand : null;
             $this->dom->addChild(
@@ -5068,7 +5068,7 @@ class Make
                 $tBand,
                 true,
                 "Bandeira da operadora de cartão de crédito e/ou débito"
-                );
+            );
             //removido no layout 4.00
             $cAut = !empty($std->cAut) ? $std->cAut : null;
             $this->dom->addChild(
@@ -5077,7 +5077,7 @@ class Make
                 $cAut,
                 true,
                 "Número de autorização da operação cartão de crédito e/ou débito"
-                );
+            );
             $this->dom->appChild($Pag, $card, "Inclusão do node Card");
         }
         //incluso no layout 4.00
