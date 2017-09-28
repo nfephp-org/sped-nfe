@@ -347,7 +347,7 @@ class Tools extends ToolsCommon
         $this->servico(
             $servico,
             $fonte,
-            1,
+            $this->tpAmb,
             true
         );
         $cUF = UFList::getCodeByUF($this->config->siglaUF);
