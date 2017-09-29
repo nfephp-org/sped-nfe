@@ -359,7 +359,7 @@ class Tools extends ToolsCommon
         }
         //monta a consulta
         $consulta = "<distDFeInt xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
-            . "<tpAmb>1</tpAmb>"
+            . "<tpAmb>".$this->tpAmb."</tpAmb>"
             . "<cUFAutor>$cUF</cUFAutor>"
             . "<CNPJ>".$this->config->cnpj."</CNPJ>$tagNSU</distDFeInt>";
         //valida o xml da requisição
