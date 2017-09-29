@@ -78,7 +78,7 @@ class ValidTXT
                 continue;
             }
             $default = count(explode('|', self::$entities[$ref]));
-            if ($default != $count) {
+            if ($default > $count) {
                 self::$errors[] = "ERRO: O número de parâmetros na linha "
                     . "está errado (esperado #$default) -> (encontrado #$count). [ $row ] Esperado [ "
                     . self::$entities[$ref]." ]";
