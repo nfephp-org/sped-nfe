@@ -86,7 +86,7 @@ class Tools extends ToolsCommon
         $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
         $method = $this->urlMethod;
         if ($compactar) {
-            $gzdata = base64_encode(gzencode($cons, 9, FORCE_GZIP));
+            $gzdata = base64_encode(gzencode($request, 9, FORCE_GZIP));
             $body = "<nfeDadosMsgZip xmlns=\"$this->urlNamespace\">$gzdata</nfeDadosMsgZip>";
             $method = $this->urlMethod."Zip";
             $parameters = ['nfeDadosMsgZip' => $gzdata];
