@@ -2,7 +2,7 @@
 
 Framework para geração e comunicação das NFe com as SEFAZ autorizadoras, e visa fornecer os meios para gerar, assinar e anviar os dados relativos ao projeto Sped NFe das SEFAZ.
 
-> **NOTA: Atende os layoouts versão 3.10 e 4.0 da SEFAZ!**
+> ### Atende os layoouts versão 3.10 e 4.0 da SEFAZ!**
 
 > ### NOVA Versão 4.0 do layout da SEFAZ (ajustado NT_2016_002_v1.31 de 10/2017)
 
