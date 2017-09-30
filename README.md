@@ -1,20 +1,16 @@
-# SPED-NFE v5.0 (em desenvolvimento)
+# SPED-NFE 
 
 Framework para geração e comunicação das NFe com as SEFAZ autorizadoras, e visa fornecer os meios para gerar, assinar e anviar os dados relativos ao projeto Sped NFe das SEFAZ.
 
-Esta versão do pacote ainda está em desenvolvimento [FASE BETA TEST], pode não estar totalmente funcional e não deve ser utilizado para nada além de testes.
+## Atender os layoouts versão 3.10 e 4.0 da SEFAZ!
 
-## Este release está sendo preparado para atender as verões 3.10 e 4.0 do layout da SEFAZ!
-
-> ### NOVA Versão 4.0 do layout da SEFAZ (ajustado NT_2016_002_v1.20 de 31/05/2017)
+> ### NOVA Versão 4.0 do layout da SEFAZ (ajustado NT_2016_002_v1.31 de 10/2017)
 
 >Ambiente SEFAZ de Homologação 4.0 (ambiente de teste das empresas): a partir de 03/07/2017;
 
->*Ambiente SEFAZ de Produção 4.0 : a partir de 02/10/17;*
+>*Ambiente SEFAZ de Produção 4.0 : a partir de 06/11/17;*
 
 >*Desativação na SEFAZ da versão anterior 3.10: até 02/04/18.*
-
->**IMPORTANTE: até 31/08/2017 esta versão será movida para master e as anteriores se tornam automaticamente OBSOLETAS e não mais receberão correções ou atualizações.**
 
 *Utilize o chat do Gitter para iniciar discussões especificas sobre o desenvolvimento deste pacote.*
 
@@ -45,7 +41,18 @@ Não deixe de se cadastrar no [grupo de discussão do NFePHP](http://groups.goog
 
 **Este pacote esta listado no [Packgist](https://packagist.org/) foi desenvolvido para uso do [Composer](https://getcomposer.org/), portanto não será explicitada nenhuma alternativa de instalação.**
 
-*Durante a fase de desenvolvimento e testes este pacote deve ser instalado com:*
+*E deve ser instalado com:*
+```bash
+composer require nfephp-org/sped-nfe
+```
+Ou ainda alterando o composer.json do seu aplicativo inserindo:
+```json
+"require": {
+    "nfephp-org/sped-nfe" : "^5.0"
+}
+```
+
+*Para utilizar o pacote em desenvolvimento (branch master) deve ser instalado com:*
 ```bash
 composer require nfephp-org/sped-nfe:dev-master
 ```
@@ -57,21 +64,10 @@ composer require nfephp-org/sped-nfe:dev-master
 }
 ```
 
-> NOTA: Ao utilizar este pacote ainda na fase de desenvolvimento não se esqueça de alterar o composer.json da sua aplicação para aceitar pacotes em desenvolvimento, alterando a propriedade "minimum-stability" de "stable" para "dev".
+> NOTA: Ao utilizar este pacote na versão em desenvolvimento não se esqueça de alterar o composer.json da sua aplicação para aceitar pacotes em desenvolvimento, alterando a propriedade "minimum-stability" de "stable" para "dev".
 > ```json
 > "minimum-stability": "dev"
 > ```
-
-*Após os stable realeases estarem disponíveis, pode ser instalado com:*
-```bash
-composer require nfephp-org/sped-nfe
-```
-Ou ainda alterando o composer.json do seu aplicativo inserindo:
-```json
-"require": {
-    "nfephp-org/sped-nfe" : "^5.0"
-}
-```
 
 ## Requirements
 
