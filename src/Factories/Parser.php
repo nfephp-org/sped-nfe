@@ -15,7 +15,6 @@ namespace NFePHP\NFe\Factories;
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
 
-use NFePHP\Common\Strings;
 use NFePHP\NFe\Make;
 use NFePHP\NFe\Exception\DocumentsException;
 use stdClass;
@@ -204,8 +203,6 @@ class Parser
      */
     protected function baEntity($std)
     {
-        //fake não faz nada
-        $field = null;
     }
 
     /**
@@ -776,7 +773,6 @@ class Parser
 
     /**
      * Create tag comb [LA]
-     * @param stdClass $std
      * @return void
      */
     protected function buildLAEntity()
@@ -821,8 +817,6 @@ class Parser
      */
     protected function nEntity($std)
     {
-        //fake não faz nada
-        $field = null;
     }
 
     /**
@@ -1546,8 +1540,6 @@ class Parser
      */
     protected function wEntity($std)
     {
-        //fake não faz nada
-        $field = null;
     }
 
     /**
