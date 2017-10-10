@@ -67,7 +67,8 @@ class Webservices
             $pad = json_decode(json_encode($pad), true);
             if (!empty($pad)) {
                 foreach ($pad as $key => $p) {
-                    if (!empty($svw->$key)) {
+                    if (empty($svw->$key)) {
+                        $svw->$key = new \stdClass();
                         $svw->$key->method = $p['method'];
                         $svw->$key->operation = $p['operation'];
                         $svw->$key->version = $p['version'];
