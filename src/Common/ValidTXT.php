@@ -89,7 +89,7 @@ class ValidTXT
                         . "campo dos dados. [$row]";
                     continue;
                 }
-                $newfield = preg_replace("/[^a-zA-Z0-9 @,-_.;:%$\[\]()\/]/", "", $field);
+                $newfield = preg_replace("/[^A-Za-zÀ-ú0-9 @,-_.;:%$\[\]()\/]/", "", $field);
                 if ($field != $newfield) {
                     self::$errors[] = "ERRO: Existem caracteres especiais, "
                         . "acentos ou aspas em algum campo dos dados. [" . htmlentities($row) . "]";
