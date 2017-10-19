@@ -714,7 +714,7 @@ $std->vICMSSTRet = 190.00;
 $std->vBCSTDest = 1000.00;
 $std->vICMSSTDest = 1.00;
 
-$elem = $nfe->tagICMSSN($std);
+$elem = $nfe->tagICMSST($std);
 ```
 
 ### function tagICMSSN($std):DOMElement
@@ -937,7 +937,7 @@ $std = new stdClass();
 $std->pDevol = 2.00;
 $std->vIPIDevol = 123.36;
 
-$elem = $nfe->tagICMSTot($std);
+$elem = $nfe->tagimpostoDevol($std);
 ```
 
 ### function tagICMSTot($std):DOMElement
@@ -1024,7 +1024,7 @@ $std->vIRRF = 100.00;
 $std->vBCRetPrev = 100.00;
 $std->vRetPrev = 100.00;
 
-$elem = $nfe->tagtransp($std);
+$elem = $nfe->tagretTrib($std);
 ```
 
 ### function tagtransp($std):DOMElement
@@ -1173,7 +1173,8 @@ $elem = $nfe->tagdup($std);
 ```
 
 ### function tagpag($std):DOMElement
-Node referente as formas de pagamento **OBRIGATÓRIO para NFCe**
+Node referente as formas de pagamento **OBRIGATÓRIO para NFCe a partir do layout 3.10**
+e também **obrigatório para NFe (modelo 55)** a partir do layout 4.00
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
