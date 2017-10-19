@@ -15,7 +15,6 @@ namespace NFePHP\NFe\Factories;
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
 
-use NFePHP\Common\Strings;
 use NFePHP\NFe\Make;
 use NFePHP\NFe\Exception\DocumentsException;
 use stdClass;
