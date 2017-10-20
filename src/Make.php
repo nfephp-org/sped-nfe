@@ -4359,7 +4359,27 @@ class Make
         $vFCPUFDest = !empty($std->vFCPUFDest) ? $std->vFCPUFDest : $this->stdTot->vFCPUFDest;
         $vICMSUFDest = !empty($std->vICMSUFDest) ? $std->vICMSUFDest : $this->stdTot->vICMSUFDest;
         $vICMSUFRemet = !empty($std->vICMSUFRemet) ? $std->vICMSUFRemet : $this->stdTot->vICMSUFRemet;
-
+        
+        //campos opcionais incluir se maior que zero
+        $vFCPUFDest = ($vFCPUFDest > 0) ? number_format($vFCPUFDest, 2, '.', '') : null;
+        $vICMSUFDest = ($vICMSUFDest > 0) ? number_format($vICMSUFDest, 2, '.', '') : null;
+        $vICMSUFRemet = ($vICMSUFRemet > 0) ? number_format($vICMSUFRemet, 2, '.', '') : null;
+        $vTotTrib = ($vTotTrib > 0) ? number_format($vTotTrib, 2, '.', '') : null;
+        
+        //campos especificos por layout
+        if ($this->version == '3.10') {
+            //campos inexistentes no 3.10
+            $vFCP = null;
+            $vFCPST = null;
+            $vFCPSTRet = null;
+            $vIPIDevol = null;
+        } else {
+            //campos obrigatórios para 4.00
+            $vFCP = number_format($vFCP, 2, '.', '');
+            $vFCPST = number_format($vFCPST, 2, '.', '');
+            $vFCPSTRet = number_format($vFCPSTRet, 2, '.', '');
+            $vIPIDevol = number_format($vIPIDevol, 2, '.', '');
+        }
         $ICMSTot = $this->dom->createElement("ICMSTot");
         $this->dom->addChild(
             $ICMSTot,
@@ -4382,40 +4402,37 @@ class Make
             true,
             "Valor Total do ICMS desonerado"
         );
-        if ($this->version != '3.10') {
-            $this->dom->addChild(
-                $ICMSTot,
-                "vFCP",
-                number_format($vFCP, 2, '.', ''),
-                true,
-                "Valor total do ICMS relativo ao Fundo de Combate à Pobreza(FCP) "
-                . "para a UF de destino"
-            );
-        }
-        if ($vFCPUFDest > 0) {
-            $this->dom->addChild(
-                $ICMSTot,
-                "vFCPUFDest",
-                number_format($vFCPUFDest, 2, '.', ''),
-                false,
-                "Valor total do ICMS relativo ao Fundo de Combate à Pobreza(FCP) "
-                . "para a UF de destino"
-            );
-            $this->dom->addChild(
-                $ICMSTot,
-                "vICMSUFDest",
-                number_format($vICMSUFDest, 2, '.', ''),
-                false,
-                "Valor total do ICMS de partilha para a UF do destinatário"
-            );
-            $this->dom->addChild(
-                $ICMSTot,
-                "vICMSUFRemet",
-                number_format($vICMSUFRemet, 2, '.', ''),
-                false,
-                "Valor total do ICMS de partilha para a UF do remetente"
-            );
-        }
+        //incluso no layout 4.00
+        $this->dom->addChild(
+            $ICMSTot,
+            "vFCP",
+            $vFCP,
+            false,
+            "Valor total do ICMS relativo ao Fundo de Combate à Pobreza(FCP) "
+            . "para a UF de destino"
+        );
+        $this->dom->addChild(
+            $ICMSTot,
+            "vFCPUFDest",
+            $vFCPUFDest,
+            false,
+            "Valor total do ICMS relativo ao Fundo de Combate à Pobreza(FCP) "
+            . "para a UF de destino"
+        );
+        $this->dom->addChild(
+            $ICMSTot,
+            "vICMSUFDest",
+            $vICMSUFDest,
+            false,
+            "Valor total do ICMS de partilha para a UF do destinatário"
+        );
+        $this->dom->addChild(
+            $ICMSTot,
+            "vICMSUFRemet",
+            $vICMSUFRemet,
+            false,
+            "Valor total do ICMS de partilha para a UF do remetente"
+        );
         $this->dom->addChild(
             $ICMSTot,
             "vBCST",
@@ -4430,24 +4447,24 @@ class Make
             true,
             "Valor Total do ICMS ST"
         );
-        if ($this->version != '3.10') {
-            $this->dom->addChild(
-                $ICMSTot,
-                "vFCPST",
-                number_format($vFCPST, 2, '.', ''),
-                true,
-                "Valor Total do FCP (Fundo de Combate à Pobreza) "
-                . "retido por substituição tributária"
-            );
-            $this->dom->addChild(
-                $ICMSTot,
-                "vFCPSTRet",
-                number_format($vFCPSTRet, 2, '.', ''),
-                true,
-                "Valor Total do FCP retido anteriormente por "
-                . "Substituição Tributária"
-            );
-        }
+        //incluso na 4.00
+        $this->dom->addChild(
+            $ICMSTot,
+            "vFCPST",
+            $vFCPST,
+            false, //true para 4.00
+            "Valor Total do FCP (Fundo de Combate à Pobreza) "
+            . "retido por substituição tributária"
+        );
+        //incluso na 4.00
+        $this->dom->addChild(
+            $ICMSTot,
+            "vFCPSTRet",
+            $vFCPSTRet,
+            false, //true para 4.00
+            "Valor Total do FCP retido anteriormente por "
+            . "Substituição Tributária"
+        );
         $this->dom->addChild(
             $ICMSTot,
             "vProd",
@@ -4490,15 +4507,14 @@ class Make
             true,
             "Valor Total do IPI"
         );
-        if ($this->version != '3.10') {
-            $this->dom->addChild(
-                $ICMSTot,
-                "vIPIDevol",
-                number_format($vIPIDevol, 2, '.', ''),
-                true,
-                "Valor Total do IPI"
-            );
-        }
+        //incluso 4.00
+        $this->dom->addChild(
+            $ICMSTot,
+            "vIPIDevol",
+            $vIPIDevol,
+            false,
+            "Valor Total do IPI"
+        );
         $this->dom->addChild(
             $ICMSTot,
             "vPIS",
@@ -4530,7 +4546,7 @@ class Make
         $this->dom->addChild(
             $ICMSTot,
             "vTotTrib",
-            number_format($vTotTrib, 2, '.', ''),
+            $vTotTrib,
             false,
             "Valor aproximado total de tributos federais, estaduais e municipais."
         );
