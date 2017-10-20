@@ -3613,6 +3613,13 @@ class Make
         );
         $this->dom->addChild(
             $icmsUFDest,
+            "vBCFCPUFDest",
+            $std->vBCFCPUFDest,
+            false,
+            "[item $std->item] Valor da BC do ICMS na UF do destinatário"
+        );
+        $this->dom->addChild(
+            $icmsUFDest,
             "pFCPUFDest",
             $std->pFCPUFDest,
             true,
@@ -4402,15 +4409,6 @@ class Make
             true,
             "Valor Total do ICMS desonerado"
         );
-        //incluso no layout 4.00
-        $this->dom->addChild(
-            $ICMSTot,
-            "vFCP",
-            $vFCP,
-            false,
-            "Valor total do ICMS relativo ao Fundo de Combate à Pobreza(FCP) "
-            . "para a UF de destino"
-        );
         $this->dom->addChild(
             $ICMSTot,
             "vFCPUFDest",
@@ -4432,6 +4430,15 @@ class Make
             $vICMSUFRemet,
             false,
             "Valor total do ICMS de partilha para a UF do remetente"
+        );
+        //incluso no layout 4.00
+        $this->dom->addChild(
+            $ICMSTot,
+            "vFCP",
+            $vFCP,
+            false,
+            "Valor total do ICMS relativo ao Fundo de Combate à Pobreza(FCP) "
+            . "para a UF de destino"
         );
         $this->dom->addChild(
             $ICMSTot,

@@ -1677,19 +1677,19 @@ N-NormalVIN</xs:documentation>
 																		</xs:restriction>
 																	</xs:simpleType>
 																</xs:element>
-																<xs:element minOccurs="0" name="pGLP" type="TDec_0104v">
+																<xs:element minOccurs="0" name="pGLP" type="TDec_0302a04Max100">
 																	<xs:annotation>
-																		<xs:documentation>Percentual do GLP derivado do petróleo no produto GLP (cProdANP=210203001). Informar em número decimal o percentual do GLP derivado de petróleo no produto GLP. Valores 0 a 1.</xs:documentation>
+																		<xs:documentation>Percentual do GLP derivado do petróleo no produto GLP (cProdANP=210203001). Informar em número decimal o percentual do GLP derivado de petróleo no produto GLP. Valores 0 a 100.</xs:documentation>
 																	</xs:annotation>
 																</xs:element>
-																<xs:element minOccurs="0" name="pGNn" type="TDec_0104v">
+																<xs:element minOccurs="0" name="pGNn" type="TDec_0302a04Max100">
 																	<xs:annotation>
-																		<xs:documentation>Percentual de gás natural nacional - GLGNn para o produto GLP (cProdANP=210203001). Informar em número decimal o percentual do Gás Natural Nacional - GLGNn para o produto GLP. Valores de 0 a 1.</xs:documentation>
+																		<xs:documentation>Percentual de gás natural nacional - GLGNn para o produto GLP (cProdANP=210203001). Informar em número decimal o percentual do Gás Natural Nacional - GLGNn para o produto GLP. Valores de 0 a 100.</xs:documentation>
 																	</xs:annotation>
 																</xs:element>
-																<xs:element minOccurs="0" name="pGNi" type="TDec_0104v">
+																<xs:element minOccurs="0" name="pGNi" type="TDec_0302a04Max100">
 																	<xs:annotation>
-																		<xs:documentation>Percentual de gás natural importado GLGNi para o produto GLP (cProdANP=210203001). Informar em número deciaml o percentual do Gás Natural Importado - GLGNi para o produto GLP. Valores de 0 a 1.</xs:documentation>
+																		<xs:documentation>Percentual de gás natural importado GLGNi para o produto GLP (cProdANP=210203001). Informar em número deciaml o percentual do Gás Natural Importado - GLGNi para o produto GLP. Valores de 0 a 100.</xs:documentation>
 																	</xs:annotation>
 																</xs:element>
 																<xs:element minOccurs="0" name="vPart" type="TDec_1302">
@@ -4920,7 +4920,7 @@ Substituição Tributaria;</xs:documentation>
 											<xs:sequence>
 												<xs:element name="tPag">
 													<xs:annotation>
-														<xs:documentation>Forma de Pagamento:01-Dinheiro;02-Cheque;03-Cartão de Crédito;04-Cartão de Débito;05-Crédito Loja;10-Vale Alimentação;11-Vale Refeição;12-Vale Presente;13-Vale Combustível;14 - Duplicata Mercantil;90 - Sem Pagamento;99 - Outros</xs:documentation>
+														<xs:documentation>Forma de Pagamento:01-Dinheiro;02-Cheque;03-Cartão de Crédito;04-Cartão de Débito;05-Crédito Loja;10-Vale Alimentação;11-Vale Refeição;12-Vale Presente;13-Vale Combustível;14 - Duplicata Mercantil;15 - Boleto Bancario;90 - Sem Pagamento;99 - Outros</xs:documentation>
 													</xs:annotation>
 													<xs:simpleType>
 														<xs:restriction base="xs:string">
@@ -4935,6 +4935,7 @@ Substituição Tributaria;</xs:documentation>
 															<xs:enumeration value="12"/>
 															<xs:enumeration value="13"/>
 															<xs:enumeration value="14"/>
+															<xs:enumeration value="15"/>
 															<xs:enumeration value="90"/>
 															<xs:enumeration value="99"/>
 														</xs:restriction>
