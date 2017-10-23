@@ -191,6 +191,7 @@ class Tools
         $this->certificate = $certificate;
         $this->setEnvironment($this->config->tpAmb);
         $this->contingency = new Contingency();
+        $this->soap = new SoapCurl($certificate);
     }
     
     /**
