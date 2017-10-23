@@ -818,7 +818,7 @@ $std->vDespAdu = 100.00;
 $std->vII = 220.00;
 $std->vIOF = null;
 
-$elem = $nfe->tagPIS($std);
+$elem = $nfe->tagII($std);
 ```
 
 ### function tagPIS($std):DOMElement
