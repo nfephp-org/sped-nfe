@@ -775,7 +775,7 @@ $std->pICMSInter = 12.00;
 $std->pICMSInterPart = 80.00; 
 $std->vFCPUFDest = 1.00;
 $std->vICMSUFDest = 14.44;
-$std->vICMSFRemet = 3.56;
+$std->vICMSUFRemet = 3.56;
 
 $elem = $nfe->tagICMSUFDest($std);
 ```
