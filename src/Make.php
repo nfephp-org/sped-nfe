@@ -3611,13 +3611,17 @@ class Make
             true,
             "[item $std->item] Valor da BC do ICMS na UF do destinatário"
         );
-        $this->dom->addChild(
-            $icmsUFDest,
-            "vBCFCPUFDest",
-            $std->vBCFCPUFDest,
-            false,
-            "[item $std->item] Valor da BC do ICMS na UF do destinatário"
-        );
+
+        if ($this->version == '4.00') {
+            $this->dom->addChild(
+                $icmsUFDest,
+                "vBCFCPUFDest",
+                $std->vBCFCPUFDest,
+                false,
+                "[item $std->item] Valor da BC do ICMS na UF do destinatário"
+            );
+        }
+
         $this->dom->addChild(
             $icmsUFDest,
             "pFCPUFDest",
