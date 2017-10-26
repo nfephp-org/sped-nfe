@@ -2,7 +2,7 @@
 
 - Roberto L. Machado (Owner, Leading Developer and Project Manager)
 
-## Collaborators in all NFePHP projects (alphabetic order)
+## Collaborators in all NFePHP 24 repositories (alphabetic order)
 - Alberto Leal (Developer)
 - Alex Assunção (Developer)
 - Antonio Spinelli (Developer)
