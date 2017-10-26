@@ -66,9 +66,11 @@ class Tools extends ToolsCommon
             }
             $aXml = $xmls;
         }
-
-        $sxml = implode("", $aXml);
-        $sxml = preg_replace("/<\?xml.*?\?>/", "", $sxml);
+        $ax = [];
+        foreach ($aXml as $xml) {
+            $ax[] = trim(preg_replace("/<\?xml.*?\?>/", "", $xml));
+        }
+        $sxml = trim(implode("", $ax));
         $this->servico(
             $servico,
             $this->config->siglaUF,
