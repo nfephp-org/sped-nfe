@@ -79,6 +79,18 @@
         </homologacao>
     </UF>
     <UF>
+        <sigla>PE</sigla>
+        <homologacao>
+            <NfeStatusServico method="nfeStatusServicoNF" operation="NFeStatusServico4" version="4.00">https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NFeStatusServico4</NfeStatusServico>
+            <NfeAutorizacao method="nfeAutorizacaoLote" operation="NFeAutorizacao4" version="4.00">https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NFeAutorizacao4</NfeAutorizacao>
+            <NfeConsultaProtocolo method="nfeConsultaNF" operation="NFeConsulta4" version="4.00">https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NFeConsultaProtocolo4</NfeConsultaProtocolo>
+            <NfeInutilizacao method="nfeInutilizacaoNF" operation="NFeInutilizacao4" version="4.00">https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NFeInutilizacao4</NfeInutilizacao>
+            <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NFeRetAutorizacao4" version="4.00">https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NFeRetAutorizacao4</NfeRetAutorizacao>
+            <RecepcaoEvento method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="1.00">https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/RecepcaoEvento4</RecepcaoEvento>
+            <NfeConsultaCadastro method="consultaCadastro4" operation="CadConsultaCadastro4" version="4.00">https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/CadConsultaCadastro4</NfeConsultaCadastro>
+        </homologacao>
+    </UF>
+    <UF>
         <sigla>PR</sigla>
         <homologacao>
             <NfeStatusServico method="nfeStatusServicoNF" operation="NFeStatusServico4" version="4.00">https://homologacao.nfe.sefa.pr.gov.br/nfe/NFeStatusServico4</NfeStatusServico>
