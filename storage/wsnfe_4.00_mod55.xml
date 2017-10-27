@@ -109,7 +109,7 @@
             <NfeAutorizacao method="nfeAutorizacaoLote" operation="NFeAutorizacao4" version="4.00">https://nfe-homologacao.sefazrs.rs.gov.br/ws/NfeAutorizacao/NFeAutorizacao4.asmx</NfeAutorizacao>
             <NfeConsultaProtocolo method="nfeConsultaNF" operation="NFeConsulta4" version="4.00">https://nfe-homologacao.sefazrs.rs.gov.br/ws/NfeConsulta/NfeConsulta4.asmx</NfeConsultaProtocolo>
             <NfeInutilizacao method="nfeInutilizacaoNF" operation="NFeInutilizacao4" version="4.00">https://nfe-homologacao.sefazrs.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao4.asmx</NfeInutilizacao>
-            <NFeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NFeRetAutorizacao4" version="4.00">https://nfe-homologacao.sefazrs.rs.gov.br/ws/NfeRetAutorizacao/NFeRetAutorizacao4.asmx</NFeRetAutorizacao>
+            <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NFeRetAutorizacao4" version="4.00">https://nfe-homologacao.sefazrs.rs.gov.br/ws/NfeRetAutorizacao/NFeRetAutorizacao4.asmx</NfeRetAutorizacao>
             <RecepcaoEvento method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="1.00">https://nfe-homologacao.sefazrs.rs.gov.br/ws/recepcaoevento/recepcaoevento4.asmx</RecepcaoEvento>
             <NfeConsultaCadastro method="consultaCadastro4" operation="CadConsultaCadastro4" version="4.00"></NfeConsultaCadastro>
         </homologacao>
