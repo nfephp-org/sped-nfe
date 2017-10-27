@@ -469,6 +469,21 @@ $std->nDraw;
 $elem = $nfe->tagdetExport($std);
 ```
 
+### function tagdetExportInd($std):DOMElement
+Node com Grupo sobre exportação indireta
+
+| Parametro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->item = 1; //item da NFe
+$std->nRE = '123456789012';
+$std->chNFe = '53170924915365000295550550000001951000001952';
+$std->qExport = 1234.123;
+
+$elem = $nfe->tagdetExportInd($std);
+```
 ### function tagRastro($std):DOMElement
 Node com os dados de rastreabilidade do item da NFe
 
