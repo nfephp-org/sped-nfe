@@ -40,9 +40,9 @@ try {
 
 Quando em modo de contigência SVC alguns parametros da NFe devem ser alterados para indicar esse emissão em contigência.
 
-A API irá prover essas alterações automaticamente, mas isso cria um problema, pois o XML da NFe é alterado, portanto será diferente do original que foi criado para ambiente normal, e isso irá impossibilitar a junção com o protocolo de autorização pois os DIGEST do documento original será diferente do documento efetivamente enviado à SEFAZ.
+A API irá prover essas alterações automaticamente, mas isso cria um problema, pois o XML da NFe é alterado, portanto será diferente do original que foi criado para ambiente normal, e isso irá impossibilitar a junção com o protocolo de autorização pois os DIGEST do documento original será diferente do documento efetivamente enviado à SEFAZ em modo de contingência.
 
-Para solucionar esse problema deve ser passado mais um parametro para a classe (um array vazio) e o método irá retornar nesse array as NFe já modificadas que deverão substituir os originais, antes de tentar a junção do protocolo de autorização. É esse documento modificado que deve ser salvo pelo seu sistema e mantido para fins legais.
+Para solucionar esse problema deve ser passado mais um parâmetro, como referência, para a classe (um array vazio) e o método irá retornar nesse array as NFe já modificadas que deverão substituir os originais, antes de tentar a junção do protocolo de autorização. É esse documento modificado que deve ser salvo pelo seu sistema e mantido para fins legais.
 
 ```php
 use NFePHP\NFe\Convert;
@@ -67,7 +67,6 @@ try {
 
     //indica que estamos em modo de contingência, se nada for passado estaremos em modo normal
     $tools->contingency->load($contingency);
-
 
     //envia o xml para pedir autorização ao SEFAZ
     //a variável $xml é uma string contêm o XML da NFe que será enviada 
