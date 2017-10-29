@@ -38,6 +38,7 @@ class Tools extends ToolsCommon
      * @param string $idLote lote number
      * @param int $indSinc flag to use synchronous communication
      * @param bool $compactar flag to compress data with gzip
+     * @param array $xmls array with xmls substitutes if contigency is on
      * @return string soap response xml
      */
     public function sefazEnviaLote(
