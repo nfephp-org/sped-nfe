@@ -2,7 +2,7 @@
 
 Framework para geração e comunicação das NFe com as SEFAZ autorizadoras, e visa fornecer os meios para gerar, assinar e anviar os dados relativos ao projeto Sped NFe das SEFAZ.
 
-> ### Atende os layoouts versão 3.10 e 4.0 da SEFAZ!**
+> ### Atende os layouts versão 3.10 e 4.0 da SEFAZ!**
 
 > ### NOVA Versão 4.0 do layout da SEFAZ (ajustado NT_2016_002_v1.31 de 10/2017)
 
@@ -12,7 +12,7 @@ Framework para geração e comunicação das NFe com as SEFAZ autorizadoras, e v
 
 >*Desativação na SEFAZ da versão anterior 3.10: até 02/04/18.*
 
-*Utilize o chat do Gitter para iniciar discussões especificas sobre o desenvolvimento deste pacote.*
+*Utilize o chat do Gitter para iniciar discussões específicas sobre o desenvolvimento deste pacote.*
 
 [![Chat][ico-gitter]][link-gitter]
 [![Build Status][ico-travis]][link-travis]
@@ -35,11 +35,11 @@ Este pacote é aderente com os [PSR-1], [PSR-2] e [PSR-4]. Se você observar neg
 [PSR-2]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md
 [PSR-4]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md
 
-Não deixe de se cadastrar no [grupo de discussão do NFePHP](http://groups.google.com/group/nfephp) para acompanhar o desenvolvimento e participar das discussões e tirar duvidas!
+Não deixe de se cadastrar no [grupo de discussão do NFePHP](http://groups.google.com/group/nfephp) para acompanhar o desenvolvimento e participar das discussões e tirar dúvidas!
 
 ## Install
 
-**Este pacote esta listado no [Packgist](https://packagist.org/) foi desenvolvido para uso do [Composer](https://getcomposer.org/), portanto não será explicitada nenhuma alternativa de instalação.**
+**Este pacote está listado no [Packgist](https://packagist.org/) foi desenvolvido para uso do [Composer](https://getcomposer.org/), portanto não será explicitada nenhuma alternativa de instalação.**
 
 *E deve ser instalado com:*
 ```bash
@@ -71,7 +71,7 @@ composer require nfephp-org/sped-nfe:dev-master
 
 ## Requirements
 
-Para que este pacote possa funcionar são necessarios os seguintes requisitos do PHP e outros pacotes dos quais esse depende.
+Para que este pacote possa funcionar são necessários os seguintes requisitos do PHP e outros pacotes dos quais esse depende.
 
 - PHP 5.6 ou PHP 7.x (recomendável PHP 7.x) 
 - ext-curl
@@ -99,7 +99,7 @@ Para que este pacote possa funcionar são necessarios os seguintes requisitos do
 
 **Estamos em busca de *doadores* e *patrocinadores* para ajudar a financiar parte do desenvolvimento deste pacote e de outros pacotes, aqueles que estiverem interessados por favor entrem em contato com o autor pelo email linux.rlm@gmail.com** 
 
-Este é um projeto totalmente *OpenSource*, para usa-lo, copia-lo e modifica-lo você não paga absolutamente nada. Porém para continuarmos a mante-lo de forma adequada é necessária alguma contribuição seja feita, seja auxiliando na codificação, na documentação, na realização de testes e identificação de falhas e BUGs.
+Este é um projeto totalmente *OpenSource*, para usá-lo, copia-lo e modificá-lo você não paga absolutamente nada. Porém para continuarmos a mantê-lo de forma adequada é necessária alguma contribuição seja feita, seja auxiliando na codificação, na documentação, na realização de testes e identificação de falhas e BUGs.
 
 Mas também, caso você ache que qualquer informação obtida aqui, lhe foi útil e que isso vale de algum dinheiro e está disposto a doar algo, sinta-se livre para enviar qualquer quantia, seja diretamente ao autor ou através do PayPal e do PagSeguro.
 
@@ -110,19 +110,19 @@ Mas também, caso você ache que qualquer informação obtida aqui, lhe foi úti
 <img alt="Doar PagSeguro" src="https://stc.pagseguro.uol.com.br/public/img/botoes/doacoes/120x53-doar.gif"/></a>
 
 
-*Agradecemos a contribuição, dos colegas abaixo indicados, pois sem a ajuda deles o desenvolvimento desse projeto seria muito mais lento e talvez até impossivel.*
+*Agradecemos a contribuição, dos colegas abaixo indicados, pois sem a ajuda deles o desenvolvimento desse projeto seria muito mais lento e talvez até impossível.*
 
 > ### Walber Sales - *Patrocinador Gold*
 
 ## Documentation
 
-O processo de documentação ainda esta no inicio, mas já existem alguns documentos uteis.
+O processo de documentação ainda está no inicio, mas já existem alguns documentos úteis.
 
 [Documentação](docs/Funcionalidades.md)
 
 ## Contributing
 
-Para contribuir com correções de BUGS, melhoria no código, documentação, elaboração de testes ou qualquer outro auxilio técnico e de programação por favor observe o [CONTRIBUTING](CONTRIBUTING.md) e o  [Código de Conduta](CONDUCT.md) para maiores detalhes.
+Para contribuir com correções de BUGS, melhoria no código, documentação, elaboração de testes ou qualquer outro auxílio técnico e de programação por favor observe o [CONTRIBUTING](CONTRIBUTING.md) e o  [Código de Conduta](CONDUCT.md) para maiores detalhes.
 
 ## Change log
 
