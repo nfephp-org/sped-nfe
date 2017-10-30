@@ -4017,7 +4017,7 @@ class Make
                     $icmsSN,
                     'vFCPST',
                     $std->vFCPST,
-                    true,
+                    false,
                     "[item $std->item] Valor do FCP retido por Substituição Tributária"
                 );
                 $this->dom->addChild(
