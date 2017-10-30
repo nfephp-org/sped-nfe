@@ -4176,7 +4176,7 @@ class Make
                     $icmsSN,
                     'vFCPSTRet',
                     $std->vFCPSTRet,
-                    true,
+                    false,
                     "[item $std->item] Valor do FCP retido anteiormente por "
                         . "Substituição Tributária"
                 );
