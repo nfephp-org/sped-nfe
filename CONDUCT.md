@@ -2,7 +2,7 @@
 
 Como contribuidores e mantenedores deste projeto, e no interesse de promover uma comunidade aberta e acolhedora, nós nos comprometemos a respeitar todas as pessoas que contribuem através do registro de falhas, postando pedidos de funcionalidades, atualizando a documentação, submetendo "pull requests" ou patches, e outras atividades.
 
-Estamos empenhados em tornar a participação neste projecto uma experiência livre de assédio para todos, independentemente do nível de experiência, sexo, identidade de gênero e expressão, orientação sexual, deficiência, aparência pessoal, tamanho corporal, raça, etnia, idade, religião ou nacionalidade.
+Estamos empenhados em tornar a participação neste projeto uma experiência livre de assédio para todos, independentemente do nível de experiência, sexo, identidade de gênero e expressão, orientação sexual, deficiência, aparência pessoal, tamanho corporal, raça, etnia, idade, religião ou nacionalidade.
 
 Exemplos de comportamento inaceitável pelos participantes incluem:
 
@@ -13,7 +13,7 @@ Exemplos de comportamento inaceitável pelos participantes incluem:
 * Publicar informações privadas e/ou pessoais, como endereços físicos ou eletrônicos, sem a permissão explícita
 * Outras condutas antiéticas ou não profissionais.
 
-Os mantenedores do projeto têm o direito e a responsabilidade de remover, editar, ou rejeitar comentários, comitar, códificar, editar wikis, problemas e outras contribuições que não estejam alinhadas a este *Código de Conduta*. Ao adotar este *Código de Conduta*, os mantenedores do projeto se comprometem a forma justa e coerente a aplicar estes princípios a todos os aspectos da gestão do projeto. Os mantenedores do projeto que não seguem ou não fazem cumprir esse *Código de Conduta* podem ser permanentemente removidos da equipe do projeto.
+Os mantenedores do projeto têm o direito e a responsabilidade de remover, editar, ou rejeitar comentários, comitar, codificar, editar wikis, problemas e outras contribuições que não estejam alinhadas a este *Código de Conduta*. Ao adotar este *Código de Conduta*, os mantenedores do projeto se comprometem a forma justa e coerente a aplicar estes princípios a todos os aspectos da gestão do projeto. Os mantenedores do projeto que não seguem ou não fazem cumprir esse *Código de Conduta* podem ser permanentemente removidos da equipe do projeto.
 
 Este *Código de Conduta* aplica-se tanto dentro dos espaços do projeto e em espaços públicos quando um indivíduo está representando o projeto ou sua comunidade em uma ação direta ou pessoal. Pontos de vista pessoais, crenças e valores dos indivíduos não refletem necessariamente os desta organização ou de outros indivíduos e organizações afiliadas.
 
