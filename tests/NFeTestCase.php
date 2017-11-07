@@ -2,13 +2,15 @@
 
 namespace NFePHP\NFe\Tests;
 
-class NFeTestCase extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class NFeTestCase extends TestCase
 {
     public $fixturesPath = '';
     public $configJson = '';
     public $contentpfx = '';
     public $passwordpfx = '';
-    
+
     public function __construct()
     {
         $this->fixturesPath = dirname(__FILE__) . '/fixtures/';
