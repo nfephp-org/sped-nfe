@@ -949,6 +949,7 @@ Node referente a informação do Imposto devolvido
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
+$std->item = 1; //item da NFe
 $std->pDevol = 2.00;
 $std->vIPIDevol = 123.36;
 
