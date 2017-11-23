@@ -738,6 +738,8 @@ class Make
         $possible = [
             'cUF',
             'AAMM',
+            'CNPJ',
+            'CPF',
             'IE',
             'mod',
             'serie',
@@ -5152,11 +5154,12 @@ class Make
     public function tagimpostoDevol($std)
     {
         $possible = [
+            'item',
             'pDevol',
             'vIPIDevol'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         //totalizador
         $this->stdTot->vIPIDevol += (float) $std->vIPIDevol;
 

@@ -128,6 +128,8 @@ Node referente a Nota Fiscal referenciada de produtor rural
 $std = new stdClass();
 $std->cUF = 35;
 $std->AAMM = 1502;
+$std->CNPJ;
+$std->CPF;
 $std->IE = 'ISENTO';
 $std->mod = '04';
 $std->serie = 0;
@@ -949,6 +951,7 @@ Node referente a informação do Imposto devolvido
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
+$std->item = 1; //item da NFe
 $std->pDevol = 2.00;
 $std->vIPIDevol = 123.36;
 
