@@ -5977,6 +5977,14 @@ class Make
     public function tagpag($std)
     {
         $pag = $this->dom->createElement("pag");
+
+        if ($this->version == '3.10') {
+            $this->aPag[] = $pag;
+            $this->domTagPag($pag, $std);
+
+            return $pag;
+        }
+
         //incluso no layout 4.00
         $vTroco = !empty($std->vTroco) ? $std->vTroco : null;
         $this->dom->addChild(
@@ -5986,7 +5994,9 @@ class Make
             false,
             "Valor do troco"
         );
-        return $this->aPag[] = $pag;
+
+        $this->aPag[] = $pag;
+        return $pag;
     }
 
     /**
@@ -5998,6 +6008,30 @@ class Make
      */
     public function tagdetPag($std)
     {
+        $detPag = $this->dom->createElement("detPag");
+        $this->domTagPag($detPag, $std);
+
+        $n = count($this->aPag);
+        $node = $this->aPag[$n-1]->getElementsByTagName("vTroco")->item(0);
+        if (!empty($node)) {
+            $this->aPag[$n-1]->insertBefore($detPag, $node);
+        } else {
+            $this->dom->appChild($this->aPag[$n-1], $detPag, 'Falta tag "Pag"');
+        }
+        return $detPag;
+    }
+
+
+    /**
+     * Monta o DOM da tag de pagamento
+     * Utilizado em `tagpag` e `tagdetPag`
+     * Apenas para o modelo 65 NFCe
+     * @param $domPag
+     * @param stdClass $std
+     * @return DOMElement
+     */
+    private function domTagPag($domPag, $std)
+    {
         $possible = [
             'tPag',
             'vPag',
@@ -6007,24 +6041,25 @@ class Make
             'tpIntegra'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
-        $detPag = $this->dom->createElement("detPag");
+
         $this->dom->addChild(
-            $detPag,
+            $domPag,
             "tPag",
             $std->tPag,
             true,
             "Forma de pagamento"
         );
         $this->dom->addChild(
-            $detPag,
+            $domPag,
             "vPag",
             $std->vPag,
             true,
             "Valor do Pagamento"
         );
+
         if ($std->tBand != '') {
             $card = $this->dom->createElement("card");
+
             $this->dom->addChild(
                 $card,
                 "tpIntegra",
@@ -6053,16 +6088,11 @@ class Make
                 true,
                 "Número de autorização da operação cartão de crédito e/ou débito"
             );
-            $this->dom->appChild($detPag, $card, "Inclusão do node Card");
+
+            $this->dom->appChild($domPag, $card, "Inclusão do node Card");
         }
-        $n = count($this->aPag);
-        $node = $this->aPag[$n-1]->getElementsByTagName("vTroco")->item(0);
-        if (!empty($node)) {
-            $this->aPag[$n-1]->insertBefore($detPag, $node);
-        } else {
-            $this->dom->appChild($this->aPag[$n-1], $detPag, 'Falta tag "Pag"');
-        }
-        return $detPag;
+
+        return $domPag;
     }
 
     /**
