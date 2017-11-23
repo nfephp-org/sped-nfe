@@ -738,6 +738,8 @@ class Make
         $possible = [
             'cUF',
             'AAMM',
+            'CNPJ',
+            'CPF',
             'IE',
             'mod',
             'serie',

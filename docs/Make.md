@@ -128,6 +128,8 @@ Node referente a Nota Fiscal referenciada de produtor rural
 $std = new stdClass();
 $std->cUF = 35;
 $std->AAMM = 1502;
+$std->CNPJ;
+$std->CPF;
 $std->IE = 'ISENTO';
 $std->mod = '04';
 $std->serie = 0;
