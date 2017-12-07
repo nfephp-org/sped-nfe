@@ -1068,7 +1068,7 @@ Node com os dados da tranportadora
 $std = new stdClass();
 $std->xNome = 'Rodo Fulano';
 $std->IE = '12345678901';
-$std->xEnder = 'Rua Um, sem numero'
+$std->xEnder = 'Rua Um, sem numero';
 $std->xMun = 'Cotia';
 $std->UF = 'SP';
 $std->CNPJ = '12345678901234';//só pode haver um ou CNPJ ou CPF, se um deles é especificado o outro deverá ser null
@@ -1085,11 +1085,11 @@ Node referente a retenção de ICMS do serviço de transporte
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
-$std->vServ = 240.00
+$std->vServ = 240.00;
 $std->vBCRet = 240.00;
 $std->pICMSRet = 1.00;
 $std->vICMSRet = 2.40;
-$std->CFOP = '5353'
+$std->CFOP = '5353';
 $std->cMunFG = '3518800';
 
 $elem = $nfe->tagveicTransp($std);
@@ -1103,9 +1103,9 @@ Node para informação do veículo trator
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
-$std->placa = 'ABC1111'
-$std->UF = 'RJ'
-$std->RNTC = '999999'
+$std->placa = 'ABC1111';
+$std->UF = 'RJ';
+$std->RNTC = '999999';
 
 $elem = $nfe->tagveicTransp($std);
 ```
@@ -1118,9 +1118,9 @@ Node para informar os reboques/Dolly
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
-$std->placa = 'BCB0897'
-$std->UF = 'SP'
-$std->RNTC = '123456'
+$std->placa = 'BCB0897';
+$std->UF = 'SP';
+$std->RNTC = '123456';
 $std->vagao = null;
 $std->balsa = null;
 
