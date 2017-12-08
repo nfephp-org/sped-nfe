@@ -802,7 +802,7 @@ Formato ”CFOP9999”.</xs:documentation>
 													<xs:simpleType>
 														<xs:restriction base="xs:string">
 															<xs:whiteSpace value="preserve"/>
-															<xs:pattern value="[0-9]{0}|[0-9]{8}|[0-9]{12,14}"/>
+															<xs:pattern value="SEM GTIN|[0-9]{0}|[0-9]{8}|[0-9]{12,14}"/>
 														</xs:restriction>
 													</xs:simpleType>
 												</xs:element>
@@ -927,7 +927,7 @@ Formato ”CFOP9999”.</xs:documentation>
 													<xs:simpleType>
 														<xs:restriction base="xs:string">
 															<xs:whiteSpace value="preserve"/>
-															<xs:pattern value="[0-9]{0}|[0-9]{8}|[0-9]{12,14}"/>
+															<xs:pattern value="SEM GTIN|[0-9]{0}|[0-9]{8}|[0-9]{12,14}"/>
 														</xs:restriction>
 													</xs:simpleType>
 												</xs:element>
