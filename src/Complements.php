@@ -28,7 +28,7 @@ class Complements
         $func = "add".$key."Protocol";
         return self::$func($request, $response);
     }
-    
+
     /**
      * Add tags B2B, as example ANFAVEA
      * @param  string $nfe xml nfe string content
@@ -75,7 +75,7 @@ class Complements
         $nfeb2bXMLString = str_replace(array("\n","\r","\s"), '', $nfeb2bXML);
         return (string) $nfeb2bXMLString;
     }
-    
+
     /**
      * Add cancel protocol to a autorized NFe
      * if event is not a cancellation will return
@@ -103,7 +103,7 @@ class Complements
         }
         $chaveNFe = $proNFe->getElementsByTagName('chNFe')->item(0)->nodeValue;
         $tpAmb = $domnfe->getElementsByTagName('tpAmb')->item(0)->nodeValue;
-        
+
         $domcanc = new DOMDocument('1.0', 'utf-8');
         $domcanc->formatOutput = false;
         $domcanc->preserveWhiteSpace = false;
@@ -114,7 +114,7 @@ class Complements
             $cStat = $evento->getElementsByTagName('cStat')
                 ->item(0)
                 ->nodeValue;
-            $tpAmb = $evento->getElementsByTagName('tpAmb')
+            $nProt = $evento->getElementsByTagName('nProt')
                 ->item(0)
                 ->nodeValue;
             $chaveEvento = $evento->getElementsByTagName('chNFe')
@@ -130,6 +130,9 @@ class Complements
                 $proNFe->getElementsByTagName('cStat')
                     ->item(0)
                     ->nodeValue = '101';
+                $proNFe->getElementsByTagName('nProt')
+                    ->item(0)
+                    ->nodeValue = $nProt;
                 $proNFe->getElementsByTagName('xMotivo')
                     ->item(0)
                     ->nodeValue = 'Cancelamento de NF-e homologado';
@@ -139,7 +142,7 @@ class Complements
         }
         return (string) $procXML;
     }
-    
+
     /**
      * Authorize Inutilization of numbers
      * @param string $request
@@ -164,7 +167,7 @@ class Complements
         $serie = $infInut->getElementsByTagName('serie')->item(0)->nodeValue;
         $nNFIni = $infInut->getElementsByTagName('nNFIni')->item(0)->nodeValue;
         $nNFFin = $infInut->getElementsByTagName('nNFFin')->item(0)->nodeValue;
-        
+
         $ret = new DOMDocument('1.0', 'UTF-8');
         $ret->preserveWhiteSpace = false;
         $ret->formatOutput = false;
@@ -221,7 +224,7 @@ class Complements
         $req->preserveWhiteSpace = false;
         $req->formatOutput = false;
         $req->loadXML($request);
-        
+
         $nfe = $req->getElementsByTagName('NFe')->item(0);
         $infNFe = $req->getElementsByTagName('infNFe')->item(0);
         $versao = $infNFe->getAttribute("versao");
@@ -229,7 +232,7 @@ class Complements
         $digNFe = $req->getElementsByTagName('DigestValue')
             ->item(0)
             ->nodeValue;
-                
+
         $ret = new DOMDocument('1.0', 'UTF-8');
         $ret->preserveWhiteSpace = false;
         $ret->formatOutput = false;
@@ -264,7 +267,7 @@ class Complements
             $versao
         );
     }
-    
+
     /**
      * Authorize Event
      * @param string $request
@@ -283,7 +286,7 @@ class Complements
         //extrai tag evento do xml origem (solicitação)
         $event = $ev->getElementsByTagName('evento')->item(0);
         $versao = $event->getAttribute('versao');
-        
+
         $ret = new \DOMDocument('1.0', 'UTF-8');
         $ret->preserveWhiteSpace = false;
         $ret->formatOutput = false;
@@ -315,7 +318,7 @@ class Complements
             $versao
         );
     }
-    
+
     /**
      * Join the pieces of the source document with those of the answer
      * @param string $first
