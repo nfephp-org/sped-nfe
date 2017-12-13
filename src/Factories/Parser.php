@@ -42,27 +42,27 @@ class Parser
      */
     protected $volId = -1;
     /**
-     * @var stdClass
+     * @var stdClass|null
      */
     protected $stdNFP;
     /**
-     * @var stdClass
+     * @var stdClass|null
      */
     protected $stdEmit;
     /**
-     * @var stdClass
+     * @var stdClass|null
      */
     protected $stdDest;
     /**
-     * @var stdClass
+     * @var stdClass|null
      */
     protected $stdRetirada;
     /**
-     * @var stdClass
+     * @var stdClass|null
      */
     protected $stdEntrega;
     /**
-     * @var stdClass
+     * @var stdClass|null
      */
     protected $stdAutXML;
     /**
@@ -94,7 +94,7 @@ class Parser
      */
     protected $stdCOFINSST;
     /**
-     * @var stdClass
+     * @var stdClass|null
      */
     protected $stdTransporta;
 
@@ -113,7 +113,7 @@ class Parser
     /**
      * Convert txt to XML
      * @param array $nota
-     * @return string
+     * @return string|null
      */
     public function toXml($nota)
     {
@@ -775,7 +775,6 @@ class Parser
 
     /**
      * Create tag comb [LA]
-     * @param stdClass $std
      * @return void
      */
     protected function buildLAEntity()

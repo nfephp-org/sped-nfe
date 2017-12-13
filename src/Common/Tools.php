@@ -30,6 +30,7 @@ use NFePHP\NFe\Factories\Contingency;
 use NFePHP\NFe\Factories\ContingencyNFe;
 use NFePHP\NFe\Factories\Header;
 use NFePHP\NFe\Factories\QRCode;
+use SoapHeader;
 
 class Tools
 {
@@ -117,9 +118,9 @@ class Tools
     protected $urlPortal = 'http://www.portalfiscal.inf.br/nfe';
     /**
      * urlcUF
-     * @var string
+     * @var int
      */
-    protected $urlcUF = '';
+    protected $urlcUF;
     /**
      * urlVersion
      * @var string
@@ -147,9 +148,9 @@ class Tools
      */
     protected $urlAction = '';
     /**
-     * @var \SOAPHeader
+     * @var \SoapHeader | null
      */
-    protected $objHeader;
+    protected $objHeader = null;
     /**
      * @var string
      */
@@ -441,7 +442,7 @@ class Tools
      * Assembles all the necessary parameters for soap communication
      * @param string $service
      * @param string $uf
-     * @param string $tpAmb
+     * @param int $tpAmb
      * @param bool $ignoreContingency
      * @return void
      */
@@ -509,9 +510,9 @@ class Tools
             . $this->urlMethod
             . "\"";
         //montagem do SOAP Header
-        //para versões posteriores a 3.10 não incluir o SOAPHeader !!!!
+        //para versões posteriores a 3.10 não incluir o SoapHeader !!!!
         if ($this->versao < '4.00') {
-            $this->objHeader = new \SOAPHeader(
+            $this->objHeader = new SoapHeader(
                 $this->urlNamespace,
                 'nfeCabecMsg',
                 ['cUF' => $this->urlcUF, 'versaoDados' => $this->urlVersion]

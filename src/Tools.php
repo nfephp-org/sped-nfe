@@ -187,9 +187,6 @@ class Tools extends ToolsCommon
             $tpAmb = $this->tpAmb;
         }
         $xJust = Strings::replaceSpecialsChars($xJust);
-        $nSerie = (integer) $nSerie;
-        $nIni = (integer) $nIni;
-        $nFin = (integer) $nFin;
         $servico = 'NfeInutilizacao';
         $this->checkContingencyForWebServices($servico);
         //carrega serviço
