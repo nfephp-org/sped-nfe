@@ -1198,31 +1198,16 @@ e também **obrigatório para NFe (modelo 55)** a partir do layout 4.00
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 
-Versão 3.10
 
 ```php
 $std = new stdClass();
-$std->tPag = '03';
-$std->vPag = 200.00; //Obs: deve ser o informado o valor total da Nota Fiscal (vPag = vNF), caso contrário a a SEFAZ irá retornar "Rejeição 767" 
-$std->CNPJ = '12345678901234';
-$std->tBand = '01';
-$std->cAut = '3333333';
-
-$std->tpIntegra = 1; //incluso na NT 2015/002
-$elem = $nfe->tagpag($std);
-```
-
-Versão 4.00
-
-```php
-$std = new stdClass();
-$std->vTroco = null; //incluso no layout 4.00
+$std->vTroco = null; //incluso no layout 4.00, obrigatório informar para NFCe (65)
 
 $elem = $nfe->tagpag($std);
 ```
 
 ### function tagdetPag($std):DOMElement
-Node com o detalhamento da forma de pagamento **OBRIGATÓRIO para NFCe partir do layout 4.00**
+Node com o detalhamento da forma de pagamento **OBRIGATÓRIO para NFCe**, e **não deve ser usado para NFe (55)**
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
@@ -1234,7 +1219,6 @@ $std->vPag = 200.00; //Obs: deve ser informado o valor pago pelo cliente
 $std->CNPJ = '12345678901234';
 $std->tBand = '01';
 $std->cAut = '3333333';
-
 $std->tpIntegra = 1; //incluso na NT 2015/002
 
 $elem = $nfe->tagdetPag($std);

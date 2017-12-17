@@ -420,7 +420,7 @@ class Make
      * @param  stdClass $std
      * @return DOMElement
      */
-    public function taginfNFe($std)
+    public function taginfNFe(stdClass $std)
     {
         $possible = ['Id', 'versao', 'pk_nItem'];
         $std = $this->equilizeParameters($std, $possible);
@@ -447,7 +447,7 @@ class Make
      * @param  stdClass $std
      * @return DOMElement
      */
-    public function tagide($std)
+    public function tagide(stdClass $std)
     {
         $possible = [
             'cUF',
@@ -656,7 +656,7 @@ class Make
      * @param  stdClass $std
      * @return DOMElement
      */
-    public function tagrefNFe($std)
+    public function tagrefNFe(stdClass $std)
     {
         $possible = ['refNFe'];
         $std = $this->equilizeParameters($std, $possible);
@@ -673,7 +673,7 @@ class Make
      * @param  stdClass $std
      * @return DOMElement
      */
-    public function tagrefNF($std)
+    public function tagrefNF(stdClass $std)
     {
         $possible = ['cUF', 'AAMM', 'CNPJ', 'mod', 'serie', 'nNF'];
         $std = $this->equilizeParameters($std, $possible);
@@ -733,7 +733,7 @@ class Make
      * @param  stdClass $std
      * @return DOMElement
      */
-    public function tagrefNFP($std)
+    public function tagrefNFP(stdClass $std)
     {
         $possible = [
             'cUF',
@@ -816,7 +816,7 @@ class Make
      * @param  stdClass $std
      * @return DOMElement
      */
-    public function tagrefCTe($std)
+    public function tagrefCTe(stdClass $std)
     {
         $possible = ['refCTe'];
         $std = $this->equilizeParameters($std, $possible);
@@ -833,7 +833,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagrefECF($std)
+    public function tagrefECF(stdClass $std)
     {
         $possible = ['mod', 'nECF', 'nCOO'];
         $std = $this->equilizeParameters($std, $possible);
@@ -872,7 +872,7 @@ class Make
      * @param  stdClass $std
      * @return DOMElement
      */
-    public function tagemit($std)
+    public function tagemit(stdClass $std)
     {
         $possible = [
             'xNome',
@@ -961,7 +961,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagenderEmit($std)
+    public function tagenderEmit(stdClass $std)
     {
         $possible = [
             'xLgr',
@@ -1068,7 +1068,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagdest($std)
+    public function tagdest(stdClass $std)
     {
         $possible = [
             'xNome',
@@ -1179,7 +1179,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagenderDest($std)
+    public function tagenderDest(stdClass $std)
     {
         $possible = [
             'xLgr',
@@ -1292,7 +1292,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagretirada($std)
+    public function tagretirada(stdClass $std)
     {
         $possible = [
             'xLgr',
@@ -1381,7 +1381,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagentrega($std)
+    public function tagentrega(stdClass $std)
     {
         $possible = [
             'xLgr',
@@ -1467,12 +1467,10 @@ class Make
     /**
      * Pessoas autorizadas para o download do XML da NF-e G50 pai A01
      * tag NFe/infNFe/autXML
-     *
-     * @param stdclass $std
-     *
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagautXML($std)
+    public function tagautXML(stdClass $std)
     {
         $possible = ['CNPJ', 'CPF'];
         $std = $this->equilizeParameters($std, $possible);
@@ -1505,7 +1503,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function taginfAdProd($std)
+    public function taginfAdProd(stdClass $std)
     {
         $possible = ['item', 'infAdProd'];
         $std = $this->equilizeParameters($std, $possible);
@@ -1525,7 +1523,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagprod($std)
+    public function tagprod(stdClass $std)
     {
         $possible = [
             'item',
@@ -1747,7 +1745,7 @@ class Make
      *
      * @return DOMElement|null
      */
-    public function tagNVE($std)
+    public function tagNVE(stdClass $std)
     {
         $possible = ['item','NVE'];
         $std = $this->equilizeParameters($std, $possible);
@@ -1770,7 +1768,7 @@ class Make
      * @param  stdClass $std
      * @return DOMElement
      */
-    public function tagCEST($std)
+    public function tagCEST(stdClass $std)
     {
         $possible = ['item', 'CEST', 'indEscala', 'CNPJFab'];
         $std = $this->equilizeParameters($std, $possible);
@@ -1810,7 +1808,7 @@ class Make
      * @param  stdClass $std
      * @return DOMElement
      */
-    public function tagRECOPI($std)
+    public function tagRECOPI(stdClass $std)
     {
         $possible = ['item', 'nRECOPI'];
         $std = $this->equilizeParameters($std, $possible);
@@ -1826,7 +1824,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagDI($std)
+    public function tagDI(stdClass $std)
     {
         $possible = [
             'item',
@@ -1935,7 +1933,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagadi($std)
+    public function tagadi(stdClass $std)
     {
         $possible = [
             'item',
@@ -1999,7 +1997,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagdetExport($std)
+    public function tagdetExport(stdClass $std)
     {
         $possible = [
             'item',
@@ -2026,7 +2024,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagdetExportInd($std)
+    public function tagdetExportInd(stdClass $std)
     {
         $possible = [
             'item',
@@ -2070,7 +2068,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagRastro($std)
+    public function tagRastro(stdClass $std)
     {
         $possible = [
             'item',
@@ -2129,7 +2127,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagveicProd($std)
+    public function tagveicProd(stdClass $std)
     {
         $possible = [
             'item',
@@ -2341,7 +2339,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagmed($std)
+    public function tagmed(stdClass $std)
     {
         $possible = [
             'item',
@@ -2414,7 +2412,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagarma($std)
+    public function tagarma(stdClass $std)
     {
         $possible = [
             'item',
@@ -2471,7 +2469,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagcomb($std)
+    public function tagcomb(stdClass $std)
     {
         $possible = [
             'item',
@@ -2612,7 +2610,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagencerrante($std)
+    public function tagencerrante(stdClass $std)
     {
         $possible = [
             'item',
@@ -2671,7 +2669,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagimposto($std)
+    public function tagimposto(stdClass $std)
     {
         $possible = ['item','vTotTrib'];
         $std = $this->equilizeParameters($std, $possible);
@@ -2698,7 +2696,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagICMS($std)
+    public function tagICMS(stdClass $std)
     {
         $possible = [
             'item',
@@ -3628,7 +3626,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagICMSPart($std)
+    public function tagICMSPart(stdClass $std)
     {
         $possible = [
             'item',
@@ -3774,7 +3772,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagICMSST($std)
+    public function tagICMSST(stdClass $std)
     {
         $possible = [
             'item',
@@ -3847,7 +3845,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagICMSSN($std)
+    public function tagICMSSN(stdClass $std)
     {
         $possible = [
             'item',
@@ -4337,7 +4335,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagICMSUFDest($std)
+    public function tagICMSUFDest(stdClass $std)
     {
         $possible = [
             'item',
@@ -4432,7 +4430,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagIPI($std)
+    public function tagIPI(stdClass $std)
     {
         $possible = [
             'item',
@@ -4557,7 +4555,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagII($std)
+    public function tagII(stdClass $std)
     {
         $possible = [
             'item',
@@ -4610,7 +4608,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagPIS($std)
+    public function tagPIS(stdClass $std)
     {
         $possible = [
             'item',
@@ -4788,7 +4786,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagPISST($std)
+    public function tagPISST(stdClass $std)
     {
         $possible = [
             'item',
@@ -4846,7 +4844,7 @@ class Make
      * @param  stdClass $std
      * @return DOMElement
      */
-    public function tagCOFINS($std)
+    public function tagCOFINS(stdClass $std)
     {
         $possible = [
             'item',
@@ -4947,7 +4945,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagCOFINSST($std)
+    public function tagCOFINSST(stdClass $std)
     {
         $possible = [
             'item',
@@ -5002,10 +5000,10 @@ class Make
     /**
      * Grupo ISSQN U01 pai M01
      * tag NFe/infNFe/det[]/imposto/ISSQN (opcional)
-     * @param  string stdClass $std
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagISSQN($std)
+    public function tagISSQN(stdClass $std)
     {
         $possible = [
             'item',
@@ -5151,7 +5149,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagimpostoDevol($std)
+    public function tagimpostoDevol(stdClass $std)
     {
         $possible = [
             'item',
@@ -5190,7 +5188,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagICMSTot($std)
+    public function tagICMSTot(stdClass $std)
     {
         $this->buildTotal();
         $vBC = !empty($std->vBC) ? $std->vBC : $this->stdTot->vBC;
@@ -5417,7 +5415,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagISSQNTot($std)
+    public function tagISSQNTot(stdClass $std)
     {
         $possible = [
             'vServ',
@@ -5531,7 +5529,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagretTrib($std)
+    public function tagretTrib(stdClass $std)
     {
         $possible = [
             'vRetPIS',
@@ -5604,7 +5602,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagtransp($std)
+    public function tagtransp(stdClass $std)
     {
         $this->transp = $this->dom->createElement("transp");
         $this->dom->addChild(
@@ -5623,7 +5621,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagtransporta($std)
+    public function tagtransporta(stdClass $std)
     {
         $possible = [
             'xNome',
@@ -5701,7 +5699,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagretTransp($std)
+    public function tagretTransp(stdClass $std)
     {
         $possible = [
             'vServ',
@@ -5770,7 +5768,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagveicTransp($std)
+    public function tagveicTransp(stdClass $std)
     {
         $possible = [
             'placa',
@@ -5815,7 +5813,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagreboque($std)
+    public function tagreboque(stdClass $std)
     {
         $possible = [
             'placa',
@@ -5876,7 +5874,7 @@ class Make
      * @param  stdClass $std
      * @return DOMElement
      */
-    public function tagvol($std)
+    public function tagvol(stdClass $std)
     {
         $possible = [
             'item',
@@ -5942,7 +5940,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function taglacres($std)
+    public function taglacres(stdClass $std)
     {
         $lacre = $this->dom->createElement("lacres");
         $this->dom->addChild(
@@ -5967,24 +5965,16 @@ class Make
     }
 
     /**
-     * Grupo de Formas de Pagamento YA01 pai A01
+     * Grupo Pagamento Y pai A01
      * NOTA: Ajustado para NT2016_002_v1.30
      * tag NFe/infNFe/pag (obrigatorio na NT2016_002_v1.30)
-     * Apenas para o modelo 65 NFCe
+     * Obrigatório para 55 e 65
      * @param stdClass $std
      * @return DOMElement
      */
     public function tagpag($std)
     {
         $pag = $this->dom->createElement("pag");
-
-        if ($this->version == '3.10') {
-            $this->aPag[] = $pag;
-            $this->domTagPag($pag, $std);
-
-            return $pag;
-        }
-
         //incluso no layout 4.00
         $vTroco = !empty($std->vTroco) ? $std->vTroco : null;
         $this->dom->addChild(
@@ -5994,11 +5984,9 @@ class Make
             false,
             "Valor do troco"
         );
-
-        $this->aPag[] = $pag;
-        return $pag;
+        return $this->aPag[] = $pag;
     }
-
+    
     /**
      * Grupo de Formas de Pagamento YA01a pai YA01
      * NOTA: Ajuste nt_2016_002_v1.30
@@ -6007,30 +5995,6 @@ class Make
      * @return DOMElement
      */
     public function tagdetPag($std)
-    {
-        $detPag = $this->dom->createElement("detPag");
-        $this->domTagPag($detPag, $std);
-
-        $n = count($this->aPag);
-        $node = $this->aPag[$n-1]->getElementsByTagName("vTroco")->item(0);
-        if (!empty($node)) {
-            $this->aPag[$n-1]->insertBefore($detPag, $node);
-        } else {
-            $this->dom->appChild($this->aPag[$n-1], $detPag, 'Falta tag "Pag"');
-        }
-        return $detPag;
-    }
-
-
-    /**
-     * Monta o DOM da tag de pagamento
-     * Utilizado em `tagpag` e `tagdetPag`
-     * Apenas para o modelo 65 NFCe
-     * @param $domPag
-     * @param stdClass $std
-     * @return DOMElement
-     */
-    private function domTagPag($domPag, $std)
     {
         $possible = [
             'tPag',
@@ -6041,25 +6005,24 @@ class Make
             'tpIntegra'
         ];
         $std = $this->equilizeParameters($std, $possible);
-
+        
+        $detPag = $this->dom->createElement("detPag");
         $this->dom->addChild(
-            $domPag,
+            $detPag,
             "tPag",
             $std->tPag,
             true,
             "Forma de pagamento"
         );
         $this->dom->addChild(
-            $domPag,
+            $detPag,
             "vPag",
             $std->vPag,
             true,
             "Valor do Pagamento"
         );
-
         if ($std->tBand != '') {
             $card = $this->dom->createElement("card");
-
             $this->dom->addChild(
                 $card,
                 "tpIntegra",
@@ -6088,11 +6051,16 @@ class Make
                 true,
                 "Número de autorização da operação cartão de crédito e/ou débito"
             );
-
-            $this->dom->appChild($domPag, $card, "Inclusão do node Card");
+            $this->dom->appChild($detPag, $card, "Inclusão do node Card");
         }
-
-        return $domPag;
+        $n = count($this->aPag);
+        $node = $this->aPag[$n-1]->getElementsByTagName("vTroco")->item(0);
+        if (!empty($node)) {
+            $this->aPag[$n-1]->insertBefore($detPag, $node);
+        } else {
+            $this->dom->appChild($this->aPag[$n-1], $detPag, 'Falta tag "Pag"');
+        }
+        return $detPag;
     }
 
     /**
@@ -6101,7 +6069,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagfat($std)
+    public function tagfat(stdClass $std)
     {
         $possible = [
             'nFat',
@@ -6152,7 +6120,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagdup($std)
+    public function tagdup(stdClass $std)
     {
         $possible = [
             'nDup',
@@ -6194,7 +6162,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function taginfAdic($std)
+    public function taginfAdic(stdClass $std)
     {
         $possible = ['infAdFisco', 'infCpl'];
         $std = $this->equilizeParameters($std, $possible);
@@ -6224,7 +6192,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagobsCont($std)
+    public function tagobsCont(stdClass $std)
     {
         $possible = ['xCampo', 'xTexto'];
         $std = $this->equilizeParameters($std, $possible);
@@ -6250,7 +6218,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagobsFisco($std)
+    public function tagobsFisco(stdClass $std)
     {
         $possible = ['xCampo', 'xTexto'];
         $std = $this->equilizeParameters($std, $possible);
@@ -6307,7 +6275,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagexporta($std)
+    public function tagexporta(stdClass $std)
     {
         $possible = ['UFSaidaPais', 'xLocExporta', 'xLocDespacho'];
         $std = $this->equilizeParameters($std, $possible);
@@ -6343,7 +6311,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagcompra($std)
+    public function tagcompra(stdClass $std)
     {
         $possible = ['xNEmp', 'xPed', 'xCont'];
         $std = $this->equilizeParameters($std, $possible);
@@ -6379,7 +6347,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagcana($std)
+    public function tagcana(stdClass $std)
     {
         $possible = [
             'safra',
@@ -6459,7 +6427,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagforDia($std)
+    public function tagforDia(stdClass $std)
     {
         $forDia = $this->dom->createElement("forDia");
         $forDia->setAttribute("dia", $std->dia);
@@ -6481,7 +6449,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagdeduc($std)
+    public function tagdeduc(stdClass $std)
     {
         $possible = ['xDed', 'vDed'];
         $std = $this->equilizeParameters($std, $possible);
@@ -6511,7 +6479,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function taginfNFeSupl($std)
+    public function taginfNFeSupl(stdClass $std)
     {
         $possible = ['qrcode', 'urlChave'];
         $std = $this->equilizeParameters($std, $possible);
@@ -6648,7 +6616,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    protected function buildCOFINSNT($std)
+    protected function buildCOFINSNT(stdClass $std)
     {
         $confinsnt = $this->dom->createElement('COFINSNT');
         $this->dom->addChild(
@@ -6668,7 +6636,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    protected function buildCOFINSoutr($std)
+    protected function buildCOFINSoutr(stdClass $std)
     {
         $confinsoutr = $this->dom->createElement('COFINSOutr');
         $this->dom->addChild(
@@ -6991,10 +6959,10 @@ class Make
     /**
      * Includes missing or unsupported properties in stdClass
      * @param stdClass $std
-     * @param array $required
+     * @param array $possible
      * @return stdClass
      */
-    protected function equilizeParameters(stdClass $std, array $possible)
+    protected function equilizeParameters(stdClass $std, $possible)
     {
         $arr = get_object_vars($std);
         foreach ($possible as $key) {

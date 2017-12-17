@@ -39,7 +39,7 @@ class Webservices
      * the storage folder
      * @param string $sigla
      * @param string $ambiente "homologacao" ou "producao"
-     * @param string $modelo "55" ou "65"
+     * @param int $modelo "55" ou "65"
      * @return boolean | \stdClass
      */
     public function get($sigla, $ambiente, $modelo)
