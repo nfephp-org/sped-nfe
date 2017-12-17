@@ -182,6 +182,10 @@ class Make
     /**
      * @var array of DOMElements
      */
+    protected $aExportInd = [];
+    /**
+     * @var array of DOMElements
+     */
     protected $aDI = [];
     /**
      * @var array of DOMElements
@@ -2001,6 +2005,7 @@ class Make
     {
         $possible = [
             'item',
+            'nDE',
             'nDraw'
         ];
         $std = $this->equilizeParameters($std, $possible);
@@ -2014,7 +2019,7 @@ class Make
             false,
             $identificador . "[item $std->item] Número do ato concessório de Drawback"
         );
-        $this->aDetExport[$std->item] = $detExport;
+        $this->aDetExport[$std->item][$std->nDE] = $detExport;
         return $detExport;
     }
 
@@ -2028,6 +2033,7 @@ class Make
     {
         $possible = [
             'item',
+            'nDE',
             'nRE',
             'chNFe',
             'qExport'
@@ -2057,7 +2063,11 @@ class Make
             true,
             $identificador . "[item $std->item] Quantidade do item realmente exportado"
         );
-        $this->aDetExport[$std->item]->appendChild($exportInd);
+        $this->aExportInd[$std->item][$std->nDE][] = $exportInd;
+        //colocar a exportInd em seu DetExport respectivo
+        $nodeDetExport = $this->aDetExport[$std->item][$std->nDE];
+        $this->dom->appChild($nodeDetExport, $exportInd);
+        $this->aDetExport[$std->item][$std->nDE] = $nodeDetExport;
         return $exportInd;
     }
 
@@ -2416,6 +2426,7 @@ class Make
     {
         $possible = [
             'item',
+            'nAR',
             'tpArma',
             'nSerie',
             'nCano',
@@ -2455,7 +2466,7 @@ class Make
             . "tipo de funcionamento, comprimento e demais elementos que "
             . "permitam a sua perfeita identificação."
         );
-        $this->aArma[$std->item] = $arma;
+        $this->aArma[$std->item][$std->nAR] = $arma;
         return $arma;
     }
 
@@ -6746,11 +6757,16 @@ class Make
             $this->aProd[$nItem] = $prod;
         }
         //insere detExport
-        foreach ($this->aDetExport as $nItem => $child) {
+        foreach ($this->aDetExport as $nItem => $detexport) {
             $prod = $this->aProd[$nItem];
-            $node = $prod->getElementsByTagName("indTot")->item(0);
-            $prod->insertBefore($child, $node->nextSibling);
-//            $this->dom->appChild($prod, $child, "Inclusão do node detExport");
+            foreach ($detexport as $child) {
+                $node = $prod->getElementsByTagName("xPed")->item(0);
+                if (! empty($node)) {
+                    $prod->insertBefore($child, $node);
+                } else {
+                    $this->dom->appChild($prod, $child, "Inclusão do node DetExport");
+                }
+            }
             $this->aProd[$nItem] = $prod;
         }
         //insere veiculo
@@ -6766,9 +6782,16 @@ class Make
             $this->aProd[$nItem] = $prod;
         }
         //insere armas
-        foreach ($this->aArma as $nItem => $child) {
+        foreach ($this->aArma as $nItem => $arma) {
             $prod = $this->aProd[$nItem];
-            $this->dom->appChild($prod, $child, "Inclusão do node arma");
+            foreach ($arma as $child) {
+                $node = $prod->getElementsByTagName("imposto")->item(0);
+                if (! empty($node)) {
+                    $prod->insertBefore($child, $node);
+                } else {
+                    $this->dom->appChild($prod, $child, "Inclusão do node arma");
+                }
+            }
             $this->aProd[$nItem] = $prod;
         }
         //insere combustivel
