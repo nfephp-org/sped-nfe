@@ -1576,7 +1576,7 @@ class Make
         $this->dom->addChild(
             $prod,
             "cEAN",
-            $std->cEAN,
+            !empty($std->cEAN) ? $std->cEAN : 'SEM GTIN',
             true,
             $identificador . "[item $std->item] GTIN (Global Trade Item Number) do produto, antigo "
             . "código EAN ou código de barras",
@@ -1653,7 +1653,7 @@ class Make
         $this->dom->addChild(
             $prod,
             "cEANTrib",
-            $std->cEANTrib,
+            !empty($std->cEANTrib) ? $std->cEANTrib : 'SEM GTIN',
             true,
             $identificador . "[item $std->item] GTIN (Global Trade Item Number) da unidade tributável, antigo "
             . "código EAN ou código de barras",
@@ -6761,7 +6761,7 @@ class Make
             $prod = $this->aProd[$nItem];
             foreach ($detexport as $child) {
                 $node = $prod->getElementsByTagName("xPed")->item(0);
-                if (! empty($node)) {
+                if (!empty($node)) {
                     $prod->insertBefore($child, $node);
                 } else {
                     $this->dom->appChild($prod, $child, "Inclusão do node DetExport");
