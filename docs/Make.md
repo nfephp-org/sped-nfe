@@ -463,6 +463,7 @@ Node com informações de exportação para o item
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
+$std->nDE; // Indicativo de numero da DetExport
 $std->nRE;
 $std->chNFe;
 $std->qExport;
@@ -480,6 +481,7 @@ Node com Grupo sobre exportação indireta
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
+$std->nDE; // Indicativo de numero da DetExport
 $std->nRE = '123456789012';
 $std->chNFe = '53170924915365000295550550000001951000001952';
 $std->qExport = 1234.123;
@@ -574,6 +576,7 @@ Node com informações e detalhamento de Armamento do item da NFe
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
+$std->nAR; //Indicativo de numero da arma
 $std->tpArma;
 $std->nSerie;
 $std->nCano;
