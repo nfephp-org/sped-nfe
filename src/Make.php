@@ -431,7 +431,7 @@ class Make
         
         $chave = preg_replace('/[^0-9]/', '', $std->Id);
         $this->infNFe = $this->dom->createElement("infNFe");
-        $this->infNFe->setAttribute("Id", 'NFe'.$chave);
+        $this->infNFe->setAttribute("Id", 'NFe' . $chave);
         $this->infNFe->setAttribute(
             "versao",
             $std->versao
@@ -667,7 +667,7 @@ class Make
         
         $num = $this->buildNFref();
         $refNFe = $this->dom->createElement("refNFe", $std->refNFe);
-        $this->dom->appChild($this->aNFref[$num-1], $refNFe);
+        $this->dom->appChild($this->aNFref[$num - 1], $refNFe);
         return $refNFe;
     }
 
@@ -727,7 +727,7 @@ class Make
             true,
             $identificador . "Número do Documento Fiscal"
         );
-        $this->dom->appChild($this->aNFref[$num-1], $refNF);
+        $this->dom->appChild($this->aNFref[$num - 1], $refNF);
         return $refNF;
     }
 
@@ -810,7 +810,7 @@ class Make
             true,
             $identificador . "Número do Documento Fiscal"
         );
-        $this->dom->appChild($this->aNFref[$num-1], $refNFP);
+        $this->dom->appChild($this->aNFref[$num - 1], $refNFP);
         return $refNFP;
     }
 
@@ -827,7 +827,7 @@ class Make
         
         $num = $this->buildNFref();
         $refCTe = $this->dom->createElement("refCTe", $std->refCTe);
-        $this->dom->appChild($this->aNFref[$num-1], $refCTe);
+        $this->dom->appChild($this->aNFref[$num - 1], $refCTe);
         return $refCTe;
     }
 
@@ -866,7 +866,7 @@ class Make
             true,
             $identificador . "Número do Contador de Ordem de Operação - COO"
         );
-        $this->dom->appChild($this->aNFref[$num-1], $refECF);
+        $this->dom->appChild($this->aNFref[$num - 1], $refECF);
         return $refECF;
     }
 
@@ -1088,7 +1088,7 @@ class Make
         $std = $this->equilizeParameters($std, $possible);
 
         $identificador = 'E01 <dest> - ';
-        $flagNome = true;//marca se xNome é ou não obrigatório
+        $flagNome = true; //marca se xNome é ou não obrigatório
         $temIE = $std->IE != '' && $std->IE != 'ISENTO'; // Tem inscrição municipal
         $this->dest = $this->dom->createElement("dest");
         if (!$temIE && $std->indIEDest == 1) {
@@ -1097,7 +1097,7 @@ class Make
         if ($this->mod == '65') {
             $std->indIEDest = 9;
             if ($std->xNome == '') {
-                $flagNome = false;//marca se xNome é ou não obrigatório
+                $flagNome = false; //marca se xNome é ou não obrigatório
             }
         }
         $xNome = $std->xNome;
@@ -1751,7 +1751,7 @@ class Make
      */
     public function tagNVE(stdClass $std)
     {
-        $possible = ['item','NVE'];
+        $possible = ['item', 'NVE'];
         $std = $this->equilizeParameters($std, $possible);
         
         if ($std->NVE == '') {
@@ -2682,7 +2682,7 @@ class Make
      */
     public function tagimposto(stdClass $std)
     {
-        $possible = ['item','vTotTrib'];
+        $possible = ['item', 'vTotTrib'];
         $std = $this->equilizeParameters($std, $possible);
         
         //totalizador dos valores dos itens
@@ -4499,7 +4499,7 @@ class Make
             true,
             "[item $std->item] Código de Enquadramento Legal do IPI"
         );
-        if ($std->CST == '00' || $std->CST == '49'|| $std->CST == '50' || $std->CST == '99') {
+        if ($std->CST == '00' || $std->CST == '49' || $std->CST == '50' || $std->CST == '99') {
             $ipiTrib = $this->dom->createElement('IPITrib');
             $this->dom->addChild(
                 $ipiTrib,
@@ -6065,11 +6065,11 @@ class Make
             $this->dom->appChild($detPag, $card, "Inclusão do node Card");
         }
         $n = count($this->aPag);
-        $node = $this->aPag[$n-1]->getElementsByTagName("vTroco")->item(0);
+        $node = $this->aPag[$n - 1]->getElementsByTagName("vTroco")->item(0);
         if (!empty($node)) {
-            $this->aPag[$n-1]->insertBefore($detPag, $node);
+            $this->aPag[$n - 1]->insertBefore($detPag, $node);
         } else {
-            $this->dom->appChild($this->aPag[$n-1], $detPag, 'Falta tag "Pag"');
+            $this->dom->appChild($this->aPag[$n - 1], $detPag, 'Falta tag "Pag"');
         }
         return $detPag;
     }
@@ -6748,7 +6748,7 @@ class Make
             $prod = $this->aProd[$nItem];
             foreach ($aDI as $child) {
                 $node = $prod->getElementsByTagName("xPed")->item(0);
-                if (! empty($node)) {
+                if (!empty($node)) {
                     $prod->insertBefore($child, $node);
                 } else {
                     $this->dom->appChild($prod, $child, "Inclusão do node DI");
@@ -6786,7 +6786,7 @@ class Make
             $prod = $this->aProd[$nItem];
             foreach ($arma as $child) {
                 $node = $prod->getElementsByTagName("imposto")->item(0);
-                if (! empty($node)) {
+                if (!empty($node)) {
                     $prod->insertBefore($child, $node);
                 } else {
                     $this->dom->appChild($prod, $child, "Inclusão do node arma");
@@ -6797,9 +6797,9 @@ class Make
         //insere combustivel
         foreach ($this->aComb as $nItem => $child) {
             $prod = $this->aProd[$nItem];
-            if (! empty($this->aEncerrante)) {
+            if (!empty($this->aEncerrante)) {
                 $encerrante = $this->aEncerrante[$nItem];
-                if (! empty($encerrante)) {
+                if (!empty($encerrante)) {
                     $this->dom->appChild($child, $encerrante, "inclusão do node encerrante na tag comb");
                 }
             }
