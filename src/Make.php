@@ -6761,7 +6761,7 @@ class Make
             $prod = $this->aProd[$nItem];
             foreach ($detexport as $child) {
                 $node = $prod->getElementsByTagName("xPed")->item(0);
-                if (! empty($node)) {
+                if (!empty($node)) {
                     $prod->insertBefore($child, $node);
                 } else {
                     $this->dom->appChild($prod, $child, "Inclusão do node DetExport");
