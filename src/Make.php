@@ -511,7 +511,8 @@ class Make
             "indPag",
             $std->indPag,
             false,
-            $identificador . "Indicador da forma de pagamento"
+            $identificador . "Indicador da forma de pagamento",
+            true
         );
         $this->dom->addChild(
             $ide,
