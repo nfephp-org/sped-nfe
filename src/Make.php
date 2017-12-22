@@ -1564,7 +1564,14 @@ class Make
         $this->stdTot->vSeg += (float) $std->vSeg;
         $this->stdTot->vDesc += (float) $std->vDesc;
         $this->stdTot->vOutro += (float) $std->vOutro;
-
+        
+        $cean = !empty($std->cEAN) ? $std->cEAN : '';
+        $ceantrib = !empty($std->cEANTrib) ? $std->cEANTrib : '';
+        if ($this->version !== '3.10') {
+            $cean = !empty($cean) ? $cean : 'SEM GTIN';
+            $ceantrib = !empty($ceantrib) ? $ceantrib : 'SEM GTIN';
+        }
+        
         $identificador = 'I01 <prod> - ';
         $prod = $this->dom->createElement("prod");
         $this->dom->addChild(
@@ -1577,7 +1584,7 @@ class Make
         $this->dom->addChild(
             $prod,
             "cEAN",
-            !empty($std->cEAN) ? $std->cEAN : 'SEM GTIN',
+            $cean,
             true,
             $identificador . "[item $std->item] GTIN (Global Trade Item Number) do produto, antigo "
             . "código EAN ou código de barras",
@@ -1654,7 +1661,7 @@ class Make
         $this->dom->addChild(
             $prod,
             "cEANTrib",
-            !empty($std->cEANTrib) ? $std->cEANTrib : 'SEM GTIN',
+            $ceantrib,
             true,
             $identificador . "[item $std->item] GTIN (Global Trade Item Number) da unidade tributável, antigo "
             . "código EAN ou código de barras",
