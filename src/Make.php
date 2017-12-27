@@ -505,15 +505,17 @@ class Make
             true,
             $identificador . "Descrição da Natureza da Operaçãoo"
         );
-        //removido no layout 4.00
-        $this->dom->addChild(
-            $ide,
-            "indPag",
-            $std->indPag,
-            false,
-            $identificador . "Indicador da forma de pagamento",
-            true
-        );
+        // Removido no layout 4.00
+        if ($this->version == '3.10') {
+            $this->dom->addChild(
+                $ide,
+                "indPag",
+                $std->indPag,
+                false,
+                $identificador . "Indicador da forma de pagamento",
+                true
+                );
+        }
         $this->dom->addChild(
             $ide,
             "mod",
