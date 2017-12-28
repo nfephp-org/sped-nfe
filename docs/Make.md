@@ -973,7 +973,7 @@ Node dos totais referentes ao ICMS
 $std = new stdClass();
 $std->vBC = 1000.00;
 $std->vICMS = 1000.00;
-$std->vICMSDesonv = 1000.00;
+$std->vICMSDeson = 1000.00;
 $std->vFCP = 1000.00; //incluso no layout 4.00
 $std->vBCST = 1000.00;
 $std->vST = 1000.00;
