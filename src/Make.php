@@ -428,7 +428,7 @@ class Make
     {
         $possible = ['Id', 'versao', 'pk_nItem'];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $chave = preg_replace('/[^0-9]/', '', $std->Id);
         $this->infNFe = $this->dom->createElement("infNFe");
         $this->infNFe->setAttribute("Id", 'NFe' . $chave);
@@ -479,7 +479,7 @@ class Make
             'xJust'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $this->tpAmb = $std->tpAmb;
         $this->mod = $std->mod;
         $identificador = 'B01 <ide> - ';
@@ -512,7 +512,7 @@ class Make
             $std->indPag,
             false,
             $identificador . "Indicador da forma de pagamento",
-            true
+            false
         );
         $this->dom->addChild(
             $ide,
@@ -665,7 +665,7 @@ class Make
     {
         $possible = ['refNFe'];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $num = $this->buildNFref();
         $refNFe = $this->dom->createElement("refNFe", $std->refNFe);
         $this->dom->appChild($this->aNFref[$num - 1], $refNFe);
@@ -682,7 +682,7 @@ class Make
     {
         $possible = ['cUF', 'AAMM', 'CNPJ', 'mod', 'serie', 'nNF'];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $identificador = 'BA03 <refNF> - ';
         $num = $this->buildNFref();
         $refNF = $this->dom->createElement("refNF");
@@ -751,7 +751,7 @@ class Make
             'nNF'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $identificador = 'BA10 <refNFP> - ';
         $num = $this->buildNFref();
         $refNFP = $this->dom->createElement("refNFP");
@@ -825,7 +825,7 @@ class Make
     {
         $possible = ['refCTe'];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $num = $this->buildNFref();
         $refCTe = $this->dom->createElement("refCTe", $std->refCTe);
         $this->dom->appChild($this->aNFref[$num - 1], $refCTe);
@@ -1400,7 +1400,7 @@ class Make
             'CPF'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $identificador = 'G01 <entrega> - ';
         $this->entrega = $this->dom->createElement("entrega");
         $this->dom->addChild(
@@ -1512,7 +1512,7 @@ class Make
     {
         $possible = ['item', 'infAdProd'];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $infAdProd = $this->dom->createElement(
             "infAdProd",
             Strings::replaceSpecialsChars(substr(trim($std->infAdProd), 0, 500))
@@ -1557,21 +1557,21 @@ class Make
             'nFCI'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         //totalizador
         $this->stdTot->vProd += (float) $std->vProd;
         $this->stdTot->vFrete += (float) $std->vFrete;
         $this->stdTot->vSeg += (float) $std->vSeg;
         $this->stdTot->vDesc += (float) $std->vDesc;
         $this->stdTot->vOutro += (float) $std->vOutro;
-        
+
         $cean = !empty($std->cEAN) ? $std->cEAN : '';
         $ceantrib = !empty($std->cEANTrib) ? $std->cEANTrib : '';
         if ($this->version !== '3.10') {
             $cean = !empty($cean) ? $cean : 'SEM GTIN';
             $ceantrib = !empty($ceantrib) ? $ceantrib : 'SEM GTIN';
         }
-        
+
         $identificador = 'I01 <prod> - ';
         $prod = $this->dom->createElement("prod");
         $this->dom->addChild(
@@ -1761,7 +1761,7 @@ class Make
     {
         $possible = ['item', 'NVE'];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         if ($std->NVE == '') {
             return null;
         }
@@ -1784,7 +1784,7 @@ class Make
     {
         $possible = ['item', 'CEST', 'indEscala', 'CNPJFab'];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $identificador = 'I05b <ctrltST> - ';
         $ctrltST = $this->dom->createElement("ctrltST");
         $this->dom->addChild(
@@ -1824,7 +1824,7 @@ class Make
     {
         $possible = ['item', 'nRECOPI'];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $recopi = $this->dom->createElement("nRECOPI", $std->nRECOPI);
         $this->aRECOPI[$std->item] = $recopi;
         return $recopi;
@@ -1853,7 +1853,7 @@ class Make
             'cExportador'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $identificador = 'I8 <DI> - ';
         $tDI = $this->dom->createElement("DI");
         $this->dom->addChild(
@@ -1957,7 +1957,7 @@ class Make
             'nDraw'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $identificador = 'I25 <adi> - ';
         $adi = $this->dom->createElement("adi");
         $this->dom->addChild(
@@ -2017,7 +2017,7 @@ class Make
             'nDraw'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $identificador = 'I50 <detExport> - ';
         $detExport = $this->dom->createElement("detExport");
         $this->dom->addChild(
@@ -2097,7 +2097,7 @@ class Make
             'cAgreg'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $identificador = 'I80 <rastro> - ';
         $rastro = $this->dom->createElement("rastro");
         $this->dom->addChild(
@@ -2369,7 +2369,7 @@ class Make
             'cProdANVISA',
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $identificador = 'K01 <med> - ';
         $med = $this->dom->createElement("med");
         //incluso no layout 4.00
@@ -2507,7 +2507,7 @@ class Make
             'vCIDE'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $identificador = 'L101 <comb> - ';
         $comb = $this->dom->createElement("comb");
         $this->dom->addChild(
@@ -2640,7 +2640,7 @@ class Make
             'vEncFin'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $identificador = 'LA11 <encerrante> - ';
         $encerrante = $this->dom->createElement("encerrante");
         $this->dom->addChild(
@@ -2692,7 +2692,7 @@ class Make
     {
         $possible = ['item', 'vTotTrib'];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         //totalizador dos valores dos itens
         $this->stdTot->vTotTrib += (float) $std->vTotTrib;
 
@@ -3666,7 +3666,7 @@ class Make
             'UFST'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $icmsPart = $this->dom->createElement("ICMSPart");
         $this->dom->addChild(
             $icmsPart,
@@ -3803,7 +3803,7 @@ class Make
             'vICMSSTDest'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $icmsST = $this->dom->createElement("ICMSST");
         $this->dom->addChild(
             $icmsST,
@@ -3898,7 +3898,7 @@ class Make
             'vICMS',
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         //totalizador
         $this->stdTot->vBC += (float) $std->vBC;
         $this->stdTot->vICMS += (float) $std->vICMS;
@@ -4369,7 +4369,7 @@ class Make
             'vICMSUFRemet'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $this->stdTot->vICMSUFDest += (float) $std->vICMSUFDest;
         $this->stdTot->vFCPUFDest += (float) $std->vFCPUFDest;
         $this->stdTot->vICMSUFRemet += (float) $std->vICMSUFRemet;
@@ -4466,7 +4466,7 @@ class Make
             'vUnid'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         //totalizador
         $this->stdTot->vIPI += (float) $std->vIPI;
 
@@ -4584,7 +4584,7 @@ class Make
             'vIOF'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         //totalizador
         $this->stdTot->vII += (float) $std->vII;
 
@@ -4639,7 +4639,7 @@ class Make
             'vAliqProd'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         //totalizador
         $this->stdTot->vPIS += $std->vPIS;
 
@@ -4816,7 +4816,7 @@ class Make
             'vAliqProd'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $pisst = $this->dom->createElement('PISST');
         $this->dom->addChild(
             $pisst,
@@ -4875,7 +4875,7 @@ class Make
             'vAliqProd'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         //totalizador
         $this->stdTot->vCOFINS += (float) $std->vCOFINS;
 
@@ -4975,7 +4975,7 @@ class Make
             'vAliqProd'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $cofinsst = $this->dom->createElement("COFINSST");
         $this->dom->addChild(
             $cofinsst,
@@ -5044,7 +5044,7 @@ class Make
             'indIncentivo'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $issqn = $this->dom->createElement("ISSQN");
         $this->dom->addChild(
             $issqn,
@@ -5233,13 +5233,13 @@ class Make
         $vFCPUFDest = !empty($std->vFCPUFDest) ? $std->vFCPUFDest : $this->stdTot->vFCPUFDest;
         $vICMSUFDest = !empty($std->vICMSUFDest) ? $std->vICMSUFDest : $this->stdTot->vICMSUFDest;
         $vICMSUFRemet = !empty($std->vICMSUFRemet) ? $std->vICMSUFRemet : $this->stdTot->vICMSUFRemet;
-        
+
         //campos opcionais incluir se maior que zero
         $vFCPUFDest = ($vFCPUFDest > 0) ? number_format($vFCPUFDest, 2, '.', '') : null;
         $vICMSUFDest = ($vICMSUFDest > 0) ? number_format($vICMSUFDest, 2, '.', '') : null;
         $vICMSUFRemet = ($vICMSUFRemet > 0) ? number_format($vICMSUFRemet, 2, '.', '') : null;
         $vTotTrib = ($vTotTrib > 0) ? number_format($vTotTrib, 2, '.', '') : null;
-        
+
         //campos especificos por layout
         if ($this->version == '3.10') {
             //campos inexistentes no 3.10
@@ -5451,7 +5451,7 @@ class Make
             'cRegTrib'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $this->buildTotal();
         $ISSQNTot = $this->dom->createElement("ISSQNtot");
         $this->dom->addChild(
@@ -5560,7 +5560,7 @@ class Make
             'vRetPrev'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $retTrib = $this->dom->createElement("retTrib");
         $this->dom->addChild(
             $retTrib,
@@ -5652,7 +5652,7 @@ class Make
             'CPF'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $transporta = $this->dom->createElement("transporta");
         $this->dom->addChild(
             $transporta,
@@ -5729,7 +5729,7 @@ class Make
             'cMunFG'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $retTransp = $this->dom->createElement("retTransp");
         $this->dom->addChild(
             $retTransp,
@@ -5842,7 +5842,7 @@ class Make
             'balsa'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $reboque = $this->dom->createElement("reboque");
         $this->dom->addChild(
             $reboque,
@@ -5905,7 +5905,7 @@ class Make
             'pesoB'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $vol = $this->dom->createElement("vol");
         $this->dom->addChild(
             $vol,
@@ -6005,7 +6005,7 @@ class Make
         );
         return $this->aPag[] = $pag;
     }
-    
+
     /**
      * Grupo de Formas de Pagamento YA01a pai YA01
      * NOTA: Ajuste nt_2016_002_v1.30
@@ -6024,7 +6024,7 @@ class Make
             'tpIntegra'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $detPag = $this->dom->createElement("detPag");
         $this->dom->addChild(
             $detPag,
@@ -6147,7 +6147,7 @@ class Make
             'vDup'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $this->buildCobr();
         $dup = $this->dom->createElement("dup");
         $this->dom->addChild(
@@ -6185,7 +6185,7 @@ class Make
     {
         $possible = ['infAdFisco', 'infCpl'];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $this->buildInfAdic();
         $this->dom->addChild(
             $this->infAdic,
@@ -6215,7 +6215,7 @@ class Make
     {
         $possible = ['xCampo', 'xTexto'];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $this->buildInfAdic();
         $obsCont = $this->dom->createElement("obsCont");
         $obsCont->setAttribute("xCampo", $std->xCampo);
@@ -6241,7 +6241,7 @@ class Make
     {
         $possible = ['xCampo', 'xTexto'];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $this->buildInfAdic();
         $obsFisco = $this->dom->createElement("obsFisco");
         $obsFisco->setAttribute("xCampo", $std->xCampo);
@@ -6267,7 +6267,7 @@ class Make
     {
         $possible = ['nProc', 'indProc'];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $this->buildInfAdic();
         $procRef = $this->dom->createElement("procRef");
         $this->dom->addChild(
@@ -6298,7 +6298,7 @@ class Make
     {
         $possible = ['UFSaidaPais', 'xLocExporta', 'xLocDespacho'];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $this->exporta = $this->dom->createElement("exporta");
         $this->dom->addChild(
             $this->exporta,
@@ -6334,7 +6334,7 @@ class Make
     {
         $possible = ['xNEmp', 'xPed', 'xCont'];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $this->compra = $this->dom->createElement("compra");
         $this->dom->addChild(
             $this->compra,
@@ -6379,7 +6379,7 @@ class Make
             'vLiqFor'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $this->cana = $this->dom->createElement("cana");
         $this->dom->addChild(
             $this->cana,
@@ -6472,7 +6472,7 @@ class Make
     {
         $possible = ['xDed', 'vDed'];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $deduc = $this->dom->createElement("deduc");
         $this->dom->addChild(
             $deduc,
@@ -6502,7 +6502,7 @@ class Make
     {
         $possible = ['qrcode', 'urlChave'];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $infNFeSupl = $this->dom->createElement("infNFeSupl");
         $nodeqr = $infNFeSupl->appendChild($this->dom->createElement('qrCode'));
         $nodeqr->appendChild($this->dom->createCDATASection($std->qrcode));
@@ -6986,7 +6986,7 @@ class Make
             $this->chNFe = $chaveMontada;
         }
     }
-    
+
     /**
      * Includes missing or unsupported properties in stdClass
      * @param stdClass $std
