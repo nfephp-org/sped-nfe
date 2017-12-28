@@ -4,13 +4,13 @@ Framework para geração e comunicação das NFe com as SEFAZ autorizadoras, e v
 
 > ### Atende os layouts versão 3.10 e 4.0 da SEFAZ!**
 
-> ### NOVA Versão 4.0 do layout da SEFAZ (ajustado NT_2016_002_v1.31 de 10/2017)
+> ### NOVA Versão 4.0 do layout da SEFAZ ( [NT_2016_002_v1.42](http://www.nfe.fazenda.gov.br/portal/exibirArquivo.aspx?conteudo=uvfnqOj%20spg=) )
 
->Ambiente SEFAZ de Homologação 4.0 (ambiente de teste das empresas): a partir de 03/07/2017;
+>Ambiente SEFAZ de Homologação 4.0 (ambiente de teste das empresas): a partir de 20/11/2017;
 
->*Ambiente SEFAZ de Produção 4.0 : a partir de 06/11/17;*
+>*Ambiente SEFAZ de Produção 4.0 : a partir de 04/12/17;*
 
->*Desativação na SEFAZ da versão anterior 3.10: até 02/04/18.*
+>*Desativação na SEFAZ da versão anterior 3.10: até 02/07/18.*
 
 *Utilize o chat do Gitter para iniciar discussões específicas sobre o desenvolvimento deste pacote.*
 
