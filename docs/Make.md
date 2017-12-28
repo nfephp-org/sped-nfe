@@ -328,7 +328,7 @@ $std->cEAN;
 $std->xProd;
 $std->NCM;
 
-$std->cBenf; //incluido no layout 4.00
+$std->cBenef; //incluido no layout 4.00
 
 $std->EXTIPI;
 $std->CFOP;
@@ -446,8 +446,8 @@ $std = new stdClass();
 $std->item = 1; //item da NFe
 $std->nDI; //numero da DI
 $std->nAdicao;
-$std->nSeqAdic
-$std->cFabricante
+$std->nSeqAdic;
+$std->cFabricante;
 $std->vDescDI;
 $std->nDraw;
 
@@ -608,8 +608,8 @@ $std->CODIF;
 $std->qTemp;
 $std->UFCons;
 $std->qBCProd;
-$std->vAliqProd
-$std->vCIDE
+$std->vAliqProd;
+$std->vCIDE;
 
 $elem = $nfe->tagcomb($std);
 ```
@@ -887,7 +887,7 @@ Node COFINS do item da NFe
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
-$std->CST = '07'
+$std->CST = '07';
 $std->vBC = null;
 $std->pCOFINS = null;
 $std->vCOFINS = null;
@@ -927,8 +927,8 @@ $std->item = 1; //item da NFe
 $std->vBC = 1000.00;
 $std->vAliq = 5.00;
 $std->vISSQN = 50.00;
-$std->cMunFG = '3518800'
-$std->cListServ = '12.23'
+$std->cMunFG = '3518800';
+$std->cListServ = '12.23';
 $std->vDeducao = null;
 $std->vOutro = null;
 $std->vDescIncond = null;
