@@ -503,7 +503,7 @@ class Make
             "natOp",
             Strings::replaceSpecialsChars(substr(trim($std->natOp), 0, 60)),
             true,
-            $identificador . "Descrição da Natureza da Operaçãoo"
+            $identificador . "Descrição da Natureza da Operação"
         );
         //removido no layout 4.00
         $this->dom->addChild(
@@ -511,8 +511,7 @@ class Make
             "indPag",
             $std->indPag,
             false,
-            $identificador . "Indicador da forma de pagamento",
-            false
+            $identificador . "Indicador da forma de pagamento"
         );
         $this->dom->addChild(
             $ide,
