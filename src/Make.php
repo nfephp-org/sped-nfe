@@ -510,7 +510,7 @@ class Make
             $ide,
             "indPag",
             $std->indPag,
-            false,
+            ($this->version == '3.10') ? true : false,
             $identificador . "Indicador da forma de pagamento"
         );
         $this->dom->addChild(
