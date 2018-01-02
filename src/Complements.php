@@ -108,8 +108,7 @@ class Complements
         $domcanc->formatOutput = false;
         $domcanc->preserveWhiteSpace = false;
         $domcanc->loadXML($cancelamento);
-        $retEvento = $domcanc->getElementsByTagName('retEvento')->item(0);
-        $eventos = $retEvento->getElementsByTagName('infEvento');
+        $eventos = $domcanc->getElementsByTagName('infEvento');
         foreach ($eventos as $evento) {
             $cStat = $evento->getElementsByTagName('cStat')
                 ->item(0)
