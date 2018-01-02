@@ -108,18 +108,19 @@ class Complements
         $domcanc->formatOutput = false;
         $domcanc->preserveWhiteSpace = false;
         $domcanc->loadXML($cancelamento);
-        $eventos = $domcanc->getElementsByTagName('infEvento');
+        $eventos = $domcanc->getElementsByTagName('retEvento');
         foreach ($eventos as $evento) {
-            $cStat = $evento->getElementsByTagName('cStat')
+            $infEvento = $domcanc->getElementsByTagName('infEvento')->item(0);
+            $cStat = $infEvento->getElementsByTagName('cStat')
                 ->item(0)
                 ->nodeValue;
-            $nProt = $evento->getElementsByTagName('nProt')
+            $nProt = $infEvento->getElementsByTagName('nProt')
                 ->item(0)
                 ->nodeValue;
-            $chaveEvento = $evento->getElementsByTagName('chNFe')
+            $chaveEvento = $infEvento->getElementsByTagName('chNFe')
                 ->item(0)
                 ->nodeValue;
-            $tpEvento = $evento->getElementsByTagName('tpEvento')
+            $tpEvento = $infEvento->getElementsByTagName('tpEvento')
                 ->item(0)
                 ->nodeValue;
             if (in_array($cStat, ['135', '136', '155'])
