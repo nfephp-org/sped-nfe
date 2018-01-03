@@ -256,18 +256,22 @@ class Tools
      * @return string
      * @throws InvalidArgumentException
      */
-    public function version($version = '')
+    public function version($version = null)
     {
-        if (!empty($version)) {
-            if (!array_key_exists($version, $this->availableVersions)) {
-                throw new \InvalidArgumentException('Essa versão de layout não está disponível');
-            }
-            $this->versao = $version;
-            $this->config->schemes = $this->availableVersions[$version];
-            $this->pathschemes = realpath(
-                __DIR__ . '/../../schemes/'. $this->config->schemes
-            ).'/';
+        if (null === $version) {
+            return $this->version;
         }
+        //Verify version template is defined
+        if (false === isset($availableVersions[$version])) {
+            throw new \InvalidArgumentException('Essa versão de layout não está disponível');
+        }
+        
+        $this->versao = $version;
+        $this->config->schemes = $this->availableVersions[$version];
+        $this->pathschemes = realpath(
+            __DIR__ . '/../../schemes/'. $this->config->schemes
+        ).'/';
+        
         return $this->versao;
     }
     
