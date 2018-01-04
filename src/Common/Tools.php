@@ -259,7 +259,7 @@ class Tools
     public function version($version = null)
     {
         if (null === $version) {
-            return $this->version;
+            return $this->versao;
         }
         //Verify version template is defined
         if (false === isset($availableVersions[$version])) {
