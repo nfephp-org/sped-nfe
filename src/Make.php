@@ -4315,14 +4315,14 @@ class Make extends BaseMake
                     $pisItem,
                     'vBC',
                     $vBC,
-                    false,
+                    true,
                     "[item $nItem] Valor da Base de Cálculo do PIS"
                 );
                 $this->dom->addChild(
                     $pisItem,
                     'pPIS',
                     $pPIS,
-                    false,
+                    true,
                     "[item $nItem] Alíquota do PIS (em percentual)"
                 );
                 $this->dom->addChild(
@@ -6157,14 +6157,14 @@ class Make extends BaseMake
             $confinsoutr,
             "vBC",
             $vBC,
-            false,
+            true,
             "Valor da Base de Cálculo da COFINS"
         );
         $this->dom->addChild(
             $confinsoutr,
             "pCOFINS",
             $pCOFINS,
-            false,
+            true,
             "Alíquota da COFINS (em percentual)"
         );
         $this->dom->addChild(
