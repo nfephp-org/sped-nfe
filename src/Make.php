@@ -4757,28 +4757,28 @@ class Make
                     $pisItem,
                     'vBC',
                     $std->vBC,
-                    false,
+                    ($std->vBC != null) ? true : false,
                     "[item $std->item] Valor da Base de Cálculo do PIS"
                 );
                 $this->dom->addChild(
                     $pisItem,
                     'pPIS',
                     $std->pPIS,
-                    false,
+                    ($std->pPIS != null) ? true : false,
                     "[item $std->item] Alíquota do PIS (em percentual)"
                 );
                 $this->dom->addChild(
                     $pisItem,
                     'qBCProd',
                     $std->qBCProd,
-                    false,
+                    ($std->qBCProd != null) ? true : false,
                     "[item $std->item] Quantidade Vendida"
                 );
                 $this->dom->addChild(
                     $pisItem,
                     'vAliqProd',
                     $std->vAliqProd,
-                    false,
+                    ($std->vAliqProd != null) ? true : false,
                     "[item $std->item] Alíquota do PIS (em reais)"
                 );
                 $this->dom->addChild(
