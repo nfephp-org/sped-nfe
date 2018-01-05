@@ -262,7 +262,7 @@ class Tools
             return $this->versao;
         }
         //Verify version template is defined
-        if (false === isset($availableVersions[$version])) {
+        if (false === isset($this->availableVersions[$version])) {
             throw new \InvalidArgumentException('Essa versão de layout não está disponível');
         }
         
