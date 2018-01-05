@@ -6668,28 +6668,28 @@ class Make
             $confinsoutr,
             "vBC",
             $std->vBC,
-            false,
+            ($std->vBC != null) ? true : false,
             "Valor da Base de Cálculo da COFINS"
         );
         $this->dom->addChild(
             $confinsoutr,
             "pCOFINS",
             $std->pCOFINS,
-            false,
+            ($std->pCOFINS != null) ? true : false,
             "Alíquota da COFINS (em percentual)"
         );
         $this->dom->addChild(
             $confinsoutr,
             "qBCProd",
             $std->qBCProd,
-            false,
+            ($std->qBCProd != null) ? true : false,
             "Quantidade Vendida"
         );
         $this->dom->addChild(
             $confinsoutr,
             "vAliqProd",
             $std->vAliqProd,
-            false,
+            ($std->vAliqProd != null) ? true : false,
             "Alíquota da COFINS (em reais)"
         );
         $this->dom->addChild(
