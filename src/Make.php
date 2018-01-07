@@ -4591,28 +4591,28 @@ class Make
         $this->dom->addChild(
             $tii,
             "vBC",
-            $std->vBC,
+            number_format($std->vBC, 2, '.', ''),
             true,
             "[item $std->item] Valor BC do Imposto de Importação"
         );
         $this->dom->addChild(
             $tii,
             "vDespAdu",
-            $std->vDespAdu,
+            number_format($std->vDespAdu, 2, '.', ''),
             true,
             "[item $std->item] Valor despesas aduaneiras"
         );
         $this->dom->addChild(
             $tii,
             "vII",
-            $std->vII,
+            number_format($std->vII, 2, '.', ''),
             true,
             "[item $std->item] Valor Imposto de Importação"
         );
         $this->dom->addChild(
             $tii,
             "vIOF",
-            $std->vIOF,
+            number_format($std->vIOF, 2, '.', ''),
             true,
             "[item $std->item] Valor Imposto sobre Operações Financeiras"
         );
@@ -4640,7 +4640,7 @@ class Make
         $std = $this->equilizeParameters($std, $possible);
 
         //totalizador
-        $this->stdTot->vPIS += $std->vPIS;
+        $this->stdTot->vPIS += (float) $std->vPIS;
 
         switch ($std->CST) {
             case '01':
@@ -4757,34 +4757,34 @@ class Make
                     $pisItem,
                     'vBC',
                     $std->vBC,
-                    ($std->vBC != null) ? true : false,
+                    ($std->vBC !== null) ? true : false,
                     "[item $std->item] Valor da Base de Cálculo do PIS"
                 );
                 $this->dom->addChild(
                     $pisItem,
                     'pPIS',
                     $std->pPIS,
-                    ($std->pPIS != null) ? true : false,
+                    ($std->pPIS !== null) ? true : false,
                     "[item $std->item] Alíquota do PIS (em percentual)"
                 );
                 $this->dom->addChild(
                     $pisItem,
                     'qBCProd',
                     $std->qBCProd,
-                    ($std->qBCProd != null) ? true : false,
+                    ($std->qBCProd !== null) ? true : false,
                     "[item $std->item] Quantidade Vendida"
                 );
                 $this->dom->addChild(
                     $pisItem,
                     'vAliqProd',
                     $std->vAliqProd,
-                    ($std->vAliqProd != null) ? true : false,
+                    ($std->vAliqProd !== null) ? true : false,
                     "[item $std->item] Alíquota do PIS (em reais)"
                 );
                 $this->dom->addChild(
                     $pisItem,
                     'vPIS',
-                    $std->vPIS,
+                    number_format($std->vPIS, 2, '.', ''),
                     true,
                     "[item $std->item] Valor do PIS"
                 );
@@ -6668,28 +6668,28 @@ class Make
             $confinsoutr,
             "vBC",
             $std->vBC,
-            ($std->vBC != null) ? true : false,
+            ($std->vBC !== null) ? true : false,
             "Valor da Base de Cálculo da COFINS"
         );
         $this->dom->addChild(
             $confinsoutr,
             "pCOFINS",
             $std->pCOFINS,
-            ($std->pCOFINS != null) ? true : false,
+            ($std->pCOFINS !== null) ? true : false,
             "Alíquota da COFINS (em percentual)"
         );
         $this->dom->addChild(
             $confinsoutr,
             "qBCProd",
             $std->qBCProd,
-            ($std->qBCProd != null) ? true : false,
+            ($std->qBCProd !== null) ? true : false,
             "Quantidade Vendida"
         );
         $this->dom->addChild(
             $confinsoutr,
             "vAliqProd",
             $std->vAliqProd,
-            ($std->vAliqProd != null) ? true : false,
+            ($std->vAliqProd !== null) ? true : false,
             "Alíquota da COFINS (em reais)"
         );
         $this->dom->addChild(
