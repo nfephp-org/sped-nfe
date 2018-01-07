@@ -30,14 +30,14 @@ class Config
     public static function validate($content)
     {
         if (!is_string($content)) {
-            return false;
+            throw DocumentsException::wrongDocument(8, "Não foi passado um json.");
         }
         $std = json_decode($content);
-        if (!is_object($std)) {
-            return false;
+        if (! is_object($std)) {
+            throw DocumentsException::wrongDocument(8, "Não foi passado um json valido.");
         }
         self::validInputData($std);
-        return true;
+        return $std;
     }
     
     /**
@@ -48,7 +48,7 @@ class Config
      */
     protected static function validInputData($data)
     {
-        $filejsonschema = __DIR__. "/../../storage/config_json.schema";
+        $filejsonschema = __DIR__. "/../../storage/config.schema";
         $validator = new JsonValid();
         $validator->check($data, (object)['$ref' => 'file://' . $filejsonschema]);
         if (!$validator->isValid()) {

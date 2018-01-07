@@ -26,6 +26,7 @@ use NFePHP\Common\Strings;
 use NFePHP\Common\TimeZoneByUF;
 use NFePHP\Common\UFList;
 use NFePHP\Common\Validator;
+use NFePHP\NFe\Common\Config;
 use NFePHP\NFe\Factories\Contingency;
 use NFePHP\NFe\Factories\ContingencyNFe;
 use NFePHP\NFe\Factories\Header;
@@ -170,7 +171,7 @@ class Tools
         '3.10' => 'PL_008i2',
         '4.00' => 'PL_009_V4'
     ];
-
+    
     /**
      * Constructor
      * load configurations,
@@ -183,10 +184,12 @@ class Tools
      */
     public function __construct($configJson, Certificate $certificate)
     {
-        $this->config = json_decode($configJson);
         $this->pathwsfiles = realpath(
             __DIR__ . '/../../storage'
         ).'/';
+        //valid config json string
+        $this->config = Config::validate($configJson);
+        
         $this->version($this->config->versao);
         $this->setEnvironmentTimeZone($this->config->siglaUF);
         $this->certificate = $certificate;
