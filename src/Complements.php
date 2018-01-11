@@ -224,7 +224,7 @@ class Complements
         $req->preserveWhiteSpace = false;
         $req->formatOutput = false;
         $req->loadXML($request);
-        
+
         $nfe = $req->getElementsByTagName('NFe')->item(0);
         $infNFe = $req->getElementsByTagName('infNFe')->item(0);
         $versao = $infNFe->getAttribute("versao");
