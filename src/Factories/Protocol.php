@@ -25,7 +25,7 @@ class Protocol
     /**
      * Add protocol to xml
      * @param string $xmlnfe xml
-     * @param string $protocol response xml
+     * @param string $xmlprotocol response xml
      * @return string
      * @throws InvalidArgumentException
      */

@@ -37,7 +37,7 @@ class ContingencyNFe
         $dtEmi = new DateTime($ide->getElementsByTagName('dhEmi')->item(0)->nodeValue);
         $ano = $dtEmi->format('y');
         $mes = $dtEmi->format('m');
-        $tpEmis = $contingency->tpEmis;
+        $tpEmis = (string) $contingency->tpEmis;
         $emit = $dom->getElementsByTagName('emit')->item(0);
         $cnpj = $emit->getElementsByTagName('CNPJ')->item(0)->nodeValue;
         

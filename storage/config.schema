@@ -1,0 +1,73 @@
+{
+    "title": "config",
+    "type": "object",
+    "properties": {
+        "atualizacao": {
+            "required": false,
+            "type": ["string", "null"]
+        },
+        "tpAmb": {
+            "required": true,
+            "type": "integer",
+            "maxLength": 1,
+            "minLength": 2
+        },
+        "razaosocial": {
+            "required": true,
+            "type": "string"
+        },
+        "cnpj": {
+            "required": true,
+            "type": "string",
+            "pattern": "^[0-9]{14}"
+        },
+        "siglaUF": {
+            "required": true,
+            "type": "string",
+            "maxLength": 2,
+            "minLength": 2
+        },
+        "schemes": {
+            "required": true,
+            "type": "string"
+        },
+        "versao": {
+            "required": true,
+            "type": "string"
+        },
+        "tokenIBPT": {
+            "required": false,
+            "type": ["string", "null"]
+        },
+        "CSC": {
+            "required": false,
+            "type": ["string", "null"]
+        },
+        "CSCid": {
+            "required": false,
+            "type": ["string","null"]
+        },
+        "aProxyConf": {
+            "required": false,
+            "type": ["object","null"],
+            "properties": {
+                "proxyIp": {
+                    "required": false,
+                    "type": ["string","null"]
+                },
+                "proxyPort": {
+                    "required": false,
+                    "type": ["string","null"]
+                },
+                "proxyUser": {
+                    "required": false,
+                    "type": ["string","null"]
+                },
+                "proxyPass": {
+                    "required": false,
+                    "type": ["string","null"]
+                }
+            }
+        }
+    }
+}

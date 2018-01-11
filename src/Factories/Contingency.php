@@ -116,7 +116,7 @@ class Contingency
         $type = strtoupper(str_replace('-', '', $type));
         
         if (empty($type)) {
-            $type = (string) $list[$acronym];
+            $type = $list[$acronym];
         }
         $this->config = $this->configBuild($dt->getTimestamp(), $motive, $type);
         return $this->__toString();

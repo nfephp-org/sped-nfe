@@ -108,19 +108,19 @@ class Complements
         $domcanc->formatOutput = false;
         $domcanc->preserveWhiteSpace = false;
         $domcanc->loadXML($cancelamento);
-        $retEvento = $domcanc->getElementsByTagName('retEvento')->item(0);
-        $eventos = $retEvento->getElementsByTagName('infEvento');
+        $eventos = $domcanc->getElementsByTagName('retEvento');
         foreach ($eventos as $evento) {
-            $cStat = $evento->getElementsByTagName('cStat')
+            $infEvento = $evento->getElementsByTagName('infEvento')->item(0);
+            $cStat = $infEvento->getElementsByTagName('cStat')
                 ->item(0)
                 ->nodeValue;
-            $nProt = $evento->getElementsByTagName('nProt')
+            $nProt = $infEvento->getElementsByTagName('nProt')
                 ->item(0)
                 ->nodeValue;
-            $chaveEvento = $evento->getElementsByTagName('chNFe')
+            $chaveEvento = $infEvento->getElementsByTagName('chNFe')
                 ->item(0)
                 ->nodeValue;
-            $tpEvento = $evento->getElementsByTagName('tpEvento')
+            $tpEvento = $infEvento->getElementsByTagName('tpEvento')
                 ->item(0)
                 ->nodeValue;
             if (in_array($cStat, ['135', '136', '155'])
@@ -140,7 +140,7 @@ class Complements
                 break;
             }
         }
-        return (string) $procXML;
+        return $procXML;
     }
 
     /**
@@ -237,35 +237,41 @@ class Complements
         $ret->preserveWhiteSpace = false;
         $ret->formatOutput = false;
         $ret->loadXML($response);
-        $retProt = $ret->getElementsByTagName('protNFe')->item(0);
+        $retProt = $ret->getElementsByTagName('protNFe');
         if (!isset($retProt)) {
             throw DocumentsException::wrongDocument(3, "&lt;protNFe&gt;");
         }
-        $infProt = $ret->getElementsByTagName('infProt')->item(0);
-        $cStat  = $infProt->getElementsByTagName('cStat')->item(0)->nodeValue;
-        $xMotivo = $infProt->getElementsByTagName('xMotivo')->item(0)->nodeValue;
-        $dig = $infProt->getElementsByTagName("digVal")->item(0);
         $digProt = '000';
-        if (isset($dig)) {
-            $digProt = $dig->nodeValue;
-        }
-        //100 Autorizado
-        //150 Autorizado fora do prazo
-        //110 Uso Denegado
-        //205 NFe Denegada
-        $cstatpermit = ['100', '150', '110', '205'];
-        if (!in_array($cStat, $cstatpermit)) {
-            throw DocumentsException::wrongDocument(4, "[$cStat] $xMotivo");
+        foreach ($retProt as $rp) {
+            $infProt = $rp->getElementsByTagName('infProt')->item(0);
+            $cStat  = $infProt->getElementsByTagName('cStat')->item(0)->nodeValue;
+            $xMotivo = $infProt->getElementsByTagName('xMotivo')->item(0)->nodeValue;
+            $dig = $infProt->getElementsByTagName("digVal")->item(0);
+            $key = $infProt->getElementsByTagName("chNFe")->item(0)->nodeValue;
+            if (isset($dig)) {
+                $digProt = $dig->nodeValue;
+                if ($digProt == $digNFe && $chave == $key) {
+                    //100 Autorizado
+                    //150 Autorizado fora do prazo
+                    //110 Uso Denegado
+                    //205 NFe Denegada
+                    $cstatpermit = ['100', '150', '110', '205'];
+                    if (!in_array($cStat, $cstatpermit)) {
+                        throw DocumentsException::wrongDocument(4, "[$cStat] $xMotivo");
+                    }
+                    return self::join(
+                        $req->saveXML($nfe),
+                        $ret->saveXML($rp),
+                        'nfeProc',
+                        $versao
+                    );
+                }
+            }
         }
         if ($digNFe !== $digProt) {
-            throw DocumentsException::wrongDocument(5, "O digest é diferente");
+            throw DocumentsException::wrongDocument(5, "Os digest são diferentes");
         }
-        return self::join(
-            $req->saveXML($nfe),
-            $ret->saveXML($retProt),
-            'nfeProc',
-            $versao
-        );
+        return $req->saveXML();
     }
 
     /**

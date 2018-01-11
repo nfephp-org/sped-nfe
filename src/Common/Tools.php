@@ -26,10 +26,12 @@ use NFePHP\Common\Strings;
 use NFePHP\Common\TimeZoneByUF;
 use NFePHP\Common\UFList;
 use NFePHP\Common\Validator;
+use NFePHP\NFe\Common\Config;
 use NFePHP\NFe\Factories\Contingency;
 use NFePHP\NFe\Factories\ContingencyNFe;
 use NFePHP\NFe\Factories\Header;
 use NFePHP\NFe\Factories\QRCode;
+use SoapHeader;
 
 class Tools
 {
@@ -117,9 +119,9 @@ class Tools
     protected $urlPortal = 'http://www.portalfiscal.inf.br/nfe';
     /**
      * urlcUF
-     * @var string
+     * @var int
      */
-    protected $urlcUF = '';
+    protected $urlcUF;
     /**
      * urlVersion
      * @var string
@@ -147,9 +149,9 @@ class Tools
      */
     protected $urlAction = '';
     /**
-     * @var \SOAPHeader
+     * @var \SoapHeader | null
      */
-    protected $objHeader;
+    protected $objHeader = null;
     /**
      * @var string
      */
@@ -169,7 +171,7 @@ class Tools
         '3.10' => 'PL_008i2',
         '4.00' => 'PL_009_V4'
     ];
-
+    
     /**
      * Constructor
      * load configurations,
@@ -182,10 +184,12 @@ class Tools
      */
     public function __construct($configJson, Certificate $certificate)
     {
-        $this->config = json_decode($configJson);
         $this->pathwsfiles = realpath(
             __DIR__ . '/../../storage'
         ).'/';
+        //valid config json string
+        $this->config = Config::validate($configJson);
+        
         $this->version($this->config->versao);
         $this->setEnvironmentTimeZone($this->config->siglaUF);
         $this->certificate = $certificate;
@@ -255,18 +259,22 @@ class Tools
      * @return string
      * @throws InvalidArgumentException
      */
-    public function version($version = '')
+    public function version($version = null)
     {
-        if (!empty($version)) {
-            if (!array_key_exists($version, $this->availableVersions)) {
-                throw new \InvalidArgumentException('Essa versão de layout não está disponível');
-            }
-            $this->versao = $version;
-            $this->config->schemes = $this->availableVersions[$version];
-            $this->pathschemes = realpath(
-                __DIR__ . '/../../schemes/'. $this->config->schemes
-            ).'/';
+        if (null === $version) {
+            return $this->versao;
         }
+        //Verify version template is defined
+        if (false === isset($this->availableVersions[$version])) {
+            throw new \InvalidArgumentException('Essa versão de layout não está disponível');
+        }
+        
+        $this->versao = $version;
+        $this->config->schemes = $this->availableVersions[$version];
+        $this->pathschemes = realpath(
+            __DIR__ . '/../../schemes/'. $this->config->schemes
+        ).'/';
+        
         return $this->versao;
     }
     
@@ -441,7 +449,7 @@ class Tools
      * Assembles all the necessary parameters for soap communication
      * @param string $service
      * @param string $uf
-     * @param string $tpAmb
+     * @param int $tpAmb
      * @param bool $ignoreContingency
      * @return void
      */
@@ -509,9 +517,9 @@ class Tools
             . $this->urlMethod
             . "\"";
         //montagem do SOAP Header
-        //para versões posteriores a 3.10 não incluir o SOAPHeader !!!!
+        //para versões posteriores a 3.10 não incluir o SoapHeader !!!!
         if ($this->versao < '4.00') {
-            $this->objHeader = new \SOAPHeader(
+            $this->objHeader = new SoapHeader(
                 $this->urlNamespace,
                 'nfeCabecMsg',
                 ['cUF' => $this->urlcUF, 'versaoDados' => $this->urlVersion]

@@ -182,6 +182,10 @@ class Make
     /**
      * @var array of DOMElements
      */
+    protected $aExportInd = [];
+    /**
+     * @var array of DOMElements
+     */
     protected $aDI = [];
     /**
      * @var array of DOMElements
@@ -420,14 +424,14 @@ class Make
      * @param  stdClass $std
      * @return DOMElement
      */
-    public function taginfNFe($std)
+    public function taginfNFe(stdClass $std)
     {
         $possible = ['Id', 'versao', 'pk_nItem'];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $chave = preg_replace('/[^0-9]/', '', $std->Id);
         $this->infNFe = $this->dom->createElement("infNFe");
-        $this->infNFe->setAttribute("Id", 'NFe'.$chave);
+        $this->infNFe->setAttribute("Id", 'NFe' . $chave);
         $this->infNFe->setAttribute(
             "versao",
             $std->versao
@@ -447,7 +451,7 @@ class Make
      * @param  stdClass $std
      * @return DOMElement
      */
-    public function tagide($std)
+    public function tagide(stdClass $std)
     {
         $possible = [
             'cUF',
@@ -475,7 +479,7 @@ class Make
             'xJust'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $this->tpAmb = $std->tpAmb;
         $this->mod = $std->mod;
         $identificador = 'B01 <ide> - ';
@@ -499,14 +503,14 @@ class Make
             "natOp",
             Strings::replaceSpecialsChars(substr(trim($std->natOp), 0, 60)),
             true,
-            $identificador . "Descrição da Natureza da Operaçãoo"
+            $identificador . "Descrição da Natureza da Operação"
         );
         //removido no layout 4.00
         $this->dom->addChild(
             $ide,
             "indPag",
             $std->indPag,
-            false,
+            ($this->version == '3.10') ? true : false,
             $identificador . "Indicador da forma de pagamento"
         );
         $this->dom->addChild(
@@ -656,14 +660,14 @@ class Make
      * @param  stdClass $std
      * @return DOMElement
      */
-    public function tagrefNFe($std)
+    public function tagrefNFe(stdClass $std)
     {
         $possible = ['refNFe'];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $num = $this->buildNFref();
         $refNFe = $this->dom->createElement("refNFe", $std->refNFe);
-        $this->dom->appChild($this->aNFref[$num-1], $refNFe);
+        $this->dom->appChild($this->aNFref[$num - 1], $refNFe);
         return $refNFe;
     }
 
@@ -673,11 +677,11 @@ class Make
      * @param  stdClass $std
      * @return DOMElement
      */
-    public function tagrefNF($std)
+    public function tagrefNF(stdClass $std)
     {
         $possible = ['cUF', 'AAMM', 'CNPJ', 'mod', 'serie', 'nNF'];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $identificador = 'BA03 <refNF> - ';
         $num = $this->buildNFref();
         $refNF = $this->dom->createElement("refNF");
@@ -723,7 +727,7 @@ class Make
             true,
             $identificador . "Número do Documento Fiscal"
         );
-        $this->dom->appChild($this->aNFref[$num-1], $refNF);
+        $this->dom->appChild($this->aNFref[$num - 1], $refNF);
         return $refNF;
     }
 
@@ -733,7 +737,7 @@ class Make
      * @param  stdClass $std
      * @return DOMElement
      */
-    public function tagrefNFP($std)
+    public function tagrefNFP(stdClass $std)
     {
         $possible = [
             'cUF',
@@ -746,7 +750,7 @@ class Make
             'nNF'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $identificador = 'BA10 <refNFP> - ';
         $num = $this->buildNFref();
         $refNFP = $this->dom->createElement("refNFP");
@@ -806,7 +810,7 @@ class Make
             true,
             $identificador . "Número do Documento Fiscal"
         );
-        $this->dom->appChild($this->aNFref[$num-1], $refNFP);
+        $this->dom->appChild($this->aNFref[$num - 1], $refNFP);
         return $refNFP;
     }
 
@@ -816,14 +820,14 @@ class Make
      * @param  stdClass $std
      * @return DOMElement
      */
-    public function tagrefCTe($std)
+    public function tagrefCTe(stdClass $std)
     {
         $possible = ['refCTe'];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $num = $this->buildNFref();
         $refCTe = $this->dom->createElement("refCTe", $std->refCTe);
-        $this->dom->appChild($this->aNFref[$num-1], $refCTe);
+        $this->dom->appChild($this->aNFref[$num - 1], $refCTe);
         return $refCTe;
     }
 
@@ -833,7 +837,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagrefECF($std)
+    public function tagrefECF(stdClass $std)
     {
         $possible = ['mod', 'nECF', 'nCOO'];
         $std = $this->equilizeParameters($std, $possible);
@@ -862,7 +866,7 @@ class Make
             true,
             $identificador . "Número do Contador de Ordem de Operação - COO"
         );
-        $this->dom->appChild($this->aNFref[$num-1], $refECF);
+        $this->dom->appChild($this->aNFref[$num - 1], $refECF);
         return $refECF;
     }
 
@@ -872,7 +876,7 @@ class Make
      * @param  stdClass $std
      * @return DOMElement
      */
-    public function tagemit($std)
+    public function tagemit(stdClass $std)
     {
         $possible = [
             'xNome',
@@ -961,7 +965,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagenderEmit($std)
+    public function tagenderEmit(stdClass $std)
     {
         $possible = [
             'xLgr',
@@ -1068,7 +1072,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagdest($std)
+    public function tagdest(stdClass $std)
     {
         $possible = [
             'xNome',
@@ -1084,7 +1088,7 @@ class Make
         $std = $this->equilizeParameters($std, $possible);
 
         $identificador = 'E01 <dest> - ';
-        $flagNome = true;//marca se xNome é ou não obrigatório
+        $flagNome = true; //marca se xNome é ou não obrigatório
         $temIE = $std->IE != '' && $std->IE != 'ISENTO'; // Tem inscrição municipal
         $this->dest = $this->dom->createElement("dest");
         if (!$temIE && $std->indIEDest == 1) {
@@ -1093,7 +1097,7 @@ class Make
         if ($this->mod == '65') {
             $std->indIEDest = 9;
             if ($std->xNome == '') {
-                $flagNome = false;//marca se xNome é ou não obrigatório
+                $flagNome = false; //marca se xNome é ou não obrigatório
             }
         }
         $xNome = $std->xNome;
@@ -1179,7 +1183,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagenderDest($std)
+    public function tagenderDest(stdClass $std)
     {
         $possible = [
             'xLgr',
@@ -1292,7 +1296,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagretirada($std)
+    public function tagretirada(stdClass $std)
     {
         $possible = [
             'xLgr',
@@ -1381,7 +1385,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagentrega($std)
+    public function tagentrega(stdClass $std)
     {
         $possible = [
             'xLgr',
@@ -1395,7 +1399,7 @@ class Make
             'CPF'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $identificador = 'G01 <entrega> - ';
         $this->entrega = $this->dom->createElement("entrega");
         $this->dom->addChild(
@@ -1467,12 +1471,10 @@ class Make
     /**
      * Pessoas autorizadas para o download do XML da NF-e G50 pai A01
      * tag NFe/infNFe/autXML
-     *
-     * @param stdclass $std
-     *
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagautXML($std)
+    public function tagautXML(stdClass $std)
     {
         $possible = ['CNPJ', 'CPF'];
         $std = $this->equilizeParameters($std, $possible);
@@ -1505,11 +1507,11 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function taginfAdProd($std)
+    public function taginfAdProd(stdClass $std)
     {
         $possible = ['item', 'infAdProd'];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $infAdProd = $this->dom->createElement(
             "infAdProd",
             Strings::replaceSpecialsChars(substr(trim($std->infAdProd), 0, 500))
@@ -1525,7 +1527,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagprod($std)
+    public function tagprod(stdClass $std)
     {
         $possible = [
             'item',
@@ -1554,13 +1556,20 @@ class Make
             'nFCI'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         //totalizador
         $this->stdTot->vProd += (float) $std->vProd;
         $this->stdTot->vFrete += (float) $std->vFrete;
         $this->stdTot->vSeg += (float) $std->vSeg;
         $this->stdTot->vDesc += (float) $std->vDesc;
         $this->stdTot->vOutro += (float) $std->vOutro;
+
+        $cean = !empty($std->cEAN) ? $std->cEAN : '';
+        $ceantrib = !empty($std->cEANTrib) ? $std->cEANTrib : '';
+        if ($this->version !== '3.10') {
+            $cean = !empty($cean) ? $cean : 'SEM GTIN';
+            $ceantrib = !empty($ceantrib) ? $ceantrib : 'SEM GTIN';
+        }
 
         $identificador = 'I01 <prod> - ';
         $prod = $this->dom->createElement("prod");
@@ -1574,7 +1583,7 @@ class Make
         $this->dom->addChild(
             $prod,
             "cEAN",
-            $std->cEAN,
+            $cean,
             true,
             $identificador . "[item $std->item] GTIN (Global Trade Item Number) do produto, antigo "
             . "código EAN ou código de barras",
@@ -1651,7 +1660,7 @@ class Make
         $this->dom->addChild(
             $prod,
             "cEANTrib",
-            $std->cEANTrib,
+            $ceantrib,
             true,
             $identificador . "[item $std->item] GTIN (Global Trade Item Number) da unidade tributável, antigo "
             . "código EAN ou código de barras",
@@ -1747,11 +1756,11 @@ class Make
      *
      * @return DOMElement|null
      */
-    public function tagNVE($std)
+    public function tagNVE(stdClass $std)
     {
-        $possible = ['item','NVE'];
+        $possible = ['item', 'NVE'];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         if ($std->NVE == '') {
             return null;
         }
@@ -1770,11 +1779,11 @@ class Make
      * @param  stdClass $std
      * @return DOMElement
      */
-    public function tagCEST($std)
+    public function tagCEST(stdClass $std)
     {
         $possible = ['item', 'CEST', 'indEscala', 'CNPJFab'];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $identificador = 'I05b <ctrltST> - ';
         $ctrltST = $this->dom->createElement("ctrltST");
         $this->dom->addChild(
@@ -1810,11 +1819,11 @@ class Make
      * @param  stdClass $std
      * @return DOMElement
      */
-    public function tagRECOPI($std)
+    public function tagRECOPI(stdClass $std)
     {
         $possible = ['item', 'nRECOPI'];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $recopi = $this->dom->createElement("nRECOPI", $std->nRECOPI);
         $this->aRECOPI[$std->item] = $recopi;
         return $recopi;
@@ -1826,7 +1835,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagDI($std)
+    public function tagDI(stdClass $std)
     {
         $possible = [
             'item',
@@ -1843,7 +1852,7 @@ class Make
             'cExportador'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $identificador = 'I8 <DI> - ';
         $tDI = $this->dom->createElement("DI");
         $this->dom->addChild(
@@ -1935,7 +1944,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagadi($std)
+    public function tagadi(stdClass $std)
     {
         $possible = [
             'item',
@@ -1947,7 +1956,7 @@ class Make
             'nDraw'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $identificador = 'I25 <adi> - ';
         $adi = $this->dom->createElement("adi");
         $this->dom->addChild(
@@ -1999,14 +2008,15 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagdetExport($std)
+    public function tagdetExport(stdClass $std)
     {
         $possible = [
             'item',
+            'nDE',
             'nDraw'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $identificador = 'I50 <detExport> - ';
         $detExport = $this->dom->createElement("detExport");
         $this->dom->addChild(
@@ -2016,7 +2026,7 @@ class Make
             false,
             $identificador . "[item $std->item] Número do ato concessório de Drawback"
         );
-        $this->aDetExport[$std->item] = $detExport;
+        $this->aDetExport[$std->item][$std->nDE] = $detExport;
         return $detExport;
     }
 
@@ -2026,10 +2036,11 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagdetExportInd($std)
+    public function tagdetExportInd(stdClass $std)
     {
         $possible = [
             'item',
+            'nDE',
             'nRE',
             'chNFe',
             'qExport'
@@ -2059,7 +2070,11 @@ class Make
             true,
             $identificador . "[item $std->item] Quantidade do item realmente exportado"
         );
-        $this->aDetExport[$std->item]->appendChild($exportInd);
+        $this->aExportInd[$std->item][$std->nDE][] = $exportInd;
+        //colocar a exportInd em seu DetExport respectivo
+        $nodeDetExport = $this->aDetExport[$std->item][$std->nDE];
+        $this->dom->appChild($nodeDetExport, $exportInd);
+        $this->aDetExport[$std->item][$std->nDE] = $nodeDetExport;
         return $exportInd;
     }
 
@@ -2070,7 +2085,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagRastro($std)
+    public function tagRastro(stdClass $std)
     {
         $possible = [
             'item',
@@ -2081,7 +2096,7 @@ class Make
             'cAgreg'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $identificador = 'I80 <rastro> - ';
         $rastro = $this->dom->createElement("rastro");
         $this->dom->addChild(
@@ -2129,7 +2144,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagveicProd($std)
+    public function tagveicProd(stdClass $std)
     {
         $possible = [
             'item',
@@ -2341,7 +2356,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagmed($std)
+    public function tagmed(stdClass $std)
     {
         $possible = [
             'item',
@@ -2353,7 +2368,7 @@ class Make
             'cProdANVISA',
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $identificador = 'K01 <med> - ';
         $med = $this->dom->createElement("med");
         //incluso no layout 4.00
@@ -2414,10 +2429,11 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagarma($std)
+    public function tagarma(stdClass $std)
     {
         $possible = [
             'item',
+            'nAR',
             'tpArma',
             'nSerie',
             'nCano',
@@ -2457,7 +2473,7 @@ class Make
             . "tipo de funcionamento, comprimento e demais elementos que "
             . "permitam a sua perfeita identificação."
         );
-        $this->aArma[$std->item] = $arma;
+        $this->aArma[$std->item][$std->nAR] = $arma;
         return $arma;
     }
 
@@ -2471,7 +2487,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagcomb($std)
+    public function tagcomb(stdClass $std)
     {
         $possible = [
             'item',
@@ -2490,7 +2506,7 @@ class Make
             'vCIDE'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $identificador = 'L101 <comb> - ';
         $comb = $this->dom->createElement("comb");
         $this->dom->addChild(
@@ -2612,7 +2628,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagencerrante($std)
+    public function tagencerrante(stdClass $std)
     {
         $possible = [
             'item',
@@ -2623,7 +2639,7 @@ class Make
             'vEncFin'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $identificador = 'LA11 <encerrante> - ';
         $encerrante = $this->dom->createElement("encerrante");
         $this->dom->addChild(
@@ -2671,11 +2687,11 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagimposto($std)
+    public function tagimposto(stdClass $std)
     {
-        $possible = ['item','vTotTrib'];
+        $possible = ['item', 'vTotTrib'];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         //totalizador dos valores dos itens
         $this->stdTot->vTotTrib += (float) $std->vTotTrib;
 
@@ -2698,7 +2714,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagICMS($std)
+    public function tagICMS(stdClass $std)
     {
         $possible = [
             'item',
@@ -3628,7 +3644,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagICMSPart($std)
+    public function tagICMSPart(stdClass $std)
     {
         $possible = [
             'item',
@@ -3649,7 +3665,7 @@ class Make
             'UFST'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $icmsPart = $this->dom->createElement("ICMSPart");
         $this->dom->addChild(
             $icmsPart,
@@ -3774,7 +3790,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagICMSST($std)
+    public function tagICMSST(stdClass $std)
     {
         $possible = [
             'item',
@@ -3786,7 +3802,7 @@ class Make
             'vICMSSTDest'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $icmsST = $this->dom->createElement("ICMSST");
         $this->dom->addChild(
             $icmsST,
@@ -3847,7 +3863,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagICMSSN($std)
+    public function tagICMSSN(stdClass $std)
     {
         $possible = [
             'item',
@@ -3881,7 +3897,7 @@ class Make
             'vICMS',
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         //totalizador
         $this->stdTot->vBC += (float) $std->vBC;
         $this->stdTot->vICMS += (float) $std->vICMS;
@@ -4337,7 +4353,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagICMSUFDest($std)
+    public function tagICMSUFDest(stdClass $std)
     {
         $possible = [
             'item',
@@ -4352,7 +4368,7 @@ class Make
             'vICMSUFRemet'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $this->stdTot->vICMSUFDest += (float) $std->vICMSUFDest;
         $this->stdTot->vFCPUFDest += (float) $std->vFCPUFDest;
         $this->stdTot->vICMSUFRemet += (float) $std->vICMSUFRemet;
@@ -4432,7 +4448,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagIPI($std)
+    public function tagIPI(stdClass $std)
     {
         $possible = [
             'item',
@@ -4449,7 +4465,7 @@ class Make
             'vUnid'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         //totalizador
         $this->stdTot->vIPI += (float) $std->vIPI;
 
@@ -4490,7 +4506,7 @@ class Make
             true,
             "[item $std->item] Código de Enquadramento Legal do IPI"
         );
-        if ($std->CST == '00' || $std->CST == '49'|| $std->CST == '50' || $std->CST == '99') {
+        if ($std->CST == '00' || $std->CST == '49' || $std->CST == '50' || $std->CST == '99') {
             $ipiTrib = $this->dom->createElement('IPITrib');
             $this->dom->addChild(
                 $ipiTrib,
@@ -4557,7 +4573,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagII($std)
+    public function tagII(stdClass $std)
     {
         $possible = [
             'item',
@@ -4567,7 +4583,7 @@ class Make
             'vIOF'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         //totalizador
         $this->stdTot->vII += (float) $std->vII;
 
@@ -4575,28 +4591,28 @@ class Make
         $this->dom->addChild(
             $tii,
             "vBC",
-            $std->vBC,
+            number_format($std->vBC, 2, '.', ''),
             true,
             "[item $std->item] Valor BC do Imposto de Importação"
         );
         $this->dom->addChild(
             $tii,
             "vDespAdu",
-            $std->vDespAdu,
+            number_format($std->vDespAdu, 2, '.', ''),
             true,
             "[item $std->item] Valor despesas aduaneiras"
         );
         $this->dom->addChild(
             $tii,
             "vII",
-            $std->vII,
+            number_format($std->vII, 2, '.', ''),
             true,
             "[item $std->item] Valor Imposto de Importação"
         );
         $this->dom->addChild(
             $tii,
             "vIOF",
-            $std->vIOF,
+            number_format($std->vIOF, 2, '.', ''),
             true,
             "[item $std->item] Valor Imposto sobre Operações Financeiras"
         );
@@ -4610,7 +4626,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagPIS($std)
+    public function tagPIS(stdClass $std)
     {
         $possible = [
             'item',
@@ -4622,9 +4638,9 @@ class Make
             'vAliqProd'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         //totalizador
-        $this->stdTot->vPIS += $std->vPIS;
+        $this->stdTot->vPIS += (float) $std->vPIS;
 
         switch ($std->CST) {
             case '01':
@@ -4741,34 +4757,34 @@ class Make
                     $pisItem,
                     'vBC',
                     $std->vBC,
-                    false,
+                    ($std->vBC !== null) ? true : false,
                     "[item $std->item] Valor da Base de Cálculo do PIS"
                 );
                 $this->dom->addChild(
                     $pisItem,
                     'pPIS',
                     $std->pPIS,
-                    false,
+                    ($std->pPIS !== null) ? true : false,
                     "[item $std->item] Alíquota do PIS (em percentual)"
                 );
                 $this->dom->addChild(
                     $pisItem,
                     'qBCProd',
                     $std->qBCProd,
-                    false,
+                    ($std->qBCProd !== null) ? true : false,
                     "[item $std->item] Quantidade Vendida"
                 );
                 $this->dom->addChild(
                     $pisItem,
                     'vAliqProd',
                     $std->vAliqProd,
-                    false,
+                    ($std->vAliqProd !== null) ? true : false,
                     "[item $std->item] Alíquota do PIS (em reais)"
                 );
                 $this->dom->addChild(
                     $pisItem,
                     'vPIS',
-                    $std->vPIS,
+                    number_format($std->vPIS, 2, '.', ''),
                     true,
                     "[item $std->item] Valor do PIS"
                 );
@@ -4788,7 +4804,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagPISST($std)
+    public function tagPISST(stdClass $std)
     {
         $possible = [
             'item',
@@ -4799,7 +4815,7 @@ class Make
             'vAliqProd'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $pisst = $this->dom->createElement('PISST');
         $this->dom->addChild(
             $pisst,
@@ -4846,7 +4862,7 @@ class Make
      * @param  stdClass $std
      * @return DOMElement
      */
-    public function tagCOFINS($std)
+    public function tagCOFINS(stdClass $std)
     {
         $possible = [
             'item',
@@ -4858,7 +4874,7 @@ class Make
             'vAliqProd'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         //totalizador
         $this->stdTot->vCOFINS += (float) $std->vCOFINS;
 
@@ -4947,7 +4963,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagCOFINSST($std)
+    public function tagCOFINSST(stdClass $std)
     {
         $possible = [
             'item',
@@ -4958,7 +4974,7 @@ class Make
             'vAliqProd'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $cofinsst = $this->dom->createElement("COFINSST");
         $this->dom->addChild(
             $cofinsst,
@@ -5002,10 +5018,10 @@ class Make
     /**
      * Grupo ISSQN U01 pai M01
      * tag NFe/infNFe/det[]/imposto/ISSQN (opcional)
-     * @param  string stdClass $std
+     * @param stdClass $std
      * @return DOMElement
      */
-    public function tagISSQN($std)
+    public function tagISSQN(stdClass $std)
     {
         $possible = [
             'item',
@@ -5027,7 +5043,7 @@ class Make
             'indIncentivo'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $issqn = $this->dom->createElement("ISSQN");
         $this->dom->addChild(
             $issqn,
@@ -5151,7 +5167,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagimpostoDevol($std)
+    public function tagimpostoDevol(stdClass $std)
     {
         $possible = [
             'item',
@@ -5190,7 +5206,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagICMSTot($std)
+    public function tagICMSTot(stdClass $std)
     {
         $this->buildTotal();
         $vBC = !empty($std->vBC) ? $std->vBC : $this->stdTot->vBC;
@@ -5216,13 +5232,13 @@ class Make
         $vFCPUFDest = !empty($std->vFCPUFDest) ? $std->vFCPUFDest : $this->stdTot->vFCPUFDest;
         $vICMSUFDest = !empty($std->vICMSUFDest) ? $std->vICMSUFDest : $this->stdTot->vICMSUFDest;
         $vICMSUFRemet = !empty($std->vICMSUFRemet) ? $std->vICMSUFRemet : $this->stdTot->vICMSUFRemet;
-        
+
         //campos opcionais incluir se maior que zero
         $vFCPUFDest = ($vFCPUFDest > 0) ? number_format($vFCPUFDest, 2, '.', '') : null;
         $vICMSUFDest = ($vICMSUFDest > 0) ? number_format($vICMSUFDest, 2, '.', '') : null;
         $vICMSUFRemet = ($vICMSUFRemet > 0) ? number_format($vICMSUFRemet, 2, '.', '') : null;
         $vTotTrib = ($vTotTrib > 0) ? number_format($vTotTrib, 2, '.', '') : null;
-        
+
         //campos especificos por layout
         if ($this->version == '3.10') {
             //campos inexistentes no 3.10
@@ -5417,7 +5433,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagISSQNTot($std)
+    public function tagISSQNTot(stdClass $std)
     {
         $possible = [
             'vServ',
@@ -5434,7 +5450,7 @@ class Make
             'cRegTrib'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $this->buildTotal();
         $ISSQNTot = $this->dom->createElement("ISSQNtot");
         $this->dom->addChild(
@@ -5531,7 +5547,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagretTrib($std)
+    public function tagretTrib(stdClass $std)
     {
         $possible = [
             'vRetPIS',
@@ -5543,7 +5559,7 @@ class Make
             'vRetPrev'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $retTrib = $this->dom->createElement("retTrib");
         $this->dom->addChild(
             $retTrib,
@@ -5604,7 +5620,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagtransp($std)
+    public function tagtransp(stdClass $std)
     {
         $this->transp = $this->dom->createElement("transp");
         $this->dom->addChild(
@@ -5623,7 +5639,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagtransporta($std)
+    public function tagtransporta(stdClass $std)
     {
         $possible = [
             'xNome',
@@ -5635,7 +5651,7 @@ class Make
             'CPF'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $transporta = $this->dom->createElement("transporta");
         $this->dom->addChild(
             $transporta,
@@ -5701,7 +5717,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagretTransp($std)
+    public function tagretTransp(stdClass $std)
     {
         $possible = [
             'vServ',
@@ -5712,7 +5728,7 @@ class Make
             'cMunFG'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $retTransp = $this->dom->createElement("retTransp");
         $this->dom->addChild(
             $retTransp,
@@ -5770,7 +5786,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagveicTransp($std)
+    public function tagveicTransp(stdClass $std)
     {
         $possible = [
             'placa',
@@ -5815,7 +5831,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagreboque($std)
+    public function tagreboque(stdClass $std)
     {
         $possible = [
             'placa',
@@ -5825,7 +5841,7 @@ class Make
             'balsa'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $reboque = $this->dom->createElement("reboque");
         $this->dom->addChild(
             $reboque,
@@ -5876,7 +5892,7 @@ class Make
      * @param  stdClass $std
      * @return DOMElement
      */
-    public function tagvol($std)
+    public function tagvol(stdClass $std)
     {
         $possible = [
             'item',
@@ -5888,7 +5904,7 @@ class Make
             'pesoB'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $vol = $this->dom->createElement("vol");
         $this->dom->addChild(
             $vol,
@@ -5942,7 +5958,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function taglacres($std)
+    public function taglacres(stdClass $std)
     {
         $lacre = $this->dom->createElement("lacres");
         $this->dom->addChild(
@@ -5967,24 +5983,16 @@ class Make
     }
 
     /**
-     * Grupo de Formas de Pagamento YA01 pai A01
+     * Grupo Pagamento Y pai A01
      * NOTA: Ajustado para NT2016_002_v1.30
      * tag NFe/infNFe/pag (obrigatorio na NT2016_002_v1.30)
-     * Apenas para o modelo 65 NFCe
+     * Obrigatório para 55 e 65
      * @param stdClass $std
      * @return DOMElement
      */
     public function tagpag($std)
     {
         $pag = $this->dom->createElement("pag");
-
-        if ($this->version == '3.10') {
-            $this->aPag[] = $pag;
-            $this->domTagPag($pag, $std);
-
-            return $pag;
-        }
-
         //incluso no layout 4.00
         $vTroco = !empty($std->vTroco) ? $std->vTroco : null;
         $this->dom->addChild(
@@ -5994,9 +6002,7 @@ class Make
             false,
             "Valor do troco"
         );
-
-        $this->aPag[] = $pag;
-        return $pag;
+        return $this->aPag[] = $pag;
     }
 
     /**
@@ -6008,30 +6014,6 @@ class Make
      */
     public function tagdetPag($std)
     {
-        $detPag = $this->dom->createElement("detPag");
-        $this->domTagPag($detPag, $std);
-
-        $n = count($this->aPag);
-        $node = $this->aPag[$n-1]->getElementsByTagName("vTroco")->item(0);
-        if (!empty($node)) {
-            $this->aPag[$n-1]->insertBefore($detPag, $node);
-        } else {
-            $this->dom->appChild($this->aPag[$n-1], $detPag, 'Falta tag "Pag"');
-        }
-        return $detPag;
-    }
-
-
-    /**
-     * Monta o DOM da tag de pagamento
-     * Utilizado em `tagpag` e `tagdetPag`
-     * Apenas para o modelo 65 NFCe
-     * @param $domPag
-     * @param stdClass $std
-     * @return DOMElement
-     */
-    private function domTagPag($domPag, $std)
-    {
         $possible = [
             'tPag',
             'vPag',
@@ -6042,24 +6024,23 @@ class Make
         ];
         $std = $this->equilizeParameters($std, $possible);
 
+        $detPag = $this->dom->createElement("detPag");
         $this->dom->addChild(
-            $domPag,
+            $detPag,
             "tPag",
             $std->tPag,
             true,
             "Forma de pagamento"
         );
         $this->dom->addChild(
-            $domPag,
+            $detPag,
             "vPag",
             $std->vPag,
             true,
             "Valor do Pagamento"
         );
-
         if ($std->tBand != '') {
             $card = $this->dom->createElement("card");
-
             $this->dom->addChild(
                 $card,
                 "tpIntegra",
@@ -6088,11 +6069,16 @@ class Make
                 true,
                 "Número de autorização da operação cartão de crédito e/ou débito"
             );
-
-            $this->dom->appChild($domPag, $card, "Inclusão do node Card");
+            $this->dom->appChild($detPag, $card, "Inclusão do node Card");
         }
-
-        return $domPag;
+        $n = count($this->aPag);
+        $node = $this->aPag[$n - 1]->getElementsByTagName("vTroco")->item(0);
+        if (!empty($node)) {
+            $this->aPag[$n - 1]->insertBefore($detPag, $node);
+        } else {
+            $this->dom->appChild($this->aPag[$n - 1], $detPag, 'Falta tag "Pag"');
+        }
+        return $detPag;
     }
 
     /**
@@ -6101,7 +6087,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagfat($std)
+    public function tagfat(stdClass $std)
     {
         $possible = [
             'nFat',
@@ -6152,7 +6138,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagdup($std)
+    public function tagdup(stdClass $std)
     {
         $possible = [
             'nDup',
@@ -6160,7 +6146,7 @@ class Make
             'vDup'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $this->buildCobr();
         $dup = $this->dom->createElement("dup");
         $this->dom->addChild(
@@ -6194,11 +6180,11 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function taginfAdic($std)
+    public function taginfAdic(stdClass $std)
     {
         $possible = ['infAdFisco', 'infCpl'];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $this->buildInfAdic();
         $this->dom->addChild(
             $this->infAdic,
@@ -6224,11 +6210,11 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagobsCont($std)
+    public function tagobsCont(stdClass $std)
     {
         $possible = ['xCampo', 'xTexto'];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $this->buildInfAdic();
         $obsCont = $this->dom->createElement("obsCont");
         $obsCont->setAttribute("xCampo", $std->xCampo);
@@ -6250,11 +6236,11 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagobsFisco($std)
+    public function tagobsFisco(stdClass $std)
     {
         $possible = ['xCampo', 'xTexto'];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $this->buildInfAdic();
         $obsFisco = $this->dom->createElement("obsFisco");
         $obsFisco->setAttribute("xCampo", $std->xCampo);
@@ -6280,7 +6266,7 @@ class Make
     {
         $possible = ['nProc', 'indProc'];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $this->buildInfAdic();
         $procRef = $this->dom->createElement("procRef");
         $this->dom->addChild(
@@ -6307,11 +6293,11 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagexporta($std)
+    public function tagexporta(stdClass $std)
     {
         $possible = ['UFSaidaPais', 'xLocExporta', 'xLocDespacho'];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $this->exporta = $this->dom->createElement("exporta");
         $this->dom->addChild(
             $this->exporta,
@@ -6343,11 +6329,11 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagcompra($std)
+    public function tagcompra(stdClass $std)
     {
         $possible = ['xNEmp', 'xPed', 'xCont'];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $this->compra = $this->dom->createElement("compra");
         $this->dom->addChild(
             $this->compra,
@@ -6379,7 +6365,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagcana($std)
+    public function tagcana(stdClass $std)
     {
         $possible = [
             'safra',
@@ -6392,7 +6378,7 @@ class Make
             'vLiqFor'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $this->cana = $this->dom->createElement("cana");
         $this->dom->addChild(
             $this->cana,
@@ -6459,7 +6445,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagforDia($std)
+    public function tagforDia(stdClass $std)
     {
         $forDia = $this->dom->createElement("forDia");
         $forDia->setAttribute("dia", $std->dia);
@@ -6481,11 +6467,11 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function tagdeduc($std)
+    public function tagdeduc(stdClass $std)
     {
         $possible = ['xDed', 'vDed'];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $deduc = $this->dom->createElement("deduc");
         $this->dom->addChild(
             $deduc,
@@ -6511,11 +6497,11 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    public function taginfNFeSupl($std)
+    public function taginfNFeSupl(stdClass $std)
     {
         $possible = ['qrcode', 'urlChave'];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         $infNFeSupl = $this->dom->createElement("infNFeSupl");
         $nodeqr = $infNFeSupl->appendChild($this->dom->createElement('qrCode'));
         $nodeqr->appendChild($this->dom->createCDATASection($std->qrcode));
@@ -6648,7 +6634,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    protected function buildCOFINSNT($std)
+    protected function buildCOFINSNT(stdClass $std)
     {
         $confinsnt = $this->dom->createElement('COFINSNT');
         $this->dom->addChild(
@@ -6668,7 +6654,7 @@ class Make
      * @param stdClass $std
      * @return DOMElement
      */
-    protected function buildCOFINSoutr($std)
+    protected function buildCOFINSoutr(stdClass $std)
     {
         $confinsoutr = $this->dom->createElement('COFINSOutr');
         $this->dom->addChild(
@@ -6682,28 +6668,28 @@ class Make
             $confinsoutr,
             "vBC",
             $std->vBC,
-            false,
+            ($std->vBC !== null) ? true : false,
             "Valor da Base de Cálculo da COFINS"
         );
         $this->dom->addChild(
             $confinsoutr,
             "pCOFINS",
             $std->pCOFINS,
-            false,
+            ($std->pCOFINS !== null) ? true : false,
             "Alíquota da COFINS (em percentual)"
         );
         $this->dom->addChild(
             $confinsoutr,
             "qBCProd",
             $std->qBCProd,
-            false,
+            ($std->qBCProd !== null) ? true : false,
             "Quantidade Vendida"
         );
         $this->dom->addChild(
             $confinsoutr,
             "vAliqProd",
             $std->vAliqProd,
-            false,
+            ($std->vAliqProd !== null) ? true : false,
             "Alíquota da COFINS (em reais)"
         );
         $this->dom->addChild(
@@ -6769,7 +6755,7 @@ class Make
             $prod = $this->aProd[$nItem];
             foreach ($aDI as $child) {
                 $node = $prod->getElementsByTagName("xPed")->item(0);
-                if (! empty($node)) {
+                if (!empty($node)) {
                     $prod->insertBefore($child, $node);
                 } else {
                     $this->dom->appChild($prod, $child, "Inclusão do node DI");
@@ -6778,11 +6764,16 @@ class Make
             $this->aProd[$nItem] = $prod;
         }
         //insere detExport
-        foreach ($this->aDetExport as $nItem => $child) {
+        foreach ($this->aDetExport as $nItem => $detexport) {
             $prod = $this->aProd[$nItem];
-            $node = $prod->getElementsByTagName("indTot")->item(0);
-            $prod->insertBefore($child, $node->nextSibling);
-//            $this->dom->appChild($prod, $child, "Inclusão do node detExport");
+            foreach ($detexport as $child) {
+                $node = $prod->getElementsByTagName("xPed")->item(0);
+                if (!empty($node)) {
+                    $prod->insertBefore($child, $node);
+                } else {
+                    $this->dom->appChild($prod, $child, "Inclusão do node DetExport");
+                }
+            }
             $this->aProd[$nItem] = $prod;
         }
         //insere veiculo
@@ -6798,17 +6789,24 @@ class Make
             $this->aProd[$nItem] = $prod;
         }
         //insere armas
-        foreach ($this->aArma as $nItem => $child) {
+        foreach ($this->aArma as $nItem => $arma) {
             $prod = $this->aProd[$nItem];
-            $this->dom->appChild($prod, $child, "Inclusão do node arma");
+            foreach ($arma as $child) {
+                $node = $prod->getElementsByTagName("imposto")->item(0);
+                if (!empty($node)) {
+                    $prod->insertBefore($child, $node);
+                } else {
+                    $this->dom->appChild($prod, $child, "Inclusão do node arma");
+                }
+            }
             $this->aProd[$nItem] = $prod;
         }
         //insere combustivel
         foreach ($this->aComb as $nItem => $child) {
             $prod = $this->aProd[$nItem];
-            if (! empty($this->aEncerrante)) {
+            if (!empty($this->aEncerrante)) {
                 $encerrante = $this->aEncerrante[$nItem];
-                if (! empty($encerrante)) {
+                if (!empty($encerrante)) {
                     $this->dom->appChild($child, $encerrante, "inclusão do node encerrante na tag comb");
                 }
             }
@@ -6987,14 +6985,14 @@ class Make
             $this->chNFe = $chaveMontada;
         }
     }
-    
+
     /**
      * Includes missing or unsupported properties in stdClass
      * @param stdClass $std
-     * @param array $required
+     * @param array $possible
      * @return stdClass
      */
-    protected function equilizeParameters(stdClass $std, array $possible)
+    protected function equilizeParameters(stdClass $std, $possible)
     {
         $arr = get_object_vars($std);
         foreach ($possible as $key) {

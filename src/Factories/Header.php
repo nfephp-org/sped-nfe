@@ -14,7 +14,7 @@ class Header
     /**
      * Return header
      * @param string $namespace
-     * @param string $cUF
+     * @param int $cUF
      * @param string $version
      * @return string
      */
