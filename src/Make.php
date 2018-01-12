@@ -6101,7 +6101,7 @@ class Make
                     $card,
                     "CNPJ",
                     $std->CNPJ,
-                    true,
+                    false,
                     "CNPJ da Credenciadora de cartão de crédito e/ou débito"
                 );
                 $this->dom->addChild(
