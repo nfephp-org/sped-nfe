@@ -6023,62 +6023,112 @@ class Make
             'tpIntegra'
         ];
         $std = $this->equilizeParameters($std, $possible);
-
-        $detPag = $this->dom->createElement("detPag");
-        $this->dom->addChild(
-            $detPag,
-            "tPag",
-            $std->tPag,
-            true,
-            "Forma de pagamento"
-        );
-        $this->dom->addChild(
-            $detPag,
-            "vPag",
-            $std->vPag,
-            true,
-            "Valor do Pagamento"
-        );
-        if ($std->tBand != '') {
-            $card = $this->dom->createElement("card");
+        if ($this->version === '3.10') {
+            $n = count($this->aPag);
             $this->dom->addChild(
-                $card,
-                "tpIntegra",
-                $std->tpIntegra,
-                false,
-                "Tipo de Integração para pagamento"
-            );
-            $this->dom->addChild(
-                $card,
-                "CNPJ",
-                $std->CNPJ,
+                $this->aPag[$n-1],
+                "tPag",
+                $std->tPag,
                 true,
-                "CNPJ da Credenciadora de cartão de crédito e/ou débito"
+                "Forma de pagamento"
             );
             $this->dom->addChild(
-                $card,
-                "tBand",
-                $std->tBand,
+                $this->aPag[$n-1],
+                "vPag",
+                $std->vPag,
                 true,
-                "Bandeira da operadora de cartão de crédito e/ou débito"
+                "Valor do Pagamento"
             );
-            $this->dom->addChild(
-                $card,
-                "cAut",
-                $std->cAut,
-                true,
-                "Número de autorização da operação cartão de crédito e/ou débito"
-            );
-            $this->dom->appChild($detPag, $card, "Inclusão do node Card");
-        }
-        $n = count($this->aPag);
-        $node = $this->aPag[$n - 1]->getElementsByTagName("vTroco")->item(0);
-        if (!empty($node)) {
-            $this->aPag[$n - 1]->insertBefore($detPag, $node);
+            if ($std->tBand != '') {
+                $card = $this->dom->createElement("card");
+                $this->dom->addChild(
+                    $card,
+                    "tpIntegra",
+                    $std->tpIntegra,
+                    false,
+                    "Tipo de Integração para pagamento"
+                );
+                $this->dom->addChild(
+                    $card,
+                    "CNPJ",
+                    $std->CNPJ,
+                    true,
+                    "CNPJ da Credenciadora de cartão de crédito e/ou débito"
+                );
+                $this->dom->addChild(
+                    $card,
+                    "tBand",
+                    $std->tBand,
+                    true,
+                    "Bandeira da operadora de cartão de crédito e/ou débito"
+                );
+                $this->dom->addChild(
+                    $card,
+                    "cAut",
+                    $std->cAut,
+                    true,
+                    "Número de autorização da operação cartão de crédito e/ou débito"
+                );
+                $this->dom->appChild($this->aPag[$n-1], $card, "Inclusão do node Card");
+            }
+            return $this->aPag[$n-1];
         } else {
-            $this->dom->appChild($this->aPag[$n - 1], $detPag, 'Falta tag "Pag"');
+            $detPag = $this->dom->createElement("detPag");
+            $this->dom->addChild(
+                $detPag,
+                "tPag",
+                $std->tPag,
+                true,
+                "Forma de pagamento"
+            );
+            $this->dom->addChild(
+                $detPag,
+                "vPag",
+                $std->vPag,
+                true,
+                "Valor do Pagamento"
+            );
+            if ($std->tBand != '') {
+                $card = $this->dom->createElement("card");
+                $this->dom->addChild(
+                    $card,
+                    "tpIntegra",
+                    $std->tpIntegra,
+                    false,
+                    "Tipo de Integração para pagamento"
+                );
+                $this->dom->addChild(
+                    $card,
+                    "CNPJ",
+                    $std->CNPJ,
+                    false,
+                    "CNPJ da Credenciadora de cartão de crédito e/ou débito"
+                );
+                $this->dom->addChild(
+                    $card,
+                    "tBand",
+                    $std->tBand,
+                    true,
+                    "Bandeira da operadora de cartão de crédito e/ou débito"
+                );
+                $this->dom->addChild(
+                    $card,
+                    "cAut",
+                    $std->cAut,
+                    true,
+                    "Número de autorização da operação cartão de crédito e/ou débito"
+                );
+                $this->dom->appChild($detPag, $card, "Inclusão do node Card");
+            }
+            $n = count($this->aPag);
+            $node = $this->aPag[$n - 1]->getElementsByTagName("vTroco")->item(0);
+            if (!empty($node)) {
+                $this->aPag[$n - 1]->insertBefore($detPag, $node);
+            } else {
+                $this->dom->appChild($this->aPag[$n - 1], $detPag, 'Falta tag "Pag"');
+            }
+            return $detPag;
         }
-        return $detPag;
     }
 
     /**
