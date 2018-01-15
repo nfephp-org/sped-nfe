@@ -181,7 +181,16 @@
       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">https://appnfc.sefa.pa.gov.br/portal/view/consultas/nfce/nfceForm.seam</NfeConsultaQR>
     </producao>
   </UF>
- <UF>
+  <UF>
+    <sigla>PE</sigla>
+    <homologacao>
+      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://nfcehomolog.sefaz.pe.gov.br/nfce-web/consultarNFCe</NfeConsultaQR>
+    </homologacao>
+    <producao>
+      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://nfce.sefaz.pe.gov.br/nfce-web/consultarNFCe</NfeConsultaQR>
+    </producao>
+  </UF>
+  <UF>
     <sigla>PR</sigla>
     <homologacao>
        <NfeAutorizacao method="nfeAutorizacaoLote" operation="NfeAutorizacao3" version="3.10">https://homologacao.nfce.fazenda.pr.gov.br/nfce/NFeAutorizacao3</NfeAutorizacao>
