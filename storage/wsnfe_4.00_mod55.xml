@@ -193,7 +193,7 @@
             <NfeConsultaProtocolo method="nfeConsultaNF" operation="NFeConsulta4" version="4.00">https://homologacao.nfe.sefa.pr.gov.br/nfe/NFeConsultaProtocolo4</NfeConsultaProtocolo>
             <NfeInutilizacao method="nfeInutilizacaoNF" operation="NFeInutilizacao4" version="4.00">https://homologacao.nfe.sefa.pr.gov.br/nfe/NFeInutilizacao4</NfeInutilizacao>
             <NfeRetAutorizacao method="nfeRetAutorizacao" operation="NFeRetAutorizacao4" version="4.00">https://homologacao.nfe.sefa.pr.gov.br/nfe/NFeRetAutorizacao4</NfeRetAutorizacao>
-            <RecepcaoEvento method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="4.00">https://homologacao.nfe.sefa.pr.gov.br/nfe/NFeRecepcaoEvento4</RecepcaoEvento>
+            <RecepcaoEvento method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="1.00">https://homologacao.nfe.sefa.pr.gov.br/nfe/NFeRecepcaoEvento4</RecepcaoEvento>
             <NfeConsultaCadastro method="consultaCadastro4" operation="CadConsultaCadastro4" version="4.00">https://homologacao.nfe.sefa.pr.gov.br/nfe/CadConsultaCadastro4</NfeConsultaCadastro>
         </homologacao>
         <producao>
@@ -202,7 +202,7 @@
             <NfeConsultaProtocolo method="nfeConsultaNF" operation="NFeConsulta4" version="4.00">https://nfe.sefa.pr.gov.br/nfe/NFeConsultaProtocolo4</NfeConsultaProtocolo>
             <NfeInutilizacao method="nfeInutilizacaoNF" operation="NFeInutilizacao4" version="4.00">https://nfe.sefa.pr.gov.br/nfe/NFeInutilizacao4</NfeInutilizacao>
             <NfeRetAutorizacao method="nfeRetAutorizacao" operation="NFeRetAutorizacao4" version="4.00">https://nfe.sefa.pr.gov.br/nfe/NFeRetAutorizacao4</NfeRetAutorizacao>
-            <RecepcaoEvento method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="4.00">https://nfe.sefa.pr.gov.br/nfe/NFeRecepcaoEvento4</RecepcaoEvento>
+            <RecepcaoEvento method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="1.00">https://nfe.sefa.pr.gov.br/nfe/NFeRecepcaoEvento4</RecepcaoEvento>
             <NfeConsultaCadastro method="consultaCadastro4" operation="CadConsultaCadastro4" version="4.00">https://nfe.sefa.pr.gov.br/nfe/CadConsultaCadastro4</NfeConsultaCadastro>
         </producao>
     </UF>
