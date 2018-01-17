@@ -555,7 +555,7 @@ class Tools
     protected function getXmlUrlPath()
     {
         $file = $this->pathwsfiles
-            . DIRECTORY_SEPARATOR
+            //. DIRECTORY_SEPARATOR
             . "wsnfe_".$this->versao."_mod55.xml";
         if ($this->modelo == 65) {
             $file = str_replace('55', '65', $file);
