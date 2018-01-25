@@ -6035,8 +6035,11 @@ class Make
                 true,
                 "Valor do Pagamento"
             );
+                      
             if ($std->tBand != '') {
+                
                 $card = $this->dom->createElement("card");
+                
                 $this->dom->addChild(
                     $card,
                     "tpIntegra",
@@ -6067,6 +6070,24 @@ class Make
                 );
                 $this->dom->appChild($this->aPag[$n-1], $card, "Inclusão do node Card");
             }
+            
+            //EMISSÃO PARA EMPRESAS SEM TEF, UTILIZANDO POS OU APENAS A MAQUINETA                
+            if($std->tpIntegra == '2' && !isset($card) ){
+
+                $card = $this->dom->createElement("card");
+
+                $this->dom->addChild(
+                    $card,
+                    "tpIntegra",
+                    $std->tpIntegra,
+                    false,
+                    "Tipo de Integração para pagamento"
+                );
+                
+                $this->dom->appChild($this->aPag[$n-1], $card, "Inclusão do node Card");
+            }
+                
+            
             return $this->aPag[$n-1];
         } else {
             //padrão para layout 4.00
