@@ -4,7 +4,7 @@
     "description": "API para geração e comunicação da NFe e NFCe com as SEFAZ autorizadoras.",
     "keywords": ["nfe","nfce","sped","nfephp"],
     "homepage": "https://github.com/nfephp-org/sped-nfe",
-    "license": ["GPL-3.0+","LGPL-3.0+", "MIT"],
+    "license": ["LGPL-3.0-or-later", "GPL-3.0-or-later", "MIT"],
     "authors": [
         {
             "name": "Roberto L. Machado",
