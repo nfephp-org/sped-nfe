@@ -6035,34 +6035,34 @@ class Make
                 true,
                 "Valor do Pagamento"
             );
-            if ($std->tBand != '') {
+            if (!empty($std->tpIntegra)) {
                 $card = $this->dom->createElement("card");
                 $this->dom->addChild(
                     $card,
                     "tpIntegra",
                     $std->tpIntegra,
-                    false,
+                    true,
                     "Tipo de Integração para pagamento"
                 );
                 $this->dom->addChild(
                     $card,
                     "CNPJ",
-                    $std->CNPJ,
-                    true,
+                    !empty($std->CNPJ) ? $std->CNPJ : null,
+                    false,
                     "CNPJ da Credenciadora de cartão de crédito e/ou débito"
                 );
                 $this->dom->addChild(
                     $card,
                     "tBand",
-                    $std->tBand,
-                    true,
+                    !empty($std->tBand) ? $std->tBand : null,
+                    false,
                     "Bandeira da operadora de cartão de crédito e/ou débito"
                 );
                 $this->dom->addChild(
                     $card,
                     "cAut",
-                    $std->cAut,
-                    true,
+                    !empty($std->cAut) ? $std->cAut : null,
+                    false,
                     "Número de autorização da operação cartão de crédito e/ou débito"
                 );
                 $this->dom->appChild($this->aPag[$n-1], $card, "Inclusão do node Card");
