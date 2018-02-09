@@ -30,9 +30,14 @@ Framework para geração e comunicação das NFe com as SEFAZ autorizadoras, e v
 
 ## Estados atendidos
 
-### **NFe (modelo 55) TODOS**
+### NFe (modelo 55) TODOS
 
-### NFCe (modelo 65) Todos **Exceto: CE e SC que não aderiram ao projeto**
+### NFCe (modelo 65) Todos, menos MG, CE e SC
+
+- MG inicia o projeto em 2018 (sem previsão)
+- No caso do CE ainda estamos no aguardo de mais esclarecimentos.(vai ?? não vai ??)
+- E SC não participa.
+
 
 Este pacote é aderente com os [PSR-1], [PSR-2] e [PSR-4]. Se você observar negligências de conformidade, por favor envie um patch via pull request.
 
