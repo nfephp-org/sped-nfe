@@ -28,6 +28,11 @@ Framework para geração e comunicação das NFe com as SEFAZ autorizadoras, e v
 [![Forks][ico-forks]][link-forks]
 [![Stars][ico-stars]][link-stars]
 
+## Estados atendidos
+
+### **NFe (modelo 55) TODOS**
+
+### NFCe (modelo 65) Todos **Exceto: CE e SC que não aderiram ao projeto**
 
 Este pacote é aderente com os [PSR-1], [PSR-2] e [PSR-4]. Se você observar negligências de conformidade, por favor envie um patch via pull request.
 
