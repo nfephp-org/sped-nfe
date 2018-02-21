@@ -588,7 +588,7 @@ class Make
         $this->dom->addChild(
             $ide,
             "cDV",
-            $std->cDV,
+            !empty($std->cDV) ? $std->cDV : '0',
             true,
             $identificador . "Dígito Verificador da Chave de Acesso da NF-e"
         );
