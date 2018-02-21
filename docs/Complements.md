@@ -114,11 +114,11 @@ Retorna: String
 
 use NFePHP\NFe\Complements;
 
-$request = "<XML conteudo original do documento que quer protocolar>";
-$response = "<XML conteudo do retorno com a resposta da SEFAZ>";
+$nfe = "<XML da NFe protocolada e autorizada>";
+$cancelamento = "<XML conteudo do retorno com a resposta de cancelamento autorizado da SEFAZ>";
 
 try {
-    $xml = Complements::toAuthorize($req, $res);
+    $xml = Complements::cancelRegister($nfe, $cancelamento);
     header('Content-type: text/xml; charset=UTF-8');
     echo $xml;
 } catch (\Exception $e) {
