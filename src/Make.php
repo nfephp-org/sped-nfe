@@ -1105,28 +1105,31 @@ class Make
             $xNome = 'NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
             //a exigência do CNPJ 99999999000191 não existe mais
         }
-        $this->dom->addChild(
-            $this->dest,
-            "CNPJ",
-            Strings::onlyNumbers($std->CNPJ),
-            false,
-            $identificador . "CNPJ do destinatário"
-        );
-        $this->dom->addChild(
-            $this->dest,
-            "CPF",
-            Strings::onlyNumbers($std->CPF),
-            false,
-            $identificador . "CPF do destinatário"
-        );
-        $this->dom->addChild(
-            $this->dest,
-            "idEstrangeiro",
-            Strings::onlyNumbers($std->idEstrangeiro),
-            false,
-            $identificador . "Identificação do destinatário no caso de comprador estrangeiro"
-        );
-        if ($std->idEstrangeiro != '') {
+        if (!empty($std->CNPJ)) {
+            $this->dom->addChild(
+                $this->dest,
+                "CNPJ",
+                Strings::onlyNumbers($std->CNPJ),
+                true,
+                $identificador . "CNPJ do destinatário"
+            );
+        } elseif (!empty($std->CPF)) {
+            $this->dom->addChild(
+                $this->dest,
+                "CPF",
+                Strings::onlyNumbers($std->CPF),
+                true,
+                $identificador . "CPF do destinatário"
+            );
+        } else {    
+            $this->dom->addChild(
+                $this->dest,
+                "idEstrangeiro",
+                $std->idEstrangeiro,
+                true,
+                $identificador . "Identificação do destinatário no caso de comprador estrangeiro",
+                true    
+            );
             $std->indIEDest = '9';
         }
         $this->dom->addChild(
