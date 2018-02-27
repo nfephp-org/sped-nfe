@@ -1121,14 +1121,14 @@ class Make
                 true,
                 $identificador . "CPF do destinatário"
             );
-        } else {    
+        } else {
             $this->dom->addChild(
                 $this->dest,
                 "idEstrangeiro",
                 $std->idEstrangeiro,
                 true,
                 $identificador . "Identificação do destinatário no caso de comprador estrangeiro",
-                true    
+                true
             );
             $std->indIEDest = '9';
         }
