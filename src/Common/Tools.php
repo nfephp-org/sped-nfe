@@ -606,13 +606,14 @@ class Tools
         if ($this->versao < '4.00') {
             return '';
         }
-        //existe no XML apenas para layout >= 4.x
+        //essa TAG existe no XML apenas para layout >= 4.x
         //os URI estão em storage/uri_consulta_nfce.json
-        $std = json_decode(
+        $arr = json_decode(
             file_get_contents(
                 $this->pathwsfiles.'uri_consulta_nfce.json'
-            )
+            ), true
         );
+        $std = json_decode(json_decode($arr[$this->tpAmb]));
         return $std->$uf;
     }
     
