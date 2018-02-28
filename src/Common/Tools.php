@@ -611,7 +611,8 @@ class Tools
         $arr = json_decode(
             file_get_contents(
                 $this->pathwsfiles.'uri_consulta_nfce.json'
-            ), true
+            ),
+            true
         );
         $std = json_decode(json_decode($arr[$this->tpAmb]));
         return $std->$uf;
