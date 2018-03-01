@@ -365,7 +365,7 @@ $nfe->tagdup($std);
 
 $xml = $nfe->getXML(); // O conteúdo do XML fica armazenado na variável $xml
 ```
-Esse exemplo são só alguns campos que podem ser preenchidos para emitir uma Nf-e, mas existem muito mais. Abordar todos os campos seria bastante complicado, para cada situação a nota deve ser preenchida com um campo ou outro. Se você não tem um bom domínio sobre contabilidade o meu concelho é sempre perguntar para alguem que saiba como deve ser preenchida a nota na situação em questão.
+Esse exemplo são só alguns campos que podem ser preenchidos para emitir uma Nf-e, mas existem muito mais. Abordar todos os campos seria bastante complicado, para cada situação a nota deve ser preenchida com um campo ou outro. Se você não tem um bom domínio sobre contabilidade o meu conselho é sempre perguntar para alguém que saiba como deve ser preenchida a nota na situação em questão.
 
 > Para saber todos os campos suportados pelo framework acesse o link da documentação https://github.com/nfephp-org/sped-nfe/blob/master/docs/Make.md
 
@@ -394,23 +394,33 @@ Agora que temos o nosso *$xml* gerado do passo anterior, a *$configJson* e o nos
 Cole os seguinte código no seu arquivo *index.php*. Lembrando de substituir a *'senha do certificado'* pela senha correta.
 ```php
 $tools = new NFePHP\NFe\Tools($configJson, NFePHP\Common\Certificate::readPfx($certificadoDigital, 'senha do certificado'));
-$xmlAssinado = $tools->signNFe($xml); // O conteúdo do XML assinado fica armazenado na variável $xmlAssinado
+try {
+    $xmlAssinado = $tools->signNFe($xml); // O conteúdo do XML assinado fica armazenado na variável $xmlAssinado
+} catch (\Exception $e) {
+    //aqui você trata possíveis exceptions da assinatura
+    exit($e->getMessage());
+}
 ```
 > Mais uma vez caso precise de mais detalhes sobre como funciona o método de assinatura você pode consultar a documentação acessando o link https://github.com/nfephp-org/sped-nfe/blob/master/docs/metodos/SignNFe.md
 
 ## Enviar Lote
 Para o envio do lote vamos precisar da *$configJson*, *$certificadoDigital* e do nosso XML assinado que está na variável *$xmlAssinado*. Esse método recebe um array com os XMLs nos permitindo enviar mais de um XML por vez, mas nesse caso vamos enviar somente um.
 ```php
-$idLote = str_pad(100, 15, '0', STR_PAD_LEFT); // Identificador do lote
-$resp = $this->tools->sefazEnviaLote([$xmlAssinado], $idLote);
+try {
+    $idLote = str_pad(100, 15, '0', STR_PAD_LEFT); // Identificador do lote
+    $resp = $tools->sefazEnviaLote([$xmlAssinado], $idLote);
 
-$st = new NFePHP\NFe\Common\Standardize();
-$std = $st->toStd($resp);
-if ($std->cStat != 103) {
-   //erro registrar e voltar
-   exit("[$std->cStat] $std->xMotivo");
+    $st = new NFePHP\NFe\Common\Standardize();
+    $std = $st->toStd($resp);
+    if ($std->cStat != 103) {
+        //erro registrar e voltar
+        exit("[$std->cStat] $std->xMotivo");
+    }
+    $recibo = $std->infRec->nRec; // Vamos usar a variável $recibo para consultar o status da nota
+} catch (\Exception $e) {
+    //aqui você trata possiveis exceptions do envio
+    exit($e->getMessage());
 }
-$recibo = $std->infRec->nRec; // Vamos usar a variável $recibo para consultar o status da nota
 ```
 Usamos a classe *Standardize* para converter o XML retornado pela receita para o formato *StdClass* assim caso o atributo *$std->cStat* retorne algo diferente de 103 sabemos algo deu errado no envio do lote para a receita.
 > Caso você precise de mais detalhes acesse o link da documentação https://github.com/nfephp-org/sped-nfe/blob/master/docs/metodos/EnviaLote.md
@@ -418,8 +428,13 @@ Usamos a classe *Standardize* para converter o XML retornado pela receita para o
 ## Consultar Recibo
 Com o recibo retornado pelo método *sefazEnviaLote* vamos ver se nota foi autorizada ou rejeitada pela receita. Vamos precisar da *$configJson*, *$certificadoDigital* e do número de recibo que temos na variável *$recibo*.
 ```php
-$tools = new NFePHP\NFe\Tools($configJson, NFePHP\Common\Certificate::readPfx($certificadoDigital, 'senha do certificado'));
-$protocolo = $this->tools->sefazConsultaRecibo($recibo);
+try {
+    $protocolo = $tools->sefazConsultaRecibo($recibo);
+} catch (\Exception $e) {
+    //aqui você trata possíveis exceptions da consulta
+    exit($e->getMessage());
+}
+
 ```
 > Para detalhes acesse o link da documentação https://github.com/nfephp-org/sped-nfe/blob/master/docs/metodos/ConsultaRecibo.md
 
@@ -428,8 +443,13 @@ Agora com variável *$protocolo* temos o resultado se a nossa nota foi autorizad
 ## Finalizando o processo
 Agora que enviamos a nota, consultamos o seu status, vamos trabalhar a com a situação a onde tudo deu certo e a nota foi autorizada. Precisamos guardar esse protocolo dentro do nosso XML, vamos pegar a nossa *$xmlAssinado* e a *$protocolo* e usar o código abaixo.
 ```php
-$protocol = new NFePHP\NFe\Factories\Protocol();
-$xmlProtocolado = $protocol->add($xmlAssinado,$protocolo);
+try {
+    $protocol = new NFePHP\NFe\Factories\Protocol();
+    $xmlProtocolado = $protocol->add($xmlAssinado,$protocolo);
+} catch (\Exception $e) {
+    //aqui você trata possíveis exceptions ao adicionar protocolo
+    exit($e->getMessage());
+}
 ```
 Por fim usamos o *file_put_contents* para criar um arquivo XML em disco para aguardar essa nota. A receita exige que você guarde os XMLs das suas notas pelo menos por 5 anos, então cuida bem delas.
 ```php
