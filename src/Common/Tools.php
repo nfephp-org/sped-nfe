@@ -614,7 +614,7 @@ class Tools
             ),
             true
         );
-        $std = json_decode(json_decode($arr[$this->tpAmb]));
+        $std = json_decode(json_encode($arr[$this->tpAmb]));
         return $std->$uf;
     }
     
