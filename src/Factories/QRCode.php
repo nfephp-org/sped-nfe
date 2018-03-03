@@ -23,6 +23,8 @@ class QRCode
 {
     //TODO: alterar para permitir uso do QRCode versão 2.0
     //com observância obrigatória a partir de 01/10/2018
+    //a estrutura do QRCode será diferente para ONLINE e
+    //OFFLINE podemos conferir o tpEmis para isso também
     
     /**
      * putQRTag
