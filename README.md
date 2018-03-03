@@ -12,6 +12,19 @@ Framework para geração e comunicação das NFe com as SEFAZ autorizadoras, e v
 
 >*Desativação na SEFAZ da versão anterior 3.10: até 02/07/18.*
 
+> ### NOVA VERSÃO 4.0 do layout para NFCe [Manual técnico DANFCE](http://www.nfe.fazenda.gov.br/portal/exibirArquivo.aspx?conteudo=/xyXbAFZ71k=)
+
+**Existem alterações e padrões a serem adotados na impressão do DANFCE, deve ser revisto o sped-da**
+
+> 04/06/2018 - Início da homologação da versão 4.00 do XML para a NFC-e
+
+>02/07/2018 – Início da produção da versão 4.00 do XML para a NFC-e – início da concomitância com a versão 1.00 do QR Code (a versão 4.00 do XML da NFC-e aceitará as versões 1.00 e 2.00 do QR Code)
+
+> *01/10/2018 – Desativação da versão 3.10 do XML para a NFC-e*
+ 
+> *01/10/2018 – Fim da concomitância com a versão 1.00 do QR Code (a versão 4.00 do XML da NFC-e aceitará somente a versão 2.00 do QR Code)* 
+
+
 *Utilize o chat do Gitter para iniciar discussões específicas sobre o desenvolvimento deste pacote.*
 
 [![Chat][ico-gitter]][link-gitter]
@@ -37,6 +50,8 @@ Framework para geração e comunicação das NFe com as SEFAZ autorizadoras, e v
 - MG inicia o projeto em 2018 (sem previsão)
 - No caso do CE ainda estamos no aguardo de mais esclarecimentos.(vai ?? não vai ??)
 - E SC não participa.
+
+
 
 
 Este pacote é aderente com os [PSR-1], [PSR-2] e [PSR-4]. Se você observar negligências de conformidade, por favor envie um patch via pull request.

@@ -573,6 +573,12 @@ class Tools
      */
     protected function addQRCode(DOMDocument $dom)
     {
+        //TODO: QRCode versão 2 vide manual layout 4.00
+        //esse novo QRCode é diferente ONLINE e OFFLINE
+        //portando a contingência agora será inclusa
+        //$this->contingency->type
+        //com observância obrigatória a partir de 01/10/2018
+        
         $memmod = $this->modelo;
         $this->modelo = 65;
         $uf = UFList::getUFByCode(

@@ -21,6 +21,9 @@ use NFePHP\NFe\Exception\DocumentsException;
 
 class QRCode
 {
+    //TODO: alterar para permitir uso do QRCode versão 2.0
+    //com observância obrigatória a partir de 01/10/2018
+    
     /**
      * putQRTag
      * Mount URI for QRCode and create XML tag in signed xml

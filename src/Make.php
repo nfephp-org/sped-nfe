@@ -1569,11 +1569,7 @@ class Make
 
         $cean = !empty($std->cEAN) ? $std->cEAN : '';
         $ceantrib = !empty($std->cEANTrib) ? $std->cEANTrib : '';
-        if ($this->version !== '3.10') {
-            $cean = !empty($cean) ? $cean : 'SEM GTIN';
-            $ceantrib = !empty($ceantrib) ? $ceantrib : 'SEM GTIN';
-        }
-
+        
         $identificador = 'I01 <prod> - ';
         $prod = $this->dom->createElement("prod");
         $this->dom->addChild(
