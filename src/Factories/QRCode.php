@@ -21,12 +21,11 @@ use NFePHP\NFe\Exception\DocumentsException;
 
 class QRCode
 {
-    //TODO: alterar para permitir uso do QRCode versão 2.0
-    //com observância obrigatória a partir de 01/10/2018
-    
     /**
      * putQRTag
      * Mount URI for QRCode and create XML tag in signed xml
+     * NOTE: included Manual_de_Especificações_Técnicas_do_DANFE_NFC-e_QR_Code
+     *       versão 5.0 since fevereiro de 2018
      * @param DOMDocument $dom NFe
      * @param string $token CSC number
      * @param string $idToken CSC identification
@@ -75,6 +74,7 @@ class QRCode
         $cUF = $ide->getElementsByTagName('cUF')->item(0)->nodeValue;
         $tpAmb = $ide->getElementsByTagName('tpAmb')->item(0)->nodeValue;
         $dhEmi = $ide->getElementsByTagName('dhEmi')->item(0)->nodeValue;
+        $tpEmis = $ide->getElementsByTagName('tpEmis')->item(0)->nodeValue;
         $cDest = '';
         if (!empty($dest)) {
             $cDest = !empty($dest->getElementsByTagName('CNPJ')->item(0)->nodeValue)
@@ -92,7 +92,9 @@ class QRCode
         $vNF = $icmsTot->getElementsByTagName('vNF')->item(0)->nodeValue;
         $vICMS = $icmsTot->getElementsByTagName('vICMS')->item(0)->nodeValue;
         $digVal = $signedInfo->getElementsByTagName('DigestValue')->item(0)->nodeValue;
-        $qrcode = self::get(
+        $qrMethod = "get$versao";
+        
+        $qrcode = self::$qrMethod(
             $chNFe,
             $urlqr,
             $tpAmb,
@@ -101,10 +103,12 @@ class QRCode
             $vICMS,
             $digVal,
             $token,
-            $cDest,
             $idToken,
-            $versao
+            $versao,
+            $tpEmis,
+            $cDest
         );
+        
         $infNFeSupl = $dom->createElement("infNFeSupl");
         $nodeqr = $infNFeSupl->appendChild($dom->createElement('qrCode'));
         $nodeqr->appendChild($dom->createCDATASection($qrcode));
@@ -120,7 +124,7 @@ class QRCode
     }
     
     /**
-     * Return a QRCode string to be used in NFCe
+     * Return a QRCode version 1 string to be used in NFCe layout 3.10
      * @param  string $chNFe
      * @param  string $url
      * @param  string $tpAmb
@@ -129,12 +133,13 @@ class QRCode
      * @param  string $vICMS
      * @param  string $digVal
      * @param  string $token
-     * @param  string $cDest
      * @param  string $idToken
      * @param  string $versao
+     * @param  int $tpEmis
+     * @param  string $cDest
      * @return string
      */
-    public static function get(
+    protected static function get100(
         $chNFe,
         $url,
         $tpAmb,
@@ -143,9 +148,10 @@ class QRCode
         $vICMS,
         $digVal,
         $token,
-        $cDest = '',
-        $idToken = '000001',
-        $versao = '100'
+        $idToken,
+        $versao,
+        $tpEmis,
+        $cDest = ''
     ) {
         $dhHex = self::str2Hex($dhEmi);
         $digHex = self::str2Hex($digVal);
@@ -169,6 +175,56 @@ class QRCode
         return $url.$seq;
     }
     
+    /**
+     * Return a QRCode version 2 string to be used in NFCe layout 4.00
+     * @param  string $chNFe
+     * @param  string $url
+     * @param  string $tpAmb
+     * @param  string $dhEmi
+     * @param  string $vNF
+     * @param  string $vICMS
+     * @param  string $digVal
+     * @param  string $token
+     * @param  string $idToken
+     * @param  string $versao
+     * @param  int $tpEmis
+     * @param  string $cDest
+     * @return string
+     */
+    protected static function get200(
+        $chNFe,
+        $url,
+        $tpAmb,
+        $dhEmi,
+        $vNF,
+        $vICMS,
+        $digVal,
+        $token,
+        $idToken,
+        $versao,
+        $tpEmis,
+        $cDest = ''
+    ) {
+        $ver = $versao/100;
+        $cscId = (int) $idToken;
+        $csc = $token;
+        if (strpos($url, '?p=') === false) {
+            $url = $url.'?p=';
+        }
+        if ($tpEmis != 9) {
+            $seq = "$chNFe|$ver|$tpAmb|$cscId";
+            $hash = strtoupper(sha1($seq.$csc));
+            return "$url$seq|$hash";
+        }
+        $dt = new \DateTime($dhEmi);
+        $dia = $dt->format('d');
+        $valor = number_format($vNF, 2, '.', '');
+        $digHex = str2Hex($digVal);
+        $seq = "$chNFe|$ver|$tpAmb|$dia|$valor|$digHex|$cscId";
+        $hash = strtoupper(sha1($seq.$csc));
+        return "$url$seq|$hash";
+    }
+
     /**
      * Convert string to hexadecimal ASCII equivalent
      * @param  string $str
