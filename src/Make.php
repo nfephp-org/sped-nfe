@@ -1150,7 +1150,7 @@ class Make
             $this->dom->addChild(
                 $this->dest,
                 "IE",
-                Strings::onlyNumbers($std->IE),
+                $std->IE,
                 true,
                 $identificador . "Inscrição Estadual do Destinatário"
             );
