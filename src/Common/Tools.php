@@ -325,6 +325,9 @@ class Tools
     {
         //remove all invalid strings
         $xml = Strings::clearXmlString($xml);
+        if ($this->contingency->type !== '') {
+            $xml = ContingencyNFe::adjust($xml, $this->contingency);
+        }
         $signed = Signer::sign(
             $this->certificate,
             $xml,
@@ -338,7 +341,10 @@ class Tools
         $dom->formatOutput = false;
         $dom->loadXML($signed);
         $modelo = $dom->getElementsByTagName('mod')->item(0)->nodeValue;
-        if ($modelo == 65) {
+        $isInfNFeSupl = !empty($dom->getElementsByTagName('infNFeSupl')->item(0))
+            ? true
+            : false;
+        if ($modelo == 65 && !$isInfNFeSupl) {
             $signed = $this->addQRCode($dom);
         }
         //exception will be throw if NFe is not valid
@@ -356,7 +362,6 @@ class Tools
         if ($this->contingency->type == '') {
             return $xml;
         }
-        $xml = ContingencyNFe::adjust($xml, $this->contingency);
         return $this->signNFe($xml);
     }
 
@@ -555,7 +560,6 @@ class Tools
     protected function getXmlUrlPath()
     {
         $file = $this->pathwsfiles
-            //. DIRECTORY_SEPARATOR
             . "wsnfe_".$this->versao."_mod55.xml";
         if ($this->modelo == 65) {
             $file = str_replace('55', '65', $file);
@@ -573,6 +577,11 @@ class Tools
      */
     protected function addQRCode(DOMDocument $dom)
     {
+        if (empty($this->config->CSC) || empty($this->config->CSCid)) {
+            throw new \RuntimeException(
+                "O QRCode não pode ser criado pois faltam dados CSC e/ou CSCId"
+            );
+        }
         $memmod = $this->modelo;
         $this->modelo = 65;
         $uf = UFList::getUFByCode(
