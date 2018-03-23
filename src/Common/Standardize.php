@@ -19,7 +19,6 @@ namespace NFePHP\NFe\Common;
 use NFePHP\Common\Validator;
 use NFePHP\NFe\Exception\DocumentsException;
 use Symfony\Component\Yaml\Yaml;
-use DOMDocument;
 use stdClass;
 
 class Standardize
@@ -82,7 +81,7 @@ class Standardize
      * Identify node and extract from XML for convertion type
      * @param string $xml
      * @return string identificated node name
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function whichIs($xml)
     {
