@@ -26,7 +26,6 @@ use NFePHP\Common\Strings;
 use NFePHP\Common\TimeZoneByUF;
 use NFePHP\Common\UFList;
 use NFePHP\Common\Validator;
-use NFePHP\NFe\Common\Config;
 use NFePHP\NFe\Factories\Contingency;
 use NFePHP\NFe\Factories\ContingencyNFe;
 use NFePHP\NFe\Factories\Header;
@@ -341,9 +340,7 @@ class Tools
         $dom->formatOutput = false;
         $dom->loadXML($signed);
         $modelo = $dom->getElementsByTagName('mod')->item(0)->nodeValue;
-        $isInfNFeSupl = !empty($dom->getElementsByTagName('infNFeSupl')->item(0))
-            ? true
-            : false;
+        $isInfNFeSupl = !empty($dom->getElementsByTagName('infNFeSupl')->item(0));
         if ($modelo == 65 && !$isInfNFeSupl) {
             $signed = $this->addQRCode($dom);
         }
