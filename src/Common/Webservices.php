@@ -134,7 +134,6 @@ class Webservices
     {
         $amb[$environment] = [];
         foreach ($node->children() as $children) {
-            $name = $children->getName();
             $name = (string) $children->getName();
             $method = (string) $children['method'];
             $operation = (string) $children['operation'];
