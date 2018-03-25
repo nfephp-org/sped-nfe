@@ -18,41 +18,41 @@ Depois de registrado algum dos eventos em uma NF-e, as retificações só poder�
 
 *I – Exija o preenchimento do Grupo Detalhamento Específico de Combustíveis, nos casos de circulação de mercadoria destinada a:* 
 
-a)  estabelecimentos distribuidores de combustíveis, a partir de 1º de março de 2013;
-b)  postos de combustíveis e transportadores revendedores retalhistas, a partir de 1º de julho de 2013;
-II – acoberte operações com álcool para fins não-combustíveis, transportado a granel, a partir de 1º de julho de 2014;
+*a)  estabelecimentos distribuidores de combustíveis, a partir de 1º de março de 2013;*
+*b)  postos de combustíveis e transportadores revendedores retalhistas, a partir de 1º de julho de 2013;*
+*II – acoberte operações com álcool para fins não-combustíveis, transportado a granel, a partir de 1º de julho de 2014;*
 
-III – nos casos em que o destinatário for um estabelecimento distribuidor ou atacadista, acoberte, a partir de 1º de agosto de 2015, a circulação de:
+*III – nos casos em que o destinatário for um estabelecimento distribuidor ou atacadista, acoberte, a partir de 1º de agosto de 2015, a circulação de:*
 
-a) cigarros;
-b) bebidas alcoólicas, inclusive cervejas e chopes;
-c) refrigerantes e água mineral.
-Prazos para registro dos eventos
-O registro dos eventos para os itens acima deverá ser realizado nos seguintes prazos, contados da data de autorização de uso da NF-e:
+*a) cigarros;*
+*b) bebidas alcoólicas, inclusive cervejas e chopes;*
+*c) refrigerantes e água mineral.*
+*Prazos para registro dos eventos*
+*O registro dos eventos para os itens acima deverá ser realizado nos seguintes prazos, contados da data de autorização de uso da NF-e:*
 
-### Em caso de operações internas:
+### *Em caso de operações internas:*
 | Evento | Dias |
 | :---:  | :--- |
-|Confirmação da Operação | 20 |
-|Operação não Realizada	| 20 |
-|Desconhecimento da Operação |	10 |
+| Confirmação da Operação | 20 |
+| Operação não Realizada | 20 |
+| Desconhecimento da Operação |	10 |
 
-### Em caso de operações interestaduais:
+### *Em caso de operações interestaduais:*
 | Evento | Dias |
 | :---:  | :--- |
-|Confirmação da Operação | 35 |
-|Operação não Realizada	| 35
-|Desconhecimento da Operação | 15 |
+| Confirmação da Operação | 35 |
+| Operação não Realizada	| 35
+| Desconhecimento da Operação | 15 |
 
-### Em caso de operações interestaduais destinadas a área incentivada
+### *Em caso de operações interestaduais destinadas a área incentivada*
 | Evento | Dias |
 | :---:  | :--- |
-|Confirmação da Operação | 70 |
-|Operação não Realizada	| 70 |
-|Desconhecimento da Operação | 15 |
+| Confirmação da Operação | 70 |
+| Operação não Realizada | 70 |
+| Desconhecimento da Operação | 15 |
 
-### Obrigatoriedade e Prazos a Nível Estadual
-Conforme legislação federal do Ajuste SINIEF 07/05 fica a critério de cada unidade federativa exigir dos destinatários a manifestação do destinatário para as operações que não estejam relacionados na obrigatoriedade federal. *
+### *Obrigatoriedade e Prazos a Nível Estadual*
+*Conforme legislação federal do Ajuste SINIEF 07/05 fica a critério de cada unidade federativa exigir dos destinatários a manifestação do destinatário para as operações que não estejam relacionados na obrigatoriedade federal.*
 
 Considerando as premissas acima, segue obrigatoriedade e prazos estabelecidos pelos em cada estado até o momento.
 
