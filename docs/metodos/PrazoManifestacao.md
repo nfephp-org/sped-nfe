@@ -1,4 +1,4 @@
-# MANISFETAÇÃO DE DESTINATÁRIO
+# MANIFESTAÇÃO DE DESTINATÁRIO PRAZOS
 
 Inicialmente tinha-se a expectativa que o governo fosse estabelecer o prazo para Manifestação do Destinatário entre 2014 e 2015.
 
