@@ -16,7 +16,7 @@ Depois de registrado algum dos eventos em uma NF-e, as retificações só poder�
 ## Obrigatoriedade especificas e Prazos a Nível Federal
 É obrigatório o registro da “Confirmação da Operação” e/ou “Operação não Realizada” e/ou “Desconhecimento da Operação” pelo destinatário toda NF-e que atenda um dos critérios abaixo:
 
-** I – Exija o preenchimento do Grupo Detalhamento Específico de Combustíveis, nos casos de circulação de mercadoria destinada a:
+* I – Exija o preenchimento do Grupo Detalhamento Específico de Combustíveis, nos casos de circulação de mercadoria destinada a: 
 
 a)  estabelecimentos distribuidores de combustíveis, a partir de 1º de março de 2013;
 b)  postos de combustíveis e transportadores revendedores retalhistas, a partir de 1º de julho de 2013;
@@ -52,7 +52,7 @@ O registro dos eventos para os itens acima deverá ser realizado nos seguintes p
 |Desconhecimento da Operação | 15 |
 
 ### Obrigatoriedade e Prazos a Nível Estadual
-Conforme legislação federal do Ajuste SINIEF 07/05 fica a critério de cada unidade federativa exigir dos destinatários a manifestação do destinatário para as operações que não estejam relacionados na obrigatoriedade federal. **
+Conforme legislação federal do Ajuste SINIEF 07/05 fica a critério de cada unidade federativa exigir dos destinatários a manifestação do destinatário para as operações que não estejam relacionados na obrigatoriedade federal. *
 
 Considerando as premissas acima, segue obrigatoriedade e prazos estabelecidos pelos em cada estado até o momento.
 
