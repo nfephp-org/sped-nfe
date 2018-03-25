@@ -18,3 +18,140 @@ O destinatário deve apresentar uma manifestação conclusiva dentro de um prazo
 **Processo:** síncrono.
 
 **Método:** nfeRecepcaoEvento
+
+## [Veja os Prazos para manifestação](PrazoManifestacao.md) 
+
+
+## Exemplo de Uso
+
+### public function sefazManifesta($chNFe,$tpEvento,$xJust = '',$nSeqEvento = 1)
+Manifestação individual de uma nota fiscal. (processo usual)    
+
+```php
+use NFePHP\NFe\Tools;
+use NFePHP\Common\Certificate;
+use NFePHP\NFe\Common\Standardize;
+
+try {
+    $certificate = Certificate::readPfx($content, 'senha');
+    $tools = new Tools($configJson, $certificate);
+    $tools->model('55');
+
+    $chNFe = '12345678901234567890123456789012345678901234'; //chave de 44 digitos da nota do fornecedor
+    $tpEvento = '210210'; //ciencia da operação
+    $xJust = ''; //a ciencia não requer justificativa
+    $nSeqEvento = 1; //a ciencia em geral será numero inicial de uma sequencia para essa nota e evento
+
+    $response = $tools->sefazManifesta($chNFe,$tpEvento,$xJust = '',$nSeqEvento = 1);
+    //você pode padronizar os dados de retorno atraves da classe abaixo
+    //de forma a facilitar a extração dos dados do XML
+    //NOTA: mas lembre-se que esse XML muitas vezes será necessário, 
+    //      quando houver a necessidade de protocolos
+    $st = new Standardize($response);
+    //nesse caso $std irá conter uma representação em stdClass do XML
+    $stdRes = $st->toStd();
+    //nesse caso o $arr irá conter uma representação em array do XML
+    $arr = $st->toArray();
+    //nesse caso o $json irá conter uma representação em JSON do XML
+    $json = $st->toJson();
+    
+
+} catch (\Exception $e) {
+    echo $e->getMessage();
+}
+```
+
+
+### public function sefazManifestaLote($std)
+Manifestação em LOTE de várias notas fiscais (até 20). (processo EVENTUAL)    
+
+```php
+use NFePHP\NFe\Tools;
+use NFePHP\Common\Certificate;
+use NFePHP\NFe\Common\Standardize;
+
+try {
+    $certificate = Certificate::readPfx($content, 'senha');
+    $tools = new Tools($configJson, $certificate);
+    $tools->model('55');
+
+    $std = new stdClass();
+    $std->evento[0] =  new stdClass();
+    $std->evento[0]->chNFe = '02345678901234567890123456789012345678901234';
+    $std->evento[0]->tpEvento = 210210; //evento ciencia da operação
+    $std->evento[0]->xJust = null;
+    $std->evento[0]->nSeqEvento = 1;
+    
+    $std->evento[1] =  new stdClass();
+    $std->evento[1]->chNFe = '12345678901234567890123456789012345678901234';
+    $std->evento[1]->tpEvento = 210210; //evento ciencia da operação
+    $std->evento[1]->xJust = null;
+    $std->evento[1]->nSeqEvento = 1;
+    
+    $std->evento[2] =  new stdClass();
+    $std->evento[2]->chNFe = '22345678901234567890123456789012345678901234';
+    $std->evento[2]->tpEvento = 210210; //evento ciencia da operação
+    $std->evento[2]->xJust = null;
+    $std->evento[2]->nSeqEvento = 1;
+    
+    $std->evento[3] =  new stdClass();
+    $std->evento[3]->chNFe = '32345678901234567890123456789012345678901234';
+    $std->evento[3]->tpEvento = 210210; //evento ciencia da operação
+    $std->evento[3]->xJust = null;
+    $std->evento[3]->nSeqEvento = 1;
+    
+    $std->evento[4] =  new stdClass();
+    $std->evento[4]->chNFe = '42345678901234567890123456789012345678901234';
+    $std->evento[4]->tpEvento = 210210; //evento ciencia da operação
+    $std->evento[4]->xJust = null;
+    $std->evento[4]->nSeqEvento = 1;
+    
+    $std->evento[5] =  new stdClass();
+    $std->evento[5]->chNFe = '52345678901234567890123456789012345678901234';
+    $std->evento[5]->tpEvento = 210210; //evento ciencia da operação
+    $std->evento[5]->xJust = null;
+    $std->evento[5]->nSeqEvento = 1;
+    
+    $std->evento[6] =  new stdClass();
+    $std->evento[6]->chNFe = '62345678901234567890123456789012345678901234';
+    $std->evento[6]->tpEvento = 210210; //evento ciencia da operação
+    $std->evento[6]->xJust = null;
+    $std->evento[6]->nSeqEvento = 1;    
+    
+    $std->evento[7] =  new stdClass();
+    $std->evento[7]->chNFe = '72345678901234567890123456789012345678901234';
+    $std->evento[7]->tpEvento = 210210; //evento ciencia da operação
+    $std->evento[7]->xJust = null;
+    $std->evento[7]->nSeqEvento = 1;
+    
+    $std->evento[8] =  new stdClass();
+    $std->evento[8]->chNFe = '72345678901234567890123456789012345678901234';
+    $std->evento[8]->tpEvento = 210240; //evento não realizada
+    $std->evento[8]->xJust = 'Entrega de produto não solicitado.';
+    $std->evento[8]->nSeqEvento = 2;
+    
+    $std->evento[9] =  new stdClass();
+    $std->evento[9]->chNFe = '82345678901234567890123456789012345678901234';
+    $std->evento[9]->tpEvento = 210200; //evento confirmação
+    $std->evento[9]->xJust = null;
+    $std->evento[9]->nSeqEvento = 1;        
+
+    $response = $tools->sefazManifestaLote($std);
+
+    //você pode padronizar os dados de retorno atraves da classe abaixo
+    //de forma a facilitar a extração dos dados do XML
+    //NOTA: mas lembre-se que esse XML muitas vezes será necessário, 
+    //      quando houver a necessidade de protocolos
+    $st = new Standardize($response);
+    //nesse caso $std irá conter uma representação em stdClass do XML
+    $stdRes = $st->toStd();
+    //nesse caso o $arr irá conter uma representação em array do XML
+    $arr = $st->toArray();
+    //nesse caso o $json irá conter uma representação em JSON do XML
+    $json = $st->toJson();
+    
+
+} catch (\Exception $e) {
+    echo $e->getMessage();
+}
+```
