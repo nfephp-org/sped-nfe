@@ -56,17 +56,17 @@ Depois de registrado algum dos eventos em uma NF-e, as retificações só poder�
 
 Considerando as premissas acima, segue obrigatoriedade e prazos estabelecidos pelos em cada estado até o momento.
 
-> Acre (AC)
+> ### Acre (AC)
 > Não tem obrigatoriedade especifica no estado. Segue apenas a legislação federal.
 > 
 > Para mais detalhes veja Art. 258-V do RICMS (DECRETO 008/98).
 
-> Amapá (AP)
+> ### Amapá (AP)
 > Não tem obrigatoriedade especifica no estado. Segue apenas a legislação federal.
 > 
 > Para mais detalhes veja ANEXO XIII-B do RICMS (DECRETO 2269/98).
 
-> Amazonas (AM)
+> ### Amazonas (AM)
 > Obrigatoriedade : É mandatório o registro dos eventos “Desconhecimento da Operação” ou “Operação não realizada” para as notas fiscais que o destinatário não reconheça a operação comercial conforme Decreto 36.593/15 com efeitos a partir de 01 de Janeiro de 2016.
 > 
 > Art. 204. Presume-se inidôneo, para os efeitos fiscais, fazendo prova apenas em favor do Fisco, o documento fiscal que:
@@ -79,7 +79,7 @@ Considerando as premissas acima, segue obrigatoriedade e prazos estabelecidos pe
 > 
 > Para mais detalhes veja Art. 204, Inciso XII do RICMS (DECRETO Nº 20686/99).
 
-> Bahia (BA)
+> ### Bahia (BA)
 > Obrigatoriedade: Além da obrigatoriedade federal, é mandatório o registro da Manifestação do Destinatário para os casos abaixo.
 > 
 > A partir de 15º de Agosto de 2014 estabeleceu-se obrigatoriedade do evento de “Operação não Realizada” ou “Desconhecimento da Operação” para toda NFe de “Farinha de trigo e mistura de farinha de trigo, em embalagens com peso igual ou superior a vinte e cinco quilos”.
@@ -92,27 +92,27 @@ Considerando as premissas acima, segue obrigatoriedade e prazos estabelecidos pe
 > 
 > Para mais detalhes veja Art. 90, Inciso 14 do RICMS (DECRETO Nº 13.780/12).
 
-> Ceará (CE)
+> ### Ceará (CE)
 > Não tem obrigatoriedade especifica no estado. Segue apenas a legislação federal.
 > 
 > O  RICMS(DECRETO 24.569/97) não está atualizado conforme legislação federal AJUSTE SINIEF 007/05.
 
-> Distrito Federal (DF)
+> ### Distrito Federal (DF)
 > Não tem obrigatoriedade especifica no estado. Segue apenas a legislação federal.
 > 
 > Para mais detalhes veja Art. 19-A da PORTARIA 403 / 2009.
 
-> Espírito Santo (ES)
+> ### Espírito Santo (ES)
 > Não tem obrigatoriedade especifica no estado. Segue apenas a legislação federal.
 > 
 > Para mais detalhes veja TÍTULO III, Seção II-A , Art. 543-P-A do RICMS (DECRETO 1.090-R/02).
 
-> Goiás (GO)
+> ### Goiás (GO)
 > Não tem obrigatoriedade especifica no estado. Segue apenas a legislação federal.
 > 
 > Para mais detalhes veja Art. 167-Q  do RCTE (DECRETO 4.852/97).
 
-> Maranhão (MA)
+> ### Maranhão (MA)
 > Obrigatoriedade: Além da obrigatoriedade federal, é mandatório o registro da Manifestação do Destinatário para os casos abaixo conforme Resoluções Administrativas 06/15, 13/15, 19/15 e 23/15.
 > 
 > A partir de 01º de Julho de 2015 estabeleceu-se obrigatoriedade do registro dos eventos pelo destinatário no recebimento das mercadorias e serviços constantes na NF-e a partir de R$ 50.000,00 (cinquenta mil reais);
@@ -132,7 +132,7 @@ Considerando as premissas acima, segue obrigatoriedade e prazos estabelecidos pe
 > | Operação não Realizada | 30 |
 > | Desconhecimento da Operação | 20 |
 > 
-> ###Em caso de operações interestaduais:
+> ### Em caso de operações interestaduais:
 > | Evento | Dias |
 > | :---:  | :--- |
 > | Confirmação da Operação | 60 |
@@ -141,49 +141,49 @@ Considerando as premissas acima, segue obrigatoriedade e prazos estabelecidos pe
 >
 > Para mais detalhes veja Subseção VII do RICMS (DECRETO 19.714/03).
 
-> Mato Grosso (MT)
+> ### Mato Grosso (MT)
 > Não tem obrigatoriedade especifica no estado. Segue apenas a legislação federal.
 > 
 > Para mais detalhes veja o anexo único da Portaria 163/2007-SEFAZ.
 
-> Mato Grosso do Sul (MS)
+> ### Mato Grosso do Sul (MS)
 > Não tem obrigatoriedade especifica no estado. Segue apenas a legislação federal.
 > 
 > Para mais detalhes veja o Sub-anexo XII ao Anexo XV do Regulamento de ICMS.
 
-> Minas Gerais (MG)
+> ### Minas Gerais (MG)
 > Não tem obrigatoriedade especifica no estado. Segue apenas a legislação federal.
 > 
 > Para mais detalhes veja Art. 11-K do Anexo V do RICMS (DECRETO 43.080/02).
 
-> Pará (PA)
+> ### Pará (PA)
 > Não tem obrigatoriedade especifica no estado. Segue apenas a legislação federal.
 > 
 > Para mais detalhes veja Art. 182-RB do RICMS (DECRETO 4.676/01).
 
-> Paraíba (PB)
+> ### Paraíba (PB)
 > Não tem obrigatoriedade especifica no estado. Segue apenas a legislação federal.
 > 
 > Para mais detalhes veja Anexo 117 do RICMS (DECRETO 18.930/97).
 
-> Paraná (PR)
+> ### Paraná (PR)
 > Não tem obrigatoriedade especifica no estado. Segue apenas a legislação federal.
 > 
 > Para mais detalhes veja Art. 16-A do RICMS (DECRETO 6.080/12).
 
-> Pernambuco (PE)
+> ### Pernambuco (PE)
 > Não tem obrigatoriedade especifica no estado. Segue apenas a legislação federal.
 > 
 > Mais detalhes, acesse o site sobre este assunto no estado.
 > 
 > Nota : Não existe nenhuma referencia a Manifestação do Destinatário no RICMS (DECRETO 14.876/91).
 
-> Piauí (PI)
+> ### Piauí (PI)
 > Não tem obrigatoriedade especifica no estado. Segue apenas a legislação federal.
 > 
 > Para mais detalhes veja o Anexo CCLXXXI – A do RICMS (DECRETO 13.500/08).
  
-> Rio de Janeiro (RJ)
+> ### Rio de Janeiro (RJ)
 > Obrigatoriedade : É mandatório o registro da Manifestação do Destinatário para os casos abaixo conforme Art.8° do Anexo II da Parte II da Resolução SEFAZ 720/2014.
 > 
 > A partir de 1º de Julho de 2014 estabeleceu-se obrigatoriedade do evento de “Operação não Realizada” ou “Desconhecimento da Operação” para toda NFe que tenha sido recusada pelo destinatário;
@@ -192,7 +192,7 @@ Considerando as premissas acima, segue obrigatoriedade e prazos estabelecidos pe
 > 
 > Para mais detalhes veja a Tabela 6 do Anexo II da Parte II da Resolução SEFAZ nº 720/2014.
 
-> Rio Grande do Norte (RN)
+> ### Rio Grande do Norte (RN)
 > Obrigatoriedade :  É mandatório o registro da Manifestação do Destinatário para o caso abaixo conforme Art. 425-H,  20 do RICMS/RN.
 > 
 > A partir de 1º de agosto de 2015 estabeleceu-se obrigatoriedade do evento “Desconhecimento da Operação” até o dia 25 (vinte e cinco) do mês subsequente à autorização de uso da NF-e, sempre que a operação nela descrita não tenha sido por ele.
@@ -200,7 +200,7 @@ Considerando as premissas acima, segue obrigatoriedade e prazos estabelecidos pe
 > 
 > Para mais detalhes veja Art. 425-H,  18 do RICMS/RN.
 
-> Rio Grande do Sul (RS)
+> ### Rio Grande do Sul (RS)
 > Obrigatoriedade :  É mandatório o registro da Manifestação do Destinatário para os casos abaixo conforme Instrução Normativa DRP Nº 045/98, Título I, Capítulo XI, Seção 20.0, Item 20.11.
 > 
 > A partir de 1º de Julho de 2013 estabeleceu-se a obrigatoriedade da Manifestação do Destinatário para todos os destinatários cuja as Notas Fiscais tenham o valor de operação superior a R$ 100.000,00 (cem mil reais).
@@ -208,17 +208,17 @@ Considerando as premissas acima, segue obrigatoriedade e prazos estabelecidos pe
 > 
 > Prazos :  Foi estabelecido os mesmos prazos da obrigatoriedade federal conforme a Instrução Normativa DRP Nº 045/98, Título I, Capítulo XI, Seção 20.0, Item 20.11
 
-> Rondônia (RO)
+> ### Rondônia (RO)
 > Não tem obrigatoriedade especifica no estado. Segue apenas a legislação federal.
 > 
 > Para mais detalhes veja Art. 196-P4 do RICMS (DECRETO 8321/08).
 
-> Roraima (RR)
+> ### Roraima (RR)
 > Não tem obrigatoriedade especifica no estado. Segue apenas a legislação federal.
 > 
 > Para mais detalhes veja Art. 186-PC do RICMS (DECRETO 4.335/01).
 
-> Santa Catarina (SC)
+> ### Santa Catarina (SC)
 > Obrigatoriedade:  É mandatório o registro da Manifestação do Destinatário para os casos abaixo conforme Alteração 3.565 de Decreto 289 5 de Agosto de 2015.
 > 
 > A partir de 5º de Agosto de 2015 estabeleceu-se a obrigatoriedade da Manifestação do Destinatário para todos os destinatários cuja as Notas Fiscais tenham o valor de operação superior a R$ 100.000,00 (cem mil reais).
@@ -228,17 +228,17 @@ Considerando as premissas acima, segue obrigatoriedade e prazos estabelecidos pe
 > 
 > Para Mais detalhes, acesse o Anexo 11 do RICMS(DECRETO 2.870/01).
 
-> Sergipe (SE)
+> ### Sergipe (SE)
 > Não tem obrigatoriedade especifica no estado. Segue apenas a legislação federal.
 > 
 > Para mais detalhes veja Anexo LXXXVIII do RICMS (DECRETO 21.400/02).
 
-> São Paulo (SP)
+> ### São Paulo (SP)
 > Não tem obrigatoriedade especifica no estado. Segue apenas a legislação federal.
 > 
 > Para mais detalhes veja Anexo IV da Portaria CAT 162/08.
 
-> Tocantins (TO)
+> ### Tocantins (TO)
 > Não tem obrigatoriedade especifica no estado. Segue apenas a legislação federal.
 > 
 > Para mais detalhes veja Art. 153-K do RICMS (DECRETO 2.912/06).
