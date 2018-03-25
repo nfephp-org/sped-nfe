@@ -19,6 +19,9 @@ O destinatário deve apresentar uma manifestação conclusiva dentro de um prazo
 
 **Método:** nfeRecepcaoEvento
 
+## [Veja os Prazos para manifestação](PrazoManifestacao.md) 
+
+
 ## Exemplo de Uso
 
 ### public function sefazManifesta($chNFe,$tpEvento,$xJust = '',$nSeqEvento = 1)
