@@ -23,7 +23,7 @@ class QRCode
 {
     /**
      * putQRTag
-     * Mount URI for QRCode and create XML tag in signed xml
+     * Mount URI for QRCode and create three XML tags in signed xml
      * NOTE: included Manual_de_Especificações_Técnicas_do_DANFE_NFC-e_QR_Code
      *       versão 5.0 since fevereiro de 2018
      * @param DOMDocument $dom NFe
@@ -71,7 +71,6 @@ class QRCode
         $icmsTot = $dom->getElementsByTagName('ICMSTot')->item(0);
         $signedInfo = $dom->getElementsByTagName('SignedInfo')->item(0);
         $chNFe = preg_replace('/[^0-9]/', '', $infNFe->getAttribute("Id"));
-        $cUF = $ide->getElementsByTagName('cUF')->item(0)->nodeValue;
         $tpAmb = $ide->getElementsByTagName('tpAmb')->item(0)->nodeValue;
         $dhEmi = $ide->getElementsByTagName('dhEmi')->item(0)->nodeValue;
         $tpEmis = $ide->getElementsByTagName('tpEmis')->item(0)->nodeValue;
@@ -135,7 +134,6 @@ class QRCode
      * @param  string $token
      * @param  string $idToken
      * @param  string $versao
-     * @param  int $tpEmis
      * @param  string $cDest
      * @return string
      */
@@ -150,7 +148,6 @@ class QRCode
         $token,
         $idToken,
         $versao,
-        $tpEmis,
         $cDest = ''
     ) {
         $dhHex = self::str2Hex($dhEmi);
@@ -182,13 +179,11 @@ class QRCode
      * @param  string $tpAmb
      * @param  string $dhEmi
      * @param  string $vNF
-     * @param  string $vICMS
      * @param  string $digVal
      * @param  string $token
      * @param  string $idToken
      * @param  string $versao
      * @param  int $tpEmis
-     * @param  string $cDest
      * @return string
      */
     protected static function get200(
@@ -197,13 +192,11 @@ class QRCode
         $tpAmb,
         $dhEmi,
         $vNF,
-        $vICMS,
         $digVal,
         $token,
         $idToken,
         $versao,
-        $tpEmis,
-        $cDest = ''
+        $tpEmis
     ) {
         $ver = $versao/100;
         $cscId = (int) $idToken;
@@ -219,7 +212,7 @@ class QRCode
         $dt = new \DateTime($dhEmi);
         $dia = $dt->format('d');
         $valor = number_format($vNF, 2, '.', '');
-        $digHex = str2Hex($digVal);
+        $digHex = self::str2Hex($digVal);
         $seq = "$chNFe|$ver|$tpAmb|$dia|$valor|$digHex|$cscId";
         $hash = strtoupper(sha1($seq.$csc));
         return "$url$seq|$hash";
