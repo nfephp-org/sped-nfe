@@ -1721,20 +1721,22 @@ class Make
             true,
             $identificador . "[item $std->item] Indica se valor do Item (vProd) entra no valor total da NF-e (vProd)"
         );
-        $this->dom->addChild(
-            $prod,
-            "xPed",
-            $std->xPed,
-            false,
-            $identificador . "[item $std->item] Número do Pedido de Compra"
-        );
-        $this->dom->addChild(
-            $prod,
-            "nItemPed",
-            $std->nItemPed,
-            false,
-            $identificador . "[item $std->item] Item do Pedido de Compra"
-        );
+        if (!empty($std->xPed) &&  !empty($std->nItemPed)) {
+            $this->dom->addChild(
+                $prod,
+                "xPed",
+                $std->xPed,
+                false,
+                $identificador . "[item $std->item] Número do Pedido de Compra"
+            );
+            $this->dom->addChild(
+                $prod,
+                "nItemPed",
+                $std->nItemPed,
+                false,
+                $identificador . "[item $std->item] Item do Pedido de Compra"
+            );
+        }
         $this->dom->addChild(
             $prod,
             "nFCI",
@@ -2133,7 +2135,7 @@ class Make
             false,
             $identificador . "[item $std->item] Código de Agregação"
         );
-        $this->aRastro[$std->item][] = $rastro;
+        $this->aRastro[$std->item] = $rastro;
         return $rastro;
     }
 
@@ -6800,6 +6802,7 @@ class Make
                 $cchild = $child->getElementsByTagName("CNPJFab")->item(0);
                 if (!empty($cchild)) {
                     $prod->insertBefore($cchild, $node);
+                    $this->aProd[$nItem] = $prod;
                 }
             }
         }
@@ -6811,7 +6814,12 @@ class Make
                 if (!empty($node)) {
                     $prod->insertBefore($child, $node);
                 } else {
-                    $this->dom->appChild($prod, $child, "Inclusão do node DI");
+                    $node = $prod->getElementsByTagName("FCI")->item(0);
+                    if (!empty($node)) {
+                        $prod->insertBefore($child, $node);
+                    } else {
+                        $this->dom->appChild($prod, $child, "Inclusão do node DI");
+                    }
                 }
             }
             $this->aProd[$nItem] = $prod;
@@ -6827,6 +6835,12 @@ class Make
                     $this->dom->appChild($prod, $child, "Inclusão do node DetExport");
                 }
             }
+            $this->aProd[$nItem] = $prod;
+        }
+        //insere Rastro
+        foreach ($this->aRastro as $nItem => $child) {
+            $prod = $this->aProd[$nItem];
+            $this->dom->appChild($prod, $child, "Inclusão do node Rastro");
             $this->aProd[$nItem] = $prod;
         }
         //insere veiculo
