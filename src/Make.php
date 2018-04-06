@@ -1569,7 +1569,7 @@ class Make
 
         $cean = !empty($std->cEAN) ? $std->cEAN : '';
         $ceantrib = !empty($std->cEANTrib) ? $std->cEANTrib : '';
-        
+
         $identificador = 'I01 <prod> - ';
         $prod = $this->dom->createElement("prod");
         $this->dom->addChild(
@@ -1791,7 +1791,7 @@ class Make
             $ctrltST,
             "CEST",
             Strings::onlyNumbers($std->CEST),
-            true,
+            false,
             "$identificador [item $std->item] Numero CEST"
         );
         //incluido no layout 4.00
@@ -2757,11 +2757,11 @@ class Make
         $this->stdTot->vICMSDeson += (float) !empty($std->vICMSDeson) ? $std->vICMSDeson : 0;
         $this->stdTot->vBCST += (float) !empty($std->vBCST) ? $std->vBCST : 0;
         $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
-        
+
         $this->stdTot->vFCP += (float) !empty($std->vFCP) ? $std->vFCP : 0;
         $this->stdTot->vFCPST += (float) !empty($std->vFCPST) ? $std->vFCPST : 0;
         $this->stdTot->vFCPSTRet += (float) !empty($std->vFCPSTRet) ? $std->vFCPSTRet : 0;
-        
+
         $identificador = 'N01 <ICMSxx> - ';
         switch ($std->CST) {
             case '00':
@@ -3907,7 +3907,7 @@ class Make
 
         $this->stdTot->vFCPST += (float) !empty($std->vFCPST) ? $std->vFCPST : 0;
         $this->stdTot->vFCPSTRet += (float) !empty($std->vFCPST) ? $std->vFCPSTRet : 0;
-        
+
         switch ($std->CSOSN) {
             case '101':
                 $icmsSN = $this->dom->createElement("ICMSSN101");
@@ -6794,7 +6794,9 @@ class Make
                     }
                 }
                 $cchild = $child->getElementsByTagName("CEST")->item(0);
-                $prod->insertBefore($cchild, $node);
+                if ($cchild instanceof DOMElement) {
+                    $prod->insertBefore($cchild, $node);
+                }
                 $cchild = $child->getElementsByTagName("indEscala")->item(0);
                 if (!empty($cchild)) {
                     $prod->insertBefore($cchild, $node);
