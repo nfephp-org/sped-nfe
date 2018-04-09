@@ -10,20 +10,20 @@
 
   - Versão do leiaute:
 
-<! --- Apague as linhas abaixo, 13-42 caso na esteja enviando um bug  ->
+<! --- Apague as linhas abaixo, 13-42 caso não esteja enviando um bug  ->
 
 ## Comportamento esperado
 <! --- Diga-nos o que deve acontecer ->
 
 ## Comportamento Atual
-<! --- Diga-nos o que acontece em vez do comportamento esperado ->
+<! --- Diga-nos o que acontecer em vez do comportamento esperado ->
 
 ## Solução possível
 <! --- Não é obrigatório, mas sugere uma correção / razão para o bug, ->
 
 ## Passos para reproduzir
 <! --- Forneça um link para um exemplo ativo ou um conjunto de etapas não ambíguo para ->
-<! --- reproduz este bug. Incluir código para reproduzir, se relevante ->
+<! --- reproduzir este bug. Incluir código para reproduzir, se relevante ->
 1
 2
 3
