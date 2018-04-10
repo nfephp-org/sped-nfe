@@ -255,7 +255,8 @@ class Complements
                     //150 Autorizado fora do prazo
                     //110 Uso Denegado
                     //205 NFe Denegada
-                    $cstatpermit = ['100', '150', '110', '205'];
+                    //302 Uso denegado por irregularidade fiscal do destinatário
+                    $cstatpermit = ['100', '150', '110', '205', '302'];
                     if (!in_array($cStat, $cstatpermit)) {
                         throw DocumentsException::wrongDocument(4, "[$cStat] $xMotivo");
                     }

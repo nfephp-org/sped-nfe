@@ -588,7 +588,7 @@ class Make
         $this->dom->addChild(
             $ide,
             "cDV",
-            $std->cDV,
+            !empty($std->cDV) ? $std->cDV : '0',
             true,
             $identificador . "Dígito Verificador da Chave de Acesso da NF-e"
         );
@@ -1105,28 +1105,31 @@ class Make
             $xNome = 'NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
             //a exigência do CNPJ 99999999000191 não existe mais
         }
-        $this->dom->addChild(
-            $this->dest,
-            "CNPJ",
-            Strings::onlyNumbers($std->CNPJ),
-            false,
-            $identificador . "CNPJ do destinatário"
-        );
-        $this->dom->addChild(
-            $this->dest,
-            "CPF",
-            Strings::onlyNumbers($std->CPF),
-            false,
-            $identificador . "CPF do destinatário"
-        );
-        $this->dom->addChild(
-            $this->dest,
-            "idEstrangeiro",
-            Strings::onlyNumbers($std->idEstrangeiro),
-            false,
-            $identificador . "Identificação do destinatário no caso de comprador estrangeiro"
-        );
-        if ($std->idEstrangeiro != '') {
+        if (!empty($std->CNPJ)) {
+            $this->dom->addChild(
+                $this->dest,
+                "CNPJ",
+                Strings::onlyNumbers($std->CNPJ),
+                true,
+                $identificador . "CNPJ do destinatário"
+            );
+        } elseif (!empty($std->CPF)) {
+            $this->dom->addChild(
+                $this->dest,
+                "CPF",
+                Strings::onlyNumbers($std->CPF),
+                true,
+                $identificador . "CPF do destinatário"
+            );
+        } else {
+            $this->dom->addChild(
+                $this->dest,
+                "idEstrangeiro",
+                $std->idEstrangeiro,
+                true,
+                $identificador . "Identificação do destinatário no caso de comprador estrangeiro",
+                true
+            );
             $std->indIEDest = '9';
         }
         $this->dom->addChild(
@@ -1147,7 +1150,7 @@ class Make
             $this->dom->addChild(
                 $this->dest,
                 "IE",
-                Strings::onlyNumbers($std->IE),
+                $std->IE,
                 true,
                 $identificador . "Inscrição Estadual do Destinatário"
             );
@@ -1558,19 +1561,17 @@ class Make
         $std = $this->equilizeParameters($std, $possible);
 
         //totalizador
-        $this->stdTot->vProd += (float) $std->vProd;
+        if ($std->indTot == 1) {
+            $this->stdTot->vProd += (float) $std->vProd;
+        }
         $this->stdTot->vFrete += (float) $std->vFrete;
         $this->stdTot->vSeg += (float) $std->vSeg;
         $this->stdTot->vDesc += (float) $std->vDesc;
         $this->stdTot->vOutro += (float) $std->vOutro;
-
-        $cean = !empty($std->cEAN) ? $std->cEAN : '';
-        $ceantrib = !empty($std->cEANTrib) ? $std->cEANTrib : '';
-        if ($this->version !== '3.10') {
-            $cean = !empty($cean) ? $cean : 'SEM GTIN';
-            $ceantrib = !empty($ceantrib) ? $ceantrib : 'SEM GTIN';
-        }
-
+        
+        $cean = !empty($std->cEAN) ? trim(strtoupper($std->cEAN)) : '';
+        $ceantrib = !empty($std->cEANTrib) ? trim(strtoupper($std->cEANTrib)) : '';
+        
         $identificador = 'I01 <prod> - ';
         $prod = $this->dom->createElement("prod");
         $this->dom->addChild(
@@ -1722,20 +1723,22 @@ class Make
             true,
             $identificador . "[item $std->item] Indica se valor do Item (vProd) entra no valor total da NF-e (vProd)"
         );
-        $this->dom->addChild(
-            $prod,
-            "xPed",
-            $std->xPed,
-            false,
-            $identificador . "[item $std->item] Número do Pedido de Compra"
-        );
-        $this->dom->addChild(
-            $prod,
-            "nItemPed",
-            $std->nItemPed,
-            false,
-            $identificador . "[item $std->item] Item do Pedido de Compra"
-        );
+        if (!empty($std->xPed) &&  !empty($std->nItemPed)) {
+            $this->dom->addChild(
+                $prod,
+                "xPed",
+                $std->xPed,
+                false,
+                $identificador . "[item $std->item] Número do Pedido de Compra"
+            );
+            $this->dom->addChild(
+                $prod,
+                "nItemPed",
+                $std->nItemPed,
+                false,
+                $identificador . "[item $std->item] Item do Pedido de Compra"
+            );
+        }
         $this->dom->addChild(
             $prod,
             "nFCI",
@@ -2134,7 +2137,7 @@ class Make
             false,
             $identificador . "[item $std->item] Código de Agregação"
         );
-        $this->aRastro[$std->item][] = $rastro;
+        $this->aRastro[$std->item] = $rastro;
         return $rastro;
     }
 
@@ -2756,7 +2759,11 @@ class Make
         $this->stdTot->vICMSDeson += (float) !empty($std->vICMSDeson) ? $std->vICMSDeson : 0;
         $this->stdTot->vBCST += (float) !empty($std->vBCST) ? $std->vBCST : 0;
         $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
-
+        
+        $this->stdTot->vFCP += (float) !empty($std->vFCP) ? $std->vFCP : 0;
+        $this->stdTot->vFCPST += (float) !empty($std->vFCPST) ? $std->vFCPST : 0;
+        $this->stdTot->vFCPSTRet += (float) !empty($std->vFCPSTRet) ? $std->vFCPSTRet : 0;
+        
         $identificador = 'N01 <ICMSxx> - ';
         switch ($std->CST) {
             case '00':
@@ -3880,10 +3887,6 @@ class Make
             'vBCFCPST',
             'pFCPST',
             'vFCPST',
-            'pCredSN',
-            'vCredICMSSN',
-            'pCredSN',
-            'vCredICMSSN',
             'vBCSTRet',
             'pST',
             'vICMSSTRet',
@@ -3904,6 +3907,9 @@ class Make
         $this->stdTot->vBCST += (float) $std->vBCST;
         $this->stdTot->vST += (float) $std->vICMSST;
 
+        $this->stdTot->vFCPST += (float) !empty($std->vFCPST) ? $std->vFCPST : 0;
+        $this->stdTot->vFCPSTRet += (float) !empty($std->vFCPST) ? $std->vFCPSTRet : 0;
+        
         switch ($std->CSOSN) {
             case '101':
                 $icmsSN = $this->dom->createElement("ICMSSN101");
@@ -6023,62 +6029,113 @@ class Make
             'tpIntegra'
         ];
         $std = $this->equilizeParameters($std, $possible);
-
-        $detPag = $this->dom->createElement("detPag");
-        $this->dom->addChild(
-            $detPag,
-            "tPag",
-            $std->tPag,
-            true,
-            "Forma de pagamento"
-        );
-        $this->dom->addChild(
-            $detPag,
-            "vPag",
-            $std->vPag,
-            true,
-            "Valor do Pagamento"
-        );
-        if ($std->tBand != '') {
-            $card = $this->dom->createElement("card");
+        if ($this->version === '3.10') {
+            $n = count($this->aPag);
             $this->dom->addChild(
-                $card,
-                "tpIntegra",
-                $std->tpIntegra,
-                false,
-                "Tipo de Integração para pagamento"
-            );
-            $this->dom->addChild(
-                $card,
-                "CNPJ",
-                $std->CNPJ,
-                false,
-                "CNPJ da Credenciadora de cartão de crédito e/ou débito"
-            );
-            $this->dom->addChild(
-                $card,
-                "tBand",
-                $std->tBand,
+                $this->aPag[$n-1],
+                "tPag",
+                $std->tPag,
                 true,
-                "Bandeira da operadora de cartão de crédito e/ou débito"
+                "Forma de pagamento"
             );
             $this->dom->addChild(
-                $card,
-                "cAut",
-                $std->cAut,
+                $this->aPag[$n-1],
+                "vPag",
+                $std->vPag,
                 true,
-                "Número de autorização da operação cartão de crédito e/ou débito"
+                "Valor do Pagamento"
             );
-            $this->dom->appChild($detPag, $card, "Inclusão do node Card");
-        }
-        $n = count($this->aPag);
-        $node = $this->aPag[$n - 1]->getElementsByTagName("vTroco")->item(0);
-        if (!empty($node)) {
-            $this->aPag[$n - 1]->insertBefore($detPag, $node);
+            if (!empty($std->tpIntegra)) {
+                $card = $this->dom->createElement("card");
+                $this->dom->addChild(
+                    $card,
+                    "tpIntegra",
+                    $std->tpIntegra,
+                    true,
+                    "Tipo de Integração para pagamento"
+                );
+                $this->dom->addChild(
+                    $card,
+                    "CNPJ",
+                    !empty($std->CNPJ) ? $std->CNPJ : null,
+                    false,
+                    "CNPJ da Credenciadora de cartão de crédito e/ou débito"
+                );
+                $this->dom->addChild(
+                    $card,
+                    "tBand",
+                    !empty($std->tBand) ? $std->tBand : null,
+                    false,
+                    "Bandeira da operadora de cartão de crédito e/ou débito"
+                );
+                $this->dom->addChild(
+                    $card,
+                    "cAut",
+                    !empty($std->cAut) ? $std->cAut : null,
+                    false,
+                    "Número de autorização da operação cartão de crédito e/ou débito"
+                );
+                $this->dom->appChild($this->aPag[$n-1], $card, "Inclusão do node Card");
+            }
+            return $this->aPag[$n-1];
         } else {
-            $this->dom->appChild($this->aPag[$n - 1], $detPag, 'Falta tag "Pag"');
+            //padrão para layout 4.00
+            $detPag = $this->dom->createElement("detPag");
+            $this->dom->addChild(
+                $detPag,
+                "tPag",
+                $std->tPag,
+                true,
+                "Forma de pagamento"
+            );
+            $this->dom->addChild(
+                $detPag,
+                "vPag",
+                $std->vPag,
+                true,
+                "Valor do Pagamento"
+            );
+            if (!empty($std->tpIntegra)) {
+                $card = $this->dom->createElement("card");
+                $this->dom->addChild(
+                    $card,
+                    "tpIntegra",
+                    $std->tpIntegra,
+                    true,
+                    "Tipo de Integração para pagamento"
+                );
+                $this->dom->addChild(
+                    $card,
+                    "CNPJ",
+                    !empty($std->CNPJ) ? $std->CNPJ : null,
+                    false,
+                    "CNPJ da Credenciadora de cartão de crédito e/ou débito"
+                );
+                $this->dom->addChild(
+                    $card,
+                    "tBand",
+                    !empty($std->tBand) ? $std->tBand : null,
+                    false,
+                    "Bandeira da operadora de cartão de crédito e/ou débito"
+                );
+                $this->dom->addChild(
+                    $card,
+                    "cAut",
+                    !empty($std->cAut) ? $std->cAut : null,
+                    false,
+                    "Número de autorização da operação cartão de crédito e/ou débito"
+                );
+                $this->dom->appChild($detPag, $card, "Inclusão do node Card");
+            }
+            $n = count($this->aPag);
+            $node = $this->aPag[$n - 1]->getElementsByTagName("vTroco")->item(0);
+            if (!empty($node)) {
+                $this->aPag[$n - 1]->insertBefore($detPag, $node);
+            } else {
+                $this->dom->appChild($this->aPag[$n - 1], $detPag, 'Falta tag "Pag"');
+            }
+            return $detPag;
         }
-        return $detPag;
     }
 
     /**
@@ -6747,6 +6804,7 @@ class Make
                 $cchild = $child->getElementsByTagName("CNPJFab")->item(0);
                 if (!empty($cchild)) {
                     $prod->insertBefore($cchild, $node);
+                    $this->aProd[$nItem] = $prod;
                 }
             }
         }
@@ -6758,7 +6816,12 @@ class Make
                 if (!empty($node)) {
                     $prod->insertBefore($child, $node);
                 } else {
-                    $this->dom->appChild($prod, $child, "Inclusão do node DI");
+                    $node = $prod->getElementsByTagName("FCI")->item(0);
+                    if (!empty($node)) {
+                        $prod->insertBefore($child, $node);
+                    } else {
+                        $this->dom->appChild($prod, $child, "Inclusão do node DI");
+                    }
                 }
             }
             $this->aProd[$nItem] = $prod;
@@ -6774,6 +6837,12 @@ class Make
                     $this->dom->appChild($prod, $child, "Inclusão do node DetExport");
                 }
             }
+            $this->aProd[$nItem] = $prod;
+        }
+        //insere Rastro
+        foreach ($this->aRastro as $nItem => $child) {
+            $prod = $this->aProd[$nItem];
+            $this->dom->appChild($prod, $child, "Inclusão do node Rastro");
             $this->aProd[$nItem] = $prod;
         }
         //insere veiculo

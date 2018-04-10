@@ -61,8 +61,8 @@ class ConfigTest extends NFeTestCase
                 "proxyUser" => "",
                 "proxyPass" => ""
             ]
-        ];
-        $resp = Config::validate($config);
+         ];
+         $resp = Config::validate($config);
     }
 
     /**

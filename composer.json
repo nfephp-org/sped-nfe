@@ -4,7 +4,7 @@
     "description": "API para geração e comunicação da NFe e NFCe com as SEFAZ autorizadoras.",
     "keywords": ["nfe","nfce","sped","nfephp"],
     "homepage": "https://github.com/nfephp-org/sped-nfe",
-    "license": ["GPL-3.0+","LGPL-3.0+", "MIT"],
+    "license": ["LGPL-3.0-or-later", "GPL-3.0-or-later", "MIT"],
     "authors": [
         {
             "name": "Roberto L. Machado",
@@ -20,8 +20,7 @@
     "require": {
         "php" : ">= 5.6",
         "nfephp-org/sped-common" : "^5.0",
-        "justinrainbow/json-schema": "^5.2",
-        "symfony/yaml": "^3.3"
+        "justinrainbow/json-schema": "^5.2"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^2.8",
