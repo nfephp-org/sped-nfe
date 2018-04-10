@@ -727,7 +727,8 @@ class Tools extends ToolsCommon
         $vNF = $total->getElementsByTagName('vNF')->item(0)->nodeValue;
         $vICMS = $total->getElementsByTagName('vICMS')->item(0)->nodeValue;
         $vST = $total->getElementsByTagName('vST')->item(0)->nodeValue;
-        $dID = $dest->getElementsByTagName('CNPJ')->item(0)->nodeValue;
+        $dID = !empty($dest->getElementsByTagName('CNPJ')->item(0)) ?
+                $dest->getElementsByTagName('CNPJ')->item(0)->nodeValue : null;
         if (!empty($dID)) {
             $destID = "<CNPJ>$dID</CNPJ>";
         } else {
