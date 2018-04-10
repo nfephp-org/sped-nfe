@@ -134,7 +134,7 @@ class QRCode
      * @param  string $token
      * @param  string $idToken
      * @param  string $versao
-     * @param  int    $tpEmis
+     * @param  string $tpEmis
      * @param  string $cDest
      * @return string
      */
@@ -181,6 +181,7 @@ class QRCode
      * @param  string $tpAmb
      * @param  string $dhEmi
      * @param  string $vNF
+     * @param  string $vICMS
      * @param  string $digVal
      * @param  string $token
      * @param  string $idToken
@@ -195,6 +196,7 @@ class QRCode
         $tpAmb,
         $dhEmi,
         $vNF,
+        $vICMS,
         $digVal,
         $token,
         $idToken,
