@@ -92,7 +92,7 @@ class QRCode
         $vICMS = $icmsTot->getElementsByTagName('vICMS')->item(0)->nodeValue;
         $digVal = $signedInfo->getElementsByTagName('DigestValue')->item(0)->nodeValue;
         $qrMethod = "get$versao";
-        
+
         $qrcode = self::$qrMethod(
             $chNFe,
             $urlqr,
@@ -107,7 +107,7 @@ class QRCode
             $tpEmis,
             $cDest
         );
-        
+
         $infNFeSupl = $dom->createElement("infNFeSupl");
         $nodeqr = $infNFeSupl->appendChild($dom->createElement('qrCode'));
         $nodeqr->appendChild($dom->createCDATASection($qrcode));
@@ -121,7 +121,7 @@ class QRCode
         $dom->formatOutput = false;
         return $dom->saveXML();
     }
-    
+
     /**
      * Return a QRCode version 1 string to be used in NFCe layout 3.10
      * @param  string $chNFe
@@ -134,6 +134,7 @@ class QRCode
      * @param  string $token
      * @param  string $idToken
      * @param  string $versao
+     * @param  string $tpEmis
      * @param  string $cDest
      * @return string
      */
@@ -148,6 +149,7 @@ class QRCode
         $token,
         $idToken,
         $versao,
+        $tpEmis,
         $cDest = ''
     ) {
         $dhHex = self::str2Hex($dhEmi);
@@ -171,7 +173,7 @@ class QRCode
         }
         return $url.$seq;
     }
-    
+
     /**
      * Return a QRCode version 2 string to be used in NFCe layout 4.00
      * @param  string $chNFe
@@ -179,11 +181,13 @@ class QRCode
      * @param  string $tpAmb
      * @param  string $dhEmi
      * @param  string $vNF
+     * @param  string $vICMS
      * @param  string $digVal
      * @param  string $token
      * @param  string $idToken
      * @param  string $versao
-     * @param  int $tpEmis
+     * @param  int    $tpEmis
+     * @param  string $cDest
      * @return string
      */
     protected static function get200(
@@ -192,11 +196,13 @@ class QRCode
         $tpAmb,
         $dhEmi,
         $vNF,
+        $vICMS,
         $digVal,
         $token,
         $idToken,
         $versao,
-        $tpEmis
+        $tpEmis,
+        $cDest
     ) {
         $ver = $versao/100;
         $cscId = (int) $idToken;
