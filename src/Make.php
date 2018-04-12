@@ -1125,7 +1125,7 @@ class Make
             $this->dom->addChild(
                 $this->dest,
                 "idEstrangeiro",
-                $std->idEstrangeiro,
+                Strings::replaceSpecialsChars(substr(trim($std->idEstrangeiro), 0, 50)),
                 true,
                 $identificador . "Identificação do destinatário no caso de comprador estrangeiro",
                 true
