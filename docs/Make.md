@@ -1205,9 +1205,10 @@ $std->vTroco = null; //incluso no layout 4.00, obrigatório informar para NFCe (
 
 $elem = $nfe->tagpag($std);
 ```
+>NOTA: usualmente para NFe modelo 55, vTroco é null.
 
 ### function tagdetPag($std):DOMElement
-Node com o detalhamento da forma de pagamento **OBRIGATÓRIO para NFCe**, e **não deve ser usado para NFe (55)**
+Node com o detalhamento da forma de pagamento **OBRIGATÓRIO para NFCe e NFe layout4.00**
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
@@ -1223,6 +1224,18 @@ $std->tpIntegra = 1; //incluso na NT 2015/002
 
 $elem = $nfe->tagdetPag($std);
 ```
+>NOTA: para NFe (modelo 55), temos ...
+>
+> vPag=0.00 **mas pode ter valor se a venda for a vista**
+>
+> tPag é usualmente:
+> - 14 = Duplicata Mercantil
+> - 15 = Boleto Bancário
+> - 90 = Sem pagamento
+> - 99 = Outros 
+>
+> *Porém podem haver casos que os outros nodes e valores tenha de ser usados.*
+
 
 ### function taginfAdic($std):DOMElement
 Node referente as informações adicionais da NFe
