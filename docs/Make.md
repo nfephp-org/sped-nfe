@@ -376,7 +376,7 @@ Node com a Nomenclatura de Valor Aduaneiro e Estatística do item da NFe
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
-$std->NVE;
+$std->NVE = 'AA0001';
 
 $elem = $nfe->tagNVE($std);
 ```
@@ -390,9 +390,9 @@ Node de detalhamento do Especificador da Substituição Tributária do item da N
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
-$std->CEST;
-$std->indEscala; //incluido no layout 4.00
-$std->CNPJFab; //incluido no layout 4.00
+$std->CEST = '0200100';
+$std->indEscala = 'N'; //incluido no layout 4.00
+$std->CNPJFab = '12345678901234'; //incluido no layout 4.00
 
 $elem = $nfe->tagCEST($std);
 ```
@@ -406,7 +406,7 @@ Node com o numero do RECOPI
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
-$std->nRECOPI;
+$std->nRECOPI = '12345678901234567890';
 
 $elem = $nfe->tagRECOPI($std);
 ```
@@ -463,11 +463,8 @@ Node com informações de exportação para o item
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
-$std->nDE; // Indicativo de numero da DetExport
-$std->nRE;
-$std->chNFe;
-$std->qExport;
-$std->nDraw;
+$std->nDE = '111'; // Indicativo de numero da DetExport
+$std->nDraw = '82828';
 
 $elem = $nfe->tagdetExport($std);
 ```
@@ -481,7 +478,7 @@ Node com Grupo sobre exportação indireta
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
-$std->nDE; // Indicativo de numero da DetExport
+$std->nDE = '111'; // Indicativo de numero da DetExport
 $std->nRE = '123456789012';
 $std->chNFe = '53170924915365000295550550000001951000001952';
 $std->qExport = 1234.123;
@@ -499,11 +496,11 @@ Node com os dados de rastreabilidade do item da NFe
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
-$std->nLote;
-$std->qLote;
-$std->dFab;
-$std->dVal;
-$std->cAgreg;
+$std->nLote = '11111';
+$std->qLote = 200;
+$std->dFab = '2018-01-01';
+$std->dVal = '2020-01-01';
+$std->cAgreg = '1234';
 
 $elem = $nfe->tagRastro($std);
 ```
@@ -813,8 +810,8 @@ $std->clEnq = null;
 $std->CNPJProd = null;
 $std->cSelo = null;
 $std->qSelo = null;
-$std->cEnq = '999'
-$std->CST = '50'
+$std->cEnq = '999';
+$std->CST = '50';
 $std->vIPI = 150.00;
 $std->vBC = 1000.00;
 $std->pIPI = 15.00;
@@ -1208,9 +1205,10 @@ $std->vTroco = null; //incluso no layout 4.00, obrigatório informar para NFCe (
 
 $elem = $nfe->tagpag($std);
 ```
+>NOTA: usualmente para NFe modelo 55, vTroco é null.
 
 ### function tagdetPag($std):DOMElement
-Node com o detalhamento da forma de pagamento **OBRIGATÓRIO para NFCe**, e **não deve ser usado para NFe (55)**
+Node com o detalhamento da forma de pagamento **OBRIGATÓRIO para NFCe e NFe layout4.00**
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
@@ -1226,6 +1224,18 @@ $std->tpIntegra = 1; //incluso na NT 2015/002
 
 $elem = $nfe->tagdetPag($std);
 ```
+>NOTA: para NFe (modelo 55), temos ...
+>
+> vPag=0.00 **mas pode ter valor se a venda for a vista**
+>
+> tPag é usualmente:
+> - 14 = Duplicata Mercantil
+> - 15 = Boleto Bancário
+> - 90 = Sem pagamento
+> - 99 = Outros 
+>
+> *Porém podem haver casos que os outros nodes e valores tenha de ser usados.*
+
 
 ### function taginfAdic($std):DOMElement
 Node referente as informações adicionais da NFe

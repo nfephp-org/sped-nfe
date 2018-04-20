@@ -27,10 +27,13 @@ use InvalidArgumentException;
 
 class Tools extends ToolsCommon
 {
-    const EVT_CONFIRMACAO = 210200;
-    const EVT_CIENCIA = 210210;
-    const EVT_DESCONHECIMENTO = 210220;
-    const EVT_NAO_REALIZADA = 210240;
+    const EVT_CONFIRMACAO = 210200; //only one per nfe seq=n
+    const EVT_CIENCIA = 210210; //only one per nfe seq=1
+    const EVT_DESCONHECIMENTO = 210220; //only one per nfe seq=n
+    const EVT_NAO_REALIZADA = 210240; //only one per nfe but seq=n
+    const EVT_CCE = 110110; //many seq=n
+    const EVT_CANCELA = 110111; //only seq=1
+    const EVT_EPEC = 110140; //only seq=1
 
     /**
      * Request authorization to issue NFe in batch with one or more documents
@@ -107,6 +110,9 @@ class Tools extends ToolsCommon
      */
     public function sefazConsultaRecibo($recibo, $tpAmb = null)
     {
+        if (empty($recibo)) {
+            throw new RuntimeException('Não foram passados todos os dados necessários.');
+        }
         if (empty($tpAmb)) {
             $tpAmb = $this->tpAmb;
         }
@@ -142,6 +148,9 @@ class Tools extends ToolsCommon
      */
     public function sefazConsultaChave($chave, $tpAmb = null)
     {
+        if (empty($chave)) {
+            throw new RuntimeException('Não foram passados todos os dados necessários.');
+        }
         $uf = UFList::getUFByCode(substr($chave, 0, 2));
         if (empty($tpAmb)) {
             $tpAmb = $this->tpAmb;
@@ -183,6 +192,9 @@ class Tools extends ToolsCommon
         $xJust,
         $tpAmb = null
     ) {
+        if (empty($nSerie) || empty($nIni) || empty($nFin) || empty($xJust)) {
+            throw new RuntimeException('Não foram passados todos os dados necessários.');
+        }
         if (empty($tpAmb)) {
             $tpAmb = $this->tpAmb;
         }
@@ -259,15 +271,19 @@ class Tools extends ToolsCommon
         $iest = '',
         $cpf = ''
     ) {
-        if ($cnpj != '') {
+        $filter = '';
+        if (!empty($cnpj)) {
             $filter = "<CNPJ>$cnpj</CNPJ>";
             $txtFile = "CNPJ_$cnpj";
-        } elseif ($iest != '') {
+        } elseif (!empty($iest)) {
             $filter = "<IE>$iest</IE>";
             $txtFile = "IE_$iest";
-        } else {
+        } elseif (!empty($cpf)) {
             $filter = "<CPF>$cpf</CPF>";
             $txtFile = "CPF_$cpf";
+        }
+        if (empty($uf) || empty($filter)) {
+            throw new RuntimeException('Não foram passados todos os dados necessários.');
         }
         //carrega serviço
         $servico = 'NfeConsultaCadastro';
@@ -386,6 +402,9 @@ class Tools extends ToolsCommon
      */
     public function sefazCCe($chave, $xCorrecao, $nSeqEvento = 1)
     {
+        if (empty($chave) || empty($xCorrecao)) {
+            throw new RuntimeException('Não foram passados todos os dados necessários.');
+        }
         $uf = $this->validKeyByUF($chave);
         $xCorrecao = Strings::replaceSpecialsChars(
             substr(trim($xCorrecao), 0, 1000)
@@ -457,17 +476,20 @@ class Tools extends ToolsCommon
      * Request the cancellation of the request for an extension of the term
      * of return of products of an NF-e of consignment for industrialization
      * by order with suspension of ICMS in interstate operations
-     * @param  string  $chNFe
+     * @param  string  $chave
      * @param  string  $nProt
      * @param  integer $nSeqEvento
      * @return string
      */
     public function sefazECPP(
-        $chNFe,
+        $chave,
         $nProt,
         $nSeqEvento = 1
     ) {
-        $uf = UFList::getUFByCode(substr($chNFe, 0, 2));
+        if (empty($chave) || empty($nProt)) {
+            throw new RuntimeException('Não foram passados todos os dados necessários.');
+        }
+        $uf = UFList::getUFByCode(substr($chave, 0, 2));
         $tpEvento = 111502;
         $origEvent = 111500;
         if ($nSeqEvento == 2) {
@@ -475,14 +497,14 @@ class Tools extends ToolsCommon
             $origEvent = 111501;
         }
         $sSeqEvento = str_pad($nSeqEvento, 2, "0", STR_PAD_LEFT);
-        $idPedidoCancelado = "ID$origEvent$chNFe$sSeqEvento";
+        $idPedidoCancelado = "ID$origEvent$chave$sSeqEvento";
         $tagAdic = "<idPedidoCancelado>"
                 . "$idPedidoCancelado"
                 . "</idPedidoCancelado>"
                 . "<nProt>$nProt</nProt>";
         return $this->sefazEvento(
             $uf,
-            $chNFe,
+            $chave,
             $tpEvento,
             $nSeqEvento,
             $tagAdic
@@ -498,6 +520,9 @@ class Tools extends ToolsCommon
      */
     public function sefazCancela($chave, $xJust, $nProt)
     {
+        if (empty($chave) || empty($xJust) || empty($nProt)) {
+            throw new RuntimeException('Não foram passados todos os dados necessários.');
+        }
         $uf = $this->validKeyByUF($chave);
         $xJust = Strings::replaceSpecialsChars(
             substr(trim($xJust), 0, 255)
@@ -516,30 +541,155 @@ class Tools extends ToolsCommon
 
     /**
      * Request the registration of the manifestation of recipient
-     * @param string $chNFe
+     * @param string $chave
      * @param int $tpEvento
      * @param string $xJust Justification for not carrying out the operation
      * @param int $nSeqEvento
      * @return string
      */
     public function sefazManifesta(
-        $chNFe,
+        $chave,
         $tpEvento,
         $xJust = '',
         $nSeqEvento = 1
     ) {
+        if (empty($chave) || empty($tpEvento)) {
+            throw new RuntimeException('Não foram passados todos os dados necessários.');
+        }
         $tagAdic = '';
+        //210240 - Operação não Realizada
         if ($tpEvento == 210240) {
             $xJust = Strings::replaceSpecialsChars(substr(trim($xJust), 0, 255));
             $tagAdic = "<xJust>$xJust</xJust>";
         }
         return $this->sefazEvento(
             'AN',
-            $chNFe,
+            $chave,
             $tpEvento,
             $nSeqEvento,
             $tagAdic
         );
+    }
+    
+    /**
+     * Request the registration of the manifestation of recipient in batch
+     * @param \stdClass $std
+     * @return string
+     */
+    public function sefazManifestaLote(\stdClass $std)
+    {
+        $allowed = [
+            '210200',
+            '210210',
+            '210220',
+            '210240'
+        ];
+        if (empty($std) || empty($std->evento)) {
+            throw new RuntimeException('Não foram passados todos os dados necessários.');
+        }
+        if (count($std->evento) > 20) {
+            throw new \RuntimeException('O lote de eventos está limitado a 20');
+        }
+        $evt = new \stdClass();
+        $i = 0;
+        foreach ($std->evento as $s) {
+            //se o evento não estiver entre os permitidos ignore
+            if (!in_array($s->tpEvento, $allowed)) {
+                continue;
+            }
+            $tagAdic = '';
+            //210240 - Operação não Realizada
+            if ($s->tpEvento == 210240) {
+                $xJust = Strings::replaceSpecialsChars(substr(trim($s->xJust), 0, 255));
+                $tagAdic = "<xJust>$xJust</xJust>";
+            }
+            $evt->evento[$i] = new \stdClass();
+            $evt->evento[$i]->chave = $s->chNFe;
+            $evt->evento[$i]->tpEvento = $s->tpEvento;
+            $evt->evento[$i]->nSeqEvento = $s->nSeqEvento;
+            $evt->evento[$i]->tagAdic = $tagAdic;
+            $i++;
+        }
+        return $this->sefazEventoLote('AN', $evt);
+    }
+    
+    /**
+     * Send event to SEFAZ in batch
+     * @param string $uf
+     * @param \stdClass $std
+     * @return string
+     * @throws RuntimeException
+     */
+    public function sefazEventoLote($uf, \stdClass $std)
+    {
+        if (empty($uf) || empty($std)) {
+            throw new RuntimeException('Não foram passados todos os dados necessários.');
+        }
+        if (count($std->evento) > 20) {
+            throw new \RuntimeException('O lote de eventos está limitado a 20');
+        }
+        $servico = 'RecepcaoEvento';
+        $this->checkContingencyForWebServices($servico);
+        $this->servico(
+            $servico,
+            $uf,
+            $this->tpAmb,
+            false
+        );
+        $batchRequest = '';
+        foreach ($std->evento as $evt) {
+            if ($evt->tpEvento == '110140') {
+                //não é possivel enviar EPEC com outros eventos
+                continue;
+            }
+            $ev = $this->tpEv($evt->tpEvento);
+            $aliasEvento = $ev->alias;
+            $descEvento = $ev->desc;
+            $cnpj = $this->config->cnpj;
+            $dt = new \DateTime();
+            $dhEvento = $dt->format('Y-m-d\TH:i:sP');
+            $sSeqEvento = str_pad($evt->nSeqEvento, 2, "0", STR_PAD_LEFT);
+            $eventId = "ID".$evt->tpEvento.$evt->chave.$sSeqEvento;
+            $cOrgao = UFList::getCodeByUF($uf);
+            $request = "<evento xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
+                . "<infEvento Id=\"$eventId\">"
+                . "<cOrgao>$cOrgao</cOrgao>"
+                . "<tpAmb>$this->tpAmb</tpAmb>"
+                . "<CNPJ>$cnpj</CNPJ>"
+                . "<chNFe>$evt->chave</chNFe>"
+                . "<dhEvento>$dhEvento</dhEvento>"
+                . "<tpEvento>$evt->tpEvento</tpEvento>"
+                . "<nSeqEvento>$evt->nSeqEvento</nSeqEvento>"
+                . "<verEvento>$this->urlVersion</verEvento>"
+                . "<detEvento versao=\"$this->urlVersion\">"
+                . "<descEvento>$descEvento</descEvento>"
+                . "$evt->tagAdic"
+                . "</detEvento>"
+                . "</infEvento>"
+                . "</evento>";
+        
+            //assinatura dos dados
+            $request = Signer::sign(
+                $this->certificate,
+                $request,
+                'infEvento',
+                'Id',
+                $this->algorithm,
+                $this->canonical
+            );
+            $batchRequest .= Strings::clearXmlString($request, true);
+        }
+        $lote = $dt->format('YmdHis').rand(0, 9);
+        $request = "<envEvento xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
+            . "<idLote>$lote</idLote>"
+            . $batchRequest
+            . "</envEvento>";
+        $this->isValid($this->urlVersion, $request, 'envEvento');
+        $this->lastRequest = $request;
+        $parameters = ['nfeDadosMsg' => $request];
+        $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
+        $this->lastResponse = $this->sendRequest($body, $parameters);
+        return $this->lastResponse;
     }
 
     /**
@@ -549,6 +699,9 @@ class Tools extends ToolsCommon
      */
     public function sefazEPEC(&$xml)
     {
+        if (empty($xml)) {
+            throw new RuntimeException('Não foram passados todos os dados necessários.');
+        }
         $tagAdic = '';
         $tpEvento = 110140;
         $nSeqEvento = 1;
@@ -574,7 +727,8 @@ class Tools extends ToolsCommon
         $vNF = $total->getElementsByTagName('vNF')->item(0)->nodeValue;
         $vICMS = $total->getElementsByTagName('vICMS')->item(0)->nodeValue;
         $vST = $total->getElementsByTagName('vST')->item(0)->nodeValue;
-        $dID = $dest->getElementsByTagName('CNPJ')->item(0)->nodeValue;
+        $dID = !empty($dest->getElementsByTagName('CNPJ')->item(0)) ?
+                $dest->getElementsByTagName('CNPJ')->item(0)->nodeValue : null;
         if (!empty($dID)) {
             $destID = "<CNPJ>$dID</CNPJ>";
         } else {
@@ -703,6 +857,9 @@ class Tools extends ToolsCommon
      */
     public function sefazDownload($chave)
     {
+        if (empty($chave)) {
+            throw new RuntimeException('Não foram passados todos os dados necessários.');
+        }
         //carrega serviço
         $servico = 'NfeDistribuicaoDFe';
         $this->checkContingencyForWebServices($servico);
@@ -744,6 +901,9 @@ class Tools extends ToolsCommon
      */
     public function sefazCsc($indOp)
     {
+        if (empty($indOp) || $indOp < 1 || $indOp > 3) {
+            throw new RuntimeException('Não foram passados todos os dados necessários.');
+        }
         if ($this->modelo != 65) {
             throw new RuntimeException(
                 "Esta operação é exclusiva de NFCe modelo [65], "
@@ -791,6 +951,9 @@ class Tools extends ToolsCommon
      */
     public function sefazValidate($nfe)
     {
+        if (empty($nfe)) {
+            throw new RuntimeException('Não foram passados todos os dados necessários.');
+        }
         //verifica a assinatura da NFe, exception caso de falha
         Signer::isSigned($nfe);
         $dom = new \DOMDocument('1.0', 'utf-8');
@@ -852,13 +1015,13 @@ class Tools extends ToolsCommon
                 $std->desc = 'Carta de Correcao';
                 break;
             case 110111:
-                //cancelamento
+                //Cancelamento
                 $std->alias = 'CancNFe';
                 $std->desc = 'Cancelamento';
                 break;
             case 110140:
                 //EPEC
-                //emissão em contingência EPEC
+                //Emissão em contingência EPEC
                 $std->alias = 'EPEC';
                 $std->desc = 'EPEC';
                 break;
@@ -877,23 +1040,23 @@ class Tools extends ToolsCommon
                 $std->desc = 'Cancelamento de Pedido de Prorrogacao';
                 break;
             case 210200:
-                //Confirmacao da Operacao
+                //Manifestação Confirmacao da Operacao
                 $std->alias = 'EvConfirma';
                 $std->desc = 'Confirmacao da Operacao';
                 break;
             case 210210:
-                //Ciencia da Operacao
+                //Manifestação Ciencia da Operacao
                 $std->alias = 'EvCiencia';
                 $std->desc = 'Ciencia da Operacao';
                 $std->tpAutor = 2;
                 break;
             case 210220:
-                //Desconhecimento da Operacao
+                //Manifestação Desconhecimento da Operacao
                 $std->alias = 'EvDesconh';
                 $std->desc = 'Desconhecimento da Operacao';
                 break;
             case 210240:
-                //Operacao não Realizada
+                //Manifestação Operacao não Realizada
                 $std->alias = 'EvNaoRealizada';
                 $std->desc = 'Operacao nao Realizada';
                 break;
