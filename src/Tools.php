@@ -19,8 +19,6 @@ namespace NFePHP\NFe;
 use NFePHP\Common\Strings;
 use NFePHP\Common\Signer;
 use NFePHP\Common\UFList;
-use NFePHP\NFe\Factories\QRCode;
-use NFePHP\NFe\Factories\Events;
 use NFePHP\NFe\Common\Tools as ToolsCommon;
 use RuntimeException;
 use InvalidArgumentException;
@@ -90,11 +88,8 @@ class Tools extends ToolsCommon
         //montagem dos dados da mensagem SOAP
         $parameters = ['nfeDadosMsg' => $request];
         $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
-        $method = $this->urlMethod;
         if ($compactar) {
             $gzdata = base64_encode(gzencode($request, 9, FORCE_GZIP));
-            $body = "<nfeDadosMsgZip xmlns=\"$this->urlNamespace\">$gzdata</nfeDadosMsgZip>";
-            $method = $this->urlMethod."Zip";
             $parameters = ['nfeDadosMsgZip' => $gzdata];
             $body = "<nfeDadosMsgZip xmlns=\"$this->urlNamespace\">$gzdata</nfeDadosMsgZip>";
         }
@@ -274,13 +269,10 @@ class Tools extends ToolsCommon
         $filter = '';
         if (!empty($cnpj)) {
             $filter = "<CNPJ>$cnpj</CNPJ>";
-            $txtFile = "CNPJ_$cnpj";
         } elseif (!empty($iest)) {
             $filter = "<IE>$iest</IE>";
-            $txtFile = "IE_$iest";
         } elseif (!empty($cpf)) {
             $filter = "<CPF>$cpf</CPF>";
-            $txtFile = "CPF_$cpf";
         }
         if (empty($uf) || empty($filter)) {
             throw new RuntimeException('Não foram passados todos os dados necessários.');
@@ -643,7 +635,6 @@ class Tools extends ToolsCommon
                 continue;
             }
             $ev = $this->tpEv($evt->tpEvento);
-            $aliasEvento = $ev->alias;
             $descEvento = $ev->desc;
             $cnpj = $this->config->cnpj;
             $dt = new \DateTime();
@@ -702,7 +693,6 @@ class Tools extends ToolsCommon
         if (empty($xml)) {
             throw new RuntimeException('Não foram passados todos os dados necessários.');
         }
-        $tagAdic = '';
         $tpEvento = 110140;
         $nSeqEvento = 1;
         if ($this->contingency->type !== 'EPEC') {
@@ -801,7 +791,6 @@ class Tools extends ToolsCommon
             $ignore
         );
         $ev = $this->tpEv($tpEvento);
-        $aliasEvento = $ev->alias;
         $descEvento = $ev->desc;
         $cnpj = $this->config->cnpj;
         $dt = new \DateTime();
@@ -979,8 +968,6 @@ class Tools extends ToolsCommon
             );
         }
         $infProt = $ret->getElementsByTagName('infProt')->item(0);
-        $cStat  = $infProt->getElementsByTagName('cStat')->item(0)->nodeValue;
-        $xMotivo = $infProt->getElementsByTagName('xMotivo')->item(0)->nodeValue;
         $dig = $infProt->getElementsByTagName("digVal")->item(0);
         $digProt = '000';
         if (isset($dig)) {
@@ -998,10 +985,10 @@ class Tools extends ToolsCommon
     }
 
     /**
-     *
+     * Returns alias and description event from event code.
      * @param  int $tpEvento
      * @return \stdClass
-     * @throws Exception
+     * @throws \RuntimeException
      */
     private function tpEv($tpEvento)
     {

@@ -18,7 +18,6 @@ namespace NFePHP\NFe\Factories;
 use NFePHP\Common\Strings;
 use NFePHP\Common\Validator;
 use InvalidArgumentException;
-use DOMDocument;
 
 class Protocol
 {
