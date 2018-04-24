@@ -182,6 +182,15 @@
     </producao>
   </UF>
   <UF>
+    <sigla>PB</sigla>
+    <homologacao>
+      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://www.receita.pb.gov.br/nfcehom</NfeConsultaQR>
+    </homologacao>
+    <producao>
+      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://www.receita.pb.gov.br/nfce</NfeConsultaQR>
+    </producao>
+  </UF>
+  <UF>
     <sigla>PE</sigla>
     <homologacao>
       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://nfcehomolog.sefaz.pe.gov.br/nfce-web/consultarNFCe</NfeConsultaQR>
