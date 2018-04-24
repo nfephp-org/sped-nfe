@@ -6565,7 +6565,7 @@ class Make
             "urlChave",
             $std->urlChave,
             false,
-            "Valor Líquido dos Fornecimentos"
+            "URL de consulta por chave de acesso a ser impressa no DANFE NFC-e"
         );
         $this->infNFeSupl = $infNFeSupl;
         return $infNFeSupl;
