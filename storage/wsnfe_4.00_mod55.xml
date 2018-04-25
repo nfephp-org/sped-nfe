@@ -125,13 +125,13 @@
     <UF>
         <sigla>MS</sigla>
         <homologacao>
-            <NfeStatusServico method="nfeStatusServicoNF" operation="NFeStatusServico4" version="4.00">https://homologacao.nfe.ms.gov.br/ws/NFeStatusServico4</NfeStatusServico>
-            <NfeAutorizacao method="nfeAutorizacaoLote" operation="NFeAutorizacao4" version="4.00">https://homologacao.nfe.ms.gov.br/ws/NFeAutorizacao4</NfeAutorizacao>
-            <NfeConsultaProtocolo method="nfeConsultaNF" operation="NFeConsulta4" version="4.00">https://homologacao.nfe.ms.gov.br/ws/NFeConsultaProtocolo4</NfeConsultaProtocolo>
-            <NfeInutilizacao method="nfeInutilizacaoNF" operation="NFeInutilizacao4" version="4.00">https://homologacao.nfe.ms.gov.br/ws/NFeInutilizacao4</NfeInutilizacao>
-            <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NFeRetAutorizacao4" version="4.00">https://homologacao.nfe.ms.gov.br/ws/NFeRetAutorizacao4</NfeRetAutorizacao>
-            <RecepcaoEvento method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="1.00">https://homologacao.nfe.ms.gov.br/ws/NFeRecepcaoEvento4</RecepcaoEvento>
-            <NfeConsultaCadastro method="consultaCadastro4" operation="CadConsultaCadastro4" version="2.00"></NfeConsultaCadastro>
+            <NfeStatusServico method="nfeStatusServicoNF" operation="NFeStatusServico4" version="4.00">https://hom.nfe.sefaz.ms.gov.br/ws/NFeStatusServico4</NfeStatusServico>
+            <NfeAutorizacao method="nfeAutorizacaoLote" operation="NFeAutorizacao4" version="4.00">https://hom.nfe.sefaz.ms.gov.br/ws/NFeAutorizacao4</NfeAutorizacao>
+            <NfeConsultaProtocolo method="nfeConsultaNF" operation="NFeConsulta4" version="4.00">https://hom.nfe.sefaz.ms.gov.br/ws/NFeConsultaProtocolo4</NfeConsultaProtocolo>
+            <NfeInutilizacao method="nfeInutilizacaoNF" operation="NFeInutilizacao4" version="4.00">https://hom.nfe.sefaz.ms.gov.br/ws/NFeInutilizacao4</NfeInutilizacao>
+            <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NFeRetAutorizacao4" version="4.00">https://hom.nfe.sefaz.ms.gov.br/ws/NFeRetAutorizacao4</NfeRetAutorizacao>
+            <RecepcaoEvento method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="1.00">https://hom.nfe.sefaz.ms.gov.br/ws/NFeRecepcaoEvento4</RecepcaoEvento>
+            <NfeConsultaCadastro method="consultaCadastro4" operation="CadConsultaCadastro4" version="2.00">https://hom.nfe.sefaz.ms.gov.br/ws/CadConsultaCadastro4</NfeConsultaCadastro>
         </homologacao>
         <producao>
             <NfeStatusServico method="nfeStatusServicoNF" operation="NFeStatusServico4" version="4.00">https://nfe.fazenda.ms.gov.br/ws/NFeStatusServico4</NfeStatusServico>
