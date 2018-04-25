@@ -25,7 +25,7 @@ class Protocol
     /**
      * Add protocol to xml
      * @param string $xmlnfe xml
-     * @param string $protocol response xml
+     * @param string $xmlprotocol response xml
      * @return string
      * @throws InvalidArgumentException
      */
@@ -34,8 +34,8 @@ class Protocol
         $xmlprotocol
     ) {
         //test if string is a XML
-        if (!Validator::isXml($xmlnfe) ||
-            !Validator::isXml($xmlprotocol)
+        if (!Validator::isXML($xmlnfe) ||
+            !Validator::isXML($xmlprotocol)
         ) {
             throw new \InvalidArgumentException(
                 'O documento passado não é um xml.'
@@ -83,7 +83,7 @@ class Protocol
      */
     public static function remove($xmlprocnfe)
     {
-        if (!Validator::isXml($xmlprocnfe)) {
+        if (!Validator::isXML($xmlprocnfe)) {
             throw new InvalidArgumentException(
                 'O documento passado não é um xml.'
             );

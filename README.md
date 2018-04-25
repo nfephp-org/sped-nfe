@@ -1,30 +1,38 @@
-# SPED-NFE v5.0 (em desenvolvimento)
+# SPED-NFE 
 
 Framework para geração e comunicação das NFe com as SEFAZ autorizadoras, e visa fornecer os meios para gerar, assinar e anviar os dados relativos ao projeto Sped NFe das SEFAZ.
 
-Esta versão do pacote ainda está em desenvolvimento [FASE BETA TEST], pode não estar totalmente funcional e não deve ser utilizado para nada além de testes.
+> ### Atende os layouts versão 3.10 e 4.0 da SEFAZ!**
 
-## Este release está sendo preparado para atender as verões 3.10 e 4.0 do layout da SEFAZ!
+> ### NOVA Versão 4.0 do layout da SEFAZ ( [NT_2016_002_v1.42](http://www.nfe.fazenda.gov.br/portal/exibirArquivo.aspx?conteudo=uvfnqOj%20spg=) )
 
-> ### NOVA Versão 4.0 do layout da SEFAZ (ajustado NT_2016_002_v1.20 de 29/05/2017)
+>Ambiente SEFAZ de Homologação 4.0 (ambiente de teste das empresas): a partir de 20/11/2017;
 
->Ambiente SEFAZ de Homologação 4.0 (ambiente de teste das empresas): a partir de 03/07/2017;
+>*Ambiente SEFAZ de Produção 4.0 : a partir de 04/12/17;*
 
->*Ambiente SEFAZ de Produção 4.0 : a pertir de 02/10/17;*
+>*Desativação na SEFAZ da versão anterior 3.10: até 02/07/18.*
 
->*Desativação na SEFAZ da versão anterior 3.10: até 02/04/18.*
+> ### NOVA VERSÃO 4.0 do layout para NFCe [Manual técnico DANFCE](http://www.nfe.fazenda.gov.br/portal/exibirArquivo.aspx?conteudo=/xyXbAFZ71k=)
 
->**IMPORTANTE: Até 15/06/2017 esta versão será movida para master e as anteriores se tornam automaticamente OBSOLETAS e não mais receberão correções ou atualizações.**
+**Existem alterações e padrões a serem adotados na impressão do DANFCE, deve ser revisto o sped-da**
 
-*Utilize o chat do Gitter para iniciar discussões especificas sobre o desenvolvimento deste pacote.*
+>04/06/2018 - Início da homologação da versão 4.00 do XML para a NFC-e
+
+>02/07/2018 – Início da produção da versão 4.00 do XML para a NFC-e – início da concomitância com a versão 1.00 do QR Code (a versão 4.00 do XML da NFC-e aceitará as versões 1.00 e 2.00 do QR Code)
+
+> *01/10/2018 – Desativação da versão 3.10 do XML para a NFC-e*
+ 
+> *01/10/2018 – Fim da concomitância com a versão 1.00 do QR Code (a versão 4.00 do XML da NFC-e aceitará somente a versão 2.00 do QR Code)* 
+
+
+*Utilize o chat do Gitter para iniciar discussões específicas sobre o desenvolvimento deste pacote.*
 
 [![Chat][ico-gitter]][link-gitter]
-
-
-[![Latest Stable Version][ico-stable]][link-packagist]
 [![Build Status][ico-travis]][link-travis]
 [![Coverage Status][ico-scrutinizer]][link-scrutinizer]
 [![Quality Score][ico-code-quality]][link-code-quality]
+
+[![Latest Stable Version][ico-stable]][link-packagist]
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![License][ico-license]][link-packagist]
 [![Total Downloads][ico-downloads]][link-downloads]
@@ -33,6 +41,18 @@ Esta versão do pacote ainda está em desenvolvimento [FASE BETA TEST], pode nã
 [![Forks][ico-forks]][link-forks]
 [![Stars][ico-stars]][link-stars]
 
+## Estados atendidos
+
+### NFe (modelo 55) TODOS
+
+### NFCe (modelo 65) Todos, menos MG, CE e SC
+
+- MG inicia o projeto em 2018 (sem previsão)
+- No caso do CE ainda estamos no aguardo de mais esclarecimentos.(vai ?? não vai ??)
+- E SC não participa.
+
+
+
 
 Este pacote é aderente com os [PSR-1], [PSR-2] e [PSR-4]. Se você observar negligências de conformidade, por favor envie um patch via pull request.
 
@@ -40,13 +60,24 @@ Este pacote é aderente com os [PSR-1], [PSR-2] e [PSR-4]. Se você observar neg
 [PSR-2]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md
 [PSR-4]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md
 
-Não deixe de se cadastrar no [grupo de discussão do NFePHP](http://groups.google.com/group/nfephp) para acompanhar o desenvolvimento e participar das discussões e tirar duvidas!
+Não deixe de se cadastrar no [grupo de discussão do NFePHP](http://groups.google.com/group/nfephp) para acompanhar o desenvolvimento e participar das discussões e tirar dúvidas!
 
 ## Install
 
-**Este pacote esta listado no [Packgist](https://packagist.org/) foi desenvolvido para uso do [Composer](https://getcomposer.org/), portanto não será explicitada nenhuma alternativa de instalação.**
+**Este pacote está listado no [Packgist](https://packagist.org/) foi desenvolvido para uso do [Composer](https://getcomposer.org/), portanto não será explicitada nenhuma alternativa de instalação.**
 
-*Durante a fase de desenvolvimento e testes este pacote deve ser instalado com:*
+*E deve ser instalado com:*
+```bash
+composer require nfephp-org/sped-nfe
+```
+Ou ainda alterando o composer.json do seu aplicativo inserindo:
+```json
+"require": {
+    "nfephp-org/sped-nfe" : "^5.0"
+}
+```
+
+*Para utilizar o pacote em desenvolvimento (branch master) deve ser instalado com:*
 ```bash
 composer require nfephp-org/sped-nfe:dev-master
 ```
@@ -58,25 +89,14 @@ composer require nfephp-org/sped-nfe:dev-master
 }
 ```
 
-> NOTA: Ao utilizar este pacote ainda na fase de desenvolvimento não se esqueça de alterar o composer.json da sua aplicação para aceitar pacotes em desenvolvimento, alterando a propriedade "minimum-stability" de "stable" para "dev".
+> NOTA: Ao utilizar este pacote na versão em desenvolvimento não se esqueça de alterar o composer.json da sua aplicação para aceitar pacotes em desenvolvimento, alterando a propriedade "minimum-stability" de "stable" para "dev".
 > ```json
 > "minimum-stability": "dev"
 > ```
 
-*Após os stable realeases estarem disponíveis, pode ser instalado com:*
-```bash
-composer require nfephp-org/sped-nfe
-```
-Ou ainda alterando o composer.json do seu aplicativo inserindo:
-```json
-"require": {
-    "nfephp-org/sped-nfe" : "^5.0"
-}
-```
-
 ## Requirements
 
-Para que este pacote possa funcionar são necessarios os seguintes requisitos do PHP e outros pacotes dos quais esse depende.
+Para que este pacote possa funcionar são necessários os seguintes requisitos do PHP e outros pacotes dos quais esse depende.
 
 - PHP 5.6 ou PHP 7.x (recomendável PHP 7.x) 
 - ext-curl
@@ -104,7 +124,7 @@ Para que este pacote possa funcionar são necessarios os seguintes requisitos do
 
 **Estamos em busca de *doadores* e *patrocinadores* para ajudar a financiar parte do desenvolvimento deste pacote e de outros pacotes, aqueles que estiverem interessados por favor entrem em contato com o autor pelo email linux.rlm@gmail.com** 
 
-Este é um projeto totalmente *OpenSource*, para usa-lo, copia-lo e modifica-lo você não paga absolutamente nada. Porém para continuarmos a mante-lo de forma adequada é necessária alguma contribuição seja feita, seja auxiliando na codificação, na documentação, na realização de testes e identificação de falhas e BUGs.
+Este é um projeto totalmente *OpenSource*, para usá-lo, copia-lo e modificá-lo você não paga absolutamente nada. Porém para continuarmos a mantê-lo de forma adequada é necessária alguma contribuição seja feita, seja auxiliando na codificação, na documentação, na realização de testes e identificação de falhas e BUGs.
 
 Mas também, caso você ache que qualquer informação obtida aqui, lhe foi útil e que isso vale de algum dinheiro e está disposto a doar algo, sinta-se livre para enviar qualquer quantia, seja diretamente ao autor ou através do PayPal e do PagSeguro.
 
@@ -115,19 +135,19 @@ Mas também, caso você ache que qualquer informação obtida aqui, lhe foi úti
 <img alt="Doar PagSeguro" src="https://stc.pagseguro.uol.com.br/public/img/botoes/doacoes/120x53-doar.gif"/></a>
 
 
-*Agradecemos a contribuição, dos colegas abaixo indicados, pois sem a ajuda deles o desenvolvimento desse projeto seria muito mais lento e talvez até impossivel.*
+*Agradecemos a contribuição, dos colegas abaixo indicados, pois sem a ajuda deles o desenvolvimento desse projeto seria muito mais lento e talvez até impossível.*
 
 > ### Walber Sales - *Patrocinador Gold*
 
 ## Documentation
 
-O processo de documentação ainda esta no inicio, mas já existem alguns documentos uteis.
+O processo de documentação ainda está no inicio, mas já existem alguns documentos úteis.
 
 [Documentação](docs/Funcionalidades.md)
 
 ## Contributing
 
-Para contribuir com correções de BUGS, melhoria no código, documentação, elaboração de testes ou qualquer outro auxilio técnico e de programação por favor observe o [CONTRIBUTING](CONTRIBUTING.md) e o  [Código de Conduta](CONDUCT.md) para maiores detalhes.
+Para contribuir com correções de BUGS, melhoria no código, documentação, elaboração de testes ou qualquer outro auxílio técnico e de programação por favor observe o [CONTRIBUTING](CONTRIBUTING.md) e o  [Código de Conduta](CONDUCT.md) para maiores detalhes.
 
 ## Change log
 

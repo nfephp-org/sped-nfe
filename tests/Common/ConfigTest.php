@@ -10,7 +10,8 @@ class ConfigTest extends NFeTestCase
     public function testValidate()
     {
         $resp = Config::validate($this->configJson);
-        $this->assertTrue($resp);
+        $b = is_object($resp);
+        $this->assertTrue($b);
     }
     
     public function testValidadeWithoutSomeOptionalData()
@@ -34,7 +35,42 @@ class ConfigTest extends NFeTestCase
             //]
         ];
         $resp = Config::validate(json_encode($config));
-        $this->assertTrue($resp);
+        $b = is_object($resp);
+        $this->assertTrue($b);
+    }
+    
+    /**
+     * @expectedException NFePHP\NFe\Exception\DocumentsException
+     */
+    public function testValidadeFailWithArray()
+    {
+         $config = [
+            "atualizacao" => "2017-02-20 09:11:21",
+            "tpAmb" => 2,
+            "razaosocial" => "SUA RAZAO SOCIAL LTDA",
+            "siglaUF" => "SP",
+            "cnpj" => "99999999999999",
+            "schemes" => "PL_008i2",
+            "versao" => "3.10",
+            "tokenIBPT" => "AAAAAAA",
+            "CSC" => "GPB0JBWLUR6HWFTVEAS6RJ69GPCROFPBBB8G",
+            "CSCid" => "000001",
+            "aProxyConf" => [
+                "proxyIp" => "",
+                "proxyPort" => "",
+                "proxyUser" => "",
+                "proxyPass" => ""
+            ]
+         ];
+         $resp = Config::validate($config);
+    }
+
+    /**
+     * @expectedException NFePHP\NFe\Exception\DocumentsException
+     */
+    public function testValidadeFailWithoutJsonString()
+    {
+        $resp = Config::validate('');
     }
     
     /**
@@ -61,7 +97,6 @@ class ConfigTest extends NFeTestCase
             ]
         ];
         $resp = Config::validate(json_encode($config));
-        $this->assertFalse($resp);
     }
     
     /**
@@ -88,7 +123,6 @@ class ConfigTest extends NFeTestCase
             //]
         ];
         $resp = Config::validate(json_encode($config));
-        $this->assertFalse($resp);
     }
     
     /**
@@ -115,7 +149,6 @@ class ConfigTest extends NFeTestCase
             //]
         ];
         $resp = Config::validate(json_encode($config));
-        $this->assertFalse($resp);
     }
     
     /**
@@ -142,7 +175,6 @@ class ConfigTest extends NFeTestCase
             //]
         ];
         $resp = Config::validate(json_encode($config));
-        $this->assertFalse($resp);
     }
 
     /**
@@ -169,7 +201,6 @@ class ConfigTest extends NFeTestCase
             //]
         ];
         $resp = Config::validate(json_encode($config));
-        $this->assertFalse($resp);
     }
     
     /**
@@ -196,6 +227,5 @@ class ConfigTest extends NFeTestCase
             //]
         ];
         $resp = Config::validate(json_encode($config));
-        $this->assertFalse($resp);
     }
 }

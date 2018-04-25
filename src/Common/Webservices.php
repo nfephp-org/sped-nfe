@@ -39,7 +39,7 @@ class Webservices
      * the storage folder
      * @param string $sigla
      * @param string $ambiente "homologacao" ou "producao"
-     * @param string $modelo "55" ou "65"
+     * @param int $modelo "55" ou "65"
      * @return boolean | \stdClass
      */
     public function get($sigla, $ambiente, $modelo)
@@ -56,7 +56,28 @@ class Webservices
         if (empty($auto) || empty($this->std)) {
             return false;
         }
-        return $this->std->$auto->$ambiente;
+        if (empty($this->std->$auto)) {
+            throw new \RuntimeException(
+                "Não existem webservices cadastrados para  [$sigla] no modelo [$modelo]"
+            );
+        }
+        $svw = $this->std->$auto->$ambiente;
+        if ($auto == 'SVRS' || $auto == 'SVAN') {
+            $pad = !empty($this->std->$sigla->$ambiente) ? $this->std->$sigla->$ambiente : '';
+            $pad = json_decode(json_encode($pad), true);
+            if (!empty($pad)) {
+                foreach ($pad as $key => $p) {
+                    if (empty($svw->$key)) {
+                        $svw->$key = new \stdClass();
+                        $svw->$key->method = $p['method'];
+                        $svw->$key->operation = $p['operation'];
+                        $svw->$key->version = $p['version'];
+                        $svw->$key->url = $p['url'];
+                    }
+                }
+            }
+        }
+        return $svw;
     }
 
     /**
@@ -113,7 +134,6 @@ class Webservices
     {
         $amb[$environment] = [];
         foreach ($node->children() as $children) {
-            $name = $children->getName();
             $name = (string) $children->getName();
             $method = (string) $children['method'];
             $operation = (string) $children['operation'];

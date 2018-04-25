@@ -361,6 +361,7 @@ Já na seção do retorno do evento "\<retEvento\>" :
 | :---: | :--- | 
 | 101 | Cancelamento homologado. |
 | 155 | Cancelamento homologado fora de prazo. |
+| 135 | Evento registrado e vinculado a NF-e |
 
 ## Mensagens de ERRO (Exceptions)
 

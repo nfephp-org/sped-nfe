@@ -5,7 +5,7 @@ NOTAFISCAL|numero de notas|
 
 A|versao|Id|pk_nItem|
 
-B|cUF|cNF|natOp|indPag|mod|serie|nNF|dhEmi|dhSaiEnt|tpNF|idDest|cMunFG|tpImp|tpEmis|cDV|tp Amb|finNFe|indFinal|indPres|procEmi|verProc|dhCont|xJust|
+B|cUF|cNF|natOp|indPag|mod|serie|nNF|dhEmi|dhSaiEnt|tpNF|idDest|cMunFG|tpImp|tpEmis|cDV|tpAmb|finNFe|indFinal|indPres|procEmi|verProc|dhCont|xJust|
 
 BA|
 
@@ -23,13 +23,13 @@ B19|refCTe|
 
 BA20|mod|nECF|nCOO|
 
-C|xNome|XFant|IE|IEST|IM|CNAE|CRT|
+C|xNome|xFant|IE|IEST|IM|CNAE|CRT|
 
 C02|CNPJ|
 
 C02a|CPF|
 
-C05|xLgr|Nro|Cpl|Bairro|CMun|XMun|UF|CEP|cPais|xPais|fone|
+C05|xLgr|nro|cpl|xBairro|cMun|XMun|UF|CEP|cPais|xPais|fone|
 
 E|xNome|indIEDest|IE|ISUF|IM|email|
 
@@ -45,7 +45,7 @@ F|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|
 
 F02|CNPJ|
 
-F02a|CPF
+F02a|CPF|
 
 G|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|
 
@@ -69,7 +69,7 @@ I05C|CEST|
 
 I18|nDI|dDI|xLocDesemb|UFDesemb|dDesemb|tpViaTransp|vAFRMM|tpIntermedio|CNPJ|UFTerceiro|cExportador|
 
-I25|nAdicao|nSeqAdicC|cFabricante|vDescDI|nDraw|
+I25|nAdicao|nSeqAdic|cFabricante|vDescDI|nDraw|
 
 I50|nDraw|
 
@@ -84,6 +84,8 @@ L|tpArma|nSerie|nCano|descr|
 LA|cProdANP|pMixGN|CODIF|qTemp|UFCons|
 
 LA07|qBCProd|vAliqProd|vCIDE|
+
+LA11|nBico|nBomba|nTanque|vEncIni|vEncFin|
 
 LB|nRECOPI|
 

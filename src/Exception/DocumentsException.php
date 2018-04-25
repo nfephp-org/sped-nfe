@@ -24,7 +24,12 @@ class DocumentsException extends \InvalidArgumentException implements ExceptionI
         8 => "A configuração (config.json) não é válido {{msg}}.",
         9 => "Falta o CSC no config.json.",
         10 => "Falta o CSCId no config.json.",
-        11 => "Falta a URL do serviço NfeConsultaQR."
+        11 => "Falta a URL do serviço NfeConsultaQR.",
+        12 => "O TXT não representa uma NFe",
+        13 => "O numero de notas indicado na primeira linha do TXT é diferente do numero total de notas do txt.",
+        14 => "Falha na validação do TXT:\n {{msg}}.",
+        15 => "Um TXT de NFe deve ser passado como parâmetro, e nada foi passado.",
+        16 => "O txt tem um campo não definido {{msg}}"
     ];
     
     public static function wrongDocument($code, $msg = '')

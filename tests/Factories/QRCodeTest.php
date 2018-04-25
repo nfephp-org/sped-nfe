@@ -40,7 +40,6 @@ class QRCodeTest extends NFeTestCase
         $actualElement = $actualDom->documentElement;
         
         $this->assertEqualXMLStructure($expectedElement, $actualElement);
-        
     }
     
     /**
@@ -92,5 +91,5 @@ class QRCodeTest extends NFeTestCase
         $versao = '100';
         $urlqr = '';
         $response = QRCode::putQRTag($dom, $token, $idToken, $versao, $urlqr);
-    }    
+    }
 }

@@ -15,25 +15,22 @@ namespace NFePHP\NFe\Common;
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
 
-use DateTime;
 use DOMDocument;
-use Exception;
-use RuntimeException;
 use InvalidArgumentException;
-use NFePHP\Common\Strings;
-use NFePHP\Common\Keys;
+use RuntimeException;
 use NFePHP\Common\Certificate;
-use NFePHP\Common\Soap\SoapInterface;
-use NFePHP\Common\Soap\SoapCurl;
 use NFePHP\Common\Signer;
-use NFePHP\Common\Validator;
+use NFePHP\Common\Soap\SoapCurl;
+use NFePHP\Common\Soap\SoapInterface;
+use NFePHP\Common\Strings;
 use NFePHP\Common\TimeZoneByUF;
 use NFePHP\Common\UFList;
-use NFePHP\NFe\Common\Webservices;
+use NFePHP\Common\Validator;
 use NFePHP\NFe\Factories\Contingency;
-use NFePHP\NFe\Factories\QRCode;
-use NFePHP\NFe\Factories\Header;
 use NFePHP\NFe\Factories\ContingencyNFe;
+use NFePHP\NFe\Factories\Header;
+use NFePHP\NFe\Factories\QRCode;
+use SoapHeader;
 
 class Tools
 {
@@ -121,9 +118,9 @@ class Tools
     protected $urlPortal = 'http://www.portalfiscal.inf.br/nfe';
     /**
      * urlcUF
-     * @var string
+     * @var int
      */
-    protected $urlcUF = '';
+    protected $urlcUF;
     /**
      * urlVersion
      * @var string
@@ -151,9 +148,9 @@ class Tools
      */
     protected $urlAction = '';
     /**
-     * @var \SOAPHeader
+     * @var \SoapHeader | null
      */
-    protected $objHeader;
+    protected $objHeader = null;
     /**
      * @var string
      */
@@ -166,7 +163,14 @@ class Tools
         'xmlns:xsd' => "http://www.w3.org/2001/XMLSchema",
         'xmlns:soap' => "http://www.w3.org/2003/05/soap-envelope"
     ];
-
+    /**
+     * @var array
+     */
+    protected $availableVersions = [
+        '3.10' => 'PL_008i2',
+        '4.00' => 'PL_009_V4'
+    ];
+    
     /**
      * Constructor
      * load configurations,
@@ -179,18 +183,18 @@ class Tools
      */
     public function __construct($configJson, Certificate $certificate)
     {
-        $this->config = json_decode($configJson);
         $this->pathwsfiles = realpath(
             __DIR__ . '/../../storage'
         ).'/';
-        $this->pathschemes = realpath(
-            __DIR__ . '/../../schemes/'. $this->config->schemes
-        ).'/';
+        //valid config json string
+        $this->config = Config::validate($configJson);
+        
         $this->version($this->config->versao);
         $this->setEnvironmentTimeZone($this->config->siglaUF);
         $this->certificate = $certificate;
         $this->setEnvironment($this->config->tpAmb);
         $this->contingency = new Contingency();
+        $this->soap = new SoapCurl($certificate);
     }
     
     /**
@@ -252,25 +256,25 @@ class Tools
      * Set or get parameter layout version
      * @param string $version
      * @return string
+     * @throws InvalidArgumentException
      */
-    public function version($version = '')
+    public function version($version = null)
     {
-        if (!empty($version)) {
-            $this->versao = $version;
+        if (null === $version) {
+            return $this->versao;
         }
+        //Verify version template is defined
+        if (false === isset($this->availableVersions[$version])) {
+            throw new \InvalidArgumentException('Essa versão de layout não está disponível');
+        }
+        
+        $this->versao = $version;
+        $this->config->schemes = $this->availableVersions[$version];
+        $this->pathschemes = realpath(
+            __DIR__ . '/../../schemes/'. $this->config->schemes
+        ).'/';
+        
         return $this->versao;
-    }
-    
-    /**
-     * Set environment for production or homologation
-     * @param int $tpAmb
-     */
-    public function environment($tpAmb = 2)
-    {
-        if (!empty($tpAmb) && ($tpAmb == 1 || $tpAmb == 2)) {
-            $this->tpAmb = $tpAmb;
-            $this->ambiente = ($tpAmb == 1) ? 'producao' : 'homologacao';
-        }
     }
     
     /**
@@ -320,6 +324,9 @@ class Tools
     {
         //remove all invalid strings
         $xml = Strings::clearXmlString($xml);
+        if ($this->contingency->type !== '') {
+            $xml = ContingencyNFe::adjust($xml, $this->contingency);
+        }
         $signed = Signer::sign(
             $this->certificate,
             $xml,
@@ -333,7 +340,8 @@ class Tools
         $dom->formatOutput = false;
         $dom->loadXML($signed);
         $modelo = $dom->getElementsByTagName('mod')->item(0)->nodeValue;
-        if ($modelo == 65) {
+        $isInfNFeSupl = !empty($dom->getElementsByTagName('infNFeSupl')->item(0));
+        if ($modelo == 65 && !$isInfNFeSupl) {
             $signed = $this->addQRCode($dom);
         }
         //exception will be throw if NFe is not valid
@@ -351,7 +359,6 @@ class Tools
         if ($this->contingency->type == '') {
             return $xml;
         }
-        $xml = ContingencyNFe::adjust($xml, $this->contingency);
         return $this->signNFe($xml);
     }
 
@@ -421,10 +428,9 @@ class Tools
      */
     public function setEnvironment($tpAmb = 2)
     {
-        $this->tpAmb = $tpAmb;
-        $this->ambiente = 'homologacao';
-        if ($tpAmb == 1) {
-            $this->ambiente = 'producao';
+        if (!empty($tpAmb) && ($tpAmb == 1 || $tpAmb == 2)) {
+            $this->tpAmb = $tpAmb;
+            $this->ambiente = ($tpAmb == 1) ? 'producao' : 'homologacao';
         }
     }
     
@@ -445,7 +451,7 @@ class Tools
      * Assembles all the necessary parameters for soap communication
      * @param string $service
      * @param string $uf
-     * @param string $tpAmb
+     * @param int $tpAmb
      * @param bool $ignoreContingency
      * @return void
      */
@@ -513,9 +519,9 @@ class Tools
             . $this->urlMethod
             . "\"";
         //montagem do SOAP Header
-        //para versões posteriores a 3.10 não incluir o SOAPHeader !!!!
+        //para versões posteriores a 3.10 não incluir o SoapHeader !!!!
         if ($this->versao < '4.00') {
-            $this->objHeader = new \SOAPHeader(
+            $this->objHeader = new SoapHeader(
                 $this->urlNamespace,
                 'nfeCabecMsg',
                 ['cUF' => $this->urlcUF, 'versaoDados' => $this->urlVersion]
@@ -525,10 +531,11 @@ class Tools
     
     /**
      * Send request message to webservice
+     * @param array $parameters
      * @param string $request
      * @return string
      */
-    protected function sendRequest($request, $parameters = [])
+    protected function sendRequest($request, array $parameters = [])
     {
         $this->checkSoap();
         return (string) $this->soap->send(
@@ -550,7 +557,6 @@ class Tools
     protected function getXmlUrlPath()
     {
         $file = $this->pathwsfiles
-            . DIRECTORY_SEPARATOR
             . "wsnfe_".$this->versao."_mod55.xml";
         if ($this->modelo == 65) {
             $file = str_replace('55', '65', $file);
@@ -568,6 +574,11 @@ class Tools
      */
     protected function addQRCode(DOMDocument $dom)
     {
+        if (empty($this->config->CSC) || empty($this->config->CSCid)) {
+            throw new \RuntimeException(
+                "O QRCode não pode ser criado pois faltam dados CSC e/ou CSCId"
+            );
+        }
         $memmod = $this->modelo;
         $this->modelo = 65;
         $uf = UFList::getUFByCode(
@@ -587,9 +598,9 @@ class Tools
             $this->getURIConsultaNFCe($uf)
         );
         $this->modelo = $memmod;
-        return $signed;
+        return Strings::clearXmlString($signed);
     }
-    
+
     /**
      * Get URI for search NFCe by chave
      * NOTE: exists only in 4.00 layout
@@ -601,13 +612,15 @@ class Tools
         if ($this->versao < '4.00') {
             return '';
         }
-        //existe no XML apenas para layout >= 4.x
+        //essa TAG existe no XML apenas para layout >= 4.x
         //os URI estão em storage/uri_consulta_nfce.json
-        $std = json_decode(
+        $arr = json_decode(
             file_get_contents(
                 $this->pathwsfiles.'uri_consulta_nfce.json'
-            )
+            ),
+            true
         );
+        $std = json_decode(json_encode($arr[$this->tpAmb]));
         return $std->$uf;
     }
     

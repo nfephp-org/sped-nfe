@@ -3,11 +3,11 @@
 namespace NFePHP\NFe\Common;
 
 /**
- * Class for identification of eletronic documents in xml
- * used for Sped NFe comunications
+ * Class for identification and convertion of eletronic documents in xml
+ * for documents used in sped-nfe, sped-esocial, sped-cte, sped-mdfe, etc.
  *
  * @category  NFePHP
- * @package   NFePHP\NFe\Common\Standardize
+ * @package   NFePHP\Common\Standardize
  * @copyright NFePHP Copyright (c) 2008-2017
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
@@ -18,7 +18,6 @@ namespace NFePHP\NFe\Common;
 
 use NFePHP\Common\Validator;
 use NFePHP\NFe\Exception\DocumentsException;
-use DOMDocument;
 use stdClass;
 
 class Standardize
@@ -32,10 +31,16 @@ class Standardize
      */
     public $json = '';
     /**
+     * @var string
+     */
+    public $key = '';
+    /**
      * @var array
      */
     public $rootTagList = [
         'distDFeInt',
+        'resNFe',
+        'resEvento',
         'envEvento',
         'ConsCad',
         'consSitNFe',
@@ -75,7 +80,7 @@ class Standardize
      * Identify node and extract from XML for convertion type
      * @param string $xml
      * @return string identificated node name
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function whichIs($xml)
     {
@@ -117,8 +122,9 @@ class Standardize
     public function toStd($xml = null)
     {
         if (!empty($xml)) {
-            $this->whichIs($xml);
+            $this->key = $this->whichIs($xml);
         }
+        
         $sxml = simplexml_load_string($this->node);
         $this->json = str_replace(
             '@attributes',

@@ -1,11 +1,11 @@
 ## LAYOUT NFe v4.00
 
 ```
-NOTAFISCAL|numero de notas|
+NOTAFISCAL|1|
 
 A|versao|Id|pk_nItem|
 
-B|cUF|cNF|natOp|indPag|mod|serie|nNF|dhEmi|dhSaiEnt|tpNF|idDest|cMunFG|tpImp|tpEmis|cDV|tp Amb|finNFe|indFinal|indPres|procEmi|verProc|dhCont|xJust|
+B|cUF|cNF|natOp|mod|serie|nNF|dhEmi|dhSaiEnt|tpNF|idDest|cMunFG|tpImp|tpEmis|cDV|tp Amb|finNFe|indFinal|indPres|procEmi|verProc|dhCont|xJust|
 
 BA|
 
@@ -23,13 +23,13 @@ B19|refCTe|
 
 BA20|mod|nECF|nCOO|
 
-C|xNome|XFant|IE|IEST|IM|CNAE|CRT|
+C|xNome|xFant|IE|IEST|IM|CNAE|CRT|
 
 C02|CNPJ|
 
 C02a|CPF|
 
-C05|xLgr|Nro|Cpl|Bairro|CMun|XMun|UF|CEP|cPais|xPais|fone|
+C05|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|CEP|cPais|xPais|fone|
 
 E|xNome|indIEDest|IE|ISUF|IM|email|
 
@@ -61,29 +61,33 @@ GA03|CPF|
 
 H|item|infAdProd|
 
-I|cProd|cEAN|xProd|NCM|EXTIPI|CFOP|uCom|qCom|vUnCom|vProd|cEANTrib|uTrib|qTrib|vUnTrib|vFrete|vSeg|vDesc|vOutro|indTot|xPed|nItemPed|nFCI|
+I|cProd|cEAN|xProd|NCM|cBenf|EXTIPI|CFOP|uCom|qCom|vUnCom|vProd|cEANTrib|uTrib|qTrib|vUnTrib|vFrete|vSeg|vDesc|vOutro|indTot|xPed|nItemPed|nFCI|
 
 I05A|NVE|
 
-I05C|CEST|
+I05C|CEST|indEscala|CNPJFab|
 
 I18|nDI|dDI|xLocDesemb|UFDesemb|dDesemb|tpViaTransp|vAFRMM|tpIntermedio|CNPJ|UFTerceiro|cExportador|
 
-I25|nAdicao|nSeqAdicC|cFabricante|vDescDI|nDraw|
+I25|nAdicao|nSeqAdic|cFabricante|vDescDI|nDraw|
 
 I50|nDraw|
 
 I52|nRE|chNFe|qExport|
 
+I80|nLote|qLote|dFab|dVal|cAgreg|
+
 JA|tpOp|chassi|cCor|xCor|pot|cilin|pesoL|pesoB|nSerie|tpComb|nMotor|CMT|dist|anoMod|anoFab|tpPint|tpVeic|espVeic|VIN|condVeic|cMod|cCorDENATRAN|lota|tpRest|
 
-K|nLote|qLote|dFab|dVal|vPMC|
+K|cProdANVISA|vPMC|
 
 L|tpArma|nSerie|nCano|descr|
 
-LA|cProdANP|pMixGN|CODIF|qTemp|UFCons|
+LA|cProdANP|descANP|pGLP|pGNn|pGNi|vPart|CODIF|qTemp|UFCons|
 
 LA07|qBCProd|vAliqProd|vCIDE|
+
+LA11|nBico|nBomba|nTanque|vEncIni|vEncFin|
 
 LB|nRECOPI|
 
@@ -91,23 +95,23 @@ M|vTotTrib|
 
 N|
 
-N02|orig|CST|modBC|vBC|pICMS|vICMS|
+N02|orig|CST|modBC|vBC|pICMS|vICMS|pFCP|vFCP|
 
-N03|orig|CST|modBC|vBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|
+N03|orig|CST|modBC|vBC|pICMS|vICMS|vBCFCP|pFCP|vFCP|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|
 
-N04|orig|CST|modBC|pRedBC|vBC|pICMS|vICMS|vICMSDeson|motDesICMS|
+N04|orig|CST|modBC|pRedBC|vBC|pICMS|vICMS|BCFCP|pFCP|vFCP|vICMSDeson|motDesICMS|
 
-N05|orig|CST|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vICMSDeson|motDesICMS|
+N05|orig|CST|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|vICMSDeson|motDesICMS|
 
 N06|orig|CST|vICMSDeson|motDesICMS|
 
-N07|orig|CST|modBC|pRedBC|vBC|pICMS|vICMSOp|pDif|vICMSDif|vICMS|
+N07|orig|CST|modBC|pRedBC|vBC|pICMS|vICMSOp|pDif|vICMSDif|vICMS|vBCFCP|pFCP|vFCP|
 
-N08|orig|CST|vBCSTRet|vICMSSTRet|
+N08|orig|CST|vBCSTRet|pST|vICMSSTRet|vBCFCPSTRet|pFCPSTRet|vFCPSTRet|
 
-N09|orig|CST|modBC|pRedBC|vBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vICMSDeson|motDesICMS|
+N09|orig|CST|modBC|pRedBC|vBC|pICMS|vICMS|vBCFCP|pFCP|vFCP|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|vICMSDeson|motDesICMS|
 
-N10|orig|CST|modBC|vBC|pRedBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vICMSDeson|motDesICMS|
+N10|orig|CST|modBC|vBC|pRedBC|pICMS|vICMS|vBCFCP|pFCP|vFCP|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|vICMSDeson|motDesICMS|
 
 N10a|orig|CST|modBC|vBC|pRedBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|pBCOp|UFST|
 
@@ -117,7 +121,7 @@ N10c|orig|CSOSN|pCredSN|vCredICMSSN|
 
 N10d|orig|CSOSN|
 
-N10e|orig|CSOSN|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|pCredSN|vCredICMSSN|
+N10e|orig|CSOSN|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|pCredSN|vCredICMSSN|pCredSN|vCredICMSSN|
 
 N10f|orig|CSOSN|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|
 
@@ -185,7 +189,7 @@ UA|pDevol|vIPIDevol|
 
 W|
 
-W02|vBC|vICMS|vICMSDeson|vFCP|vBCST|vST|vFCPST|vFCPSTRet|vProd|vFrete|vSeg|vDesc|vII|vIPI|vIPIDevol|vPIS|vCOFINS|vOutro|vNF|vTotTrib|
+W02|vBC|vICMS|vICMSDeson|vFCP|vBCST|vST|vFCPST|vFCPSTRet|vProd|vFrete|vSeg|vDesc|vII|vIPI|vIPIDevol|vPIS|vCOFINS|vOutro|vNF|vTotTrib|vFCPUFDest|vICMSUFDest|vICMSUFRemet|
 
 W17|vServ|vBC|vISS|vPIS|vCOFINS|dCompet|vDeducao|vOutro|vDescIncond|vDescCond|vISSRet|cRegTrib|
 
@@ -209,13 +213,13 @@ X26|qVol|esp|marca|nVol|pesoL|pesoB|
 
 X33|nLacre|
 
-Y|
+Y|vTroco|
 
 Y02|nFat|vOrig|vDesc|vLiq|
 
 Y07|nDup|dVenc|vDup|
 
-YA|tPag|vPag|CNPJ|tBand|cAut|tpIntegra|vTroco|
+YA|tPag|vPag|CNPJ|tBand|cAut|tpIntegra|
 
 Z|infAdFisco|infCpl|
 
@@ -236,4 +240,5 @@ ZC04|dia|qtde|
 ZC10|xDed|vDed|
 
 ZX01|qrcode|urlChave|
+
 ```
