@@ -95,14 +95,12 @@ class Complements
         $domnfe->formatOutput = false;
         $domnfe->preserveWhiteSpace = false;
         $domnfe->loadXML($nfe);
-        $nodenfe = $domnfe->getElementsByTagName('NFe')->item(0);
         $proNFe = $domnfe->getElementsByTagName('protNFe')->item(0);
         if (empty($proNFe)) {
             //not protocoladed NFe
             throw DocumentsException::wrongDocument(1);
         }
         $chaveNFe = $proNFe->getElementsByTagName('chNFe')->item(0)->nodeValue;
-        $tpAmb = $domnfe->getElementsByTagName('tpAmb')->item(0)->nodeValue;
 
         $domcanc = new DOMDocument('1.0', 'utf-8');
         $domcanc->formatOutput = false;
@@ -217,7 +215,7 @@ class Complements
      * @param string $request
      * @param string $response
      * @return string
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     protected static function addInutNFeProtocol($request, $response)
     {
@@ -285,7 +283,7 @@ class Complements
      * @param string $request
      * @param string $response
      * @return string
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     protected static function addNFeProtocol($request, $response)
     {
@@ -349,7 +347,7 @@ class Complements
      * @param string $request
      * @param string $response
      * @return string
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     protected static function addEnvEventoProtocol($request, $response)
     {

@@ -317,7 +317,7 @@ class Tools
     /**
      * Sign NFe or NFCe
      * @param  string  $xml NFe xml content
-     * @return string singed NFe xml
+     * @return string signed NFe xml
      * @throws RuntimeException
      */
     public function signNFe($xml)
