@@ -176,7 +176,7 @@ class Complements
 
         $evTpEvento = $event->getElementsByTagName('tpEvento')->item(0)->nodeValue;
         $reTpEvento = $retEv->getElementsByTagName('tpEvento')->item(0)->nodeValue;
-        if ($resLote !== $envLote) {
+        if ($evTpEvento !== $reTpEvento) {
             throw DocumentsException::wrongDocument(
                 5,
                 "Os tipos de evento dos documentos são diferentes."
