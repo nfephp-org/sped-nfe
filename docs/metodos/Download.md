@@ -134,12 +134,12 @@ use NFePHP\NFe\Common\Standardize;
 try {
     $stz = new Standardize($response);
     $std = $stz->toStd();
-    if ($std->cStat !== 138) {
+    if ($std->cStat != 138) {
         echo "Documento não retornado. [$std->cStat] $std->xMotivo";  
         die;
     }    
     $zip = $std->loteDistDFeInt->docZip;
-    $xml = gzdecode(base64_decode($zip);
+    $xml = gzdecode(base64_decode($zip));
 
     header('Content-type: text/xml; charset=UTF-8');
     echo $xml;
