@@ -6844,7 +6844,7 @@ class Make
             $prod = $this->aProd[$nItem];
             foreach ($child as $rastro) {
                 $this->dom->appChild($prod, $rastro, "Inclusão do node Rastro");
-            }    
+            }
             $this->aProd[$nItem] = $prod;
         }
         //insere veiculo
