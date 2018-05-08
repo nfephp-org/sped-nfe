@@ -2137,7 +2137,7 @@ class Make
             false,
             $identificador . "[item $std->item] Código de Agregação"
         );
-        $this->aRastro[$std->item] = $rastro;
+        $this->aRastro[$std->item][] = $rastro;
         return $rastro;
     }
 
@@ -6842,7 +6842,9 @@ class Make
         //insere Rastro
         foreach ($this->aRastro as $nItem => $child) {
             $prod = $this->aProd[$nItem];
-            $this->dom->appChild($prod, $child, "Inclusão do node Rastro");
+            foreach ($child as $rastro) {
+                $this->dom->appChild($prod, $rastro, "Inclusão do node Rastro");
+            }
             $this->aProd[$nItem] = $prod;
         }
         //insere veiculo
