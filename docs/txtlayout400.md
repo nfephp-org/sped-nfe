@@ -1,4 +1,13 @@
 ## LAYOUT NFe v4.00
+- Nota Técnica 2016.002 - v1.10
+- Nota Técnica 2016.002 - v1.20
+- Nota Técnica 2016.002 - v1.30
+- Nota Técnica 2016.002 - v1.31
+- Nota Técnica 2016.002 - v1.40
+- Nota Técnica 2016.002 - v1.41
+- Nota Técnica 2016.002 - v1.42
+- Nota Técnica 2016.002 - v1.50
+- Nota Técnica 2016.002 - v1.51
 
 ```
 NOTAFISCAL|1|
@@ -219,7 +228,7 @@ Y02|nFat|vOrig|vDesc|vLiq|
 
 Y07|nDup|dVenc|vDup|
 
-YA|tPag|vPag|CNPJ|tBand|cAut|tpIntegra|
+YA|indPag|tPag|vPag|CNPJ|tBand|cAut|tpIntegra|
 
 Z|infAdFisco|infCpl|
 
