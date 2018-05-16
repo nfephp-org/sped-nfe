@@ -108,7 +108,7 @@
     "Y":"Y|vTroco|",
     "Y02":"Y02|nFat|vOrig|vDesc|vLiq|",
     "Y07":"Y07|nDup|dVenc|vDup|",
-    "YA":"YA|tPag|vPag|CNPJ|tBand|cAut|tpIntegra|",
+    "YA":"YA|indPag|tPag|vPag|CNPJ|tBand|cAut|tpIntegra|",
     "Z":"Z|infAdFisco|infCpl|",
     "Z04":"Z04|xCampo|xTexto|",
     "Z07":"Z07|xCampo|xTexto|",
