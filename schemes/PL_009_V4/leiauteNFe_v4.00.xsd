@@ -4,9 +4,6 @@
 <!-- PL_008g  alterações de esquema decorrentes da - NT2015.002  - 15/07/2015 -->
 <!-- PL_008h  alterações de esquema decorrentes da - NT2015.003 - 17/09/2015 -->
 <!-- PL_008i -->
-<!-- PL_009-v4  alterações de esquema decorrentes da - NT2016.002 - 10/2017 -->
-<!-- PL_009-v4a  alterações de esquema decorrentes da - NT2017.001 - 10/2017 -->
-
 <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.portalfiscal.inf.br/nfe" xmlns="http://www.portalfiscal.inf.br/nfe" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:editix="http://www.portalfiscal.inf.br/nfe" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v1.01.xsd"/>
 	<xs:include schemaLocation="tiposBasico_v4.00.xsd"/>
@@ -805,7 +802,7 @@ Formato ”CFOP9999”.</xs:documentation>
 													<xs:simpleType>
 														<xs:restriction base="xs:string">
 															<xs:whiteSpace value="preserve"/>
-															<xs:pattern value="SEM GTIN|[0-9]{0}|[0-9]{8}|[0-9]{12,14}"/>
+															<xs:pattern value="[0-9]{0}|[0-9]{8}|[0-9]{12,14}"/>
 														</xs:restriction>
 													</xs:simpleType>
 												</xs:element>
@@ -930,7 +927,7 @@ Formato ”CFOP9999”.</xs:documentation>
 													<xs:simpleType>
 														<xs:restriction base="xs:string">
 															<xs:whiteSpace value="preserve"/>
-															<xs:pattern value="SEM GTIN|[0-9]{0}|[0-9]{8}|[0-9]{12,14}"/>
+															<xs:pattern value="[0-9]{0}|[0-9]{8}|[0-9]{12,14}"/>
 														</xs:restriction>
 													</xs:simpleType>
 												</xs:element>
@@ -1681,17 +1678,17 @@ N-NormalVIN</xs:documentation>
 																		</xs:restriction>
 																	</xs:simpleType>
 																</xs:element>
-																<xs:element minOccurs="0" name="pGLP" type="TDec_0302a04Max100">
+																<xs:element minOccurs="0" name="pGLP" type="TDec_0304Max100">
 																	<xs:annotation>
 																		<xs:documentation>Percentual do GLP derivado do petróleo no produto GLP (cProdANP=210203001). Informar em número decimal o percentual do GLP derivado de petróleo no produto GLP. Valores 0 a 100.</xs:documentation>
 																	</xs:annotation>
 																</xs:element>
-																<xs:element minOccurs="0" name="pGNn" type="TDec_0302a04Max100">
+																<xs:element minOccurs="0" name="pGNn" type="TDec_0304Max100">
 																	<xs:annotation>
 																		<xs:documentation>Percentual de gás natural nacional - GLGNn para o produto GLP (cProdANP=210203001). Informar em número decimal o percentual do Gás Natural Nacional - GLGNn para o produto GLP. Valores de 0 a 100.</xs:documentation>
 																	</xs:annotation>
 																</xs:element>
-																<xs:element minOccurs="0" name="pGNi" type="TDec_0302a04Max100">
+																<xs:element minOccurs="0" name="pGNi" type="TDec_0304Max100">
 																	<xs:annotation>
 																		<xs:documentation>Percentual de gás natural importado GLGNi para o produto GLP (cProdANP=210203001). Informar em número deciaml o percentual do Gás Natural Importado - GLGNi para o produto GLP. Valores de 0 a 100.</xs:documentation>
 																	</xs:annotation>

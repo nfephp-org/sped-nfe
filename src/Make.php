@@ -2137,7 +2137,7 @@ class Make
             false,
             $identificador . "[item $std->item] Código de Agregação"
         );
-        $this->aRastro[$std->item] = $rastro;
+        $this->aRastro[$std->item][] = $rastro;
         return $rastro;
     }
 
@@ -6013,7 +6013,8 @@ class Make
 
     /**
      * Grupo de Formas de Pagamento YA01a pai YA01
-     * NOTA: Ajuste nt_2016_002_v1.30
+     * NOTA: Ajuste NT_2016_002_v1.30
+     * NOTA: Ajuste NT_2016_002_v1 51
      * tag NFe/infNFe/pag/detPag
      * @param stdClass $std
      * @return DOMElement
@@ -6021,6 +6022,7 @@ class Make
     public function tagdetPag($std)
     {
         $possible = [
+            'indPag',
             'tPag',
             'vPag',
             'CNPJ',
@@ -6081,6 +6083,13 @@ class Make
         } else {
             //padrão para layout 4.00
             $detPag = $this->dom->createElement("detPag");
+            $this->dom->addChild(
+                $detPag,
+                "indPag",
+                !empty($std->indPag) ? $std->indPag : null,
+                false,
+                "Indicador da Forma de Pagamento"
+            );
             $this->dom->addChild(
                 $detPag,
                 "tPag",
@@ -6842,7 +6851,9 @@ class Make
         //insere Rastro
         foreach ($this->aRastro as $nItem => $child) {
             $prod = $this->aProd[$nItem];
-            $this->dom->appChild($prod, $child, "Inclusão do node Rastro");
+            foreach ($child as $rastro) {
+                $this->dom->appChild($prod, $rastro, "Inclusão do node Rastro");
+            }
             $this->aProd[$nItem] = $prod;
         }
         //insere veiculo

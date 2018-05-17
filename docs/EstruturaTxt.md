@@ -158,6 +158,10 @@ W02|vBC|vICMS|vICMSDeson|**vFCP**|vBCST|vST|**vFCPST**|**vFCPSTRet**|vProd|vFret
 
 Y|**vTroco**|
 
+## LINHA YA *(adicionado o elemento indPag)*
+
+YA|**indPag**|tPag|vPag|CNPJ|tBand|cAut|tpIntegra|
+
 ## LINHA ZX01 *(adicionado o elemento urlChave)*
 
 ZX01|qrcode|**urlChave**|
