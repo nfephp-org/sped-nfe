@@ -6086,7 +6086,7 @@ class Make
             $this->dom->addChild(
                 $detPag,
                 "indPag",
-                !empty($std->indPag) ? $std->indPag : null,
+                $std->indPag,
                 false,
                 "Indicador da Forma de Pagamento"
             );
