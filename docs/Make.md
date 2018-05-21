@@ -1210,6 +1210,9 @@ $elem = $nfe->tagpag($std);
 ### function tagdetPag($std):DOMElement
 Node com o detalhamento da forma de pagamento **OBRIGATÓRIO para NFCe e NFe layout4.00**
 
+> NOTA: indPag re-incluso no layout 4.00 NT_2016_V1.51
+> NOTA: tPag 14 - duplicata foi removido do layout 4.00 na NT_2016_V1.51
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
@@ -1221,6 +1224,7 @@ $std->CNPJ = '12345678901234';
 $std->tBand = '01';
 $std->cAut = '3333333';
 $std->tpIntegra = 1; //incluso na NT 2015/002
+$std->indPag = '0'; //0= Pagamento à Vista 1= Pagamento à Prazo
 
 $elem = $nfe->tagdetPag($std);
 ```
