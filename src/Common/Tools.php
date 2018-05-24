@@ -322,30 +322,41 @@ class Tools
      */
     public function signNFe($xml)
     {
+        if (empty($xml))
+            throw new InvalidArgumentException('$xml');
+
         //remove all invalid strings
         $xml = Strings::clearXmlString($xml);
         if ($this->contingency->type !== '') {
             $xml = ContingencyNFe::adjust($xml, $this->contingency);
         }
-        $signed = Signer::sign(
+
+        $doc = new DOMDocument('1.0', 'UTF-8');
+        $doc->preserveWhiteSpace = false;
+        $doc->formatOutput = false;
+        $doc->loadXML($xml);
+
+        $node_to_sign = $doc->getElementsByTagName('infNFe')->item(0);
+
+        $signed_doc = Signer::sign(
             $this->certificate,
-            $xml,
-            'infNFe',
+            $doc,
+            $node_to_sign,
             'Id',
             $this->algorithm,
             $this->canonical
         );
-        $dom = new DOMDocument('1.0', 'UTF-8');
-        $dom->preserveWhiteSpace = false;
-        $dom->formatOutput = false;
-        $dom->loadXML($signed);
-        $modelo = $dom->getElementsByTagName('mod')->item(0)->nodeValue;
-        $isInfNFeSupl = !empty($dom->getElementsByTagName('infNFeSupl')->item(0));
+        
+        $modelo = $signed_doc->getElementsByTagName('mod')->item(0)->nodeValue;
+        $isInfNFeSupl = !empty($signed_doc->getElementsByTagName('infNFeSupl')->item(0));
+        
         if ($modelo == 65 && !$isInfNFeSupl) {
-            $signed = $this->addQRCode($dom);
+            $signed = $this->addQRCode($signed_doc);
         }
+
         //exception will be throw if NFe is not valid
         $this->isValid($this->versao, $signed, 'nfe');
+
         return $signed;
     }
     
