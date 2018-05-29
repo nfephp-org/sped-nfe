@@ -322,9 +322,9 @@ class Tools
      */
     public function signNFe($xml)
     {
-        if (empty($xml))
+        if (empty($xml)) {
             throw new InvalidArgumentException('$xml');
-
+        }
         //remove all invalid strings
         $xml = Strings::clearXmlString($xml);
         if ($this->contingency->type !== '') {
