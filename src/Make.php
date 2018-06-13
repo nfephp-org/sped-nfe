@@ -6966,7 +6966,8 @@ class Make
             + $this->stdTot->vSeg
             + $this->stdTot->vOutro
             + $this->stdTot->vII
-            + $this->stdTot->vIPI;
+            + $this->stdTot->vIPI
+            + $this->stdTot->vIPIDevol;
 
         //round all values
         $this->stdTot->vBC = round($this->stdTot->vBC, 2);
