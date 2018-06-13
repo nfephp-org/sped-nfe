@@ -54,7 +54,7 @@ F|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|
 
 F02|CNPJ|
 
-F02a|CPF
+F02a|CPF|
 
 G|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|
 
