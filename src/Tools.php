@@ -187,7 +187,7 @@ class Tools extends ToolsCommon
         $xJust,
         $tpAmb = null
     ) {
-        if (empty($nSerie) || empty($nIni) || empty($nFin) || empty($xJust)) {
+        if (!isset($nSerie) || empty($nIni) || empty($nFin) || empty($xJust)) {
             throw new RuntimeException('Não foram passados todos os dados necessários.');
         }
         if (empty($tpAmb)) {
