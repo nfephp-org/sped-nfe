@@ -330,33 +330,25 @@ class Tools
         if ($this->contingency->type !== '') {
             $xml = ContingencyNFe::adjust($xml, $this->contingency);
         }
-
-        $doc = new DOMDocument('1.0', 'UTF-8');
-        $doc->preserveWhiteSpace = false;
-        $doc->formatOutput = false;
-        $doc->loadXML($xml);
-
-        $node_to_sign = $doc->getElementsByTagName('infNFe')->item(0);
-
-        $signed_doc = Signer::sign(
+        $signed = Signer::sign(
             $this->certificate,
-            $doc,
-            $node_to_sign,
+            $xml,
+            'infNFe',
             'Id',
             $this->algorithm,
             $this->canonical
         );
-        
-        $modelo = $signed_doc->getElementsByTagName('mod')->item(0)->nodeValue;
-        $isInfNFeSupl = !empty($signed_doc->getElementsByTagName('infNFeSupl')->item(0));
-        
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->preserveWhiteSpace = false;
+        $dom->formatOutput = false;
+        $dom->loadXML($signed);
+        $modelo = $dom->getElementsByTagName('mod')->item(0)->nodeValue;
+        $isInfNFeSupl = !empty($dom->getElementsByTagName('infNFeSupl')->item(0));
         if ($modelo == 65 && !$isInfNFeSupl) {
-            $signed = $this->addQRCode($signed_doc);
+            $signed = $this->addQRCode($dom);
         }
-
         //exception will be throw if NFe is not valid
         $this->isValid($this->versao, $signed, 'nfe');
-
         return $signed;
     }
     

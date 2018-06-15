@@ -29,7 +29,8 @@ class DocumentsException extends \InvalidArgumentException implements ExceptionI
         13 => "O numero de notas indicado na primeira linha do TXT é diferente do numero total de notas do txt.",
         14 => "Falha na validação do TXT:\n {{msg}}.",
         15 => "Um TXT de NFe deve ser passado como parâmetro, e nada foi passado.",
-        16 => "O txt tem um campo não definido {{msg}}"
+        16 => "O txt tem um campo não definido {{msg}}",
+        17 => "O txt não está no formato adequado."
     ];
     
     public static function wrongDocument($code, $msg = '')
