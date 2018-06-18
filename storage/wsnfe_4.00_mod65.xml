@@ -160,7 +160,7 @@
        <NfeConsultaProtocolo method="nfeConsultaNF" operation="NFeConsulta4" version="4.00">https://hom.nfce.sefaz.ms.gov.br/ws/NFeConsultaProtocolo4</NfeConsultaProtocolo>
        <NfeStatusServico method="nfeStatusServicoNF" operation="NFeStatusServico4" version="4.00">https://hom.nfce.sefaz.ms.gov.br/ws/NFeStatusServico4</NfeStatusServico>
        <RecepcaoEvento  method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="1.00">https://hom.nfce.sefaz.ms.gov.br/ws/NFeRecepcaoEvento4</RecepcaoEvento>
-       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://www.dfe.ms.gov.br/nfce/qrcode?wsdl</NfeConsultaQR>
+       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">http://www.dfe.ms.gov.br/nfce/qrcode?wsdl</NfeConsultaQR>
     </homologacao>
     <producao>
        <NfeAutorizacao method="nfeAutorizacaoLote" operation="NFeAutorizacao4" version="4.00">https://nfce.fazenda.ms.gov.br/ws/NFeAutorizacao4</NfeAutorizacao>
@@ -169,7 +169,7 @@
        <NfeConsultaProtocolo method="nfeConsultaNF" operation="NFeConsulta4" version="4.00">https://nfce.fazenda.ms.gov.br/ws/NFeConsultaProtocolo4</NfeConsultaProtocolo>
        <NfeStatusServico method="nfeStatusServicoNF" operation="NFeStatusServico4" version="4.00">https://nfce.fazenda.ms.gov.br/ws/NFeStatusServico4</NfeStatusServico>
        <RecepcaoEvento  method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento" version="1.00">https://nfce.fazenda.ms.gov.br/ws/NFeRecepcaoEvento4</RecepcaoEvento>
-       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://www.dfe.ms.gov.br/nfce/qrcode?wsdl</NfeConsultaQR>
+       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">http://www.dfe.ms.gov.br/nfce/qrcode?wsdl</NfeConsultaQR>
     </producao>
   </UF>
   <UF>
