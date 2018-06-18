@@ -142,6 +142,75 @@ class Complements
     }
 
     /**
+     * Authorize Event with response of NfeConsultaProtocolo
+     * @param string $request
+     * @param string $response
+     * @return string
+     * @throws InvalidArgumentException
+     */
+    public static function eventoRegister($evento, $retEvento)
+    {
+        $ev = new \DOMDocument('1.0', 'UTF-8');
+        $ev->preserveWhiteSpace = false;
+        $ev->formatOutput = false;
+        $ev->loadXML($evento);
+
+        //extrai tag evento do xml
+        $event = $ev->getElementsByTagName('evento')->item(0);
+        if (empty($event)) {
+            throw DocumentsException::wrongDocument(3, 'evento');
+        }
+
+        $versao = $event->getAttribute('versao');
+
+        $ret = new \DOMDocument('1.0', 'UTF-8');
+        $ret->preserveWhiteSpace = false;
+        $ret->formatOutput = false;
+        $ret->loadXML($retEvento);
+
+        //extrai tag retEvento do xml
+        $retEv = $ret->getElementsByTagName('retEvento')->item(0);
+        if (empty($retEv)) {
+            throw DocumentsException::wrongDocument(3, 'retEvento');
+        }
+
+        $evTpEvento = $event->getElementsByTagName('tpEvento')->item(0)->nodeValue;
+        $reTpEvento = $retEv->getElementsByTagName('tpEvento')->item(0)->nodeValue;
+        if ($evTpEvento !== $reTpEvento) {
+            throw DocumentsException::wrongDocument(
+                5,
+                "Os tipos de evento dos documentos são diferentes."
+            );
+        }
+
+        $evChNFe = $event->getElementsByTagName('chNFe')->item(0)->nodeValue;
+        $reChNFe = $retEv->getElementsByTagName('chNFe')->item(0)->nodeValue;
+        if ($evChNFe !== $reChNFe) {
+            throw DocumentsException::wrongDocument(
+                5,
+                "As chaves de acesso de NFe dos documentos são diferentes."
+            );
+        }
+
+        $cStat  = $retEv->getElementsByTagName('cStat')->item(0)->nodeValue;
+        $xMotivo = $retEv->getElementsByTagName('xMotivo')->item(0)->nodeValue;
+        $cStatValids = ['135', '136'];
+        if ($reTpEvento == '110111') {
+            $cStatValids[] = '155';
+        }
+        if (!in_array($cStat, $cStatValids)) {
+            throw DocumentsException::wrongDocument(4, "[$cStat] $xMotivo");
+        }
+
+        return self::join(
+            $ev->saveXML($event),
+            $ret->saveXML($retEv),
+            'procEventoNFe',
+            $versao
+        );
+    }
+
+    /**
      * Authorize Inutilization of numbers
      * @param string $request
      * @param string $response

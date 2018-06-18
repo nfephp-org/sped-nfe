@@ -1570,10 +1570,10 @@ class Make
         $this->stdTot->vSeg += (float) $std->vSeg;
         $this->stdTot->vDesc += (float) $std->vDesc;
         $this->stdTot->vOutro += (float) $std->vOutro;
-        
+
         $cean = !empty($std->cEAN) ? trim(strtoupper($std->cEAN)) : '';
         $ceantrib = !empty($std->cEANTrib) ? trim(strtoupper($std->cEANTrib)) : '';
-        
+
         $identificador = 'I01 <prod> - ';
         $prod = $this->dom->createElement("prod");
         $this->dom->addChild(
@@ -2761,11 +2761,11 @@ class Make
         $this->stdTot->vICMSDeson += (float) !empty($std->vICMSDeson) ? $std->vICMSDeson : 0;
         $this->stdTot->vBCST += (float) !empty($std->vBCST) ? $std->vBCST : 0;
         $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
-        
+
         $this->stdTot->vFCP += (float) !empty($std->vFCP) ? $std->vFCP : 0;
         $this->stdTot->vFCPST += (float) !empty($std->vFCPST) ? $std->vFCPST : 0;
         $this->stdTot->vFCPSTRet += (float) !empty($std->vFCPSTRet) ? $std->vFCPSTRet : 0;
-        
+
         $identificador = 'N01 <ICMSxx> - ';
         switch ($std->CST) {
             case '00':
@@ -3911,7 +3911,7 @@ class Make
 
         $this->stdTot->vFCPST += (float) !empty($std->vFCPST) ? $std->vFCPST : 0;
         $this->stdTot->vFCPSTRet += (float) !empty($std->vFCPST) ? $std->vFCPSTRet : 0;
-        
+
         switch ($std->CSOSN) {
             case '101':
                 $icmsSN = $this->dom->createElement("ICMSSN101");
