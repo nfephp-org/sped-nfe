@@ -3505,14 +3505,14 @@ class Make
                     $icms,
                     'modBC',
                     $std->modBC,
-                    true,
+                    false,
                     "$identificador [item $std->item] Modalidade de determinação da BC do ICMS"
                 );
                 $this->dom->addChild(
                     $icms,
                     'vBC',
                     $std->vBC,
-                    true,
+                    false,
                     "$identificador [item $std->item] Valor da BC do ICMS"
                 );
                 $this->dom->addChild(
@@ -3526,14 +3526,14 @@ class Make
                     $icms,
                     'pICMS',
                     $std->pICMS,
-                    true,
+                    false,
                     "$identificador [item $std->item] Alíquota do imposto"
                 );
                 $this->dom->addChild(
                     $icms,
                     'vICMS',
                     $std->vICMS,
-                    true,
+                    false,
                     "$identificador [item $std->item] Valor do ICMS"
                 );
                 $this->dom->addChild(
@@ -3562,7 +3562,7 @@ class Make
                     $icms,
                     'modBCST',
                     $std->modBCST,
-                    true,
+                    false,
                     "$identificador [item $std->item] Modalidade de determinação da BC do ICMS ST"
                 );
                 $this->dom->addChild(
@@ -3583,21 +3583,21 @@ class Make
                     $icms,
                     'vBCST',
                     $std->vBCST,
-                    true,
+                    false,
                     "$identificador [item $std->item] Valor da BC do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icms,
                     'pICMSST',
                     $std->pICMSST,
-                    true,
+                    false,
                     "$identificador [item $std->item] Alíquota do imposto do ICMS ST"
                 );
                 $this->dom->addChild(
                     $icms,
                     'vICMSST',
                     $std->vICMSST,
-                    true,
+                    false,
                     "$identificador [item $std->item] Valor do ICMS ST"
                 );
                 $this->dom->addChild(
