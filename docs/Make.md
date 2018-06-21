@@ -683,6 +683,10 @@ $std->vICMSSTRet;
 $std->vBCFCPSTRet;
 $std->pFCPSTRet;
 $std->vFCPSTRet;
+$std->pRedBCEfet;
+$std->vBCEfet;
+$std->pICMSEfet;
+$std->vICMSEfet;
 
 $elem = $nfe->tagICMS($std);
 ```
@@ -771,6 +775,10 @@ $std->vBC = null;
 $std->pRedBC = null;
 $std->pICMS = null;
 $std->vICMS = null;
+$std->pRedBCEfet = null;
+$std->vBCEfet = null;
+$std->pICMSEfet = null;
+$std->vICMSEfet = null;
 
 $elem = $nfe->tagICMSSN($std);
 ```
