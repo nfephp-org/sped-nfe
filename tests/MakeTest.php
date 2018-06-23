@@ -7,6 +7,9 @@ use PHPUnit\Framework\TestCase;
 
 class MakeTest extends TestCase
 {
+    /**
+     * @var Make
+     */
     protected $make;
 
     public function testTaginfNFe()
@@ -36,6 +39,19 @@ class MakeTest extends TestCase
         $this->assertEquals('NFe' . $std->Id, $infNFe->getAttribute('Id'));
         $this->assertEquals($std->versao, $infNFe->getAttribute('versao'));
         $this->assertEquals($std->pk_nItem, $infNFe->getAttribute('pk_nItem'));
+    }
+
+    public function testTaginfNFeSemChaveDeAcesso()
+    {
+        $std = new \stdClass();
+        $std->versao = '4.00';
+
+        $infNFe = $this->make->taginfNFe($std);
+
+        $this->assertInstanceOf(\DOMElement::class, $infNFe);
+        $this->assertEquals('NFe', $infNFe->getAttribute('Id'));
+        $this->assertEmpty($this->make->chNFe);
+        $this->assertEquals($std->versao, $infNFe->getAttribute('versao'));
     }
 
     protected function setUp()
