@@ -12,7 +12,7 @@ class MakeTest extends TestCase
     public function testTaginfNFe()
     {
         $std = new \stdClass();
-        $std->Id = '0123456789';
+        $std->Id = '35170358716523000119550010000000301000000300';
         $std->versao = '4.00';
 
         $infNFe = $this->make->taginfNFe($std);
@@ -26,7 +26,7 @@ class MakeTest extends TestCase
     public function testTaginfNFeComPkNItem()
     {
         $std = new \stdClass();
-        $std->Id = '0123456789';
+        $std->Id = '35170358716523000119550010000000301000000300';
         $std->versao = '3.10';
         $std->pk_nItem = '1';
 
