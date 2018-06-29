@@ -476,7 +476,12 @@ class Make
             'xJust'
         ];
         $std = $this->equilizeParameters($std, $possible);
-
+        if (empty($std->cNF)) {
+            $std->cNF = Keys::random();
+        }
+        if (empty($std->cDV)) {
+            $std->cDV = 0;
+        }
         $this->tpAmb = $std->tpAmb;
         $this->mod = $std->mod;
         $identificador = 'B01 <ide> - ';

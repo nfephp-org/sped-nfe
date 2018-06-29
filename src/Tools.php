@@ -963,9 +963,16 @@ class Tools extends ToolsCommon
         $ret->loadXML($response);
         $retProt = $ret->getElementsByTagName('protNFe')->item(0);
         if (!isset($retProt)) {
-            throw new InvalidArgumentException(
-                'O documento de resposta não contêm o NODE "protNFe".'
-            );
+            $xMotivo = $ret->getElementsByTagName('xMotivo')->item(0);
+            if (isset($xMotivo)) {
+                throw new InvalidArgumentException(
+                    $xMotivo->nodeValue
+                );
+            } else {
+                throw new InvalidArgumentException(
+                    'O documento de resposta não contêm o NODE "protNFe".'
+                );
+            }
         }
         $infProt = $ret->getElementsByTagName('infProt')->item(0);
         $dig = $infProt->getElementsByTagName("digVal")->item(0);
