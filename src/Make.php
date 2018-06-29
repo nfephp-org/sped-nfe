@@ -20,6 +20,7 @@ namespace NFePHP\NFe;
 use NFePHP\Common\Keys;
 use NFePHP\Common\DOMImproved as Dom;
 use NFePHP\Common\Strings;
+use NFePHP\NFe\Common\Gtin;
 use stdClass;
 use RuntimeException;
 use DOMElement;
@@ -179,10 +180,6 @@ class Make
      * @var array of DOMElements
      */
     protected $aDetExport = [];
-    /**
-     * @var array of DOMElements
-     */
-    protected $aExportInd = [];
     /**
      * @var array of DOMElements
      */
@@ -1574,6 +1571,13 @@ class Make
         $cean = !empty($std->cEAN) ? trim(strtoupper($std->cEAN)) : '';
         $ceantrib = !empty($std->cEANTrib) ? trim(strtoupper($std->cEANTrib)) : '';
         
+        if (!Gtin::isValid($cean)) {
+            throw new Exception\InvalidArgumentException('GTIN indicado não é válido.');
+        }
+        if (!Gtin::isValid($ceantrib)) {
+            throw new Exception\InvalidArgumentException('GTIN Trib indicado não é válido.');
+        }
+        
         $identificador = 'I01 <prod> - ';
         $prod = $this->dom->createElement("prod");
         $this->dom->addChild(
@@ -2017,7 +2021,6 @@ class Make
     {
         $possible = [
             'item',
-            'nDE',
             'nDraw'
         ];
         $std = $this->equilizeParameters($std, $possible);
@@ -2031,7 +2034,7 @@ class Make
             false,
             $identificador . "[item $std->item] Número do ato concessório de Drawback"
         );
-        $this->aDetExport[$std->item][$std->nDE] = $detExport;
+        $this->aDetExport[$std->item][] = $detExport;
         return $detExport;
     }
 
@@ -2045,7 +2048,6 @@ class Make
     {
         $possible = [
             'item',
-            'nDE',
             'nRE',
             'chNFe',
             'qExport'
@@ -2075,11 +2077,16 @@ class Make
             true,
             $identificador . "[item $std->item] Quantidade do item realmente exportado"
         );
-        $this->aExportInd[$std->item][$std->nDE][] = $exportInd;
+        //obtem o ultimo detExport
+        $nDE = count($this->aDetExport[$std->item])-1;
+        if ($nDE < 0) {
+            throw new RuntimeException('A TAG detExportInd deve ser criada depois da detExport, pois pertence a ela.');
+        }
+        //$this->aExportInd[$std->item][$nDE][] = $exportInd;
         //colocar a exportInd em seu DetExport respectivo
-        $nodeDetExport = $this->aDetExport[$std->item][$std->nDE];
+        $nodeDetExport = $this->aDetExport[$std->item][$nDE];
         $this->dom->appChild($nodeDetExport, $exportInd);
-        $this->aDetExport[$std->item][$std->nDE] = $nodeDetExport;
+        $this->aDetExport[$std->item][$nDE] = $nodeDetExport;
         return $exportInd;
     }
 
