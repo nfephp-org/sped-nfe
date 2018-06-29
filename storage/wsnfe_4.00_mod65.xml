@@ -133,12 +133,12 @@
   <UF>
     <sigla>MT</sigla>
     <homologacao>
-       <NfeAutorizacao method="nfeAutorizacaoLote" operation="NFeAutorizacao4" version="4.00">https://homologacao.sefaz.mt.gov.br/nfcews/v2/services/NfeAutorizacao4</NfeAutorizacao>
-       <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NFeRetAutorizacao4" version="4.00">https://homologacao.sefaz.mt.gov.br/nfcews/v2/services/NfeRetAutorizacao4</NfeRetAutorizacao>
-       <NfeInutilizacao  method="nfeInutilizacaoNF" operation="NFeInutilizacao4" version="4.00">https://homologacao.sefaz.mt.gov.br/nfcews/v2/services/NfeInutilizacao4</NfeInutilizacao>
-       <NfeConsultaProtocolo method="nfeConsultaNF" operation="NFeConsulta4" version="4.00">https://homologacao.sefaz.mt.gov.br/nfcews/v2/services/NfeConsulta4</NfeConsultaProtocolo>
-       <NfeStatusServico method="nfeStatusServicoNF" operation="NFeStatusServico4" version="4.00">https://homologacao.sefaz.mt.gov.br/nfcews/v2/services/NfeStatusServico4</NfeStatusServico>
-       <RecepcaoEvento  method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento" version="1.00">https://homologacao.sefaz.mt.gov.br/nfcews/v2/services/RecepcaoEvento4</RecepcaoEvento>
+       <NfeAutorizacao method="nfeAutorizacaoLote" operation="NFeAutorizacao4" version="4.00">https://homologacao.sefaz.mt.gov.br/nfcews/services/NfeAutorizacao4</NfeAutorizacao>
+       <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NFeRetAutorizacao4" version="4.00">https://homologacao.sefaz.mt.gov.br/nfcews/services/NfeRetAutorizacao4</NfeRetAutorizacao>
+       <NfeInutilizacao  method="nfeInutilizacaoNF" operation="NFeInutilizacao4" version="4.00">https://homologacao.sefaz.mt.gov.br/nfcews/services/NfeInutilizacao4</NfeInutilizacao>
+       <NfeConsultaProtocolo method="nfeConsultaNF" operation="NFeConsultaProtocolo4" version="4.00">https://homologacao.sefaz.mt.gov.br/nfcews/services/NfeConsulta4</NfeConsultaProtocolo>
+       <NfeStatusServico method="nfeStatusServicoNF" operation="NFeStatusServico4" version="4.00">https://homologacao.sefaz.mt.gov.br/nfcews/services/NfeStatusServico4</NfeStatusServico>
+       <RecepcaoEvento  method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="1.00">https://homologacao.sefaz.mt.gov.br/nfcews/services/RecepcaoEvento4</RecepcaoEvento> 
        <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://homologacao.sefaz.mt.gov.br/nfce/consultanfce</NfeConsultaQR>
     </homologacao>
     <producao>
