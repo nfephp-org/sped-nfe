@@ -28,7 +28,7 @@ Sets the PHP environment time zone
 
 @return void
 
->Este método é invocado automaticamente na instanciação da classe e ajusta o tomezone do PHP para a localidade indicada no config.json.
+>Este método é invocado automaticamente na instanciação da classe e ajusta o timezone do PHP para a localidade indicada no config.json.
 Mas pode ser usado posteriormente a instanciação da classe para alterar essa condição. Isso é necessário pois um mesmo servidor poderá acessar e enviar dados para mais de um autorizador em estados diferentes com zonas de tempo diferentes, lembrando que no Brasil existem 4 zonas de tempo e com variáções em função do horário de verão *(das zero horas do terceiro domingo de outubro até as zero horas do terceiro domingo de fevereiro)*.
 
 ### public function loadSoapClass(SoapInterface $soap)
@@ -71,7 +71,7 @@ Set or get teh parameter versao do layout
 
 @return string
 
->Este método pode ser usado para setar a versão cdo layout da NFe sendo utilizado pela API, caso o paramtro seja passado com uma string vazia o método irá retornar a versão atualmente setada na classe.
+>Este método pode ser usado para setar a versão cdo layout da NFe sendo utilizado pela API, caso o parametro seja passado com uma string vazia o método irá retornar a versão atualmente setada na classe.
 
 ### public function getcUF($acronym)
 Recover cUF number from 
