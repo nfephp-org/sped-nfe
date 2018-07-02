@@ -29,7 +29,7 @@ class Gtin
         if (!is_numeric($gtin)) {
             return false;
         }
-        $dv = (int) substr($num, -1);
+        $dv = (int) substr($gtin, -1);
         $mod = self::calcDV($gtin);
         if ($dv === $mod) {
             return true;
