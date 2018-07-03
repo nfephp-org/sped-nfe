@@ -1717,7 +1717,7 @@ class Make
             $prod,
             "vDesc",
             $std->vDesc,
-            false,
+            isset($std->vDesc) ? true : false,
             $identificador . "[item $std->item] Valor do Desconto"
         );
         $this->dom->addChild(
