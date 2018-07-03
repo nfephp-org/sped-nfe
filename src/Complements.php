@@ -216,7 +216,7 @@ class Complements
      * @return string
      * @throws \InvalidArgumentException
      */
-    protected static function addNFeProtocol($request, $response)
+    protected static function addNFeProtocol($request, $response, $ignore_digest_error = false)
     {
         $req = new DOMDocument('1.0', 'UTF-8');
         $req->preserveWhiteSpace = false;
@@ -267,8 +267,14 @@ class Complements
                 }
             }
         }
-        if ($digNFe !== $digProt) {
-            throw DocumentsException::wrongDocument(5, "Os digest são diferentes");
+        /**
+         * Em alguns casos, podem acontecer divergências de Digest Value.
+         * Normalmente este erro pode acontecer por conta da SEFAZ devolver nos protocolos de autorização, valores de digest diferentes daqueles que o contribuinte forneceu no nó de assinatura da NF-e.
+         */
+        if(!$ignore_digest_error){
+            if ($digNFe !== $digProt) {
+                throw DocumentsException::wrongDocument(5, "Os digest são diferentes");
+            }
         }
         return $req->saveXML();
     }
