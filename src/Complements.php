@@ -269,9 +269,7 @@ class Complements
         }
         /**
          * Em alguns casos, podem acontecer divergências de Digest Value.
-         * Normalmente este erro pode acontecer por conta da SEFAZ ao devolver os protocolos com os digest values diferentes daqueles que
-         * o contribuinte forneceu no nó de assinatura da NF-e.
-         * Para esta situação, o programador pode ignorar esta proteção, claro que por sua conta em risco.
+         * Normalmente este erro pode acontecer por conta da SEFAZ devolver nos protocolos de autorização, valores de digest diferentes daqueles que o contribuinte forneceu no nó de assinatura da NF-e.
          */
         if(!$ignore_digest_error){
             if ($digNFe !== $digProt) {
