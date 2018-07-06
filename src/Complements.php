@@ -158,7 +158,7 @@ class Complements
         $versao = $inutNFe->getAttribute("versao");
         $infInut = $req->getElementsByTagName('infInut')->item(0);
         $tpAmb = $infInut->getElementsByTagName('tpAmb')->item(0)->nodeValue;
-        $cUF = !empty($infInut->getElementsByTagName('cUF')->item(0)->nodeValue) 
+        $cUF = !empty($infInut->getElementsByTagName('cUF')->item(0)->nodeValue)
             ? $infInut->getElementsByTagName('cUF')->item(0)->nodeValue : '';
         $ano = $infInut->getElementsByTagName('ano')->item(0)->nodeValue;
         $cnpj = $infInut->getElementsByTagName('CNPJ')->item(0)->nodeValue;
