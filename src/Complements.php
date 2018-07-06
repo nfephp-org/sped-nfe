@@ -158,7 +158,8 @@ class Complements
         $versao = $inutNFe->getAttribute("versao");
         $infInut = $req->getElementsByTagName('infInut')->item(0);
         $tpAmb = $infInut->getElementsByTagName('tpAmb')->item(0)->nodeValue;
-        $cUF = $infInut->getElementsByTagName('cUF')->item(0)->nodeValue;
+        $cUF = !empty($infInut->getElementsByTagName('cUF')->item(0)->nodeValue) 
+            ? $infInut->getElementsByTagName('cUF')->item(0)->nodeValue : '';
         $ano = $infInut->getElementsByTagName('ano')->item(0)->nodeValue;
         $cnpj = $infInut->getElementsByTagName('CNPJ')->item(0)->nodeValue;
         $mod = $infInut->getElementsByTagName('mod')->item(0)->nodeValue;
@@ -182,7 +183,8 @@ class Complements
             throw DocumentsException::wrongDocument(4, "[$cStat] $xMotivo.");
         }
         $rettpAmb = $retInfInut->getElementsByTagName('tpAmb')->item(0)->nodeValue;
-        $retcUF = $retInfInut->getElementsByTagName('cUF')->item(0)->nodeValue;
+        $retcUF = !empty($retInfInut->getElementsByTagName('cUF')->item(0)->nodeValue)
+            ? $retInfInut->getElementsByTagName('cUF')->item(0)->nodeValue : $cUF;
         $retano = $retInfInut->getElementsByTagName('ano')->item(0)->nodeValue;
         $retcnpj = $retInfInut->getElementsByTagName('CNPJ')->item(0)->nodeValue;
         $retmod = $retInfInut->getElementsByTagName('mod')->item(0)->nodeValue;
