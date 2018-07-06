@@ -182,7 +182,6 @@ class Complements
             throw DocumentsException::wrongDocument(4, "[$cStat] $xMotivo.");
         }
         $rettpAmb = $retInfInut->getElementsByTagName('tpAmb')->item(0)->nodeValue;
-        $retcUF = $retInfInut->getElementsByTagName('cUF')->item(0)->nodeValue;
         $retano = $retInfInut->getElementsByTagName('ano')->item(0)->nodeValue;
         $retcnpj = $retInfInut->getElementsByTagName('CNPJ')->item(0)->nodeValue;
         $retmod = $retInfInut->getElementsByTagName('mod')->item(0)->nodeValue;
@@ -191,7 +190,6 @@ class Complements
         $retnNFFin = $retInfInut->getElementsByTagName('nNFFin')->item(0)->nodeValue;
         if ($versao != $retversao ||
             $tpAmb != $rettpAmb ||
-            $cUF != $retcUF ||
             $ano != $retano ||
             $cnpj != $retcnpj ||
             $mod != $retmod ||
