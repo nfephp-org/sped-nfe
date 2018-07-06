@@ -20,6 +20,7 @@
     "require": {
         "php" : ">= 5.6",
         "nfephp-org/sped-common" : "^5.0",
+        "nfephp-org/sped-gtin" : "^1.0",
         "justinrainbow/json-schema": "^5.2"
     },
     "require-dev": {
