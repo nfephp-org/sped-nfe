@@ -161,7 +161,7 @@ class Parser
         for ($i = 1; $i < $len; $i++) {
             $name = $sfls[$i];
             $data = $dfls[$i];
-            if (!empty($name)) {
+            if (!empty($name) && $data !== '') {
                 $std->$name = $data;
             }
         }
