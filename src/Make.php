@@ -1575,13 +1575,9 @@ class Make
         
         $cean = !empty($std->cEAN) ? trim(strtoupper($std->cEAN)) : '';
         $ceantrib = !empty($std->cEANTrib) ? trim(strtoupper($std->cEANTrib)) : '';
-        
-        if (!Gtin::isValid($cean)) {
-            throw new Exception\InvalidArgumentException('GTIN indicado não é válido.');
-        }
-        if (!Gtin::isValid($ceantrib)) {
-            throw new Exception\InvalidArgumentException('GTIN Trib indicado não é válido.');
-        }
+        //throw exception if not is Valid
+        Gtin::isValid($cean);
+        Gtin::isValid($ceantrib);
         
         $identificador = 'I01 <prod> - ';
         $prod = $this->dom->createElement("prod");
