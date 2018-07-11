@@ -1576,8 +1576,10 @@ class Make
         $cean = !empty($std->cEAN) ? trim(strtoupper($std->cEAN)) : '';
         $ceantrib = !empty($std->cEANTrib) ? trim(strtoupper($std->cEANTrib)) : '';
         //throw exception if not is Valid
-        Gtin::isValid($cean);
-        Gtin::isValid($ceantrib);
+        // Segundo a NT 2017.001 - V1.30, a validação do GTIN foi prorrogado
+        // para setembro/2018 em homologação
+        //Gtin::isValid($cean);
+        //Gtin::isValid($ceantrib);
         
         $identificador = 'I01 <prod> - ';
         $prod = $this->dom->createElement("prod");
