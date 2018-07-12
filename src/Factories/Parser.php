@@ -1690,7 +1690,7 @@ class Parser
     protected function x25bEntity($std)
     {
         $this->make->tagbalsa($std);
-    }    
+    }
     
     /**
      * Create tag vol [X26], belongs to [X]

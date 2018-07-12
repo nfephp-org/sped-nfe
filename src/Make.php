@@ -5976,7 +5976,7 @@ class Make
      * tag NFe/infNFe/transp/balsa (opcional)
      * @param stdClass $std
      * @return DOMElement
-     */    
+     */
     public function tagbalsa(stdClass $std)
     {
         $possible = [
