@@ -1124,11 +1124,38 @@ $std = new stdClass();
 $std->placa = 'BCB0897';
 $std->UF = 'SP';
 $std->RNTC = '123456';
-$std->vagao = null;
-$std->balsa = null;
 
 $elem = $nfe->tagreboque($std);
 ```
+
+### function tagvagao($std):DOMElement
+Node para informar o vagão usado
+
+| Parametro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$std = new stdClass();
+$std->vagao = 'YY452-19';
+
+$elem = $nfe->tagvagao($std);
+```
+
+### function tagbalsa($std):DOMElement
+Node para informar o balsa usado
+
+| Parametro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$std = new stdClass();
+$std->balsa = 'BNAV111';
+
+$elem = $nfe->tagbalsa($std);
+```
+
 
 ### function tagvol($std):DOMElement
 Node com as informações dos volumes transportados

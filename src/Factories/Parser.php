@@ -161,7 +161,7 @@ class Parser
         for ($i = 1; $i < $len; $i++) {
             $name = $sfls[$i];
             $data = $dfls[$i];
-            if (!empty($name)) {
+            if (!empty($name) && $data !== '') {
                 $std->$name = $data;
             }
         }
@@ -1661,7 +1661,7 @@ class Parser
 
     /**
      * Create tag reboque [X22], belogns to [X]
-     * X22|placa|UF|RNTC|vagao|balsa|
+     * X22|placa|UF|RNTC|
      * @param stdClass $std
      * @return void
      */
@@ -1670,6 +1670,28 @@ class Parser
         $this->make->tagreboque($std);
     }
 
+    /**
+     * Create tag vagao [X25a], belogns to [X01]
+     * X25a|vagao|
+     * @param stdClass $std
+     * @return void
+     */
+    protected function x25aEntity($std)
+    {
+        $this->make->tagvagao($std);
+    }
+
+    /**
+     * Create tag balsa [X25b], belogns to [X01]
+     * X25b|balsa|
+     * @param stdClass $std
+     * @return void
+     */
+    protected function x25bEntity($std)
+    {
+        $this->make->tagbalsa($std);
+    }    
+    
     /**
      * Create tag vol [X26], belongs to [X]
      * X26|qVol|esp|marca|nVol|pesoL|pesoB|

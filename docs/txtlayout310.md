@@ -205,7 +205,11 @@ X11|vServ|vBCRet|pICMSRet|vICMSRet|CFOP|cMunFG|
 
 X18|placa|UF|RNTC|
 
-X22|placa|UF|RNTC|vagao|balsa|
+X22|placa|UF|RNTC|
+
+X25a|vagao|
+
+X25b|balsa|
 
 X26|qVol|esp|marca|nVol|pesoL|pesoB|
 
