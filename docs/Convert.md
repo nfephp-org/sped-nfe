@@ -19,14 +19,16 @@ public static function toXML($txt)
 
 > NOTA: O TXT poderá conter uma ou mais notas, conforme a estrutura definida pela SEFAZ.
 
-## Forma de Uso
+## Formas de Uso
+
+### Chamada estática
 
 ```php
 
 use NFePHP\NFe\Convert;
 
 try {
-    $axml = Convert::toXML($txt);
+    $axml = Convert::parse($txt);
     foreach($axml as $xml) {
         //aqui você processa o xml na operação que desejar
     }
@@ -35,6 +37,25 @@ try {
     echo str_replace("\n", "<br/>", $e->getMessage());
 }
 ```
+
+### Chamada normal
+
+```php
+
+use NFePHP\NFe\Convert;
+
+try {
+    $conv = new Convert($txt);
+    $axml = $conv->toXML();
+    foreach($axml as $xml) {
+        //aqui você processa o xml na operação que desejar
+    }
+} catch (\Exception $e) {
+    //tratar exceptions
+    echo str_replace("\n", "<br/>", $e->getMessage());
+}
+```
+
 
 ## Exceptions e Erros
 
