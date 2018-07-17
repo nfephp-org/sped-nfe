@@ -36,7 +36,7 @@
             <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="1.01">https://www.nfe.fazenda.gov.br/NFeConsultaDest/NFeConsultaDest.asmx</NfeConsultaDest>
             <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="4.00">https://www.nfe.fazenda.gov.br/NfeDownloadNF/NfeDownloadNF.asmx</NfeDownloadNF>
             <RecepcaoEPEC method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="4.00">https://www.nfe.fazenda.gov.br/RecepcaoEvento/RecepcaoEvento.asmx</RecepcaoEPEC>
-        </producao>        
+        </producao>
     </UF>
     <UF>
         <sigla>BA</sigla>
@@ -134,13 +134,13 @@
             <NfeConsultaCadastro method="consultaCadastro4" operation="CadConsultaCadastro4" version="2.00">https://hom.nfe.sefaz.ms.gov.br/ws/CadConsultaCadastro4</NfeConsultaCadastro>
         </homologacao>
         <producao>
-            <NfeStatusServico method="nfeStatusServicoNF" operation="NFeStatusServico4" version="4.00">https://nfe.fazenda.ms.gov.br/ws/NFeStatusServico4</NfeStatusServico>
-            <NfeAutorizacao method="nfeAutorizacaoLote" operation="NFeAutorizacao4" version="4.00">https://nfe.fazenda.ms.gov.br/ws/NFeAutorizacao4</NfeAutorizacao>
-            <NfeConsultaProtocolo method="nfeConsultaNF" operation="NFeConsultaProtocolo4" version="4.00">https://nfe.fazenda.ms.gov.br/ws/NFeConsultaProtocolo4</NfeConsultaProtocolo>
-            <NfeInutilizacao method="nfeInutilizacaoNF" operation="NFeInutilizacao4" version="4.00">https://nfe.fazenda.ms.gov.br/ws/NFeInutilizacao4</NfeInutilizacao>
-            <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NFeRetAutorizacao4" version="4.00">https://nfe.fazenda.ms.gov.br/ws/NFeRetAutorizacao4</NfeRetAutorizacao>
-            <RecepcaoEvento method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="1.00">https://nfe.fazenda.ms.gov.br/ws/NFeRecepcaoEvento4</RecepcaoEvento>
-            <NfeConsultaCadastro method="consultaCadastro4" operation="CadConsultaCadastro4" version="2.00">https://nfe.fazenda.ms.gov.br/ws/CadConsultaCadastro4</NfeConsultaCadastro>
+            <NfeStatusServico method="nfeStatusServicoNF" operation="NFeStatusServico4" version="4.00">https://nfe.sefaz.ms.gov.br/ws/NFeStatusServico4</NfeStatusServico>
+            <NfeAutorizacao method="nfeAutorizacaoLote" operation="NFeAutorizacao4" version="4.00">https://nfe.sefaz.ms.gov.br/ws/NFeAutorizacao4</NfeAutorizacao>
+            <NfeConsultaProtocolo method="nfeConsultaNF" operation="NFeConsultaProtocolo4" version="4.00">https://nfe.sefaz.ms.gov.br/ws/NFeConsultaProtocolo4</NfeConsultaProtocolo>
+            <NfeInutilizacao method="nfeInutilizacaoNF" operation="NFeInutilizacao4" version="4.00">https://nfe.sefaz.ms.gov.br/ws/NFeInutilizacao4</NfeInutilizacao>
+            <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NFeRetAutorizacao4" version="4.00">https://nfe.sefaz.ms.gov.br/ws/NFeRetAutorizacao4</NfeRetAutorizacao>
+            <RecepcaoEvento method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="1.00">https://nfe.sefaz.ms.gov.br/ws/NFeRecepcaoEvento4</RecepcaoEvento>
+            <NfeConsultaCadastro method="consultaCadastro4" operation="CadConsultaCadastro4" version="2.00">https://nfe.sefaz.ms.gov.br/ws/CadConsultaCadastro4</NfeConsultaCadastro>
         </producao>
     </UF>
     <UF>
@@ -225,7 +225,7 @@
             <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NFeRetAutorizacao4" version="4.00">https://nfe.sefazrs.rs.gov.br/ws/NfeRetAutorizacao/NFeRetAutorizacao4.asmx</NfeRetAutorizacao>
             <RecepcaoEvento method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="1.00">https://nfe.sefazrs.rs.gov.br/ws/recepcaoevento/recepcaoevento4.asmx</RecepcaoEvento>
             <NfeConsultaCadastro method="consultaCadastro4" operation="CadConsultaCadastro4" version="2.00">https://cad.sefazrs.rs.gov.br/ws/cadconsultacadastro/cadconsultacadastro4.asmx</NfeConsultaCadastro>
-        </producao>    
+        </producao>
     </UF>
     <UF>
         <sigla>SP</sigla>
