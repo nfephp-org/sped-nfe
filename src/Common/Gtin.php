@@ -26,7 +26,7 @@ class Gtin
      */
     public static function isValid($gtin)
     {
-        if (empty($gtin) || $gtin == 'SEM GTIN') {
+        if ($gtin === '' || $gtin === 'SEM GTIN') {
             return true;
         }
         return GB::check($gtin)->isValid();
