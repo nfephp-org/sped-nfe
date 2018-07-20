@@ -2,6 +2,8 @@
 
 Esse documento tem o objetivo de ser um passo a passo inicial para que você possa emitir as suas notas com SPED-NFE. Mas antes de começar vou dar uma breve explicação do que são as NF-e e como funciona o seu processo de emissão.
 
+>*IMPORTANTE: Não deixe de estudar os manuais da SEFAZ e ver TODA a documentação desta pasta.*
+
 ## O que são Nf-e/Nfc-e?
 Uma nota fiscal eletrônica nada mais é do que um arquivo XML que contém informações dos produtos vendidos ou serviços prestados por você com todas as informações tributárias necessárias exigidas pela receita. Esse arquivo é assinado com um certificado digital e enviado para a receita.
 
@@ -182,15 +184,22 @@ Para a instalação do framework você precisa verificar se as seguintes extens�
 * ext-xml
 * ext-zip
 
-Com as extensões devidamente instaladas, basta criar um pasta para o seu projeto e dentro dela rodar o seguinte comando com o composer
+Com as extensões devidamente instaladas, vá para a RAIZ do seu projeto e rodar o seguinte comando com o composer
 ```bash
 composer require nfephp-org/sped-nfe
 ```
 
-Rodando esse comando vamos instalar a última versão do framework hoje, que é a versão 5.0 capaz de emitir Nf-e e Nfc-e na versão 3.10 e 4.0.
+Rodando esse comando vamos INCLUIR a última versão STABLE da API, como uma dependência do seu projeto, capaz de emitir Nfe e Nfce tando na versão 3.10, como na 4.0.
+
+Se você não tem outras dependências ainda será criada uma pasta "vendor" na RAIZ de seu projeto, que conterá todas as dependências do seu projeto e as dos pacotes que você intalou com o composer. 
 
 ## Montar XML
-Agora com framework devidamente instalando podemos partir para a montagem do XML. Vamos criar um arquivo *index.php* dentro do seu projeto e nele colocar o código abaixo.
+
+Agora com a API devidamente instalada podemos partir para a montagem do XML. Vamos criar um arquivo *php* dentro do seu projeto e nele colocar o código abaixo.
+
+[VEJA Make.md](Make.md) Não se baseie somente nesse exemplo.
+
+
 ```php
 <?php
 require_once "vendor/autoload.php";
@@ -205,7 +214,7 @@ $std = new \stdClass();
 $std->cUF = 35;
 $std->cNF = '80070008';
 $std->natOp = 'VENDA';
-$std->indPag = 0;
+$std->indPag = 0; //NÂO EXISTE EM 4.00
 $std->mod = 55;
 $std->serie = 1;
 $std->nNF = 2;
@@ -365,12 +374,18 @@ $nfe->tagdup($std);
 
 $xml = $nfe->getXML(); // O conteúdo do XML fica armazenado na variável $xml
 ```
+
+>NOTA : a tag referente ao pagamento está descrita aqui [PAG](TagPag.md)
+
 Esse exemplo são só alguns campos que podem ser preenchidos para emitir uma Nf-e, mas existem muito mais. Abordar todos os campos seria bastante complicado, para cada situação a nota deve ser preenchida com um campo ou outro. Se você não tem um bom domínio sobre contabilidade o meu conselho é sempre perguntar para alguém que saiba como deve ser preenchida a nota na situação em questão.
 
 > Para saber todos os campos suportados pelo framework acesse o link da documentação https://github.com/nfephp-org/sped-nfe/blob/master/docs/Make.md
 
 ## Assinar XML
 Antes de assinarmos o XML precisamos criar um variável em *JSON* com os dados que o framework vai precisar para os próximos passos.
+
+[Veja Config](Config.md)
+
 ```php
 $config = [
    "atualizacao" => "2018-02-06 06:01:21",
@@ -391,7 +406,11 @@ $certificadoDigital = file_get_contents('certificado.pfx');
 
 Agora que temos o nosso *$xml* gerado do passo anterior, a *$configJson* e o nosso $certificadoDigital* já estamos pronto para assiná-lo.
 
-Cole os seguinte código no seu arquivo *index.php*. Lembrando de substituir a *'senha do certificado'* pela senha correta.
+[Veja documentação sobre o Certificado](https://github.com/nfephp-org/sped-common/blob/master/docs/Certificate.md)
+
+[Classe Tools](Tools.md)
+
+Cole os seguinte código no seu arquivo *php*. Lembrando de substituir a *'senha do certificado'* pela senha correta.
 ```php
 $tools = new NFePHP\NFe\Tools($configJson, NFePHP\Common\Certificate::readPfx($certificadoDigital, 'senha do certificado'));
 try {
@@ -405,6 +424,9 @@ try {
 
 ## Enviar Lote
 Para o envio do lote vamos precisar da *$configJson*, *$certificadoDigital* e do nosso XML assinado que está na variável *$xmlAssinado*. Esse método recebe um array com os XMLs nos permitindo enviar mais de um XML por vez, mas nesse caso vamos enviar somente um.
+
+>NOTA: o primeiro paramêtro do método $tools->sefazEnviaLote é um array pois podem ser envidas até 50 NFe por vez desde que não ultrapassem o limite de kBytes estabelecido (veja documentação SEFAZ)
+
 ```php
 try {
     $idLote = str_pad(100, 15, '0', STR_PAD_LEFT); // Identificador do lote
@@ -422,7 +444,13 @@ try {
     exit($e->getMessage());
 }
 ```
+
+[TimeOUT e outros problemas](TimeOut.md)
+
+[Quando e como usar Contingência](Contingency.md)
+
 Usamos a classe *Standardize* para converter o XML retornado pela receita para o formato *StdClass* assim caso o atributo *$std->cStat* retorne algo diferente de 103 sabemos algo deu errado no envio do lote para a receita.
+
 > Caso você precise de mais detalhes acesse o link da documentação https://github.com/nfephp-org/sped-nfe/blob/master/docs/metodos/EnviaLote.md
 
 ## Consultar Recibo
@@ -434,7 +462,6 @@ try {
     //aqui você trata possíveis exceptions da consulta
     exit($e->getMessage());
 }
-
 ```
 > Para detalhes acesse o link da documentação https://github.com/nfephp-org/sped-nfe/blob/master/docs/metodos/ConsultaRecibo.md
 
@@ -443,14 +470,22 @@ Agora com variável *$protocolo* temos o resultado se a nossa nota foi autorizad
 ## Finalizando o processo
 Agora que enviamos a nota, consultamos o seu status, vamos trabalhar a com a situação a onde tudo deu certo e a nota foi autorizada. Precisamos guardar esse protocolo dentro do nosso XML, vamos pegar a nossa *$xmlAssinado* e a *$protocolo* e usar o código abaixo.
 ```php
+use NFePHP\NFe\Complements;
+
+$request = "<XML conteudo original do documento que quer protocolar>";
+$response = "<XML conteudo do retorno com a resposta da SEFAZ>";
+
 try {
-    $protocol = new NFePHP\NFe\Factories\Protocol();
-    $xmlProtocolado = $protocol->add($xmlAssinado,$protocolo);
+    $xml = Complements::toAuthorize($req, $res);
+    header('Content-type: text/xml; charset=UTF-8');
+    echo $xml;
 } catch (\Exception $e) {
-    //aqui você trata possíveis exceptions ao adicionar protocolo
-    exit($e->getMessage());
+    echo "Erro: " . $e->getMessage();
 }
 ```
+
+[VIDE como protocolar](Complements.md)
+
 Por fim usamos o *file_put_contents* para criar um arquivo XML em disco para aguardar essa nota. A receita exige que você guarde os XMLs das suas notas pelo menos por 5 anos, então cuida bem delas.
 ```php
 file_put_contents('nota.xml',$xmlProtocolado);
@@ -458,3 +493,5 @@ file_put_contents('nota.xml',$xmlProtocolado);
 
 ## Conclusão
 A ideia com esse passo a passo é dar um ponta pé inicial para quem nunca emitiu uma Nf-e/Nfc-e, mostrando o passo a passo necessário para enviar um nota para receita.
+
+LEIAM A DOCUMENTAÇÃO TODA !!!!!
