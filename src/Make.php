@@ -477,7 +477,7 @@ class Make
         ];
         $std = $this->equilizeParameters($std, $possible);
         if (empty($std->cNF)) {
-            $std->cNF = Keys::random();
+            $std->cNF = mt_rand(10000000, 99999999);
         }
         if (empty($std->cDV)) {
             $std->cDV = 0;
@@ -5954,7 +5954,6 @@ class Make
      * Campo Vagao X25a pai X01
      * tag NFe/infNFe/transp/vagao (opcional)
      * @param stdClass $std
-     * @return DOMElement
      */
     public function tagvagao(stdClass $std)
     {
@@ -5975,7 +5974,6 @@ class Make
      * Campo Balsa X25b pai X01
      * tag NFe/infNFe/transp/balsa (opcional)
      * @param stdClass $std
-     * @return DOMElement
      */
     public function tagbalsa(stdClass $std)
     {
