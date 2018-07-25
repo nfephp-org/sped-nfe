@@ -1571,8 +1571,8 @@ class Make
         $this->stdTot->vDesc += (float) $std->vDesc;
         $this->stdTot->vOutro += (float) $std->vOutro;
         
-        $cean = !empty($std->cEAN) ? trim(strtoupper($std->cEAN)) : '';
-        $ceantrib = !empty($std->cEANTrib) ? trim(strtoupper($std->cEANTrib)) : '';
+        $cean = !empty($std->cEAN) ? trim(strtoupper($std->cEAN)) : 'SEM GTIN';
+        $ceantrib = !empty($std->cEANTrib) ? trim(strtoupper($std->cEANTrib)) : 'SEM GTIN';
         
         $identificador = 'I01 <prod> - ';
         $prod = $this->dom->createElement("prod");
