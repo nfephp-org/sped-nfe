@@ -1263,7 +1263,6 @@ $elem = $nfe->tagdetPag($std);
 > vPag=0.00 **mas pode ter valor se a venda for a vista**
 >
 > tPag é usualmente:
-> - 14 = Duplicata Mercantil
 > - 15 = Boleto Bancário
 > - 90 = Sem pagamento
 > - 99 = Outros 
