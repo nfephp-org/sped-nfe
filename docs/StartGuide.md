@@ -211,10 +211,10 @@ require_once "vendor/autoload.php";
 
 $nfe = new Make();
 $std = new \stdClass();
+
 $std->versao = '4.00';
 $std->Id = null;
 $std->pk_nItem = '';
-
 $nfe->taginfNFe($std);
 
 $std = new \stdClass();
@@ -418,6 +418,7 @@ Antes de assinarmos o XML precisamos criar um variável em *JSON* com os dados q
 [Veja Config](Config.md)
 
 ```php
+
 $config  = [
       "atualizacao"=>date('Y-m-d h:i:s'),
       "tpAmb"=> 2,
@@ -437,6 +438,7 @@ $config  = [
           "proxyPass" => ""
       ]
   ]
+
 $configJson = json_encode($config);
 ```
 E vamos precisar do certificado digital mencionado anteriormente.
