@@ -207,7 +207,7 @@ require_once "vendor/autoload.php";
 $nfe = new NFePHP\NFe\Make();
 
 $std = new \stdClass();
-$std->versao = '3.10';
+$std->versao = '3.10'; // usar 4.00 depois de 02/08/2018
 $nfe->taginfNFe($std);
 
 $std = new \stdClass();
@@ -393,8 +393,8 @@ $config = [
    "razaosocial" => "Empresa teste",
    "siglaUF" => "RS",
    "cnpj" => "78767865000156",
-   "schemes" => "PL_008i2",
-   "versao" => "3.10",
+   "schemes" => "PL_008i2", // usar PL_008i2 para 3.10 ou PL_009_V4 para 4.00
+   "versao" => "3.10", // usar 4.00 depois de 02/08/2018
    "tokenIBPT" => "AAAAAAA"
 ];
 $configJson = json_encode($config);
