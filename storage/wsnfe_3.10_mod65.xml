@@ -108,7 +108,7 @@
     </producao>
   </UF>
   <UF>
-    <!-- NOTA: ES usa o SVRS -->  
+    <!-- NOTA: ES usa o SVRS -->
     <sigla>ES</sigla>
     <homologacao>
       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://homologacao.sefaz.es.gov.br/ConsultaNFCe/qrcode.aspx</NfeConsultaQR>
@@ -116,7 +116,7 @@
     <producao>
       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://app.sefaz.es.gov.br/ConsultaNFCe/qrcode.aspx</NfeConsultaQR>
     </producao>
-  </UF>  
+  </UF>
   <UF>
     <sigla>GO</sigla>
     <homologacao>
@@ -292,7 +292,7 @@
       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://www.hom.nfe.se.gov.br/portal/consultarNFCe.jsp</NfeConsultaQR>
     </homologacao>
     <producao>
-      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://www.nfe.se.gov.br/portal/consultarNFCe.jsp</NfeConsultaQR>
+      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://www.nfce.se.gov.br/portal/consultarNFCe.jsp</NfeConsultaQR>
     </producao>
   </UF>
   <UF>
