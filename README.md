@@ -123,14 +123,16 @@ Para que este pacote possa funcionar são necessários os seguintes requisitos d
 ## Como eu faço uso desta API no meu projeto?
 
 Primeiro, esta API faz uso dos recursos mais atuais do PHP para classes e objetos, portanto abaixo vai um exemplo ERRADO de uso:
-```require 'sped-nfe/src/Make.php';
+```
+require 'sped-nfe/src/Make.php';
 
 $nfe = new Make();
 ```
 Portanto, você deve primeiro entender que para usar esta API você precisará trabalhar com NAMESPACES pois esta API trabalha com NAMESPACES.
 
 Agora que você sabe que NAMESPACES é requerido, o uso correto para o exemplo acima seria:
-```// VENDOR_DIR = pasta vendor da sua instalação composer
+```
+// VENDOR_DIR = pasta vendor da sua instalação composer
 require VENDOR_DIR . 'autoload.php';
 
 use namespace NFePHP\NFe\Make;
