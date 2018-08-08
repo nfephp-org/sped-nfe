@@ -4992,7 +4992,7 @@ Substituição Tributaria;</xs:documentation>
 												</xs:element>
 												<xs:element name="tPag">
 													<xs:annotation>
-														<xs:documentation>Forma de Pagamento:01-Dinheiro;02-Cheque;03-Cartão de Crédito;04-Cartão de Débito;05-Crédito Loja;10-Vale Alimentação;11-Vale Refeição;12-Vale Presente;13-Vale Combustível;14 - Duplicata Mercantil;15 - Boleto Bancario;90 - Sem Pagamento;99 - Outros</xs:documentation>
+														<xs:documentation>Forma de Pagamento:01-Dinheiro;02-Cheque;03-Cartão de Crédito;04-Cartão de Débito;05-Crédito Loja;10-Vale Alimentação;11-Vale Refeição;12-Vale Presente;13-Vale Combustível;15 - Boleto Bancario;90 - Sem Pagamento;99 - Outros</xs:documentation>
 													</xs:annotation>
 													<xs:simpleType>
 														<xs:restriction base="xs:string">
@@ -5006,7 +5006,6 @@ Substituição Tributaria;</xs:documentation>
 															<xs:enumeration value="11"/>
 															<xs:enumeration value="12"/>
 															<xs:enumeration value="13"/>
-															<xs:enumeration value="14"/>
 															<xs:enumeration value="15"/>
 															<xs:enumeration value="90"/>
 															<xs:enumeration value="99"/>
