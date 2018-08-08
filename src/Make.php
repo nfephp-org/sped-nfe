@@ -2767,12 +2767,12 @@ class Make
             'vICMSEfet'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        //totalizador
-        $this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
-        $this->stdTot->vICMS += (float) !empty($std->vICMS) ? $std->vICMS : 0;
+        //totalizador = somar somente quando tag aplicada
+        //$this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
+        //$this->stdTot->vICMS += (float) !empty($std->vICMS) ? $std->vICMS : 0;
         $this->stdTot->vICMSDeson += (float) !empty($std->vICMSDeson) ? $std->vICMSDeson : 0;
-        $this->stdTot->vBCST += (float) !empty($std->vBCST) ? $std->vBCST : 0;
-        $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
+        //$this->stdTot->vBCST += (float) !empty($std->vBCST) ? $std->vBCST : 0;
+        //$this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
         
         $this->stdTot->vFCP += (float) !empty($std->vFCP) ? $std->vFCP : 0;
         $this->stdTot->vFCPST += (float) !empty($std->vFCPST) ? $std->vFCPST : 0;
@@ -2810,6 +2810,8 @@ class Make
                     true,
                     "$identificador [item $std->item] Valor da BC do ICMS"
                 );
+                // somar vBC ao total
+                $this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
                 $this->dom->addChild(
                     $icms,
                     'pICMS',
@@ -2824,6 +2826,8 @@ class Make
                     true,
                     "$identificador [item $std->item] Valor do ICMS"
                 );
+                // somar apenas quando aplicável
+                $this->stdTot->vICMS += (float) !empty($std->vICMS) ? $std->vICMS : 0;
                 $this->dom->addChild(
                     $icms,
                     'pFCP',
@@ -2871,6 +2875,8 @@ class Make
                     true,
                     "$identificador [item $std->item] Valor da BC do ICMS"
                 );
+                // somar vBC ao total
+                $this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
                 $this->dom->addChild(
                     $icms,
                     'pICMS',
@@ -2885,6 +2891,8 @@ class Make
                     true,
                     "$identificador [item $std->item] Valor do ICMS"
                 );
+                // somar apenas quando aplicável
+                $this->stdTot->vICMS += (float) !empty($std->vICMS) ? $std->vICMS : 0;
                 $this->dom->addChild(
                     $icms,
                     'vBCFCP',
@@ -2935,6 +2943,8 @@ class Make
                     true,
                     "$identificador [item $std->item] Valor da BC do ICMS ST"
                 );
+                // somar vBC ao total
+                $this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
                 $this->dom->addChild(
                     $icms,
                     'pICMSST',
@@ -2949,6 +2959,8 @@ class Make
                     true,
                     "$identificador [item $std->item] Valor do ICMS ST"
                 );
+                // somar apenas quando aplicável
+                $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
                 $this->dom->addChild(
                     $icms,
                     'vBCFCPST',
@@ -3009,6 +3021,8 @@ class Make
                     true,
                     "$identificador [item $std->item] Valor da BC do ICMS"
                 );
+                // somar vBC ao total
+                $this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
                 $this->dom->addChild(
                     $icms,
                     'pICMS',
@@ -3023,6 +3037,8 @@ class Make
                     true,
                     "$identificador [item $std->item] Valor do ICMS"
                 );
+                // somar apenas quando aplicável
+                $this->stdTot->vICMS += (float) !empty($std->vICMS) ? $std->vICMS : 0;
                 $this->dom->addChild(
                     $icms,
                     'vBCFCP',
@@ -3104,6 +3120,8 @@ class Make
                     true,
                     "$identificador [item $std->item] Valor da BC do ICMS ST"
                 );
+                // somar vBC ao total
+                $this->stdTot->vBCST += (float) !empty($std->vBCST) ? $std->vBCST : 0;
                 $this->dom->addChild(
                     $icms,
                     'pICMSST',
@@ -3118,6 +3136,8 @@ class Make
                     true,
                     "$identificador [item $std->item] Valor do ICMS ST"
                 );
+                // somar apenas quando aplicável
+                $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
                 $this->dom->addChild(
                     $icms,
                     'vBCFCPST',
@@ -3225,6 +3245,8 @@ class Make
                     false,
                     "$identificador [item $std->item] Valor da BC do ICMS"
                 );
+                // somar vBC ao total
+                $this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
                 $this->dom->addChild(
                     $icms,
                     'pICMS',
@@ -3260,6 +3282,8 @@ class Make
                     false,
                     "$identificador [item $std->item] Valor do ICMS realmente devido"
                 );
+                // somar apenas quando aplicável
+                $this->stdTot->vICMS += (float) !empty($std->vICMS) ? $std->vICMS : 0;
                 $this->dom->addChild(
                     $icms,
                     'vBCFCP',
@@ -3411,6 +3435,8 @@ class Make
                     true,
                     "$identificador [item $std->item] Valor da BC do ICMS"
                 );
+                // somar vBC ao total
+                $this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
                 $this->dom->addChild(
                     $icms,
                     'pICMS',
@@ -3425,6 +3451,8 @@ class Make
                     true,
                     "$identificador [item $std->item] Valor do ICMS"
                 );
+                // somar apenas quando aplicável
+                $this->stdTot->vICMS += (float) !empty($std->vICMS) ? $std->vICMS : 0;
                 $this->dom->addChild(
                     $icms,
                     'vBCFCP',
@@ -3475,6 +3503,8 @@ class Make
                     true,
                     "$identificador [item $std->item] Valor da BC do ICMS ST"
                 );
+                // somar vBC ao total
+                $this->stdTot->vBCST += (float) !empty($std->vBCST) ? $std->vBCST : 0;
                 $this->dom->addChild(
                     $icms,
                     'pICMSST',
@@ -3489,6 +3519,8 @@ class Make
                     true,
                     "$identificador [item $std->item] Valor do ICMS ST"
                 );
+                // somar apenas quando aplicável
+                $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
                 $this->dom->addChild(
                     $icms,
                     'vBCFCPST',
@@ -3556,6 +3588,8 @@ class Make
                     false,
                     "$identificador [item $std->item] Valor da BC do ICMS"
                 );
+                // somar vBC ao total
+                $this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
                 $this->dom->addChild(
                     $icms,
                     'pRedBC',
@@ -3577,6 +3611,8 @@ class Make
                     false,
                     "$identificador [item $std->item] Valor do ICMS"
                 );
+                // somar apenas quando aplicável
+                $this->stdTot->vICMS += (float) !empty($std->vICMS) ? $std->vICMS : 0;
                 $this->dom->addChild(
                     $icms,
                     'vBCFCP',
@@ -3627,6 +3663,8 @@ class Make
                     false,
                     "$identificador [item $std->item] Valor da BC do ICMS ST"
                 );
+                // somar vBC ao total
+                $this->stdTot->vBCST += (float) !empty($std->vBCST) ? $std->vBCST : 0;
                 $this->dom->addChild(
                     $icms,
                     'pICMSST',
@@ -3641,6 +3679,8 @@ class Make
                     false,
                     "$identificador [item $std->item] Valor do ICMS ST"
                 );
+                // somar apenas quando aplicável
+                $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
                 $this->dom->addChild(
                     $icms,
                     'vBCFCPST',
@@ -3745,6 +3785,8 @@ class Make
             true,
             "[item $std->item] Valor da BC do ICMS"
         );
+        // somar vBC ao total
+        $this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
         $this->dom->addChild(
             $icmsPart,
             'pRedBC',
@@ -3766,6 +3808,8 @@ class Make
             true,
             "[item $std->item] Valor do ICMS"
         );
+        // somar apenas quando aplicável
+        $this->stdTot->vICMS += (float) !empty($std->vICMS) ? $std->vICMS : 0;
         $this->dom->addChild(
             $icmsPart,
             'modBCST',
@@ -3794,6 +3838,8 @@ class Make
             true,
             "[item $std->item] Valor da BC do ICMS ST"
         );
+        // somar vBC ao total
+        $this->stdTot->vBCST += (float) !empty($std->vBCST) ? $std->vBCST : 0;
         $this->dom->addChild(
             $icmsPart,
             'pICMSST',
@@ -3808,6 +3854,8 @@ class Make
             true,
             "[item $std->item] Valor do ICMS ST"
         );
+        // somar apenas quando aplicável
+        $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
         $this->dom->addChild(
             $icmsPart,
             'pBCOp',
@@ -3949,10 +3997,11 @@ class Make
         $std = $this->equilizeParameters($std, $possible);
 
         //totalizador
-        $this->stdTot->vBC += (float) $std->vBC;
-        $this->stdTot->vICMS += (float) $std->vICMS;
-        $this->stdTot->vBCST += (float) $std->vBCST;
-        $this->stdTot->vST += (float) $std->vICMSST;
+        // somar somente se aplicavel (tag presente)
+        //$this->stdTot->vBC += (float) $std->vBC;
+        //$this->stdTot->vICMS += (float) $std->vICMS;
+        //$this->stdTot->vBCST += (float) $std->vBCST;
+        //$this->stdTot->vST += (float) $std->vICMSST;
         $this->stdTot->vFCPST += (float) !empty($std->vFCPST) ? $std->vFCPST : 0;
         $this->stdTot->vFCPSTRet += (float) !empty($std->vFCPST) ? $std->vFCPSTRet : 0;
         
@@ -4053,6 +4102,8 @@ class Make
                     true,
                     "[item $std->item] Valor da BC do ICMS ST"
                 );
+                // somar vBC ao total
+                $this->stdTot->vBCST += (float) !empty($std->vBCST) ? $std->vBCST : 0;
                 $this->dom->addChild(
                     $icmsSN,
                     'pICMSST',
@@ -4067,6 +4118,8 @@ class Make
                     true,
                     "[item $std->item] Valor do ICMS ST"
                 );
+                // somar apenas quando aplicável
+                $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
                 $this->dom->addChild(
                     $icmsSN,
                     'vBCFCPST',
@@ -4151,6 +4204,8 @@ class Make
                     true,
                     "[item $std->item] Valor da BC do ICMS ST"
                 );
+                // somar vBC ao total
+                $this->stdTot->vBCST += (float) !empty($std->vBCST) ? $std->vBCST : 0;
                 $this->dom->addChild(
                     $icmsSN,
                     'pICMSST',
@@ -4165,6 +4220,8 @@ class Make
                     true,
                     "[item $std->item] Valor do ICMS ST"
                 );
+                // somar apenas quando aplicável
+                $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
                 $this->dom->addChild(
                     $icmsSN,
                     'vBCFCPST',
@@ -4310,6 +4367,8 @@ class Make
                     isset($std->vBC) ? true : false,
                     "[item $std->item] Valor da BC do ICMS"
                 );
+                // somar vBC ao total
+                $this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
                 $this->dom->addChild(
                     $icmsSN,
                     'pRedBC',
@@ -4331,6 +4390,8 @@ class Make
                     isset($std->pICMS) ? true : false,
                     "[item $std->item] Valor do ICMS"
                 );
+                // somar apenas quando aplicável
+                $this->stdTot->vICMS += (float) !empty($std->vICMS) ? $std->vICMS : 0;
                 $this->dom->addChild(
                     $icmsSN,
                     'modBCST',
@@ -4359,6 +4420,8 @@ class Make
                     isset($std->vBCST) ? true : false,
                     "[item $std->item] Valor da BC do ICMS ST"
                 );
+                // somar vBC ao total
+                $this->stdTot->vBCST += (float) !empty($std->vBCST) ? $std->vBCST : 0;
                 $this->dom->addChild(
                     $icmsSN,
                     'pICMSST',
@@ -4373,6 +4436,8 @@ class Make
                     isset($std->vICMSST) ? true : false,
                     "[item $std->item] Valor do ICMS ST"
                 );
+                // somar apenas quando aplicável
+                $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
                 $this->dom->addChild(
                     $icmsSN,
                     'vBCFCPST',

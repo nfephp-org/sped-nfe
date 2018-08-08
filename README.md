@@ -120,6 +120,27 @@ Para que este pacote possa funcionar são necessários os seguintes requisitos d
 > - [posprint](https://github.com/nfephp-org/posprint) Impressão de documentos em impressoras térmicas POS
 
 
+## Como eu faço uso desta API no meu projeto?
+
+Primeiro, esta API faz uso dos recursos mais atuais do PHP para classes e objetos, portanto abaixo vai um exemplo ERRADO de uso:
+```
+require 'sped-nfe/src/Make.php';
+
+$nfe = new Make();
+```
+Portanto, você deve primeiro entender que para usar esta API você precisará trabalhar com NAMESPACES pois esta API trabalha com NAMESPACES.
+
+Agora que você sabe que NAMESPACES é requerido, o uso correto para o exemplo acima seria:
+```
+// VENDOR_DIR = pasta vendor da sua instalação composer
+require VENDOR_DIR . 'autoload.php';
+
+use namespace NFePHP\NFe\Make;
+
+$nfe = new Make();
+```
+
+
 ## Donations
 
 **Estamos em busca de *doadores* e *patrocinadores* para ajudar a financiar parte do desenvolvimento deste pacote e de outros pacotes, aqueles que estiverem interessados por favor entrem em contato com o autor pelo email linux.rlm@gmail.com** 

@@ -518,15 +518,29 @@ $request = "<XML conteudo original do documento que quer protocolar>";
 $response = "<XML conteudo do retorno com a resposta da SEFAZ>";
 
 try {
-    $xml = Complements::toAuthorize($req, $res);
+    $xml = Complements::toAuthorize($request, $response);
     header('Content-type: text/xml; charset=UTF-8');
     echo $xml;
 } catch (\Exception $e) {
     echo "Erro: " . $e->getMessage();
 }
 ```
+ATENÇÃO: Utilize o método correto da classe `Complements` para cada tipo de evento (Autorização, Cancelamento, e outros), veja abaixo um exemplo protocolando Cancelamento:
+```php
+use NFePHP\NFe\Complements;
 
-[VIDE como protocolar](Complements.md)
+$request = "<XML assinado e com autorização de uso protocolado>";
+$response = "<XML do retorno com a resposta da solicitação de cancelamento / $tools->sefazCancela($chave, $xJust, $nProt) >";
+
+try {
+    $xml = Complements::cancelRegistra($request, $response);
+    header('Content-type: text/xml; charset=UTF-8');
+    echo $xml;
+} catch (\Exception $e) {
+    echo "Erro: " . $e->getMessage();
+}
+```
+[VIDE como protocolar cada evento na NF-e](Complements.md)
 
 Por fim usamos o *file_put_contents* para criar um arquivo XML em disco para aguardar essa nota. A receita exige que você guarde os XMLs das suas notas pelo menos por 5 anos, então cuida bem delas.
 ```php
