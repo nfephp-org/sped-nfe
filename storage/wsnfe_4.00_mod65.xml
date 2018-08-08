@@ -208,7 +208,7 @@
        <NfeConsultaProtocolo method="nfeConsultaNF" operation="NFeConsulta4" version="4.00">https://homologacao.nfce.sefa.pr.gov.br/nfce/NFeConsultaProtocolo4</NfeConsultaProtocolo>
        <NfeStatusServico method="nfeStatusServicoNF" operation="NFeStatusServico4" version="4.00">https://homologacao.nfce.sefa.pr.gov.br/nfce/NFeStatusServico4</NfeStatusServico>
        <RecepcaoEvento  method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento" version="1.00">https://homologacao.nfce.sefa.pr.gov.br/nfce/NFeRecepcaoEvento4</RecepcaoEvento>
-       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">http://www.fazenda.pr.gov.br/nfce/qrcode?</NfeConsultaQR>
+       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">http://www.fazenda.pr.gov.br/nfce/qrcode</NfeConsultaQR>
     </homologacao>
     <producao>
        <NfeAutorizacao method="nfeAutorizacaoLote" operation="NFeAutorizacao4" version="4.00">https://nfce.sefa.pr.gov.br/nfce/NFeAutorizacao4</NfeAutorizacao>
@@ -217,7 +217,7 @@
        <NfeConsultaProtocolo method="nfeConsultaNF" operation="NFeConsultaProtocolo4" version="4.00">https://nfce.sefa.pr.gov.br/nfce/NFeConsultaProtocolo4</NfeConsultaProtocolo>
        <NfeStatusServico method="nfeStatusServicoNF" operation="NFeStatusServico4" version="4.00">https://nfce.sefa.pr.gov.br/nfce/NFeStatusServico4</NfeStatusServico>
        <RecepcaoEvento  method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento" version="1.00">https://nfce.sefa.pr.gov.br/nfce/NFeRecepcaoEvento4</RecepcaoEvento>
-       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">http://www.fazenda.pr.gov.br/nfce/qrcode?</NfeConsultaQR>
+       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">http://www.fazenda.pr.gov.br/nfce/qrcode</NfeConsultaQR>
     </producao>
   </UF>
   <UF>
