@@ -477,7 +477,7 @@ class Make
         ];
         $std = $this->equilizeParameters($std, $possible);
         if (empty($std->cNF)) {
-            $std->cNF = mt_rand(10000000, 99999999);
+            $std->cNF = Keys::random();
         }
         if (empty($std->cDV)) {
             $std->cDV = 0;
