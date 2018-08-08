@@ -207,8 +207,11 @@ class QRCode
         $ver = $versao/100;
         $cscId = (int) $idToken;
         $csc = $token;
-        if (strpos($url, '?p=') === false) {
-            $url = $url.'?p=';
+        if (strpos($url, '?') === false) {
+            $url = $url.'?';
+        }
+        if (strpos($url, 'p=') === false) {
+            $url = $url.'p=';
         }
         if ($tpEmis != 9) {
             $seq = "$chNFe|$ver|$tpAmb|$cscId";
