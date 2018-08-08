@@ -5,7 +5,7 @@
         <homologacao>
             <NfeStatusServico method="nfeStatusServicoNF" operation="NFeStatusServico4" version="4.00">https://homnfe.sefaz.am.gov.br/services2/services/NfeStatusServico4</NfeStatusServico>
             <NfeAutorizacao method="nfeAutorizacaoLote" operation="NFeAutorizacao4" version="4.00">https://homnfe.sefaz.am.gov.br/services2/services/NfeAutorizacao4</NfeAutorizacao>
-            <NfeConsultaProtocolo method="nfeConsultaNF" operation="NFeConsulta4" version="4.00">https://homnfe.sefaz.am.gov.br/services2/services/NfeConsulta4</NfeConsultaProtocolo>
+            <NfeConsultaProtocolo method="nfeConsultaNF" operation="NFeConsultaProtocolo4" version="4.00">https://homnfe.sefaz.am.gov.br/services2/services/NfeConsulta4</NfeConsultaProtocolo>
             <NfeInutilizacao method="nfeInutilizacaoNF" operation="NFeInutilizacao4" version="4.00">https://homnfe.sefaz.am.gov.br/services2/services/NfeInutilizacao4</NfeInutilizacao>
             <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NFeRetAutorizacao4" version="4.00">https://homnfe.sefaz.am.gov.br/services2/services/NfeRetAutorizacao4</NfeRetAutorizacao>
             <RecepcaoEvento method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="1.00">https://homnfe.sefaz.am.gov.br/services2/services/RecepcaoEvento4</RecepcaoEvento>
@@ -14,7 +14,7 @@
         <producao>
             <NfeStatusServico method="nfeStatusServicoNF" operation="NFeStatusServico4" version="4.00">https://nfe.sefaz.am.gov.br/services2/services/NfeStatusServico4</NfeStatusServico>
             <NfeAutorizacao method="nfeAutorizacaoLote" operation="NFeAutorizacao4" version="4.00">https://nfe.sefaz.am.gov.br/services2/services/NfeAutorizacao4</NfeAutorizacao>
-            <NfeConsultaProtocolo method="nfeConsultaNF" operation="NFeConsulta4" version="4.00">https://nfe.sefaz.am.gov.br/services2/services/NfeConsulta4</NfeConsultaProtocolo>
+            <NfeConsultaProtocolo method="nfeConsultaNF" operation="NFeConsultaProtocolo4" version="4.00">https://nfe.sefaz.am.gov.br/services2/services/NfeConsulta4</NfeConsultaProtocolo>
             <NfeInutilizacao method="nfeInutilizacaoNF" operation="NFeInutilizacao4" version="4.00">https://nfe.sefaz.am.gov.br/services2/services/NfeInutilizacao4</NfeInutilizacao>
             <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NFeRetAutorizacao4" version="4.00">https://nfe.sefaz.am.gov.br/services2/services/NfeRetAutorizacao4</NfeRetAutorizacao>
             <RecepcaoEvento method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="1.00">https://nfe.sefaz.am.gov.br/services2/services/RecepcaoEvento4</RecepcaoEvento>
