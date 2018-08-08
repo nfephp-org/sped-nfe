@@ -5988,7 +5988,6 @@ class Make
      * Campo Vagao X25a pai X01
      * tag NFe/infNFe/transp/vagao (opcional)
      * @param stdClass $std
-     * @return DOMElement
      */
     public function tagvagao(stdClass $std)
     {
@@ -6009,7 +6008,6 @@ class Make
      * Campo Balsa X25b pai X01
      * tag NFe/infNFe/transp/balsa (opcional)
      * @param stdClass $std
-     * @return DOMElement
      */
     public function tagbalsa(stdClass $std)
     {

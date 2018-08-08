@@ -3,7 +3,7 @@
 namespace NFePHP\NFe\Common;
 
 /**
- * Class for validation of config
+ * Validation of config
  *
  * @category  NFePHP
  * @package   NFePHP\NFe\Common\Config
@@ -16,8 +16,6 @@ namespace NFePHP\NFe\Common;
  */
 
 use JsonSchema\Validator as JsonValid;
-use JsonSchema\SchemaStorage;
-use stdClass;
 use NFePHP\NFe\Exception\DocumentsException;
 
 class Config
