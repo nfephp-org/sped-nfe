@@ -13,6 +13,7 @@ class NFeTestCase extends TestCase
 
     public function __construct()
     {
+        parent::__construct();
         $this->fixturesPath = dirname(__FILE__) . '/fixtures/';
         $config = [
             "atualizacao" => "2017-02-20 09:11:21",
@@ -32,8 +33,8 @@ class NFeTestCase extends TestCase
                 "proxyPass" => ""
             ]
         ];
-        $this->contentpfx = file_get_contents($this->fixturesPath . "certs/expired_certificate.pfx");
-        $this->passwordpfx = "associacao";
+        $this->contentpfx = file_get_contents($this->fixturesPath . "certs/test_certificate.pfx");
+        $this->passwordpfx = 'nfephp';
         $this->configJson = json_encode($config);
     }
 }
