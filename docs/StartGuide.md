@@ -189,9 +189,11 @@ Com as extensões devidamente instaladas, vá para a RAIZ do seu projeto e rodar
 composer require nfephp-org/sped-nfe
 ```
 
-Rodando esse comando vamos INCLUIR a última versão STABLE da API, como uma dependência do seu projeto, capaz de emitir Nfe e Nfce tando na versão 3.10, como na 4.0.
+Rodando esse comando vamos INCLUIR a última versão STABLE da API, como uma dependência do seu projeto, capaz de emitir Nfe e Nfce tanto na versão 3.10, como na 4.0.
 
-Se você não tem outras dependências ainda será criada uma pasta "vendor" na RAIZ de seu projeto, que conterá todas as dependências do seu projeto e as dos pacotes que você intalou com o composer. 
+Se você não tem outras dependências, será criada uma pasta "vendor" na RAIZ de seu projeto, que conterá todas as dependências do seu projeto e as dos pacotes que você intalou com o composer. 
+
+É de suma importância que entenda como funciona o [COMPOSER]() 
 
 ## Montar XML
 
