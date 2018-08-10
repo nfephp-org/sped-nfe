@@ -2767,13 +2767,8 @@ class Make
             'vICMSEfet'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        //totalizador
-        $this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
-        $this->stdTot->vICMS += (float) !empty($std->vICMS) ? $std->vICMS : 0;
+        //totalização generica
         $this->stdTot->vICMSDeson += (float) !empty($std->vICMSDeson) ? $std->vICMSDeson : 0;
-        $this->stdTot->vBCST += (float) !empty($std->vBCST) ? $std->vBCST : 0;
-        $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
-        
         $this->stdTot->vFCP += (float) !empty($std->vFCP) ? $std->vFCP : 0;
         $this->stdTot->vFCPST += (float) !empty($std->vFCPST) ? $std->vFCPST : 0;
         $this->stdTot->vFCPSTRet += (float) !empty($std->vFCPSTRet) ? $std->vFCPSTRet : 0;
@@ -2781,6 +2776,9 @@ class Make
         $identificador = 'N01 <ICMSxx> - ';
         switch ($std->CST) {
             case '00':
+                $this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
+                $this->stdTot->vICMS += (float) !empty($std->vICMS) ? $std->vICMS : 0;
+                
                 $icms = $this->dom->createElement("ICMS00");
                 $this->dom->addChild(
                     $icms,
@@ -2842,6 +2840,11 @@ class Make
                 );
                 break;
             case '10':
+                $this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
+                $this->stdTot->vICMS += (float) !empty($std->vICMS) ? $std->vICMS : 0;
+                $this->stdTot->vBCST += (float) !empty($std->vBCST) ? $std->vBCST : 0;
+                $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
+                
                 $icms = $this->dom->createElement("ICMS10");
                 $this->dom->addChild(
                     $icms,
@@ -2973,6 +2976,9 @@ class Make
                 );
                 break;
             case '20':
+                $this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
+                $this->stdTot->vICMS += (float) !empty($std->vICMS) ? $std->vICMS : 0;                
+                
                 $icms = $this->dom->createElement("ICMS20");
                 $this->dom->addChild(
                     $icms,
@@ -3061,6 +3067,9 @@ class Make
                 );
                 break;
             case '30':
+                $this->stdTot->vBCST += (float) !empty($std->vBCST) ? $std->vBCST : 0;
+                $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
+                
                 $icms = $this->dom->createElement("ICMS30");
                 $this->dom->addChild(
                     $icms,
@@ -3189,6 +3198,9 @@ class Make
                 );
                 break;
             case '51':
+                $this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
+                $this->stdTot->vICMS += (float) !empty($std->vICMS) ? $std->vICMS : 0;
+                
                 $icms = $this->dom->createElement("ICMS51");
                 $this->dom->addChild(
                     $icms,
@@ -3375,6 +3387,11 @@ class Make
                 );
                 break;
             case '70':
+                $this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
+                $this->stdTot->vICMS += (float) !empty($std->vICMS) ? $std->vICMS : 0;
+                $this->stdTot->vBCST += (float) !empty($std->vBCST) ? $std->vBCST : 0;
+                $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
+                
                 $icms = $this->dom->createElement("ICMS70");
                 $this->dom->addChild(
                     $icms,
@@ -3527,6 +3544,11 @@ class Make
                 );
                 break;
             case '90':
+                $this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
+                $this->stdTot->vICMS += (float) !empty($std->vICMS) ? $std->vICMS : 0;
+                $this->stdTot->vBCST += (float) !empty($std->vBCST) ? $std->vBCST : 0;
+                $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
+                
                 $icms = $this->dom->createElement("ICMS90");
                 $this->dom->addChild(
                     $icms,
@@ -3715,7 +3737,12 @@ class Make
             'UFST'
         ];
         $std = $this->equilizeParameters($std, $possible);
-
+        
+        $this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
+        $this->stdTot->vICMS += (float) !empty($std->vICMS) ? $std->vICMS : 0;
+        $this->stdTot->vBCST += (float) !empty($std->vBCST) ? $std->vBCST : 0;
+        $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
+        
         $icmsPart = $this->dom->createElement("ICMSPart");
         $this->dom->addChild(
             $icmsPart,
@@ -3948,11 +3975,7 @@ class Make
         ];
         $std = $this->equilizeParameters($std, $possible);
 
-        //totalizador
-        $this->stdTot->vBC += (float) $std->vBC;
-        $this->stdTot->vICMS += (float) $std->vICMS;
-        $this->stdTot->vBCST += (float) $std->vBCST;
-        $this->stdTot->vST += (float) $std->vICMSST;
+        //totalizador generico
         $this->stdTot->vFCPST += (float) !empty($std->vFCPST) ? $std->vFCPST : 0;
         $this->stdTot->vFCPSTRet += (float) !empty($std->vFCPST) ? $std->vFCPSTRet : 0;
         
@@ -4010,6 +4033,9 @@ class Make
                 );
                 break;
             case '201':
+                $this->stdTot->vBCST += (float) !empty($std->vBCST) ? $std->vBCST : 0;
+                $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
+                
                 $icmsSN = $this->dom->createElement("ICMSSN201");
                 $this->dom->addChild(
                     $icmsSN,
@@ -4108,6 +4134,9 @@ class Make
                 break;
             case '202':
             case '203':
+                $this->stdTot->vBCST += (float) !empty($std->vBCST) ? $std->vBCST : 0;
+                $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
+
                 $icmsSN = $this->dom->createElement("ICMSSN202");
                 $this->dom->addChild(
                     $icmsSN,
@@ -4281,6 +4310,11 @@ class Make
                 );
                 break;
             case '900':
+                $this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
+                $this->stdTot->vICMS += (float) !empty($std->vICMS) ? $std->vICMS : 0;
+                $this->stdTot->vBCST += (float) !empty($std->vBCST) ? $std->vBCST : 0;
+                $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
+
                 $icmsSN = $this->dom->createElement("ICMSSN900");
                 $this->dom->addChild(
                     $icmsSN,
@@ -4720,7 +4754,7 @@ class Make
         $std = $this->equilizeParameters($std, $possible);
 
         //totalizador
-        $this->stdTot->vPIS += (float) $std->vPIS;
+        $this->stdTot->vPIS += (float) !empty($std->vPIS) ? $std->vPIS : 0;
 
         switch ($std->CST) {
             case '01':
@@ -4736,7 +4770,7 @@ class Make
                 $this->dom->addChild(
                     $pisItem,
                     'vBC',
-                    $std->vBC,
+                    number_format($std->vBC, 2, '.', ''),
                     true,
                     "[item $std->item] Valor da Base de Cálculo do PIS"
                 );
@@ -4750,7 +4784,7 @@ class Make
                 $this->dom->addChild(
                     $pisItem,
                     'vPIS',
-                    $std->vPIS,
+                    number_format($std->vPIS, 2, '.', ''),
                     true,
                     "[item $std->item] Valor do PIS"
                 );
@@ -4781,7 +4815,7 @@ class Make
                 $this->dom->addChild(
                     $pisItem,
                     'vPIS',
-                    $std->vPIS,
+                    number_format($std->vPIS, 2, '.', ''),
                     true,
                     "[item $std->item] Valor do PIS"
                 );
@@ -4836,7 +4870,7 @@ class Make
                 $this->dom->addChild(
                     $pisItem,
                     'vBC',
-                    $std->vBC,
+                    number_format($std->vBC, 2, '.', ''),
                     ($std->vBC !== null) ? true : false,
                     "[item $std->item] Valor da Base de Cálculo do PIS"
                 );
@@ -4900,7 +4934,7 @@ class Make
         $this->dom->addChild(
             $pisst,
             'vBC',
-            $std->vBC,
+            number_format($std->vBC, 2, '.', ''),
             true,
             "[item $std->item] Valor da Base de Cálculo do PIS"
         );
@@ -4928,7 +4962,7 @@ class Make
         $this->dom->addChild(
             $pisst,
             'vPIS',
-            $std->vPIS,
+            number_format($std->vPIS, 2, '.', ''),
             true,
             "[item $std->item] Valor do PIS"
         );
@@ -5954,7 +5988,6 @@ class Make
      * Campo Vagao X25a pai X01
      * tag NFe/infNFe/transp/vagao (opcional)
      * @param stdClass $std
-     * @return DOMElement
      */
     public function tagvagao(stdClass $std)
     {
@@ -5975,7 +6008,6 @@ class Make
      * Campo Balsa X25b pai X01
      * tag NFe/infNFe/transp/balsa (opcional)
      * @param stdClass $std
-     * @return DOMElement
      */
     public function tagbalsa(stdClass $std)
     {
