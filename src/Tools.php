@@ -50,7 +50,7 @@ class Tools extends ToolsCommon
         &$xmls = []
     ) {
         if (!is_array($aXml)) {
-            throw new \InvalidArgumentException('Os XML das NFe devem ser passados em um array.');
+            throw new \InvalidArgumentException('Os XMLs das NF-es devem ser passados em um array.');
         }
         $servico = 'NfeAutorizacao';
         $this->checkContingencyForWebServices($servico);
@@ -102,11 +102,12 @@ class Tools extends ToolsCommon
      * @param string $recibo
      * @param int $tpAmb
      * @return string
+     * @throws \InvalidArgumentException
      */
     public function sefazConsultaRecibo($recibo, $tpAmb = null)
     {
         if (empty($recibo)) {
-            throw new RuntimeException('Não foram passados todos os dados necessários.');
+            throw new \InvalidArgumentException('O numero do recibo para consulta esta vazio!');
         }
         if (empty($tpAmb)) {
             $tpAmb = $this->tpAmb;
@@ -120,7 +121,7 @@ class Tools extends ToolsCommon
             $tpAmb
         );
         if ($this->urlService == '') {
-            $msg = "A consulta de NFe não está disponível na SEFAZ {$this->config->siglaUF}!!!";
+            $msg = "A consulta de NFe não está disponível na SEFAZ {$this->config->siglaUF}!";
             throw new RuntimeException($msg);
         }
         $request = "<consReciNFe xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
@@ -140,11 +141,15 @@ class Tools extends ToolsCommon
      * @param string $chave
      * @param int $tpAmb
      * @return string
+     * @throws \InvalidArgumentException
      */
     public function sefazConsultaChave($chave, $tpAmb = null)
     {
         if (empty($chave)) {
-            throw new RuntimeException('Não foram passados todos os dados necessários.');
+            throw new \InvalidArgumentException('A chave esta vazia!');
+        }
+        if (strlen($chave) != 44 || !is_numeric($chave)) {
+            throw new \InvalidArgumentException("A chave \"$chave\" é invalida!");
         }
         $uf = UFList::getUFByCode(substr($chave, 0, 2));
         if (empty($tpAmb)) {
@@ -179,6 +184,7 @@ class Tools extends ToolsCommon
      * @param string $xJust
      * @param int $tpAmb
      * @return string
+     * @throws \InvalidArgumentException
      */
     public function sefazInutiliza(
         $nSerie,
@@ -188,7 +194,7 @@ class Tools extends ToolsCommon
         $tpAmb = null
     ) {
         if (!isset($nSerie) || empty($nIni) || empty($nFin) || empty($xJust)) {
-            throw new RuntimeException('Não foram passados todos os dados necessários.');
+            throw new \InvalidArgumentException('Parametros incompletos para inutilizacao!');
         }
         if (empty($tpAmb)) {
             $tpAmb = $this->tpAmb;
@@ -254,11 +260,12 @@ class Tools extends ToolsCommon
      * if in contingency mode this service will cause a
      * Exception and remember not all Sefaz have this service available,
      * so it will not work in some cases.
-     * @param string $uf  federation unit
+     * @param string $uf federation unit (abbreviation)
      * @param string $cnpj CNPJ number (optional)
      * @param string $iest IE number (optional)
-     * @param string $cpf  CPF number (optional)
+     * @param string $cpf CPF number (optional)
      * @return string xml soap response
+     * @throws \InvalidArgumentException
      */
     public function sefazCadastro(
         $uf,
@@ -275,7 +282,7 @@ class Tools extends ToolsCommon
             $filter = "<CPF>$cpf</CPF>";
         }
         if (empty($uf) || empty($filter)) {
-            throw new RuntimeException('Não foram passados todos os dados necessários.');
+            throw new \InvalidArgumentException('Sigla UF esta vazia ou CNPJ+IE+CPF vazios!');
         }
         //carrega serviço
         $servico = 'NfeConsultaCadastro';
@@ -387,15 +394,16 @@ class Tools extends ToolsCommon
 
     /**
      * Request authorization for Letter of Correction
-     * @param  string $chave
-     * @param  string $xCorrecao
-     * @param  int $nSeqEvento
+     * @param string $chave
+     * @param string $xCorrecao
+     * @param int $nSeqEvento
      * @return string
+     * @throws \InvalidArgumentException
      */
     public function sefazCCe($chave, $xCorrecao, $nSeqEvento = 1)
     {
         if (empty($chave) || empty($xCorrecao)) {
-            throw new RuntimeException('Não foram passados todos os dados necessários.');
+            throw new \InvalidArgumentException('Chave ou motivo da correcao vazio!');
         }
         $uf = $this->validKeyByUF($chave);
         $xCorrecao = Strings::replaceSpecialsChars(
