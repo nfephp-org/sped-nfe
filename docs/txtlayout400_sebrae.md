@@ -11,7 +11,7 @@
 - Nota Técnica 2016.002 - v1.60
 
 > IMPORTANTE: Alguns campos tem comportamentos erraticos, ou seja não seguem um determinado padrão, e isso não será coberto pela API.
-> Ou seja não será importado em TODAS as condições. O parser não tem como reagir a esses incogruências.
+> Ou seja não será importado em TODAS as condições. O parser não tem como reagir a essas incogruências.
 
 > **NOTA: Essa estrutura foi obtida em parte por engenharia reversa, e portanto sujeita e ERROS pois não existe um Manual de formação do TXT oficial. E nem todos os campos puderam ser verificados e validados.**
 
@@ -26,6 +26,7 @@ Entidade **YA01** - o emissor do SEBRAE, coloca na mesma linha TODAS as formas d
 
 ## Estrutura (Lista de entidades)
 
+```
 NOTAFISCAL|qtd|
 
 A|versao|Id|
@@ -283,4 +284,4 @@ ZC04|dia|qtde|
 ZC10|xDed|vDed|
 
 ZX01|qrcode|urlChave|
-
+```
