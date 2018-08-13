@@ -6,9 +6,9 @@ Existem dois formatos diferentes (**devido a falta informação oriunda da SEFAZ
 
 [FORMATO LOCAL 4.00](txtlayout400.md)
 
-[FORMATO SEBRAE 4.00](txtlayout400_sebrae.md) Leia com atenção!!
+[FORMATO SEBRAE 4.00](txtlayout400_sebrae.md) Leia com atenção!! *Em desenvolvimento*
 
-Essa classe valida os TXT com base nos seguintes parâmetros:
+Esta classe valida os TXT com base nos seguintes parâmetros:
 
 1. todas as entidades no TXT (cada linha) deve terminar com pipe "|".
 2. não podem haver outros caracteres de controle além do Line Feed (LF ou \n) para terminar a linha (ex. CR ou TAB).
@@ -30,8 +30,9 @@ Onde
 
 O método irá retornar um array que 
 
-Array Vazio = TXT válido 
-Array Não Vazio = TXT INVÁLIDO e o array irá conter os erros encontrados na estrutura.
+Array **Vazio** = TXT válido 
+
+Array **Não Vazio** = TXT INVÁLIDO e o array irá conter os erros encontrados na estrutura.
 
 ### Exemplo de uso (padrão SEBRAE)
 
