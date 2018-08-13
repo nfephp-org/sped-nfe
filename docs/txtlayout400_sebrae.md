@@ -1,4 +1,4 @@
-## LAYOUT NFe **Emissor SEBRAE** v4.00
+## LAYOUT NFe **Emissor SEBRAE** v4.00 *Em desenvolvimento*
 - Nota Técnica 2016.002 - v1.10
 - Nota Técnica 2016.002 - v1.20
 - Nota Técnica 2016.002 - v1.30

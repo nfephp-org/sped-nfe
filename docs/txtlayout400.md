@@ -1,4 +1,4 @@
-## LAYOUT NFe v4.00
+## LAYOUT NFe v4.00 (FORMATO LOCAL do NFePHP)
 - Nota Técnica 2016.002 - v1.10
 - Nota Técnica 2016.002 - v1.20
 - Nota Técnica 2016.002 - v1.30
