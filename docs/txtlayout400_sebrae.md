@@ -13,16 +13,18 @@
 > IMPORTANTE: Alguns campos tem comportamentos erraticos, ou seja não seguem um determinado padrão, e isso não será coberto pela API.
 > Ou seja não será importado em TODAS as condições. O parser não tem como reagir a esses incogruências.
 
-> **NOTA: Essa estrura foi obtida em parte por engenharia reversa, e portanto sujeita e ERROS pois não existe um Manual de formação do TXT oficial. E nem todos os campos puderam ser verificados e validados.**
+> **NOTA: Essa estrutura foi obtida em parte por engenharia reversa, e portanto sujeita e ERROS pois não existe um Manual de formação do TXT oficial. E nem todos os campos puderam ser verificados e validados.**
+
+> **NOTA: Para o emissor SEBRAE, alguns campos finalizam sem o pipe "|", mas no caso do nosso parser, TODOS os campos devem finalizar com "|".**
 
 ## Pontos de Falha (Incongruências do emissor SEBRAE)
 
-node **I** - o emissor da SEBRAE faz uma loucura quando nçao tem CEST mas é indicada cBenef, indEscala, e CNPJFab. Joga isso na linha "I".
-Porém se tem o CEST coloda como indicado aqui.
+Entidade **I** - o emissor da SEBRAE faz uma loucura quando não tem CEST, mas é indicada cBenef, indEscala, e CNPJFab, joga isso na linha "I".
+Porém se tem o CEST coloca como indicado aqui na entidade I05C.
 
-YA01 - o emissor do SEBRAE, coloca na mesma linha TODOS as formas de pagamento estabelecidas, ao invés de criar um novo campo como seria de esperar. 
+Entidade **YA01** - o emissor do SEBRAE, coloca na mesma linha TODAS as formas de pagamento estabelecidas, ao invés de criar um novo campo como seria de esperar. 
 
-## Estrutura
+## Estrutura (Lista de entidades)
 
 NOTAFISCAL|qtd|
 
