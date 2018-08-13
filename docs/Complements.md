@@ -45,8 +45,8 @@ Retorna: String
 
 use NFePHP\NFe\Complements;
 
-$request = "<XML conteudo original do documento que quer protocolar>";
-$response = "<XML conteudo do retorno com a resposta da SEFAZ>";
+$req = "<XML conteudo original do documento que quer protocolar>";
+$res = "<XML conteudo do retorno com a resposta da SEFAZ>";
 
 try {
     $xml = Complements::toAuthorize($req, $res);
@@ -78,8 +78,8 @@ Retorna: String
 
 use NFePHP\NFe\Complements;
 
-$request = "<XML conteudo original do documento que quer protocolar>";
-$response = "<XML conteudo do retorno com a resposta da SEFAZ>";
+$req = "<XML conteudo original do documento que quer protocolar>";
+$res = "<XML conteudo do retorno com a resposta da SEFAZ>";
 
 try {
     $xml = Complements::toAuthorize($req, $res);
