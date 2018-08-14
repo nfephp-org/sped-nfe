@@ -156,6 +156,10 @@ NA|vBCUFDest|**vBCFCPUFDest**|pFCPUFDest|pICMSUFDest|pICMSInter|pICMSInterPart|v
 
 W02|vBC|vICMS|vICMSDeson|**vFCP**|vBCST|vST|**vFCPST**|**vFCPSTRet**|vProd|vFrete|vSeg|vDesc|vII|vIPI|vIPIDevol|vPIS|vCOFINS|vOutro|vNF|vTotTrib|
 
+## LINHA O *(removido o campo clEnq)*
+
+O|~~clEnq~~|CNPJProd|cSelo|qSelo|cEnq|
+
 ## LINHA Y *(adicionado o elemento vTroco)*
 
 Y|**vTroco**|

@@ -27,7 +27,7 @@ Entidade **YA01** - o emissor do SEBRAE, coloca na mesma linha TODAS as formas d
 ## Estrutura (Lista de entidades)
 
 ```
-NOTAFISCAL|qtd|
+NOTAFISCAL|numero de notas|
 
 A|versao|Id|
 
