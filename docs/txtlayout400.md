@@ -11,7 +11,7 @@
 - Nota Técnica 2016.002 - v1.60
 
 ```
-NOTAFISCAL|1|
+NOTAFISCAL|numero de notas|
 
 A|versao|Id|pk_nItem|
 
@@ -141,7 +141,7 @@ N10h|orig|CSOSN|modBC|vBC|pRedBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMS
 
 NA|vBCUFDest|vBCFCPUFDest|pFCPUFDest|pICMSUFDest|pICMSInter|pICMSInterPart|vFCPUFDest|vICMSUFDest|vICMSFRemet|
 
-O|clEnq|CNPJProd|cSelo|qSelo|cEnq|
+O|CNPJProd|cSelo|qSelo|cEnq|
 
 O07|CST|vIPI|
 
