@@ -46,7 +46,7 @@ Podem existir várias CCe para uma unica NFe, então o "nSeqEvento" deve ser inc
 
 [NFePHP\NFe\Common\Standardize::class](Standardize.md)
 
-[NFePHP\NFe\Common\Complements::class](Complements.md)
+[NFePHP\NFe\Complements::class](Complements.md)
 
 
 ## Exemplo de Uso
@@ -56,7 +56,7 @@ Podem existir várias CCe para uma unica NFe, então o "nSeqEvento" deve ser inc
 use NFePHP\NFe\Tools;
 use NFePHP\Common\Certificate;
 use NFePHP\NFe\Common\Standardize;
-use NFePHP\NFe\Common\Complements;
+use NFePHP\NFe\Complements;
 
 try {
 
