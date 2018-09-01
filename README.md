@@ -135,7 +135,7 @@ Agora que você sabe que NAMESPACES é requerido, o uso correto para o exemplo a
 // VENDOR_DIR = pasta vendor da sua instalação composer
 require VENDOR_DIR . 'autoload.php';
 
-use namespace NFePHP\NFe\Make;
+use NFePHP\NFe\Make;
 
 $nfe = new Make();
 ```
