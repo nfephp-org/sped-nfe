@@ -26,7 +26,7 @@ Leia [Make (construtor de XML)](Make.md)
 
 ## Contingência
 
-O uso dos sstema sde contingência é uma necessidade e para isso deve ser instanciada e injetada a class Contingency::class.
+O uso dos sistemas de contingência é uma necessidade e para isso deve ser instanciada e injetada a class Contingency::class.
 Os dados referentes a contignência devem ser mantidos de alguma forma pelo aplicativo. 
 Estão disponíveis alguns modos de contingência (SVC, EPEC, FS-DA e OFF-LINE).
 
