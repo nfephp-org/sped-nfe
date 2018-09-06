@@ -1,4 +1,4 @@
-## LAYOUT NFe v4.00 (FORMATO LOCAL do NFePHP)
+## LAYOUT NFe v4.00 - FORMATO LOCAL do NFePHP *(diferente do emissor SEBRAE)*
 - Nota Técnica 2016.002 - v1.10
 - Nota Técnica 2016.002 - v1.20
 - Nota Técnica 2016.002 - v1.30
@@ -40,6 +40,8 @@ C02|CNPJ|
 C02a|CPF|
 
 C05|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|CEP|cPais|xPais|fone|
+
+D|CNPJ|xOrgao|matr|xAgente|fone|UF|nDAR|dEmi|vDAR|repEmi|dPag|
 
 E|xNome|indIEDest|IE|ISUF|IM|email|
 
@@ -109,7 +111,7 @@ N02|orig|CST|modBC|vBC|pICMS|vICMS|pFCP|vFCP|
 
 N03|orig|CST|modBC|vBC|pICMS|vICMS|vBCFCP|pFCP|vFCP|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|
 
-N04|orig|CST|modBC|pRedBC|vBC|pICMS|vICMS|BCFCP|pFCP|vFCP|vICMSDeson|motDesICMS|
+N04|orig|CST|modBC|pRedBC|vBC|pICMS|vICMS|vBCFCP|pFCP|vFCP|vICMSDeson|motDesICMS|
 
 N05|orig|CST|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|vICMSDeson|motDesICMS|
 
@@ -135,7 +137,7 @@ N10e|orig|CSOSN|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vF
 
 N10f|orig|CSOSN|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|
 
-N10g|orig|CSOSN|vBCSTRet|pST|vICMSSTRet|vBCFCPSTRet|pFCPSTRet|vFCPSTRet|pRedBCEfet|vBCEfet|pICMSEfet|vICMSEfet|
+N10g|orig|CSOSN|vBCSTRet|pST|vICMSSTRet|vBCFCPSTRet|pFCPSTRet|vFCPSTRet|pRedBCEfet|vBCEfet|pICMSEfet|vICMSEfet|",
 
 N10h|orig|CSOSN|modBC|vBC|pRedBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|pCredSN|vCredICMSSN|
 

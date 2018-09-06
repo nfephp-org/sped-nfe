@@ -15,6 +15,8 @@
 
 > **NOTA: Essa estrutura foi obtida em parte por engenharia reversa, e portanto sujeita e ERROS pois não existe um Manual de formação do TXT oficial. E nem todos os campos puderam ser verificados e validados.**
 
+> **TODO: O conversor ainda não executa uma conversão completa no padrão da SEBRAE, devido a falta de informações, complexidade inserida pela SEBRAE e falta de testes.**
+
 > **NOTA: Para o emissor SEBRAE, alguns campos finalizam sem o pipe "|", mas no caso do nosso parser, TODOS os campos devem finalizar com "|".**
 
 ## Pontos de Falha (Incongruências do emissor SEBRAE)
@@ -26,10 +28,12 @@ Entidade **YA01** - o emissor do SEBRAE, coloca na mesma linha TODAS as formas d
 
 ## Estrutura (Lista de entidades)
 
+> NOTA: campos em negrito são diferentes do padrão LOCAL
+
 ```
 NOTAFISCAL|numero de notas|
 
-A|versao|Id|
+**A|versao|Id|**
 
 B|cUF|cNF|natOp|mod|serie|nNF|dhEmi|dhSaiEnt|tpNF|idDest|cMunFG|tpImp|tpEmis|cDV|tpAmb|finNFe|indFinal|indPres|procEmi|verProc|dhCont|xJust|
 
@@ -89,11 +93,11 @@ GA03|CPF|
 
 H|item|infAdProd|
 
-I|cProd|cEAN|xProd|NCM|EXTIPI|CFOP|uCom|qCom|vUnCom|vProd|cEANTrib|uTrib|qTrib|vUnTrib|vFrete|vSeg|vDesc|vOutro|indTot|xPed|nItemPed|nFCI|cBenef|
+**I|cProd|cEAN|xProd|NCM|EXTIPI|CFOP|uCom|qCom|vUnCom|vProd|cEANTrib|uTrib|qTrib|vUnTrib|vFrete|vSeg|vDesc|vOutro|indTot|xPed|nItemPed|nFCI|**
 
 I05A|NVE|
 
-I05C|CEST|indEscala|CNPJFab|
+**I05C|CEST|indEscala|CNPJFab|cBenef|**
 
 I18|nDI|dDI|xLocDesemb|UFDesemb|dDesemb|tpViaTransp|vAFRMM|tpIntermedio|CNPJ|UFTerceiro|cExportador|
 
@@ -153,7 +157,7 @@ N10e|orig|CSOSN|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vF
 
 N10f|orig|CSOSN|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|
 
-N10g|orig|CSOSN|vBCSTRet|pST|vICMSSTRet|vBCFCPSTRet|pFCPSTRet|vFCPSTRet|
+**N10g|orig|CSOSN|vBCSTRet|pST|vICMSSTRet|vBCFCPSTRet|pFCPSTRet|vFCPSTRet|**
 
 N10h|orig|CSOSN|modBC|vBC|pRedBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|pCredSN|vCredICMSSN|
 
@@ -189,7 +193,7 @@ R|vPIS|
 
 R02|vBC|pPIS|
 
-R04|qBCProd|vAliqProd|
+**R04|qBCProd|vAliqProd|**
 
 S|
 
@@ -213,19 +217,19 @@ T04|qBCProd|vAliqProd|
 
 U|vBC|vAliq|vISSQN|cMunFG|cListServ|vDeducao|vOutro|vDescIncond|vDescCond|vISSRet|indISS|cServico|cMun|cPais|nProcesso|indIncentivo|
 
-UA|pDevol|
+**UA|pDevol|**
 
-UA03|vIPIDevol|
+**UA03|vIPIDevol|**
 
 W|
 
-W02|vBC|vICMS|vICMSDeson|vFCP|vBCST|vST|vFCPST|vFCPSTRet|vProd|vFrete|vSeg|vDesc|vII|vIPI|vIPIDevol|vPIS|vCOFINS|vOutro|vNF|vTotTrib|
+**W02|vBC|vICMS|vICMSDeson|vFCP|vBCST|vST|vFCPST|vFCPSTRet|vProd|vFrete|vSeg|vDesc|vII|vIPI|vIPIDevol|vPIS|vCOFINS|vOutro|vNF|vTotTrib|**
 
-W04c|vFCPUFDest|
+**W04c|vFCPUFDest|**
 
-W04e|vICMSUFDest|
+**W04e|vICMSUFDest|**
 
-W04g|vICMSUFRemet|
+**W04g|vICMSUFRemet|**
 
 W17|vServ|vBC|vISS|vPIS|vCOFINS|dCompet|vDeducao|vOutro|vDescIncond|vDescCond|vISSRet|cRegTrib|
 
@@ -253,17 +257,17 @@ X26|qVol|esp|marca|nVol|pesoL|pesoB|
 
 X33|nLacre|
 
-Y|
+**Y|**
 
 Y02|nFat|vOrig|vDesc|vLiq|
 
 Y07|nDup|dVenc|vDup|
 
-YA|vTroco|
+**YA|vTroco|**
 
-YA01|indPag|tPag|vPag|
+**YA01|indPag|tPag|vPag|**
 
-YA04|tpIntegra|CNPJ|tBand|cAut|
+**YA04|tpIntegra|CNPJ|tBand|cAut|**
 
 Z|infAdFisco|infCpl|
 
