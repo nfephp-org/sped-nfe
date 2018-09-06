@@ -5,11 +5,11 @@ namespace NFePHP\NFe;
 /**
  * Classe a construção do xml da NFe modelo 55 e modelo 65
  * Esta classe basica está estruturada para montar XML da NFe para o
- * layout versão 3.10, os demais modelos serão derivados deste
+ * layout versão 4.00, os demais modelos serão derivados deste
  *
  * @category  API
  * @package   NFePHP\NFe\
- * @copyright Copyright (c) 2008-2017
+ * @copyright Copyright (c) 2008-2018
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
  * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
@@ -1125,7 +1125,7 @@ class Make
                 true,
                 $identificador . "CPF do destinatário"
             );
-        } else {
+        } elseif ($std->idEstrangeiro !== null) {
             $this->dom->addChild(
                 $this->dest,
                 "idEstrangeiro",

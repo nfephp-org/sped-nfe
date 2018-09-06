@@ -24,6 +24,8 @@ Framework para geração e comunicação das NFe com as SEFAZ autorizadoras, e v
  
 > *01/10/2018 – Fim da concomitância com a versão 1.00 do QR Code (a versão 4.00 do XML da NFC-e aceitará somente a versão 2.00 do QR Code)* 
 
+## TODO: A conversão com o PADRÂO SEBRAE ainda está incompleta!!
+
 
 *Utilize o chat do Gitter para iniciar discussões específicas sobre o desenvolvimento deste pacote.*
 
