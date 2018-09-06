@@ -6,7 +6,7 @@ namespace NFePHP\NFe;
  * Converts NFe from text format to xml
  * @category  API
  * @package   NFePHP\NFe
- * @copyright NFePHP Copyright (c) 2008-2017
+ * @copyright NFePHP Copyright (c) 2008-2018
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
  * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
@@ -21,19 +21,25 @@ use NFePHP\NFe\Factories\Parser;
 
 class Convert
 {
-    public $txt;
-    public $dados;
-    public $numNFe = 1;
-    public $notas;
-    public $layouts = [];
-    public $xmls = [];
+    const LOCAL="LOCAL";
+    const SEBRAE="SEBRAE";
+    
+    protected $txt;
+    protected $dados;
+    protected $numNFe = 1;
+    protected $notas;
+    protected $layouts = [];
+    protected $xmls = [];
+    protected $baselayout;
     
     /**
      * Constructor method
      * @param string $txt
+     * @param string $baselayout
      */
-    public function __construct($txt = '')
+    public function __construct($txt = '', $baselayout = self::LOCAL)
     {
+        $this->baselayout = $baselayout;
         if (!empty($txt)) {
             $this->txt = trim($txt);
         }
@@ -42,27 +48,25 @@ class Convert
     /**
      * Static method to convert Txt to Xml
      * @param string $txt
+     * @param string $baselayout
      * @return array
      */
-    public static function parse($txt)
+    public static function parse($txt, $baselayout = self::LOCAL)
     {
-        $conv = new static($txt);
+        $conv = new static($txt, $baselayout);
         return $conv->toXml();
     }
     
     /**
      * Convert all nfe in XML, one by one
-     * @param string $txt
      * @return array
      * @throws \NFePHP\NFe\Exception\DocumentsException
      */
-    public function toXml($txt = '')
+    public function toXml()
     {
-        if (!empty($txt)) {
-            $this->txt = trim($txt);
-        }
-        $txt = Strings::removeSomeAlienCharsfromTxt($this->txt);
-        if (!$this->isNFe($txt)) {
+        //$txt = Strings::removeSomeAlienCharsfromTxt($this->txt);
+        
+        if (!$this->isNFe($this->txt)) {
             throw DocumentsException::wrongDocument(12, '');
         }
         $this->notas = $this->sliceNotas($this->dados);
@@ -71,7 +75,7 @@ class Convert
         $i = 0;
         foreach ($this->notas as $nota) {
             $version = $this->layouts[$i];
-            $parser = new Parser($version);
+            $parser = new Parser($version, $this->baselayout);
             $this->xmls[] = $parser->toXml($nota);
             $i++;
         }
@@ -152,16 +156,16 @@ class Convert
     protected function validNotas()
     {
         foreach ($this->notas as $nota) {
-            $this->loadLayouts($nota);
+            $this->loadLayoutsVersions($nota);
             $this->isValidTxt($nota);
         }
     }
 
     /**
-     * Read and set all layouts in NFes
+     * Read and set all layouts versions in NFes
      * @param array $nota
      */
-    protected function loadLayouts($nota)
+    protected function loadLayoutsVersions($nota)
     {
         if (empty($nota)) {
             throw DocumentsException::wrongDocument(17, '');
@@ -182,7 +186,7 @@ class Convert
      */
     protected function isValidTxt($nota)
     {
-        $errors = ValidTXT::isValid(implode("\n", $nota));
+        $errors = ValidTXT::isValid(implode("\n", $nota), $this->baselayout);
         if (!empty($errors)) {
             throw DocumentsException::wrongDocument(14, implode("\n", $errors));
         }

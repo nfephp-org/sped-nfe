@@ -7,7 +7,7 @@ namespace NFePHP\NFe\Factories;
  *
  * @category  API
  * @package   NFePHP\NFe
- * @copyright NFePHP Copyright (c) 2008-2017
+ * @copyright NFePHP Copyright (c) 2008-2018
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
  * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
@@ -21,6 +21,9 @@ use stdClass;
 
 class Parser
 {
+    const LOCAL="LOCAL";
+    const SEBRAE="SEBRAE";
+    
     /**
      * @var array
      */
@@ -97,15 +100,25 @@ class Parser
      * @var stdClass|null
      */
     protected $stdTransporta;
+    /**
+     * @var string
+     */
+    protected $baselayout;
 
     /**
      * Configure environment to correct NFe layout
      * @param string $version
+     * @param string $baselayout
      */
-    public function __construct($version = '3.10')
+    public function __construct($version = '4.00', $baselayout = self::LOCAL)
     {
         $ver = str_replace('.', '', $version);
-        $path = realpath(__DIR__."/../../storage/txtstructure$ver.json");
+        $comp = "";
+        if ($baselayout === 'SEBRAE') {
+            $comp = "_sebrae";
+        }
+        $this->baselayout = $baselayout;
+        $path = realpath(__DIR__."/../../storage/txtstructure$ver" . $comp . ".json");
         $this->structure = json_decode(file_get_contents($path), true);
         $this->make = new Make();
     }
@@ -181,10 +194,6 @@ class Parser
 
     /**
      * Create tag ide [B]
-     * B|cUF|cNF|natOp|indPag|mod|serie|nNF|dhEmi|dhSaiEnt|tpNF|idDest|cMunFG
-     *  |tpImp|tpEmis|cDV|tp Amb|finNFe|indFinal|indPres|procEmi|verProc|dhCont|xJust|
-     *
-     * NOTE: adjusted for NT2016_002_v1.30
      * B|cUF|cNF|natOp|mod|serie|nNF|dhEmi|dhSaiEnt|tpNF|idDest|cMunFG|tpImp
      *  |tpEmis|cDV|tpAmb|finNFe|indFinal|indPres|procEmi|verProc|dhCont|xJust|
      * @param stdClass $std
@@ -337,6 +346,11 @@ class Parser
         $this->buildCEntity();
         $this->stdEmit = null;
     }
+    
+    protected function dEntity($std)
+    {
+        //nada
+    }
 
     /**
      * Create tag emit [C]
@@ -406,7 +420,7 @@ class Parser
      */
     protected function e03aEntity($std)
     {
-        $this->stdDest->idEstrangeiro = $std->idEstrangeiro;
+        $this->stdDest->idEstrangeiro = !empty($std->idEstrangeiro) ? $std->idEstrangeiro : '';
         $this->buildEEntity();
         $this->stdDest = null;
     }
@@ -582,10 +596,10 @@ class Parser
 
     /**
      * Create tag prod [I]
+     * LOCAL
+     * I|cProd|cEAN|xProd|NCM|cBenef|EXTIPI|CFOP|uCom|qCom|vUnCom|vProd|cEANTrib|uTrib|qTrib|vUnTrib|vFrete|vSeg|vDesc|vOutro|indTot|xPed|nItemPed|nFCI|
+     * SEBRAE
      * I|cProd|cEAN|xProd|NCM|EXTIPI|CFOP|uCom|qCom|vUnCom|vProd|cEANTrib|uTrib|qTrib|vUnTrib|vFrete|vSeg|vDesc|vOutro|indTot|xPed|nItemPed|nFCI|
-     *
-     * NOTE: adjusted for NT2016_002_v1.30
-     * I|cProd|cEAN|xProd|NCM|cBenf|EXTIPI|CFOP|uCom|qCom|vUnCom|vProd|cEANTrib|uTrib|qTrib|vUnTrib|vFrete|vSeg|vDesc|vOutro|indTot|xPed|nItemPed|nFCI|
      * @param stdClass $std
      * @return void
      */
@@ -609,9 +623,9 @@ class Parser
 
     /**
      * Create tag CEST [I05C]
-     * I05C|CEST|
-     * NOTE: adjusted for NT2016_002_v1.30
      * I05C|CEST|indEscala|CNPJFab|
+     * SEBRAE
+     * I05C|CEST|indEscala|CNPJFab|cBenef|
      * @param stdClass $std
      * @return void
      */
@@ -673,7 +687,6 @@ class Parser
     
     /**
      * Create tag RASTRO [I80]
-     * NOTE: adjusted for NT2016_002_v1.30
      * I80|nLote|qLote|dFab|dVal|cAgreg|
      * @param stdClass $std
      * @return void
@@ -698,9 +711,6 @@ class Parser
 
     /**
      * Create tag med [K]
-     * K|nLote|qLote|dFab|dVal|vPMC|
-     *
-     * NOTE: adjusted for NT2016_002_v1.30
      * K|cProdANVISA|vPMC|
      * @param stdClass $std
      * @return void
@@ -730,9 +740,6 @@ class Parser
 
     /**
      * Load fields for tag comb [LA]
-     * LA|cProdANP|pMixGN|CODIF|qTemp|UFCons|
-     *
-     * NOTE: adjusted for NT2016_002_v1.30
      * LA|cProdANP|descANP|pGLP|pGNn|pGNi|vPart|CODIF|qTemp|UFCons|
      * @param stdClass $std
      * @return void
@@ -741,9 +748,6 @@ class Parser
     {
         $std->item = $this->item;
         $this->stdComb = $std;
-        //como o campo abaixo é opcional não é possível saber de antemão
-        //se o mesmo existe ou não então
-        //invocar montagem buildLAEntity() na proxima tag obrigatória [M]
     }
 
     /**
@@ -757,8 +761,6 @@ class Parser
         $this->stdComb->qBCProd = $std->qBCProd;
         $this->stdComb->vAliqProd = $std->vAliqProd;
         $this->stdComb->vCIDE = $std->vCIDE;
-        //como este campo é opcional, pode ser que não exista então
-        //invocar montagem buildLAEntity() na proxima tag obrigatória [M]
     }
 
     /**
@@ -825,9 +827,6 @@ class Parser
 
     /**
      * Load fields for tag ICMS [N02]
-     * N02|orig|CST|modBC|vBC|pICMS|vICMS|
-     *
-     * NOTE: adjusted for NT2016_002_v1.30
      * N02|orig|CST|modBC|vBC|pICMS|vICMS|pFCP|vFCP|
      * @param stdClass $std
      * @return void
@@ -839,9 +838,6 @@ class Parser
 
     /**
      * Load fields for tag ICMS [N03]
-     * N03|orig|CST|modBC|vBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|
-     *
-     * NOTE: adjusted for NT2016_002_v1.30
      * N03|orig|CST|modBC|vBC|pICMS|vICMS|vBCFCP|pFCP|vFCP|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|
      * @param stdClass $std
      * @return void
@@ -853,9 +849,6 @@ class Parser
 
     /**
      * Load fields for tag ICMS [N04]
-     * N04|orig|CST|modBC|pRedBC|vBC|pICMS|vICMS|vICMSDeson|motDesICMS|
-     *
-     * NOTE: adjusted for NT2016_002_v1.30
      * N04|orig|CST|modBC|pRedBC|vBC|pICMS|vICMS|BCFCP|pFCP|vFCP|vICMSDeson|motDesICMS|
      * @param stdClass $std
      * @return void
@@ -867,9 +860,6 @@ class Parser
 
     /**
      * Load fields for tag ICMS [N05]
-     * N05|orig|CST|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vICMSDeson|motDesICMS|
-     *
-     * NOTE: adjusted for NT2016_002_v1.30
      * N05|orig|CST|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|vICMSDeson|motDesICMS|
      * @param stdClass $std
      * @return void
@@ -892,9 +882,6 @@ class Parser
 
     /**
      * Load fields for tag ICMS [N07]
-     * N07|orig|CST|modBC|pRedBC|vBC|pICMS|vICMSOp|pDif|vICMSDif|vICMS|
-     *
-     * NOTE: adjusted for NT2016_002_v1.30
      * N07|orig|CST|modBC|pRedBC|vBC|pICMS|vICMSOp|pDif|vICMSDif|vICMS|vBCFCP|pFCP|vFCP|
      * @param stdClass $std
      * @return void
@@ -906,9 +893,6 @@ class Parser
 
     /**
      * Load fields for tag ICMS [N08]
-     * N08|orig|CST|vBCSTRet|vICMSSTRet|
-     *
-     * NOTE: adjusted for NT2016_002_v1.30
      * N08|orig|CST|vBCSTRet|pST|vICMSSTRet|vBCFCPSTRet|pFCPSTRet|vFCPSTRet|
      * @param stdClass $std
      * @return void
@@ -920,9 +904,6 @@ class Parser
 
     /**
      * Load fields for tag ICMS [N09]
-     * N09|orig|CST|modBC|pRedBC|vBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vICMSDeson|motDesICMS|
-     *
-     * NOTE: adjusted for NT2016_002_v1.30
      * N09|orig|CST|modBC|pRedBC|vBC|pICMS|vICMS|vBCFCP|pFCP|vFCP|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|vICMSDeson|motDesICMS|
      * @param stdClass $std
      * @return void
@@ -934,9 +915,6 @@ class Parser
 
     /**
      * Load fields for tag ICMS [N10]
-     * N10|orig|CST|modBC|vBC|pRedBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vICMSDeson|motDesICMS|
-     *
-     * NOTE: adjusted for NT2016_002_v1.30
      * N10|orig|CST|modBC|vBC|pRedBC|pICMS|vICMS|vBCFCP|pFCP|vFCP|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|vICMSDeson|motDesICMS|
      * @param stdClass $std
      * @return void
@@ -1007,9 +985,6 @@ class Parser
 
     /**
      * Carrega e Create tag ICMSSN [N10e]
-     * N10e|orig|CSOSN|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|pCredSN|vCredICMSSN|
-     *
-     * NOTE: adjusted for NT2016_002_v1.30
      * N10e|orig|CSOSN|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|pCredSN|vCredICMSSN|pCredSN|vCredICMSSN|
      * @param stdClass $std
      * @return void
@@ -1020,9 +995,6 @@ class Parser
     }
     /**
      * Carrega e Create tag ICMSSN [N10f]
-     * N10f|orig|CSOSN|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|
-     *
-     * NOTE: adjusted for NT2016_002_v1.30
      * N10f|orig|CSOSN|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|
      * @param stdClass $std
      * @return void
@@ -1034,9 +1006,6 @@ class Parser
 
     /**
      * Carrega e Create tag ICMSSN [N10g]
-     * N10g|orig|CSOSN|vBCSTRet|vICMSSTRet|
-     *
-     * NOTE: adjusted for NT2016_002_v1.30
      * N10g|orig|CSOSN|vBCSTRet|pST|vICMSSTRet|vBCFCPSTRet|pFCPSTRet|vFCPSTRet|
      * @param stdClass $std
      * @return void
@@ -1048,9 +1017,6 @@ class Parser
 
     /**
      * Carrega e Create tag ICMSSN [N10h]
-     * N10h|orig|CSOSN|modBC|vBC|pRedBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|pCredSN|vCredICMSSN|
-     *
-     * NOTE: adjusted for NT2016_002_v1.30
      * N10h|orig|CSOSN|modBC|vBC|pRedBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|pCredSN|vCredICMSSN|
      * @param stdClass $std
      * @return void
@@ -1550,11 +1516,6 @@ class Parser
 
     /**
      * Cria tag ICMSTot [W02], belongs to [W]
-     * W02|vBC|vICMS|vICMSDeson|vBCST|vST|vProd|vFrete|vSeg|vDesc|vII|vIPI|vPIS|vCOFINS|vOutro|vNF|vTotTrib|
-     *
-     * NOTE: adjusted for NT2016_002_v1.30
-     * W02|vBC|vICMS|vICMSDeson|vFCP|vBCST|vST|vFCPST|vFCPSTRet|vProd|vFrete|vSeg|vDesc|vII|vIPI|vIPIDevol|vPIS|vCOFINS|vOutro|vNF|vTotTrib|
-     * NOTE: adjusted for NT2016_002_v1.31
      * W02|vBC|vICMS|vICMSDeson|vFCP|vBCST|vST|vFCPST|vFCPSTRet|vProd|vFrete|vSeg|vDesc|vII|vIPI|vIPIDevol|vPIS|vCOFINS|vOutro|vNF|vTotTrib|vFCPUFDest|vICMSUFDest|vICMSUFRemet|
      * @param stdClass $std
      * @return void
@@ -1562,6 +1523,18 @@ class Parser
     protected function w02Entity($std)
     {
         $this->make->tagICMSTot($std);
+    }
+    
+    protected function w04cEntity($std)
+    {
+    }
+    
+    protected function w04eEntity($std)
+    {
+    }
+    
+    protected function w04gEntity($std)
+    {
     }
 
     /**
@@ -1729,29 +1702,19 @@ class Parser
 
     /**
      * yEntity [Y]
-     * Y|
      *
-     * NOTE: adjusted for NT2016_002_v1.30
+     * LOCAL
      * Y|vTroco|
      * @param stdClass $std
      * @return void
      */
     protected function yEntity($std)
     {
-        $this->make->tagpag($std);
+        if ($this->baselayout !== 'SEBRAE') {
+            $this->make->tagpag($std);
+        }
     }
-
-    /**
-     * Creates tag detPag and card [YA]
-     * YA|tPag|vPag|CNPJ|tBand|cAut|tpIntegra|
-     * @param stdClass $std
-     * @return void
-     */
-    protected function yaEntity($std)
-    {
-        $this->make->tagdetPag($std);
-    }
-
+    
     /**
      * Create tag fat [Y02]
      * Y02|nFat|vOrig|vDesc|vLiq|
@@ -1773,6 +1736,36 @@ class Parser
     {
         $this->make->tagdup($std);
     }
+
+    /**
+     * Creates tag detPag and card [YA]
+     * YA|tPag|vPag|CNPJ|tBand|cAut|tpIntegra|
+     * SEBRAE
+     * YA|troco|
+     * @param stdClass $std
+     * @return void
+     */
+    protected function yaEntity($std)
+    {
+        if ($this->baselayout === 'SEBRAE') {
+            $this->make->tagpag($std);
+        } else {
+            $this->make->tagdetPag($std);
+        }
+    }
+    
+    /**
+     * Creates tag detPag and card [YA]
+     * SEBRAE
+     * YA01|indPag|tPag|vPag|",
+     * @param type $std
+     */
+    protected function ya01Entity($std)
+    {
+        $this->make->tagdetPag($std);
+    }
+    
+
 
     /**
      * Create a tag infAdic [Z]
@@ -1875,9 +1868,6 @@ class Parser
 
     /**
      * Create tag infNFeSupl com o qrCode para impressão da DANFCE [ZX01]
-     * ZX01|qrcode|
-     *
-     * NOTE: Adjusted for NT2016_002_v1.30
      * ZX01|qrcode|urlChave|
      * @param stdClass $std
      * @return void
