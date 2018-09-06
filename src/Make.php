@@ -49,6 +49,10 @@ class Make
      */
     protected $mod = 55;
     /**
+     * @var bool
+     */
+    protected $showNames = false;
+    /**
      * @var \NFePHP\Common\DOMImproved
      */
     public $dom;
@@ -337,6 +341,17 @@ class Make
     public function getModelo()
     {
         return $this->mod;
+    }
+
+    /**
+     * Set showNames variable with given parameter.
+     * This is used in xNome from dest tag and xProd from prod tag
+     * to show prod and dest name instead default approval environment message
+     * @param   bool $show
+     * @return  void
+     */
+    public function setShowNames($show = true){
+        $this->showNames = $show;
     }
 
     /**
@@ -1105,7 +1120,7 @@ class Make
             }
         }
         $xNome = $std->xNome;
-        if ($this->tpAmb == '2') {
+        if ($this->tpAmb == '2' && !$this->showNames) {
             $xNome = 'NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
             //a exigência do CNPJ 99999999000191 não existe mais
         }
@@ -1598,7 +1613,7 @@ class Make
             true
         );
         $xProd = $std->xProd;
-        if ($this->tpAmb == '2' && $this->mod == '65') {
+        if ($this->tpAmb == '2' && $this->mod == '65' && !$this->showNames) {
             $xProd = 'NOTA FISCAL EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
         }
         $this->dom->addChild(
