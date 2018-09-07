@@ -30,10 +30,10 @@ Entidade **YA01** - o emissor do SEBRAE, coloca na mesma linha TODAS as formas d
 
 > NOTA: campos em negrito são diferentes do padrão LOCAL
 
-```
+
 NOTAFISCAL|numero de notas|
 
-**A|versao|Id|**
+A|versao|Id|
 
 B|cUF|cNF|natOp|mod|serie|nNF|dhEmi|dhSaiEnt|tpNF|idDest|cMunFG|tpImp|tpEmis|cDV|tpAmb|finNFe|indFinal|indPres|procEmi|verProc|dhCont|xJust|
 
@@ -288,4 +288,4 @@ ZC04|dia|qtde|
 ZC10|xDed|vDed|
 
 ZX01|qrcode|urlChave|
-```
+
