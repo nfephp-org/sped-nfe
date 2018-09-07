@@ -31,29 +31,29 @@ Entidade **YA01** - o emissor do SEBRAE, coloca na mesma linha TODAS as formas d
 > NOTA: campos em negrito são diferentes do padrão LOCAL
 
 
-NOTAFISCAL|numero de notas|
+`NOTAFISCAL|numero de notas|`
 
-A|versao|Id|
+**`A|versao|Id|`**
 
-B|cUF|cNF|natOp|mod|serie|nNF|dhEmi|dhSaiEnt|tpNF|idDest|cMunFG|tpImp|tpEmis|cDV|tpAmb|finNFe|indFinal|indPres|procEmi|verProc|dhCont|xJust|
+`B|cUF|cNF|natOp|mod|serie|nNF|dhEmi|dhSaiEnt|tpNF|idDest|cMunFG|tpImp|tpEmis|cDV|tpAmb|finNFe|indFinal|indPres|procEmi|verProc|dhCont|xJust|`
 
-BA|
+`BA|`
 
-BA02|refNFe|
+`BA02|refNFe|`
 
-BA03|cUF|AAMM|CNPJ|mod|serie|nNF|
+`BA03|cUF|AAMM|CNPJ|mod|serie|nNF|`
 
-BA10|cUF|AAMM|IE|mod|serie|nNF|
+`BA10|cUF|AAMM|IE|mod|serie|nNF|`
 
-BA13|CNPJ|
+`BA13|CNPJ|`
 
-BA14|CPF|
+`BA14|CPF|`
 
-B19|refCTe|
+`B19|refCTe|`
 
-BA20|mod|nECF|nCOO|
+`BA20|mod|nECF|nCOO|`
 
-C|xNome|xFant|IE|IEST|IM|CNAE|CRT|
+`C|xNome|xFant|IE|IEST|IM|CNAE|CRT|`
 
 C02|CNPJ|
 
