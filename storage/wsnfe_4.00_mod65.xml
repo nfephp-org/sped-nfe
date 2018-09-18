@@ -200,6 +200,15 @@
     </producao>
   </UF>
   <UF>
+    <sigla>PI</sigla>
+    <homologacao>
+      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://webas.sefaz.pi.gov.br/nfceweb-homologacao/consultarNFCe.jsf</NfeConsultaQR>
+    </homologacao>
+    <producao>
+      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://webas.sefaz.pi.gov.br/nfceweb/consultarNFCe.jsf</NfeConsultaQR>
+    </producao>
+  </UF>
+  <UF>
     <sigla>PR</sigla>
     <homologacao>
        <NfeAutorizacao method="nfeAutorizacaoLote" operation="NFeAutorizacao4" version="4.00">https://homologacao.nfce.sefa.pr.gov.br/nfce/NFeAutorizacao4</NfeAutorizacao>
