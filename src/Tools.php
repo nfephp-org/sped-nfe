@@ -576,8 +576,7 @@ class Tools extends ToolsCommon
         $batchRequest = '';
         foreach ($std->evento as $evt) {
             if ($evt->tpEvento == '110140') {
-                //não é possivel enviar EPEC com outros eventos
-                continue;
+                continue; //não é possivel enviar EPEC com outros eventos
             }
             $ev = $this->tpEv($evt->tpEvento);
             $descEvento = $ev->desc;
@@ -615,7 +614,8 @@ class Tools extends ToolsCommon
             );
             $batchRequest .= Strings::clearXmlString($request, true);
         }
-        $lote = $dt->format('YmdHis').rand(0, 9);
+        $dt = new \DateTime();
+        $lote = $dt->format('YmdHis') . rand(0, 9);
         $request = "<envEvento xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
             . "<idLote>$lote</idLote>"
             . $batchRequest
