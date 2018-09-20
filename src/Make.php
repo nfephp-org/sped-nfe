@@ -1129,7 +1129,7 @@ class Make
             $this->dom->addChild(
                 $this->dest,
                 "idEstrangeiro",
-                Strings::replaceSpecialsChars(substr(trim($std->idEstrangeiro), 0, 50)),
+                $std->idEstrangeiro,
                 true,
                 $identificador . "Identificação do destinatário no caso de comprador estrangeiro",
                 true
@@ -1730,22 +1730,20 @@ class Make
             true,
             $identificador . "[item $std->item] Indica se valor do Item (vProd) entra no valor total da NF-e (vProd)"
         );
-        if (!empty($std->xPed) &&  !empty($std->nItemPed)) {
-            $this->dom->addChild(
-                $prod,
-                "xPed",
-                $std->xPed,
-                false,
-                $identificador . "[item $std->item] Número do Pedido de Compra"
-            );
-            $this->dom->addChild(
-                $prod,
-                "nItemPed",
-                $std->nItemPed,
-                false,
-                $identificador . "[item $std->item] Item do Pedido de Compra"
-            );
-        }
+        $this->dom->addChild(
+            $prod,
+            "xPed",
+             $std->xPed,
+            false,
+            $identificador . "[item $std->item] Número do Pedido de Compra"
+        );
+        $this->dom->addChild(
+            $prod,
+            "nItemPed",
+            $std->nItemPed,
+            false,
+            $identificador . "[item $std->item] Item do Pedido de Compra"
+        );
         $this->dom->addChild(
             $prod,
             "nFCI",
