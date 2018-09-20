@@ -228,4 +228,29 @@ class ConfigTest extends NFeTestCase
         ];
         $resp = Config::validate(json_encode($config));
     }
+    
+    public function testValidadeWithCPF()
+    {
+        $config = [
+            //"atualizacao" => "2017-02-20 09:11:21",
+            "tpAmb" => 2,
+            "razaosocial" => "SUA RAZAO SOCIAL LTDA",
+            "siglaUF" => "SP",
+            "cnpj" => "99999999999", //CPF
+            "schemes" => "PL_009_V4",
+            "versao" => "4.00",
+            //"tokenIBPT" => "AAAAAAA",
+            //"CSC" => "GPB0JBWLUR6HWFTVEAS6RJ69GPCROFPBBB8G",
+            //"CSCid" => "000001",
+            //"aProxyConf" => [
+            //    "proxyIp" => "",
+            //    "proxyPort" => "",
+            //    "proxyUser" => "",
+            //    "proxyPass" => ""
+            //]
+        ];
+        $resp = Config::validate(json_encode($config));
+        $b = is_object($resp);
+        $this->assertTrue($b);
+    }
 }

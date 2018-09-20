@@ -1733,7 +1733,7 @@ class Make
         $this->dom->addChild(
             $prod,
             "xPed",
-             $std->xPed,
+            $std->xPed,
             false,
             $identificador . "[item $std->item] Número do Pedido de Compra"
         );
