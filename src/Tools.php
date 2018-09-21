@@ -72,11 +72,7 @@ class Tools extends ToolsCommon
             $ax[] = trim(preg_replace("/<\?xml.*?\?>/", "", $xml));
         }
         $sxml = trim(implode("", $ax));
-        $this->servico(
-            $servico,
-            $this->config->siglaUF,
-            $this->tpAmb
-        );
+        $this->servico($servico, $this->config->siglaUF, $this->tpAmb);
         $request = "<enviNFe xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
             . "<idLote>$idLote</idLote>"
             . "<indSinc>$indSinc</indSinc>"
@@ -299,12 +295,7 @@ class Tools extends ToolsCommon
         }
         $servico = 'NfeStatusServico';
         $this->checkContingencyForWebServices($servico);
-        $this->servico(
-            $servico,
-            $uf,
-            $tpAmb,
-            $ignoreContingency
-        );
+        $this->servico($servico, $uf, $tpAmb, $ignoreContingency);
         $request = "<consStatServ xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
             . "<tpAmb>$tpAmb</tpAmb><cUF>$this->urlcUF</cUF>"
             . "<xServ>STATUS</xServ></consStatServ>";
@@ -372,7 +363,6 @@ class Tools extends ToolsCommon
         }
         $uf = $this->validKeyByUF($chave);
         $xCorrecao = Strings::replaceSpecialsChars(substr(trim($xCorrecao), 0, 1000));
-        $tpEvento = 110110;
         $xCondUso = 'A Carta de Correcao e disciplinada pelo paragrafo '
             . '1o-A do art. 7o do Convenio S/N, de 15 de dezembro de 1970 '
             . 'e pode ser utilizada para regularizacao de erro ocorrido '
@@ -386,13 +376,7 @@ class Tools extends ToolsCommon
         $tagAdic = "<xCorrecao>"
             . $xCorrecao
             . "</xCorrecao><xCondUso>$xCondUso</xCondUso>";
-        return $this->sefazEvento(
-            $uf,
-            $chave,
-            $tpEvento,
-            $nSeqEvento,
-            $tagAdic
-        );
+        return $this->sefazEvento($uf, $chave, self::EVT_CCE, $nSeqEvento, $tagAdic);
     }
 
     /**
@@ -481,10 +465,9 @@ class Tools extends ToolsCommon
         }
         $uf = $this->validKeyByUF($chave);
         $xJust = Strings::replaceSpecialsChars(substr(trim($xJust), 0, 255));
-        $tpEvento = 110111;
         $nSeqEvento = 1;
         $tagAdic = "<nProt>$nProt</nProt><xJust>$xJust</xJust>";
-        return $this->sefazEvento($uf, $chave, $tpEvento, $nSeqEvento, $tagAdic);
+        return $this->sefazEvento($uf, $chave, self::EVT_CANCELA, $nSeqEvento, $tagAdic);
     }
 
     /**
@@ -502,8 +485,7 @@ class Tools extends ToolsCommon
             throw new InvalidArgumentException('Manifestacao: chave ou tipo de evento vazio!');
         }
         $tagAdic = '';
-        //210240 - Operação não Realizada
-        if ($tpEvento == 210240) {
+        if ($tpEvento == self::EVT_NAO_REALIZADA) {
             $xJust = Strings::replaceSpecialsChars(substr(trim($xJust), 0, 255));
             $tagAdic = "<xJust>$xJust</xJust>";
         }
@@ -520,10 +502,10 @@ class Tools extends ToolsCommon
     public function sefazManifestaLote(\stdClass $std)
     {
         $allowed = [
-            '210200',
-            '210210',
-            '210220',
-            '210240'
+            self::EVT_CONFIRMACAO,
+            self::EVT_CIENCIA,
+            self::EVT_DESCONHECIMENTO,
+            self::EVT_NAO_REALIZADA,
         ];
         if (empty($std) || empty($std->evento)) {
             throw new InvalidArgumentException('Manifestacao: parametro "std" ou evento estao vazios!');
@@ -534,13 +516,11 @@ class Tools extends ToolsCommon
         $evt = new \stdClass();
         $i = 0;
         foreach ($std->evento as $s) {
-            //se o evento não estiver entre os permitidos ignore
-            if (!in_array($s->tpEvento, $allowed)) {
+            if (!in_array($s->tpEvento, $allowed)) { // se o evento não estiver entre os permitidos ignore
                 continue;
             }
             $tagAdic = '';
-            //210240 - Operação não Realizada
-            if ($s->tpEvento == 210240) {
+            if ($s->tpEvento == self::EVT_NAO_REALIZADA) {
                 $xJust = Strings::replaceSpecialsChars(substr(trim($s->xJust), 0, 255));
                 $tagAdic = "<xJust>$xJust</xJust>";
             }
@@ -575,7 +555,7 @@ class Tools extends ToolsCommon
         $this->servico($servico, $uf, $this->tpAmb, false);
         $batchRequest = '';
         foreach ($std->evento as $evt) {
-            if ($evt->tpEvento == '110140') {
+            if ($evt->tpEvento == self::EVT_EPEC) {
                 continue; //não é possivel enviar EPEC com outros eventos
             }
             $ev = $this->tpEv($evt->tpEvento);
@@ -640,7 +620,6 @@ class Tools extends ToolsCommon
         if (empty($xml)) {
             throw new InvalidArgumentException('EPEC: parametro xml esta vazio!');
         }
-        $tpEvento = 110140;
         $nSeqEvento = 1;
         if ($this->contingency->type !== 'EPEC') {
             throw new RuntimeException('A contingencia EPEC deve estar ativada!');
@@ -699,14 +678,8 @@ class Tools extends ToolsCommon
             . "<vICMS>$vICMS</vICMS>"
             . "<vST>$vST</vST>"
             . "</dest>";
-
-        return $this->sefazEvento(
-            'AN',
-            $chNFe,
-            $tpEvento,
-            $nSeqEvento,
-            $tagAdic
-        );
+    
+        return $this->sefazEvento('AN', $chNFe, self::EVT_EPEC, $nSeqEvento, $tagAdic);
     }
 
     /**
@@ -725,18 +698,10 @@ class Tools extends ToolsCommon
         $nSeqEvento = 1,
         $tagAdic = ''
     ) {
-        $ignore = false;
-        if ($tpEvento == 110140) {
-            $ignore = true;
-        }
+        $ignore = $tpEvento == self::EVT_EPEC;
         $servico = 'RecepcaoEvento';
         $this->checkContingencyForWebServices($servico);
-        $this->servico(
-            $servico,
-            $uf,
-            $this->tpAmb,
-            $ignore
-        );
+        $this->servico($servico, $uf, $this->tpAmb, $ignore);
         $ev = $this->tpEv($tpEvento);
         $descEvento = $ev->desc;
         $cnpj = $this->config->cnpj;
@@ -917,10 +882,7 @@ class Tools extends ToolsCommon
         }
         $chProt = $infProt->getElementsByTagName("chNFe")->item(0)->nodeValue;
         $nProt = $infProt->getElementsByTagName("nProt")->item(0)->nodeValue;
-        if ($protocol == $nProt
-            && $digval == $digProt
-            && $chNFe == $chProt
-        ) {
+        if ($protocol == $nProt && $digval == $digProt && $chNFe == $chProt) {
             return true;
         }
         return false;
@@ -938,19 +900,15 @@ class Tools extends ToolsCommon
         $std->alias = '';
         $std->desc = '';
         switch ($tpEvento) {
-            case 110110:
-                //CCe
+            case self::EVT_CCE:
                 $std->alias = 'CCe';
                 $std->desc = 'Carta de Correcao';
                 break;
-            case 110111:
-                //Cancelamento
+            case self::EVT_CANCELA:
                 $std->alias = 'CancNFe';
                 $std->desc = 'Cancelamento';
                 break;
-            case 110140:
-                //EPEC
-                //Emissão em contingência EPEC
+            case self::EVT_EPEC: // Emissão em contingência EPEC
                 $std->alias = 'EPEC';
                 $std->desc = 'EPEC';
                 break;
@@ -968,24 +926,20 @@ class Tools extends ToolsCommon
                 $std->alias = 'ECPP';
                 $std->desc = 'Cancelamento de Pedido de Prorrogacao';
                 break;
-            case 210200:
-                //Manifestação Confirmacao da Operacao
+            case self::EVT_CONFIRMACAO: // Manifestação Confirmacao da Operação
                 $std->alias = 'EvConfirma';
                 $std->desc = 'Confirmacao da Operacao';
                 break;
-            case 210210:
-                //Manifestação Ciencia da Operacao
+            case self::EVT_CIENCIA: // Manifestação Ciencia da Operação
                 $std->alias = 'EvCiencia';
                 $std->desc = 'Ciencia da Operacao';
                 $std->tpAutor = 2;
                 break;
-            case 210220:
-                //Manifestação Desconhecimento da Operacao
+            case self::EVT_DESCONHECIMENTO: // Manifestação Desconhecimento da Operação
                 $std->alias = 'EvDesconh';
                 $std->desc = 'Desconhecimento da Operacao';
                 break;
-            case 210240:
-                //Manifestação Operacao não Realizada
+            case self::EVT_NAO_REALIZADA: // Manifestação Operacao não Realizada
                 $std->alias = 'EvNaoRealizada';
                 $std->desc = 'Operacao nao Realizada';
                 break;
