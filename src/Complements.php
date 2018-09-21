@@ -122,7 +122,7 @@ class Complements
                 ->item(0)
                 ->nodeValue;
             if (in_array($cStat, ['135', '136', '155'])
-                && $tpEvento == '110111'
+                && $tpEvento == Tools::EVT_CANCELA
                 && $chaveEvento == $chaveNFe
             ) {
                 $proNFe->getElementsByTagName('cStat')
@@ -307,7 +307,7 @@ class Complements
         $xMotivo = $retEv->getElementsByTagName('xMotivo')->item(0)->nodeValue;
         $tpEvento = $retEv->getElementsByTagName('tpEvento')->item(0)->nodeValue;
         $cStatValids = ['135', '136'];
-        if ($tpEvento == '110111') {
+        if ($tpEvento == Tools::EVT_CANCELA) {
             $cStatValids[] = '155';
         }
         if (!in_array($cStat, $cStatValids)) {
