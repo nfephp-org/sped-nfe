@@ -303,7 +303,7 @@
        <NfeInutilizacao  method="nfeInutilizacaoNF" operation="NFeInutilizacao4" version="4.00">https://nfce.fazenda.sp.gov.br/ws/NFeInutilizacao4.asmx</NfeInutilizacao>
        <NfeConsultaProtocolo method="nfeConsultaNF" operation="NFeConsultaProtocolo4" version="4.00">https://nfce.fazenda.sp.gov.br/ws/NFeConsultaProtocolo4.asmx</NfeConsultaProtocolo>
        <NfeStatusServico method="nfeStatusServicoNF" operation="NFeStatusServico4" version="4.00">https://nfce.fazenda.sp.gov.br/ws/NFeStatusServico4.asmx</NfeStatusServico>
-       <RecepcaoEvento  method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento" version="1.00">https://nfce.fazenda.sp.gov.br/ws/NFeRecepcaoEvento4.asmx</RecepcaoEvento>
+       <RecepcaoEvento  method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="1.00">https://nfce.fazenda.sp.gov.br/ws/NFeRecepcaoEvento4.asmx</RecepcaoEvento>
        <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">https://www.nfce.fazenda.sp.gov.br/NFCeConsultaPublica/Paginas/ConsultaQRCode.aspx</NfeConsultaQR>
     </producao>
   </UF>
