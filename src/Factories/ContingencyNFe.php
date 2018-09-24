@@ -3,17 +3,16 @@
 namespace NFePHP\NFe\Factories;
 
 use NFePHP\Common\Strings;
-use NFePHP\NFe\Factories\Contingency;
 use NFePHP\Common\Signer;
 use NFePHP\Common\Keys;
-use NFePHP\Common\UFList;
 use DateTime;
 
 class ContingencyNFe
 {
     /**
-     * Corret NFe fields when in contingency mode
+     * Corrects NFe fields when in contingency mode
      * @param string $xml NFe xml content
+     * @param Contingency $contingency
      * @return string
      */
     public static function adjust($xml, Contingency $contingency)

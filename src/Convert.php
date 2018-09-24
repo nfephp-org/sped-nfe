@@ -15,7 +15,6 @@ namespace NFePHP\NFe;
  */
 
 use NFePHP\NFe\Common\ValidTXT;
-use NFePHP\Common\Strings;
 use NFePHP\NFe\Exception\DocumentsException;
 use NFePHP\NFe\Factories\Parser;
 

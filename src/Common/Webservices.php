@@ -40,26 +40,21 @@ class Webservices
      * @param string $sigla
      * @param string $ambiente "homologacao" ou "producao"
      * @param int $modelo "55" ou "65"
-     * @return boolean | \stdClass
+     * @return bool | \stdClass
      */
     public function get($sigla, $ambiente, $modelo)
     {
         $autfile = realpath(__DIR__ . '/../../storage/autorizadores.json');
         $autorizadores = json_decode(file_get_contents($autfile), true);
         if (!key_exists($sigla, $autorizadores[$modelo])) {
-            throw new \RuntimeException(
-                "Não existe o autorizador [$sigla] para os "
-                . "webservices do modelo [$modelo]"
-            );
+            throw new \RuntimeException("Nao existe autorizador [$sigla] para os webservices do modelo [$modelo]");
         }
         $auto = $autorizadores[$modelo][$sigla];
         if (empty($auto) || empty($this->std)) {
-            return false;
+            return false; // TODO fmertins 24/09/18: throw exception e nao retornar mais false...?
         }
         if (empty($this->std->$auto)) {
-            throw new \RuntimeException(
-                "Não existem webservices cadastrados para  [$sigla] no modelo [$modelo]"
-            );
+            throw new \RuntimeException("Nao existem webservices cadastrados para [$sigla] no modelo [$modelo]");
         }
         $svw = $this->std->$auto->$ambiente;
         if ($auto == 'SVRS' || $auto == 'SVAN') {

@@ -244,7 +244,7 @@ class Complements
         $digProt = '000';
         foreach ($retProt as $rp) {
             $infProt = $rp->getElementsByTagName('infProt')->item(0);
-            $cStat  = $infProt->getElementsByTagName('cStat')->item(0)->nodeValue;
+            $cStat = $infProt->getElementsByTagName('cStat')->item(0)->nodeValue;
             $xMotivo = $infProt->getElementsByTagName('xMotivo')->item(0)->nodeValue;
             $dig = $infProt->getElementsByTagName("digVal")->item(0);
             $key = $infProt->getElementsByTagName("chNFe")->item(0)->nodeValue;

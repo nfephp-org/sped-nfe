@@ -458,12 +458,8 @@ class Tools
      * @param bool $ignoreContingency
      * @return void
      */
-    protected function servico(
-        $service,
-        $uf,
-        $tpAmb,
-        $ignoreContingency = false
-    ) {
+    protected function servico($service, $uf, $tpAmb, $ignoreContingency = false)
+    {
         $ambiente = $tpAmb == 1 ? "producao" : "homologacao";
         $webs = new Webservices($this->getXmlUrlPath());
         $sigla = $uf;
@@ -477,50 +473,24 @@ class Tools
         }
         $stdServ = $webs->get($sigla, $ambiente, $this->modelo);
         if ($stdServ === false) {
-            throw new \RuntimeException(
-                "Nenhum serviço foi localizado para esta unidade "
-                . "da federação [$sigla], com o modelo [$this->modelo]."
-            );
+            throw new \RuntimeException("Nenhum servico encontrado para UF [$sigla], modelo [$this->modelo]");
         }
         if (empty($stdServ->$service->url)) {
-            throw new \RuntimeException(
-                "Este serviço [$service] não está disponivel para esta "
-                . "unidade da federação [$uf] ou para este modelo de Nota ["
-                . $this->modelo
-                ."]."
-            );
+            throw new \RuntimeException("Servico [$service] indisponivel UF [$uf] ou modelo [$this->modelo]");
         }
-        //recuperação do cUF
-        $this->urlcUF = $this->getcUF($uf);
+        $this->urlcUF = $this->getcUF($uf); //recuperação do cUF
         if ($this->urlcUF > 91) {
-            //foi solicitado dado de SVCRS ou SVCAN
-            $this->urlcUF = $this->getcUF($this->config->siglaUF);
+            $this->urlcUF = $this->getcUF($this->config->siglaUF); //foi solicitado dado de SVCRS ou SVCAN
         }
-        //recuperação da versão
-        $this->urlVersion = $stdServ->$service->version;
-        //recuperação da url do serviço
-        $this->urlService = $stdServ->$service->url;
-        //recuperação do método
-        $this->urlMethod = $stdServ->$service->method;
-        //recuperação da operação
-        $this->urlOperation = $stdServ->$service->operation;
-        //montagem do namespace do serviço
-        $this->urlNamespace = sprintf(
-            "%s/wsdl/%s",
-            $this->urlPortal,
-            $this->urlOperation
-        );
+        $this->urlVersion = $stdServ->$service->version; //recuperação da versão
+        $this->urlService = $stdServ->$service->url; //recuperação da url do serviço
+        $this->urlMethod = $stdServ->$service->method; //recuperação do método
+        $this->urlOperation = $stdServ->$service->operation; //recuperação da operação
+        //monta namespace do serviço
+        $this->urlNamespace = sprintf("%s/wsdl/%s", $this->urlPortal, $this->urlOperation);
         //montagem do cabeçalho da comunicação SOAP
-        $this->urlHeader = Header::get(
-            $this->urlNamespace,
-            $this->urlcUF,
-            $this->urlVersion
-        );
-        $this->urlAction = "\""
-            . $this->urlNamespace
-            . "/"
-            . $this->urlMethod
-            . "\"";
+        $this->urlHeader = Header::get($this->urlNamespace, $this->urlcUF, $this->urlVersion);
+        $this->urlAction = "\"$this->urlNamespace/$this->urlMethod\"";
         //montagem do SOAP Header
         //para versões posteriores a 3.10 não incluir o SoapHeader !!!!
         if ($this->versao < '4.00') {
@@ -559,8 +529,7 @@ class Tools
      */
     protected function getXmlUrlPath()
     {
-        $file = $this->pathwsfiles
-            . "wsnfe_".$this->versao."_mod55.xml";
+        $file = $this->pathwsfiles . "wsnfe_" . $this->versao . "_mod55.xml";
         if ($this->modelo == 65) {
             $file = str_replace('55', '65', $file);
         }
