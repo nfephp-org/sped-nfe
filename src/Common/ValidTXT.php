@@ -15,8 +15,6 @@ namespace NFePHP\NFe\Common;
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
 
-use NFePHP\Common\Strings;
-
 class ValidTXT
 {
     const LOCAL="LOCAL";
@@ -27,6 +25,7 @@ class ValidTXT
      * @param float $version
      * @param string $baselayout
      * @throws \InvalidArgumentException
+     * @return mixed
      */
     public static function loadStructure($version = 4.00, $baselayout = self::LOCAL)
     {
@@ -143,8 +142,6 @@ class ValidTXT
                     continue;
                 }
             }
-            $count = 0;
-            $default = 0;
         }
         return $errors;
     }

@@ -49,16 +49,13 @@ class QRCode
         $urlqr = trim($urlqr);
         $urichave = trim($urichave);
         if (empty($token)) {
-            //Falta o CSC no config.json
-            throw DocumentsException::wrongDocument(9);
+            throw DocumentsException::wrongDocument(9); //Falta o CSC no config.json
         }
         if (empty($idToken)) {
-            //Falta o CSCId no config.json
-            throw DocumentsException::wrongDocument(10);
+            throw DocumentsException::wrongDocument(10); //Falta o CSCId no config.json
         }
         if (empty($urlqr)) {
-            //Falta a URL do serviço NfeConsultaQR
-            throw DocumentsException::wrongDocument(11);
+            throw DocumentsException::wrongDocument(11); //Falta a URL do serviço NfeConsultaQR
         }
         if (empty($versao)) {
             $versao = '100';
@@ -91,7 +88,7 @@ class QRCode
         $vNF = $icmsTot->getElementsByTagName('vNF')->item(0)->nodeValue;
         $vICMS = $icmsTot->getElementsByTagName('vICMS')->item(0)->nodeValue;
         $digVal = $signedInfo->getElementsByTagName('DigestValue')->item(0)->nodeValue;
-        $qrMethod = "get$versao";
+        $qrMethod = "get$versao"; // TODO fmertins 24/09/18: simplificar para apenas get200() com fim QR-Code 1.00?
 
         $qrcode = self::$qrMethod(
             $chNFe,
@@ -123,6 +120,7 @@ class QRCode
     }
 
     /**
+     * TODO fmertins 24/09/18: remover em out/18 com o fim do QR-Code versão 1.00?
      * Return a QRCode version 1 string to be used in NFCe layout 3.10
      * @param  string $chNFe
      * @param  string $url

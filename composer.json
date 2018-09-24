@@ -26,7 +26,9 @@
         "ext-dom": "*",
         "ext-openssl": "*",
         "ext-soap": "*",
-        "ext-json": "*"
+        "ext-json": "*",
+        "ext-simplexml": "*",
+        "ext-libxml": "*"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^2.8",
