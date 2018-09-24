@@ -486,7 +486,8 @@ class Tools
         $this->urlService = $stdServ->$service->url; //recuperação da url do serviço
         $this->urlMethod = $stdServ->$service->method; //recuperação do método
         $this->urlOperation = $stdServ->$service->operation; //recuperação da operação
-        $this->urlNamespace = sprintf("%s/wsdl/%s", $this->urlPortal, $this->urlOperation); //monta namespace do serviço
+        //monta namespace do serviço
+        $this->urlNamespace = sprintf("%s/wsdl/%s", $this->urlPortal, $this->urlOperation);
         //montagem do cabeçalho da comunicação SOAP
         $this->urlHeader = Header::get($this->urlNamespace, $this->urlcUF, $this->urlVersion);
         $this->urlAction = "\"$this->urlNamespace/$this->urlMethod\"";
