@@ -87,7 +87,7 @@ $tools = new Tools($configJson, Certificate::readPfx($pfxcontent, $password));
 //só funciona para o modelo 55
 $tools->model('55');
 //este serviço somente opera em ambiente de produção
-$this->tools->setEnvironment(1);
+$tools->setEnvironment(1);
 
 //este numero deverá vir do banco de dados nas proximas buscas para reduzir 
 //a quantidade de documentos, e para não baixar várias vezes as mesmas coisas.
@@ -104,7 +104,7 @@ while ($ultNSU <= $maxNSU) {
     }
     try {
         //executa a busca pelos documentos
-        $resp = $this->tools->sefazDistDFe($ultNSU);
+        $resp = $tools->sefazDistDFe($ultNSU);
     } catch (\Exception $e) {
         echo $e->getMessage();
         //tratar o erro
