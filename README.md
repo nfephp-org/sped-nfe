@@ -54,8 +54,6 @@ Framework para geração e comunicação das NFe com as SEFAZ autorizadoras, e v
 - E SC não participa.
 
 
-
-
 Este pacote é aderente com os [PSR-1], [PSR-2] e [PSR-4]. Se você observar negligências de conformidade, por favor envie um patch via pull request.
 
 [PSR-1]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md
@@ -100,7 +98,7 @@ composer require nfephp-org/sped-nfe:dev-master
 
 Para que este pacote possa funcionar são necessários os seguintes requisitos do PHP e outros pacotes dos quais esse depende.
 
-- PHP 5.6 ou PHP 7.x (recomendável PHP 7.x) 
+- PHP 7.x (recomendável PHP 7.2) 
 - ext-curl
 - ext-dom
 - ext-json
