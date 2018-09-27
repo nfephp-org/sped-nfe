@@ -108,7 +108,7 @@ class Tools
      * Version of layout
      * @var string
      */
-    protected $versao = '3.10';
+    protected $versao = '4.00';
     /**
      * urlPortal
      * Instância do WebService
@@ -167,7 +167,6 @@ class Tools
      * @var array
      */
     protected $availableVersions = [
-        '3.10' => 'PL_008i2',
         '4.00' => 'PL_009_V4'
     ];
     
@@ -491,15 +490,6 @@ class Tools
         //montagem do cabeçalho da comunicação SOAP
         $this->urlHeader = Header::get($this->urlNamespace, $this->urlcUF, $this->urlVersion);
         $this->urlAction = "\"$this->urlNamespace/$this->urlMethod\"";
-        //montagem do SOAP Header
-        //para versões posteriores a 3.10 não incluir o SoapHeader !!!!
-        if ($this->versao < '4.00') {
-            $this->objHeader = new SoapHeader(
-                $this->urlNamespace,
-                'nfeCabecMsg',
-                ['cUF' => $this->urlcUF, 'versaoDados' => $this->urlVersion]
-            );
-        }
     }
     
     /**

@@ -30,7 +30,7 @@ class MakeTest extends TestCase
     {
         $std = new \stdClass();
         $std->Id = '35170358716523000119550010000000301000000300';
-        $std->versao = '3.10';
+        $std->versao = '4.00';
         $std->pk_nItem = '1';
 
         $infNFe = $this->make->taginfNFe($std);

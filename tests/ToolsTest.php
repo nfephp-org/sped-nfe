@@ -14,11 +14,14 @@ class ToolsTest extends NFeTestCase
     
     protected function setUp()
     {
-        $this->tools = new Tools($this->configJson, Certificate::readPfx($this->contentpfx, $this->passwordpfx));
+        $this->tools = new Tools(
+            $this->configJson,
+            Certificate::readPfx($this->contentpfx, $this->passwordpfx)
+        );
     }
     
     /**
-     * Testa a consulta pelo número do recibo validando o parâmetro vazio.
+     * Testa a consulta pelo nÃºmero do recibo validando o parÃ¢metro vazio.
      */
     public function testSefazConsultaReciboThrowsInvalidArgExceptionSemRecibo()
     {
@@ -27,7 +30,7 @@ class ToolsTest extends NFeTestCase
     }
     
     /**
-     * Testa a consulta pela chave validando o parâmetro da chave vazio.
+     * Testa a consulta pela chave validando o parÃ¢metro da chave vazio.
      */
     public function testSefazConsultaChaveThrowsInvalidArgExceptionSemChave()
     {
@@ -36,16 +39,16 @@ class ToolsTest extends NFeTestCase
     }
     
     /**
-     * Testa a consulta pela chave validando o parâmetro de chave incompleta (comprimento diferente de 44 dígitos).
+     * Testa a consulta pela chave validando o parÃ¢metro de chave incompleta (comprimento diferente de 44 digitos).
      */
     public function testSefazConsultaChaveThrowsInvalidArgExceptionChaveCompleta()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->tools->sefazConsultaChave('1234567890123456789012345678901234567890123'); // 43 dígitos
+        $this->tools->sefazConsultaChave('1234567890123456789012345678901234567890123'); // 43 digitos
     }
     
     /**
-     * Testa a consulta pela chave validando uma chave alfanumérica.
+     * Testa a consulta pela chave validando uma chave alfanumÃ©rica.
      */
     public function testSefazConsultaChaveThrowsInvalidArgExceptionChaveNaoNumerica()
     {

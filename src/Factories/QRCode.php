@@ -58,7 +58,7 @@ class QRCode
             throw DocumentsException::wrongDocument(11); //Falta a URL do serviço NfeConsultaQR
         }
         if (empty($versao)) {
-            $versao = '100';
+            $versao = '200';
         }
         $nfe = $dom->getElementsByTagName('NFe')->item(0);
         $infNFe = $dom->getElementsByTagName('infNFe')->item(0);
@@ -104,11 +104,10 @@ class QRCode
             $tpEmis,
             $cDest
         );
-
         $infNFeSupl = $dom->createElement("infNFeSupl");
         $nodeqr = $infNFeSupl->appendChild($dom->createElement('qrCode'));
         $nodeqr->appendChild($dom->createCDATASection($qrcode));
-        if (!empty($urichave) && $layoutver > 3.10) {
+        if (!empty($urichave)) {
             $infNFeSupl->appendChild(
                 $dom->createElement('urlChave', $urichave)
             );
@@ -121,7 +120,7 @@ class QRCode
 
     /**
      * TODO fmertins 24/09/18: remover em out/18 com o fim do QR-Code versão 1.00?
-     * Return a QRCode version 1 string to be used in NFCe layout 3.10
+     * Return a QRCode version 1 string to be used in NFCe
      * @param  string $chNFe
      * @param  string $url
      * @param  string $tpAmb
