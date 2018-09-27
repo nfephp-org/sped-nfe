@@ -53,11 +53,12 @@ class Tools extends ToolsCommon
         if (!is_array($aXml)) {
             throw new InvalidArgumentException('Envia Lote: XMLs de NF-e deve ser um array!');
         }
+        if ($indSinc == 1 && count($aXml) > 1) {
+            throw new InvalidArgumentException('Envio sincrono deve ser usado para enviar '
+                . 'uma UNICA nota por vez. Você está tentando enviar varias.');
+        }
         $servico = 'NfeAutorizacao';
         $this->checkContingencyForWebServices($servico);
-        if (count($aXml) > 1) {
-            $indSinc = 0;
-        }
         if ($this->contingency->type != '') {
             // Em modo de contingencia esses XMLs deverão ser modificados e re-assinados e retornados
             // no parametro $xmls para serem armazenados pelo aplicativo pois serão alterados.
