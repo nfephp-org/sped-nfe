@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nfeProc xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00">
+    <NFe>
+        <infNFe Id="NFe43180906929383000163550010000000261000010301" versao="4.00">
+            <ide>
+                <cUF>43</cUF>
+                <cNF>00001030</cNF>
+                <natOp>Venda de producao do estabelecimento</natOp>
+                <mod>55</mod>
+                <serie>1</serie>
+                <nNF>26</nNF>
+                <dhEmi>2018-09-25T00:00:00-03:00</dhEmi>
+                <dhSaiEnt>2018-09-25T15:14:00-03:00</dhSaiEnt>
+                <tpNF>1</tpNF>
+                <idDest>2</idDest>
+                <cMunFG>4307609</cMunFG>
+                <tpImp>1</tpImp>
+                <tpEmis>1</tpEmis>
+                <cDV>1</cDV>
+                <tpAmb>2</tpAmb>
+                <finNFe>1</finNFe>
+                <indFinal>0</indFinal>
+                <indPres>1</indPres>
+                <procEmi>0</procEmi>
+                <verProc>fernando</verProc>
+            </ide>
+            <emit>
+                <CNPJ>06929383000163</CNPJ>
+                <xNome>UMA RAZAO SOCIAL DE TESTE QUALQUER</xNome>
+                <enderEmit>
+                    <xLgr>Rua dos Testes</xLgr>
+                    <nro>1020</nro>
+                    <xCpl>0</xCpl>
+                    <xBairro>Centro</xBairro>
+                    <cMun>4319901</cMun>
+                    <xMun>SAPIRANGA</xMun>
+                    <UF>RS</UF>
+                    <CEP>93800000</CEP>
+                    <cPais>1058</cPais>
+                    <xPais>BRASIL</xPais>
+                    <fone>5190909090</fone>
+                </enderEmit>
+                <IE>0018000762</IE>
+                <CRT>1</CRT>
+            </emit>
+            <dest>
+                <CNPJ>58716523000119</CNPJ>
+                <xNome>NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL</xNome>
+                <enderDest>
+                    <xLgr>Av. Teste</xLgr>
+                    <nro>2040</nro>
+                    <xBairro>Centro</xBairro>
+                    <cMun>3550308</cMun>
+                    <xMun>SAO PAULO</xMun>
+                    <UF>SP</UF>
+                    <CEP>04207040</CEP>
+                    <cPais>1058</cPais>
+                    <xPais>BRASIL</xPais>
+                    <fone>5190909090</fone>
+                </enderDest>
+                <indIEDest>1</indIEDest>
+                <IE>112006603110</IE>
+            </dest>
+            <det nItem="1">
+                <prod>
+                    <cProd>11007</cProd>
+                    <cEAN>SEM GTIN</cEAN>
+                    <xProd>UM PRODUTO TESTE QUALQUER</xProd>
+                    <NCM>64011000</NCM>
+                    <CEST>1234567</CEST>
+                    <CFOP>6101</CFOP>
+                    <uCom>UN</uCom>
+                    <qCom>10.0000</qCom>
+                    <vUnCom>50</vUnCom>
+                    <vProd>500.00</vProd>
+                    <cEANTrib>SEM GTIN</cEANTrib>
+                    <uTrib>UN</uTrib>
+                    <qTrib>10.0000</qTrib>
+                    <vUnTrib>50.0000</vUnTrib>
+                    <indTot>1</indTot>
+                </prod>
+                <imposto>
+                    <vTotTrib>0.00</vTotTrib>
+                    <ICMS>
+                        <ICMSSN202>
+                            <orig>0</orig>
+                            <CSOSN>202</CSOSN>
+                            <modBCST>4</modBCST>
+                            <vBCST>0.00</vBCST>
+                            <pICMSST>0.0000</pICMSST>
+                            <vICMSST>0.00</vICMSST>
+                        </ICMSSN202>
+                    </ICMS>
+                    <PIS>
+                        <PISOutr>
+                            <CST>49</CST>
+                            <vBC>0.00</vBC>
+                            <pPIS>0.0000</pPIS>
+                            <vPIS>0.00</vPIS>
+                        </PISOutr>
+                    </PIS>
+                    <COFINS>
+                        <COFINSOutr>
+                            <CST>49</CST>
+                            <vBC>0.00</vBC>
+                            <pCOFINS>0.0000</pCOFINS>
+                            <vCOFINS>0.00</vCOFINS>
+                        </COFINSOutr>
+                    </COFINS>
+                </imposto>
+            </det>
+            <total>
+                <ICMSTot>
+                    <vBC>0.00</vBC>
+                    <vICMS>0.00</vICMS>
+                    <vICMSDeson>0.00</vICMSDeson>
+                    <vFCPUFDest>0.00</vFCPUFDest>
+                    <vICMSUFDest>0.00</vICMSUFDest>
+                    <vICMSUFRemet>0.00</vICMSUFRemet>
+                    <vFCP>0.00</vFCP>
+                    <vBCST>0.00</vBCST>
+                    <vST>0.00</vST>
+                    <vFCPST>0.00</vFCPST>
+                    <vFCPSTRet>0.00</vFCPSTRet>
+                    <vProd>500.00</vProd>
+                    <vFrete>0.00</vFrete>
+                    <vSeg>0.00</vSeg>
+                    <vDesc>0.00</vDesc>
+                    <vII>0.00</vII>
+                    <vIPI>0.00</vIPI>
+                    <vIPIDevol>0.00</vIPIDevol>
+                    <vPIS>0.00</vPIS>
+                    <vCOFINS>0.00</vCOFINS>
+                    <vOutro>0.00</vOutro>
+                    <vNF>500.00</vNF>
+                    <vTotTrib>0.00</vTotTrib>
+                </ICMSTot>
+            </total>
+            <transp>
+                <modFrete>9</modFrete>
+            </transp>
+            <cobr>
+                <fat>
+                    <nFat>173</nFat>
+                    <vOrig>1.00</vOrig>
+                    <vDesc>0.00</vDesc>
+                    <vLiq>1.00</vLiq>
+                </fat>
+                <dup>
+                    <nDup>001</nDup>
+                    <dVenc>2018-12-31</dVenc>
+                    <vDup>1.00</vDup>
+                </dup>
+            </cobr>
+            <pag>
+                <detPag>
+                    <tPag>01</tPag>
+                    <vPag>500.00</vPag>
+                </detPag>
+            </pag>
+        </infNFe>
+        <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+            <SignedInfo>
+                <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+                <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+                <Reference URI="#NFe43180906929383000163550010000000261000010301">
+                    <Transforms>
+                        <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                        <Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+                    </Transforms>
+                    <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+                    <DigestValue>Hwr3X8T6PR7EUzdSHZYeHpn14e4=</DigestValue>
+                </Reference>
+            </SignedInfo>
+            <SignatureValue>
+                EK204hk3Mb13cgAHaJlIXQB9OcbjvMEuLx6U+p1Gvp9QLkNE4UtA4vIGwWmU2XbA0lspYMvc449gasXEp38U0d9uLcj3+np9fvOHpYFoAro9zf8dLLLV/h/R0yTOBchtmHF3lr9rcgnopedJ4MzLM4T4rlmRE3ahqUKxSfW0GINFXH24BU8e5JM63wCr3+K1dGlGVe3Qhn4eoD1OhjXrRrKQ0lpzST8rGlN77cxBCby/02VBD2TDaNlsSbRayt3ZVhxzdhVdOkRz0kuPFUMEhNY4FL6hjNbDRrryeZizuAzQquWhJAIvw8Ts27Ilge2+LLk2/+pAWjJ2PQGpiYBh4w==
+            </SignatureValue>
+            <KeyInfo>
+                <X509Data>
+                    <X509Certificate>
+                        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
+                    </X509Certificate>
+                </X509Data>
+            </KeyInfo>
+        </Signature>
+    </NFe>
+    <protNFe versao="4.00">
+        <infProt>
+            <tpAmb>2</tpAmb>
+            <verAplic>RS201809141107</verAplic>
+            <chNFe>43180906929383000163550010000000261000010301</chNFe>
+            <dhRecbto>2018-09-25T16:21:05-03:00</dhRecbto>
+            <nProt>143180006932433</nProt>
+            <digVal>Hwr3X8T6PR7EUzdSHZYeHpn14e4=</digVal>
+            <cStat>100</cStat>
+            <xMotivo>Autorizado o uso da NF-e</xMotivo>
+        </infProt>
+    </protNFe>
+</nfeProc>
