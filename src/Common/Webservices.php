@@ -3,8 +3,7 @@
 namespace NFePHP\NFe\Common;
 
 /**
- * Class to Read and preprocess WS parameters from xml storage
- * file to json encode or stdClass
+ * Reads and preprocesses WS parameters from xml storage file to json encode or stdClass
  *
  * @category  NFePHP
  * @package   NFePHP\NFe\Common\Webservices
@@ -34,15 +33,14 @@ class Webservices
     }
     
     /**
-     * Get webservices parameters for specific conditions
-     * the parameters with the authorizers are in a json file in
-     * the storage folder
+     * Gets webservices parameters for specific conditions
      * @param string $sigla
-     * @param string $ambiente "homologacao" ou "producao"
+     * @param int $amb 1-Produção ou 2-Homologação
      * @param int $modelo "55" ou "65"
-     * @return bool | \stdClass
+     * @return \stdClass
+     * @see storage/autorizadores.json
      */
-    public function get($sigla, $ambiente, $modelo)
+    public function get($sigla, $amb, $modelo)
     {
         $autfile = realpath(__DIR__ . '/../../storage/autorizadores.json');
         $autorizadores = json_decode(file_get_contents($autfile), true);
@@ -51,11 +49,12 @@ class Webservices
         }
         $auto = $autorizadores[$modelo][$sigla];
         if (empty($auto) || empty($this->std)) {
-            return false; // TODO fmertins 24/09/18: throw exception e nao retornar mais false...?
+            throw new \RuntimeException('Falhou autorizador, parece vazio');
         }
         if (empty($this->std->$auto)) {
             throw new \RuntimeException("Nao existem webservices cadastrados para [$sigla] no modelo [$modelo]");
         }
+        $ambiente = $amb == 1 ? 'producao' : 'homologacao';
         $svw = $this->std->$auto->$ambiente;
         if ($auto == 'SVRS' || $auto == 'SVAN') {
             $pad = !empty($this->std->$sigla->$ambiente) ? $this->std->$sigla->$ambiente : '';

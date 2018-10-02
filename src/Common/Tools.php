@@ -441,7 +441,7 @@ class Tools
      * @param array $opt
      * @return array
      */
-    public function canonicalOptions($opt = [true,false,null,null])
+    public function canonicalOptions(array $opt = [true, false, null, null])
     {
         if (!empty($opt) && is_array($opt)) {
             $this->canonical = $opt;
@@ -453,27 +453,21 @@ class Tools
      * Assembles all the necessary parameters for soap communication
      * @param string $service
      * @param string $uf
-     * @param int $tpAmb
+     * @param int $tpAmb 1-Production ou 2-Testing
      * @param bool $ignoreContingency
      * @return void
      */
     protected function servico($service, $uf, $tpAmb, $ignoreContingency = false)
     {
-        $ambiente = $tpAmb == 1 ? "producao" : "homologacao";
         $webs = new Webservices($this->getXmlUrlPath());
         $sigla = $uf;
         if (!$ignoreContingency) {
             $contType = $this->contingency->type;
-            if (!empty($contType)
-                && ($contType == 'SVCRS' || $contType == 'SVCAN')
-            ) {
+            if (!empty($contType) && ($contType == 'SVCRS' || $contType == 'SVCAN')) {
                 $sigla = $contType;
             }
         }
-        $stdServ = $webs->get($sigla, $ambiente, $this->modelo);
-        if ($stdServ === false) {
-            throw new \RuntimeException("Nenhum servico encontrado para UF [$sigla], modelo [$this->modelo]");
-        }
+        $stdServ = $webs->get($sigla, $tpAmb, $this->modelo);
         if (empty($stdServ->$service->url)) {
             throw new \RuntimeException("Servico [$service] indisponivel UF [$uf] ou modelo [$this->modelo]");
         }
@@ -485,8 +479,7 @@ class Tools
         $this->urlService = $stdServ->$service->url; //recuperação da url do serviço
         $this->urlMethod = $stdServ->$service->method; //recuperação do método
         $this->urlOperation = $stdServ->$service->operation; //recuperação da operação
-        //monta namespace do serviço
-        $this->urlNamespace = sprintf("%s/wsdl/%s", $this->urlPortal, $this->urlOperation);
+        $this->urlNamespace = sprintf("%s/wsdl/%s", $this->urlPortal, $this->urlOperation); //monta namespace
         //montagem do cabeçalho da comunicação SOAP
         $this->urlHeader = Header::get($this->urlNamespace, $this->urlcUF, $this->urlVersion);
         $this->urlAction = "\"$this->urlNamespace/$this->urlMethod\"";
