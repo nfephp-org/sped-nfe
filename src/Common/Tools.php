@@ -30,7 +30,6 @@ use NFePHP\NFe\Factories\Contingency;
 use NFePHP\NFe\Factories\ContingencyNFe;
 use NFePHP\NFe\Factories\Header;
 use NFePHP\NFe\Factories\QRCode;
-use SoapHeader;
 
 class Tools
 {
@@ -453,8 +452,9 @@ class Tools
      * Assembles all the necessary parameters for soap communication
      * @param string $service
      * @param string $uf
-     * @param int $tpAmb 1-Production ou 2-Testing
+     * @param int $tpAmb 1-Production or 2-Homologation
      * @param bool $ignoreContingency
+     * @throws RuntimeException
      * @return void
      */
     protected function servico($service, $uf, $tpAmb, $ignoreContingency = false)
