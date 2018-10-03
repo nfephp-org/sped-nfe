@@ -40,7 +40,7 @@ class ContingencyNFe
         $emit = $dom->getElementsByTagName('emit')->item(0);
         $cnpj = $emit->getElementsByTagName('CNPJ')->item(0)->nodeValue;
         
-        $motivo = trim(Strings::replaceSpecialsChars($contingency->motive));
+        $motivo = trim(Strings::replaceUnacceptableCharacters($contingency->motive));
         $dt = new DateTime();
         $dt->setTimestamp($contingency->timestamp);
         $ide->getElementsByTagName('tpEmis')

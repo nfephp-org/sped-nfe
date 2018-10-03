@@ -186,7 +186,7 @@ class Contingency
                 );
         }
         $config = new \stdClass();
-        $config->motive = Strings::replaceSpecialsChars(substr(trim($motive), 0, 256));
+        $config->motive = Strings::replaceUnacceptableCharacters(substr(trim($motive), 0, 256));
         $config->timestamp = $timestamp;
         $config->type = $type;
         $config->tpEmis = $tpEmis;
