@@ -159,9 +159,9 @@ class Make
     protected $aDup = [];
 
     /**
-     * @var array of DOMElements
+     * @var DOMElement
      */
-    protected $aPag = [];
+    protected $pag = [];
 
     /**
      * @var array of DOMElements
@@ -455,7 +455,7 @@ class Make
         //[39a] tag cobr (389 Y01)
         $this->dom->appChild($this->infNFe, $this->cobr, 'Falta tag "infNFe"');
         //[42] tag pag (398a YA01)
-        //processa aPag e coloca as tags na tag pag
+        //processa Pag e coloca as tags na tag pag
         $this->buildTagPag();
         //[44] tag infAdic (399 Z01)
         $this->dom->appChild($this->infNFe, $this->infAdic, 'Falta tag "infNFe"');
@@ -563,7 +563,7 @@ class Make
         $this->dom->addChild(
             $ide,
             "natOp",
-            Strings::replaceSpecialsChars(substr(trim($std->natOp), 0, 60)),
+            Strings::replaceUnacceptableCharacters(substr(trim($std->natOp), 0, 60)),
             true,
             $identificador . "Descrição da Natureza da Operação"
         );
@@ -699,7 +699,7 @@ class Make
             $this->dom->addChild(
                 $ide,
                 "xJust",
-                Strings::replaceSpecialsChars(substr(trim($std->xJust), 0, 256)),
+                Strings::replaceUnacceptableCharacters(substr(trim($std->xJust), 0, 256)),
                 true,
                 $identificador . "Justificativa da entrada em contingência"
             );
@@ -963,14 +963,14 @@ class Make
         $this->dom->addChild(
             $this->emit,
             "xNome",
-            Strings::replaceSpecialsChars(substr(trim($std->xNome), 0, 60)),
+            Strings::replaceUnacceptableCharacters(substr(trim($std->xNome), 0, 60)),
             true,
             $identificador . "Razão Social ou Nome do emitente"
         );
         $this->dom->addChild(
             $this->emit,
             "xFant",
-            Strings::replaceSpecialsChars(substr(trim($std->xFant), 0, 60)),
+            Strings::replaceUnacceptableCharacters(substr(trim($std->xFant), 0, 60)),
             false,
             $identificador . "Nome fantasia do emitente"
         );
@@ -1040,28 +1040,28 @@ class Make
         $this->dom->addChild(
             $this->enderEmit,
             "xLgr",
-            Strings::replaceSpecialsChars(substr(trim($std->xLgr), 0, 60)),
+            Strings::replaceUnacceptableCharacters(substr(trim($std->xLgr), 0, 60)),
             true,
             $identificador . "Logradouro do Endereço do emitente"
         );
         $this->dom->addChild(
             $this->enderEmit,
             "nro",
-            Strings::replaceSpecialsChars(substr(trim($std->nro), 0, 60)),
+            Strings::replaceUnacceptableCharacters(substr(trim($std->nro), 0, 60)),
             true,
             $identificador . "Número do Endereço do emitente"
         );
         $this->dom->addChild(
             $this->enderEmit,
             "xCpl",
-            Strings::replaceSpecialsChars(substr(trim($std->xCpl), 0, 60)),
+            Strings::replaceUnacceptableCharacters(substr(trim($std->xCpl), 0, 60)),
             false,
             $identificador . "Complemento do Endereço do emitente"
         );
         $this->dom->addChild(
             $this->enderEmit,
             "xBairro",
-            Strings::replaceSpecialsChars(substr(trim($std->xBairro), 0, 60)),
+            Strings::replaceUnacceptableCharacters(substr(trim($std->xBairro), 0, 60)),
             true,
             $identificador . "Bairro do Endereço do emitente"
         );
@@ -1075,7 +1075,7 @@ class Make
         $this->dom->addChild(
             $this->enderEmit,
             "xMun",
-            Strings::replaceSpecialsChars(substr(trim($std->xMun), 0, 60)),
+            Strings::replaceUnacceptableCharacters(substr(trim($std->xMun), 0, 60)),
             true,
             $identificador . "Nome do município do Endereço do emitente"
         );
@@ -1103,7 +1103,7 @@ class Make
         $this->dom->addChild(
             $this->enderEmit,
             "xPais",
-            Strings::replaceSpecialsChars(substr(trim($std->xPais), 0, 60)),
+            Strings::replaceUnacceptableCharacters(substr(trim($std->xPais), 0, 60)),
             false,
             $identificador . "Nome do País do Endereço do emitente"
         );
@@ -1187,7 +1187,7 @@ class Make
         $this->dom->addChild(
             $this->dest,
             "xNome",
-            Strings::replaceSpecialsChars(substr(trim($xNome), 0, 60)),
+            Strings::replaceUnacceptableCharacters(substr(trim($xNome), 0, 60)),
             $flagNome, //se mod 55 true ou mod 65 false
             $identificador . "Razão Social ou nome do destinatário"
         );
@@ -1224,7 +1224,7 @@ class Make
         $this->dom->addChild(
             $this->dest,
             "email",
-            Strings::replaceSpecialsChars(substr(trim($std->email), 0, 60)),
+            Strings::replaceUnacceptableCharacters(substr(trim($std->email), 0, 60)),
             false,
             $identificador . "Email do destinatário"
         );
@@ -1565,7 +1565,7 @@ class Make
         $std = $this->equilizeParameters($std, $possible);
         $infAdProd = $this->dom->createElement(
             "infAdProd",
-            Strings::replaceSpecialsChars(substr(trim($std->infAdProd), 0, 500))
+            Strings::replaceUnacceptableCharacters(substr(trim($std->infAdProd), 0, 500))
         );
         $this->aInfAdProd[$std->item] = $infAdProd;
         return $infAdProd;
@@ -6081,7 +6081,7 @@ class Make
             false,
             "Valor do troco"
         );
-        return $this->aPag[] = $pag;
+        return $this->pag = $pag;
     }
 
     /**
@@ -6159,12 +6159,13 @@ class Make
             );
             $this->dom->appChild($detPag, $card, "Inclusão do node Card");
         }
-        $n = count($this->aPag);
-        $node = $this->aPag[$n - 1]->getElementsByTagName("vTroco")->item(0);
+        $node = !empty($this->pag->getElementsByTagName("vTroco")->item(0))
+            ? $this->pag->getElementsByTagName("vTroco")->item(0)
+            : null;
         if (!empty($node)) {
-            $this->aPag[$n - 1]->insertBefore($detPag, $node);
+            $this->pag->insertBefore($detPag, $node);
         } else {
-            $this->dom->appChild($this->aPag[$n - 1], $detPag, 'Falta tag "Pag"');
+            $this->dom->appChild($this->pag, $detPag, 'Falta tag "Pag"');
         }
         return $detPag;
     }
@@ -6948,11 +6949,7 @@ class Make
      */
     protected function buildTagPag()
     {
-        if (count($this->aPag) > 0) {
-            foreach ($this->aPag as $pag) {
-                $this->dom->appChild($this->infNFe, $pag, 'Falta tag "infNFe"');
-            }
-        }
+        $this->dom->appChild($this->infNFe, $this->pag, 'Falta tag "infNFe"');
     }
 
     /**

@@ -176,13 +176,13 @@ class Tools extends ToolsCommon
      */
     public function sefazInutiliza($nSerie, $nIni, $nFin, $xJust, $tpAmb = null)
     {
-        if (!isset($nSerie) || empty($nIni) || empty($nFin) || empty($xJust)) {
+        if (empty($nIni) || empty($nFin) || empty($xJust)) {
             throw new InvalidArgumentException('Inutilizacao: parametros incompletos!');
         }
         if (empty($tpAmb)) {
             $tpAmb = $this->tpAmb;
         }
-        $xJust = Strings::replaceSpecialsChars($xJust);
+        $xJust = Strings::replaceUnacceptableCharacters($xJust);
         $servico = 'NfeInutilizacao';
         $this->checkContingencyForWebServices($servico);
         //carrega serviço
@@ -201,7 +201,7 @@ class Tools extends ToolsCommon
             . $strInicio
             . $strFinal;
         //limpa os caracteres indesejados da justificativa
-        $xJust = Strings::replaceSpecialsChars($xJust);
+        $xJust = Strings::replaceUnacceptableCharacters($xJust);
         //montagem do corpo da mensagem
         $msg = "<inutNFe xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">" .
             "<infInut Id=\"$idInut\">" .
@@ -363,7 +363,7 @@ class Tools extends ToolsCommon
             throw new InvalidArgumentException('CC-e: chave ou motivo da correcao vazio!');
         }
         $uf = $this->validKeyByUF($chave);
-        $xCorrecao = Strings::replaceSpecialsChars(substr(trim($xCorrecao), 0, 1000));
+        $xCorrecao = Strings::replaceUnacceptableCharacters(substr(trim($xCorrecao), 0, 1000));
         $xCondUso = 'A Carta de Correcao e disciplinada pelo paragrafo '
             . '1o-A do art. 7o do Convenio S/N, de 15 de dezembro de 1970 '
             . 'e pode ser utilizada para regularizacao de erro ocorrido '
@@ -465,7 +465,7 @@ class Tools extends ToolsCommon
             throw new InvalidArgumentException('Cancelamento: chave, just ou numprot vazio!');
         }
         $uf = $this->validKeyByUF($chave);
-        $xJust = Strings::replaceSpecialsChars(substr(trim($xJust), 0, 255));
+        $xJust = Strings::replaceUnacceptableCharacters(substr(trim($xJust), 0, 255));
         $nSeqEvento = 1;
         $tagAdic = "<nProt>$nProt</nProt><xJust>$xJust</xJust>";
         return $this->sefazEvento($uf, $chave, self::EVT_CANCELA, $nSeqEvento, $tagAdic);
@@ -487,7 +487,7 @@ class Tools extends ToolsCommon
         }
         $tagAdic = '';
         if ($tpEvento == self::EVT_NAO_REALIZADA) {
-            $xJust = Strings::replaceSpecialsChars(substr(trim($xJust), 0, 255));
+            $xJust = Strings::replaceUnacceptableCharacters(substr(trim($xJust), 0, 255));
             $tagAdic = "<xJust>$xJust</xJust>";
         }
         return $this->sefazEvento('AN', $chave, $tpEvento, $nSeqEvento, $tagAdic);
@@ -522,7 +522,7 @@ class Tools extends ToolsCommon
             }
             $tagAdic = '';
             if ($s->tpEvento == self::EVT_NAO_REALIZADA) {
-                $xJust = Strings::replaceSpecialsChars(substr(trim($s->xJust), 0, 255));
+                $xJust = Strings::replaceUnacceptableCharacters(substr(trim($s->xJust), 0, 255));
                 $tagAdic = "<xJust>$xJust</xJust>";
             }
             $evt->evento[$i] = new \stdClass();

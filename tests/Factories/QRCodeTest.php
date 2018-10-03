@@ -36,9 +36,8 @@ class QRCodeTest extends NFeTestCase
         $actualDom = new \DOMDocument('1.0', 'UTF-8');
         $actualDom->formatOutput = false;
         $actualDom->preserveWhiteSpace = false;
-        $actualDom->loadXML($response);
+        $xml = $actualDom->loadXML($response);
         $actualElement = $actualDom->documentElement;
-        
         $this->assertEqualXMLStructure($expectedElement, $actualElement);
     }
     

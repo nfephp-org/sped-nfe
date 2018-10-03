@@ -88,8 +88,7 @@ class QRCode
         $vNF = $icmsTot->getElementsByTagName('vNF')->item(0)->nodeValue;
         $vICMS = $icmsTot->getElementsByTagName('vICMS')->item(0)->nodeValue;
         $digVal = $signedInfo->getElementsByTagName('DigestValue')->item(0)->nodeValue;
-        $qrMethod = "get$versao"; // TODO fmertins 24/09/18: simplificar para apenas get200() com fim QR-Code 1.00?
-
+        $qrMethod = "get$versao";
         $qrcode = self::$qrMethod(
             $chNFe,
             $urlqr,
@@ -105,70 +104,14 @@ class QRCode
             $cDest
         );
         $infNFeSupl = $dom->createElement("infNFeSupl");
-        $nodeqr = $infNFeSupl->appendChild($dom->createElement('qrCode'));
-        $nodeqr->appendChild($dom->createCDATASection($qrcode));
-        if (!empty($urichave)) {
-            $infNFeSupl->appendChild(
-                $dom->createElement('urlChave', $urichave)
-            );
-        }
+        $infNFeSupl->appendChild($dom->createElement('qrCode', $qrcode));
+        //$nodeqr = $infNFeSupl->appendChild($dom->createElement('qrCode'));
+        //$nodeqr->appendChild($dom->createCDATASection($qrcode));
+        $infNFeSupl->appendChild($dom->createElement('urlChave', $urichave));
         $signature = $dom->getElementsByTagName('Signature')->item(0);
         $nfe->insertBefore($infNFeSupl, $signature);
         $dom->formatOutput = false;
         return $dom->saveXML();
-    }
-
-    /**
-     * TODO fmertins 24/09/18: remover em out/18 com o fim do QR-Code versão 1.00?
-     * Return a QRCode version 1 string to be used in NFCe
-     * @param  string $chNFe
-     * @param  string $url
-     * @param  string $tpAmb
-     * @param  string $dhEmi
-     * @param  string $vNF
-     * @param  string $vICMS
-     * @param  string $digVal
-     * @param  string $token
-     * @param  string $idToken
-     * @param  string $versao
-     * @param  string $tpEmis
-     * @param  string $cDest
-     * @return string
-     */
-    protected static function get100(
-        $chNFe,
-        $url,
-        $tpAmb,
-        $dhEmi,
-        $vNF,
-        $vICMS,
-        $digVal,
-        $token,
-        $idToken,
-        $versao,
-        $tpEmis,
-        $cDest = ''
-    ) {
-        $dhHex = self::str2Hex($dhEmi);
-        $digHex = self::str2Hex($digVal);
-        $seq = '';
-        $seq .= 'chNFe=' . $chNFe;
-        $seq .= '&nVersao=' . $versao;
-        $seq .= '&tpAmb=' . $tpAmb;
-        if ($cDest != '') {
-            $seq .= '&cDest=' . $cDest;
-        }
-        $seq .= '&dhEmi=' . strtolower($dhHex);
-        $seq .= '&vNF=' . $vNF;
-        $seq .= '&vICMS=' . $vICMS;
-        $seq .= '&digVal=' . strtolower($digHex);
-        $seq .= '&cIdToken=' . str_pad($idToken, 6, '0', STR_PAD_LEFT);
-        $hash = sha1($seq.$token);
-        $seq .= '&cHashQRCode='. strtoupper($hash);
-        if (strpos($url, '?') === false) {
-            $url = $url.'?';
-        }
-        return $url.$seq;
     }
 
     /**
@@ -208,10 +151,12 @@ class QRCode
             $url = $url.'?p=';
         }
         if ($tpEmis != 9) {
+            //emissão on-line
             $seq = "$chNFe|$ver|$tpAmb|$cscId";
             $hash = strtoupper(sha1($seq.$csc));
             return "$url$seq|$hash";
         }
+        //emissão off-line
         $dt = new \DateTime($dhEmi);
         $dia = $dt->format('d');
         $valor = number_format($vNF, 2, '.', '');
