@@ -237,8 +237,8 @@ class Complements
         $ret->preserveWhiteSpace = false;
         $ret->formatOutput = false;
         $ret->loadXML($response);
-        $retProt = $ret->getElementsByTagName('protNFe');
-        if (!isset($retProt)) {
+        $retProt = !empty($ret->getElementsByTagName('protNFe')) ? $ret->getElementsByTagName('protNFe') : null;
+        if ($retProt === null) {
             throw DocumentsException::wrongDocument(3, "&lt;protNFe&gt;");
         }
         $digProt = '000';
