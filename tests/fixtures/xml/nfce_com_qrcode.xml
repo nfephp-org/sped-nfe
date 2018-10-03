@@ -1,2 +1,203 @@
-<?xml version="1.0" encoding="utf-8"?>
-<NFe xmlns="http://www.portalfiscal.inf.br/nfe"><infNFe Id="NFe53151158716523000119650010000001752000001754" versao="3.10"><ide><cUF>53</cUF><cNF>00000175</cNF><natOp>Venda ao consumidor</natOp><indPag>0</indPag><mod>65</mod><serie>1</serie><nNF>175</nNF><dhEmi>2015-11-13T11:08:02-02:00</dhEmi><tpNF>1</tpNF><idDest>1</idDest><cMunFG>4314902</cMunFG><tpImp>4</tpImp><tpEmis>2</tpEmis><cDV>4</cDV><tpAmb>2</tpAmb><finNFe>1</finNFe><indFinal>1</indFinal><indPres>1</indPres><procEmi>0</procEmi><verProc>1.0.0</verProc></ide><emit><CNPJ>58716523000119</CNPJ><xNome>FIMATEC TEXTIL LTDA</xNome><xFant>FIMATEC</xFant><enderEmit><xLgr>RUA DOS PATRIOTAS</xLgr><nro>897</nro><xCpl>ARMAZEM 42</xCpl><xBairro>IPIRANGA</xBairro><cMun>3550308</cMun><xMun>Sao Paulo</xMun><UF>SP</UF><CEP>04207040</CEP><cPais>1058</cPais><xPais>BRASIL</xPais><fone>1120677300</fone></enderEmit><IE>112006603110</IE><IM>95095870</IM><CNAE>0131380</CNAE><CRT>3</CRT></emit><dest><CPF>60362219591</CPF><xNome>NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL</xNome><enderDest><xLgr>R. Tobias da Silva</xLgr><nro>287</nro><xBairro>CENTRO</xBairro><cMun>4314902</cMun><xMun>Porto Alegre</xMun><UF>RS</UF><CEP>90570020</CEP><cPais>1058</cPais><xPais>BRASIL</xPais><fone>4199007993</fone></enderDest><indIEDest>9</indIEDest><email>silvio@teixeira.com.br</email></dest><det nItem="1"><prod><cProd>YOMA7LIRIO</cProd><cEAN/><xProd>NOTA FISCAL EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL</xProd><NCM>90328911</NCM><CFOP>5102</CFOP><uCom>Kg</uCom><qCom>1.0000</qCom><vUnCom>10.0000000000</vUnCom><vProd>10.00</vProd><cEANTrib/><uTrib>Kg</uTrib><qTrib>1.0000</qTrib><vUnTrib>10.0000000000</vUnTrib><indTot>1</indTot><xPed>506</xPed><nItemPed>1</nItemPed></prod><imposto><vTotTrib>3.29</vTotTrib><ICMS><ICMS00><orig>1</orig><CST>00</CST><modBC>3</modBC><vBC>10.00</vBC><pICMS>18.00</pICMS><vICMS>1.80</vICMS></ICMS00></ICMS><PIS><PISAliq><CST>01</CST><vBC>10.00</vBC><pPIS>1.65</pPIS><vPIS>0.07</vPIS></PISAliq></PIS><COFINS><COFINSAliq><CST>01</CST><vBC>10.00</vBC><pCOFINS>3.00</pCOFINS><vCOFINS>0.30</vCOFINS></COFINSAliq></COFINS></imposto></det><total><ICMSTot><vBC>10.00</vBC><vICMS>1.80</vICMS><vICMSDeson>0.00</vICMSDeson><vBCST>0.00</vBCST><vST>0.00</vST><vProd>10.00</vProd><vFrete>0.00</vFrete><vSeg>0.00</vSeg><vDesc>0.00</vDesc><vII>0.00</vII><vIPI>0.00</vIPI><vPIS>0.07</vPIS><vCOFINS>0.30</vCOFINS><vOutro>0.00</vOutro><vNF>10.00</vNF><vTotTrib>3.29</vTotTrib></ICMSTot></total><transp><modFrete>9</modFrete></transp><pag><tPag>01</tPag><vPag>10.00</vPag></pag><infAdic><infCpl>Trib aprox R$: 2,09 Federal e R$: 1,20 Estadual Fonte: IBPT 5oi7eW 15.2.A.</infCpl></infAdic></infNFe><infNFeSupl><qrCode><![CDATA[https://www.homologacao.nfce.fazenda.sp.gov.br/NFCeConsultaPublica/Paginas/ConsultaQRCode.aspx?chNFe=53151158716523000119650010000001752000001754&nVersao=100&tpAmb=2&cDest=60362219591&dhEmi=323031352d31312d31335431313a30383a30322d30323a3030&vNF=10.00&vICMS=1.80&digVal=5a67486f6466727a656478795445686630654441354b576e436d303d&cIdToken=000001&cHashQRCode=2517E28A57D323A57BB30A965E247196847C496A]]></qrCode></infNFeSupl><Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><Reference URI="#NFe53151158716523000119650010000001752000001754"><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/><Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><DigestValue>ZgHodfrzedxyTEhf0eDA5KWnCm0=</DigestValue></Reference></SignedInfo><SignatureValue>VvPn3y8VwKjStcbW4ai17Nq6dkaz1gVKs9RzQ49bdvXbEGjM6GlFeQx4BdHjeKh948ISfXmGUeBqoIRQ1WWFvI+88nEqUaIyVVg2ZEEWObz2Hh4kYwZ7G7lzMr/J3cln6pbdb8eg92O3q7P9c8LIYXwQye2eGlbZweowNS2L69PQjAYUUOie2/kAgvGbFMMAp9B05HbvSx/w4u5tGoTMZscDH+Dyq6dHdCWI2fCq4tgFW4t73qwM0nzzU6lkahnz/2uQ4rfUE+IHC26s3tD2bw7675mZWe6LmGDiYCu65fPRCf19t0IkvsKfuohIUIxRNxKVyPrdpGH0F4rzWvQLnA==</SignatureValue><KeyInfo><X509Data><X509Certificate>MIIINDCCBhygAwIBAgIQbW4TozfxRFSbS3qN3wM6HTANBgkqhkiG9w0BAQsFADB0MQswCQYDVQQGEwJCUjETMBEGA1UEChMKSUNQLUJyYXNpbDEtMCsGA1UECxMkQ2VydGlzaWduIENlcnRpZmljYWRvcmEgRGlnaXRhbCBTLkEuMSEwHwYDVQQDExhBQyBDZXJ0aXNpZ24gTXVsdGlwbGEgRzUwHhcNMTUwNDMwMDAwMDAwWhcNMTYwNDI4MjM1OTU5WjCBwjELMAkGA1UEBhMCQlIxEzARBgNVBAoUCklDUC1CcmFzaWwxIjAgBgNVBAsUGUF1dGVudGljYWRvIHBvciBBUiBEYXNjaGkxGzAZBgNVBAsUEkFzc2luYXR1cmEgVGlwbyBBMTEVMBMGA1UECxQMSUQgLSA4MTMxMzIxMRwwGgYDVQQDExNGSU1BVEVDIFRFWFRJTCBMVERBMSgwJgYJKoZIhvcNAQkBFhlmaW5hbmNlaXJvQGZpbWF0ZWMuY29tLmJyMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzOxHRRSpfxwbbHepRc7xUn752xbon1nciqcZk6HkrEXCXaG0tLGSBsMdhRlTlrDHw2QuDkS4HwGJZFUI6KstSFyjxSVot6vY1yJUhxpAhgYm3zOAlcanCDoW3TcYlKQZ7Oy4fANbYdvzNUJRu/l1EGiPUcwkYuqRyNSXTJ1vauFZ4FSKKAuV9BeXdAKwQ9TSK50JxQE+7/kbrnhgBlTCEQVIcWx4LvALahQloKL7CexnZ4eHTFi1WRua91od3GjbeEPx8d+36t5rVVL0wtn56bVzh2m/Zs8aIB5wXmissQnHQLad29zeSZN37GAwTSZXIEFSlV6vaZwdIOCwggfV/wIDAQABo4IDcTCCA20wgbcGA1UdEQSBrzCBrKA4BgVgTAEDBKAvBC0yMDEwMTk1OTA1MjI1NTM3ODgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDCgIQYFYEwBAwKgGAQWRkVSTkFORE8gSk9TRSBLQUlSQUxMQaAZBgVgTAEDA6AQBA41ODcxNjUyMzAwMDExOaAXBgVgTAEDB6AOBAwwMDAwMDAwMDAwMDCBGWZpbmFuY2Vpcm9AZmltYXRlYy5jb20uYnIwCQYDVR0TBAIwADAfBgNVHSMEGDAWgBSdUM+9/yTKr7Ez6xfiQnqOaSqOUzAOBgNVHQ8BAf8EBAMCBeAwgYkGA1UdIASBgTB/MH0GBmBMAQIBCzBzMHEGCCsGAQUFBwIBFmVodHRwOi8vaWNwLWJyYXNpbC5jZXJ0aXNpZ24uY29tLmJyL3JlcG9zaXRvcmlvL2RwYy9BQ19DZXJ0aXNpZ25fTXVsdGlwbGEvRFBDX0FDX0NlcnRpU2lnbk11bHRpcGxhLnBkZjCCASUGA1UdHwSCARwwggEYMFygWqBYhlZodHRwOi8vaWNwLWJyYXNpbC5jZXJ0aXNpZ24uY29tLmJyL3JlcG9zaXRvcmlvL2xjci9BQ0NlcnRpc2lnbk11bHRpcGxhRzUvTGF0ZXN0Q1JMLmNybDBboFmgV4ZVaHR0cDovL2ljcC1icmFzaWwub3V0cmFsY3IuY29tLmJyL3JlcG9zaXRvcmlvL2xjci9BQ0NlcnRpc2lnbk11bHRpcGxhRzUvTGF0ZXN0Q1JMLmNybDBboFmgV4ZVaHR0cDovL3JlcG9zaXRvcmlvLmljcGJyYXNpbC5nb3YuYnIvbGNyL0NlcnRpc2lnbi9BQ0NlcnRpc2lnbk11bHRpcGxhRzUvTGF0ZXN0Q1JMLmNybDAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwgaAGCCsGAQUFBwEBBIGTMIGQMGQGCCsGAQUFBzAChlhodHRwOi8vaWNwLWJyYXNpbC5jZXJ0aXNpZ24uY29tLmJyL3JlcG9zaXRvcmlvL2NlcnRpZmljYWRvcy9BQ19DZXJ0aXNpZ25fTXVsdGlwbGFfRzUucDdjMCgGCCsGAQUFBzABhhxodHRwOi8vb2NzcC5jZXJ0aXNpZ24uY29tLmJyMA0GCSqGSIb3DQEBCwUAA4ICAQCCAQcAotZLVGxy77a4ssJgCW9RQ8kwo37NibnzS9uB1Ll+iHCby974PjOEGRy2gHdnGq/Jk8wesW7qYu5DDcxE6X/op3fvMeEk/zosYHeeHT9ZrpzQUq7z4oxhny59VWM9oIECYIAXXogU/KWDaeq/KgbzxWWIXjXg/+7C3Frse4V3wRgI5z4qRcTUf3mDv6MsmR1nKJv6nfewwdmBv27oo9MQrv1Jpe6DHV5cDrV0nIKM7NL84U5rJRenv8fBcKNJJafWrYQ4nVkwJn1zyEVYPQYnGSnwDok+/P/YSgew5JXIjaV8YORJGh06Paadb21XtNg3MHfz/7KMNlbf2XeGfNl1/G/tdDOB939PTVhKuN68PWiinTK2447rAo6fWOYZhKTANRqgVMSy8l+jT5FjTJJJ8X6CeiM/8ho6dSti+XhmTcwxguFHY/l4W/DfgEgElRF11xb6qzfiG2zhWsiPODHWOFvvc8fgV7ZifTyOLDpYO7BwdVRUcQP6J6qE6PreuQTS+4FC9by/748Dn7gLt2KJqh+khvJlaV8QYdx2m1FZcUMO7g0/99m+Bj7wrXd/COBmD6SCDpfMZykYA4UdSWjb8V/I0pE8IuQlciZrgYNZwg+dJ5PKq0c3ktoLN4xwpq9bBvmnS2QjaRAxqLlX0HMvJb5djnCg0yyMcsI7WA==</X509Certificate></X509Data></KeyInfo></Signature></NFe>
+<?xml version="1.0" encoding="UTF-8"?>
+<NFe xmlns="http://www.portalfiscal.inf.br/nfe">
+    <infNFe Id="NFe29181033657677000156650010001654399001654399" versao="4.00">
+        <ide>
+            <cUF>29</cUF>
+            <cNF>00165439</cNF>
+            <natOp>VENDA DE MERC. ADQ. E/OU REC. DE TERCEIROS C/ REG. SUB.TRIB.</natOp>
+            <mod>65</mod>
+            <serie>1</serie>
+            <nNF>165439</nNF>
+            <dhEmi>2018-10-01T07:28:14-04:00</dhEmi>
+            <tpNF>1</tpNF>
+            <idDest>1</idDest>
+            <cMunFG>5108402</cMunFG>
+            <tpImp>4</tpImp>
+            <tpEmis>9</tpEmis>
+            <cDV>9</cDV>
+            <tpAmb>2</tpAmb>
+            <finNFe>1</finNFe>
+            <indFinal>1</indFinal>
+            <indPres>1</indPres>
+            <procEmi>0</procEmi>
+            <verProc>PEMAWEB 2.11.0</verProc>
+            <dhCont>2018-10-01T14:54:34-04:00</dhCont>
+            <xJust>PROBLEMAS TECNICOS</xJust>
+        </ide>
+        <emit>
+            <CNPJ>33657677000156</CNPJ>
+            <xNome>PMZ CENTRO NORTE S/A</xNome>
+            <xFant>PMZ CENTRO NORTE S/A</xFant>
+            <enderEmit>
+                <xLgr>AV. DA FEB (LOT.PONTE NOVA)</xLgr>
+                <nro>1150</nro>
+                <xBairro>PONTE NOVA</xBairro>
+                <cMun>2908402</cMun>
+                <xMun>VARZEA GRANDE</xMun>
+                <UF>BA</UF>
+                <CEP>29115005</CEP>
+                <cPais>1058</cPais>
+                <xPais>BRASIL</xPais>
+                <fone>02936882500</fone>
+            </enderEmit>
+            <IE>130796832</IE>
+            <IM>8216</IM>
+            <CNAE>4530703</CNAE>
+            <CRT>3</CRT>
+        </emit>
+        <det nItem="1">
+            <prod>
+                <cProd>10015300336</cProd>
+                <cEAN>7893049207584</cEAN>
+                <xProd>(153 - C2075) -CILINDRO MESTRE DUPLO UN</xProd>
+                <NCM>87083090</NCM>
+                <CFOP>5405</CFOP>
+                <uCom>UN</uCom>
+                <qCom>1.0000</qCom>
+                <vUnCom>96.2200</vUnCom>
+                <vProd>96.22</vProd>
+                <cEANTrib>7893049207584</cEANTrib>
+                <uTrib>UN</uTrib>
+                <qTrib>1.0000</qTrib>
+                <vUnTrib>96.2200</vUnTrib>
+                <indTot>1</indTot>
+            </prod>
+            <imposto>
+                <vTotTrib>17.32</vTotTrib>
+                <ICMS>
+                    <ICMS60>
+                        <orig>0</orig>
+                        <CST>60</CST>
+                        <vBCSTRet>0.00</vBCSTRet>
+                        <pST>0.00</pST>
+                        <vICMSSTRet>0.00</vICMSSTRet>
+                        <vBCFCPSTRet>0.00</vBCFCPSTRet>
+                        <pFCPSTRet>0.00</pFCPSTRet>
+                        <vFCPSTRet>0.00</vFCPSTRet>
+                    </ICMS60>
+                </ICMS>
+                <PIS>
+                    <PISNT>
+                        <CST>04</CST>
+                    </PISNT>
+                </PIS>
+                <COFINS>
+                    <COFINSNT>
+                        <CST>04</CST>
+                    </COFINSNT>
+                </COFINS>
+            </imposto>
+            <infAdProd>Valor Aprox. dos Tributos : R$ 17.32</infAdProd>
+        </det>
+        <det nItem="2">
+            <prod>
+                <cProd>10029200332</cProd>
+                <cEAN/>
+                <xProd>(292 - BAH0031D) -ROLAMENTO RODA DIANTEIRO SEM ABS UN</xProd>
+                <NCM>84821090</NCM>
+                <CFOP>5405</CFOP>
+                <uCom>UN</uCom>
+                <qCom>1.0000</qCom>
+                <vUnCom>53.7800</vUnCom>
+                <vProd>53.78</vProd>
+                <cEANTrib/>
+                <uTrib>UN</uTrib>
+                <qTrib>1.0000</qTrib>
+                <vUnTrib>53.7800</vUnTrib>
+                <indTot>1</indTot>
+            </prod>
+            <imposto>
+                <vTotTrib>18.43</vTotTrib>
+                <ICMS>
+                    <ICMS60>
+                        <orig>0</orig>
+                        <CST>60</CST>
+                        <vBCSTRet>0.00</vBCSTRet>
+                        <pST>0.00</pST>
+                        <vICMSSTRet>0.00</vICMSSTRet>
+                        <vBCFCPSTRet>0.00</vBCFCPSTRet>
+                        <pFCPSTRet>0.00</pFCPSTRet>
+                        <vFCPSTRet>0.00</vFCPSTRet>
+                    </ICMS60>
+                </ICMS>
+                <PIS>
+                    <PISAliq>
+                        <CST>01</CST>
+                        <vBC>53.78</vBC>
+                        <pPIS>1.65</pPIS>
+                        <vPIS>0.89</vPIS>
+                    </PISAliq>
+                </PIS>
+                <COFINS>
+                    <COFINSAliq>
+                        <CST>01</CST>
+                        <vBC>53.78</vBC>
+                        <pCOFINS>7.60</pCOFINS>
+                        <vCOFINS>4.09</vCOFINS>
+                    </COFINSAliq>
+                </COFINS>
+            </imposto>
+            <infAdProd>Valor Aprox. dos Tributos : R$ 18.43</infAdProd>
+        </det>
+        <total>
+            <ICMSTot>
+                <vBC>0.00</vBC>
+                <vICMS>0.00</vICMS>
+                <vICMSDeson>0.00</vICMSDeson>
+                <vFCP>0.00</vFCP>
+                <vBCST>0.00</vBCST>
+                <vST>0.00</vST>
+                <vFCPST>0.00</vFCPST>
+                <vFCPSTRet>0.00</vFCPSTRet>
+                <vProd>150.00</vProd>
+                <vFrete>0.00</vFrete>
+                <vSeg>0.00</vSeg>
+                <vDesc>0.00</vDesc>
+                <vII>0.00</vII>
+                <vIPI>0.00</vIPI>
+                <vIPIDevol>0.00</vIPIDevol>
+                <vPIS>0.89</vPIS>
+                <vCOFINS>4.09</vCOFINS>
+                <vOutro>0.00</vOutro>
+                <vNF>150.00</vNF>
+                <vTotTrib>35.75</vTotTrib>
+            </ICMSTot>
+        </total>
+        <transp>
+            <modFrete>9</modFrete>
+        </transp>
+        <pag>
+            <detPag>
+                <tPag>04</tPag>
+                <vPag>150.00</vPag>
+            </detPag>
+        </pag>
+        <infAdic>
+            <infCpl>11899318;422-JERK DIONNY;CLIENTE RECUSOU INFORMAR CPF/CNPJ NO CUPOM</infCpl>
+        </infAdic>
+    </infNFe>
+    <infNFeSupl>
+        <qrCode>http://hnfe.sefaz.ba.gov.br/servicos/nfce/modulos/geral/NFCEC_consulta_chave_acesso.aspx?p=29181033657677000156650010001654399001654399|2|2|01|150.00|6d395a7251544b4d7876374131426c6e662f6e6d4e4756582b4e383d|1|9C886E1A36ADC68CAFDF114F3424CD30E8371631</qrCode>
+        <urlChave>http://hinternet.sefaz.ba.gov.br/nfce/consulta</urlChave>
+    </infNFeSupl>
+    <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+        <SignedInfo>
+            <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+            <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+            <Reference URI="#NFe29181033657677000156650010001654399001654399">
+                <Transforms>
+                    <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                    <Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+                </Transforms>
+                <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+                <DigestValue>m9ZrQTKMxv7A1Blnf/nmNGVX+N8=</DigestValue>
+            </Reference>
+        </SignedInfo>
+        <SignatureValue>NCVDuApMC7Bjq9UyTNZymbAtF1miOOeTI1iAdqY00lPeehvrWraWuU8lSZXxn4lPsOJ8YBApDQC/zuzbn5rmLFPfLGMb8WR1lBfmvjgWHgtKNQj+WGcGD0QWr04LJWBiZXWccnTY60E/Jfq/ZKIAxE/Iau9NCxS3ihY176XbI+m1TRxHmAUu7b7zYwFS5xKAo5Oo3ui4DY4NtVhXQT3BerHu419L3w7tVKl1FPfcLoNZY3DiKyi1f72z+FSXm6y22ly0O2SRGfwTQusSttWyzwATI6Qfwmq0hpRad53bkW76DrhmA8HFujJLZPS0ZmhPT7RXOE4dq51zzHKLoDREKA==</SignatureValue>
+        <KeyInfo>
+            <X509Data>
+                <X509Certificate>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</X509Certificate>
+            </X509Data>
+        </KeyInfo>
+    </Signature>
+</NFe>
