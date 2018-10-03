@@ -4833,7 +4833,7 @@ class Make
                 $this->dom->addChild(
                     $pisItem,
                     'vBC',
-                    number_format($std->vBC, 2, '.', ''),
+                    $std->vBC,
                     ($std->vBC !== null) ? true : false,
                     "[item $std->item] Valor da Base de Cálculo do PIS"
                 );
