@@ -1757,7 +1757,7 @@ class Parser
      * Creates tag detPag and card [YA]
      * SEBRAE
      * YA01|indPag|tPag|vPag|",
-     * @param type $std
+     * @param stdClass $std
      */
     protected function ya01Entity($std)
     {
