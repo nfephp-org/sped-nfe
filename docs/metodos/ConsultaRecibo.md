@@ -21,21 +21,21 @@ try {
     $tools = new Tools($configJson, Certificate::readPfx($content, 'senha'));
     
     //consulta número de recibo
-    //$numeroRecibo = número do recíbo recebido no envio do lote
+    //$numeroRecibo = número do recíbo do envio do lote
     $xmlResp = $tools->sefazConsultaRecibo($numeroRecibo, $tpAmb);
     
     //transforma o xml de retorno em um stdClass
-    $st = new NStandardize();
+    $st = new Standardize();
     $std = $st->toStd($xmlResp);
 
-	if($std->cStat=='103'){ //lote enviado
+    if($std->cStat=='103') { //lote enviado
         //Lote ainda não foi precessado pela SEFAZ;
     }
-	if($std->cStat=='105'){ //lote em processamento
+    if($std->cStat=='105') { //lote em processamento
         //tente novamente mais tarde
     }
     
-	if($std->cStat=='104'){ //lote processado (tudo ok)
+    if($std->cStat=='104'){ //lote processado (tudo ok)
         if($std->protNFe->infProt->cStat=='100'){ //Autorizado o uso da NF-e
             $return = ["situacao"=>"autorizada",
                        "numeroProtocolo"=>$std->protNFe->infProt->nProt,
@@ -51,8 +51,7 @@ try {
                        "motivo"=>$std->protNFe->infProt->xMotivo,
                        "cstat"=>$std->protNFe->infProt->cStat];
         }
-    }//104
-    else{ //outros erros possíveis
+    } else { //outros erros possíveis
         $return = ["situacao"=>"rejeitada",
                    "motivo"=>$std->xMotivo,
                    "cstat"=>$std->cStat];
