@@ -18,7 +18,7 @@ $array = [
 $std = json_decode(json_encode($array));
 ```
 
-> NOTA: Muitos campos não são obrigatórios nesse caso caso não haja nenhum valor a ser informado, devem ser criados como NULL. 
+> NOTA: Muitos campos não são obrigatórios nesse caso caso não haja nenhum valor a ser informado, devem ser criados como NULL.
 
 # Métodos
 
@@ -31,7 +31,7 @@ $nfe = new Make();
 
 ### function taginfNFe($std):DOMElement
 Node principal
- 
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
@@ -42,8 +42,8 @@ $std->versao = '3.10'; //versão do layout
 $std->Id = 'NFe35150271780456000160550010000000021800700082';//se o Id de 44 digitos não for passado será gerado automaticamente
 $std->pk_nItem = null; //deixe essa variavel sempre como NULL
 
-$elem = $nfe->taginfNFe($std);
- 
+$nfe->taginfNFe($std);
+
 ```
 
 ### function tagide($std):DOMElement
@@ -59,7 +59,7 @@ $std->cUF = 35;
 $std->cNF = '80070008';
 $std->natOp = 'VENDA';
 
-$std->indPag = 0; //NÃO EXISTE MAIS NA VERSÃO 4.00 
+$std->indPag = 0; //NÃO EXISTE MAIS NA VERSÃO 4.00
 
 $std->mod = 55;
 $std->serie = 1;
@@ -74,14 +74,14 @@ $std->tpEmis = 1;
 $std->cDV = 2;
 $std->tpAmb = 2;
 $std->finNFe = 1;
-$std->indFinal = 0; 
+$std->indFinal = 0;
 $std->indPres = 0;
 $std->procEmi = '3.10.31';
 $std->verProc = null;
 $std->dhCont = null;
 $std->xJust = null;
 
-$elem = $nfe->tagide($std);
+$nfe->tagide($std);
 ```
 
 ### function tagrefNFe($std):DOMElement
@@ -95,7 +95,7 @@ Node referente a NFe referenciada
 $std = new stdClass();
 $std->refNFe = '35150271780456000160550010000253101000253101';
 
-$elem = $nfe->tagrefNFe($std);
+$nfe->tagrefNFe($std);
 ```
 
 ### function tagrefNF($std):DOMElement
@@ -114,7 +114,7 @@ $std->mod = '01';
 $std->serie = 3;
 $std->nNF = 587878;
 
-$elem = $nfe->tagrefNF($std);
+$nfe->tagrefNF($std);
 ```
 
 ### function tagrefNFP($std):DOMElement
@@ -135,7 +135,7 @@ $std->mod = '04';
 $std->serie = 0;
 $std->nNF = 5578;
 
-$elem = $nfe->tagrefNFP($std);
+$nfe->tagrefNFP($std);
 ```
 ### function tagrefCTe($std):DOMElement
 Node referente aos CTe referenciados
@@ -147,7 +147,7 @@ Node referente aos CTe referenciados
 $std = new stdClass();
 $std->refCTe = '35150268252816000146570010000016161002008472';
 
-$elem = $nfe->tagrefCTe($std);
+$nfe->tagrefCTe($std);
 ```
 
 ### function tagrefECF($std):DOMElement
@@ -162,7 +162,7 @@ $std->mod = '2C';
 $std->nECF = 788;
 $std->nCOO = 114;
 
-$elem = $nfe->tagrefECF($std);
+$nfe->tagrefECF($std);
 ```
 
 ### function tagemit($std):DOMElement
@@ -184,7 +184,7 @@ $std->CRT;
 $std->CNPJ; //indicar apenas um CNPJ ou CPF
 $std->CPF;
 
-$elem = $nfe->tagemit($std);
+$nfe->tagemit($std);
 ```
 
 ### function tagenderEmit($std):DOMElement
@@ -208,7 +208,7 @@ $std->cPais;
 $std->xPais;
 $std->fone;
 
-$elem = $nfe->tagenderEmit($std);
+$nfe->tagenderEmit($std);
 ```
 
 ### function tagdest($std):DOMElement
@@ -230,7 +230,7 @@ $std->CNPJ; //indicar apenas um CNPJ ou CPF ou idEstrangeiro
 $std->CPF;
 $std->idEstrangeiro;
 
-$elem = $nfe->tagdest($std);
+$nfe->tagdest($std);
 ```
 
 ### function tagenderDest($std):DOMElement
@@ -254,7 +254,7 @@ $std->cPais;
 $std->xPais;
 $std->fone;
 
-$elem = $nfe->tagenderDest($std);
+$nfe->tagenderDest($std);
 ```
 
 ### function tagretirada($std):DOMElement
@@ -276,7 +276,7 @@ $std->UF;
 $std->CNPJ; //indicar apenas um CNPJ ou CPF
 $std->CPF = null;
 
-$elem = $nfe->tagretirada($std);
+$nfe->tagretirada($std);
 ```
 
 
@@ -298,7 +298,7 @@ $std->UF;
 $std->CNPJ; //indicar um CNPJ ou CPF
 $std->CPF = null;
 
-$elem = $nfe->tagentrega($std);
+$nfe->tagentrega($std);
 ```
 
 ### function tagautXML($std):DOMElement
@@ -311,12 +311,12 @@ Node de registro de pessoas autorizadas a acessar a NFe
 $std = new stdClass();
 $std->CNPJ = '12345678901234'; //indicar um CNPJ ou CPF
 $std->CPF = null;
-$elem = $nfe->tagautXML($std);
+$nfe->tagautXML($std);
 ```
 
 ### function tagprod($std):DOMElement
 Node de dados do produto/serviço
- 
+
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
@@ -349,7 +349,7 @@ $std->xPed;
 $std->nItemPed;
 $std->nFCI;
 
-$elem = $nfe->tagprod($std);
+$nfe->tagprod($std);
 ```
 
 ### function taginfAdProd($std):DOMElement
@@ -364,7 +364,7 @@ $std->item = 1; //item da NFe
 
 $std->infAdProd = 'informacao adicional do item';
 
-$elem = $nfe->taginfAdProd($std);
+$nfe->taginfAdProd($std);
 ```
 
 ### function tagNVE($std):DOMElement
@@ -378,7 +378,7 @@ $std = new stdClass();
 $std->item = 1; //item da NFe
 $std->NVE = 'AA0001';
 
-$elem = $nfe->tagNVE($std);
+$nfe->tagNVE($std);
 ```
 
 ### function tagCEST($std):DOMElement
@@ -394,7 +394,7 @@ $std->CEST = '0200100';
 $std->indEscala = 'N'; //incluido no layout 4.00
 $std->CNPJFab = '12345678901234'; //incluido no layout 4.00
 
-$elem = $nfe->tagCEST($std);
+$nfe->tagCEST($std);
 ```
 
 ### function tagRECOPI($std):DOMElement
@@ -408,7 +408,7 @@ $std = new stdClass();
 $std->item = 1; //item da NFe
 $std->nRECOPI = '12345678901234567890';
 
-$elem = $nfe->tagRECOPI($std);
+$nfe->tagRECOPI($std);
 ```
 
 ### function tagDI($std):DOMElement
@@ -432,7 +432,7 @@ $std->CNPJ;
 $std->UFTerceiro;
 $std->cExportador;
 
-$elem = $nfe->tagDI($std);
+$nfe->tagDI($std);
 ```
 
 ### function tagadi($std):DOMElement
@@ -451,7 +451,7 @@ $std->cFabricante;
 $std->vDescDI;
 $std->nDraw;
 
-$elem = $nfe->tagadi($std);
+$nfe->tagadi($std);
 ```
 
 ### function tagdetExport($std):DOMElement
@@ -465,7 +465,7 @@ $std = new stdClass();
 $std->item = 1; //item da NFe
 $std->nDraw = '82828';
 
-$elem = $nfe->tagdetExport($std);
+$nfe->tagdetExport($std);
 ```
 
 ### function tagdetExportInd($std):DOMElement
@@ -482,7 +482,7 @@ $std->nRE = '123456789012';
 $std->chNFe = '53170924915365000295550550000001951000001952';
 $std->qExport = 1234.123;
 
-$elem = $nfe->tagdetExportInd($std);
+$nfe->tagdetExportInd($std);
 ```
 ### function tagRastro($std):DOMElement
 Node com os dados de rastreabilidade do item da NFe
@@ -501,7 +501,7 @@ $std->dFab = '2018-01-01';
 $std->dVal = '2020-01-01';
 $std->cAgreg = '1234';
 
-$elem = $nfe->tagRastro($std);
+$nfe->tagRastro($std);
 ```
 
 ### function tagveicProd($std):DOMElement
@@ -538,7 +538,7 @@ $std->cCorDENATRAN;
 $std->lota;
 $std->tpRest;
 
-$elem = $nfe->tagveicProd($std);
+$nfe->tagveicProd($std);
 ```
 
 ### function tagmed($std):DOMElement
@@ -560,7 +560,7 @@ $std->vPMC;
 
 $std->cProdANVISA; //incluido no layout 4.00
 
-$elem = $nfe->tagmed($std);
+$nfe->tagmed($std);
 ```
 
 ### function tagarma($std):DOMElement
@@ -578,7 +578,7 @@ $std->nSerie;
 $std->nCano;
 $std->descr;
 
-$elem = $nfe->tagarma($std);
+$nfe->tagarma($std);
 ```
 
 ### function tagcomb($std):DOMElement
@@ -607,7 +607,7 @@ $std->qBCProd;
 $std->vAliqProd;
 $std->vCIDE;
 
-$elem = $nfe->tagcomb($std);
+$nfe->tagcomb($std);
 ```
 
 ### function tagencerrante($std):DOMElement
@@ -626,7 +626,7 @@ $std->nTanque;
 $std->vEncIni;
 $std->vEncFin;
 
-$elem = $nfe->tagencerrante($std);
+$nfe->tagencerrante($std);
 ```
 
 ### function tagimposto($std):DOMElement
@@ -640,7 +640,7 @@ $std = new stdClass();
 $std->item = 1; //item da NFe
 $std->vTotTrib = 1000.00;
 
-$elem = $nfe->tagimposto($std);
+$nfe->tagimposto($std);
 ```
 
 ### function tagICMS($std):DOMElement
@@ -687,7 +687,7 @@ $std->vBCEfet;
 $std->pICMSEfet;
 $std->vICMSEfet;
 
-$elem = $nfe->tagICMS($std);
+$nfe->tagICMS($std);
 ```
 
 ### function tagICMSPart($std):DOMElement
@@ -715,7 +715,7 @@ $std->vICMSST = 140.00;
 $std->pBCOp = 10.00;
 $std->UFST = 'RJ';
 
-$elem = $nfe->tagICMSPart($std);
+$nfe->tagICMSPart($std);
 ```
 
 ### function tagICMSST($std):DOMElement
@@ -734,7 +734,7 @@ $std->vICMSSTRet = 190.00;
 $std->vBCSTDest = 1000.00;
 $std->vICMSSTDest = 1.00;
 
-$elem = $nfe->tagICMSST($std);
+$nfe->tagICMSST($std);
 ```
 
 ### function tagICMSSN($std):DOMElement
@@ -775,7 +775,7 @@ $std->vBCEfet = null;
 $std->pICMSEfet = null;
 $std->vICMSEfet = null;
 
-$elem = $nfe->tagICMSSN($std);
+$nfe->tagICMSSN($std);
 ```
 
 ### function tagICMSUFDest($std):DOMElement
@@ -792,12 +792,12 @@ $std->vBCFCPUFDest = 100.00;
 $std->pFCPUFDest = 1.00;
 $std->pICMSUFDest = 18.00;
 $std->pICMSInter = 12.00;
-$std->pICMSInterPart = 80.00; 
+$std->pICMSInterPart = 80.00;
 $std->vFCPUFDest = 1.00;
 $std->vICMSUFDest = 14.44;
 $std->vICMSUFRemet = 3.56;
 
-$elem = $nfe->tagICMSUFDest($std);
+$nfe->tagICMSUFDest($std);
 ```
 
 ### function tagIPI($std):DOMElement
@@ -821,7 +821,7 @@ $std->pIPI = 15.00;
 $std->qUnid = null;
 $std->vUnid = null;
 
-$elem = $nfe->tagIPI($std);
+$nfe->tagIPI($std);
 ```
 
 ### function tagII($std):DOMElement
@@ -838,7 +838,7 @@ $std->vDespAdu = 100.00;
 $std->vII = 220.00;
 $std->vIOF = null;
 
-$elem = $nfe->tagII($std);
+$nfe->tagII($std);
 ```
 
 ### function tagPIS($std):DOMElement
@@ -857,7 +857,7 @@ $std->vPIS = null;
 $std->qBCProd = null;
 $std->vAliqProd = null;
 
-$elem = $nfe->tagPIS($std);
+$nfe->tagPIS($std);
 ```
 
 ### function tagPISST($std):DOMElement
@@ -875,7 +875,7 @@ $std->pPIS = 1.60;
 $std->qBCProd = null;
 $std->vAliqProd = null;
 
-$elem = $nfe->tagPISST($std);
+$nfe->tagPISST($std);
 ```
 
 ### function tagCOFINS($std):DOMElement
@@ -894,7 +894,7 @@ $std->vCOFINS = null;
 $std->qBCProd = null;
 $std->vAliqProd = null;
 
-$elem = $nfe->tagCOFINS($std);
+$nfe->tagCOFINS($std);
 ```
 
 ### function tagCOFINSST($std):DOMElement
@@ -912,7 +912,7 @@ $std->pCOFINS = 10.00;
 $std->qBCProd = null;
 $std->vAliqProd = null;
 
-$elem = $nfe->tagCOFINSST($std);
+$nfe->tagCOFINSST($std);
 ```
 
 ### function tagISSQN($std):DOMElement
@@ -941,7 +941,7 @@ $std->cPais = '1058';
 $std->nProcesso = null;
 $std->indIncentivo = 2;
 
-$elem = $nfe->tagISSQN($std);
+$nfe->tagISSQN($std);
 ```
 
 ### function tagimpostoDevol($std):DOMElement
@@ -958,7 +958,7 @@ $std->item = 1; //item da NFe
 $std->pDevol = 2.00;
 $std->vIPIDevol = 123.36;
 
-$elem = $nfe->tagimpostoDevol($std);
+$nfe->tagimpostoDevol($std);
 ```
 
 ### function tagICMSTot($std):DOMElement
@@ -992,7 +992,7 @@ $std->vOutro = 1000.00;
 $std->vNF = 1000.00;
 $std->vTotTrib = 1000.00;
 
-$elem = $nfe->tagICMSTot($std);
+$nfe->tagICMSTot($std);
 ```
 
 ### function tagISSQNTot($std):DOMElement
@@ -1018,7 +1018,7 @@ $std->vDescCond = null;
 $std->vISSRet = null;
 $std->cRegTrib = 5;
 
-$elem = $nfe->tagISSQNTot($std);
+$nfe->tagISSQNTot($std);
 ```
 
 ### function tagretTrib($std):DOMElement
@@ -1045,7 +1045,7 @@ $std->vIRRF = 100.00;
 $std->vBCRetPrev = 100.00;
 $std->vRetPrev = 100.00;
 
-$elem = $nfe->tagretTrib($std);
+$nfe->tagretTrib($std);
 ```
 
 ### function tagtransp($std):DOMElement
@@ -1058,7 +1058,7 @@ Node indicativo da forma de frete
 $std = new stdClass();
 $std->modFrete = 1;
 
-$elem = $nfe->tagtransp($std);
+$nfe->tagtransp($std);
 ```
 
 ### function tagtransporta($std):DOMElement
@@ -1077,7 +1077,7 @@ $std->UF = 'SP';
 $std->CNPJ = '12345678901234';//só pode haver um ou CNPJ ou CPF, se um deles é especificado o outro deverá ser null
 $std->CPF = null;
 
-$elem = $nfe->tagtransporta($std);
+$nfe->tagtransporta($std);
 ```
 
 ### function tagretTransp($std):DOMElement
@@ -1095,7 +1095,7 @@ $std->vICMSRet = 2.40;
 $std->CFOP = '5353';
 $std->cMunFG = '3518800';
 
-$elem = $nfe->tagveicTransp($std);
+$nfe->tagveicTransp($std);
 ```
 
 ### function tagveicTransp($std):DOMElement
@@ -1110,7 +1110,7 @@ $std->placa = 'ABC1111';
 $std->UF = 'RJ';
 $std->RNTC = '999999';
 
-$elem = $nfe->tagveicTransp($std);
+$nfe->tagveicTransp($std);
 ```
 
 ### function tagreboque($std):DOMElement
@@ -1125,7 +1125,7 @@ $std->placa = 'BCB0897';
 $std->UF = 'SP';
 $std->RNTC = '123456';
 
-$elem = $nfe->tagreboque($std);
+$nfe->tagreboque($std);
 ```
 
 ### function tagvagao($std):DOMElement
@@ -1139,7 +1139,7 @@ Node para informar o vagão usado
 $std = new stdClass();
 $std->vagao = 'YY452-19';
 
-$elem = $nfe->tagvagao($std);
+$nfe->tagvagao($std);
 ```
 
 ### function tagbalsa($std):DOMElement
@@ -1153,7 +1153,7 @@ Node para informar o balsa usado
 $std = new stdClass();
 $std->balsa = 'BNAV111';
 
-$elem = $nfe->tagbalsa($std);
+$nfe->tagbalsa($std);
 ```
 
 
@@ -1173,11 +1173,11 @@ $std->nVol = '11111';
 $std->pesoL = 10.50;
 $std->pesoB = 11.00;
 
-$elem = $nfe->tagvol($std);
+$nfe->tagvol($std);
 ```
 
 ### function taglacres($std):DOMElement
-Node com a identificação dos lacres, referentes ao volume 
+Node com a identificação dos lacres, referentes ao volume
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
@@ -1187,7 +1187,7 @@ $std = new stdClass();
 $std->item = 1; //indicativo do numero do volume
 $std->nLacre = 'ZZEX425365';
 
-$elem = $nfe->taglacres($std);
+$nfe->taglacres($std);
 ```
 
 ### function tagfat($std):DOMElement
@@ -1203,7 +1203,7 @@ $std->vOrig = 1254.22;
 $std->vDesc = null;
 $std->vLiq = 1254.22;
 
-$elem = $nfe->tagfat($std);
+$nfe->tagfat($std);
 ```
 ### function tagdup($std):DOMElement
 Node de informações das duplicatas
@@ -1217,7 +1217,7 @@ $std->nDup = '1233-1';
 $std->dVenc = '2017-08-22';
 $std->vDup = 1254.22;
 
-$elem = $nfe->tagdup($std);
+$nfe->tagdup($std);
 ```
 
 ### function tagpag($std):DOMElement
@@ -1233,7 +1233,7 @@ e também **obrigatório para NFe (modelo 55)** a partir do layout 4.00
 $std = new stdClass();
 $std->vTroco = null; //incluso no layout 4.00, obrigatório informar para NFCe (65)
 
-$elem = $nfe->tagpag($std);
+$nfe->tagpag($std);
 ```
 >NOTA: usualmente para NFe modelo 55, vTroco é null.
 
@@ -1256,7 +1256,7 @@ $std->cAut = '3333333';
 $std->tpIntegra = 1; //incluso na NT 2015/002
 $std->indPag = '0'; //0= Pagamento à Vista 1= Pagamento à Prazo
 
-$elem = $nfe->tagdetPag($std);
+$nfe->tagdetPag($std);
 ```
 >NOTA: para NFe (modelo 55), temos ...
 >
@@ -1266,7 +1266,7 @@ $elem = $nfe->tagdetPag($std);
 > - 14 = Duplicata Mercantil
 > - 15 = Boleto Bancário
 > - 90 = Sem pagamento
-> - 99 = Outros 
+> - 99 = Outros
 >
 > *Porém podem haver casos que os outros nodes e valores tenha de ser usados.*
 
@@ -1283,7 +1283,7 @@ $std = new stdClass();
 $std->infAdFisco = 'informacoes para o fisco';
 $std->infCpl = 'informacoes complementares';
 
-$elem = $nfe->taginfAdic($std);
+$nfe->taginfAdic($std);
 ```
 
 ### function tagobsCont($std):DOMElement
@@ -1299,7 +1299,7 @@ $std = new stdClass();
 $std->xCampo = 'email';
 $std->xTexto = 'algum@mail.com';
 
-$elem = $nfe->tagobsCont($std);
+$nfe->tagobsCont($std);
 ```
 
 ### function tagobsFisco($std):DOMElement
@@ -1314,7 +1314,7 @@ $std = new stdClass();
 $std->xCampo = 'Info';
 $std->xTexto = 'alguma coisa';
 
-$elem = $nfe->tagobsFisco($std);
+$nfe->tagobsFisco($std);
 ```
 
 
@@ -1329,7 +1329,7 @@ $std = new stdClass();
 $std->nProc 'ks7277272';
 $std->indProc = 0;
 
-$elem = $nfe->tagprocRef($std);
+$nfe->tagprocRef($std);
 ```
 
 ### function tagexporta($std):DOMElement
@@ -1344,7 +1344,7 @@ $std->UFSaidaPais = 'PR';
 $std->xLocExporta = 'Paranagua';
 $std->xLocDespacho = 'Informação do Recinto Alfandegado';
 
-$elem = $nfe->tagexporta($std);
+$nfe->tagexporta($std);
 ```
 ### function tagcompra($std):DOMElement
 Node com a informação adicional de compra
@@ -1359,7 +1359,7 @@ $std->xNEmp = 'ajhjs8282828';
 $std->xPed = '828288jjshsjhjwj'
 $std->xCont = 'contrato 1234';
 
-$elem = $nfe->tagcompra($std);
+$nfe->tagcompra($std);
 ```
 
 ### function tagcana($std):DOMElement
@@ -1380,7 +1380,7 @@ $std->vFor = 2500.00;
 $std->vTotDed = 500.00;
 $std->vLiqFor = 2000.00;
 
-$elem = $nfe->tagcana($std);
+$nfe->tagcana($std);
 ```
 
 ### function tagforDia($std):DOMElement
@@ -1395,11 +1395,11 @@ $std = new stdClass();
 $std->dia = 1;
 $std->qtde = 1000;
 
-$elem = $nfe->tagforDia($std);
+$nfe->tagforDia($std);
 ```
 
 ### function tagdeduc($std):DOMElement
-Node das deduções Grupo Deduções – Taxas e Contribuições da aquisição de cana 
+Node das deduções Grupo Deduções – Taxas e Contribuições da aquisição de cana
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
@@ -1409,7 +1409,7 @@ $std = new stdClass();
 $std->xDed = 'deducao 1';
 $std->vDed = 100.00;
 
-$elem = $nfe->tagdeduc($std);
+$nfe->tagdeduc($std);
 ```
 ### function taginfNFeSupl($std):DOMElement
 Node das informações suplementare da NFCe.
@@ -1425,7 +1425,7 @@ $std = new stdClass();
 $std->qrcode;
 $std->urlChave;
 
-$elem = $nfe->taginfNFeSupl($std);
+$nfe->taginfNFeSupl($std);
 ```
 
 ### function montaNFe():boolean
