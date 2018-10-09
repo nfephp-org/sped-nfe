@@ -6275,14 +6275,14 @@ class Make
         $this->dom->addChild(
             $this->infAdic,
             "infAdFisco",
-            $std->infAdFisco,
+            Strings::replaceLineBreak($std->infAdFisco),
             false,
             "Informações Adicionais de Interesse do Fisco"
         );
         $this->dom->addChild(
             $this->infAdic,
             "infCpl",
-            $std->infCpl,
+            Strings::replaceLineBreak($std->infCpl),
             false,
             "Informações Complementares de interesse do Contribuinte"
         );
