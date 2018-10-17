@@ -160,7 +160,7 @@ Mas também, caso você ache que qualquer informação obtida aqui, lhe foi úti
 
 - A todos os colegas que colaboram de alguma forma com o desenvolvimento continuo desta API.
 
-- [![JetBrains](docs/images/jetbains.png|width=48)](https://www.jetbrains.com/?from=NFePHP)  pelo fornecimento de uma licença do PHPStorm 
+- [![JetBrains](https://github.com/robmachado/sped-nfe/blob/master/docs/images/jetbrains.png|width=48)](https://www.jetbrains.com/?from=NFePHP)  pelo fornecimento de uma licença do PHPStorm 
 
 
 ## Documentation
