@@ -1,5 +1,5 @@
 {
-    "name": "nfephp-org/sped-nfe",
+    "name": "compufacil/sped-nfe",
     "type": "library",
     "description": "API para geração e comunicação da NFe e NFCe com as SEFAZ autorizadoras.",
     "keywords": ["nfe","nfce","sped","nfephp"],
@@ -41,7 +41,7 @@
     "autoload": {
         "psr-4": {
           "NFePHP\\NFe\\": "src/"
-        } 
+        }
     },
     "autoload-dev": {
         "psr-4": {
