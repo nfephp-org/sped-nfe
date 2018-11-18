@@ -171,10 +171,11 @@ class Tools extends ToolsCommon
      * @param int $nFin
      * @param string $xJust
      * @param int $tpAmb
+     * @param string $ano
      * @return string
      * @throws InvalidArgumentException
      */
-    public function sefazInutiliza($nSerie, $nIni, $nFin, $xJust, $tpAmb = null)
+    public function sefazInutiliza($nSerie, $nIni, $nFin, $xJust, $tpAmb = null, $ano = null)
     {
         if (empty($nIni) || empty($nFin) || empty($xJust)) {
             throw new InvalidArgumentException('Inutilizacao: parametros incompletos!');
@@ -188,7 +189,10 @@ class Tools extends ToolsCommon
         //carrega serviço
         $this->servico($servico, $this->config->siglaUF, $tpAmb);
         $cnpj = $this->config->cnpj;
-        $strAno = (string) date('y');
+        $strAno = $ano;
+        if (empty($ano)) {
+            $strAno = (string) date('y');
+        }
         $strSerie = str_pad($nSerie, 3, '0', STR_PAD_LEFT);
         $strInicio = str_pad($nIni, 9, '0', STR_PAD_LEFT);
         $strFinal = str_pad($nFin, 9, '0', STR_PAD_LEFT);
