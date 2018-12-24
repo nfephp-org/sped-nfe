@@ -11,7 +11,7 @@ Não tem uma resposta simples para todos os casos, pois esse timeout pode ser ca
 5. etc.
 
 ## NFe (modelo 55)
-Por definição a emissão de NFe (modelo 55) não é URGENTE, pois não está atendendo na boca do caixa, ou seja não é uma loja (se fosse loja então seria uma NFCe). Dito isso a SEFAZ não tem pressa em liberar a contingência e nem você deveria ter. Tome um "chá de camolila" e relaxe, pois estamos no Brasil !!!
+Por definição a emissão de NFe (modelo 55) não é URGENTE, pois não está atendendo o cliente no balcão (boca do caixa), ou seja não é uma loja varejista (se fosse loja varejista então seria uma NFCe). Dito isso a SEFAZ não tem pressa em liberar a contingência e nem você deveria ter. Tome um "chá de camolila" e relaxe, pois estamos no Brasil !!!
 
 ### Timeout no ENVIO DE LOTE de NFe
 
@@ -51,7 +51,7 @@ Se continuar dando "timeout", verifique se a SEFAZ em sua página indica que ent
 
 ## NFCe (modelo 65)
 
-Já no caso da NFCe (modelo 65) o jeito é usar a contingência OFFLINE ou o SAT@ECF (se for SP). E como estamos atendendo na boca do caixa é IMPRESCINDÍVEL que a nota seja emitida **AGORA!!** Não importa o que ocorra.
+Já no caso da NFCe (modelo 65) o jeito é usar a contingência OFFLINE ou o SAT@ECF (se for SP). E como estamos atendendo no balcão (boca do caixa) é IMPRESCINDÍVEL que a nota seja emitida **AGORA!!** Não importa o que ocorra.
 
 O aplicativo emissor no caso da NFCe, deve ter a capacidade de operar sem a INTERNET como um aplicativo DESKTOP, nesse caso eu sugiro o uso do ELECTRON JS para reproduzir o ambiente WEB e um banco de dados LOCAL como o sqLite para guardar as informações do frente de caixa e emitir a NFCe, ou o que for mais conveniente (Java, .NET, C#, Delphi, etc.).
 
