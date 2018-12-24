@@ -124,7 +124,12 @@ $status irá conter uma string JSON ENCODED, com as informações sobre a condi�
 }
 ```
 Essa string deverá ser arquivada, em disco ou em base de dados para uso posterior, até que o modo de contingencia seja desabilitado. 
-Ou seja, a cada vez que carregar a classe Tools deverá ser passada a classe contingency, ou será considerado que o ambiente é normal. 
+Ou seja, a cada vez que carregar a classe Tools deverá ser passada a classe contingency, ou será considerado que o ambiente é normal. Exemplo:
+```
+$tools->contingency = $contingency;
+```
+
+
 
 **Desabilitando o modo de contingência**
 ```
