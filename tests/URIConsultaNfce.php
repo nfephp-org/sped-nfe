@@ -8,7 +8,6 @@
 
 namespace NFePHP\NFe\Tests;
 
-
 trait URIConsultaNfce
 {
 

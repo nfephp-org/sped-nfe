@@ -559,20 +559,14 @@ class Tools
     protected function addQRCode(DOMDocument $dom)
     {
         if (empty($this->config->CSC) || empty($this->config->CSCid)) {
-            throw new \RuntimeException(
-                "O QRCode não pode ser criado pois faltam dados CSC e/ou CSCId"
-            );
+            throw new \RuntimeException("O QRCode não pode ser criado pois faltam dados CSC e/ou CSCId");
         }
         $memmod = $this->modelo;
         $this->modelo = 65;
         $cUF = $dom->getElementsByTagName('cUF')->item(0)->nodeValue;
         $tpAmb = $dom->getElementsByTagName('tpAmb')->item(0)->nodeValue;
         $uf = UFList::getUFByCode($cUF);
-        $this->servico(
-            'NfeConsultaQR',
-            $uf,
-            $tpAmb
-        );
+        $this->servico('NfeConsultaQR', $uf, $tpAmb);
         $signed = QRCode::putQRTag(
             $dom,
             $this->config->CSC,
@@ -586,19 +580,14 @@ class Tools
     }
 
     /**
-     * Get URI for search NFCe by chave
-     * NOTE: exists only in 4.00 layout
-     * @param string $uf
+     * Get URI for search NFCe by key (chave)
+     * @param string $uf Abbreviation of the UF
+     * @param string $tpAmb SEFAZ environment, 1-Production or 2-Homologation
      * @return string
      */
     protected function getURIConsultaNFCe($uf, $tpAmb)
     {
-        $arr = json_decode(
-            file_get_contents(
-                $this->pathwsfiles.'uri_consulta_nfce.json'
-            ),
-            true
-        );
+        $arr = json_decode(file_get_contents($this->pathwsfiles . 'uri_consulta_nfce.json'), true);
         $std = json_decode(json_encode($arr[$tpAmb]));
         return $std->$uf;
     }
