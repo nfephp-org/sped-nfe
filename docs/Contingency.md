@@ -1,15 +1,17 @@
 # CONTINGÊNCIAS
 
-Em condições normais as NFe emitidas tem a propriedade &lt;tpEmis&gt; com o valor igual a 1, ou seja emissão normal.
+Em condições normais as NFe emitidas tem a propriedade &lt;tpEmis&gt; com o valor igual a 1-Emissão normal.
 
-Quando a conexão via internet com a SEFAZ autorizadora não é possivel existem alternativas para permitir a emissão dos documentos mesmo nessas condições.
+Quando a conexão via internet com a SEFAZ autorizadora não é possivel, existem alternativas para permitir a emissão dos documentos mesmo nessas condições (offline).
 
-Para uma melhor compreensão, o ENCAT lançou um documento que visa facilitar o entendimento, após lê-lo os procedimentos a baixo podem ser realizadas na biblioteca, há uma sessão interessante sobre contigência.
+Para uma melhor compreensão, o ENCAT lançou um documento que visa facilitar o entendimento:
 
 [Manual de Boas Práticas no desenvolvimento de emissor de NFC-e – BP 2018.001 – versão 1.0](http://www.nfe.fazenda.gov.br/portal/exibirArquivo.aspx?conteudo=gONQatXTm1U=)
 
+Após lê-lo, os procedimentos abaixo podem ser realizadas na biblioteca, há uma sessão interessante sobre contigência.
+
 Ao ativar qualquer contigência o XML da NFe deve ser remontado ou modificado e assinado novamente com as seguintes alterações:
-- &lt;tpEmis&gt; indicar o numero do modo de contingência utilizado
+- &lt;tpEmis&gt; indicar o número do modo de contingência utilizado
 - &lt;dhCont&gt; Data e Hora da entrada em contingência no formato com TZD
 - &lt;xJust&gt; Justificativa da entrada em contingência com 15 até 256 caracteres
 

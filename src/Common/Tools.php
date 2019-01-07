@@ -165,14 +165,11 @@ class Tools
     /**
      * @var array
      */
-    protected $availableVersions = [
-        '4.00' => 'PL_009_V4'
-    ];
+    protected $availableVersions = ['4.00' => 'PL_009_V4'];
     /**
      * @var string
      */
     protected $typePerson = 'J';
-
 
     /**
      * Constructor
@@ -186,9 +183,7 @@ class Tools
      */
     public function __construct($configJson, Certificate $certificate)
     {
-        $this->pathwsfiles = realpath(
-            __DIR__ . '/../../storage'
-        ).'/';
+        $this->pathwsfiles = realpath(__DIR__ . '/../../storage') . '/';
         //valid config json string
         $this->config = Config::validate($configJson);
         $this->version($this->config->versao);
@@ -380,26 +375,22 @@ class Tools
     }
     
     /**
-     * Corret NFe fields when in contingency mode is set
+     * Corrects NFe fields when in contingency mode
      * @param string $xml NFe xml content
      * @return string
      */
     protected function correctNFeForContingencyMode($xml)
     {
-        if ($this->contingency->type == '') {
-            return $xml;
-        }
-        return $this->signNFe($xml);
+        return $this->contingency->type == '' ? $xml : $this->signNFe($xml);
     }
 
     /**
-     * Performs xml validation with its respective
-     * XSD structure definition document
-     * NOTE: if dont exists the XSD file will return true
+     * Performs xml validation with its respective XSD structure definition document
+     * NOTE: if don't exists the XSD file will return true
      * @param string $version layout version
      * @param string $body
      * @param string $method
-     * @return boolean
+     * @return bool
      */
     protected function isValid($version, $body, $method)
     {
@@ -407,10 +398,7 @@ class Tools
         if (!is_file($schema)) {
             return true;
         }
-        return Validator::isValid(
-            $body,
-            $schema
-        );
+        return Validator::isValid($body, $schema);
     }
     
     /**
