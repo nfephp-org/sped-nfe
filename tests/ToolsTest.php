@@ -66,9 +66,7 @@ class ToolsTest extends NFeTestCase
     {
         $class = new \ReflectionClass(Tools::class);
         $object = $class->newInstanceWithoutConstructor();
-        $object->pathwsfiles = realpath(
-                __DIR__ . '/../storage'
-            ) . '/';
+        $object->pathwsfiles = realpath(__DIR__ . '/../storage') . '/';
 
         $method = new \ReflectionMethod(Tools::class, 'getURIConsultaNFCe');
         $method->setAccessible(true);
@@ -87,8 +85,8 @@ class ToolsTest extends NFeTestCase
         $class = new \ReflectionClass(Tools::class);
         $object = $class->newInstanceWithoutConstructor();
         $object->pathwsfiles = realpath(
-                __DIR__ . '/../storage'
-            ) . '/';
+            __DIR__ . '/../storage'
+        ) . '/';
 
         $method = new \ReflectionMethod(Tools::class, 'getURIConsultaNFCe');
         $method->setAccessible(true);

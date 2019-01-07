@@ -13,7 +13,7 @@ class NFeTestCase extends TestCase
 
     public function __construct($name = null, array $data = array(), $dataName = '')
     {
-        parent::__construct($name , $data, $dataName);
+        parent::__construct($name, $data, $dataName);
         $this->fixturesPath = dirname(__FILE__) . '/fixtures/';
         $config = [
             "atualizacao" => "2017-02-20 09:11:21",
