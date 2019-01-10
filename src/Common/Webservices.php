@@ -35,7 +35,7 @@ class Webservices
     /**
      * Gets webservices parameters for specific conditions
      * @param string $sigla
-     * @param int $amb 1-Produ��o ou 2-Homologa��o
+     * @param int $amb 1-Produção ou 2-Homologação
      * @param int $modelo "55" ou "65"
      * @return \stdClass
      * @see storage/autorizadores.json
