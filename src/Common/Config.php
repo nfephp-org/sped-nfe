@@ -23,7 +23,7 @@ class Config
     /**
      * Validate method
      * @param string $content config.json
-     * @return boolean
+     * @return \stdClass
      */
     public static function validate($content)
     {
@@ -31,13 +31,13 @@ class Config
             throw DocumentsException::wrongDocument(8, "Não foi passado um json.");
         }
         $std = json_decode($content);
-        if (! is_object($std)) {
+        if (!is_object($std)) {
             throw DocumentsException::wrongDocument(8, "Não foi passado um json valido.");
         }
         self::validInputData($std);
         return $std;
     }
-    
+
     /**
      * Validation with JsonValid::class
      * @param object $data
