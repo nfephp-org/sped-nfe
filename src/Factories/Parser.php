@@ -7,7 +7,7 @@ namespace NFePHP\NFe\Factories;
  *
  * @category  API
  * @package   NFePHP\NFe
- * @copyright NFePHP Copyright (c) 2008-2018
+ * @copyright NFePHP Copyright (c) 2008-2019
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
  * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
@@ -23,7 +23,7 @@ class Parser
 {
     const LOCAL="LOCAL";
     const SEBRAE="SEBRAE";
-    
+
     /**
      * @var array
      */
@@ -345,7 +345,7 @@ class Parser
         $this->buildCEntity();
         $this->stdEmit = null;
     }
-    
+
     protected function dEntity($std)
     {
         //nada
@@ -683,7 +683,7 @@ class Parser
         $std->item = $this->item;
         $this->make->tagdetExportInd($std);
     }
-    
+
     /**
      * Create tag RASTRO [I80]
      * I80|nLote|qLote|dFab|dVal|cAgreg|
@@ -807,7 +807,7 @@ class Parser
     {
         //create tag comb [LA]
         $this->buildLAEntity();
-        
+
         $std->item = $this->item;
         $this->make->tagimposto($std);
     }
@@ -1523,15 +1523,15 @@ class Parser
     {
         $this->make->tagICMSTot($std);
     }
-    
+
     protected function w04cEntity($std)
     {
     }
-    
+
     protected function w04eEntity($std)
     {
     }
-    
+
     protected function w04gEntity($std)
     {
     }
@@ -1663,7 +1663,7 @@ class Parser
     {
         $this->make->tagbalsa($std);
     }
-    
+
     /**
      * Create tag vol [X26], belongs to [X]
      * X26|qVol|esp|marca|nVol|pesoL|pesoB|
@@ -1713,7 +1713,7 @@ class Parser
             $this->make->tagpag($std);
         }
     }
-    
+
     /**
      * Create tag fat [Y02]
      * Y02|nFat|vOrig|vDesc|vLiq|
@@ -1752,7 +1752,7 @@ class Parser
             $this->make->tagdetPag($std);
         }
     }
-    
+
     /**
      * Creates tag detPag and card [YA]
      * SEBRAE
@@ -1763,7 +1763,7 @@ class Parser
     {
         $this->make->tagdetPag($std);
     }
-    
+
 
 
     /**

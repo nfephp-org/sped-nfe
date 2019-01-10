@@ -8,7 +8,7 @@ namespace NFePHP\NFe;
  *
  * @category  NFePHP
  * @package   NFePHP\NFe\Tools
- * @copyright NFePHP Copyright (c) 2008-2017
+ * @copyright NFePHP Copyright (c) 2008-2019
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
  * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
@@ -434,7 +434,7 @@ class Tools extends ToolsCommon
             $tagAdic
         );
     }
-    
+
     /**
      * Request the cancellation of the request for an extension of the term
      * of return of products of an NF-e of consignment for industrialization
@@ -465,7 +465,7 @@ class Tools extends ToolsCommon
                 . "<nProt>$nProt</nProt>";
         return $this->sefazEvento($uf, $chave, $tpEvento, $nSeqEvento, $tagAdic);
     }
-    
+
     /**
      * Requires nfe cancellation
      * @param  string $chave key of NFe
@@ -507,7 +507,7 @@ class Tools extends ToolsCommon
         }
         return $this->sefazEvento('AN', $chave, $tpEvento, $nSeqEvento, $tagAdic);
     }
-    
+
     /**
      * Request the registration of the manifestation of recipient in batch
      * @param \stdClass $std
@@ -549,7 +549,7 @@ class Tools extends ToolsCommon
         }
         return $this->sefazEventoLote('AN', $evt);
     }
-    
+
     /**
      * Send event to SEFAZ in batch
      * @param string $uf
@@ -697,7 +697,7 @@ class Tools extends ToolsCommon
             . "<vICMS>$vICMS</vICMS>"
             . "<vST>$vST</vST>"
             . "</dest>";
-    
+
         return $this->sefazEvento('AN', $chNFe, self::EVT_EPEC, $nSeqEvento, $tagAdic);
     }
 
