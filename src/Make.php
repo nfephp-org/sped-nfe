@@ -161,7 +161,7 @@ class Make
     /**
      * @var DOMElement
      */
-    protected $pag = [];
+    protected $pag;
 
     /**
      * @var array of DOMElements
