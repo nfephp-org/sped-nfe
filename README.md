@@ -2,7 +2,7 @@
 
 Framework para geração e comunicação das NFe com as SEFAZ autorizadoras, e visa fornecer os meios para gerar, assinar e anviar os dados relativos ao projeto Sped NFe das SEFAZ.
 
-## TODO: A conversão com o PADRÂO SEBRAE ainda está incompleta!!
+## TODO: A conversão com o PADRÃO SEBRAE ainda está incompleta!!
 
 *Utilize o chat do Gitter para iniciar discussões específicas sobre o desenvolvimento deste pacote.*
 
