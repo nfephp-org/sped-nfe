@@ -202,10 +202,10 @@
   <UF>
     <sigla>PI</sigla>
     <homologacao>
-      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://webas.sefaz.pi.gov.br/nfceweb-homologacao/consultarNFCe.jsf</NfeConsultaQR>
+      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">https://webas.sefaz.pi.gov.br/nfceweb-homologacao/consultarNFCe.jsf</NfeConsultaQR>
     </homologacao>
     <producao>
-      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="100">http://webas.sefaz.pi.gov.br/nfceweb/consultarNFCe.jsf</NfeConsultaQR>
+      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">https://webas.sefaz.pi.gov.br/nfceweb/consultarNFCe.jsf</NfeConsultaQR>
     </producao>
   </UF>
   <UF>

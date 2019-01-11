@@ -17,7 +17,7 @@ Esse é um campo CDATA, pertencente ao XML, conforme mostrado abaixo:
 Essa TAG é inserida **AUTOMATICAMENTE** pela API durante a fase de assinatura da NFCe (método signNFe da classe Tools), desde que:
 
 1. O config.json contenha as informações sobre o CSC e CSC_id (denominados também como "tokenNFCe" e "tokenNFCeId"). Essas referencias (tokens) devem ser obtidas pelo emitente junto a SEFAZ de seu estado.  
-2. Deve existir uma URL referenciando o serviço de consulta pelo QRCode no arquivo: sped-nfe/storage/wsnfe_3.10_mod65.xml, como no exemplo abaixo:
+2. Deve existir uma URL referenciando o serviço de consulta pelo QRCode no arquivo: sped-nfe/storage/wsnfe_4.00_mod65.xml, como no exemplo abaixo:
 
 ```xml
 <UF>
