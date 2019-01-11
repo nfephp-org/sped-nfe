@@ -7,7 +7,7 @@ namespace NFePHP\NFe\Common;
  *
  * @category  NFePHP
  * @package   NFePHP\NFe\Common\Webservices
- * @copyright NFePHP Copyright (c) 2008-2017
+ * @copyright NFePHP Copyright (c) 2008-2019
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
  * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
@@ -21,7 +21,7 @@ class Webservices
 {
     public $json;
     public $std;
-    
+
     /**
      * Constructor
      * @param string $xml path or xml content from
@@ -31,11 +31,11 @@ class Webservices
     {
         $this->toStd($xml);
     }
-    
+
     /**
      * Gets webservices parameters for specific conditions
      * @param string $sigla
-     * @param int $amb 1-Produção ou 2-Homologação
+     * @param int $amb 1-ProduÃ§Ã£o ou 2-HomologaÃ§Ã£o
      * @param int $modelo "55" ou "65"
      * @return \stdClass
      * @see storage/autorizadores.json
@@ -86,7 +86,7 @@ class Webservices
         }
         return $this->std;
     }
-    
+
     /**
      * Return WS parameters in json format
      * @return string
@@ -95,7 +95,7 @@ class Webservices
     {
         return (string) $this->json;
     }
-    
+
     /**
      * Read WS xml and convert to json and stdClass
      * @param string $xml
@@ -117,7 +117,7 @@ class Webservices
         $this->json = json_encode($aWS);
         $this->std = json_decode(json_encode($aWS));
     }
-    
+
     /**
      * Extract data from wbservices XML strorage to a array
      * @param SimpleXMLElement $node

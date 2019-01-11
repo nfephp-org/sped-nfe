@@ -6,7 +6,7 @@ namespace NFePHP\NFe;
  * Converts NFe from text format to xml
  * @category  API
  * @package   NFePHP\NFe
- * @copyright NFePHP Copyright (c) 2008-2018
+ * @copyright NFePHP Copyright (c) 2008-2019
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
  * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
@@ -22,7 +22,7 @@ class Convert
 {
     const LOCAL="LOCAL";
     const SEBRAE="SEBRAE";
-    
+
     protected $txt;
     protected $dados;
     protected $numNFe = 1;
@@ -30,7 +30,7 @@ class Convert
     protected $layouts = [];
     protected $xmls = [];
     protected $baselayout;
-    
+
     /**
      * Constructor method
      * @param string $txt
@@ -43,7 +43,7 @@ class Convert
             $this->txt = trim($txt);
         }
     }
-    
+
     /**
      * Static method to convert Txt to Xml
      * @param string $txt
@@ -55,7 +55,7 @@ class Convert
         $conv = new static($txt, $baselayout);
         return $conv->toXml();
     }
-    
+
     /**
      * Convert all nfe in XML, one by one
      * @return array
@@ -64,7 +64,7 @@ class Convert
     public function toXml()
     {
         //$txt = Strings::removeSomeAlienCharsfromTxt($this->txt);
-        
+
         if (!$this->isNFe($this->txt)) {
             throw DocumentsException::wrongDocument(12, '');
         }
@@ -148,7 +148,7 @@ class Convert
             throw DocumentsException::wrongDocument(13, '');
         }
     }
-    
+
     /**
      * Valid all NFes in txt and get layout version for each nfe
      */
