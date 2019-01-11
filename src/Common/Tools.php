@@ -213,11 +213,11 @@ class Tools
      */
     public function getTypeOfPersonFromCertificate()
     {
-        $cnpj = $this->certificate->getCNPJ();
+        $cnpj = $this->certificate->getCnpj();
         $type = 'J';
         if (substr($cnpj, 0, 1) === 'N') {
             //não é CNPJ, então verificar se é CPF
-            $cpf = $this->certificate->getCPF();
+            $cpf = $this->certificate->getCpf();
             if (substr($cpf, 0, 1) !== 'N') {
                 $type = 'F';
             } else {
