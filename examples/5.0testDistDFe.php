@@ -12,13 +12,13 @@ use NFePHP\Common\Soap\SoapCurl;
 ///trabalhar com arquivos, este script abaixo serve apenas como 
 //exemplo durante a fase de desenvolvimento e testes.
 $arr = [
-    "atualizacao" => "2016-11-03 18:01:21",
+    "atualizacao" => "2017-02-20 09:11:21",
     "tpAmb" => 2,
     "razaosocial" => "SUA RAZAO SOCIAL LTDA",
     "cnpj" => "99999999999999",
     "siglaUF" => "SP",
-    "schemes" => "PL008i2",
-    "versao" => '3.10',
+    "schemes" => "PL_009_V4",
+    "versao" => '4.00',
     "tokenIBPT" => "AAAAAAA",
     "CSC" => "GPB0JBWLUR6HWFTVEAS6RJ69GPCROFPBBB8G",
     "CSCid" => "000001",
