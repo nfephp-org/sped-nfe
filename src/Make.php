@@ -332,6 +332,11 @@ class Make
      * @var stdClass
      */
     protected $stdTot;
+    
+    /**
+     * @var DOMElement
+     */
+    protected $infRespTec;
 
     /**
      * Função construtora cria um objeto DOMDocument
@@ -1348,6 +1353,7 @@ class Make
     /**
      * Identificação do Local de retirada F01 pai A01
      * tag NFe/infNFe/retirada (opcional)
+     * NOTA: ajustado para NT 2018.005
      * @param stdClass $std
      * @return DOMElement
      */
@@ -1362,7 +1368,14 @@ class Make
             'xMun',
             'UF',
             'CNPJ',
-            'CPF'
+            'CPF',
+            'xNome',
+            'CEP',
+            'cPais',
+            'xPais',
+            'fone',
+            'email',
+            'IE'
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = 'F01 <retirada> - ';
@@ -1380,6 +1393,13 @@ class Make
             $std->CPF,
             false,
             $identificador . "CPF do Cliente da Retirada"
+        );
+        $this->dom->addChild(
+            $this->retirada,
+            "xNome",
+            $std->xNome,
+            false,
+            $identificador . "Nome do Cliente da Retirada"
         );
         $this->dom->addChild(
             $this->retirada,
@@ -1430,12 +1450,55 @@ class Make
             true,
             $identificador . "Sigla da UF do Endereco do Cliente da Retirada"
         );
+        $this->dom->addChild(
+            $this->retirada,
+            "CEP",
+            $std->CEP,
+            false,
+            $identificador . "CEP do Endereco do Cliente da Retirada"
+        );
+        $this->dom->addChild(
+            $this->retirada,
+            "cPais",
+            $std->cPais,
+            false,
+            $identificador . "Codigo do Pais do Endereco do Cliente da Retirada"
+        );
+        $this->dom->addChild(
+            $this->retirada,
+            "xPais",
+            $std->xPais,
+            false,
+            $identificador . "Pais do Endereco do Cliente da Retirada"
+        );
+        $this->dom->addChild(
+            $this->retirada,
+            "fone",
+            $std->fone,
+            false,
+            $identificador . "Fone do Endereco do Cliente da Retirada"
+        );
+        $this->dom->addChild(
+            $this->retirada,
+            "email",
+            $std->email,
+            false,
+            $identificador . "Email do Endereco do Cliente da Retirada"
+        );
+        $this->dom->addChild(
+            $this->retirada,
+            "IE",
+            $std->IE,
+            false,
+            $identificador . "IE do Cliente da Retirada"
+        );
         return $this->retirada;
     }
 
     /**
      * Identificação do Local de entrega G01 pai A01
      * tag NFe/infNFe/entrega (opcional)
+     * NOTA: ajustado para NT 2018.005
      * @param stdClass $std
      * @return DOMElement
      */
@@ -1450,7 +1513,14 @@ class Make
             'xMun',
             'UF',
             'CNPJ',
-            'CPF'
+            'CPF',
+            'xNome',
+            'CEP',
+            'cPais',
+            'xPais',
+            'fone',
+            'email',
+            'IE'
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = 'G01 <entrega> - ';
@@ -1468,6 +1538,13 @@ class Make
             $std->CPF,
             false,
             $identificador . "CPF do Cliente da Entrega"
+        );
+        $this->dom->addChild(
+            $this->entegra,
+            "xNome",
+            $std->xNome,
+            false,
+            $identificador . "Nome do Cliente da Entrega"
         );
         $this->dom->addChild(
             $this->entrega,
@@ -1517,6 +1594,48 @@ class Make
             $std->UF,
             true,
             $identificador . "Sigla da UF do Endereco do Cliente da Entrega"
+        );
+        $this->dom->addChild(
+            $this->entrega,
+            "CEP",
+            $std->CEP,
+            false,
+            $identificador . "CEP do Endereco do Cliente da Entrega"
+        );
+        $this->dom->addChild(
+            $this->entrega,
+            "cPais",
+            $std->cPais,
+            false,
+            $identificador . "Codigo do Pais do Endereco do Cliente da Entrega"
+        );
+        $this->dom->addChild(
+            $this->entrega,
+            "xPais",
+            $std->xPais,
+            false,
+            $identificador . "Pais do Endereco do Cliente da Entrega"
+        );
+        $this->dom->addChild(
+            $this->entrega,
+            "fone",
+            $std->fone,
+            false,
+            $identificador . "Fone do Endereco do Cliente da Entrega"
+        );
+        $this->dom->addChild(
+            $this->entrega,
+            "email",
+            $std->email,
+            false,
+            $identificador . "Email do Endereco do Cliente da Entrega"
+        );
+        $this->dom->addChild(
+            $this->entrega,
+            "IE",
+            $std->IE,
+            false,
+            $identificador . "IE do Cliente da Entrega"
         );
         return $this->entrega;
     }
@@ -2394,7 +2513,7 @@ class Make
 
     /**
      * Detalhamento de medicamentos K01 pai I90
-     * NOTA: Ajustado para NT2016_002_v1.00
+     * NOTA: Ajustado para NT2018.005
      * tag NFe/infNFe/det[]/prod/med (opcional)
      * @param stdClass $std
      * @return DOMElement
@@ -2405,6 +2524,7 @@ class Make
             'item',
             'vPMC',
             'cProdANVISA',
+            'xMotivoIsencao'
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = 'K01 <med> - ';
@@ -2415,6 +2535,13 @@ class Make
             $std->cProdANVISA,
             false,
             "$identificador [item $std->item] Numero ANVISA"
+        );
+        $this->dom->addChild(
+            $med,
+            "xMotivoIsencao",
+            $std->xMotivoIsencao,
+            false,
+            "$identificador [item $std->item] Motivo da isenção da ANVISA"
         );
         $this->dom->addChild(
             $med,
@@ -3851,7 +3978,10 @@ class Make
             'vBCSTRet',
             'vICMSSTRet',
             'vBCSTDest',
-            'vICMSSTDest'
+            'vICMSSTDest',
+            'vBCFCPSTRet',
+            'pFCPSTRet',
+            'vFCPSTRet'
         ];
         $std = $this->equilizeParameters($std, $possible);
         $icmsST = $this->dom->createElement("ICMSST");
@@ -3883,6 +4013,27 @@ class Make
             true,
             "[item $std->item] Valor do ICMS ST retido na UF remetente"
         );
+        $this->dom->addChild(
+            $icmsST,
+            'vBCFCPSTRet',
+            $std->vBCFCPSTRet,
+            false,
+            "[item $std->item] Valor da Base de Cálculo do FCP"
+        );
+        $this->dom->addChild(
+            $icmsST,
+            'pFCPSTRet',
+            $std->pFCPSTRet,
+            false,
+            "[item $std->item] Percentual do FCP retido"
+        );
+        $this->dom->addChild(
+            $icmsST,
+            'vFCPSTRet',
+            $std->vFCPSTRet,
+            false,
+            "[item $std->item] Valor do FCP retido"
+        );    
         $this->dom->addChild(
             $icmsST,
             'vBCSTDest',
@@ -6596,7 +6747,80 @@ class Make
         $this->infNFeSupl = $infNFeSupl;
         return $infNFeSupl;
     }
-
+    
+    /**
+     * Informações do Responsável técnico
+     * @param stdClass $std
+     * @return DOMElement
+     * @throws RuntimeException
+     */
+    public function taginfRespTec(stdClass $std)
+    {
+        $possible = [
+            'CNPJ',
+            'xContato',
+            'email',
+            'fone',
+            'CSRT',
+            'idCSRT'
+        ];
+        if (empty($std->CSRT)) {
+            throw new RuntimeException('O CSRT é obrigatorio.');
+        }
+        $conc = $csrt . $this->chNFe;
+        $hashCSRT = sha1($conc);
+        $std = $this->equilizeParameters($std, $possible);
+        $infRespTec = $this->dom->createElement("infRespTec");
+        $this->dom->addChild(
+            $infRespTec,
+            "CNPJ",
+            $std->CNPJ,
+            true,
+            "Informar o CNPJ da pessoa jurídica responsável pelo sistema "
+            . "utilizado na emissão do documento fiscal eletrônico"
+        );
+        $this->dom->addChild(
+            $infRespTec,
+            "xContato",
+            $std->xContato,
+            true,
+            "Informar o nome da pessoa a ser contatada na empresa desenvolvedora "
+            . "do sistema utilizado na emissão do documento fiscal eletrônico"
+        );
+        $this->dom->addChild(
+            $infRespTec,
+            "email",
+            $std->email,
+            true,
+            "Informar o e-mail da pessoa a ser contatada na empresa "
+            . "desenvolvedora do sistema."
+        );
+        $this->dom->addChild(
+            $infRespTec,
+            "fone",
+            $std->fone,
+            true,
+            "Informar o telefone da pessoa a ser contatada na empresa "
+            . "desenvolvedora do sistema."
+        );
+        $this->dom->addChild(
+            $infRespTec,
+            "idCSRT",
+            $std->idCSRT,
+            true,
+            "Identificador do CSRT utilizado para montar o hash do CSRT"
+        );
+        $this->dom->addChild(
+            $infRespTec,
+            "hashCSRT",
+            $hashCSRT,
+            true,
+            "hash do CSRT"
+        );
+        $this->infRespTec = $infRespTec;
+        return $infRespTec;
+    }
+   
     /**
      * Tag raiz da NFe
      * tag NFe DOMNode
@@ -7071,6 +7295,8 @@ class Make
             $infNFe = $dom->getElementsByTagName("infNFe")->item(0);
             $infNFe->setAttribute("Id", "NFe" . $chaveMontada);
             $this->chNFe = $chaveMontada;
+            //trocar também o hash
+            
         }
     }
 
