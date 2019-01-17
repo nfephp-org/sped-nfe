@@ -43,7 +43,6 @@ class ValidTXTTest extends NFeTestCase
             $maxDepth = 1,
             $canonicalize = true
         );
-         * 
          */
     }
     
