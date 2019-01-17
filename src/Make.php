@@ -332,11 +332,16 @@ class Make
      * @var stdClass
      */
     protected $stdTot;
-    
+
     /**
      * @var DOMElement
      */
     protected $infRespTec;
+
+    /**
+     * @var string
+     */
+    protected $csrt;
 
     /**
      * Função construtora cria um objeto DOMDocument
@@ -470,6 +475,8 @@ class Make
         $this->dom->appChild($this->infNFe, $this->compra, 'Falta tag "infNFe"');
         //[50] tag cana (409 ZC01)
         $this->dom->appChild($this->infNFe, $this->cana, 'Falta tag "infNFe"');
+        //Responsável Técnico
+        $this->dom->appChild($this->infNFe, $this->infRespTec, 'Falta tag "infNFe"');
         //[1] tag infNFe (1 A01)
         $this->dom->appChild($this->NFe, $this->infNFe, 'Falta tag "NFe"');
         //[0] tag NFe
@@ -3965,6 +3972,7 @@ class Make
     /**
      * Grupo de Repasse de ICMSST retido anteriormente em operações
      * interestaduais com repasses através do Substituto Tributário
+     * NOTA: ajustado NT 2018.005
      * tag NFe/infNFe/det[]/imposto/ICMS/ICMSST N10b pai N01
      * @param stdClass $std
      * @return DOMElement
@@ -4033,7 +4041,7 @@ class Make
             $std->vFCPSTRet,
             false,
             "[item $std->item] Valor do FCP retido"
-        );    
+        );
         $this->dom->addChild(
             $icmsST,
             'vBCSTDest',
@@ -6767,7 +6775,8 @@ class Make
         if (empty($std->CSRT)) {
             throw new RuntimeException('O CSRT é obrigatorio.');
         }
-        $conc = $csrt . $this->chNFe;
+        $this->csrt = $std->CSRT;
+        $conc = $this->csrt . $this->chNFe;
         $hashCSRT = sha1($conc);
         $std = $this->equilizeParameters($std, $possible);
         $infRespTec = $this->dom->createElement("infRespTec");
@@ -7275,6 +7284,7 @@ class Make
         $cNF = $ide->getElementsByTagName('cNF')->item(0)->nodeValue;
         $chave = str_replace('NFe', '', $infNFe->getAttribute("Id"));
         $dt = new DateTime($dhEmi);
+        $infRespTec = $dom->getElementsByTagName("infRespTec")->item(0);
         $chaveMontada = Keys::build(
             $cUF,
             $dt->format('y'),
@@ -7290,13 +7300,17 @@ class Make
         //substituir a chave
         if ($chaveMontada != $chave) {
             //throw new RuntimeException("A chave informada é diferente da chave
-            //mondata com os dados [correto: $chaveMontada].");
+            //montada com os dados [correto: $chaveMontada].");
             $ide->getElementsByTagName('cDV')->item(0)->nodeValue = substr($chaveMontada, -1);
             $infNFe = $dom->getElementsByTagName("infNFe")->item(0);
             $infNFe->setAttribute("Id", "NFe" . $chaveMontada);
             $this->chNFe = $chaveMontada;
             //trocar também o hash
-            
+            if (!empty($infRespTec)) {
+                $hashCSRT = sha1($this->csrt . $this->chNFe);
+                $infRespTec->getElementsByTagName("hashCSRT")
+                    ->item(0)->nodeValue = $hashCSRT;
+            }
         }
     }
 
