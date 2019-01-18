@@ -48,7 +48,7 @@
         }
     },
     "scripts": {
-        "test": "phpunit -c phpunit.xml.dist",
+        "test": "vendor/bin/phpunit -c phpunit.xml.dist",
         "phpcbf": "vendor/bin/phpcbf --standard=psr2 src",
         "phpcs": "vendor/bin/phpcs --standard=psr2 src",
         "phpstan": "vendor/bin/phpstan analyse src/ --level 1"
