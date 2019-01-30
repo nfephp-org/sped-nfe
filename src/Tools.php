@@ -277,6 +277,13 @@ class Tools extends ToolsCommon
         $this->isValid($this->urlVersion, $request, 'consCad');
         $this->lastRequest = $request;
         $parameters = ['nfeDadosMsg' => $request];
+        if ($this->urlVersion === '2.00') {
+            $this->objHeader = new \SOAPHeader(
+                $this->urlNamespace,
+                'nfeCabecMsg',
+                ['cUF' => $this->urlcUF, 'versaoDados' => $this->urlVersion]
+            );
+        }
         $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
         $this->lastResponse = $this->sendRequest($body, $parameters);
         return $this->lastResponse;
