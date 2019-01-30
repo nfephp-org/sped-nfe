@@ -5005,6 +5005,13 @@ class Make
                 );
                 $this->dom->addChild(
                     $pisItem,
+                    'vPIS',
+                    number_format($std->vPIS, 2, '.', ''),
+                    true,
+                    "[item $std->item] Valor do PIS"
+                );
+                $this->dom->addChild(
+                    $pisItem,
                     'qBCProd',
                     $std->qBCProd,
                     ($std->qBCProd !== null) ? true : false,
@@ -5016,13 +5023,6 @@ class Make
                     $std->vAliqProd,
                     ($std->vAliqProd !== null) ? true : false,
                     "[item $std->item] Alíquota do PIS (em reais)"
-                );
-                $this->dom->addChild(
-                    $pisItem,
-                    'vPIS',
-                    number_format($std->vPIS, 2, '.', ''),
-                    true,
-                    "[item $std->item] Valor do PIS"
                 );
                 break;
         }
