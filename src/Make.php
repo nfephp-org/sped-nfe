@@ -6831,7 +6831,7 @@ class Make
                 true,
                 "hash do CSRT"
             );
-        }    
+        }
         $this->infRespTec = $infRespTec;
         return $infRespTec;
     }
@@ -7338,7 +7338,7 @@ class Make
                     if ($this->replaceAccentedChars) {
                         $std->$key = Strings::toASCII($std->$key);
                     }
-                }    
+                }
             }
         }
         return $std;
