@@ -27,6 +27,8 @@
 
 > **ZD|CNPJ|xContato|email|fone|CSRT|idCSRT|**
 
+### *Estas alterações somente serão validas em produção a partir de 29/04/2019*
+
 ```
 NOTAFISCAL|numero de notas|
 
@@ -70,21 +72,17 @@ E03a|idEstrangeiro|
 
 E05|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|CEP|cPais|xPais|fone|
 
-F|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|CEP|cPais|xPais|fone|email|IE|
+F|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|
 
 F02|CNPJ|
 
 F02a|CPF|
 
-F02b|xNome|
-
-G|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|CEP|cPais|xPais|fone|email|IE|
+G|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|
 
 G02|CNPJ|
 
 G02a|CPF|
-
-G02b|xNome|
 
 GA|
 
@@ -112,7 +110,7 @@ I80|nLote|qLote|dFab|dVal|cAgreg|
 
 JA|tpOp|chassi|cCor|xCor|pot|cilin|pesoL|pesoB|nSerie|tpComb|nMotor|CMT|dist|anoMod|anoFab|tpPint|tpVeic|espVeic|VIN|condVeic|cMod|cCorDENATRAN|lota|tpRest|
 
-K|cProdANVISA|vPMC|xMotivoIsencao|
+K|cProdANVISA|vPMC|
 
 L|tpArma|nSerie|nCano|descr|
 
@@ -148,7 +146,7 @@ N10|orig|CST|modBC|vBC|pRedBC|pICMS|vICMS|vBCFCP|pFCP|vFCP|modBCST|pMVAST|pRedBC
 
 N10a|orig|CST|modBC|vBC|pRedBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|pBCOp|UFST|
 
-N10b|orig|CST|vBCSTRet|vICMSSTRet|vBCSTDest|vICMSSTDest|vBCFCPSTRet|pFCPSTRet|vFCPSTRet|
+N10b|orig|CST|vBCSTRet|vICMSSTRet|vBCSTDest|vICMSSTDest|
 
 N10c|orig|CSOSN|pCredSN|vCredICMSSN|
 
@@ -275,8 +273,6 @@ ZC|safra|ref|qTotMes|qTotAnt|qTotGer|vFor|vTotDed|vLiqFor|
 ZC04|dia|qtde|
 
 ZC10|xDed|vDed|
-
-ZD|CNPJ|xContato|email|fone|CSRT|idCSRT|
 
 ZX01|qrcode|urlChave|
 
