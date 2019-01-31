@@ -9,6 +9,23 @@
 - Nota Técnica 2016.002 - v1.50
 - Nota Técnica 2016.002 - v1.51
 - Nota Técnica 2016.002 - v1.60
+- Nota Técnica 2018.005 - v1.00
+
+### Campos alterados e inclusos nessa última nota técnica, indicados em negrito:
+
+> F|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|**CEP|cPais|xPais|fone|email|IE|**
+
+> **F02b|xNome|**
+
+> G|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|**CEP|cPais|xPais|fone|email|IE|**
+
+> **G02b|xNome|**
+
+> K|cProdANVISA|vPMC|**xMotivoIsencao|**
+
+> N10b|orig|CST|vBCSTRet|vICMSSTRet|vBCSTDest|vICMSSTDest|**vBCFCPSTRet|pFCPSTRet|vFCPSTRet|**
+
+> **ZD|CNPJ|xContato|email|fone|CSRT|idCSRT|**
 
 ```
 NOTAFISCAL|numero de notas|
@@ -53,17 +70,21 @@ E03a|idEstrangeiro|
 
 E05|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|CEP|cPais|xPais|fone|
 
-F|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|
+F|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|CEP|cPais|xPais|fone|email|IE|
 
 F02|CNPJ|
 
 F02a|CPF|
 
-G|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|
+F02b|xNome|
+
+G|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|CEP|cPais|xPais|fone|email|IE|
 
 G02|CNPJ|
 
 G02a|CPF|
+
+G02b|xNome|
 
 GA|
 
@@ -91,7 +112,7 @@ I80|nLote|qLote|dFab|dVal|cAgreg|
 
 JA|tpOp|chassi|cCor|xCor|pot|cilin|pesoL|pesoB|nSerie|tpComb|nMotor|CMT|dist|anoMod|anoFab|tpPint|tpVeic|espVeic|VIN|condVeic|cMod|cCorDENATRAN|lota|tpRest|
 
-K|cProdANVISA|vPMC|
+K|cProdANVISA|vPMC|xMotivoIsencao|
 
 L|tpArma|nSerie|nCano|descr|
 
@@ -127,7 +148,7 @@ N10|orig|CST|modBC|vBC|pRedBC|pICMS|vICMS|vBCFCP|pFCP|vFCP|modBCST|pMVAST|pRedBC
 
 N10a|orig|CST|modBC|vBC|pRedBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|pBCOp|UFST|
 
-N10b|orig|CST|vBCSTRet|vICMSSTRet|vBCSTDest|vICMSSTDest|
+N10b|orig|CST|vBCSTRet|vICMSSTRet|vBCSTDest|vICMSSTDest|vBCFCPSTRet|pFCPSTRet|vFCPSTRet|
 
 N10c|orig|CSOSN|pCredSN|vCredICMSSN|
 
@@ -254,6 +275,8 @@ ZC|safra|ref|qTotMes|qTotAnt|qTotGer|vFor|vTotDed|vLiqFor|
 ZC04|dia|qtde|
 
 ZC10|xDed|vDed|
+
+ZD|CNPJ|xContato|email|fone|CSRT|idCSRT|
 
 ZX01|qrcode|urlChave|
 

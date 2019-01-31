@@ -342,6 +342,8 @@ class Make
      * @var string
      */
     protected $csrt;
+    
+    protected $replaceAccentedChars;
 
     /**
      * Função construtora cria um objeto DOMDocument
@@ -377,6 +379,11 @@ class Make
         $this->stdTot->vOutro = 0;
         $this->stdTot->vNF = 0;
         $this->stdTot->vTotTrib = 0;
+    }
+    
+    public function setOnlyAscii($option = false)
+    {
+        $this->replaceAccentedChars = $option;
     }
 
     /**
@@ -1547,7 +1554,7 @@ class Make
             $identificador . "CPF do Cliente da Entrega"
         );
         $this->dom->addChild(
-            $this->entegra,
+            $this->entrega,
             "xNome",
             $std->xNome,
             false,
@@ -5005,13 +5012,6 @@ class Make
                 );
                 $this->dom->addChild(
                     $pisItem,
-                    'vPIS',
-                    number_format($std->vPIS, 2, '.', ''),
-                    true,
-                    "[item $std->item] Valor do PIS"
-                );
-                $this->dom->addChild(
-                    $pisItem,
                     'qBCProd',
                     $std->qBCProd,
                     ($std->qBCProd !== null) ? true : false,
@@ -5023,6 +5023,13 @@ class Make
                     $std->vAliqProd,
                     ($std->vAliqProd !== null) ? true : false,
                     "[item $std->item] Alíquota do PIS (em reais)"
+                );
+                $this->dom->addChild(
+                    $pisItem,
+                    'vPIS',
+                    number_format($std->vPIS, 2, '.', ''),
+                    true,
+                    "[item $std->item] Valor do PIS"
                 );
                 break;
         }
@@ -6232,7 +6239,7 @@ class Make
     {
         $pag = $this->dom->createElement("pag");
         //incluso no layout 4.00
-        $vTroco = !empty($std->vTroco) ? $std->vTroco : null;
+        $vTroco = !empty($std->vTroco) ? number_format($std->vTroco, 2, '.', '') : null;
         $this->dom->addChild(
             $pag,
             "vTroco",
@@ -6757,7 +6764,8 @@ class Make
     }
     
     /**
-     * Informações do Responsável técnico
+     * Informações do Responsável técnico ZD01 pai A01
+     * tag NFe/infNFe/infRespTec (opcional)
      * @param stdClass $std
      * @return DOMElement
      * @throws RuntimeException
@@ -6772,12 +6780,7 @@ class Make
             'CSRT',
             'idCSRT'
         ];
-        if (empty($std->CSRT)) {
-            throw new RuntimeException('O CSRT é obrigatorio.');
-        }
-        $this->csrt = $std->CSRT;
-        $conc = $this->csrt . $this->chNFe;
-        $hashCSRT = sha1($conc);
+        
         $std = $this->equilizeParameters($std, $possible);
         $infRespTec = $this->dom->createElement("infRespTec");
         $this->dom->addChild(
@@ -6812,20 +6815,23 @@ class Make
             "Informar o telefone da pessoa a ser contatada na empresa "
             . "desenvolvedora do sistema."
         );
-        $this->dom->addChild(
-            $infRespTec,
-            "idCSRT",
-            $std->idCSRT,
-            true,
-            "Identificador do CSRT utilizado para montar o hash do CSRT"
-        );
-        $this->dom->addChild(
-            $infRespTec,
-            "hashCSRT",
-            $hashCSRT,
-            true,
-            "hash do CSRT"
-        );
+        if (!empty($std->CSRT) && !empty($std->idCSRT)) {
+            $this->csrt = $std->CSRT;
+            $this->dom->addChild(
+                $infRespTec,
+                "idCSRT",
+                $std->idCSRT,
+                true,
+                "Identificador do CSRT utilizado para montar o hash do CSRT"
+            );
+            $this->dom->addChild(
+                $infRespTec,
+                "hashCSRT",
+                $this->hashCSRT($std->CSRT),
+                true,
+                "hash do CSRT"
+            );
+        }    
         $this->infRespTec = $infRespTec;
         return $infRespTec;
     }
@@ -7305,9 +7311,9 @@ class Make
             $infNFe = $dom->getElementsByTagName("infNFe")->item(0);
             $infNFe->setAttribute("Id", "NFe" . $chaveMontada);
             $this->chNFe = $chaveMontada;
-            //trocar também o hash
-            if (!empty($infRespTec)) {
-                $hashCSRT = sha1($this->csrt . $this->chNFe);
+            //trocar também o hash se o CSRT for passado
+            if (!empty($this->csrt)) {
+                $hashCSRT = $this->hashCSRT($this->csrt);
                 $infRespTec->getElementsByTagName("hashCSRT")
                     ->item(0)->nodeValue = $hashCSRT;
             }
@@ -7326,8 +7332,26 @@ class Make
         foreach ($possible as $key) {
             if (!array_key_exists($key, $arr)) {
                 $std->$key = null;
+            } else {
+                if (is_string($std->$key)) {
+                    $std->$key = trim(Strings::replaceUnacceptableCharacters($std->$key));
+                    if ($this->replaceAccentedChars) {
+                        $std->$key = Strings::toASCII($std->$key);
+                    }
+                }    
             }
         }
         return $std;
+    }
+    
+    /**
+     * Calcula hash sha1 retornando Base64Binary
+     * @param string $CSRT
+     * @return string
+     */
+    protected function hashCSRT($CSRT)
+    {
+        $comb = $CSRT . $this->chNFe;
+        return sha1($comb);
     }
 }
