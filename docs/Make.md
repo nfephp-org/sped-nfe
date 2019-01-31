@@ -7,6 +7,10 @@ Para construir o XML da NFe (ou da NFCe) deve ser usada a classe Make::class
 
 Esses stdClass pode ser criados diretamente como demonstrado nos exemplos abaixo, mas também podem ser criados a partir de matrizes.
 
+## *NOTA: Ajustado para NT 2018.001 v1.00
+
+> Existe um provável ERRO nos XSDs PL_009_V4, fornecidos em 02/01/2019, onde estabelece um comprimento para o campo hashCSRT de 28 digitos base64Binary, **quando na verdade são gerados 30 digitos segundo esta formatação**.
+
 ```php
 //criando o stdClass a partir de um array
 $array = [

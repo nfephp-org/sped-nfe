@@ -6220,7 +6220,7 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 					</xs:annotation>
 					<xs:simpleType>
 						<xs:restriction base="xs:base64Binary">
-							<xs:length value="28"/>
+							<xs:length value="30"/>
 						</xs:restriction>
 					</xs:simpleType>
 				</xs:element>
