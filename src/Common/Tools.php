@@ -180,9 +180,13 @@ class Tools
      * and instanciate Contingency::class
      * @param string $configJson content of config in json format
      * @param Certificate $certificate
+     * @param Contingency $contingency
      */
-    public function __construct($configJson, Certificate $certificate)
-    {
+    public function __construct(
+        $configJson,
+        Certificate $certificate,
+        Contingency $contingency = null
+    ) {
         $this->pathwsfiles = realpath(__DIR__ . '/../../storage') . '/';
         //valid config json string
         $this->config = Config::validate($configJson);
@@ -191,7 +195,9 @@ class Tools
         $this->certificate = $certificate;
         $this->typePerson = $this->getTypeOfPersonFromCertificate();
         $this->setEnvironment($this->config->tpAmb);
-        $this->contingency = new Contingency();
+        if (empty($contingency)) {
+            $this->contingency = new Contingency();
+        }
         $this->soap = new SoapCurl($certificate);
     }
 
@@ -507,9 +513,15 @@ class Tools
      * @param array $parameters
      * @param string $request
      * @return string
+     * @throws RuntimeException
      */
     protected function sendRequest($request, array $parameters = [])
     {
+        if ($this->contingency->tpEmis == 5 || $this->contingency->tpEmis == 9) {
+            throw new \RuntimeException(
+                'Em contingencia FSDA ou OFFLINE não é possivel fazer envios à webservices.'
+            );
+        }
         $this->checkSoap();
         return (string) $this->soap->send(
             $this->urlService,
