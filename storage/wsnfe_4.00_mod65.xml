@@ -319,10 +319,10 @@
   <UF>
     <sigla>TO</sigla>
     <homologacao>
-      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">http://apps.sefaz.to.gov.br/portal-nfcehomologacao/qrcodeNFCe</NfeConsultaQR>
+      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">http://homologacao.sefaz.to.gov.br/nfce/qrcode</NfeConsultaQR>
     </homologacao>
     <producao>
-      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">http://apps.sefaz.to.gov.br/portal-nfce/qrcodeNFCe</NfeConsultaQR>
+      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">http://www.sefaz.to.gov.br/nfce/qrcode</NfeConsultaQR>
     </producao>
   </UF>
   <UF>
