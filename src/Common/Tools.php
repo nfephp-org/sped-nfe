@@ -541,14 +541,16 @@ class Tools
      */
     protected function getXmlUrlPath()
     {
-        $file = $this->pathwsfiles . "wsnfe_" . $this->versao . "_mod55.xml";
+        $file = "wsnfe_" . $this->versao . "_mod55.xml";
         if ($this->modelo == 65) {
             $file = str_replace('55', '65', $file);
         }
-        if (! file_exists($file)) {
+        
+        $path = $this->pathwsfiles . $file;
+        if (! file_exists($path)) {
             return '';
         }
-        return file_get_contents($file);
+        return file_get_contents($path);
     }
 
     /**
