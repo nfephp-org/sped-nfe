@@ -24,11 +24,9 @@ Framework para geração e comunicação das NFe com as SEFAZ autorizadoras, e v
 
 ### NFe (modelo 55) TODOS
 
-### NFCe (modelo 65) Todos, menos MG, CE e SC
+### NFCe (modelo 65) Todos, menos SC 
 
-- MG inicia o projeto em 2018 (sem previsão)
-- No caso do CE ainda estamos no aguardo de mais esclarecimentos.(vai ?? não vai ??)
-- E SC não participa.
+- SC ainda não participa (previsão de uso em 2020, com Gadget Fiscal tipo SAT@ECF de SP).
 
 ### NFe com eCPF (emissor pessoa física)
 
