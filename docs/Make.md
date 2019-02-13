@@ -8,6 +8,7 @@ Para construir o XML da NFe (ou da NFCe) deve ser usada a classe Make::class
 Esses stdClass pode ser criados diretamente como demonstrado nos exemplos abaixo, mas também podem ser criados a partir de matrizes.
 
 ## *NOTA: Ajustado para NT 2018.001 v1.00* Usar novos campos dessa NT em produção somente a partir de 29/04/2019. 
+## *NOTA: Ajustado para NT 2018.001 v1.10* Usar novos campos dessa NT em produção somente a partir de 29/04/2019. 
 
 > Existe um provável ERRO nos XSDs PL_009_V4, fornecidos em 02/01/2019, onde estabelece um comprimento para o campo hashCSRT de 28 digitos base64Binary, **quando na verdade são gerados 30 digitos segundo esta formatação**.
 
@@ -659,6 +660,7 @@ $nfe->tagimposto($std);
 ```
 
 ### function tagICMS($std):DOMElement
+> NOTA: Ajustado conforme NT 2018.005_1.10
 Node com informações do ICMS do item da NFe
 
 | Parametro | Tipo | Descrição |
@@ -701,6 +703,7 @@ $std->pRedBCEfet;
 $std->vBCEfet;
 $std->pICMSEfet;
 $std->vICMSEfet;
+$std->vICMSSubstituto; //NT2018.005_1.10_Fevereiro de 2019
 
 $nfe->tagICMS($std);
 ```
@@ -734,7 +737,7 @@ $nfe->tagICMSPart($std);
 ```
 
 ### function tagICMSST($std):DOMElement
-> NOTA: Ajustado conforme NT 2018.005
+> NOTA: Ajustado conforme NT 2018.005 e NT 2018.005_1.10
 Node Repasse de ICMS ST retido anteriormente em operações interestaduais com repasses através do Substituto Tributário
 
 | Parametro | Tipo | Descrição |
@@ -752,12 +755,19 @@ $std->vICMSSTDest = 1.00;
 $std->vBCFCPSTRet = 1000.00;
 $std->pFCPSTRet = 1.00;
 $std->vFCPSTRet = 10.00;
+$std->pST = null;
+$std->vICMSSubstituto = null;
+$std->pRedBCEfet = null;
+$std->vBCEfet = null;
+$std->pICMSEfet = null;
+$std->vICMSEfet = null;
 
 $nfe->tagICMSST($std);
 ```
 
 ### function tagICMSSN($std):DOMElement
 Node referente Tributação ICMS pelo Simples Nacional do item da NFe
+> NOTA: Ajustado conforme NT 2018.005_1.10
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
@@ -793,6 +803,7 @@ $std->pRedBCEfet = null;
 $std->vBCEfet = null;
 $std->pICMSEfet = null;
 $std->vICMSEfet = null;
+$std->vICMSSubstituto = null;
 
 $nfe->tagICMSSN($std);
 ```
@@ -1073,6 +1084,7 @@ Node indicativo da forma de frete
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+
 ```php
 $std = new stdClass();
 $std->modFrete = 1;

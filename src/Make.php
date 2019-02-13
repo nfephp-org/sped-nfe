@@ -2883,7 +2883,8 @@ class Make
             'pRedBCEfet',
             'vBCEfet',
             'pICMSEfet',
-            'vICMSEfet'
+            'vICMSEfet',
+            'vICMSSubstituto'
         ];
         $std = $this->equilizeParameters($std, $possible);
         //totalização generica
@@ -3445,6 +3446,13 @@ class Make
                 );
                 $this->dom->addChild(
                     $icms,
+                    'vICMSSubstituto',
+                    $std->vICMSSubstituto,
+                    false,
+                    "$identificador [item $std->item] Valor do ICMS próprio do Substituto"
+                );
+                $this->dom->addChild(
+                    $icms,
                     'vICMSSTRet',
                     $std->vICMSSTRet,
                     false,
@@ -3996,7 +4004,13 @@ class Make
             'vICMSSTDest',
             'vBCFCPSTRet',
             'pFCPSTRet',
-            'vFCPSTRet'
+            'vFCPSTRet',
+            'pST',
+            'vICMSSubstituto',
+            'pRedBCEfet',
+            'vBCEfet',
+            'pICMSEfet',
+            'vICMSEfet'
         ];
         $std = $this->equilizeParameters($std, $possible);
         $icmsST = $this->dom->createElement("ICMSST");
@@ -4020,6 +4034,20 @@ class Make
             $std->vBCSTRet,
             true,
             "[item $std->item] Valor do BC do ICMS ST retido na UF remetente"
+        );
+        $this->dom->addChild(
+            $icmsST,
+            'pST',
+            $std->pST,
+            false,
+            "[item $std->item] Alíquota suportada pelo Consumidor Final"
+        );
+        $this->dom->addChild(
+            $icmsST,
+            'vICMSSubstituto',
+            $std->vICMSSubstituto,
+            false,
+            "[item $std->item] Valor do ICMS próprio do Substituto"
         );
         $this->dom->addChild(
             $icmsST,
@@ -4062,6 +4090,34 @@ class Make
             $std->vICMSSTDest,
             true,
             "[item $std->item] Valor do ICMS ST da UF destino"
+        );
+        $this->dom->addChild(
+            $icmsST,
+            'pRedBCEfet',
+            $std->pRedBCEfet,
+            false,
+            "[item $std->item] Percentual de redução da base de cálculo efetiva"
+        );
+        $this->dom->addChild(
+            $icmsST,
+            'vBCEfet',
+            $std->vBCEfet,
+            false,
+            "[item $std->item] Valor da base de cálculo efetiva"
+        );
+        $this->dom->addChild(
+            $icmsST,
+            'pICMSEfet',
+            $std->pICMSEfet,
+            false,
+            "[item $std->item] Alíquota do ICMS efetiva"
+        );
+        $this->dom->addChild(
+            $icmsST,
+            'vICMSEfet',
+            $std->vICMSEfet,
+            false,
+            "[item $std->item] Valor do ICMS efetivo"
         );
         //caso exista a tag aICMS[$std->item] inserir nela caso contrario criar
         if (!empty($this->aICMS[$std->item])) {
@@ -4111,7 +4167,8 @@ class Make
             'pRedBCEfet',
             'vBCEfet',
             'pICMSEfet',
-            'vICMSEfet'
+            'vICMSEfet',
+            'vICMSSubstituto'
         ];
         $std = $this->equilizeParameters($std, $possible);
         //totalizador generico
@@ -4385,6 +4442,13 @@ class Make
                     $std->pST,
                     isset($std->pST) ? true : false,
                     "[item $std->item] Alíquota suportada pelo Consumidor Final"
+                );
+                $this->dom->addChild(
+                    $icmsSN,
+                    'vICMSSubstituto',
+                    $std->vICMSSubstituto,
+                    false,
+                    "[item $std->item] Valor do ICMS próprio do Substituto"
                 );
                 $this->dom->addChild(
                     $icmsSN,
