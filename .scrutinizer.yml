@@ -29,18 +29,6 @@ tools:
     php_sim: true
 
 build:
-    dependencies:
-        before:
-            - "sudo composer self-update"
-        override:
-            - "composer install --no-interaction --prefer-dist"
-    tests:
-        override:
-            -
-                command: './vendor/bin/phpunit -c phpunit.xml.dist --coverage-clover=clover.xml'
-                coverage:
-                    file: 'clover.xml'
-                    format: 'php-clover'
     environment:
         php:
             version: 7.2
@@ -52,3 +40,14 @@ build:
         mongodb: false
         neo4j: false
         memcached: false
+    dependencies:
+        override:
+            - 'composer install --no-interaction --prefer-dist'
+    tests:
+        override:
+            -
+                command: './vendor/bin/phpunit -c phpunit.xml.dist --coverage-clover=clover.xml'
+                coverage:
+                    file: 'clover.xml'
+                    format: 'php-clover'
+   
