@@ -582,7 +582,7 @@ class Make
         $this->dom->addChild(
             $ide,
             "natOp",
-            Strings::replaceUnacceptableCharacters(substr(trim($std->natOp), 0, 60)),
+            substr(trim($std->natOp), 0, 60),
             true,
             $identificador . "Descrição da Natureza da Operação"
         );
@@ -718,7 +718,7 @@ class Make
             $this->dom->addChild(
                 $ide,
                 "xJust",
-                Strings::replaceUnacceptableCharacters(substr(trim($std->xJust), 0, 256)),
+                substr(trim($std->xJust), 0, 256),
                 true,
                 $identificador . "Justificativa da entrada em contingência"
             );
@@ -982,14 +982,14 @@ class Make
         $this->dom->addChild(
             $this->emit,
             "xNome",
-            Strings::replaceUnacceptableCharacters(substr(trim($std->xNome), 0, 60)),
+            substr(trim($std->xNome), 0, 60),
             true,
             $identificador . "Razão Social ou Nome do emitente"
         );
         $this->dom->addChild(
             $this->emit,
             "xFant",
-            Strings::replaceUnacceptableCharacters(substr(trim($std->xFant), 0, 60)),
+            substr(trim($std->xFant), 0, 60),
             false,
             $identificador . "Nome fantasia do emitente"
         );
@@ -1059,28 +1059,28 @@ class Make
         $this->dom->addChild(
             $this->enderEmit,
             "xLgr",
-            Strings::replaceUnacceptableCharacters(substr(trim($std->xLgr), 0, 60)),
+            substr(trim($std->xLgr), 0, 60),
             true,
             $identificador . "Logradouro do Endereço do emitente"
         );
         $this->dom->addChild(
             $this->enderEmit,
             "nro",
-            Strings::replaceUnacceptableCharacters(substr(trim($std->nro), 0, 60)),
+            substr(trim($std->nro), 0, 60),
             true,
             $identificador . "Número do Endereço do emitente"
         );
         $this->dom->addChild(
             $this->enderEmit,
             "xCpl",
-            Strings::replaceUnacceptableCharacters(substr(trim($std->xCpl), 0, 60)),
+            substr(trim($std->xCpl), 0, 60),
             false,
             $identificador . "Complemento do Endereço do emitente"
         );
         $this->dom->addChild(
             $this->enderEmit,
             "xBairro",
-            Strings::replaceUnacceptableCharacters(substr(trim($std->xBairro), 0, 60)),
+            substr(trim($std->xBairro), 0, 60),
             true,
             $identificador . "Bairro do Endereço do emitente"
         );
@@ -1094,7 +1094,7 @@ class Make
         $this->dom->addChild(
             $this->enderEmit,
             "xMun",
-            Strings::replaceUnacceptableCharacters(substr(trim($std->xMun), 0, 60)),
+            substr(trim($std->xMun), 0, 60),
             true,
             $identificador . "Nome do município do Endereço do emitente"
         );
@@ -1122,7 +1122,7 @@ class Make
         $this->dom->addChild(
             $this->enderEmit,
             "xPais",
-            Strings::replaceUnacceptableCharacters(substr(trim($std->xPais), 0, 60)),
+            substr(trim($std->xPais), 0, 60),
             false,
             $identificador . "Nome do País do Endereço do emitente"
         );
@@ -1206,7 +1206,7 @@ class Make
         $this->dom->addChild(
             $this->dest,
             "xNome",
-            Strings::replaceUnacceptableCharacters(substr(trim($xNome), 0, 60)),
+            substr(trim($xNome), 0, 60),
             $flagNome, //se mod 55 true ou mod 65 false
             $identificador . "Razão Social ou nome do destinatário"
         );
@@ -1243,7 +1243,7 @@ class Make
         $this->dom->addChild(
             $this->dest,
             "email",
-            Strings::replaceUnacceptableCharacters(substr(trim($std->email), 0, 60)),
+            substr(trim($std->email), 0, 60),
             false,
             $identificador . "Email do destinatário"
         );
@@ -1698,7 +1698,7 @@ class Make
         $std = $this->equilizeParameters($std, $possible);
         $infAdProd = $this->dom->createElement(
             "infAdProd",
-            Strings::replaceUnacceptableCharacters(substr(trim($std->infAdProd), 0, 500))
+            substr(trim($std->infAdProd), 0, 500)
         );
         $this->aInfAdProd[$std->item] = $infAdProd;
         return $infAdProd;
