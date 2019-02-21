@@ -14,7 +14,7 @@ A classe Tools é a responsável por fazer a comunicação entre o aplicativo e 
 
 ## Methods
 
-### public function __construct($configJson, Certificate $certificate, Contingency $contingency)
+### public function __construct($configJson, Certificate $certificate, Contingency $contingency = null)
 
 **Config**
 
@@ -100,7 +100,7 @@ Sign NFe or NFCe xml string (dont is a file path)
 >Este método assina a NFe ou a NFCe e testa sua validade com o respectivo XSD.
 
 ### Ativando as contingências
-Ao carregar a classe é instaciada a classe Factories\Contingency automaticamente na propriedade publica $contingency e a partir dessa propriedade podem ser ativadas ou desativdos os modos de contingencia. Lembrando que isso deverá ser levado em conta também na criação dos XML das NFe.
+Ao carregar a classe é instanciada a classe Factories\Contingency automaticamente na propriedade publica $contingency e a partir dessa propriedade podem ser ativadas ou desativdos os modos de contingencia. Lembrando que isso deverá ser levado em conta também na criação dos XML das NFe.
 
 A classe Contingencia pode ser passada por parâmetro na instanciação da classe Tools ou porteriormente, como indicado abaixo.
 
