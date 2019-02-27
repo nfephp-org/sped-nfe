@@ -24,7 +24,7 @@
         "RS": "www.sefaz.rs.gov.br\/nfce\/consulta",
         "SC": "",
         "SE": "http:\/\/www.nfce.se.gov.br\/nfce\/consulta",
-        "SP": "https:\/\/www.nfce.fazenda.sp.gov.br\/consulta",
+        "SP": "https:\/\/www.nfce.fazenda.sp.gov.br\/NFCeConsultaPublica",
         "TO": "www.sefaz.to.gov.br\/nfce\/consulta",
         "PB": "www.receita.pb.gov.br\/nfce\/consulta"
     },
@@ -54,7 +54,7 @@
         "RS": "www.sefaz.rs.gov.br\/nfce\/consulta",
         "SE": "http:\/\/www.hom.nfe.se.gov.br\/nfce\/consulta",
         "SC": "",
-        "SP": "https:\/\/www.homologacao.nfce.fazenda.sp.gov.br\/consulta",
+        "SP": "https:\/\/www.homologacao.nfce.fazenda.sp.gov.br\/NFCeConsultaPublica",
         "TO": "www.sefaz.to.gov.br\/nfce\/consulta"
     }
 }
