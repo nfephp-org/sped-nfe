@@ -6,7 +6,7 @@ require_once '../bootstrap.php';
 use NFePHP\NFe\Tools;
 use NFePHP\Common\Certificate;
 use NFePHP\NFe\Common\Standardize;
-use NFePHP\NFe\Common\Complements;
+use NFePHP\NFe\Complements;
 
 //tanto o config.json como o certificado.pfx podem estar
 //armazenados em uma base de dados, então não é necessário 
