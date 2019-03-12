@@ -2,7 +2,7 @@
 
 ## NFCe DUPLICADA
 
-Como o prazo de cancelamento das NFCe é curto (minutos) e devido a natureza da operção com NFCe ser um processo ASSINCRONO e depender de um terceiro (SEFAZ), foi estabelecido um novo evento o "CANCELAMENTO POR SUBSTITUIÇÃO".
+Como o prazo de cancelamento das NFCe é curto (minutos) e devido a natureza da operação com NFCe ser um processo ASSINCRONO e depender de um terceiro (SEFAZ), foi estabelecido um novo evento o "CANCELAMENTO POR SUBSTITUIÇÃO".
 
 No dia 21 de Dezembro foi divulgada a Nota Técnica 2018.004 que cria uma nova forma de cancelamento: o Cancelamento por Substituição. Esse evento deve ser utilizado apenas quando existir outra NFCe em duplicidade, que tenha sido emitida e autorizada em contingência anteriormente e acoberte a mesma operação. O prazo da autorização não pode ser superior a 168 horas (7 dias).
 
@@ -52,11 +52,11 @@ Agora para o cancelamento por substituição, é necessário preencher isso tudo
 <envEvento xmlns="http://www.portalfiscal.inf.br/nfe" versao="1.00">
     <idLote>201903121806186</idLote>
     <evento xmlns="http://www.portalfiscal.inf.br/nfe" versao="1.00">
-        <infEvento Id="ID1101123518099671900000011565001000000002100000266701">
+        <infEvento Id="ID1101123518091234567890123465001000000002100000266701">
             <cOrgao>35</cOrgao>
             <tpAmb>2</tpAmb>
-            <CNPJ>58716523000119</CNPJ>
-            <chNFe>35180996719000000115650010000000021000002667</chNFe>
+            <CNPJ>12345678901234</CNPJ>
+            <chNFe>35180912345678901234650010000000021000002667</chNFe>
             <dhEvento>2019-03-12T18:06:18-03:00</dhEvento>
             <tpEvento>110112</tpEvento>
             <nSeqEvento>1</nSeqEvento>
@@ -68,14 +68,14 @@ Agora para o cancelamento por substituição, é necessário preencher isso tudo
                 <verAplic>1234</verAplic>
                 <nProt>135180140924930</nProt>
                 <xJust>Falha na conexao internet</xJust>
-                <chNFeRef>35180996719000000115650010000000011000002667</chNFeRef>
+                <chNFeRef>35180912345678901234650010000000011000002667</chNFeRef>
             </detEvento>
         </infEvento>
         <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
             <SignedInfo>
                 <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
                 <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
-                <Reference URI="#ID1101123518099671900000011565001000000002100000266701">
+                <Reference URI="#ID1101123518091234567890123465001000000002100000266701">
                     <Transforms>
                         <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
                         <Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
@@ -110,3 +110,50 @@ Com o novo evento, foram adicionados algumas novas rejeições. Segue a lista co
 - Rejeição 918: Quantidade de itens da NF-e Substituta difere da quantidade de itens da NF-e a ser cancelada
 - Rejeição 919: Item da NF-e Substituta difere do mesmo item da NF-e a ser cancelada
 - Rejeição 920: Tipo de Emissão inválido no Cancelamento por Substituição
+
+
+### Exemplo de Cancelamento por Substituição
+
+```php
+use NFePHP\Common\Certificate;
+use NFePHP\NFe\Tools;
+use NFePHP\NFe\Common\Standardize;
+
+$config = [
+    "atualizacao" => "2018-09-28 09:29:21",
+    "tpAmb"       => 1,
+    "razaosocial" => "Empresa SA",
+    "siglaUF"     => "SP",
+    "cnpj"        => "12345678901234",
+    "schemes"     => "PL_009_V4",
+    "versao"      => "4.00",
+    "tokenIBPT"   => "",
+    "CSC"         => "19191919",
+    "CSCid"       => "00001",
+    "aProxyConf"  => [
+        "proxyIp"   => "",
+        "proxyPort" => "",
+        "proxyUser" => "",
+        "proxyPass" => ""
+    ]
+];
+$configJson = json_encode($config);
+
+try {
+    $cert = Certificate::readPfx(file_get_contents('certificado.pfx'), 'senha');
+    $tools = new Tools($configJson, $cert);
+    $tools->model('65');
+    
+    $chave = '35180912345678901234650010000000021000002667';
+    $xJust = 'Falha na conexao internet';
+    $nProt = '135180140924930';
+    $chNFeRef = '35180912345678901234650010000000011000002667';
+    $verAplic = '1234';
+    $response = $tools->sefazCancelaPorSubstituicao($chave, $xJust, $nProt, $chNFeRef, $verAplic);
+    
+    header('Content-Type: application/xml; charset=utf-8');
+    echo $response;
+} catch (\Exception $e) {
+    echo $e->getMessage();
+}
+```
