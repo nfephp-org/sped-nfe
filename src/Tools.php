@@ -813,6 +813,7 @@ class Tools extends ToolsCommon
             . "</envEvento>";
         $this->isValid($this->urlVersion, $request, 'envEvento');
         $this->lastRequest = $request;
+        //return $request;
         $parameters = ['nfeDadosMsg' => $request];
         $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
         $this->lastResponse = $this->sendRequest($body, $parameters);
@@ -984,6 +985,10 @@ class Tools extends ToolsCommon
             case self::EVT_CANCELA:
                 $std->alias = 'CancNFe';
                 $std->desc = 'Cancelamento';
+                break;
+            case self::EVT_CANCELASUBSTITUICAO:
+                $std->alias = 'CancNFe';
+                $std->desc = 'Cancelamento por substituicao';
                 break;
             case self::EVT_EPEC: // Emissão em contingência EPEC
                 $std->alias = 'EPEC';

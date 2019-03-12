@@ -1,5 +1,7 @@
 # Esclarecimentos sobre TIMEOUT
 
+> VIDE: **NFCe [Cancelamento por Substituição](CancelamentoSubs.md)**
+
 As vezes a internet está "ON LINE" mas comunicação com a SEFAZ pode estar muito RUIM (isso é BRASIL), nesses casos fica a pergunta **o que fazer ?**.
 
 Não tem uma resposta simples para todos os casos, pois esse timeout pode ser causado por:
