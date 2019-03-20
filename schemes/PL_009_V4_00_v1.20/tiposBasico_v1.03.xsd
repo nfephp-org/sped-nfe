@@ -1,0 +1,863 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- PL_006u - 21/07/14 - Inclusão do tipo Básico TPlaca // v2.0-->
+<!-- PL_006u - 06/05/14 - Alterações Fuso-Horario // v2.0-->
+<!-- PL_006h - 13/05/11 - correções da NT 2011/004  // v2.0-->
+<!-- PL_006f - 29/05/10 - correcao do tipo TDec_1504 para limitar a quantidade de decimais para 4  // v2.0-->
+<!-- PL_006f - 09/05/10 - eliminação da possibilidade informar a Inscrição produtor rural na IEDest  // v2.0-->
+<!-- PL_006d - 04/10/09 - alterada a ordem do pattern do TIE - adequacao libxml  // v2.0-->
+<!-- PL_006d - 20/08/09 - acrescentado o tipo númerico com 10 casas decimais,15 casas inteiras e hora  // v2.0-->
+<!-- PL_005d - 11/08/09 - alteração no enumeration do tpais para nova tabela de paises do BACEN-->
+<!-- PL_005b - 24/10/08 - acrescentado a tabela do tpais   e outras alterações para eliminar os brancos no início e fim do campo   -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:nfe="http://www.portalfiscal.inf.br/nfe" targetNamespace="http://www.portalfiscal.inf.br/nfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:simpleType name="TCodUfIBGE">
+		<xs:annotation>
+			<xs:documentation>Tipo Código da UF da tabela do IBGE</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:enumeration value="11"/>
+			<xs:enumeration value="12"/>
+			<xs:enumeration value="13"/>
+			<xs:enumeration value="14"/>
+			<xs:enumeration value="15"/>
+			<xs:enumeration value="16"/>
+			<xs:enumeration value="17"/>
+			<xs:enumeration value="21"/>
+			<xs:enumeration value="22"/>
+			<xs:enumeration value="23"/>
+			<xs:enumeration value="24"/>
+			<xs:enumeration value="25"/>
+			<xs:enumeration value="26"/>
+			<xs:enumeration value="27"/>
+			<xs:enumeration value="28"/>
+			<xs:enumeration value="29"/>
+			<xs:enumeration value="31"/>
+			<xs:enumeration value="32"/>
+			<xs:enumeration value="33"/>
+			<xs:enumeration value="35"/>
+			<xs:enumeration value="41"/>
+			<xs:enumeration value="42"/>
+			<xs:enumeration value="43"/>
+			<xs:enumeration value="50"/>
+			<xs:enumeration value="51"/>
+			<xs:enumeration value="52"/>
+			<xs:enumeration value="53"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TCodMunIBGE">
+		<xs:annotation>
+			<xs:documentation>Tipo Código do Município da tabela do IBGE</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="[0-9]{7}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TChNFe">
+		<xs:annotation>
+			<xs:documentation>Tipo Chave da Nota Fiscal Eletrônica</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+      <xs:pattern value="(1[1-7]|2[1-9]|3[1,2,3,5]|4[1-3]|5[0-3])(0[6-9]|[1-9][\d])(0[1-9]|1[0-2])([\d]{14})([\d]{5})([\d]{9})([\d]{10})"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TProt">
+		<xs:annotation>
+			<xs:documentation>Tipo Número do Protocolo de Status</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="[0-9]{15}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TRec">
+		<xs:annotation>
+			<xs:documentation>Tipo Número do Recibo do envio de lote de NF-e</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="[0-9]{15}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TStat">
+		<xs:annotation>
+			<xs:documentation>Tipo Código da Mensagem enviada</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="[0-9]{3}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TCnpj">
+		<xs:annotation>
+			<xs:documentation>Tipo Número do CNPJ</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="[0-9]{14}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TCnpjVar">
+		<xs:annotation>
+			<xs:documentation>Tipo Número do CNPJ tmanho varíavel (3-14)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="[0-9]{3,14}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TCnpjOpc">
+		<xs:annotation>
+			<xs:documentation>Tipo Número do CNPJ Opcional</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:maxLength value="14"/>
+			<xs:pattern value="[0-9]{0}|[0-9]{14}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TCpf">
+		<xs:annotation>
+			<xs:documentation>Tipo Número do CPF</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="[0-9]{11}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TCpfVar">
+		<xs:annotation>
+			<xs:documentation>Tipo Número do CPF de tamanho variável (3-11)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="[0-9]{3,11}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TDec_0302">
+		<xs:annotation>
+			<xs:documentation>Tipo Decimal com 5 dígitos, sendo 3 de corpo e 2 decimais</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="0|0\.[0-9]{2}|[1-9]{1}[0-9]{0,2}(\.[0-9]{2})?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TDec_0302Opc">
+		<xs:annotation>
+			<xs:documentation>Tipo Decimal com 5 dígitos, sendo 3 de corpo e 2 decimais, utilizado em tags opcionais</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="0\.[0-9]{1}[1-9]{1}|0\.[1-9]{1}[0-9]{1}|[1-9]{1}[0-9]{0,2}(\.[0-9]{2})?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TDec_0803">
+		<xs:annotation>
+			<xs:documentation>Tipo Decimal com 11 dígitos, sendo 8 de corpo e 3 decimais</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="0|0\.[0-9]{3}|[1-9]{1}[0-9]{0,7}(\.[0-9]{3})?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TDec_0803Opc">
+		<xs:annotation>
+			<xs:documentation>Tipo Decimal com 11 dígitos, sendo 8 de corpo e 3 decimais utilizado em tags opcionais</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="0\.[1-9]{1}[0-9]{2}|0\.[0-9]{2}[1-9]{1}|0\.[0-9]{1}[1-9]{1}[0-9]{1}|[1-9]{1}[0-9]{0,7}(\.[0-9]{3})?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TDec_0804">
+		<xs:annotation>
+			<xs:documentation>Tipo Decimal com 12 dígitos, sendo 8 de corpo e 4decimais</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="0|0\.[0-9]{4}|[1-9]{1}[0-9]{0,7}(\.[0-9]{4})?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TDec_0804Opc">
+		<xs:annotation>
+			<xs:documentation>Tipo Decimal com 12 dígitos, sendo 8 de corpo e 4 decimais, utilizado em tags opcionais</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="0\.[1-9]{1}[0-9]{3}|0\.[0-9]{3}[1-9]{1}|0\.[0-9]{2}[1-9]{1}[0-9]{1}|0\.[0-9]{1}[1-9]{1}[0-9]{2}|[1-9]{1}[0-9]{0,7}(\.[0-9]{4})?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TDec_1104">
+		<xs:annotation>
+			<xs:documentation>Tipo Decimal com 15 dígitos, sendo 11 de corpo e 4 decimais</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="0|0\.[0-9]{4}|[1-9]{1}[0-9]{0,10}(\.[0-9]{4})?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TDec_1104Opc">
+		<xs:annotation>
+			<xs:documentation>Tipo Decimal com 15 dígitos, sendo 11 de corpo e 4 decimais, utilizado em tags opcionais</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="0\.[1-9]{1}[0-9]{3}|0\.[0-9]{3}[1-9]{1}|0\.[0-9]{2}[1-9]{1}[0-9]{1}|0\.[0-9]{1}[1-9]{1}[0-9]{2}|[1-9]{1}[0-9]{0,10}(\.[0-9]{4})?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TDec_1203">
+		<xs:annotation>
+			<xs:documentation>Tipo Decimal com 15 dígitos, sendo 12 de corpo e 3 decimais</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="0|0\.[0-9]{3}|[1-9]{1}[0-9]{0,11}(\.[0-9]{3})?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TDec_1203Opc">
+		<xs:annotation>
+			<xs:documentation>Tipo Decimal com 15 dígitos, sendo 12 de corpo e 3 decimais, utilizado em tags opcionais</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="0\.[1-9]{1}[0-9]{2}|0\.[0-9]{2}[1-9]{1}|0\.[0-9]{1}[1-9]{1}[0-9]{1}|[1-9]{1}[0-9]{0,11}(\.[0-9]{3})?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TDec_1204">
+		<xs:annotation>
+			<xs:documentation>Tipo Decimal com 16 dígitos, sendo 12 de corpo e 4 decimais</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="0|0\.[0-9]{1,4}|[1-9]{1}[0-9]{0,11}|[1-9]{1}[0-9]{0,11}(\.[0-9]{1,4})?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TDec_1204Opc">
+		<xs:annotation>
+			<xs:documentation>Tipo Decimal com 16 dígitos, sendo 12 de corpo e 4 decimais, utilizado em tags opcionais</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="0\.[1-9]{1}[0-9]{3}|0\.[0-9]{3}[1-9]{1}|0\.[0-9]{2}[1-9]{1}[0-9]{1}|0\.[0-9]{1}[1-9]{1}[0-9]{2}|[1-9]{1}[0-9]{0,11}(\.[0-9]{4})?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TDec_1302">
+		<xs:annotation>
+			<xs:documentation>Tipo Decimal com 15 dígitos, sendo 13 de corpo e 2 decimais</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="0|0\.[0-9]{2}|[1-9]{1}[0-9]{0,12}(\.[0-9]{2})?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TDec_1302Opc">
+		<xs:annotation>
+			<xs:documentation>Tipo Decimal com 15 dígitos, sendo 13 de corpo e 2 decimais, utilizado em tags opcionais</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="0\.[0-9]{1}[1-9]{1}|0\.[1-9]{1}[0-9]{1}|[1-9]{1}[0-9]{0,12}(\.[0-9]{2})?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TDec_1110">
+		<xs:annotation>
+			<xs:documentation>Tipo Decimal com até  21 dígitos, sendo 11 de corpo e até 10 decimais // aperfeiçoamento v2.0</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="0|0\.[0-9]{1,10}|[1-9]{1}[0-9]{0,10}|[1-9]{1}[0-9]{0,10}(\.[0-9]{1,10})?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TDec_1104v">
+		<xs:annotation>
+			<xs:documentation>Tipo Decimal com até 15 dígitos, sendo 11 de corpo e até 4 decimais  // aperfeiçoamento v2.0</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="0|0\.[0-9]{1,4}|[1-9]{1}[0-9]{0,10}|[1-9]{1}[0-9]{0,10}(\.[0-9]{1,4})?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TIeDest">
+		<xs:annotation>
+			<xs:documentation>Tipo Inscrição Estadual do Destinatário // alterado para aceitar vazio ou ISENTO - maio/2010 v2.0</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="ISENTO|[0-9]{0,14}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TIeST">
+		<xs:annotation>
+			<xs:documentation>Tipo Inscrição Estadual do ST // acrescentado EM 24/10/08</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="[0-9]{2,14}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TIe">
+		<xs:annotation>
+			<xs:documentation>Tipo Inscrição Estadual do Emitente // alterado EM 24/10/08 para aceitar ISENTO</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="[0-9]{2,14}|ISENTO"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TMod">
+		<xs:annotation>
+			<xs:documentation>Tipo Modelo Documento Fiscal</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:enumeration value="55"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TNF">
+		<xs:annotation>
+			<xs:documentation>Tipo Número do Documento Fiscal</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="[1-9]{1}[0-9]{0,8}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TSerie">
+		<xs:annotation>
+			<xs:documentation>Tipo Série do Documento Fiscal </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="0|[1-9]{1}[0-9]{0,2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Tpais">
+		<xs:annotation>
+			<xs:documentation>Tipo Código do Pais 
+// PL_005d - 11/08/09
+eliminado:
+ 4235-LEBUAN, ILHAS - 
+acrescentado:
+7200 SAO TOME E PRINCIPE, ILHAS,
+8958 ZONA DO CANAL DO PANAMA               
+9903 PROVISAO DE NAVIOS E AERONAVES        
+9946 A DESIGNAR                            
+9950 BANCOS CENTRAIS                       
+9970 ORGANIZACOES INTERNACIONAIS
+ // PL_005b - 24/10/08
+ // Acrescentado:
+ 4235 - LEBUAN,ILHAS
+ 4885 - MAYOTTE (ILHAS FRANCESAS)  
+// NT2011/004
+ acrescentado a tabela de paises
+//PL_006t - 21/03/2014
+acrescentado:
+5780 - Palestina
+7600 - Sudão do Sul 
+ </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:enumeration value="132"/>
+			<xs:enumeration value="175"/>
+			<xs:enumeration value="230"/>
+			<xs:enumeration value="310"/>
+			<xs:enumeration value="370"/>
+			<xs:enumeration value="400"/>
+			<xs:enumeration value="418"/>
+			<xs:enumeration value="434"/>
+			<xs:enumeration value="477"/>
+			<xs:enumeration value="531"/>
+			<xs:enumeration value="590"/>
+			<xs:enumeration value="639"/>
+			<xs:enumeration value="647"/>
+			<xs:enumeration value="655"/>
+			<xs:enumeration value="698"/>
+			<xs:enumeration value="728"/>
+			<xs:enumeration value="736"/>
+			<xs:enumeration value="779"/>
+			<xs:enumeration value="809"/>
+			<xs:enumeration value="817"/>
+			<xs:enumeration value="833"/>
+			<xs:enumeration value="850"/>
+			<xs:enumeration value="876"/>
+			<xs:enumeration value="884"/>
+			<xs:enumeration value="906"/>
+			<xs:enumeration value="930"/>
+			<xs:enumeration value="973"/>
+			<xs:enumeration value="981"/>
+			<xs:enumeration value="0132"/>
+			<xs:enumeration value="0175"/>
+			<xs:enumeration value="0230"/>
+			<xs:enumeration value="0310"/>
+			<xs:enumeration value="0370"/>
+			<xs:enumeration value="0400"/>
+			<xs:enumeration value="0418"/>
+			<xs:enumeration value="0434"/>
+			<xs:enumeration value="0477"/>
+			<xs:enumeration value="0531"/>
+			<xs:enumeration value="0590"/>
+			<xs:enumeration value="0639"/>
+			<xs:enumeration value="0647"/>
+			<xs:enumeration value="0655"/>
+			<xs:enumeration value="0698"/>
+			<xs:enumeration value="0728"/>
+			<xs:enumeration value="0736"/>
+			<xs:enumeration value="0779"/>
+			<xs:enumeration value="0809"/>
+			<xs:enumeration value="0817"/>
+			<xs:enumeration value="0833"/>
+			<xs:enumeration value="0850"/>
+			<xs:enumeration value="0876"/>
+			<xs:enumeration value="0884"/>
+			<xs:enumeration value="0906"/>
+			<xs:enumeration value="0930"/>
+			<xs:enumeration value="0973"/>
+			<xs:enumeration value="0981"/>
+			<xs:enumeration value="1015"/>
+			<xs:enumeration value="1058"/>
+			<xs:enumeration value="1082"/>
+			<xs:enumeration value="1112"/>
+			<xs:enumeration value="1155"/>
+			<xs:enumeration value="1198"/>
+			<xs:enumeration value="1279"/>
+			<xs:enumeration value="1376"/>
+			<xs:enumeration value="1414"/>
+			<xs:enumeration value="1457"/>
+			<xs:enumeration value="1490"/>
+			<xs:enumeration value="1504"/>
+			<xs:enumeration value="1508"/>
+			<xs:enumeration value="1511"/>
+			<xs:enumeration value="1538"/>
+			<xs:enumeration value="1546"/>
+			<xs:enumeration value="1589"/>
+			<xs:enumeration value="1600"/>
+			<xs:enumeration value="1619"/>
+			<xs:enumeration value="1635"/>
+			<xs:enumeration value="1651"/>
+			<xs:enumeration value="1694"/>
+			<xs:enumeration value="1732"/>
+			<xs:enumeration value="1775"/>
+			<xs:enumeration value="1830"/>
+			<xs:enumeration value="1872"/>
+			<xs:enumeration value="1902"/>
+			<xs:enumeration value="1937"/>
+			<xs:enumeration value="1953"/>
+			<xs:enumeration value="1961"/>
+			<xs:enumeration value="1988"/>
+			<xs:enumeration value="1996"/>
+			<xs:enumeration value="2291"/>
+			<xs:enumeration value="2321"/>
+			<xs:enumeration value="2356"/>
+			<xs:enumeration value="2399"/>
+			<xs:enumeration value="2402"/>
+			<xs:enumeration value="2437"/>
+			<xs:enumeration value="2445"/>
+			<xs:enumeration value="2453"/>
+			<xs:enumeration value="2461"/>
+			<xs:enumeration value="2470"/>
+			<xs:enumeration value="2496"/>
+			<xs:enumeration value="2518"/>
+			<xs:enumeration value="2534"/>
+			<xs:enumeration value="2550"/>
+			<xs:enumeration value="2593"/>
+			<xs:enumeration value="2674"/>
+			<xs:enumeration value="2712"/>
+			<xs:enumeration value="2755"/>
+			<xs:enumeration value="2810"/>
+			<xs:enumeration value="2852"/>
+			<xs:enumeration value="2895"/>
+			<xs:enumeration value="2917"/>
+			<xs:enumeration value="2933"/>
+			<xs:enumeration value="2976"/>
+			<xs:enumeration value="3018"/>
+			<xs:enumeration value="3050"/>
+			<xs:enumeration value="3093"/>
+			<xs:enumeration value="3131"/>
+			<xs:enumeration value="3174"/>
+			<xs:enumeration value="3255"/>
+			<xs:enumeration value="3298"/>
+			<xs:enumeration value="3310"/>
+			<xs:enumeration value="3344"/>
+			<xs:enumeration value="3379"/>
+			<xs:enumeration value="3417"/>
+			<xs:enumeration value="3450"/>
+			<xs:enumeration value="3514"/>
+			<xs:enumeration value="3557"/>
+			<xs:enumeration value="3573"/>
+			<xs:enumeration value="3595"/>
+			<xs:enumeration value="3611"/>
+			<xs:enumeration value="3654"/>
+			<xs:enumeration value="3697"/>
+			<xs:enumeration value="3727"/>
+			<xs:enumeration value="3751"/>
+			<xs:enumeration value="3794"/>
+			<xs:enumeration value="3832"/>
+			<xs:enumeration value="3867"/>
+			<xs:enumeration value="3913"/>
+			<xs:enumeration value="3964"/>
+			<xs:enumeration value="3999"/>
+			<xs:enumeration value="4030"/>
+			<xs:enumeration value="4111"/>
+			<xs:enumeration value="4200"/>
+			<xs:enumeration value="4235"/>
+			<xs:enumeration value="4260"/>
+			<xs:enumeration value="4278"/>
+			<xs:enumeration value="4316"/>
+			<xs:enumeration value="4340"/>
+			<xs:enumeration value="4383"/>
+			<xs:enumeration value="4405"/>
+			<xs:enumeration value="4421"/>
+			<xs:enumeration value="4456"/>
+			<xs:enumeration value="4472"/>
+			<xs:enumeration value="4499"/>
+			<xs:enumeration value="4502"/>
+			<xs:enumeration value="4525"/>
+			<xs:enumeration value="4553"/>
+			<xs:enumeration value="4588"/>
+			<xs:enumeration value="4618"/>
+			<xs:enumeration value="4642"/>
+			<xs:enumeration value="4677"/>
+			<xs:enumeration value="4723"/>
+			<xs:enumeration value="4740"/>
+			<xs:enumeration value="4766"/>
+			<xs:enumeration value="4774"/>
+			<xs:enumeration value="4855"/>
+			<xs:enumeration value="4880"/>
+			<xs:enumeration value="4885"/>
+			<xs:enumeration value="4901"/>
+			<xs:enumeration value="4936"/>
+			<xs:enumeration value="4944"/>
+			<xs:enumeration value="4952"/>
+			<xs:enumeration value="4979"/>
+			<xs:enumeration value="4985"/>
+			<xs:enumeration value="4995"/>
+			<xs:enumeration value="5010"/>
+			<xs:enumeration value="5053"/>
+			<xs:enumeration value="5070"/>
+			<xs:enumeration value="5088"/>
+			<xs:enumeration value="5118"/>
+			<xs:enumeration value="5177"/>
+			<xs:enumeration value="5215"/>
+			<xs:enumeration value="5258"/>
+			<xs:enumeration value="5282"/>
+			<xs:enumeration value="5312"/>
+			<xs:enumeration value="5355"/>
+			<xs:enumeration value="5380"/>
+			<xs:enumeration value="5428"/>
+			<xs:enumeration value="5452"/>
+			<xs:enumeration value="5487"/>
+			<xs:enumeration value="5517"/>
+			<xs:enumeration value="5568"/>
+			<xs:enumeration value="5665"/>
+			<xs:enumeration value="5738"/>
+			<xs:enumeration value="5754"/>
+			<xs:enumeration value="5762"/>
+			<xs:enumeration value="5780"/>
+			<xs:enumeration value="5800"/>
+			<xs:enumeration value="5860"/>
+			<xs:enumeration value="5894"/>
+			<xs:enumeration value="5932"/>
+			<xs:enumeration value="5991"/>
+			<xs:enumeration value="6033"/>
+			<xs:enumeration value="6076"/>
+			<xs:enumeration value="6114"/>
+			<xs:enumeration value="6238"/>
+			<xs:enumeration value="6254"/>
+			<xs:enumeration value="6289"/>
+			<xs:enumeration value="6408"/>
+			<xs:enumeration value="6475"/>
+			<xs:enumeration value="6602"/>
+			<xs:enumeration value="6653"/>
+			<xs:enumeration value="6700"/>
+			<xs:enumeration value="6750"/>
+			<xs:enumeration value="6769"/>
+			<xs:enumeration value="6777"/>
+			<xs:enumeration value="6781"/>
+			<xs:enumeration value="6858"/>
+			<xs:enumeration value="6874"/>
+			<xs:enumeration value="6904"/>
+			<xs:enumeration value="6912"/>
+			<xs:enumeration value="6955"/>
+			<xs:enumeration value="6971"/>
+			<xs:enumeration value="7005"/>
+			<xs:enumeration value="7056"/>
+			<xs:enumeration value="7102"/>
+			<xs:enumeration value="7153"/>
+			<xs:enumeration value="7200"/>
+			<xs:enumeration value="7285"/>
+			<xs:enumeration value="7315"/>
+			<xs:enumeration value="7358"/>
+			<xs:enumeration value="7370"/>
+			<xs:enumeration value="7412"/>
+			<xs:enumeration value="7447"/>
+			<xs:enumeration value="7480"/>
+			<xs:enumeration value="7501"/>
+			<xs:enumeration value="7544"/>
+			<xs:enumeration value="7560"/>
+			<xs:enumeration value="7595"/>
+			<xs:enumeration value="7600"/>
+			<xs:enumeration value="7641"/>
+			<xs:enumeration value="7676"/>
+			<xs:enumeration value="7706"/>
+			<xs:enumeration value="7722"/>
+			<xs:enumeration value="7765"/>
+			<xs:enumeration value="7803"/>
+			<xs:enumeration value="7820"/>
+			<xs:enumeration value="7838"/>
+			<xs:enumeration value="7889"/>
+			<xs:enumeration value="7919"/>
+			<xs:enumeration value="7951"/>
+			<xs:enumeration value="8001"/>
+			<xs:enumeration value="8052"/>
+			<xs:enumeration value="8109"/>
+			<xs:enumeration value="8150"/>
+			<xs:enumeration value="8206"/>
+			<xs:enumeration value="8230"/>
+			<xs:enumeration value="8249"/>
+			<xs:enumeration value="8273"/>
+			<xs:enumeration value="8281"/>
+			<xs:enumeration value="8311"/>
+			<xs:enumeration value="8338"/>
+			<xs:enumeration value="8451"/>
+			<xs:enumeration value="8478"/>
+			<xs:enumeration value="8486"/>
+			<xs:enumeration value="8508"/>
+			<xs:enumeration value="8583"/>
+			<xs:enumeration value="8630"/>
+			<xs:enumeration value="8664"/>
+			<xs:enumeration value="8702"/>
+			<xs:enumeration value="8737"/>
+			<xs:enumeration value="8885"/>
+			<xs:enumeration value="8907"/>
+			<xs:enumeration value="8958"/>
+			<xs:enumeration value="9903"/>
+			<xs:enumeration value="9946"/>
+			<xs:enumeration value="9950"/>
+			<xs:enumeration value="9970"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TUf">
+		<xs:annotation>
+			<xs:documentation>Tipo Sigla da UF</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:enumeration value="AC"/>
+			<xs:enumeration value="AL"/>
+			<xs:enumeration value="AM"/>
+			<xs:enumeration value="AP"/>
+			<xs:enumeration value="BA"/>
+			<xs:enumeration value="CE"/>
+			<xs:enumeration value="DF"/>
+			<xs:enumeration value="ES"/>
+			<xs:enumeration value="GO"/>
+			<xs:enumeration value="MA"/>
+			<xs:enumeration value="MG"/>
+			<xs:enumeration value="MS"/>
+			<xs:enumeration value="MT"/>
+			<xs:enumeration value="PA"/>
+			<xs:enumeration value="PB"/>
+			<xs:enumeration value="PE"/>
+			<xs:enumeration value="PI"/>
+			<xs:enumeration value="PR"/>
+			<xs:enumeration value="RJ"/>
+			<xs:enumeration value="RN"/>
+			<xs:enumeration value="RO"/>
+			<xs:enumeration value="RR"/>
+			<xs:enumeration value="RS"/>
+			<xs:enumeration value="SC"/>
+			<xs:enumeration value="SE"/>
+			<xs:enumeration value="SP"/>
+			<xs:enumeration value="TO"/>
+			<xs:enumeration value="EX"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TUfEmi">
+		<xs:annotation>
+			<xs:documentation>Tipo Sigla da UF de emissor // acrescentado em 24/10/08 </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:enumeration value="AC"/>
+			<xs:enumeration value="AL"/>
+			<xs:enumeration value="AM"/>
+			<xs:enumeration value="AP"/>
+			<xs:enumeration value="BA"/>
+			<xs:enumeration value="CE"/>
+			<xs:enumeration value="DF"/>
+			<xs:enumeration value="ES"/>
+			<xs:enumeration value="GO"/>
+			<xs:enumeration value="MA"/>
+			<xs:enumeration value="MG"/>
+			<xs:enumeration value="MS"/>
+			<xs:enumeration value="MT"/>
+			<xs:enumeration value="PA"/>
+			<xs:enumeration value="PB"/>
+			<xs:enumeration value="PE"/>
+			<xs:enumeration value="PI"/>
+			<xs:enumeration value="PR"/>
+			<xs:enumeration value="RJ"/>
+			<xs:enumeration value="RN"/>
+			<xs:enumeration value="RO"/>
+			<xs:enumeration value="RR"/>
+			<xs:enumeration value="RS"/>
+			<xs:enumeration value="SC"/>
+			<xs:enumeration value="SE"/>
+			<xs:enumeration value="SP"/>
+			<xs:enumeration value="TO"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TAmb">
+		<xs:annotation>
+			<xs:documentation>Tipo Ambiente</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TVerAplic">
+		<xs:annotation>
+			<xs:documentation>Tipo Versão do Aplicativo</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="nfe:TString">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TMotivo">
+		<xs:annotation>
+			<xs:documentation>Tipo Motivo</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="nfe:TString">
+			<xs:maxLength value="255"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TJust">
+		<xs:annotation>
+			<xs:documentation>Tipo Justificativa</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="nfe:TString">
+			<xs:minLength value="15"/>
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TServ">
+		<xs:annotation>
+			<xs:documentation>Tipo Serviço solicitado</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="nfe:TString"/>
+	</xs:simpleType>
+	<xs:simpleType name="Tano">
+		<xs:annotation>
+			<xs:documentation> Tipo ano</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="[0-9]{2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TMed">
+		<xs:annotation>
+			<xs:documentation> Tipo temp médio em segundos</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="[0-9]{1,4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TString">
+		<xs:annotation>
+			<xs:documentation> Tipo string genérico</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="[!-ÿ]{1}[ -ÿ]*[!-ÿ]{1}|[!-ÿ]{1}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TData">
+		<xs:annotation>
+			<xs:documentation> Tipo data AAAA-MM-DD</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="(((20(([02468][048])|([13579][26]))-02-29))|(20[0-9][0-9])-((((0[1-9])|(1[0-2]))-((0[1-9])|(1\d)|(2[0-8])))|((((0[13578])|(1[02]))-31)|(((0[1,3-9])|(1[0-2]))-(29|30)))))"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TTime">
+		<xs:annotation>
+			<xs:documentation> Tipo hora HH:MM:SS // tipo acrescentado na v2.0</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="(([0-1][0-9])|([2][0-3])):([0-5][0-9]):([0-5][0-9])"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TDateTimeUTC">
+		<xs:annotation>
+			<xs:documentation>Data e Hora, formato UTC (AAAA-MM-DDThh:mm:ssTZD, onde TZD = +hh:mm ou -hh:mm)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="(((20(([02468][048])|([13579][26]))-02-29))|(20[0-9][0-9])-((((0[1-9])|(1[0-2]))-((0[1-9])|(1\d)|(2[0-8])))|((((0[13578])|(1[02]))-31)|(((0[1,3-9])|(1[0-2]))-(29|30)))))T(20|21|22|23|[0-1]\d):[0-5]\d:[0-5]\d([\-,\+](0[0-9]|10|11):00|([\+](12):00))"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TDec_1104Neg">
+    <xs:annotation>
+      <xs:documentation>Tipo Decimal com até 15 dígitos, sendo 11 de corpo e até 4 decimais, aceitando valores negativos</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="preserve"/>
+      <xs:pattern value="0|0\.[0-9]{1,4}|[1-9]{1}[0-9]{0,10}|[1-9]{1}[0-9]{0,10}(\.[0-9]{1,4})?|-0\.[0-9]{1,4}|-[1-9]{1}[0-9]{0,10}|-[1-9]{1}[0-9]{0,10}(\.[0-9]{1,4})?"/>
+    </xs:restriction>
+  </xs:simpleType>
+	<xs:simpleType name="TPlaca">
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="[A-Z]{2,3}[0-9]{4}|[A-Z]{3,4}[0-9]{3}|[A-Z0-9]{7}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TCOrgaoIBGE">
+		<xs:annotation>
+			<xs:documentation>Tipo Código de orgão (UF da tabela do IBGE + 90 RFB)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:enumeration value="11"/>
+			<xs:enumeration value="12"/>
+			<xs:enumeration value="13"/>
+			<xs:enumeration value="14"/>
+			<xs:enumeration value="15"/>
+			<xs:enumeration value="16"/>
+			<xs:enumeration value="17"/>
+			<xs:enumeration value="21"/>
+			<xs:enumeration value="22"/>
+			<xs:enumeration value="23"/>
+			<xs:enumeration value="24"/>
+			<xs:enumeration value="25"/>
+			<xs:enumeration value="26"/>
+			<xs:enumeration value="27"/>
+			<xs:enumeration value="28"/>
+			<xs:enumeration value="29"/>
+			<xs:enumeration value="31"/>
+			<xs:enumeration value="32"/>
+			<xs:enumeration value="33"/>
+			<xs:enumeration value="35"/>
+			<xs:enumeration value="41"/>
+			<xs:enumeration value="42"/>
+			<xs:enumeration value="43"/>
+			<xs:enumeration value="50"/>
+			<xs:enumeration value="51"/>
+			<xs:enumeration value="52"/>
+			<xs:enumeration value="53"/>
+			<xs:enumeration value="90"/>
+			<xs:enumeration value="91"/>
+			<xs:enumeration value="92"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
