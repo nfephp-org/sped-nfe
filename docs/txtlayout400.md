@@ -11,6 +11,7 @@
 - Nota Técnica 2016.002 - v1.60
 - Nota Técnica 2018.005 - v1.00
 - Nota Técnica 2018.005 - v1.10
+- Nota Técnica 2018.005 - v1.20
 
 ### Campos alterados e inclusos, indicados em negrito (validos a partir de 29/04/2019:
 
