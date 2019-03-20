@@ -2,7 +2,7 @@
 
 Realiza a ssinatura digital do XML com o certificado A1.
 
-**Função:** Para um documento ser aceito pelas SEFAZ é necessária a assinatura para a garnatia de autenticidade.
+**Função:** Para um documento ser aceito pelas SEFAZ é necessária a assinatura para a garantia de autenticidade.
 
 > NOTA: este processo deve ser realizado sempre antes do envio de uma NFe.
 
