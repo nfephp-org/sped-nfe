@@ -4446,7 +4446,7 @@ class Make
                 $this->dom->addChild(
                     $icmsSN,
                     'vICMSSubstituto',
-                    $std->vICMSSubstituto,
+                    !empty($std->vICMSSubstituto) ? number_format($std->vICMSSubstituto, 2, '.', '') : null,
                     false,
                     "[item $std->item] Valor do ICMS próprio do Substituto"
                 );
@@ -7416,6 +7416,7 @@ class Make
     protected function hashCSRT($CSRT)
     {
         $comb = $CSRT . $this->chNFe;
-        return sha1($comb);
+        return base64_encode(sha1($comb, true));
+        ;
     }
 }

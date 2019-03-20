@@ -21,8 +21,9 @@ use stdClass;
 
 class Parser
 {
-    const LOCAL="LOCAL";
-    const SEBRAE="SEBRAE";
+    const LOCAL = "LOCAL";
+    const LOCAL_V12 = "LOCAL_V12";
+    const SEBRAE = "SEBRAE";
 
     /**
      * @var array
@@ -116,6 +117,8 @@ class Parser
         $comp = "";
         if ($baselayout === 'SEBRAE') {
             $comp = "_sebrae";
+        } elseif ($baselayout == 'LOCAL_V12') {
+            $comp = "_v1.2";
         }
         $this->baselayout = $baselayout;
         $path = realpath(__DIR__."/../../storage/txtstructure$ver" . $comp . ".json");

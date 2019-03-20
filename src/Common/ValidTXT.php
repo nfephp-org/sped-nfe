@@ -18,6 +18,7 @@ namespace NFePHP\NFe\Common;
 class ValidTXT
 {
     const LOCAL="LOCAL";
+    const LOCAL_V12 = "LOCAL_V12";
     const SEBRAE="SEBRAE";
 
     /**
@@ -33,6 +34,8 @@ class ValidTXT
         $comp = '';
         if (strtoupper($baselayout) === 'SEBRAE') {
             $comp = '_sebrae';
+        } elseif (strtoupper($baselayout) === 'LOCAL_V12') {
+            $comp = '_v1.2';
         }
         $file = $path . '/txtstructure' . ($version*100) . $comp . '.json';
         if (!is_file($file)) {

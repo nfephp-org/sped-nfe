@@ -20,8 +20,9 @@ use NFePHP\NFe\Factories\Parser;
 
 class Convert
 {
-    const LOCAL="LOCAL";
-    const SEBRAE="SEBRAE";
+    const LOCAL = "LOCAL";
+    const LOCAL_V12 = "LOCAL_V12";
+    const SEBRAE = "SEBRAE";
 
     protected $txt;
     protected $dados;
@@ -64,7 +65,7 @@ class Convert
     public function toXml()
     {
         //$txt = Strings::removeSomeAlienCharsfromTxt($this->txt);
-
+        
         if (!$this->isNFe($this->txt)) {
             throw DocumentsException::wrongDocument(12, '');
         }
