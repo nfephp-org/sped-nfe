@@ -165,7 +165,7 @@ class Tools
     /**
      * @var array
      */
-    protected $availableVersions = ['4.00' => 'PL_009_V4', '4.00' => 'PL_009_V4_00_v1.20'];
+    protected $availableVersions = ['4.00' => 'PL_009_V4'];
     /**
      * @var string
      */

@@ -10,6 +10,7 @@
 <!-- PL_009-v4a.1  correções de esquema decorrentes da - NT2016.002 v1.60 - 06/2018 -->
 <!-- PL_009-v4a.2  adequação do campo placa para novo padrão do Mercosul - 06/2018 -->
 <!-- PL_009-v4a.3  adequação da lista TCListServ - 10/2018 -->
+<!-- PL_009-v4a.4  implementado alterações da NT 2018.005 -->
 
 <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.portalfiscal.inf.br/nfe" xmlns="http://www.portalfiscal.inf.br/nfe" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:editix="http://www.portalfiscal.inf.br/nfe" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v1.01.xsd"/>
@@ -1592,7 +1593,7 @@ N-NormalVIN</xs:documentation>
 																	</xs:annotation>
 																	<xs:simpleType>
 																		<xs:restriction base="TString">
-																																						<xs:pattern value="[0-9]{13}|ISENTO"/>
+																			<xs:pattern value="[0-9]{13}|ISENTO"/>
 																		</xs:restriction>
 																	</xs:simpleType>
 																</xs:element>
@@ -2515,6 +2516,11 @@ A exigência do preenchimento das informações do ICMS diferido fica à critér
 																							<xs:documentation>Aliquota suportada pelo consumidor final.</xs:documentation>
 																						</xs:annotation>
 																					</xs:element>
+																					<xs:element minOccurs="0" name="vICMSSubstituto" type="TDec_1302">
+																						<xs:annotation>
+																							<xs:documentation>Valor do ICMS Próprio do Substituto cobrado em operação anterior</xs:documentation>
+																						</xs:annotation>
+																					</xs:element>
 																					<xs:element name="vICMSSTRet" type="TDec_1302">
 																						<xs:annotation>
 																							<xs:documentation>Valor do ICMS ST retido anteriormente</xs:documentation>
@@ -3067,6 +3073,16 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 																						<xs:documentation>Informar o valor da BC do ICMS ST retido na UF remetente</xs:documentation>
 																					</xs:annotation>
 																				</xs:element>
+																				<xs:element minOccurs="0" name="pST" type="TDec_0302a04Opc">
+																					<xs:annotation>
+																						<xs:documentation>Aliquota suportada pelo consumidor final.</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
+																				<xs:element minOccurs="0" name="vICMSSubstituto" type="TDec_1302">
+																					<xs:annotation>
+																						<xs:documentation>Valor do ICMS Próprio do Substituto cobrado em operação anterior</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
 																				<xs:element name="vICMSSTRet" type="TDec_1302">
 																					<xs:annotation>
 																						<xs:documentation> Informar o valor do ICMS ST retido na UF remetente (iv2.0))</xs:documentation>
@@ -3099,6 +3115,28 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 																						<xs:documentation>Informar o valor da BC do ICMS ST da UF destino (v2.0)</xs:documentation>
 																					</xs:annotation>
 																				</xs:element>
+																				<xs:sequence minOccurs="0">
+																					<xs:element name="pRedBCEfet" type="TDec_0302a04Opc">
+																						<xs:annotation>
+																							<xs:documentation>Percentual de redução da base de cálculo efetiva.</xs:documentation>
+																						</xs:annotation>
+																					</xs:element>
+																					<xs:element name="vBCEfet" type="TDec_1302">
+																						<xs:annotation>
+																							<xs:documentation>Valor da base de cálculo efetiva.</xs:documentation>
+																						</xs:annotation>
+																					</xs:element>
+																					<xs:element name="pICMSEfet" type="TDec_0302a04Opc">
+																						<xs:annotation>
+																							<xs:documentation>Alíquota do ICMS efetivo.</xs:documentation>
+																						</xs:annotation>
+																					</xs:element>
+																					<xs:element name="vICMSEfet" type="TDec_1302">
+																						<xs:annotation>
+																							<xs:documentation>Valor do ICMS efetivo.</xs:documentation>
+																						</xs:annotation>
+																					</xs:element>
+																				</xs:sequence>
 																			</xs:sequence>
 																		</xs:complexType>
 																	</xs:element>
@@ -3404,6 +3442,11 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 																					<xs:element name="pST" type="TDec_0302a04Opc">
 																						<xs:annotation>
 																							<xs:documentation>Aliquota suportada pelo consumidor final.</xs:documentation>
+																						</xs:annotation>
+																					</xs:element>
+																					<xs:element minOccurs="0" name="vICMSSubstituto" type="TDec_1302">
+																						<xs:annotation>
+																							<xs:documentation>Valor do ICMS próprio do substituto</xs:documentation>
 																						</xs:annotation>
 																					</xs:element>
 																					<xs:element name="vICMSSTRet" type="TDec_1302">
@@ -6019,7 +6062,7 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 			</xs:choice>
-			<xs:element  minOccurs="0" name="xNome">
+			<xs:element minOccurs="0" name="xNome">
 				<xs:annotation>
 					<xs:documentation>Razão Social ou Nome do Expedidor/Recebedor</xs:documentation>
 				</xs:annotation>
@@ -6220,7 +6263,7 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 					</xs:annotation>
 					<xs:simpleType>
 						<xs:restriction base="xs:base64Binary">
-							<xs:length value="30"/>
+							<xs:length value="20"/>
 						</xs:restriction>
 					</xs:simpleType>
 				</xs:element>
