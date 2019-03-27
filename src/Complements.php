@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace NFePHP\NFe;
 
@@ -122,7 +122,7 @@ class Complements
                 ->item(0)
                 ->nodeValue;
             if (in_array($cStat, ['135', '136', '155'])
-                && $tpEvento == Tools::EVT_CANCELA
+                && ($tpEvento == Tools::EVT_CANCELA  || $tpEvento == Tools::EVT_CANCELASUBSTITUICAO)
                 && $chaveEvento == $chaveNFe
             ) {
                 $proNFe->getElementsByTagName('cStat')
