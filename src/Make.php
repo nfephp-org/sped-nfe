@@ -320,7 +320,7 @@ class Make
         $this->stdTot->vNF = 0;
         $this->stdTot->vTotTrib = 0;
     }
-    
+
     /**
      * Set character convertion to ASCII only ou not
      * @param bool $option
@@ -937,10 +937,13 @@ class Make
             false,
             $identificador . "Nome fantasia do emitente"
         );
+        if ($std->IE != 'ISENTO') {
+            $std->IE = Strings::onlyNumbers($std->IE);
+        }
         $this->dom->addChild(
             $this->emit,
             "IE",
-            Strings::onlyNumbers($std->IE),
+            $std->IE,
             true,
             $identificador . "Inscrição Estadual do emitente"
         );
@@ -6770,7 +6773,7 @@ class Make
         $this->infNFeSupl = $infNFeSupl;
         return $infNFeSupl;
     }
-    
+
     /**
      * Informações do Responsável técnico ZD01 pai A01
      * tag NFe/infNFe/infRespTec (opcional)
@@ -6788,7 +6791,7 @@ class Make
             'CSRT',
             'idCSRT'
         ];
-        
+
         $std = $this->equilizeParameters($std, $possible);
         $infRespTec = $this->dom->createElement("infRespTec");
         $this->dom->addChild(
@@ -6843,7 +6846,7 @@ class Make
         $this->infRespTec = $infRespTec;
         return $infRespTec;
     }
-   
+
     /**
      * Tag raiz da NFe
      * tag NFe DOMNode
@@ -7352,7 +7355,7 @@ class Make
         }
         return $std;
     }
-    
+
     /**
      * Calcula hash sha1 retornando Base64Binary
      * @param string $CSRT
