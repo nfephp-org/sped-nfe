@@ -13,7 +13,7 @@
 - Nota Técnica 2018.005 - v1.10
 - Nota Técnica 2018.005 - v1.20
 
-### Campos alterados e inclusos, indicados em negrito (validos a partir de 07/05/2019:
+### Campos alterados e inclusos, indicados em negrito (validos a partir de 03/06/2019:
 
 > F|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|**CEP|cPais|xPais|fone|email|IE|**
 
@@ -33,7 +33,7 @@
 
 > **ZD|CNPJ|xContato|email|fone|CSRT|idCSRT|**
 
-### *Estas alterações somente serão validas em produção a partir de 07/05/2019*
+### *Estas alterações somente serão validas em produção a partir de 03/06/2019*
 
 ```
 NOTAFISCAL|numero de notas|
