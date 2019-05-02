@@ -9,7 +9,7 @@ Consulta situação atual da NF-e
 
 ## Descrição
 
-A consulta pela chave é um recursso que deve ser usado normalemnte nas seguintes situações:
+A consulta pela chave é um recurso que deve ser usado normalmente nas seguintes situações:
 
 1. Para verificar a situação e dados do protocolo de notas recebidas de terceiros.
 

@@ -9,7 +9,7 @@ namespace NFePHP\NFe;
  *
  * @category  API
  * @package   NFePHP\NFe\
- * @copyright Copyright (c) 2008-2018
+ * @copyright Copyright (c) 2008-2019
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
  * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
@@ -32,306 +32,258 @@ class Make
      * @var array
      */
     public $erros = [];
-
     /**
      * @var string
      */
     public $chNFe;
-
     /**
      * @var string
      */
     public $xml;
-
     /**
      * @var string
      */
     protected $version;
-
     /**
      * @var integer
      */
     protected $mod = 55;
-
     /**
      * @var \NFePHP\Common\DOMImproved
      */
     public $dom;
-
     /**
      * @var integer
      */
     protected $tpAmb = 2;
-
     /**
      * @var DOMElement
      */
     protected $NFe;
-
     /**
      * @var DOMElement
      */
     protected $infNFe;
-
     /**
      * @var DOMElement
      */
     protected $ide;
-
     /**
      * @var DOMElement
      */
     protected $emit;
-
     /**
      * @var DOMElement
      */
     protected $enderEmit;
-
     /**
      * @var DOMElement
      */
     protected $dest;
-
     /**
      * @var DOMElement
      */
     protected $enderDest;
-
     /**
      * @var DOMElement
      */
     protected $retirada;
-
     /**
      * @var DOMElement
      */
     protected $entrega;
-
     /**
      * @var DOMElement
      */
     protected $total;
-
     /**
      * @var DOMElement
      */
     protected $cobr;
-
     /**
      * @var DOMElement
      */
     protected $transp;
-
     /**
      * @var DOMElement
      */
     protected $infAdic;
-
     /**
      * @var DOMElement
      */
     protected $exporta;
-
     /**
      * @var DOMElement
      */
     protected $compra;
-
     /**
      * @var DOMElement
      */
     protected $cana;
-
     /**
      * @var DOMElement
      */
     protected $infNFeSupl;
-
     /**
      * @var array of DOMElements
      */
     protected $aNFref = [];
-
     /**
      * @var array of DOMElements
      */
     protected $aDup = [];
-
     /**
      * @var DOMElement
      */
-    protected $pag = [];
-
+    protected $pag;
     /**
      * @var array of DOMElements
      */
     protected $aDetPag = [];
-
     /**
      * @var array of DOMElements
      */
     protected $aReboque = [];
-
     /**
      * @var array of DOMElements
      */
     protected $aVol = [];
-
     /**
      * @var array of DOMElements
      */
     protected $aAutXML = [];
-
     /**
      * @var array of DOMElements
      */
     protected $aDet = [];
-
     /**
      * @var array of DOMElements
      */
     protected $aProd = [];
-
     /**
      * @var array of DOMElements
      */
     protected $aRastro = [];
-
     /**
      * @var array of DOMElements
      */
     protected $aNVE = [];
-
     /**
      * @var array of DOMElements
      */
     protected $aCest = [];
-
     /**
      * @var array of DOMElements
      */
     protected $aRECOPI = [];
-
     /**
      * @var array of DOMElements
      */
     protected $aDetExport = [];
-
     /**
      * @var array of DOMElements
      */
     protected $aDI = [];
-
     /**
      * @var array of DOMElements
      */
     protected $aAdi = [];
-
     /**
      * @var array of DOMElements
      */
     protected $aVeicProd = [];
-
     /**
      * @var array of DOMElements
      */
     protected $aMed = [];
-
     /**
      * @var array of DOMElements
      */
     protected $aArma = [];
-
     /**
      * @var array of DOMElements
      */
     protected $aComb = [];
-
     /**
      * @var array of DOMElements
      */
     protected $aEncerrante = [];
-
     /**
      * @var array of DOMElements
      */
     protected $aImposto = [];
-
     /**
      * @var array of DOMElements
      */
     protected $aICMS = [];
-
     /**
      * @var array of DOMElements
      */
     protected $aICMSUFDest = [];
-
     /**
      * @var array of DOMElements
      */
     protected $aIPI = [];
-
     /**
      * @var array of DOMElements
      */
     protected $aII = [];
-
     /**
      * @var array of DOMElements
      */
     protected $aISSQN = [];
-
     /**
      * @var array
      */
     protected $aPIS = [];
-
     /**
      * @var array of DOMElements
      */
     protected $aPISST = [];
-
     /**
      * @var array of DOMElements
      */
     protected $aCOFINS = [];
-
     /**
      * @var array of DOMElements
      */
     protected $aCOFINSST = [];
-
     /**
      * @var array of DOMElements
      */
     protected $aImpostoDevol = [];
-
     /**
      * @var array of DOMElements
      */
     protected $aInfAdProd = [];
-
     /**
      * @var array of DOMElements
      */
     protected $aObsCont = [];
-
     /**
      * @var array of DOMElements
      */
     protected $aObsFisco = [];
-
     /**
      * @var array of DOMElements
      */
     protected $aProcRef = [];
-
     /**
      * @var stdClass
      */
     protected $stdTot;
+    /**
+     * @var DOMElement
+     */
+    protected $infRespTec;
+    /**
+     * @var string
+     */
+    protected $csrt;
+    /**
+     * @var boolean
+     */
+    protected $replaceAccentedChars = false;
 
     /**
      * Função construtora cria um objeto DOMDocument
@@ -367,6 +319,15 @@ class Make
         $this->stdTot->vOutro = 0;
         $this->stdTot->vNF = 0;
         $this->stdTot->vTotTrib = 0;
+    }
+
+    /**
+     * Set character convertion to ASCII only ou not
+     * @param bool $option
+     */
+    public function setOnlyAscii($option = false)
+    {
+        $this->replaceAccentedChars = $option;
     }
 
     /**
@@ -410,8 +371,8 @@ class Make
 
     /**
      * NFe xml mount method
-       * this function returns TRUE on success or FALSE on error
-       * The xml of the NFe must be retrieved by the getXML() function or
+     * this function returns TRUE on success or FALSE on error
+     * The xml of the NFe must be retrieved by the getXML() function or
      * directly by the public property $xml
      * @return boolean
      */
@@ -465,6 +426,8 @@ class Make
         $this->dom->appChild($this->infNFe, $this->compra, 'Falta tag "infNFe"');
         //[50] tag cana (409 ZC01)
         $this->dom->appChild($this->infNFe, $this->cana, 'Falta tag "infNFe"');
+        //Responsável Técnico
+        $this->dom->appChild($this->infNFe, $this->infRespTec, 'Falta tag "infNFe"');
         //[1] tag infNFe (1 A01)
         $this->dom->appChild($this->NFe, $this->infNFe, 'Falta tag "NFe"');
         //[0] tag NFe
@@ -563,7 +526,7 @@ class Make
         $this->dom->addChild(
             $ide,
             "natOp",
-            Strings::replaceUnacceptableCharacters(substr(trim($std->natOp), 0, 60)),
+            substr(trim($std->natOp), 0, 60),
             true,
             $identificador . "Descrição da Natureza da Operação"
         );
@@ -699,7 +662,7 @@ class Make
             $this->dom->addChild(
                 $ide,
                 "xJust",
-                Strings::replaceUnacceptableCharacters(substr(trim($std->xJust), 0, 256)),
+                substr(trim($std->xJust), 0, 256),
                 true,
                 $identificador . "Justificativa da entrada em contingência"
             );
@@ -963,21 +926,24 @@ class Make
         $this->dom->addChild(
             $this->emit,
             "xNome",
-            Strings::replaceUnacceptableCharacters(substr(trim($std->xNome), 0, 60)),
+            substr(trim($std->xNome), 0, 60),
             true,
             $identificador . "Razão Social ou Nome do emitente"
         );
         $this->dom->addChild(
             $this->emit,
             "xFant",
-            Strings::replaceUnacceptableCharacters(substr(trim($std->xFant), 0, 60)),
+            substr(trim($std->xFant), 0, 60),
             false,
             $identificador . "Nome fantasia do emitente"
         );
+        if ($std->IE != 'ISENTO') {
+            $std->IE = Strings::onlyNumbers($std->IE);
+        }
         $this->dom->addChild(
             $this->emit,
             "IE",
-            Strings::onlyNumbers($std->IE),
+            $std->IE,
             true,
             $identificador . "Inscrição Estadual do emitente"
         );
@@ -1040,28 +1006,28 @@ class Make
         $this->dom->addChild(
             $this->enderEmit,
             "xLgr",
-            Strings::replaceUnacceptableCharacters(substr(trim($std->xLgr), 0, 60)),
+            substr(trim($std->xLgr), 0, 60),
             true,
             $identificador . "Logradouro do Endereço do emitente"
         );
         $this->dom->addChild(
             $this->enderEmit,
             "nro",
-            Strings::replaceUnacceptableCharacters(substr(trim($std->nro), 0, 60)),
+            substr(trim($std->nro), 0, 60),
             true,
             $identificador . "Número do Endereço do emitente"
         );
         $this->dom->addChild(
             $this->enderEmit,
             "xCpl",
-            Strings::replaceUnacceptableCharacters(substr(trim($std->xCpl), 0, 60)),
+            substr(trim($std->xCpl), 0, 60),
             false,
             $identificador . "Complemento do Endereço do emitente"
         );
         $this->dom->addChild(
             $this->enderEmit,
             "xBairro",
-            Strings::replaceUnacceptableCharacters(substr(trim($std->xBairro), 0, 60)),
+            substr(trim($std->xBairro), 0, 60),
             true,
             $identificador . "Bairro do Endereço do emitente"
         );
@@ -1075,7 +1041,7 @@ class Make
         $this->dom->addChild(
             $this->enderEmit,
             "xMun",
-            Strings::replaceUnacceptableCharacters(substr(trim($std->xMun), 0, 60)),
+            substr(trim($std->xMun), 0, 60),
             true,
             $identificador . "Nome do município do Endereço do emitente"
         );
@@ -1103,7 +1069,7 @@ class Make
         $this->dom->addChild(
             $this->enderEmit,
             "xPais",
-            Strings::replaceUnacceptableCharacters(substr(trim($std->xPais), 0, 60)),
+            substr(trim($std->xPais), 0, 60),
             false,
             $identificador . "Nome do País do Endereço do emitente"
         );
@@ -1187,7 +1153,7 @@ class Make
         $this->dom->addChild(
             $this->dest,
             "xNome",
-            Strings::replaceUnacceptableCharacters(substr(trim($xNome), 0, 60)),
+            substr(trim($xNome), 0, 60),
             $flagNome, //se mod 55 true ou mod 65 false
             $identificador . "Razão Social ou nome do destinatário"
         );
@@ -1224,7 +1190,7 @@ class Make
         $this->dom->addChild(
             $this->dest,
             "email",
-            Strings::replaceUnacceptableCharacters(substr(trim($std->email), 0, 60)),
+            substr(trim($std->email), 0, 60),
             false,
             $identificador . "Email do destinatário"
         );
@@ -1348,6 +1314,7 @@ class Make
     /**
      * Identificação do Local de retirada F01 pai A01
      * tag NFe/infNFe/retirada (opcional)
+     * NOTA: ajustado para NT 2018.005
      * @param stdClass $std
      * @return DOMElement
      */
@@ -1362,7 +1329,14 @@ class Make
             'xMun',
             'UF',
             'CNPJ',
-            'CPF'
+            'CPF',
+            'xNome',
+            'CEP',
+            'cPais',
+            'xPais',
+            'fone',
+            'email',
+            'IE'
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = 'F01 <retirada> - ';
@@ -1380,6 +1354,13 @@ class Make
             $std->CPF,
             false,
             $identificador . "CPF do Cliente da Retirada"
+        );
+        $this->dom->addChild(
+            $this->retirada,
+            "xNome",
+            $std->xNome,
+            false,
+            $identificador . "Nome do Cliente da Retirada"
         );
         $this->dom->addChild(
             $this->retirada,
@@ -1430,12 +1411,55 @@ class Make
             true,
             $identificador . "Sigla da UF do Endereco do Cliente da Retirada"
         );
+        $this->dom->addChild(
+            $this->retirada,
+            "CEP",
+            $std->CEP,
+            false,
+            $identificador . "CEP do Endereco do Cliente da Retirada"
+        );
+        $this->dom->addChild(
+            $this->retirada,
+            "cPais",
+            $std->cPais,
+            false,
+            $identificador . "Codigo do Pais do Endereco do Cliente da Retirada"
+        );
+        $this->dom->addChild(
+            $this->retirada,
+            "xPais",
+            $std->xPais,
+            false,
+            $identificador . "Pais do Endereco do Cliente da Retirada"
+        );
+        $this->dom->addChild(
+            $this->retirada,
+            "fone",
+            $std->fone,
+            false,
+            $identificador . "Fone do Endereco do Cliente da Retirada"
+        );
+        $this->dom->addChild(
+            $this->retirada,
+            "email",
+            $std->email,
+            false,
+            $identificador . "Email do Endereco do Cliente da Retirada"
+        );
+        $this->dom->addChild(
+            $this->retirada,
+            "IE",
+            $std->IE,
+            false,
+            $identificador . "IE do Cliente da Retirada"
+        );
         return $this->retirada;
     }
 
     /**
      * Identificação do Local de entrega G01 pai A01
      * tag NFe/infNFe/entrega (opcional)
+     * NOTA: ajustado para NT 2018.005
      * @param stdClass $std
      * @return DOMElement
      */
@@ -1450,7 +1474,14 @@ class Make
             'xMun',
             'UF',
             'CNPJ',
-            'CPF'
+            'CPF',
+            'xNome',
+            'CEP',
+            'cPais',
+            'xPais',
+            'fone',
+            'email',
+            'IE'
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = 'G01 <entrega> - ';
@@ -1468,6 +1499,13 @@ class Make
             $std->CPF,
             false,
             $identificador . "CPF do Cliente da Entrega"
+        );
+        $this->dom->addChild(
+            $this->entrega,
+            "xNome",
+            $std->xNome,
+            false,
+            $identificador . "Nome do Cliente da Entrega"
         );
         $this->dom->addChild(
             $this->entrega,
@@ -1518,6 +1556,48 @@ class Make
             true,
             $identificador . "Sigla da UF do Endereco do Cliente da Entrega"
         );
+        $this->dom->addChild(
+            $this->entrega,
+            "CEP",
+            $std->CEP,
+            false,
+            $identificador . "CEP do Endereco do Cliente da Entrega"
+        );
+        $this->dom->addChild(
+            $this->entrega,
+            "cPais",
+            $std->cPais,
+            false,
+            $identificador . "Codigo do Pais do Endereco do Cliente da Entrega"
+        );
+        $this->dom->addChild(
+            $this->entrega,
+            "xPais",
+            $std->xPais,
+            false,
+            $identificador . "Pais do Endereco do Cliente da Entrega"
+        );
+        $this->dom->addChild(
+            $this->entrega,
+            "fone",
+            $std->fone,
+            false,
+            $identificador . "Fone do Endereco do Cliente da Entrega"
+        );
+        $this->dom->addChild(
+            $this->entrega,
+            "email",
+            $std->email,
+            false,
+            $identificador . "Email do Endereco do Cliente da Entrega"
+        );
+        $this->dom->addChild(
+            $this->entrega,
+            "IE",
+            $std->IE,
+            false,
+            $identificador . "IE do Cliente da Entrega"
+        );
         return $this->entrega;
     }
 
@@ -1565,7 +1645,7 @@ class Make
         $std = $this->equilizeParameters($std, $possible);
         $infAdProd = $this->dom->createElement(
             "infAdProd",
-            Strings::replaceUnacceptableCharacters(substr(trim($std->infAdProd), 0, 500))
+            substr(trim($std->infAdProd), 0, 500)
         );
         $this->aInfAdProd[$std->item] = $infAdProd;
         return $infAdProd;
@@ -2394,7 +2474,7 @@ class Make
 
     /**
      * Detalhamento de medicamentos K01 pai I90
-     * NOTA: Ajustado para NT2016_002_v1.00
+     * NOTA: Ajustado para NT2018.005
      * tag NFe/infNFe/det[]/prod/med (opcional)
      * @param stdClass $std
      * @return DOMElement
@@ -2405,6 +2485,7 @@ class Make
             'item',
             'vPMC',
             'cProdANVISA',
+            'xMotivoIsencao'
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = 'K01 <med> - ';
@@ -2415,6 +2496,13 @@ class Make
             $std->cProdANVISA,
             false,
             "$identificador [item $std->item] Numero ANVISA"
+        );
+        $this->dom->addChild(
+            $med,
+            "xMotivoIsencao",
+            $std->xMotivoIsencao,
+            false,
+            "$identificador [item $std->item] Motivo da isenção da ANVISA"
         );
         $this->dom->addChild(
             $med,
@@ -2742,7 +2830,8 @@ class Make
             'pRedBCEfet',
             'vBCEfet',
             'pICMSEfet',
-            'vICMSEfet'
+            'vICMSEfet',
+            'vICMSSubstituto'
         ];
         $std = $this->equilizeParameters($std, $possible);
         //totalização generica
@@ -3304,6 +3393,13 @@ class Make
                 );
                 $this->dom->addChild(
                     $icms,
+                    'vICMSSubstituto',
+                    $std->vICMSSubstituto,
+                    false,
+                    "$identificador [item $std->item] Valor do ICMS próprio do Substituto"
+                );
+                $this->dom->addChild(
+                    $icms,
                     'vICMSSTRet',
                     $std->vICMSSTRet,
                     false,
@@ -3838,6 +3934,7 @@ class Make
     /**
      * Grupo de Repasse de ICMSST retido anteriormente em operações
      * interestaduais com repasses através do Substituto Tributário
+     * NOTA: ajustado NT 2018.005
      * tag NFe/infNFe/det[]/imposto/ICMS/ICMSST N10b pai N01
      * @param stdClass $std
      * @return DOMElement
@@ -3851,7 +3948,16 @@ class Make
             'vBCSTRet',
             'vICMSSTRet',
             'vBCSTDest',
-            'vICMSSTDest'
+            'vICMSSTDest',
+            'vBCFCPSTRet',
+            'pFCPSTRet',
+            'vFCPSTRet',
+            'pST',
+            'vICMSSubstituto',
+            'pRedBCEfet',
+            'vBCEfet',
+            'pICMSEfet',
+            'vICMSEfet'
         ];
         $std = $this->equilizeParameters($std, $possible);
         $icmsST = $this->dom->createElement("ICMSST");
@@ -3878,10 +3984,45 @@ class Make
         );
         $this->dom->addChild(
             $icmsST,
+            'pST',
+            $std->pST,
+            false,
+            "[item $std->item] Alíquota suportada pelo Consumidor Final"
+        );
+        $this->dom->addChild(
+            $icmsST,
+            'vICMSSubstituto',
+            $std->vICMSSubstituto,
+            false,
+            "[item $std->item] Valor do ICMS próprio do Substituto"
+        );
+        $this->dom->addChild(
+            $icmsST,
             'vICMSSTRet',
             $std->vICMSSTRet,
             true,
             "[item $std->item] Valor do ICMS ST retido na UF remetente"
+        );
+        $this->dom->addChild(
+            $icmsST,
+            'vBCFCPSTRet',
+            $std->vBCFCPSTRet,
+            false,
+            "[item $std->item] Valor da Base de Cálculo do FCP"
+        );
+        $this->dom->addChild(
+            $icmsST,
+            'pFCPSTRet',
+            $std->pFCPSTRet,
+            false,
+            "[item $std->item] Percentual do FCP retido"
+        );
+        $this->dom->addChild(
+            $icmsST,
+            'vFCPSTRet',
+            $std->vFCPSTRet,
+            false,
+            "[item $std->item] Valor do FCP retido"
         );
         $this->dom->addChild(
             $icmsST,
@@ -3896,6 +4037,34 @@ class Make
             $std->vICMSSTDest,
             true,
             "[item $std->item] Valor do ICMS ST da UF destino"
+        );
+        $this->dom->addChild(
+            $icmsST,
+            'pRedBCEfet',
+            $std->pRedBCEfet,
+            false,
+            "[item $std->item] Percentual de redução da base de cálculo efetiva"
+        );
+        $this->dom->addChild(
+            $icmsST,
+            'vBCEfet',
+            $std->vBCEfet,
+            false,
+            "[item $std->item] Valor da base de cálculo efetiva"
+        );
+        $this->dom->addChild(
+            $icmsST,
+            'pICMSEfet',
+            $std->pICMSEfet,
+            false,
+            "[item $std->item] Alíquota do ICMS efetiva"
+        );
+        $this->dom->addChild(
+            $icmsST,
+            'vICMSEfet',
+            $std->vICMSEfet,
+            false,
+            "[item $std->item] Valor do ICMS efetivo"
         );
         //caso exista a tag aICMS[$std->item] inserir nela caso contrario criar
         if (!empty($this->aICMS[$std->item])) {
@@ -3945,7 +4114,8 @@ class Make
             'pRedBCEfet',
             'vBCEfet',
             'pICMSEfet',
-            'vICMSEfet'
+            'vICMSEfet',
+            'vICMSSubstituto'
         ];
         $std = $this->equilizeParameters($std, $possible);
         //totalizador generico
@@ -4219,6 +4389,13 @@ class Make
                     $std->pST,
                     isset($std->pST) ? true : false,
                     "[item $std->item] Alíquota suportada pelo Consumidor Final"
+                );
+                $this->dom->addChild(
+                    $icmsSN,
+                    'vICMSSubstituto',
+                    !empty($std->vICMSSubstituto) ? number_format($std->vICMSSubstituto, 2, '.', '') : null,
+                    false,
+                    "[item $std->item] Valor do ICMS próprio do Substituto"
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -6073,7 +6250,7 @@ class Make
     {
         $pag = $this->dom->createElement("pag");
         //incluso no layout 4.00
-        $vTroco = !empty($std->vTroco) ? $std->vTroco : null;
+        $vTroco = !empty($std->vTroco) ? number_format($std->vTroco, 2, '.', '') : null;
         $this->dom->addChild(
             $pag,
             "vTroco",
@@ -6598,6 +6775,79 @@ class Make
     }
 
     /**
+     * Informações do Responsável técnico ZD01 pai A01
+     * tag NFe/infNFe/infRespTec (opcional)
+     * @param stdClass $std
+     * @return DOMElement
+     * @throws RuntimeException
+     */
+    public function taginfRespTec(stdClass $std)
+    {
+        $possible = [
+            'CNPJ',
+            'xContato',
+            'email',
+            'fone',
+            'CSRT',
+            'idCSRT'
+        ];
+
+        $std = $this->equilizeParameters($std, $possible);
+        $infRespTec = $this->dom->createElement("infRespTec");
+        $this->dom->addChild(
+            $infRespTec,
+            "CNPJ",
+            $std->CNPJ,
+            true,
+            "Informar o CNPJ da pessoa jurídica responsável pelo sistema "
+            . "utilizado na emissão do documento fiscal eletrônico"
+        );
+        $this->dom->addChild(
+            $infRespTec,
+            "xContato",
+            $std->xContato,
+            true,
+            "Informar o nome da pessoa a ser contatada na empresa desenvolvedora "
+            . "do sistema utilizado na emissão do documento fiscal eletrônico"
+        );
+        $this->dom->addChild(
+            $infRespTec,
+            "email",
+            $std->email,
+            true,
+            "Informar o e-mail da pessoa a ser contatada na empresa "
+            . "desenvolvedora do sistema."
+        );
+        $this->dom->addChild(
+            $infRespTec,
+            "fone",
+            $std->fone,
+            true,
+            "Informar o telefone da pessoa a ser contatada na empresa "
+            . "desenvolvedora do sistema."
+        );
+        if (!empty($std->CSRT) && !empty($std->idCSRT)) {
+            $this->csrt = $std->CSRT;
+            $this->dom->addChild(
+                $infRespTec,
+                "idCSRT",
+                $std->idCSRT,
+                true,
+                "Identificador do CSRT utilizado para montar o hash do CSRT"
+            );
+            $this->dom->addChild(
+                $infRespTec,
+                "hashCSRT",
+                $this->hashCSRT($std->CSRT),
+                true,
+                "hash do CSRT"
+            );
+        }
+        $this->infRespTec = $infRespTec;
+        return $infRespTec;
+    }
+
+    /**
      * Tag raiz da NFe
      * tag NFe DOMNode
      * Função chamada pelo método [ monta ]
@@ -7039,7 +7289,11 @@ class Make
         $emit = $dom->getElementsByTagName("emit")->item(0);
         $cUF = $ide->getElementsByTagName('cUF')->item(0)->nodeValue;
         $dhEmi = $ide->getElementsByTagName('dhEmi')->item(0)->nodeValue;
-        $cnpj = $emit->getElementsByTagName('CNPJ')->item(0)->nodeValue;
+        if (!empty($emit->getElementsByTagName('CNPJ')->item(0)->nodeValue)) {
+            $doc = $emit->getElementsByTagName('CNPJ')->item(0)->nodeValue;
+        } else {
+            $doc = $emit->getElementsByTagName('CPF')->item(0)->nodeValue;
+        }
         $mod = $ide->getElementsByTagName('mod')->item(0)->nodeValue;
         $serie = $ide->getElementsByTagName('serie')->item(0)->nodeValue;
         $nNF = $ide->getElementsByTagName('nNF')->item(0)->nodeValue;
@@ -7047,11 +7301,12 @@ class Make
         $cNF = $ide->getElementsByTagName('cNF')->item(0)->nodeValue;
         $chave = str_replace('NFe', '', $infNFe->getAttribute("Id"));
         $dt = new DateTime($dhEmi);
+        $infRespTec = $dom->getElementsByTagName("infRespTec")->item(0);
         $chaveMontada = Keys::build(
             $cUF,
             $dt->format('y'),
             $dt->format('m'),
-            $cnpj,
+            $doc,
             $mod,
             $serie,
             $nNF,
@@ -7062,16 +7317,23 @@ class Make
         //substituir a chave
         if ($chaveMontada != $chave) {
             //throw new RuntimeException("A chave informada é diferente da chave
-            //mondata com os dados [correto: $chaveMontada].");
+            //montada com os dados [correto: $chaveMontada].");
             $ide->getElementsByTagName('cDV')->item(0)->nodeValue = substr($chaveMontada, -1);
             $infNFe = $dom->getElementsByTagName("infNFe")->item(0);
             $infNFe->setAttribute("Id", "NFe" . $chaveMontada);
             $this->chNFe = $chaveMontada;
+            //trocar também o hash se o CSRT for passado
+            if (!empty($this->csrt)) {
+                $hashCSRT = $this->hashCSRT($this->csrt);
+                $infRespTec->getElementsByTagName("hashCSRT")
+                    ->item(0)->nodeValue = $hashCSRT;
+            }
         }
     }
 
     /**
      * Includes missing or unsupported properties in stdClass
+     * Replace all unsuported chars
      * @param stdClass $std
      * @param array $possible
      * @return stdClass
@@ -7082,8 +7344,26 @@ class Make
         foreach ($possible as $key) {
             if (!array_key_exists($key, $arr)) {
                 $std->$key = null;
+            } else {
+                if (is_string($std->$key)) {
+                    $std->$key = trim(Strings::replaceUnacceptableCharacters($std->$key));
+                    if ($this->replaceAccentedChars) {
+                        $std->$key = Strings::toASCII($std->$key);
+                    }
+                }
             }
         }
         return $std;
+    }
+
+    /**
+     * Calcula hash sha1 retornando Base64Binary
+     * @param string $CSRT
+     * @return string
+     */
+    protected function hashCSRT($CSRT)
+    {
+        $comb = $CSRT . $this->chNFe;
+        return base64_encode(sha1($comb, true));
     }
 }

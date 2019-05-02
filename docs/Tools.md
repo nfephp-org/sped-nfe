@@ -2,11 +2,11 @@
 
 A classe Tools é a responsável por fazer a comunicação entre o aplicativo e o webservice da SEFAZ.
 
-## Dependencies
+## Dependencias
 
 
 
-## Properties
+## Propriedades publicas
 
 
 
@@ -14,12 +14,13 @@ A classe Tools é a responsável por fazer a comunicação entre o aplicativo e 
 
 ## Methods
 
-### public function __construct($configJson, Certificate $certificate)
+### public function __construct($configJson, Certificate $certificate, Contingency $contingency = null)
 
 **Config**
 
 **Certificate**
 
+**Contingency**
 
 ### public function setEnvironmentTimeZone($acronym)
 Sets the PHP environment time zone
@@ -99,7 +100,9 @@ Sign NFe or NFCe xml string (dont is a file path)
 >Este método assina a NFe ou a NFCe e testa sua validade com o respectivo XSD.
 
 ### Ativando as contingências
-Ao carregar a classe é instaciada a classe Factories\Contingency automaticamente na propriedade publica $contingency e a partir dessa propriedade podem ser ativadas ou desativdos os modos de contingencia. Lembrando que isso deverá ser usado também na criação das NFe.
+Ao carregar a classe é instanciada a classe Factories\Contingency automaticamente na propriedade publica $contingency e a partir dessa propriedade podem ser ativadas ou desativdos os modos de contingencia. Lembrando que isso deverá ser levado em conta também na criação dos XML das NFe.
+
+A classe Contingencia pode ser passada por parâmetro na instanciação da classe Tools ou porteriormente, como indicado abaixo.
 
 **ATIVANDO**
 ```php

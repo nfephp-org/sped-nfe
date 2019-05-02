@@ -110,7 +110,7 @@
             <NfeInutilizacao method="nfeInutilizacaoNF" operation="NFeInutilizacao4" version="4.00">https://hnfe.fazenda.mg.gov.br/nfe2/services/NFeInutilizacao4</NfeInutilizacao>
             <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NFeRetAutorizacao4" version="4.00">https://hnfe.fazenda.mg.gov.br/nfe2/services/NFeRetAutorizacao4</NfeRetAutorizacao>
             <RecepcaoEvento method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="1.00">https://hnfe.fazenda.mg.gov.br/nfe2/services/NFeRecepcaoEvento4</RecepcaoEvento>
-            <NfeConsultaCadastro method="consultaCadastro" operation="CadConsultaCadastro4" version="2.00"></NfeConsultaCadastro>
+            <NfeConsultaCadastro method="consultaCadastro" operation="CadConsultaCadastro2" version="2.00">https://nfe.fazenda.mg.gov.br/nfe2/services/cadconsultacadastro2</NfeConsultaCadastro>
         </homologacao>
         <producao>
             <NfeStatusServico method="nfeStatusServicoNF" operation="NFeStatusServico4" version="4.00">https://nfe.fazenda.mg.gov.br/nfe2/services/NFeStatusServico4</NfeStatusServico>
@@ -119,7 +119,7 @@
             <NfeInutilizacao method="nfeInutilizacaoNF" operation="NFeInutilizacao4" version="4.00">https://nfe.fazenda.mg.gov.br/nfe2/services/NFeInutilizacao4</NfeInutilizacao>
             <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NFeRetAutorizacao4" version="4.00">https://nfe.fazenda.mg.gov.br/nfe2/services/NFeRetAutorizacao4</NfeRetAutorizacao>
             <RecepcaoEvento method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="1.00">https://nfe.fazenda.mg.gov.br/nfe2/services/NFeRecepcaoEvento4</RecepcaoEvento>
-            <NfeConsultaCadastro method="consultaCadastro4" operation="CadConsultaCadastro4" version="2.00"></NfeConsultaCadastro>
+            <NfeConsultaCadastro method="consultaCadastro4" operation="CadConsultaCadastro2" version="2.00">https://nfe.fazenda.mg.gov.br/nfe2/services/cadconsultacadastro2</NfeConsultaCadastro>
         </producao>
     </UF>
     <UF>

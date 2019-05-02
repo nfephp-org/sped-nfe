@@ -7,7 +7,7 @@ namespace NFePHP\NFe\Factories;
  *
  * @category  NFePHP
  * @package   NFePHP\NFe\Common\Contingency
- * @copyright NFePHP Copyright (c) 2008
+ * @copyright NFePHP Copyright (c) 2008-2019
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
  * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
@@ -19,14 +19,15 @@ use NFePHP\Common\Strings;
 
 class Contingency
 {
-    
     const SVCAN = 'SVCAN';
     const SVCRS = 'SVCRS';
     const OFFLINE = 'OFFLINE';
     const EPEC = 'EPEC';
     const FSDA = 'FS-DA';
     
-    
+    const TPEMIS_FSDA = 5;
+    const TPEMIS_OFFLINE = 9;
+
     /**
      * @var \stdClass
      */
@@ -59,7 +60,7 @@ class Contingency
             $this->load($contingency);
         }
     }
-    
+
     /**
      * Load json string with contingency configurations
      * @param string $contingency
@@ -73,7 +74,7 @@ class Contingency
         $this->motive = $this->config->motive;
         $this->tpEmis = $this->config->tpEmis;
     }
-    
+
     /**
      * Create a object with contingency data
      * @param string $acronym Sigla do estado
@@ -114,14 +115,14 @@ class Contingency
             'TO'=>'SVCAN'
         );
         $type = strtoupper(str_replace('-', '', $type));
-        
+
         if (empty($type)) {
             $type = $list[$acronym];
         }
         $this->config = $this->configBuild($dt->getTimestamp(), $motive, $type);
         return $this->__toString();
     }
-    
+
     /**
      * Deactivate contingency mode
      * @return string
@@ -144,7 +145,7 @@ class Contingency
     {
         return json_encode($this->config);
     }
-    
+
     /**
      * Build parameter config as stdClass
      * @param int $timestamp

@@ -7,7 +7,7 @@ namespace NFePHP\NFe\Common;
  *
  * @category  NFePHP
  * @package   NFePHP\NFe\Common\Tools
- * @copyright NFePHP Copyright (c) 2008-2017
+ * @copyright NFePHP Copyright (c) 2008-2019
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
  * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
@@ -165,36 +165,34 @@ class Tools
     /**
      * @var array
      */
-    protected $availableVersions = [
-        '4.00' => 'PL_009_V4'
-    ];
-    
+    protected $availableVersions = ['4.00' => 'PL_009_V4'];
     /**
-     * Constructor
-     * load configurations,
-     * load Digital Certificate,
-     * map all paths,
-     * set timezone and
-     * and instanciate Contingency::class
+     * @var string
+     */
+    protected $typePerson = 'J';
+
+    /**
+     * Loads configurations and Digital Certificate, map all paths, set timezone and instanciate Contingency::class
      * @param string $configJson content of config in json format
      * @param Certificate $certificate
+     * @param Contingency|null $contingency
      */
-    public function __construct($configJson, Certificate $certificate)
+    public function __construct($configJson, Certificate $certificate, Contingency $contingency = null)
     {
-        $this->pathwsfiles = realpath(
-            __DIR__ . '/../../storage'
-        ).'/';
+        $this->pathwsfiles = realpath(__DIR__ . '/../../storage') . '/';
         //valid config json string
         $this->config = Config::validate($configJson);
-        
         $this->version($this->config->versao);
         $this->setEnvironmentTimeZone($this->config->siglaUF);
         $this->certificate = $certificate;
+        $this->typePerson = $this->getTypeOfPersonFromCertificate();
         $this->setEnvironment($this->config->tpAmb);
-        $this->contingency = new Contingency();
+        if (empty($contingency)) {
+            $this->contingency = new Contingency();
+        }
         $this->soap = new SoapCurl($certificate);
     }
-    
+
     /**
      * Sets environment time zone
      * @param string $acronym (ou seja a sigla do estado)
@@ -204,7 +202,31 @@ class Tools
     {
         date_default_timezone_set(TimeZoneByUF::get($acronym));
     }
-    
+
+    /**
+     * Return J or F from existing type in ASN.1 certificate
+     * J - pessoa juridica (CNPJ)
+     * F - pessoa física (CPF)
+     * @return string
+     */
+    public function getTypeOfPersonFromCertificate()
+    {
+        $cnpj = $this->certificate->getCnpj();
+        $type = 'J';
+        if (substr($cnpj, 0, 1) === 'N') {
+            //não é CNPJ, então verificar se é CPF
+            $cpf = $this->certificate->getCpf();
+            if (substr($cpf, 0, 1) !== 'N') {
+                $type = 'F';
+            } else {
+                //não foi localizado nem CNPJ e nem CPF esse certificado não é usável
+                //throw new RuntimeException('Faltam elementos CNPJ/CPF no certificado digital.');
+                $type = '';
+            }
+        }
+        return $type;
+    }
+
     /**
      * Set application version
      * @param string $ver
@@ -226,7 +248,7 @@ class Tools
         $this->soap = $soap;
         $this->soap->loadCertificate($this->certificate);
     }
-    
+
     /**
      * Set OPENSSL Algorithm using OPENSSL constants
      * @param int $algorithm
@@ -249,7 +271,7 @@ class Tools
         }
         return $this->modelo;
     }
-    
+
     /**
      * Set or get parameter layout version
      * @param string $version
@@ -265,16 +287,16 @@ class Tools
         if (false === isset($this->availableVersions[$version])) {
             throw new \InvalidArgumentException('Essa versão de layout não está disponível');
         }
-        
+
         $this->versao = $version;
         $this->config->schemes = $this->availableVersions[$version];
         $this->pathschemes = realpath(
             __DIR__ . '/../../schemes/'. $this->config->schemes
         ).'/';
-        
+
         return $this->versao;
     }
-    
+
     /**
      * Recover cUF number from state acronym
      * @param string $acronym Sigla do estado
@@ -284,7 +306,7 @@ class Tools
     {
         return UFlist::getCodeByUF($acronym);
     }
-    
+
     /**
      * Recover state acronym from cUF number
      * @param int $cUF
@@ -294,7 +316,7 @@ class Tools
     {
         return UFlist::getUFByCode($cUF);
     }
-    
+
     /**
      * Validate cUF from the key content and returns the state acronym
      * @param string $chave
@@ -311,7 +333,7 @@ class Tools
         }
         return $uf;
     }
-    
+
     /**
      * Sign NFe or NFCe
      * @param  string  $xml NFe xml content
@@ -349,28 +371,24 @@ class Tools
         $this->isValid($this->versao, $signed, 'nfe');
         return $signed;
     }
-    
+
     /**
-     * Corret NFe fields when in contingency mode is set
+     * Corrects NFe fields when in contingency mode
      * @param string $xml NFe xml content
      * @return string
      */
     protected function correctNFeForContingencyMode($xml)
     {
-        if ($this->contingency->type == '') {
-            return $xml;
-        }
-        return $this->signNFe($xml);
+        return $this->contingency->type == '' ? $xml : $this->signNFe($xml);
     }
 
     /**
-     * Performs xml validation with its respective
-     * XSD structure definition document
-     * NOTE: if dont exists the XSD file will return true
+     * Performs xml validation with its respective XSD structure definition document
+     * NOTE: if don't exists the XSD file will return true
      * @param string $version layout version
      * @param string $body
      * @param string $method
-     * @return boolean
+     * @return bool
      */
     protected function isValid($version, $body, $method)
     {
@@ -378,12 +396,9 @@ class Tools
         if (!is_file($schema)) {
             return true;
         }
-        return Validator::isValid(
-            $body,
-            $schema
-        );
+        return Validator::isValid($body, $schema);
     }
-    
+
     /**
      * Verifies the existence of the service
      * @param string $service
@@ -395,7 +410,7 @@ class Tools
             55 => ['SVCAN', 'SVCRS', 'EPEC', 'FSDA'],
             65 => ['FSDA', 'EPEC', 'OFFLINE']
         ];
-        
+
         $type = $this->contingency->type;
         $mod = $this->modelo;
         if (!empty($type)) {
@@ -406,7 +421,7 @@ class Tools
                 );
             }
         }
-        
+
         //se a contingencia é OFFLINE ou FSDA nenhum servidor está disponivel
         //se a contigencia EPEC está ativa apenas o envio de Lote está ativo,
         //então gerar um RunTimeException
@@ -421,7 +436,7 @@ class Tools
             );
         }
     }
-    
+
     /**
      * Alter environment from "homologacao" to "producao" and vice-versa
      * @param int $tpAmb
@@ -434,7 +449,7 @@ class Tools
             $this->ambiente = ($tpAmb == 1) ? 'producao' : 'homologacao';
         }
     }
-    
+
     /**
      * Set option for canonical transformation see C14n
      * @param array $opt
@@ -447,7 +462,7 @@ class Tools
         }
         return $this->canonical;
     }
-    
+
     /**
      * Assembles all the necessary parameters for soap communication
      * @param string $service
@@ -484,15 +499,19 @@ class Tools
         $this->urlHeader = Header::get($this->urlNamespace, $this->urlcUF, $this->urlVersion);
         $this->urlAction = "\"$this->urlNamespace/$this->urlMethod\"";
     }
-    
+
     /**
      * Send request message to webservice
-     * @param array $parameters
      * @param string $request
+     * @param array $parameters
      * @return string
+     * @throws RuntimeException
      */
     protected function sendRequest($request, array $parameters = [])
     {
+        if (in_array($this->contingency->tpEmis, [Contingency::TPEMIS_FSDA, Contingency::TPEMIS_OFFLINE])) {
+            throw new \RuntimeException('Em contingencia FSDA ou OFFLINE não é possivel acessar os webservices.');
+        }
         $this->checkSoap();
         return (string) $this->soap->send(
             $this->urlService,
@@ -505,23 +524,25 @@ class Tools
             $this->objHeader
         );
     }
-    
+
     /**
      * Recover path to xml data base with list of soap services
      * @return string
      */
     protected function getXmlUrlPath()
     {
-        $file = $this->pathwsfiles . "wsnfe_" . $this->versao . "_mod55.xml";
+        $file = "wsnfe_" . $this->versao . "_mod55.xml";
         if ($this->modelo == 65) {
             $file = str_replace('55', '65', $file);
         }
-        if (! file_exists($file)) {
+        
+        $path = $this->pathwsfiles . $file;
+        if (! file_exists($path)) {
             return '';
         }
-        return file_get_contents($file);
+        return file_get_contents($path);
     }
-    
+
     /**
      * Add QRCode Tag to signed XML from a NFCe
      * @param DOMDocument $dom
@@ -530,20 +551,14 @@ class Tools
     protected function addQRCode(DOMDocument $dom)
     {
         if (empty($this->config->CSC) || empty($this->config->CSCid)) {
-            throw new \RuntimeException(
-                "O QRCode não pode ser criado pois faltam dados CSC e/ou CSCId"
-            );
+            throw new \RuntimeException("O QRCode não pode ser criado pois faltam dados CSC e/ou CSCId");
         }
         $memmod = $this->modelo;
         $this->modelo = 65;
         $cUF = $dom->getElementsByTagName('cUF')->item(0)->nodeValue;
         $tpAmb = $dom->getElementsByTagName('tpAmb')->item(0)->nodeValue;
         $uf = UFList::getUFByCode($cUF);
-        $this->servico(
-            'NfeConsultaQR',
-            $uf,
-            $tpAmb
-        );
+        $this->servico('NfeConsultaQR', $uf, $tpAmb);
         $signed = QRCode::putQRTag(
             $dom,
             $this->config->CSC,
@@ -557,23 +572,18 @@ class Tools
     }
 
     /**
-     * Get URI for search NFCe by chave
-     * NOTE: exists only in 4.00 layout
-     * @param string $uf
+     * Get URI for search NFCe by key (chave)
+     * @param string $uf Abbreviation of the UF
+     * @param string $tpAmb SEFAZ environment, 1-Production or 2-Homologation
      * @return string
      */
     protected function getURIConsultaNFCe($uf, $tpAmb)
     {
-        $arr = json_decode(
-            file_get_contents(
-                $this->pathwsfiles.'uri_consulta_nfce.json'
-            ),
-            true
-        );
+        $arr = json_decode(file_get_contents($this->pathwsfiles . 'uri_consulta_nfce.json'), true);
         $std = json_decode(json_encode($arr[$tpAmb]));
         return $std->$uf;
     }
-    
+
     /**
      * Verify if SOAP class is loaded, if not, force load SoapCurl
      */

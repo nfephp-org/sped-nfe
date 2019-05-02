@@ -12,6 +12,7 @@ config.json
 local
 vendor
 nbproject
+clearTags
 build
 composer.lock
 config.json

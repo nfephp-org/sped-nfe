@@ -9,6 +9,31 @@
 - Nota Técnica 2016.002 - v1.50
 - Nota Técnica 2016.002 - v1.51
 - Nota Técnica 2016.002 - v1.60
+- Nota Técnica 2018.005 - v1.00
+- Nota Técnica 2018.005 - v1.10
+- Nota Técnica 2018.005 - v1.20
+
+### Campos alterados e inclusos, indicados em negrito (validos a partir de 03/06/2019:
+
+> F|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|**CEP|cPais|xPais|fone|email|IE|**
+
+> **F02b|xNome|**
+
+> G|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|**CEP|cPais|xPais|fone|email|IE|**
+
+> **G02b|xNome|**
+
+> K|cProdANVISA|vPMC|**xMotivoIsencao|**
+
+> N08|orig|CST|vBCSTRet|pST|vICMSSTRet|vBCFCPSTRet|pFCPSTRet|vFCPSTRet|pRedBCEfet|vBCEfet|pICMSEfet|vICMSEfet|**vICMSSubstituto|**
+
+> N10b|orig|CST|vBCSTRet|vICMSSTRet|vBCSTDest|vICMSSTDest|**vBCFCPSTRet|pFCPSTRet|vFCPSTRet|pST|vICMSSubstituto|pRedBCEfet|vBCEfet|pICMSEfet|vICMSEfet|**
+
+> N10g|orig|CSOSN|vBCSTRet|pST|vICMSSTRet|vBCFCPSTRet|pFCPSTRet|vFCPSTRet|pRedBCEfet|vBCEfet|pICMSEfet|vICMSEfet|**vICMSSubstituto|**
+
+> **ZD|CNPJ|xContato|email|fone|CSRT|idCSRT|**
+
+### *Estas alterações somente serão validas em produção a partir de 03/06/2019*
 
 ```
 NOTAFISCAL|numero de notas|
@@ -137,7 +162,7 @@ N10e|orig|CSOSN|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vF
 
 N10f|orig|CSOSN|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|
 
-N10g|orig|CSOSN|vBCSTRet|pST|vICMSSTRet|vBCFCPSTRet|pFCPSTRet|vFCPSTRet|pRedBCEfet|vBCEfet|pICMSEfet|vICMSEfet|",
+N10g|orig|CSOSN|vBCSTRet|pST|vICMSSTRet|vBCFCPSTRet|pFCPSTRet|vFCPSTRet|pRedBCEfet|vBCEfet|pICMSEfet|vICMSEfet|
 
 N10h|orig|CSOSN|modBC|vBC|pRedBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|pCredSN|vCredICMSSN|
 

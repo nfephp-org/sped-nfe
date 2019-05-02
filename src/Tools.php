@@ -8,7 +8,7 @@ namespace NFePHP\NFe;
  *
  * @category  NFePHP
  * @package   NFePHP\NFe\Tools
- * @copyright NFePHP Copyright (c) 2008-2017
+ * @copyright NFePHP Copyright (c) 2008-2019
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
  * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
@@ -31,6 +31,7 @@ class Tools extends ToolsCommon
     const EVT_NAO_REALIZADA = 210240; //only one per nfe but seq=n
     const EVT_CCE = 110110; //many seq=n
     const EVT_CANCELA = 110111; //only seq=1
+    const EVT_CANCELASUBSTITUICAO = 110112;
     const EVT_EPEC = 110140; //only seq=1
 
     /**
@@ -171,10 +172,11 @@ class Tools extends ToolsCommon
      * @param int $nFin
      * @param string $xJust
      * @param int $tpAmb
+     * @param string $ano
      * @return string
      * @throws InvalidArgumentException
      */
-    public function sefazInutiliza($nSerie, $nIni, $nFin, $xJust, $tpAmb = null)
+    public function sefazInutiliza($nSerie, $nIni, $nFin, $xJust, $tpAmb = null, $ano = null)
     {
         if (empty($nIni) || empty($nFin) || empty($xJust)) {
             throw new InvalidArgumentException('Inutilizacao: parametros incompletos!');
@@ -188,7 +190,10 @@ class Tools extends ToolsCommon
         //carrega serviço
         $this->servico($servico, $this->config->siglaUF, $tpAmb);
         $cnpj = $this->config->cnpj;
-        $strAno = (string) date('y');
+        $strAno = $ano;
+        if (empty($ano)) {
+            $strAno = (string) date('y');
+        }
         $strSerie = str_pad($nSerie, 3, '0', STR_PAD_LEFT);
         $strInicio = str_pad($nIni, 9, '0', STR_PAD_LEFT);
         $strFinal = str_pad($nFin, 9, '0', STR_PAD_LEFT);
@@ -267,10 +272,19 @@ class Tools extends ToolsCommon
             . "<infCons>"
             . "<xServ>CONS-CAD</xServ>"
             . "<UF>$uf</UF>"
-            . "$filter</infCons></ConsCad>";
+            . "$filter"
+            . "</infCons>"
+            . "</ConsCad>";
         $this->isValid($this->urlVersion, $request, 'consCad');
         $this->lastRequest = $request;
         $parameters = ['nfeDadosMsg' => $request];
+        if ($this->urlVersion === '2.00') {
+            $this->objHeader = new \SOAPHeader(
+                $this->urlNamespace,
+                'nfeCabecMsg',
+                ['cUF' => $this->urlcUF, 'versaoDados' => $this->urlVersion]
+            );
+        }
         $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
         $this->lastResponse = $this->sendRequest($body, $parameters);
         return $this->lastResponse;
@@ -298,8 +312,10 @@ class Tools extends ToolsCommon
         $this->checkContingencyForWebServices($servico);
         $this->servico($servico, $uf, $tpAmb, $ignoreContingency);
         $request = "<consStatServ xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
-            . "<tpAmb>$tpAmb</tpAmb><cUF>$this->urlcUF</cUF>"
-            . "<xServ>STATUS</xServ></consStatServ>";
+            . "<tpAmb>$tpAmb</tpAmb>"
+            . "<cUF>$this->urlcUF</cUF>"
+            . "<xServ>STATUS</xServ>"
+            . "</consStatServ>";
         $this->isValid($this->urlVersion, $request, 'consStatServ');
         $this->lastRequest = $request;
         $parameters = ['nfeDadosMsg' => $request];
@@ -323,6 +339,7 @@ class Tools extends ToolsCommon
         $this->checkContingencyForWebServices($servico);
         $this->servico($servico, $fonte, $this->tpAmb, true);
         $cUF = UFList::getCodeByUF($this->config->siglaUF);
+        $cnpj = $this->config->cnpj;
         $ultNSU = str_pad($ultNSU, 15, '0', STR_PAD_LEFT);
         $tagNSU = "<distNSU><ultNSU>$ultNSU</ultNSU></distNSU>";
         if ($numNSU != 0) {
@@ -332,8 +349,14 @@ class Tools extends ToolsCommon
         //monta a consulta
         $consulta = "<distDFeInt xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
             . "<tpAmb>".$this->tpAmb."</tpAmb>"
-            . "<cUFAutor>$cUF</cUFAutor>"
-            . "<CNPJ>".$this->config->cnpj."</CNPJ>$tagNSU</distDFeInt>";
+            . "<cUFAutor>$cUF</cUFAutor>";
+        if ($this->typePerson === 'J') {
+            $consulta .= "<CNPJ>$cnpj</CNPJ>";
+        } else {
+            $consulta .= "<CPF>$cnpj</CPF>";
+        }
+        $consulta .= "$tagNSU"
+            . "</distDFeInt>";
         //valida o xml da requisição
         $this->isValid($this->urlVersion, $consulta, 'distDFeInt');
         $this->lastRequest = $consulta;
@@ -419,7 +442,7 @@ class Tools extends ToolsCommon
             $tagAdic
         );
     }
-    
+
     /**
      * Request the cancellation of the request for an extension of the term
      * of return of products of an NF-e of consignment for industrialization
@@ -450,7 +473,7 @@ class Tools extends ToolsCommon
                 . "<nProt>$nProt</nProt>";
         return $this->sefazEvento($uf, $chave, $tpEvento, $nSeqEvento, $tagAdic);
     }
-    
+
     /**
      * Requires nfe cancellation
      * @param  string $chave key of NFe
@@ -472,6 +495,45 @@ class Tools extends ToolsCommon
     }
 
     /**
+     * Requires nfe cancellation by substitution
+     * @param  string $chave key of NFe
+     * @param  string $xJust justificative 255 characters max
+     * @param  string $nProt protocol number
+     * @param  string $chNFeRef key of New NFe
+     * @param  string $verAplic version of applicative
+     * @return string
+     * @throws InvalidArgumentException
+     */
+    public function sefazCancelaPorSubstituicao($chave, $xJust, $nProt, $chNFeRef, $verAplic)
+    {
+        if ($this->modelo != 65) {
+            throw new InvalidArgumentException(
+                'Cancelamento pro Substituição deve ser usado apenas para '
+                . 'operações com modelo 65 NFCe'
+            );
+        }
+        if (empty($chave) || empty($xJust) || empty($nProt)
+            || empty($chNFeRef) || empty($verAplic)) {
+            throw new InvalidArgumentException(
+                'CancelamentoPorSubs: chave da NFCe cancelada, justificativa, '
+                . 'protocolo, chave da NFCe substituta, ou versão do aplicativo '
+                . 'emissor não podem ser vazios!'
+            );
+        }
+        $uf = $this->validKeyByUF($chave);
+        $xJust = Strings::replaceUnacceptableCharacters(substr(trim($xJust), 0, 255));
+        $nSeqEvento = 1;
+        $cOrgao = substr($chave, 0, 2);
+        $tagAdic = "<cOrgaoAutor>$cOrgao</cOrgaoAutor>"
+            . "<tpAutor>1</tpAutor>"
+            . "<verAplic>$verAplic</verAplic>"
+            . "<nProt>$nProt</nProt>"
+            . "<xJust>$xJust</xJust>"
+            . "<chNFeRef>$chNFeRef</chNFeRef>";
+        return $this->sefazEvento($uf, $chave, self::EVT_CANCELASUBSTITUICAO, $nSeqEvento, $tagAdic);
+    }
+    
+    /**
      * Request the registration of the manifestation of recipient
      * @param string $chave
      * @param int $tpEvento
@@ -492,7 +554,7 @@ class Tools extends ToolsCommon
         }
         return $this->sefazEvento('AN', $chave, $tpEvento, $nSeqEvento, $tagAdic);
     }
-    
+
     /**
      * Request the registration of the manifestation of recipient in batch
      * @param \stdClass $std
@@ -534,7 +596,7 @@ class Tools extends ToolsCommon
         }
         return $this->sefazEventoLote('AN', $evt);
     }
-    
+
     /**
      * Send event to SEFAZ in batch
      * @param string $uf
@@ -570,9 +632,13 @@ class Tools extends ToolsCommon
             $request = "<evento xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
                 . "<infEvento Id=\"$eventId\">"
                 . "<cOrgao>$cOrgao</cOrgao>"
-                . "<tpAmb>$this->tpAmb</tpAmb>"
-                . "<CNPJ>$cnpj</CNPJ>"
-                . "<chNFe>$evt->chave</chNFe>"
+                . "<tpAmb>$this->tpAmb</tpAmb>";
+            if ($this->typePerson === 'J') {
+                $request .= "<CNPJ>$cnpj</CNPJ>";
+            } else {
+                $request .= "<CPF>$cnpj</CPF>";
+            }
+            $request .= "<chNFe>$evt->chave</chNFe>"
                 . "<dhEvento>$dhEvento</dhEvento>"
                 . "<tpEvento>$evt->tpEvento</tpEvento>"
                 . "<nSeqEvento>$evt->nSeqEvento</nSeqEvento>"
@@ -583,7 +649,6 @@ class Tools extends ToolsCommon
                 . "</detEvento>"
                 . "</infEvento>"
                 . "</evento>";
-        
             //assinatura dos dados
             $request = Signer::sign(
                 $this->certificate,
@@ -679,7 +744,7 @@ class Tools extends ToolsCommon
             . "<vICMS>$vICMS</vICMS>"
             . "<vST>$vST</vST>"
             . "</dest>";
-    
+
         return $this->sefazEvento('AN', $chNFe, self::EVT_EPEC, $nSeqEvento, $tagAdic);
     }
 
@@ -714,9 +779,13 @@ class Tools extends ToolsCommon
         $request = "<evento xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
             . "<infEvento Id=\"$eventId\">"
             . "<cOrgao>$cOrgao</cOrgao>"
-            . "<tpAmb>$this->tpAmb</tpAmb>"
-            . "<CNPJ>$cnpj</CNPJ>"
-            . "<chNFe>$chave</chNFe>"
+            . "<tpAmb>$this->tpAmb</tpAmb>";
+        if ($this->typePerson === 'J') {
+            $request .= "<CNPJ>$cnpj</CNPJ>";
+        } else {
+            $request .= "<CPF>$cnpj</CPF>";
+        }
+        $request .= "<chNFe>$chave</chNFe>"
             . "<dhEvento>$dhEvento</dhEvento>"
             . "<tpEvento>$tpEvento</tpEvento>"
             . "<nSeqEvento>$nSeqEvento</nSeqEvento>"
@@ -744,6 +813,7 @@ class Tools extends ToolsCommon
             . "</envEvento>";
         $this->isValid($this->urlVersion, $request, 'envEvento');
         $this->lastRequest = $request;
+        //return $request;
         $parameters = ['nfeDadosMsg' => $request];
         $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
         $this->lastResponse = $this->sendRequest($body, $parameters);
@@ -769,16 +839,23 @@ class Tools extends ToolsCommon
         $this->servico($servico, 'AN', $this->tpAmb, true);
         $cUF = UFList::getCodeByUF($this->config->siglaUF);
         $tagChave = "<consChNFe><chNFe>$chave</chNFe></consChNFe>";
+        $cnpj = $this->config->cnpj;
         //monta a consulta
-        $consulta = "<distDFeInt xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
+        $request = "<distDFeInt xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
             . "<tpAmb>".$this->tpAmb."</tpAmb>"
-            . "<cUFAutor>$cUF</cUFAutor>"
-            . "<CNPJ>".$this->config->cnpj."</CNPJ>$tagChave</distDFeInt>";
+            . "<cUFAutor>$cUF</cUFAutor>";
+        if ($this->typePerson === 'J') {
+            $request .= "<CNPJ>$cnpj</CNPJ>";
+        } else {
+            $request .= "<CPF>$cnpj</CPF>";
+        }
+        $request .= "$tagChave"
+            . "</distDFeInt>";
         //valida o xml da requisição
-        $this->isValid($this->urlVersion, $consulta, 'distDFeInt');
-        $this->lastRequest = $consulta;
+        $this->isValid($this->urlVersion, $request, 'distDFeInt');
+        $this->lastRequest = $request;
         //montagem dos dados da mensagem SOAP
-        $request = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$consulta</nfeDadosMsg>";
+        $request = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
         $parameters = ['nfeDistDFeInteresse' => $request];
         $body = "<nfeDistDFeInteresse xmlns=\"$this->urlNamespace\">"
             . $request
@@ -908,6 +985,10 @@ class Tools extends ToolsCommon
             case self::EVT_CANCELA:
                 $std->alias = 'CancNFe';
                 $std->desc = 'Cancelamento';
+                break;
+            case self::EVT_CANCELASUBSTITUICAO:
+                $std->alias = 'CancNFe';
+                $std->desc = 'Cancelamento por substituicao';
                 break;
             case self::EVT_EPEC: // Emissão em contingência EPEC
                 $std->alias = 'EPEC';

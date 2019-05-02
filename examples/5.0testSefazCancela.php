@@ -6,7 +6,7 @@ require_once '../bootstrap.php';
 use NFePHP\NFe\Tools;
 use NFePHP\Common\Certificate;
 use NFePHP\NFe\Common\Standardize;
-use NFePHP\NFe\Common\Complements;
+use NFePHP\NFe\Complements;
 
 //tanto o config.json como o certificado.pfx podem estar
 //armazenados em uma base de dados, então não é necessário 
@@ -18,8 +18,8 @@ $arr = [
     "razaosocial" => "SUA RAZAO SOCIAL LTDA",
     "cnpj" => "99999999999999",
     "siglaUF" => "SP",
-    "schemes" => "PL008i2",
-    "versao" => '3.10',
+    "schemes" => "PL_009_V4",
+    "versao" => '4.00',
     "tokenIBPT" => "AAAAAAA",
     "CSC" => "GPB0JBWLUR6HWFTVEAS6RJ69GPCROFPBBB8G",
     "CSCid" => "000001",

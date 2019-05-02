@@ -4,7 +4,7 @@ namespace NFePHP\NFe\Exception;
 /**
  * @category   NFePHP
  * @package    NFePHP\NFe\Exception
- * @copyright  Copyright (c) 2008-2017
+ * @copyright  Copyright (c) 2008-2019
  * @license    http://www.gnu.org/licenses/lesser.html LGPL v3
  * @author     Roberto L. Machado <linux.rlm at gmail dot com>
  * @link       http://github.com/nfephp-org/sped-common for the canonical source repository
@@ -32,13 +32,13 @@ class DocumentsException extends \InvalidArgumentException implements ExceptionI
         16 => "O txt tem um campo não definido {{msg}}",
         17 => "O txt não está no formato adequado."
     ];
-    
+
     public static function wrongDocument($code, $msg = '')
     {
         $msg = self::replaceMsg(self::$list[$code], $msg);
         return new static($msg);
     }
-    
+
     private static function replaceMsg($input, $msg)
     {
         return str_replace('{{msg}}', $msg, $input);

@@ -8,7 +8,7 @@ namespace NFePHP\NFe\Common;
  *
  * @category  NFePHP
  * @package   NFePHP\Common\Standardize
- * @copyright NFePHP Copyright (c) 2008-2017
+ * @copyright NFePHP Copyright (c) 2008-2019
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
  * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
@@ -70,7 +70,7 @@ class Standardize
         'nfeProc',
         'NFe'
     ];
-    
+
     /**
      * Constructor
      * @param string $xml
@@ -79,7 +79,7 @@ class Standardize
     {
         $this->toStd($xml);
     }
-    
+
     /**
      * Identify node and extract from XML for convertion type
      * @param string $xml
@@ -108,7 +108,7 @@ class Standardize
         //documento does not belong to the SPED-NFe project
         throw DocumentsException::wrongDocument(7);
     }
-    
+
     /**
      * Returns extract node from XML
      * @return string
@@ -117,7 +117,7 @@ class Standardize
     {
         return $this->node;
     }
-    
+
     /**
      * Returns stdClass converted from xml
      * @param string $xml
@@ -134,9 +134,35 @@ class Standardize
             'attributes',
             json_encode($this->sxml, JSON_PRETTY_PRINT)
         );
-        return json_decode($this->json);
+
+        $std = json_decode($this->json);
+        if (isset($std->infNFeSupl)) {
+            $resp = $this->getQRCode();
+            $std->infNFeSupl->qrCode = $resp['qrCode'];
+            $std->infNFeSupl->urlChave = $resp['urlChave'];
+            $this->json = json_encode($std);
+        }
+        return $std;
     }
-    
+
+    /**
+     * Return QRCODE and urlChave from XML
+     * @return array
+     */
+    private function getQRCode()
+    {
+        $dom = new \DOMDocument('1.0', 'UTF-8');
+        $dom->preserveWhiteSpace = false;
+        $dom->formatOutput = false;
+        $dom->loadXML($this->node);
+        $node = $dom->getElementsByTagName('infNFeSupl')->item(0);
+        $resp = [
+            'qrCode' => $node->getElementsByTagName('qrCode')->item(0)->nodeValue,
+            'urlChave' => $node->getElementsByTagName('urlChave')->item(0)->nodeValue
+        ];
+        return $resp;
+    }
+
     /**
      * Returns the SimpleXml Object
      * @param string $xml
@@ -149,7 +175,7 @@ class Standardize
         }
         return $this->sxml;
     }
-    
+
     /**
      * Retruns JSON string form XML
      * @param string $xml
@@ -162,7 +188,7 @@ class Standardize
         }
         return $this->json;
     }
-    
+
     /**
      * Returns array from XML
      * @param string $xml

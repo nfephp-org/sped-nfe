@@ -7,7 +7,7 @@ namespace NFePHP\NFe\Common;
  *
  * @category  NFePHP
  * @package   NFePHP\NFe\Common\ValidTXT
- * @copyright NFePHP Copyright (c) 2008-2018
+ * @copyright NFePHP Copyright (c) 2008-2019
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
  * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
@@ -18,8 +18,9 @@ namespace NFePHP\NFe\Common;
 class ValidTXT
 {
     const LOCAL="LOCAL";
+    const LOCAL_V12 = "LOCAL_V12";
     const SEBRAE="SEBRAE";
-   
+
     /**
      * Loads structure of txt from json file in storage folder
      * @param float $version
@@ -33,6 +34,8 @@ class ValidTXT
         $comp = '';
         if (strtoupper($baselayout) === 'SEBRAE') {
             $comp = '_sebrae';
+        } elseif (strtoupper($baselayout) === 'LOCAL_V12') {
+            $comp = '_v1.2';
         }
         $file = $path . '/txtstructure' . ($version*100) . $comp . '.json';
         if (!is_file($file)) {
@@ -42,7 +45,7 @@ class ValidTXT
         $json = file_get_contents($file);
         return json_decode($json, true);
     }
-    
+
     /**
      * Verifies the validity of txt according to the rules of the code
      * If is valid returns empty array
@@ -57,7 +60,7 @@ class ValidTXT
         $txt = str_replace(["\r", "\t"], '', trim($txt));
         $rows = explode("\n", $txt);
         $num = 0;
-        
+
         foreach ($rows as $row) {
             $fields = explode('|', $row);
             if (empty($fields)) {
