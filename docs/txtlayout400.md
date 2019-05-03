@@ -12,6 +12,9 @@
 - Nota Técnica 2018.005 - v1.00
 - Nota Técnica 2018.005 - v1.10
 - Nota Técnica 2018.005 - v1.20
+- Nota Técnica 2018.005 - v1.30
+
+> As regras de validação ZD01-10 e ZD02-10 (identificação do responsável técnico), ficarão para implementação futura, exceto para as UF: AM, MS, PE, PR, SC e TO, nas quais estas regras já estão em vigor em ambiente de teste na data da publicação da versão 1.30 desta NT, e entrarão em vigor em ambiente de produção no dia 03 de junho de 2019.
 
 ### Campos alterados e inclusos, indicados em negrito (validos a partir de 03/06/2019:
 
