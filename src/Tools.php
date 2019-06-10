@@ -770,7 +770,7 @@ class Tools extends ToolsCommon
         $this->servico($servico, $uf, $this->tpAmb, $ignore);
         $ev = $this->tpEv($tpEvento);
         $descEvento = $ev->desc;
-        $cnpj = $this->config->cnpj;
+        $cnpj = isset($this->config->cnpj) ? $this->config->cnpj : '';
         $dt = new \DateTime();
         $dhEvento = $dt->format('Y-m-d\TH:i:sP');
         $sSeqEvento = str_pad($nSeqEvento, 2, "0", STR_PAD_LEFT);
