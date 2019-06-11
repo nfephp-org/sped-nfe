@@ -2346,14 +2346,14 @@ class Make
         $this->dom->addChild(
             $veicProd,
             "pesoL",
-            $this->conditionalNumberFormatting($std->pesoL, 4),
+            $this->conditionalNumberFormatting($std->pesoL, 3),
             true,
             "$identificador [item $std->item] Peso Líquido do veículo"
         );
         $this->dom->addChild(
             $veicProd,
             "pesoB",
-            $this->conditionalNumberFormatting($std->pesoB, 4),
+            $this->conditionalNumberFormatting($std->pesoB, 3),
             true,
             "$identificador [item $std->item] Peso Bruto do veículo"
         );
