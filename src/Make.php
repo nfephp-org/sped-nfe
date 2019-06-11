@@ -6193,14 +6193,14 @@ class Make
         $this->dom->addChild(
             $vol,
             "pesoL",
-            $this->conditionalNumberFormatting($std->pesoL),
+            $this->conditionalNumberFormatting($std->pesoL, 3),
             false,
             "Peso Líquido (em kg) dos volumes transportados"
         );
         $this->dom->addChild(
             $vol,
             "pesoB",
-            $this->conditionalNumberFormatting($std->pesoB),
+            $this->conditionalNumberFormatting($std->pesoB, 3),
             false,
             "Peso Bruto (em kg) dos volumes transportados"
         );
