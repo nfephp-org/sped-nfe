@@ -6248,6 +6248,10 @@ class Make
      */
     public function tagpag($std)
     {
+        $possible = [
+            'vTroco'
+        ];
+        $std = $this->equilizeParameters($std, $possible);
         $pag = $this->dom->createElement("pag");
         //incluso no layout 4.00
         $this->dom->addChild(
