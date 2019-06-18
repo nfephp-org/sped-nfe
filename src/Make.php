@@ -5226,34 +5226,37 @@ class Make
         ];
         $std = $this->equilizeParameters($std, $possible);
         $cofinsst = $this->dom->createElement("COFINSST");
-        $this->dom->addChild(
-            $cofinsst,
-            "vBC",
-            $this->conditionalNumberFormatting($std->vBC),
-            true,
-            "[item $std->item] Valor da Base de Cálculo da COFINS"
-        );
-        $this->dom->addChild(
-            $cofinsst,
-            "pCOFINS",
-            $this->conditionalNumberFormatting($std->pCOFINS, 4),
-            true,
-            "[item $std->item] Alíquota da COFINS (em percentual)"
-        );
-        $this->dom->addChild(
-            $cofinsst,
-            "qBCProd",
-            $std->qBCProd,
-            true,
-            "[item $std->item] Quantidade Vendida"
-        );
-        $this->dom->addChild(
-            $cofinsst,
-            "vAliqProd",
-            $std->vAliqProd,
-            true,
-            "[item $std->item] Alíquota da COFINS (em reais)"
-        );
+        if (!isset($std->qBCProd)) {
+            $this->dom->addChild(
+                $cofinsst,
+                "vBC",
+                $this->conditionalNumberFormatting($std->vBC),
+                true,
+                "[item $std->item] Valor da Base de Cálculo da COFINS"
+            );
+            $this->dom->addChild(
+                $cofinsst,
+                "pCOFINS",
+                $this->conditionalNumberFormatting($std->pCOFINS, 4),
+                true,
+                "[item $std->item] Alíquota da COFINS (em percentual)"
+            );
+        } else {    
+            $this->dom->addChild(
+                $cofinsst,
+                "qBCProd",
+                $std->qBCProd,
+                true,
+                "[item $std->item] Quantidade Vendida"
+            );
+            $this->dom->addChild(
+                $cofinsst,
+                "vAliqProd",
+                $std->vAliqProd,
+                true,
+                "[item $std->item] Alíquota da COFINS (em reais)"
+            );
+        }    
         $this->dom->addChild(
             $cofinsst,
             "vCOFINS",
