@@ -5241,7 +5241,7 @@ class Make
                 true,
                 "[item $std->item] Alíquota da COFINS (em percentual)"
             );
-        } else {    
+        } else {
             $this->dom->addChild(
                 $cofinsst,
                 "qBCProd",
@@ -5256,7 +5256,7 @@ class Make
                 true,
                 "[item $std->item] Alíquota da COFINS (em reais)"
             );
-        }    
+        }
         $this->dom->addChild(
             $cofinsst,
             "vCOFINS",
