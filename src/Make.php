@@ -5070,34 +5070,37 @@ class Make
         ];
         $std = $this->equilizeParameters($std, $possible);
         $pisst = $this->dom->createElement('PISST');
-        $this->dom->addChild(
-            $pisst,
-            'vBC',
-            $this->conditionalNumberFormatting($std->vBC),
-            true,
-            "[item $std->item] Valor da Base de Cálculo do PIS"
-        );
-        $this->dom->addChild(
-            $pisst,
-            'pPIS',
-            $this->conditionalNumberFormatting($std->pPIS, 4),
-            true,
-            "[item $std->item] Alíquota do PIS (em percentual)"
-        );
-        $this->dom->addChild(
-            $pisst,
-            'qBCProd',
-            $std->qBCProd,
-            true,
-            "[item $std->item] Quantidade Vendida"
-        );
-        $this->dom->addChild(
-            $pisst,
-            'vAliqProd',
-            $std->vAliqProd,
-            true,
-            "[item $std->item] Alíquota do PIS (em reais)"
-        );
+        if (!isset($std->qBCProd)) {
+            $this->dom->addChild(
+                $pisst,
+                'vBC',
+                $this->conditionalNumberFormatting($std->vBC),
+                true,
+                "[item $std->item] Valor da Base de Cálculo do PIS"
+            );
+            $this->dom->addChild(
+                $pisst,
+                'pPIS',
+                $this->conditionalNumberFormatting($std->pPIS, 4),
+                true,
+                "[item $std->item] Alíquota do PIS (em percentual)"
+            );
+        } else {
+            $this->dom->addChild(
+                $pisst,
+                'qBCProd',
+                $std->qBCProd,
+                true,
+                "[item $std->item] Quantidade Vendida"
+            );
+            $this->dom->addChild(
+                $pisst,
+                'vAliqProd',
+                $std->vAliqProd,
+                true,
+                "[item $std->item] Alíquota do PIS (em reais)"
+            );
+        }
         $this->dom->addChild(
             $pisst,
             'vPIS',
