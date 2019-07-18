@@ -1735,7 +1735,7 @@ class Make
             true
         );
         $xProd = $std->xProd;
-        if ($this->tpAmb == '2' && $this->mod == '65') {
+        if ($this->tpAmb == '2' && $this->mod == '65' && $std->item === 1) {
             $xProd = 'NOTA FISCAL EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
         }
         $this->dom->addChild(
