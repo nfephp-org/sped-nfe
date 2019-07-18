@@ -116,7 +116,7 @@ class MakeTest extends TestCase
         $this->make->taginfNFe($std);
         $std = new \stdClass();
         $std->cUF = '';
-        $std->cNF = '88888888';
+        $std->cNF = '78888888';
         $std->natOp = '';
         $std->mod = '';
         $std->serie = '';
@@ -139,7 +139,7 @@ class MakeTest extends TestCase
 
         $this->assertEmpty($ide->getElementsByTagName('cUF')->item(0)->nodeValue);
         $this->assertContains('cUF', $this->make->dom->errors[0]);
-        $this->assertEquals('88888888', $ide->getElementsByTagName('cNF')->item(0)->nodeValue);
+        $this->assertEquals('78888888', $ide->getElementsByTagName('cNF')->item(0)->nodeValue);
         $this->assertEmpty($ide->getElementsByTagName('natOp')->item(0)->nodeValue);
         $this->assertContains('natOp', $this->make->dom->errors[1]);
         $this->assertContains('mod', $this->make->dom->errors[2]);
