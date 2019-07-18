@@ -22,6 +22,7 @@ use NFePHP\Common\Strings;
 use NFePHP\NFe\Common\Gtin;
 use stdClass;
 use RuntimeException;
+use InvalidArgumentException;
 use DOMElement;
 use DateTime;
 
@@ -500,11 +501,24 @@ class Make
             'xJust'
         ];
         $std = $this->equilizeParameters($std, $possible);
+        
         if (empty($std->cNF)) {
-            $std->cNF = Keys::random();
+            $std->cNF = Keys::random($std->nNF);
         }
         if (empty($std->cDV)) {
             $std->cDV = 0;
+        }
+        //validação conforme NT 2019.001
+        $std->cNF = str_pad($std->cNF, 8, '0', STR_PAD_LEFT);
+        if (intval($std->cNF) == intval($std->nNF)) {
+            throw new InvalidArgumentException("O valor [{$std->cNF}] não é "
+            . "aceitável para cNF, não pode ser igual ao de nNF, vide NT2019.001");
+        }
+        if (method_exists(Keys::class, 'cNFIsValid')) {
+            if (!Keys::cNFIsValid($std->cNF)) {
+                throw new InvalidArgumentException("O valor [{$std->cNF}] para cNF "
+                . "é invalido, deve respeitar a NT2019.001");
+            }
         }
         $this->tpAmb = $std->tpAmb;
         $this->mod = $std->mod;
@@ -520,7 +534,7 @@ class Make
         $this->dom->addChild(
             $ide,
             "cNF",
-            str_pad($std->cNF, 8, '0', STR_PAD_LEFT),
+            $std->cNF,
             true,
             $identificador . "Código Numérico que compõe a Chave de Acesso"
         );
@@ -1721,7 +1735,7 @@ class Make
             true
         );
         $xProd = $std->xProd;
-        if ($this->tpAmb == '2' && $this->mod == '65') {
+        if ($this->tpAmb == '2' && $this->mod == '65' && $std->item === 1) {
             $xProd = 'NOTA FISCAL EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
         }
         $this->dom->addChild(
