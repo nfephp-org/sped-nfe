@@ -32,7 +32,7 @@ class Make
     /**
      * @var array
      */
-    public $erros = [];
+    public $errors = [];
     /**
      * @var string
      */
@@ -379,8 +379,8 @@ class Make
      */
     public function monta()
     {
-        $this->erros = $this->dom->errors;
-        if (count($this->erros) > 0) {
+        $this->errors = $this->dom->errors;
+        if (count($this->errors) > 0) {
             return false;
         }
         //cria a tag raiz da Nfe
