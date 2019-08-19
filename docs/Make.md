@@ -833,6 +833,8 @@ $nfe->tagICMSUFDest($std);
 ### function tagIPI($std):DOMElement
 Node referente ao IPI do item da NFe
 
+> NOTA: clEnq foi removido do layout 4.00 na NT_2016_V1.40
+
 | Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
