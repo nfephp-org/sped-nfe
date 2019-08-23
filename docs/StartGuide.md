@@ -211,7 +211,7 @@ composer require nfephp-org/sped-nfe
 composer require nfephp-org/sped-nfe --prefer-dist --update-no-dev --prefer-stable --optimize-autoloader
 ```
 
-Rodando esse comando vamos INCLUIR a última versão STABLE da API, como uma dependência do seu projeto, capaz de emitir Nfe e Nfce tanto na versão 3.10, como na 4.0.
+Rodando esse comando vamos INCLUIR a última versão STABLE da API, como uma dependência do seu projeto, capaz de emitir NFe e NFCe na 4.0.
 
 Se você não tem outras dependências, será criada uma pasta "vendor" na RAIZ de seu projeto, que conterá todas as dependências do seu projeto e as dos pacotes que você intalou com o composer. 
 
