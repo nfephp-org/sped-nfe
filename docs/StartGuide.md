@@ -171,7 +171,17 @@ Segue um exemplo do XML gerado pelo framework ainda sem a assinatura do certific
 </NFe>
 ```
 ## Como vamos fazer isso?
-Nesse passo a passo vamos passar por todas as etapas desse processo. Primeiro: a montagem do XML, como no exemplo acima; Segundo: a sua assinatura usando um certificado digital; Terceiro: o envio para a receita. Quarto: vamos consultar o nosso envio para ver se tudo ocorreu como nós esperamos; Por fim vamos pegar o protocolo que recebemos da consulta para armazenar no XML.
+Nesse passo a passo vamos passar por todas as etapas desse processo. 
+
+- Primeiro: a montagem do XML, como no exemplo acima; 
+
+- Segundo: a sua assinatura usando um certificado digital; 
+
+- Terceiro: o envio para a receita. 
+
+- Quarto: vamos consultar o nosso envio para ver se tudo ocorreu como nós esperamos;
+
+- Por fim vamos pegar o protocolo que recebemos da consulta para armazenar no XML.
 
 ## Requisitos
 Antes de falarmos de código, você precisa ter em mãos o seu certificado digital do tipo A1. Ele é um tipo de certificado que pode ser instalado no computador, normalmente um arquivo com a extensão *.pfx* que pode ser usado sem a necessidade de um token externo. Caso você não tenha o certificado você pode ir ao cartório da sua cidade que lá eles vão te auxiliar no processo para conseguir o seu.
