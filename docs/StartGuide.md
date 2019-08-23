@@ -4,7 +4,7 @@ Esse documento tem o objetivo de ser um passo a passo inicial para que você pos
 
 >*IMPORTANTE: Não deixe de estudar os manuais da SEFAZ e ver TODA a documentação desta pasta.*
 
-## O que são Nf-e/Nfc-e?
+## O que são NF-e/NFC-e?
 Uma nota fiscal eletrônica nada mais é do que um arquivo XML que contém informações dos produtos vendidos ou serviços prestados por você com todas as informações tributárias necessárias exigidas pela receita. Esse arquivo é assinado com um certificado digital e enviado para a receita.
 
 Segue um exemplo do XML gerado pelo framework ainda sem a assinatura do certificado e o protocolo.
@@ -171,13 +171,23 @@ Segue um exemplo do XML gerado pelo framework ainda sem a assinatura do certific
 </NFe>
 ```
 ## Como vamos fazer isso?
-Nesse passo a passo vamos passar por todas as etapas desse processo. Primeiro: a montagem do XML, como no exemplo acima; Segundo: a sua assinatura usando um certificado digital; Terceiro: o envio para a receita. Quarto: vamos consultar o nosso envio para ver se tudo ocorreu como nós esperamos; Por fim vamos pegar o protocolo que recebemos da consulta para armazenar no XML.
+Nesse passo a passo vamos passar por todas as etapas desse processo. 
+
+- Primeiro: a montagem do XML, como no exemplo acima; 
+
+- Segundo: a sua assinatura usando um certificado digital; 
+
+- Terceiro: o envio para a receita. 
+
+- Quarto: vamos consultar o nosso envio para ver se tudo ocorreu como nós esperamos;
+
+- Por fim vamos pegar o protocolo que recebemos da consulta para armazenar no XML.
 
 ## Requisitos
 Antes de falarmos de código, você precisa ter em mãos o seu certificado digital do tipo A1. Ele é um tipo de certificado que pode ser instalado no computador, normalmente um arquivo com a extensão *.pfx* que pode ser usado sem a necessidade de um token externo. Caso você não tenha o certificado você pode ir ao cartório da sua cidade que lá eles vão te auxiliar no processo para conseguir o seu.
 
 Para a instalação do framework você precisa verificar se as seguintes extensões do PHP estão ativas no seu PHP:
-* PHP 5.6 ou PHP 7.x (recomendável PHP 7.x)
+* PHP 7+ (recomendável PHP 7.2 ou 7.3)
 * ext-curl
 * ext-dom
 * ext-json
@@ -190,11 +200,18 @@ Para a instalação do framework você precisa verificar se as seguintes extens�
 * ext-zip
 
 Com as extensões devidamente instaladas, vá para a RAIZ do seu projeto e rodar o seguinte comando com o composer
+
+*Para ambientes de testes e desenvolvimento:*
 ```bash
 composer require nfephp-org/sped-nfe
 ```
 
-Rodando esse comando vamos INCLUIR a última versão STABLE da API, como uma dependência do seu projeto, capaz de emitir Nfe e Nfce tanto na versão 3.10, como na 4.0.
+*Para ambientes de Produção:*
+```bash
+composer require nfephp-org/sped-nfe --prefer-dist --update-no-dev --prefer-stable --optimize-autoloader
+```
+
+Rodando esse comando vamos INCLUIR a última versão STABLE da API, como uma dependência do seu projeto, capaz de emitir NFe e NFCe na versão 4.0.
 
 Se você não tem outras dependências, será criada uma pasta "vendor" na RAIZ de seu projeto, que conterá todas as dependências do seu projeto e as dos pacotes que você intalou com o composer. 
 
@@ -204,7 +221,7 @@ Se você não tem outras dependências, será criada uma pasta "vendor" na RAIZ 
 
 Agora com a API devidamente instalada podemos partir para a montagem do XML. Vamos criar um arquivo *php* dentro do seu projeto e nele colocar o código abaixo.
 
-[VEJA Make.md](Make.md) Não se baseie somente nesse exemplo.
+**[Veja Make.md](Make.md)** Não se baseie somente nesse exemplo!
 
 
 ```php
@@ -367,7 +384,6 @@ $std->vNF = 11.03;
 $std->vTotTrib = 0.00;
 $nfe->tagICMSTot($std);
 
-
 $std = new \stdClass();
 $std->modFrete = 1;
 $nfe->tagtransp($std);
@@ -410,14 +426,14 @@ $xml = $nfe->getXML(); // O conteúdo do XML fica armazenado na variável $xml
 
 >NOTA : a tag referente ao pagamento está descrita aqui [PAG](TagPag.md)
 
-Esse exemplo são só alguns campos que podem ser preenchidos para emitir uma Nf-e, mas existem muito mais. Abordar todos os campos seria bastante complicado, para cada situação a nota deve ser preenchida com um campo ou outro. Se você não tem um bom domínio sobre contabilidade o meu conselho é sempre perguntar para alguém que saiba como deve ser preenchida a nota na situação em questão.
+Esse exemplo são só alguns campos que podem ser preenchidos para emitir uma NF-e, mas existem muito mais. Abordar todos os campos seria bastante complicado, para cada situação a nota deve ser preenchida com um campo ou outro. Se você não tem um bom domínio sobre contabilidade o meu conselho é sempre perguntar para alguém que saiba como deve ser preenchida a nota na situação em questão.
 
 > Para saber todos os campos suportados pelo framework acesse o link da documentação https://github.com/nfephp-org/sped-nfe/blob/master/docs/Make.md
 
 ## Assinar XML
 Antes de assinarmos o XML precisamos criar um variável em *JSON* com os dados que o framework vai precisar para os próximos passos.
 
-[Veja Config](Config.md)
+**[Veja Config](Config.md)**
 
 ```php
 
@@ -450,9 +466,9 @@ $certificadoDigital = file_get_contents('certificado.pfx');
 
 Agora que temos o nosso *$xml* gerado do passo anterior, a *$configJson* e o nosso $certificadoDigital* já estamos pronto para assiná-lo.
 
-[Veja documentação sobre o Certificado](https://github.com/nfephp-org/sped-common/blob/master/docs/Certificate.md)
+**[Veja documentação sobre o Certificado](https://github.com/nfephp-org/sped-common/blob/master/docs/Certificate.md)**
 
-[Classe Tools](Tools.md)
+**[Classe Tools](Tools.md)**
 
 Cole os seguinte código no seu arquivo *php*. Lembrando de substituir a *'senha do certificado'* pela senha correta.
 ```php
@@ -529,7 +545,7 @@ try {
 ```
 ATENÇÃO: Utilize o método correto da classe `Complements` para cada tipo de evento (Autorização, Cancelamento, e outros), veja abaixo um exemplo protocolando Cancelamento:
 
-[VIDE como protocolar cada evento na NF-e](Complements.md)
+**[Veja como protocolar cada evento na NF-e](Complements.md)**
 
 Por fim usamos o *file_put_contents* para criar um arquivo XML em disco para aguardar essa nota. A receita exige que você guarde os XMLs das suas notas pelo menos por 5 anos, então cuida bem delas.
 ```php
@@ -539,4 +555,4 @@ file_put_contents('nota.xml',$xmlProtocolado);
 ## Conclusão
 A ideia com esse passo a passo é dar um ponta pé inicial para quem nunca emitiu uma Nf-e/Nfc-e, mostrando o passo a passo necessário para enviar um nota para receita.
 
-LEIAM A DOCUMENTAÇÃO TODA !!!!!
+# LEIAM E ESTUDEM A DOCUMENTAÇÃO TODA !!!!!
