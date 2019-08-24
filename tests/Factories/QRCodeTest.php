@@ -24,14 +24,14 @@ class QRCodeTest extends NFeTestCase
         $sigla = '';
         $versao = '200';
         $urlqr = 'https://www.homologacao.nfce.fazenda.sp.gov.br/NFCeConsultaPublica/Paginas/ConsultaQRCode.aspx';
-        
+
         $expected = file_get_contents($this->fixturesPath.'xml/nfce_com_qrcode.xml');
         $expectedDom = new \DOMDocument('1.0', 'UTF-8');
         $expectedDom->formatOutput = false;
         $expectedDom->preserveWhiteSpace = false;
         $expectedDom->load($this->fixturesPath . 'xml/nfce_com_qrcode.xml');
         $expectedElement = $expectedDom->documentElement;
-        
+
         $response = QRCode::putQRTag($dom, $token, $idToken, $versao, $urlqr);
         $actualDom = new \DOMDocument('1.0', 'UTF-8');
         $actualDom->formatOutput = false;
@@ -40,12 +40,10 @@ class QRCodeTest extends NFeTestCase
         $actualElement = $actualDom->documentElement;
         $this->assertEqualXMLStructure($expectedElement, $actualElement);
     }
-    
-    /**
-     * @expectedException NFePHP\NFe\Exception\DocumentsException
-     */
+
     public function testPutQRTagFailWithoutCSC()
     {
+        $this->expectException(\NFePHP\NFe\Exception\DocumentsException::class);
         $dom = new \DOMDocument('1.0', 'UTF-8');
         $dom->formatOutput = false;
         $dom->preserveWhiteSpace = false;
@@ -57,12 +55,10 @@ class QRCodeTest extends NFeTestCase
         $urlqr = 'https://www.homologacao.nfce.fazenda.sp.gov.br/NFCeConsultaPublica/Paginas/ConsultaQRCode.aspx';
         $response = QRCode::putQRTag($dom, $token, $idToken, $versao, $urlqr);
     }
-    
-    /**
-     * @expectedException NFePHP\NFe\Exception\DocumentsException
-     */
+
     public function testPutQRTagFailWithoutCSCid()
     {
+        $this->expectException(\NFePHP\NFe\Exception\DocumentsException::class);
         $dom = new \DOMDocument('1.0', 'UTF-8');
         $dom->formatOutput = false;
         $dom->preserveWhiteSpace = false;
@@ -75,11 +71,9 @@ class QRCodeTest extends NFeTestCase
         $response = QRCode::putQRTag($dom, $token, $idToken, $versao, $urlqr);
     }
 
-    /**
-     * @expectedException NFePHP\NFe\Exception\DocumentsException
-     */
     public function testPutQRTagFailWithoutURL()
     {
+        $this->expectException(\NFePHP\NFe\Exception\DocumentsException::class);
         $dom = new \DOMDocument('1.0', 'UTF-8');
         $dom->formatOutput = false;
         $dom->preserveWhiteSpace = false;

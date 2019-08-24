@@ -18,16 +18,13 @@ class ValidTXTTest extends NFeTestCase
         );
         $txt = file_get_contents($this->fixturesPath . 'txt/nfe_errado.txt');
         $actual = ValidTXT::isValid($txt);
-        $this->assertEquals(
+        $this->assertEqualsCanonicalizing(
             $expected,
             $actual,
-            "\$canonicalize = true",
-            $delta = 0.0,
-            $maxDepth = 1,
-            $canonicalize = true
+            "\$canonicalize = true"
         );
     }
-    
+
     public function testIsValidSebrae()
     {
         $expected = [];
@@ -45,19 +42,16 @@ class ValidTXTTest extends NFeTestCase
         );
          */
     }
-    
+
     public function testIsValidLocal()
     {
         $expected = [];
         $txt = file_get_contents($this->fixturesPath . 'txt/nfe_4.00_local_01.txt');
         $actual = ValidTXT::isValid($txt, ValidTXT::LOCAL);
-        $this->assertEquals(
+        $this->assertEqualsCanonicalizing(
             $expected,
             $actual,
-            "\$canonicalize = true",
-            $delta = 0.0,
-            $maxDepth = 1,
-            $canonicalize = true
+            "\$canonicalize = true"
         );
     }
 }

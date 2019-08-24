@@ -13,7 +13,7 @@ class ConfigTest extends NFeTestCase
         $b = is_object($resp);
         $this->assertTrue($b);
     }
-    
+
     public function testValidadeWithoutSomeOptionalData()
     {
         $config = [
@@ -38,13 +38,11 @@ class ConfigTest extends NFeTestCase
         $b = is_object($resp);
         $this->assertTrue($b);
     }
-    
-    /**
-     * @expectedException NFePHP\NFe\Exception\DocumentsException
-     */
+
     public function testValidadeFailWithArray()
     {
-         $config = [
+        $this->expectException(\NFePHP\NFe\Exception\DocumentsException::class);
+        $config = [
             "atualizacao" => "2017-02-20 09:11:21",
             "tpAmb" => 2,
             "razaosocial" => "SUA RAZAO SOCIAL LTDA",
@@ -61,23 +59,19 @@ class ConfigTest extends NFeTestCase
                 "proxyUser" => "",
                 "proxyPass" => ""
             ]
-         ];
-         $resp = Config::validate($config);
+        ];
+        $resp = Config::validate($config);
     }
 
-    /**
-     * @expectedException NFePHP\NFe\Exception\DocumentsException
-     */
     public function testValidadeFailWithoutJsonString()
     {
+        $this->expectException(\NFePHP\NFe\Exception\DocumentsException::class);
         $resp = Config::validate('');
     }
-    
-    /**
-     * @expectedException NFePHP\NFe\Exception\DocumentsException
-     */
+
     public function testValidadeFailWithoutTpAmb()
     {
+        $this->expectException(\NFePHP\NFe\Exception\DocumentsException::class);
         $config = [
             "atualizacao" => "2017-02-20 09:11:21",
             //"tpAmb" => 2,
@@ -98,12 +92,10 @@ class ConfigTest extends NFeTestCase
         ];
         $resp = Config::validate(json_encode($config));
     }
-    
-    /**
-     * @expectedException NFePHP\NFe\Exception\DocumentsException
-     */
+
     public function testValidadeFailWithoutRazao()
     {
+        $this->expectException(\NFePHP\NFe\Exception\DocumentsException::class);
         $config = [
             //"atualizacao" => "2017-02-20 09:11:21",
             "tpAmb" => 2,
@@ -124,12 +116,10 @@ class ConfigTest extends NFeTestCase
         ];
         $resp = Config::validate(json_encode($config));
     }
-    
-    /**
-     * @expectedException NFePHP\NFe\Exception\DocumentsException
-     */
+
     public function testValidadeFailWithoutUF()
     {
+        $this->expectException(\NFePHP\NFe\Exception\DocumentsException::class);
         $config = [
             //"atualizacao" => "2017-02-20 09:11:21",
             "tpAmb" => 2,
@@ -150,12 +140,10 @@ class ConfigTest extends NFeTestCase
         ];
         $resp = Config::validate(json_encode($config));
     }
-    
-    /**
-     * @expectedException NFePHP\NFe\Exception\DocumentsException
-     */
+
     public function testValidadeFailWithoutCNPJ()
     {
+        $this->expectException(\NFePHP\NFe\Exception\DocumentsException::class);
         $config = [
             //"atualizacao" => "2017-02-20 09:11:21",
             "tpAmb" => 2,
@@ -177,11 +165,9 @@ class ConfigTest extends NFeTestCase
         $resp = Config::validate(json_encode($config));
     }
 
-    /**
-     * @expectedException NFePHP\NFe\Exception\DocumentsException
-     */
     public function testValidadeFailWithoutSchemes()
     {
+        $this->expectException(\NFePHP\NFe\Exception\DocumentsException::class);
         $config = [
             //"atualizacao" => "2017-02-20 09:11:21",
             "tpAmb" => 2,
@@ -202,12 +188,10 @@ class ConfigTest extends NFeTestCase
         ];
         $resp = Config::validate(json_encode($config));
     }
-    
-    /**
-     * @expectedException NFePHP\NFe\Exception\DocumentsException
-     */
+
     public function testValidadeFailWithoutVersao()
     {
+        $this->expectException(\NFePHP\NFe\Exception\DocumentsException::class);
         $config = [
             //"atualizacao" => "2017-02-20 09:11:21",
             "tpAmb" => 2,
@@ -228,7 +212,7 @@ class ConfigTest extends NFeTestCase
         ];
         $resp = Config::validate(json_encode($config));
     }
-    
+
     public function testValidadeWithCPF()
     {
         $config = [
