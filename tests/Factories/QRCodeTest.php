@@ -4,13 +4,12 @@ namespace NFePHP\NFe\Tests\Factories;
 
 use NFePHP\NFe\Factories\QRCode;
 use NFePHP\NFe\Tests\NFeTestCase;
-use NFePHP\NFe\Exception\DocumentsException;
 
 class QRCodeTest extends NFeTestCase
 {
     /**
-     * @covers QRCode::get
-     * @covers QRCode::str2Hex
+     * @covers \NFePHP\NFe\Factories\QRCode::get200
+     * @covers \NFePHP\NFe\Factories\QRCode::str2Hex
      */
     public function testPutQRTag()
     {
