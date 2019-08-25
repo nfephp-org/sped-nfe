@@ -7,7 +7,7 @@ php:
   - 7.4snapshot
   - nightly
 
-dist: precise
+dist: xenial
 sudo: false
 
 before_script:
