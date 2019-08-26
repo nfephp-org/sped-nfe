@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace NFePHP\NFe\Tests;
 
@@ -13,7 +14,7 @@ class ToolsTest extends NFeTestCase
      */
     protected $tools;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->tools = new Tools(
             $this->configJson,

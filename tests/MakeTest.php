@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace NFePHP\NFe\Tests;
 
@@ -138,24 +139,24 @@ class MakeTest extends TestCase
         $ide = $this->make->tagide($std);
 
         $this->assertEmpty($ide->getElementsByTagName('cUF')->item(0)->nodeValue);
-        $this->assertContains('cUF', $this->make->dom->errors[0]);
+        $this->assertStringContainsString('cUF', $this->make->dom->errors[0]);
         $this->assertEquals('78888888', $ide->getElementsByTagName('cNF')->item(0)->nodeValue);
         $this->assertEmpty($ide->getElementsByTagName('natOp')->item(0)->nodeValue);
-        $this->assertContains('natOp', $this->make->dom->errors[1]);
-        $this->assertContains('mod', $this->make->dom->errors[2]);
-        $this->assertContains('serie', $this->make->dom->errors[3]);
-        $this->assertContains('nNF', $this->make->dom->errors[4]);
-        $this->assertContains('dhEmi', $this->make->dom->errors[5]);
-        $this->assertContains('tpNF', $this->make->dom->errors[6]);
-        $this->assertContains('idDest', $this->make->dom->errors[7]);
-        $this->assertContains('cMunFG', $this->make->dom->errors[8]);
+        $this->assertStringContainsString('natOp', $this->make->dom->errors[1]);
+        $this->assertStringContainsString('mod', $this->make->dom->errors[2]);
+        $this->assertStringContainsString('serie', $this->make->dom->errors[3]);
+        $this->assertStringContainsString('nNF', $this->make->dom->errors[4]);
+        $this->assertStringContainsString('dhEmi', $this->make->dom->errors[5]);
+        $this->assertStringContainsString('tpNF', $this->make->dom->errors[6]);
+        $this->assertStringContainsString('idDest', $this->make->dom->errors[7]);
+        $this->assertStringContainsString('cMunFG', $this->make->dom->errors[8]);
         $this->assertEquals('0', $ide->getElementsByTagName('cDV')->item(0)->nodeValue);
-        $this->assertContains('tpAmb', $this->make->dom->errors[9]);
-        $this->assertContains('finNFe', $this->make->dom->errors[10]);
-        $this->assertContains('indFinal', $this->make->dom->errors[11]);
-        $this->assertContains('indPres', $this->make->dom->errors[12]);
-        $this->assertContains('procEmi', $this->make->dom->errors[13]);
-        $this->assertContains('verProc', $this->make->dom->errors[14]);
+        $this->assertStringContainsString('tpAmb', $this->make->dom->errors[9]);
+        $this->assertStringContainsString('finNFe', $this->make->dom->errors[10]);
+        $this->assertStringContainsString('indFinal', $this->make->dom->errors[11]);
+        $this->assertStringContainsString('indPres', $this->make->dom->errors[12]);
+        $this->assertStringContainsString('procEmi', $this->make->dom->errors[13]);
+        $this->assertStringContainsString('verProc', $this->make->dom->errors[14]);
     }
 
     public function testTagideVersaoQuantroPontoZeroModeloCinquentaECincoEmContigencia()
@@ -230,7 +231,7 @@ class MakeTest extends TestCase
         $this->assertEmpty($ide->getElementsByTagName('xJust')->item(0));
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->make = new Make();
     }

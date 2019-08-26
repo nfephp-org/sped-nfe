@@ -14,47 +14,39 @@ class StandardizeTest extends NFeTestCase
         $resp = $st->whichIs($xml);
         $this->assertEquals('NFe', $resp);
     }
-    
-    /**
-     * @expectedException NFePHP\NFe\Exception\DocumentsException
-     */
+
     public function testWhichIsFailNotXMLSting()
     {
+        $this->expectException(\NFePHP\NFe\Exception\DocumentsException::class);
         $st = new Standardize();
         $resp = $st->whichIs('jslsj ks slk lk');
         $resp = $st->whichIs($xml);
     }
-    
-    /**
-     * @expectedException NFePHP\NFe\Exception\DocumentsException
-     */
+
     public function testWhichIsFailNotXMLNumber()
     {
+        $this->expectException(\NFePHP\NFe\Exception\DocumentsException::class);
         $st = new Standardize();
         $resp = $st->whichIs(100);
         $resp = $st->whichIs($xml);
     }
-    
-    /**
-     * @expectedException NFePHP\NFe\Exception\DocumentsException
-     */
+
     public function testWhichIsFailNotXMLSpace()
     {
+        $this->expectException(\NFePHP\NFe\Exception\DocumentsException::class);
         $st = new Standardize();
         $resp = $st->whichIs('  ');
         $resp = $st->whichIs($xml);
     }
-    
-    /**
-     * @expectedException NFePHP\NFe\Exception\DocumentsException
-     */
+
     public function testWhichIsFailNotBelongToNFe()
     {
+        $this->expectException(\NFePHP\NFe\Exception\DocumentsException::class);
         $st = new Standardize();
         $xml = file_get_contents($this->fixturesPath. 'xml/cte.xml');
         $st->whichIs($xml);
     }
-    
+
     public function testToNode()
     {
         $xml = file_get_contents($this->fixturesPath. 'xml/2017nfe_antiga_v310.xml');
@@ -71,7 +63,7 @@ class StandardizeTest extends NFeTestCase
         $actualElement = $actualDom->documentElement;
         $this->assertEqualXMLStructure($expectedElement, $actualElement);
     }
-    
+
     public function testToJson()
     {
         $xml = file_get_contents($this->fixturesPath. 'xml/2017nfe_antiga_v310.xml');
@@ -79,7 +71,7 @@ class StandardizeTest extends NFeTestCase
         $expected = file_get_contents($this->fixturesPath. 'txt/2017nova-nfe.json');
         $this->assertEquals($expected, $st->toJson());
     }
-    
+
     public function testToArray()
     {
         $xml = file_get_contents($this->fixturesPath. 'xml/2017nfe_antiga_v310.xml');
@@ -87,7 +79,7 @@ class StandardizeTest extends NFeTestCase
         $expected = json_decode(file_get_contents($this->fixturesPath. 'txt/2017nova-nfe.json'), true);
         $this->assertEquals($expected, $st->toArray());
     }
-    
+
     public function testToStd()
     {
         $xml = file_get_contents($this->fixturesPath. 'xml/2017nfe_antiga_v310.xml');
