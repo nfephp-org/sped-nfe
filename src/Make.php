@@ -4421,7 +4421,7 @@ class Make
                 $this->dom->addChild(
                     $icmsSN,
                     'vBCFCPSTRet',
-                    $this->conditionalNumberFormatting($std->vBCFCPSTRet, 4),
+                    $this->conditionalNumberFormatting($std->vBCFCPSTRet, 2),
                     isset($std->vBCFCPSTRet) ? true : false,
                     "[item $std->item] Valor da Base de Cálculo do FCP "
                     . "retido anteriormente por Substituição Tributária"
