@@ -53,7 +53,7 @@
   <UF>
     <sigla>BA</sigla>
     <homologacao>
-       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">http://nfe.sefaz.ba.gov.br/servicos/nfce/qrcode.aspx</NfeConsultaQR>
+       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">http://hnfe.sefaz.ba.gov.br/servicos/nfce/qrcode.aspx</NfeConsultaQR>
     </homologacao>
     <producao>
        <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">http://nfe.sefaz.ba.gov.br/servicos/nfce/qrcode.aspx</NfeConsultaQR>
