@@ -26,8 +26,8 @@
        <NfeInutilizacao method="nfeInutilizacaoNF" operation="NFeInutilizacao4" version="4.00">https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeInutilizacao4</NfeInutilizacao>
        <NfeConsultaProtocolo method="nfeConsultaNF" operation="NFeConsulta4" version="4.00">	https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeConsulta4</NfeConsultaProtocolo>
        <NfeStatusServico method="nfeStatusServicoNF" operation="NFeStatusServico4" version="4.00">https://homnfce.sefaz.am.gov.br/nfce-services/services/NfeStatusServico4</NfeStatusServico>
-       <RecepcaoEvento method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento" version="1.00">https://homnfce.sefaz.am.gov.br/nfce-services/services/RecepcaoEvento4</RecepcaoEvento>
-       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">homnfce.sefaz.am.gov.br/nfceweb/consultarNFCe.jsp</NfeConsultaQR>
+       <RecepcaoEvento method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="1.00">https://homnfce.sefaz.am.gov.br/nfce-services/services/RecepcaoEvento4</RecepcaoEvento>
+       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">https://sistemas.sefaz.am.gov.br/nfceweb-hom/consultarNFCe.jsp</NfeConsultaQR>
        <CscNFCe method="admCscNFCe" operation="CscNFCe" version="1.00">https://homnfce.sefaz.am.gov.br/nfce-services/services/CscNFCe</CscNFCe>
     </homologacao>
     <producao>
@@ -36,8 +36,8 @@
        <NfeInutilizacao method="nfeInutilizacaoNF" operation="NFeInutilizacao4" version="4.00">https://nfce.sefaz.am.gov.br/nfce-services/services/NfeInutilizacao4</NfeInutilizacao>
        <NfeConsultaProtocolo method="nfeConsultaNF" operation="NFeConsulta4" version="4.00">https://nfce.sefaz.am.gov.br/nfce-services/services/NfeConsulta4</NfeConsultaProtocolo>
        <NfeStatusServico method="nfeStatusServicoNF" operation="NFeStatusServico4" version="4.00">https://nfce.sefaz.am.gov.br/nfce-services/services/NfeStatusServico4</NfeStatusServico>
-       <RecepcaoEvento method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento" version="1.00">https://nfce.sefaz.am.gov.br/nfce-services/services/RecepcaoEvento4</RecepcaoEvento>
-       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">sistemas.sefaz.am.gov.br/nfceweb/consultarNFCe.jsp</NfeConsultaQR>
+       <RecepcaoEvento method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="1.00">https://nfce.sefaz.am.gov.br/nfce-services/services/RecepcaoEvento4</RecepcaoEvento>
+       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">https://sistemas.sefaz.am.gov.br/nfceweb/consultarNFCe.jsp</NfeConsultaQR>
        <CscNFCe method="admCscNFCe" operation="CscNFCe" version="1.00">https://nfce.sefaz.am.gov.br/nfce-services/services/CscNFCe</CscNFCe>
     </producao>
   </UF>
