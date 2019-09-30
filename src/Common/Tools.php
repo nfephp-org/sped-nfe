@@ -212,6 +212,7 @@ class Tools
     public function getTypeOfPersonFromCertificate()
     {
         $cnpj = $this->certificate->getCnpj();
+        $cpf = $this->certificate->getCpf();
         $type = 'J';
         if (substr($cnpj, 0, 1) === 'N') {
             //não é CNPJ, então verificar se é CPF
@@ -222,6 +223,10 @@ class Tools
                 //não foi localizado nem CNPJ e nem CPF esse certificado não é usável
                 //throw new RuntimeException('Faltam elementos CNPJ/CPF no certificado digital.');
                 $type = '';
+            }
+        }else{//caso em que cnpj é nulo e cpf está presente
+            if(empty($cnpj) and !empty($cpf)){
+                $type = 'F';
             }
         }
         return $type;
