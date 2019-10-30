@@ -363,7 +363,7 @@ class Make
 
     /**
      * Call method of xml assembly. For compatibility only.
-     * @return boolean
+     * @return string
      */
     public function montaNFe()
     {
@@ -375,14 +375,13 @@ class Make
      * this function returns TRUE on success or FALSE on error
      * The xml of the NFe must be retrieved by the getXML() function or
      * directly by the public property $xml
-     * @return boolean
+     *
+     * @return string
+     * @throws RuntimeException
      */
     public function monta()
     {
         $this->errors = $this->dom->errors;
-        if (count($this->errors) > 0) {
-            return false;
-        }
         //cria a tag raiz da Nfe
         $this->buildNFe();
         //processa nfeRef e coloca as tags na tag ide
@@ -437,7 +436,10 @@ class Make
         // testa da chave
         $this->checkNFeKey($this->dom);
         $this->xml = $this->dom->saveXML();
-        return true;
+        if (count($this->errors) > 0) {
+            throw new RuntimeException('Existem erros nas tags. Obtenha os erros com getErrors().');
+        }
+        return $this->xml;
     }
 
     /**
@@ -450,7 +452,6 @@ class Make
     {
         $possible = ['Id', 'versao', 'pk_nItem'];
         $std = $this->equilizeParameters($std, $possible);
-
         $chave = preg_replace('/[^0-9]/', '', $std->Id);
         $this->infNFe = $this->dom->createElement("infNFe");
         $this->infNFe->setAttribute("Id", 'NFe' . $chave);
@@ -7336,14 +7337,10 @@ class Make
             $tpEmis,
             $cNF
         );
-        //caso a chave contida na NFe esteja errada
-        //substituir a chave
-        if ($chaveMontada != $chave) {
-            //throw new RuntimeException("A chave informada é diferente da chave
-            //montada com os dados [correto: $chaveMontada].");
-            $ide->getElementsByTagName('cDV')->item(0)->nodeValue = substr($chaveMontada, -1);
-            $infNFe = $dom->getElementsByTagName("infNFe")->item(0);
-            $infNFe->setAttribute("Id", "NFe" . $chaveMontada);
+        if (empty($chave)) {
+            //chave não foi passada por parâmetro então colocar a chavemontada
+            $infNFe->setAttribute('Id', "NFe$chaveMontada");
+            $chave = $chaveMontada;
             $this->chNFe = $chaveMontada;
             //trocar também o hash se o CSRT for passado
             if (!empty($this->csrt)) {
@@ -7352,6 +7349,21 @@ class Make
                     ->item(0)->nodeValue = $hashCSRT;
             }
         }
+        //caso a chave contida na NFe esteja errada
+        //substituir a chave
+        if ($chaveMontada != $chave) {
+            $this->chNFe = $chaveMontada;
+            $this->errors[] = "A chave informada está incorreta [$chave] => [correto: $chaveMontada].";
+        }
+    }
+    
+    /**
+     * Retorna os erros detectados
+     * @return array
+     */
+    public function getErrors()
+    {
+        return $this->errors;
     }
 
     /**
