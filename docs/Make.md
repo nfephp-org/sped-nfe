@@ -24,6 +24,8 @@ $std = json_decode(json_encode($array));
 ```
 
 > NOTA: Muitos campos não são obrigatórios. Caso não haja nenhum valor a ser informado, devem ser criados como NULL.
+> NOTA: Caso existam erros na passagem de parâmetros para a classe, será disparada uma Exception e esses erros poderão ser recuperados pelo método getErrors().
+ 
 
 # Métodos
 
@@ -37,13 +39,16 @@ $nfe = new Make();
 ### function taginfNFe($std):DOMElement
 Node principal
 
+NOTA: **se o parametro $std->Id não for passado a chave será criada e inclusa e poderá ser recuperada no parâmetro chNFe da classe,**
+**De outra forma se a chave for passada no parâmetro $std->Id e estiver incorreta, um erro será inserido na proriedade errors.**
+
 | Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $std = new stdClass();
-$std->versao = '3.10'; //versão do layout
+$std->versao = '4.00'; //versão do layout (string)
 $std->Id = 'NFe35150271780456000160550010000000021800700082'; //se o Id de 44 digitos não for passado será gerado automaticamente
 $std->pk_nItem = null; //deixe essa variavel sempre como NULL
 
@@ -1484,22 +1489,32 @@ $nfe->taginfRespTec($std);
 Este método chama o metodo monta(), mantido apenas para compatibilidade.
 
 ```php
-$result = $nfe->montaNFe();
+$xml = $nfe->montaNFe();
 ```
 
 ### function monta()
 Este método executa a montagem do XML
 
+> NOTA: irá retornar uma Exception caso existam erros na montagem OU retorna o XML montado caso não hajam erros.
+
 ```php
-$result = $nfe->monta();
+$xml = $nfe->monta();
 ```
 
 ### function getXMl():string
-Este método retorna o XML em uma string
+Este método retorna o XML em uma string, mesmo que existam erros.
 
 ```php
 $xml = $nfe->getXML();
 ```
+
+### function getErrors(): array
+Este método retorna os erros identificados na passagem dos parâmetros para a classe.
+
+```php
+$erros = $nfe->getErrors();
+```
+
 
 ### function getChave():string
 Este método retorna o numero da chave da NFe
