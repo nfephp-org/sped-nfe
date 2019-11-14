@@ -7342,6 +7342,7 @@ class Make
             $infNFe->setAttribute('Id', "NFe$chaveMontada");
             $chave = $chaveMontada;
             $this->chNFe = $chaveMontada;
+            $ide->getElementsByTagName('cDV')->item(0)->nodeValue = substr($chave, -1);
             //trocar também o hash se o CSRT for passado
             if (!empty($this->csrt)) {
                 $hashCSRT = $this->hashCSRT($this->csrt);
