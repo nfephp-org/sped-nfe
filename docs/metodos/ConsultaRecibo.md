@@ -28,25 +28,25 @@ try {
     $st = new Standardize();
     $std = $st->toStd($xmlResp);
 
-    if($std->cStat=='103') { //lote enviado
+    if ($std->cStat=='103') { //lote enviado
         //Lote ainda não foi precessado pela SEFAZ;
     }
-    if($std->cStat=='105') { //lote em processamento
+    if ($std->cStat=='105') { //lote em processamento
         //tente novamente mais tarde
     }
     
-    if($std->cStat=='104'){ //lote processado (tudo ok)
-        if($std->protNFe->infProt->cStat=='100'){ //Autorizado o uso da NF-e
+    if ($std->cStat=='104') { //lote processado (tudo ok)
+        if ($std->protNFe->infProt->cStat=='100') { //Autorizado o uso da NF-e
             $return = ["situacao"=>"autorizada",
                        "numeroProtocolo"=>$std->protNFe->infProt->nProt,
                        "xmlProtocolo"=>$xmlResp];
-        }elseif(in_array($std->protNFe->infProt->cStat,["302"])){ //DENEGADAS
+        } elseif (in_array($std->protNFe->infProt->cStat,["110", "301", "302"])) { //DENEGADAS
             $return = ["situacao"=>"denegada",
                        "numeroProtocolo"=>$std->protNFe->infProt->nProt,
                        "motivo"=>$std->protNFe->infProt->xMotivo,
                        "cstat"=>$std->protNFe->infProt->cStat,
                        "xmlProtocolo"=>$xmlResp];
-        }else{ //não autorizada (rejeição)
+        } else { //não autorizada (rejeição)
             $return = ["situacao"=>"rejeitada",
                        "motivo"=>$std->protNFe->infProt->xMotivo,
                        "cstat"=>$std->protNFe->infProt->cStat];

@@ -84,7 +84,7 @@ try {
         //TRATAR
     } else {
         $cStat = $std->retEvento->infEvento->cStat;
-        if ($cStat == '101' || $cStat == '155') {
+        if ($cStat == '101' || $cStat == '135' || $cStat == '155') {
             //SUCESSO PROTOCOLAR A SOLICITAÇÂO ANTES DE GUARDAR
             $xml = Complements::toAuthorize($tools->lastRequest, $response);
             //grave o XML protocolado 

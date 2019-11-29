@@ -16,7 +16,7 @@ E também permite a *"marcação"* de NFe como cancelada, **este não é um requ
 
 ### toAuthorize($request, $response):string
 
-Este método realiza a junção do protocolo de autorização com a requeiição original, criando um documentos VÁLIDO.
+Este método realiza a junção do protocolo de autorização com a requisição original, criando um documento VÁLIDO. Este método é utilizado para notas Aprovadas e Denegadas.
 
 Escopo: Publico
 
