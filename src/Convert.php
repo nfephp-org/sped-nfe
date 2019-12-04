@@ -16,6 +16,7 @@ namespace NFePHP\NFe;
 
 use NFePHP\NFe\Common\ValidTXT;
 use NFePHP\NFe\Exception\DocumentsException;
+use NFePHP\NFe\Exception\ParserException;
 use NFePHP\NFe\Factories\Parser;
 
 class Convert
@@ -77,6 +78,9 @@ class Convert
             $version = $this->layouts[$i];
             $parser = new Parser($version, $this->baselayout);
             $this->xmls[] = $parser->toXml($nota);
+            if ($errors = $parser->getErrors()) {
+                throw new ParserException(implode(', ', $errors));
+            }
             $i++;
         }
         return $this->xmls;

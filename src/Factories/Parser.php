@@ -141,6 +141,15 @@ class Parser
     }
 
     /**
+     * Retorna erros na criacao do DOM
+     * @return array
+     */
+    public function getErrors()
+    {
+        return $this->make->errors;
+    }
+
+    /**
      * Converte txt array to xml
      * @param array $nota
      * @return void

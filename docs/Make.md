@@ -2,10 +2,10 @@
 
 Para construir o XML da NFe (ou da NFCe) deve ser usada a classe Make::class
 
-## *NOTA: Esta classe agora recebe os parâmetros dos métodos em forma de stdClass e não mais com variáveis individuais. É importante salientar que os campos do stdClass devem ser nomeados com a EXATA nomenclatura contida no manual ou conforme a nomenclatura das estruturas do TXT, observando as letras maiuscula se minusculas.*
-## *NOTA: Procure observar a ordem em os métodos devem ser usados. Carregar os dados em sequencia errada pode causar problemas, especialmente em nodes dependentes.*
+## *NOTA: Esta classe agora recebe os parâmetros dos métodos em forma de stdClass e não mais com variáveis individuais. É importante salientar que os campos do stdClass devem ser nomeados com a EXATA nomenclatura contida no manual ou conforme a nomenclatura das estruturas do TXT, observando as letras maiúsculas e minúsculas.*
+## *NOTA: Procure observar a ordem como os métodos devem ser usados. Carregar os dados em sequência errada pode causar problemas, especialmente em nodes dependentes.*
 
-Esses stdClass pode ser criados diretamente como demonstrado nos exemplos abaixo, mas também podem ser criados a partir de matrizes.
+Esses stdClass podem ser criados diretamente como demonstrado nos exemplos abaixo, mas também podem ser criados a partir de matrizes.
 
 ## *NOTA: Ajustado para NT 2018.001 v1.00* Usar novos campos dessa NT em produção somente a partir de 29/04/2019. 
 ## *NOTA: Ajustado para NT 2018.001 v1.10* Usar novos campos dessa NT em produção somente a partir de 29/04/2019. 
@@ -23,7 +23,9 @@ $array = [
 $std = json_decode(json_encode($array));
 ```
 
-> NOTA: Muitos campos não são obrigatórios nesse caso caso não haja nenhum valor a ser informado, devem ser criados como NULL.
+> NOTA: Muitos campos não são obrigatórios. Caso não haja nenhum valor a ser informado, devem ser criados como NULL.
+> NOTA: Caso existam erros na passagem de parâmetros para a classe, será disparada uma Exception e esses erros poderão ser recuperados pelo método getErrors().
+ 
 
 # Métodos
 
@@ -37,14 +39,17 @@ $nfe = new Make();
 ### function taginfNFe($std):DOMElement
 Node principal
 
-| Parametro | Tipo | Descrição |
+NOTA: **se o parametro $std->Id não for passado a chave será criada e inclusa e poderá ser recuperada no parâmetro chNFe da classe,**
+**De outra forma se a chave for passada no parâmetro $std->Id e estiver incorreta, um erro será inserido na proriedade errors.**
+
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $std = new stdClass();
-$std->versao = '3.10'; //versão do layout
-$std->Id = 'NFe35150271780456000160550010000000021800700082';//se o Id de 44 digitos não for passado será gerado automaticamente
+$std->versao = '4.00'; //versão do layout (string)
+$std->Id = 'NFe35150271780456000160550010000000021800700082'; //se o Id de 44 digitos não for passado será gerado automaticamente
 $std->pk_nItem = null; //deixe essa variavel sempre como NULL
 
 $nfe->taginfNFe($std);
@@ -54,9 +59,9 @@ $nfe->taginfNFe($std);
 ### function tagide($std):DOMElement
 Node de identificação da NFe
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $std = new stdClass();
@@ -81,8 +86,8 @@ $std->tpAmb = 2;
 $std->finNFe = 1;
 $std->indFinal = 0;
 $std->indPres = 0;
-$std->procEmi = '3.10.31';
-$std->verProc = null;
+$std->procEmi = 0;
+$std->verProc = '3.10.31';
 $std->dhCont = null;
 $std->xJust = null;
 
@@ -92,9 +97,9 @@ $nfe->tagide($std);
 ### function tagrefNFe($std):DOMElement
 Node referente a NFe referenciada
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $std = new stdClass();
@@ -106,9 +111,9 @@ $nfe->tagrefNFe($std);
 ### function tagrefNF($std):DOMElement
 Node referente a Nota Fiscal referenciada modelo 1 ou 2
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $std = new stdClass();
@@ -125,9 +130,9 @@ $nfe->tagrefNF($std);
 ### function tagrefNFP($std):DOMElement
 Node referente a Nota Fiscal referenciada de produtor rural
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $std = new stdClass();
@@ -145,9 +150,9 @@ $nfe->tagrefNFP($std);
 ### function tagrefCTe($std):DOMElement
 Node referente aos CTe referenciados
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->refCTe = '35150268252816000146570010000016161002008472';
@@ -158,9 +163,9 @@ $nfe->tagrefCTe($std);
 ### function tagrefECF($std):DOMElement
 Node referente aos ECF referenciados
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->mod = '2C';
@@ -171,11 +176,11 @@ $nfe->tagrefECF($std);
 ```
 
 ### function tagemit($std):DOMElement
-Nod ecom os dados do emitente
+Node com os dados do emitente
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $std = new stdClass();
@@ -195,9 +200,9 @@ $nfe->tagemit($std);
 ### function tagenderEmit($std):DOMElement
 Node com o endereço do emitente
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $std = new stdClass();
@@ -219,9 +224,9 @@ $nfe->tagenderEmit($std);
 ### function tagdest($std):DOMElement
 Node com os dados do destinatário
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $std = new stdClass();
@@ -241,9 +246,9 @@ $nfe->tagdest($std);
 ### function tagenderDest($std):DOMElement
 Node de endereço do destinatário
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $std = new stdClass();
@@ -266,23 +271,23 @@ $nfe->tagenderDest($std);
 > NOTA: Ajustado para NT 2018.005
 Node indicativo de local de retirada diferente do endereço do emitente
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $std = new stdClass();
-$std->CNPJ = '12345678901234; //indicar apenas um CNPJ ou CPF
+$std->CNPJ = '12345678901234'; //indicar apenas um CNPJ ou CPF
 $std->CPF = null;
 $std->IE = '12345678901';
 $std->xNome = 'Beltrano e Cia Ltda';
-$std->xLgr = 'Rua Um;
+$std->xLgr = 'Rua Um';
 $std->nro = '123';
 $std->xCpl = 'sobreloja';
 $std->xBairro = 'centro';
 $std->cMun = '3550308';
 $std->xMun = 'Sao Paulo';
-$std->UF = 'SP;
+$std->UF = 'SP';
 $std->CEP = '01023000';
 $std->cPais = '1058';
 $std->xPais = 'BRASIL';
@@ -295,24 +300,24 @@ $nfe->tagretirada($std);
 
 ### function tagentrega($std):DOMElement
 > NOTA: Ajustado para NT 2018.005
-Node indicativo de local de entraga diferente do endereço do destinatário
+Node indicativo de local de entrega diferente do endereço do destinatário
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->CNPJ; //indicar um CNPJ ou CPF
 $std->CPF = null;
 $std->IE = '12345678901';
 $std->xNome = 'Beltrano e Cia Ltda';
-$std->xLgr = 'Rua Um;
+$std->xLgr = 'Rua Um';
 $std->nro = '123';
 $std->xCpl = 'sobreloja';
 $std->xBairro = 'centro';
 $std->cMun = '3550308';
 $std->xMun = 'Sao Paulo';
-$std->UF = 'SP;
+$std->UF = 'SP';
 $std->CEP = '01023000';
 $std->cPais = '1058';
 $std->xPais = 'BRASIL';
@@ -325,9 +330,9 @@ $nfe->tagentrega($std);
 ### function tagautXML($std):DOMElement
 Node de registro de pessoas autorizadas a acessar a NFe
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->CNPJ = '12345678901234'; //indicar um CNPJ ou CPF
@@ -338,9 +343,9 @@ $nfe->tagautXML($std);
 ### function tagprod($std):DOMElement
 Node de dados do produto/serviço
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
@@ -376,9 +381,9 @@ $nfe->tagprod($std);
 ### function taginfAdProd($std):DOMElement
 Node de informações adicionais do produto
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
@@ -391,9 +396,9 @@ $nfe->taginfAdProd($std);
 ### function tagNVE($std):DOMElement
 Node com a Nomenclatura de Valor Aduaneiro e Estatística do item da NFe
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
@@ -405,9 +410,9 @@ $nfe->tagNVE($std);
 ### function tagCEST($std):DOMElement
 Node de detalhamento do Especificador da Substituição Tributária do item da NFe
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
@@ -419,11 +424,11 @@ $nfe->tagCEST($std);
 ```
 
 ### function tagRECOPI($std):DOMElement
-Node com o numero do RECOPI
+Node com o número do RECOPI
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
@@ -435,9 +440,9 @@ $nfe->tagRECOPI($std);
 ### function tagDI($std):DOMElement
 Node com informações da Declaração de Importação do item da NFe
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
@@ -459,13 +464,13 @@ $nfe->tagDI($std);
 ### function tagadi($std):DOMElement
 Node de Adições relativas as DI do item
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
-$std->nDI; //numero da DI
+$std->nDI; //número da DI
 $std->nAdicao;
 $std->nSeqAdic;
 $std->cFabricante;
@@ -478,9 +483,9 @@ $nfe->tagadi($std);
 ### function tagdetExport($std):DOMElement
 Node com informações de exportação para o item
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
@@ -493,9 +498,9 @@ $nfe->tagdetExport($std);
 Node com Grupo sobre exportação indireta, deve ser indicado logo após
 $nfe->tagdetExport($std) pois pertence a essa tag
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
@@ -510,9 +515,9 @@ Node com os dados de rastreabilidade do item da NFe
 
 *Método Incluso para atender layout 4.00*
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
@@ -528,9 +533,9 @@ $nfe->tagRastro($std);
 ### function tagveicProd($std):DOMElement
 Node com o detalhamento de Veículos novos do item da NFe
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
@@ -566,9 +571,9 @@ $nfe->tagveicProd($std);
 > NOTA: Ajustado conforme NT 2018.005
 Node com o detalhamento de Medicamentos e de matérias-primas farmacêuticas
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
@@ -582,13 +587,13 @@ $nfe->tagmed($std);
 ### function tagarma($std):DOMElement
 Node com informações e detalhamento de Armamento do item da NFe
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
-$std->nAR; //Indicativo de numero da arma
+$std->nAR; //Indicativo de número da arma
 $std->tpArma;
 $std->nSerie;
 $std->nCano;
@@ -600,9 +605,9 @@ $nfe->tagarma($std);
 ### function tagcomb($std):DOMElement
 Node das informações específicas para combustíveis líquidos e lubrificantes do item da NFe
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
@@ -630,9 +635,9 @@ $nfe->tagcomb($std);
 Node das informações do grupo de “encerrante” disponibilizado por hardware específico acoplado à bomba de Combustível, definido no controle da venda do Posto Revendedor de Combustível.
 Referente ao item da NFe
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
@@ -663,9 +668,9 @@ $nfe->tagimposto($std);
 > NOTA: Ajustado conforme NT 2018.005_1.10
 Node com informações do ICMS do item da NFe
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
@@ -711,9 +716,9 @@ $nfe->tagICMS($std);
 ### function tagICMSPart($std):DOMElement
 Node com informações da partilha do ICMS entre a UF de origem e UF de destino ou a UF definida na legislação.
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
@@ -769,9 +774,9 @@ $nfe->tagICMSST($std);
 Node referente Tributação ICMS pelo Simples Nacional do item da NFe
 > NOTA: Ajustado conforme NT 2018.005_1.10
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
@@ -811,7 +816,7 @@ $nfe->tagICMSSN($std);
 ### function tagICMSUFDest($std):DOMElement
 Node de informação do ICMS Interestadual do item na NFe
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
 | $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
@@ -833,9 +838,11 @@ $nfe->tagICMSUFDest($std);
 ### function tagIPI($std):DOMElement
 Node referente ao IPI do item da NFe
 
-| Parametro | Tipo | Descrição |
+> NOTA: clEnq foi removido do layout 4.00 na NT_2016_V1.40
+
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
@@ -857,9 +864,9 @@ $nfe->tagIPI($std);
 ### function tagII($std):DOMElement
 Node Imposto de Importação do item da NFe
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
@@ -874,9 +881,9 @@ $nfe->tagII($std);
 ### function tagPIS($std):DOMElement
 Node PIS do item da NFe
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
@@ -893,9 +900,9 @@ $nfe->tagPIS($std);
 ### function tagPISST($std):DOMElement
 Node PIS Substituição Tributária do item da NFe
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
@@ -911,9 +918,9 @@ $nfe->tagPISST($std);
 ### function tagCOFINS($std):DOMElement
 Node COFINS do item da NFe
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
@@ -930,9 +937,9 @@ $nfe->tagCOFINS($std);
 ### function tagCOFINSST($std):DOMElement
 Node COFINS Substituição Tributária do item da NFe
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
@@ -948,9 +955,9 @@ $nfe->tagCOFINSST($std);
 ### function tagISSQN($std):DOMElement
 Node ISSQN do item da NFe
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
@@ -979,9 +986,9 @@ Node referente a informação do Imposto devolvido
 
 > NOTA: O motivo da devolução deverá ser informado pela empresa no campo de Informações Adicionais do Produto (tag:infAdProd).
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->item = 1; //item da NFe
@@ -996,9 +1003,9 @@ Node dos totais referentes ao ICMS
 
 > NOTA: Esta tag não necessita que sejam passados valores, pois a classe irá calcular esses totais e irá usar essa totalização para complementar e gerar esse node, caso nenhum valor seja passado como parâmetro.
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->vBC = 1000.00;
@@ -1028,11 +1035,11 @@ $nfe->tagICMSTot($std);
 ### function tagISSQNTot($std):DOMElement
 Node de Totais referentes ao ISSQN
 
-> NOTA: caso os valores não existam indique "null". Se for indocado 0.00 esse numero será incluso no XML o que poderá causar sua rejeição.
+> NOTA: caso os valores não existam indique "null". Se for indicado 0.00 esse número será incluso no XML o que poderá causar sua rejeição.
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->vServ = 1000.00;
@@ -1062,9 +1069,9 @@ Node referente a retenções de tributos
 
 > c) IRPJ, CSLL, COFINS e PIS - Serviços Prestados por Pessoas Jurídicas - Retenção na Fonte, Lei no 10.833 de 29.12.2003, art. 30, 31, 32, 35 e 36
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->vRetPIS = 100.00;
@@ -1081,9 +1088,9 @@ $nfe->tagretTrib($std);
 ### function tagtransp($std):DOMElement
 Node indicativo da forma de frete
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $std = new stdClass();
@@ -1093,11 +1100,11 @@ $nfe->tagtransp($std);
 ```
 
 ### function tagtransporta($std):DOMElement
-Node com os dados da tranportadora
+Node com os dados da transportadora
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->xNome = 'Rodo Fulano';
@@ -1114,9 +1121,9 @@ $nfe->tagtransporta($std);
 ### function tagretTransp($std):DOMElement
 Node referente a retenção de ICMS do serviço de transporte
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->vServ = 240.00;
@@ -1132,9 +1139,9 @@ $nfe->tagveicTransp($std);
 ### function tagveicTransp($std):DOMElement
 Node para informação do veículo trator
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->placa = 'ABC1111';
@@ -1147,9 +1154,9 @@ $nfe->tagveicTransp($std);
 ### function tagreboque($std):DOMElement
 Node para informar os reboques/Dolly
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->placa = 'BCB0897';
@@ -1162,9 +1169,9 @@ $nfe->tagreboque($std);
 ### function tagvagao($std):DOMElement
 Node para informar o vagão usado
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $std = new stdClass();
@@ -1174,11 +1181,11 @@ $nfe->tagvagao($std);
 ```
 
 ### function tagbalsa($std):DOMElement
-Node para informar o balsa usado
+Node para informar a balsa usada
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $std = new stdClass();
@@ -1191,9 +1198,9 @@ $nfe->tagbalsa($std);
 ### function tagvol($std):DOMElement
 Node com as informações dos volumes transportados
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->item = 1; //indicativo do numero do volume
@@ -1210,9 +1217,9 @@ $nfe->tagvol($std);
 ### function taglacres($std):DOMElement
 Node com a identificação dos lacres, referentes ao volume
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->item = 1; //indicativo do numero do volume
@@ -1224,9 +1231,9 @@ $nfe->taglacres($std);
 ### function tagfat($std):DOMElement
 Node com os dados da fatura
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->nFat = '1233';
@@ -1239,9 +1246,9 @@ $nfe->tagfat($std);
 ### function tagdup($std):DOMElement
 Node de informações das duplicatas
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->nDup = '1233-1';
@@ -1255,9 +1262,9 @@ $nfe->tagdup($std);
 Node referente as formas de pagamento **OBRIGATÓRIO para NFCe a partir do layout 3.10**
 e também **obrigatório para NFe (modelo 55)** a partir do layout 4.00
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 
 ```php
@@ -1274,9 +1281,9 @@ Node com o detalhamento da forma de pagamento **OBRIGATÓRIO para NFCe e NFe lay
 > NOTA: indPag re-incluso no layout 4.00 NT_2016_V1.51
 > NOTA: tPag 14 - duplicata foi removido do layout 4.00 na NT_2016_V1.51
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->tPag = '03';
@@ -1291,23 +1298,22 @@ $nfe->tagdetPag($std);
 ```
 >NOTA: para NFe (modelo 55), temos ...
 >
-> vPag=0.00 **mas pode ter valor se a venda for a vista**
+> vPag=0.00 **mas pode ter valor se a venda for à vista**
 >
 > tPag é usualmente:
-> - 14 = Duplicata Mercantil
 > - 15 = Boleto Bancário
 > - 90 = Sem pagamento
 > - 99 = Outros
 >
-> *Porém podem haver casos que os outros nodes e valores tenha de ser usados.*
+> *Porém podem haver casos que os outros nodes e valores tenham de ser usados.*
 
 
 ### function taginfAdic($std):DOMElement
 Node referente as informações adicionais da NFe
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $std = new stdClass();
@@ -1320,11 +1326,11 @@ $nfe->taginfAdic($std);
 ### function tagobsCont($std):DOMElement
 Campo de uso livre do contribuinte, Informar o nome do campo no atributo xCampo e o conteúdo do campo no xTexto
 
-*NOTA: pode ser usado, por exemplo para indicar outros destinatários de email, além do prório destinatário da NFe, como o contador, etc.*
+*NOTA: pode ser usado, por exemplo, para indicar outros destinatários de e-mail, além do próprio destinatário da NFe, como o contador, etc.*
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->xCampo = 'email';
@@ -1352,9 +1358,9 @@ $nfe->tagobsFisco($std);
 ### function tagprocRef($std):DOMElement
 Node com a identificação do processo ou ato concessório
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->nProc 'ks7277272';
@@ -1366,9 +1372,9 @@ $nfe->tagprocRef($std);
 ### function tagexporta($std):DOMElement
 Node com dados de exportação.
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->UFSaidaPais = 'PR';
@@ -1380,14 +1386,14 @@ $nfe->tagexporta($std);
 ### function tagcompra($std):DOMElement
 Node com a informação adicional de compra
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $std = new stdClass();
 $std->xNEmp = 'ajhjs8282828';
-$std->xPed = '828288jjshsjhjwj'
+$std->xPed = '828288jjshsjhjwj';
 $std->xCont = 'contrato 1234';
 
 $nfe->tagcompra($std);
@@ -1396,9 +1402,9 @@ $nfe->tagcompra($std);
 ### function tagcana($std):DOMElement
 Node com as informações de registro aquisições de cana
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $std = new stdClass();
@@ -1417,9 +1423,9 @@ $nfe->tagcana($std);
 ### function tagforDia($std):DOMElement
 Node informativo do fornecimento diário de cana
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $std = new stdClass();
@@ -1430,11 +1436,11 @@ $nfe->tagforDia($std);
 ```
 
 ### function tagdeduc($std):DOMElement
-Node das deduções Grupo Deduções – Taxas e Contribuições da aquisição de cana
+Node Grupo Deduções – Taxas e Contribuições da aquisição de cana
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
 $std->xDed = 'deducao 1';
@@ -1445,11 +1451,11 @@ $nfe->tagdeduc($std);
 ### function taginfNFeSupl($std):DOMElement
 Node das informações suplementares da NFCe.
 
-*Não é necessário informar será prenchido automaticamente após a assinatura da NFCe*
+*Não é necessário informar será preenchido automaticamente após a assinatura da NFCe*
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $std = new stdClass();
@@ -1460,12 +1466,12 @@ $nfe->taginfNFeSupl($std);
 ```
 
 ### function taginfRespTec($std):DOMElement
-Node da informação referentes ao Responsável Técnico NT 2018.005
+Node da informação referente ao Responsável Técnico NT 2018.005
 **Esta tag é OPCIONAL mas se for passada todos os campos devem ser passados para a função.**
 
-| Parametro | Tipo | Descrição |
+| Parâmetro | Tipo | Descrição |
 | :--- | :---: | :--- |
-| $std | stcClass | contêm os dados dos campos, nomeados conforme manual |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $std = new stdClass();
@@ -1483,22 +1489,32 @@ $nfe->taginfRespTec($std);
 Este método chama o metodo monta(), mantido apenas para compatibilidade.
 
 ```php
-$result = $nfe->montaNFe();
+$xml = $nfe->montaNFe();
 ```
 
 ### function monta()
 Este método executa a montagem do XML
 
+> NOTA: irá retornar uma Exception caso existam erros na montagem OU retorna o XML montado caso não hajam erros.
+
 ```php
-$result = $nfe->monta();
+$xml = $nfe->monta();
 ```
 
 ### function getXMl():string
-Este método retorna o XML em uma string
+Este método retorna o XML em uma string, mesmo que existam erros.
 
 ```php
 $xml = $nfe->getXML();
 ```
+
+### function getErrors(): array
+Este método retorna os erros identificados na passagem dos parâmetros para a classe.
+
+```php
+$erros = $nfe->getErrors();
+```
+
 
 ### function getChave():string
 Este método retorna o numero da chave da NFe
