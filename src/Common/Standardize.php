@@ -129,11 +129,7 @@ class Standardize
             $this->key = $this->whichIs($xml);
         }
         $this->sxml = simplexml_load_string($this->node);
-        $this->json = str_replace(
-            '@attributes',
-            'attributes',
-            json_encode($this->sxml, JSON_PRETTY_PRINT)
-        );
+        $this->json = json_encode($this->sxml, JSON_PRETTY_PRINT));
 
         $std = json_decode($this->json);
         if (isset($std->infNFeSupl)) {
