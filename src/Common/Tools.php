@@ -513,7 +513,7 @@ class Tools
             throw new \RuntimeException('Em contingencia FSDA ou OFFLINE não é possivel acessar os webservices.');
         }
         $this->checkSoap();
-        return (string) $this->soap->send(
+        $response = (string) $this->soap->send(
             $this->urlService,
             $this->urlMethod,
             $this->urlAction,
@@ -523,6 +523,7 @@ class Tools
             $request,
             $this->objHeader
         );
+        return Strings::normalize($response);
     }
 
     /**

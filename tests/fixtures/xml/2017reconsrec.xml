@@ -1,1 +1,34 @@
-<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Header><nfeCabecMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetAutorizacao"><cUF>35</cUF><versaoDados>3.10</versaoDados></nfeCabecMsg></soap:Header><soap:Body><nfeRetAutorizacaoLoteResult xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetAutorizacao"><retConsReciNFe versao="3.10" xmlns="http://www.portalfiscal.inf.br/nfe"><tpAmb>2</tpAmb><verAplic>SP_NFE_PL_008i2</verAplic><nRec>351000109901280</nRec><cStat>104</cStat><xMotivo>Lote processado</xMotivo><cUF>35</cUF><dhRecbto>2017-03-16T17:32:47-03:00</dhRecbto><protNFe versao="3.10"><infProt><tpAmb>2</tpAmb><verAplic>SP_NFE_PL_008i2</verAplic><chNFe>35170358716523000119550010000000301000000300</chNFe><dhRecbto>2017-03-16T15:50:02-03:00</dhRecbto><nProt>135170001136476</nProt><digVal>EqYTTcw4JWqY8+nKOnqSvYh+LXA=</digVal><cStat>100</cStat><xMotivo>Autorizado o uso da NF-e</xMotivo></infProt></protNFe></retConsReciNFe></nfeRetAutorizacaoLoteResult></soap:Body></soap:Envelope>
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <soap:Header>
+        <nfeCabecMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetAutorizacao">
+            <cUF>35</cUF>
+            <versaoDados>3.10</versaoDados>
+        </nfeCabecMsg>
+    </soap:Header>
+    <soap:Body>
+        <nfeRetAutorizacaoLoteResult xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NfeRetAutorizacao">
+            <retConsReciNFe versao="3.10" xmlns="http://www.portalfiscal.inf.br/nfe">
+                <tpAmb>2</tpAmb>
+                <verAplic>SP_NFE_PL_008i2</verAplic>
+                <nRec>351000109901280</nRec>
+                <cStat>104</cStat>
+                <xMotivo>Lote processado</xMotivo>
+                <cUF>35</cUF>
+                <dhRecbto>2017-03-16T17:32:47-03:00</dhRecbto>
+                <protNFe versao="3.10">
+                    <infProt>
+                        <tpAmb>2</tpAmb>
+                        <verAplic>SP_NFE_PL_008i2</verAplic>
+                        <chNFe>35170358716523000119550010000000301000000300</chNFe>
+                        <dhRecbto>2017-03-16T15:50:02-03:00</dhRecbto>
+                        <nProt>135170001136476</nProt>
+                        <digVal>EqYTTcw4JWqY8+nKOnqSvYh+LXA=</digVal>
+                        <cStat>100</cStat>
+                        <xMotivo>Autorizado o uso da NF-e</xMotivo>
+                    </infProt>
+                </protNFe>
+            </retConsReciNFe>
+        </nfeRetAutorizacaoLoteResult>
+    </soap:Body>
+</soap:Envelope>
