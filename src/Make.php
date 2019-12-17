@@ -4132,7 +4132,7 @@ class Make
         $std = $this->equilizeParameters($std, $possible);
         //totalizador generico
         $this->stdTot->vFCPST += (float) !empty($std->vFCPST) ? $std->vFCPST : 0;
-        $this->stdTot->vFCPSTRet += (float) !empty($std->vFCPST) ? $std->vFCPSTRet : 0;
+        $this->stdTot->vFCPSTRet += (float) !empty($std->vFCPSTRet) ? $std->vFCPSTRet : 0;
         switch ($std->CSOSN) {
             case '101':
                 $icmsSN = $this->dom->createElement("ICMSSN101");
