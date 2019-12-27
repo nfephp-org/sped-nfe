@@ -1,1 +1,2641 @@
-[{"cod":"100","msg":"Autorizado o uso da NF-e","status":"1","correct":""},{"cod":"101","msg":"Cancelamento de NF-e homologado","status":"1","correct":""},{"cod":"102","msg":"Inutiliza\u00e7\u00e3o de n\u00famero homologado","status":"1","correct":""},{"cod":"103","msg":"Lote recebido com sucesso","status":"1","correct":""},{"cod":"104","msg":"Lote processado","status":"1","correct":""},{"cod":"105","msg":"Lote em processamento","status":"1","correct":""},{"cod":"106","msg":"Lote n\u00e3o localizado","status":"0","correct":"O numero de recibo n\u00e3o foi localizado, confira"},{"cod":"107","msg":"Servi\u00e7o em Opera\u00e7\u00e3o","status":"1","correct":""},{"cod":"108","msg":"Servi\u00e7o Paralisado Momentaneamente (curto prazo)","status":"0","correct":"Fora do ar AGUARDE!"},{"cod":"109","msg":"Servi\u00e7o Paralisado sem Previs\u00e3o","status":"0","correct":"Fora do ar tente usar CONTING\u00caNCIA"},{"cod":"110","msg":"Uso Denegado","status":"0","correct":"Cuidado algo errado com o registro da empresa na SEFAZ"},{"cod":"111","msg":"Consulta cadastro com uma ocorr\u00eancia","status":"1","correct":""},{"cod":"112","msg":"Consulta cadastro com mais de uma ocorr\u00eancia","status":"1","correct":""},{"cod":"113","msg":"SVC em processo de desativa\u00e7\u00e3o SVC sera\u0301  desabilitada para a SEFAZ-XX em dd\/mm\/aa \u00e0s hh:mm horas","status":"0","correct":"Conting\u00eancia indispon\u00edvel"},{"cod":"114","msg":"SVC-RS desabilitada pela SEFAZ de Origem","status":"0","correct":"Conting\u00eancia indispon\u00edvel"},{"cod":"124","msg":"EPEC Autorizado","status":"1","correct":""},{"cod":"128","msg":"Lote de Evento Processado","status":"1","correct":""},{"cod":"135","msg":"Evento registrado e vinculado a NF-e","status":"1","correct":""},{"cod":"136","msg":"Evento registrado, mas n\u00e3o vinculado a NF-e","status":"1","correct":""},{"cod":"137","msg":"Nenhum documento localizado para o Destinat\u00e1rio","status":"1","correct":""},{"cod":"138","msg":"Documento localizado para o Destinat\u00e1rio","status":"1","correct":""},{"cod":"139","msg":"Pedido de Download processado","status":"1","correct":""},{"cod":"140","msg":"Download disponibilizado","status":"1","correct":""},{"cod":"142","msg":"Ambiente de Conting\u00eancia EPEC bloqueado para o Emitente","status":"0","correct":"EPEC bloqueado consultar a SEFAZ"},{"cod":"150","msg":"Autorizado o uso da NF-e, autoriza\u00e7\u00e3o fora de prazo","status":"1","correct":""},{"cod":"151","msg":"Cancelamento de NF-e homologado fora de prazo","status":"1","correct":""},{"cod":"155","msg":"Cancelamento homologado fora de prazo","status":"1","correct":""},{"cod":"201","msg":"Rejei\u00e7\u00e3o: N\u00famero m\u00e1ximo de numera\u00e7\u00e3o a inutilizar ultrapassou o limite","status":"0","correct":"N\u00e3o podem ser inutilizados tantos numeros"},{"cod":"202","msg":"Rejei\u00e7\u00e3o: Falha no reconhecimento da autoria ou integridade do arquivo digital","status":"0","correct":"Algo n\u00e3o esta correto no formato do arquivo"},{"cod":"203","msg":"Rejei\u00e7\u00e3o: Emissor n\u00e3o habilitado para emiss\u00e3o de NF-e","status":"0","correct":"Voc\u00ea n\u00e3o est\u00e1 credenciado para usar esse servi\u00e7o"},{"cod":"204","msg":"Duplicidade de NF-e [nRec:999999999999999]","status":"0","correct":"J\u00e1 existe outra NFe autorizada com esse mesmo numero"},{"cod":"205","msg":"NF-e est\u00e1 denegada na base de dados da SEFAZ [nRec:999999999999999]","status":"0","correct":"Essa nota j\u00e1 existe e foi DENEGADA"},{"cod":"206","msg":"Rejei\u00e7\u00e3o: NF-e j\u00e1 est\u00e1 inutilizada na Base de dados da SEFAZ","status":"0","correct":"Esse numero de NFe foi inutilizado anteriormente"},{"cod":"207","msg":"Rejei\u00e7\u00e3o: CNPJ do emitente inv\u00e1lido","status":"0","correct":"Erro no CNPJ do emitente"},{"cod":"208","msg":"Rejei\u00e7\u00e3o: CNPJ do destinat\u00e1rio inv\u00e1lido","status":"0","correct":"Erro no CNPJ do destinat\u00e1rio"},{"cod":"209","msg":"Rejei\u00e7\u00e3o: IE do emitente inv\u00e1lida","status":"0","correct":"IE incorreta do emitente"},{"cod":"210","msg":"Rejei\u00e7\u00e3o: IE do destinat\u00e1rio inv\u00e1lida","status":"0","correct":"IE incorreta do destinat\u00e1rio"},{"cod":"211","msg":"Rejei\u00e7\u00e3o: IE do substituto inv\u00e1lida","status":"0","correct":"IE do substituto incorreta"},{"cod":"212","msg":"Rejei\u00e7\u00e3o: Data de emiss\u00e3o NF-e posterior a data de recebimento","status":"0","correct":"Verifique o relogio do sistema ou a zona de tempo ou o hor\u00e1rio de ver\u00e3o"},{"cod":"213","msg":"Rejei\u00e7\u00e3o: CNPJ-Base do Emitente difere do CNPJ-Base do Certificado Digital","status":"0","correct":"Voc\u00ea est\u00e1 usando um certificado de outro CNPJ"},{"cod":"214","msg":"Rejei\u00e7\u00e3o: Tamanho da mensagem excedeu o limite estabelecido","status":"0","correct":"O tamanho da mensagem \u00e9 maior que o aceit\u00e1vel, reduza o numero de NFe ou de itens"},{"cod":"215","msg":"Rejei\u00e7\u00e3o: Falha no schema XML","status":"0","correct":"Provavelmente foram encontrados caracteres estranhos e n\u00e3o suportados"},{"cod":"216","msg":"Rejei\u00e7\u00e3o: Chave de Acesso difere da cadastrada","status":"0","correct":"A chave de acesso indicada est\u00e1 difernete a registra na SEFAZ"},{"cod":"217","msg":"Rejei\u00e7\u00e3o: NF-e n\u00e3o consta na base de dados da SEFAZ","status":"0","correct":"Essa NFe n\u00e3o est\u00e1 registrada, ou n\u00e3o foi enviada ou foi rejetada"},{"cod":"218","msg":"NF-e j\u00e1 est\u00e1 cancelada na base de dados da SEFAZ [nRec:999999999999999]","status":"0","correct":"N\u00e3o \u00e9 possivel realizar mais opera\u00e7\u00f5es com a NFE j\u00e1 cancelada"},{"cod":"219","msg":"Rejei\u00e7\u00e3o: Circula\u00e7\u00e3o da NF-e verificada","status":"0","correct":"O cancelamento n\u00e3o \u00e9 mais possivel a circula\u00e7\u00e3o j\u00e1 foi identificada"},{"cod":"220","msg":"Rejei\u00e7\u00e3o: Prazo de Cancelamento superior ao previsto na Legisla\u00e7\u00e3o","status":"0","correct":"As notas somente podem ser canceladas dentro do prazo"},{"cod":"221","msg":"Rejei\u00e7\u00e3o: Confirmado o recebimento da NF-e pelo destinat\u00e1rio","status":"0","correct":"O recebimento j\u00e1 foi feito pelo destinat\u00e1rio n\u00e3o pode mais ser cancelada"},{"cod":"222","msg":"Rejei\u00e7\u00e3o: Protocolo de Autoriza\u00e7\u00e3o de Uso difere do cadastrado","status":"0","correct":"O numero do protocolo indicado \u00e9 diferente do registrado"},{"cod":"223","msg":"Rejei\u00e7\u00e3o: CNPJ do transmissor do lote difere do CNPJ do transmissor da consulta","status":"0","correct":"O certificado usado para autenticar a comunica\u00e7\u00e3o n\u00e3o \u00e9 o mesmo usado para assinar a NF-e"},{"cod":"224","msg":"Rejei\u00e7\u00e3o: A faixa inicial \u00e9 maior que a faixa final","status":"0","correct":"Preste aten\u00e7\u00e3o aos numeros para inutilizar"},{"cod":"225","msg":"Rejei\u00e7\u00e3o: Falha no Schema XML do lote de NFe","status":"0","correct":"Podem ser Espa\u00e7os entre as TAGs do XML; Quebras de Linhas; Caracteres especiais; Nome de TAGs errados; Vers\u00e3o do XML diferente do esperado pelo WebService"},{"cod":"226","msg":"Rejei\u00e7\u00e3o: C\u00f3digo da UF do Emitente diverge da UF autorizadora","status":"0","correct":"O cUF indicado n\u00e3o corresponde a UF, avise o administrador"},{"cod":"227","msg":"Rejei\u00e7\u00e3o: Erro na Chave de Acesso - Campo Id \u2013 falta a literal NFe","status":"0","correct":"Falha no atributo Id, avise o administrador"},{"cod":"228","msg":"Rejei\u00e7\u00e3o: Data de Emiss\u00e3o muito atrasada","status":"0","correct":"Existe um limite de tempo para enviar uma solicita\u00e7\u00e3o e foi ultrapassado. Refa\u00e7a e reenvie"},{"cod":"229","msg":"Rejei\u00e7\u00e3o: IE do emitente n\u00e3o informada","status":"0","correct":"A IE do emitente \u00e9 obrigat\u00f3ria"},{"cod":"230","msg":"Rejei\u00e7\u00e3o: IE do emitente n\u00e3o cadastrada","status":"0","correct":"Emitente n\u00e3o cadastrado, verifique com a SEFAZ"},{"cod":"231","msg":"Rejei\u00e7\u00e3o: IE do emitente n\u00e3o vinculada ao CNPJ","status":"0","correct":"A IE n\u00e3o pertence ao CNPJ, corrija"},{"cod":"232","msg":"Rejei\u00e7\u00e3o: IE do destinat\u00e1rio n\u00e3o informada","status":"0","correct":"IE do destinat\u00e1rio deve ser informada nesse caso"},{"cod":"233","msg":"Rejei\u00e7\u00e3o: IE do destinat\u00e1rio n\u00e3o cadastrada","status":"0","correct":"A IE do destinat\u00e1rio deve estar incorreta, verifique"},{"cod":"234","msg":"Rejei\u00e7\u00e3o: IE do destinat\u00e1rio n\u00e3o vinculada ao CNPJ","status":"0","correct":"A IE do destinat\u00e1rio n\u00e3o pertence ao CNPJ do mesmo, verifique"},{"cod":"235","msg":"Rejei\u00e7\u00e3o: Inscri\u00e7\u00e3o SUFRAMA inv\u00e1lida","status":"0","correct":"Numero da SUFRAMA incorreto, correija"},{"cod":"236","msg":"Rejei\u00e7\u00e3o: Chave de Acesso com d\u00edgito verificador inv\u00e1lido","status":"0","correct":"O digito verificar \u00e9 calculado e est\u00e1 incorreto, informe o administrador"},{"cod":"237","msg":"Rejei\u00e7\u00e3o: CPF do destinat\u00e1rio inv\u00e1lido","status":"0","correct":"O CFP do destinat\u00e1rio est\u00e1 errdo, corrija"},{"cod":"238","msg":"Rejei\u00e7\u00e3o: Cabe\u00e7alho - Vers\u00e3o do arquivo XML superior a Vers\u00e3o vigente","status":"0","correct":"O numero da vers\u00e3o est\u00e1 incorreto, informe o administrador"},{"cod":"239","msg":"Rejei\u00e7\u00e3o: Cabe\u00e7alho - Vers\u00e3o do arquivo XML n\u00e3o suportada","status":"0","correct":"Vers\u00e3o do documento errada, informe o adminstrador"},{"cod":"240","msg":"Rejei\u00e7\u00e3o: Cancelamento\/Inutiliza\u00e7\u00e3o - Irregularidade Fiscal do Emitente","status":"0","correct":"Consulte a SEFAZ"},{"cod":"241","msg":"Rejei\u00e7\u00e3o: Um n\u00famero da faixa j\u00e1 foi utilizado","status":"0","correct":"Essa inutiliza\u00e7\u00e3o j\u00e1 foi realizada."},{"cod":"242","msg":"Rejei\u00e7\u00e3o: Cabe\u00e7alho - Falha no Schema XML","status":"0","correct":"Normalmente causado por caracteres inv\u00e1lidos, informe o administrador"},{"cod":"243","msg":"Rejei\u00e7\u00e3o: XML Mal Formado","status":"0","correct":"Erro na montagem do XML, informe o administrador"},{"cod":"244","msg":"Rejei\u00e7\u00e3o: CNPJ do Certificado Digital difere do CNPJ da Matriz e do CNPJ do Emitente","status":"0","correct":"O certificado utilizado \u00e9 incorreto"},{"cod":"245","msg":"Rejei\u00e7\u00e3o: CNPJ Emitente n\u00e3o cadastrado","status":"0","correct":"Confira o CNPJ do emitente est\u00e1 errado"},{"cod":"246","msg":"Rejei\u00e7\u00e3o: CNPJ Destinat\u00e1rio n\u00e3o cadastrado","status":"0","correct":"Confira o CNPJ do destinat\u00e1rio est\u00e1 errado"},{"cod":"247","msg":"Rejei\u00e7\u00e3o: Sigla da UF do Emitente diverge da UF autorizadora","status":"0","correct":"O sistema est\u00e1 enviando para outro autorizador diverso da UF do emitente "},{"cod":"248","msg":"Rejei\u00e7\u00e3o: UF do Recibo diverge da UF autorizadora","status":"0","correct":"O recibo usado \u00e9 de outra autoriazadora, verifique qual \u00e9 o recibo correto"},{"cod":"249","msg":"Rejei\u00e7\u00e3o: UF da Chave de Acesso diverge da UF autorizadora","status":"0","correct":"A chave de acesso \u00e9 de outra autorizadora"},{"cod":"250","msg":"Rejei\u00e7\u00e3o: UF diverge da UF autorizadora","status":"0","correct":""},{"cod":"251","msg":"Rejei\u00e7\u00e3o: UF\/Munic\u00edpio destinat\u00e1rio n\u00e3o pertence a SUFRAMA","status":"0","correct":""},{"cod":"252","msg":"Rejei\u00e7\u00e3o: Ambiente informado diverge do Ambiente de recebimento","status":"0","correct":""},{"cod":"253","msg":"Rejei\u00e7\u00e3o: Digito Verificador da chave de acesso composta inv\u00e1lida","status":"0","correct":""},{"cod":"254","msg":"Rejei\u00e7\u00e3o: NF-e complementar n\u00e3o possui NF referenciada","status":"0","correct":""},{"cod":"255","msg":"Rejei\u00e7\u00e3o: NF-e complementar possui mais de uma NF referenciada","status":"0","correct":""},{"cod":"256","msg":"Rejei\u00e7\u00e3o: Uma NF-e da faixa j\u00e1 est\u00e1 inutilizada na Base de dados da SEFAZ","status":"0","correct":""},{"cod":"257","msg":"Rejei\u00e7\u00e3o: Solicitante n\u00e3o habilitado para emiss\u00e3o da NF-e","status":"0","correct":""},{"cod":"258","msg":"Rejei\u00e7\u00e3o: CNPJ da consulta inv\u00e1lido","status":"0","correct":""},{"cod":"259","msg":"Rejei\u00e7\u00e3o: CNPJ da consulta n\u00e3o cadastrado como contribuinte na UF","status":"0","correct":""},{"cod":"260","msg":"Rejei\u00e7\u00e3o: IE da consulta inv\u00e1lida","status":"0","correct":""},{"cod":"261","msg":"Rejei\u00e7\u00e3o: IE da consulta n\u00e3o cadastrada como contribuinte na UF","status":"0","correct":""},{"cod":"262","msg":"Rejei\u00e7\u00e3o: UF n\u00e3o fornece consulta por CPF","status":"0","correct":""},{"cod":"263","msg":"Rejei\u00e7\u00e3o: CPF da consulta inv\u00e1lido","status":"0","correct":""},{"cod":"264","msg":"Rejei\u00e7\u00e3o: CPF da consulta n\u00e3o cadastrado como contribuinte na UF","status":"0","correct":""},{"cod":"265","msg":"Rejei\u00e7\u00e3o: Sigla da UF da consulta difere da UF do Web Service","status":"0","correct":""},{"cod":"266","msg":"Rejei\u00e7\u00e3o: S\u00e9rie utilizada n\u00e3o permitida no Web Service","status":"0","correct":""},{"cod":"267","msg":"Rejei\u00e7\u00e3o: NF Complementar referencia uma NF-e inexistente","status":"0","correct":""},{"cod":"268","msg":"Rejei\u00e7\u00e3o: NF Complementar referencia outra NF-e Complementar","status":"0","correct":""},{"cod":"269","msg":"Rejei\u00e7\u00e3o: CNPJ Emitente da NF Complementar difere do CNPJ da NF Referenciada","status":"0","correct":""},{"cod":"270","msg":"Rejei\u00e7\u00e3o: C\u00f3digo Munic\u00edpio do Fato Gerador: d\u00edgito inv\u00e1lido","status":"0","correct":""},{"cod":"271","msg":"Rejei\u00e7\u00e3o: C\u00f3digo Munic\u00edpio do Fato Gerador: difere da UF do emitente","status":"0","correct":""},{"cod":"272","msg":"Rejei\u00e7\u00e3o: C\u00f3digo Munic\u00edpio do Emitente: d\u00edgito inv\u00e1lido","status":"0","correct":""},{"cod":"273","msg":"Rejei\u00e7\u00e3o: C\u00f3digo Munic\u00edpio do Emitente: difere da UF do emitente","status":"0","correct":""},{"cod":"274","msg":"Rejei\u00e7\u00e3o: C\u00f3digo Munic\u00edpio do Destinat\u00e1rio: d\u00edgito inv\u00e1lido","status":"0","correct":""},{"cod":"275","msg":"Rejei\u00e7\u00e3o: C\u00f3digo Munic\u00edpio do Destinat\u00e1rio: difere da UF do Destinat\u00e1rio","status":"0","correct":""},{"cod":"276","msg":"Rejei\u00e7\u00e3o: C\u00f3digo Munic\u00edpio do Local de Retirada: d\u00edgito inv\u00e1lido","status":"0","correct":""},{"cod":"277","msg":"Rejei\u00e7\u00e3o: C\u00f3digo Munic\u00edpio do Local de Retirada: difere da UF do Local de Retirada","status":"0","correct":""},{"cod":"278","msg":"Rejei\u00e7\u00e3o: C\u00f3digo Munic\u00edpio do Local de Entrega: d\u00edgito inv\u00e1lido","status":"0","correct":""},{"cod":"279","msg":"Rejei\u00e7\u00e3o: C\u00f3digo Munic\u00edpio do Local de Entrega: difere da UF do Local de Entrega","status":"0","correct":""},{"cod":"280","msg":"Rejei\u00e7\u00e3o: Certificado Transmissor inv\u00e1lido","status":"0","correct":""},{"cod":"281","msg":"Rejei\u00e7\u00e3o: Certificado Transmissor Data Validade","status":"0","correct":""},{"cod":"282","msg":"Rejei\u00e7\u00e3o: Certificado Transmissor sem CNPJ","status":"0","correct":""},{"cod":"283","msg":"Rejei\u00e7\u00e3o: Certificado Transmissor - erro Cadeia de Certifica\u00e7\u00e3o","status":"0","correct":""},{"cod":"284","msg":"Rejei\u00e7\u00e3o: Certificado Transmissor revogado","status":"0","correct":""},{"cod":"285","msg":"Rejei\u00e7\u00e3o: Certificado Transmissor difere ICP-Brasil","status":"0","correct":""},{"cod":"286","msg":"Rejei\u00e7\u00e3o: Certificado Transmissor erro no acesso a LCR","status":"0","correct":""},{"cod":"287","msg":"Rejei\u00e7\u00e3o: C\u00f3digo Munic\u00edpio do FG - ISSQN: d\u00edgito inv\u00e1lido","status":"0","correct":""},{"cod":"288","msg":"Rejei\u00e7\u00e3o: C\u00f3digo Munic\u00edpio do FG - Transporte: d\u00edgito inv\u00e1lido","status":"0","correct":""},{"cod":"289","msg":"Rejei\u00e7\u00e3o: C\u00f3digo da UF informada diverge da UF solicitada","status":"0","correct":""},{"cod":"290","msg":"Rejei\u00e7\u00e3o: Certificado Assinatura inv\u00e1lido","status":"0","correct":""},{"cod":"291","msg":"Rejei\u00e7\u00e3o: Certificado Assinatura Data Validade","status":"0","correct":""},{"cod":"292","msg":"Rejei\u00e7\u00e3o: Certificado Assinatura sem CNPJ","status":"0","correct":""},{"cod":"293","msg":"Rejei\u00e7\u00e3o: Certificado Assinatura - erro Cadeia de Certifica\u00e7\u00e3o","status":"0","correct":""},{"cod":"294","msg":"Rejei\u00e7\u00e3o: Certificado Assinatura revogado","status":"0","correct":""},{"cod":"295","msg":"Rejei\u00e7\u00e3o: Certificado Assinatura difere ICP-Brasil","status":"0","correct":""},{"cod":"296","msg":"Rejei\u00e7\u00e3o: Certificado Assinatura erro no acesso a LCR","status":"0","correct":""},{"cod":"297","msg":"Rejei\u00e7\u00e3o: Assinatura difere do calculado","status":"0","correct":""},{"cod":"298","msg":"Rejei\u00e7\u00e3o: Assinatura difere do padr\u00e3o do Sistema","status":"0","correct":""},{"cod":"299","msg":"Rejei\u00e7\u00e3o: XML da \u00e1rea de cabe\u00e7alho com codifica\u00e7\u00e3o diferente de UTF-8","status":"0","correct":""},{"cod":"301","msg":"Uso Denegado: Irregularidade fiscal do emitente","status":"0","correct":""},{"cod":"302","msg":"Uso Denegado: Irregularidade fiscal do destinat\u00e1rio","status":"0","correct":""},{"cod":"303","msg":"Uso Denegado: Destinat\u00e1rio n\u00e3o habilitado a operar na UF","status":"0","correct":""},{"cod":"304","msg":"Rejei\u00e7\u00e3o: Pedido de Cancelamento para NF-e com evento da Suframa","status":"0","correct":""},{"cod":"315","msg":"Data de Emiss\u00e3o anterior ao in\u00edcio da autoriza\u00e7\u00e3o de Nota Fiscal na UF","status":"0","correct":""},{"cod":"316","msg":"Nota Fiscal referenciada com a mesma Chave de Acesso da Nota Fiscal atual","status":"0","correct":""},{"cod":"317","msg":"NF modelo 1 referenciada com data de emiss\u00e3o inv\u00e1lida","status":"0","correct":""},{"cod":"318","msg":"Contranota de Produtor sem Nota Fiscal referenciada","status":"0","correct":""},{"cod":"319","msg":"Contranota de Produtor n\u00e3o pode referenciar somente Nota Fiscal de entrada","status":"0","correct":""},{"cod":"320","msg":"Contranota de Produtor referencia somente NF de outro emitente","status":"0","correct":""},{"cod":"321","msg":"Rejei\u00e7\u00e3o: NF-e de devolu\u00e7\u00e3o de mercadoria n\u00e3o possui documento fiscal referenciado","status":"0","correct":""},{"cod":"322","msg":"NF-e de devolu\u00e7\u00e3o com mais de um documento fiscal referenciado","status":"0","correct":""},{"cod":"323","msg":"Rejei\u00e7\u00e3o: CNPJ autorizado para download inv\u00e1lido","status":"0","correct":""},{"cod":"324","msg":"Rejei\u00e7\u00e3o: CNPJ do destinat\u00e1rio j\u00e1 autorizado para download","status":"0","correct":""},{"cod":"325","msg":"Rejei\u00e7\u00e3o: CPF autorizado para download inv\u00e1lido","status":"0","correct":""},{"cod":"326","msg":"Rejei\u00e7\u00e3o: CPF do destinat\u00e1rio j\u00e1 autorizado para download","status":"0","correct":""},{"cod":"327","msg":"Rejei\u00e7\u00e3o: CFOP inv\u00e1lido para NF-e com finalidade de devolu\u00e7\u00e3o de mercadoria","status":"0","correct":""},{"cod":"328","msg":"Rejei\u00e7\u00e3o: CFOP de devolu\u00e7\u00e3o de mercadoria para NF-e que n\u00e3o tem finalidade de devolu\u00e7\u00e3o de mercadoria","status":"0","correct":""},{"cod":"329","msg":"Rejei\u00e7\u00e3o: N\u00famero da DI \/DSI inv\u00e1lido","status":"0","correct":""},{"cod":"330","msg":"Rejei\u00e7\u00e3o: Informar o Valor da AFRMM na importa\u00e7\u00e3o por via mar\u00edtima","status":"0","correct":""},{"cod":"331","msg":"Rejei\u00e7\u00e3o: Informar o CNPJ do adquirente ou do encomendante nesta forma de importa\u00e7\u00e3o","status":"0","correct":""},{"cod":"332","msg":"Rejei\u00e7\u00e3o: CNPJ do adquirente ou do encomendante da importa\u00e7\u00e3o inv\u00e1lido","status":"0","correct":""},{"cod":"333","msg":"Rejei\u00e7\u00e3o: Informar a UF do adquirente ou do encomendante nesta forma de importa\u00e7\u00e3o","status":"0","correct":""},{"cod":"334","msg":"Rejei\u00e7\u00e3o: N\u00famero do processo de drawback n\u00e3o informado na importa\u00e7\u00e3o","status":"0","correct":""},{"cod":"335","msg":"Rejei\u00e7\u00e3o: N\u00famero do processo de drawback na importa\u00e7\u00e3o inv\u00e1lido","status":"0","correct":""},{"cod":"336","msg":"Rejei\u00e7\u00e3o: Informado o grupo de exporta\u00e7\u00e3o no item para CFOP que n\u00e3o \u00e9 de exporta\u00e7\u00e3o","status":"0","correct":""},{"cod":"337","msg":"Rejei\u00e7\u00e3o: N\u00e3o informado o grupo de exporta\u00e7\u00e3o no item","status":"0","correct":""},{"cod":"338","msg":"Rejei\u00e7\u00e3o: N\u00famero do processo de drawback n\u00e3o informado na exporta\u00e7\u00e3o","status":"0","correct":""},{"cod":"339","msg":"Rejei\u00e7\u00e3o: N\u00famero do processo de drawback na exporta\u00e7\u00e3o inv\u00e1lido","status":"0","correct":""},{"cod":"340","msg":"Rejei\u00e7\u00e3o: N\u00e3o informado o grupo de exporta\u00e7\u00e3o indireta no item","status":"0","correct":""},{"cod":"341","msg":"Rejei\u00e7\u00e3o: N\u00famero do registro de exporta\u00e7\u00e3o inv\u00e1lido","status":"0","correct":""},{"cod":"342","msg":"Rejei\u00e7\u00e3o: Chave de Acesso informada na Exporta\u00e7\u00e3o Indireta com DV inv\u00e1lido","status":"0","correct":""},{"cod":"343","msg":"Rejei\u00e7\u00e3o: Modelo da NF-e informada na Exporta\u00e7\u00e3o Indireta diferente de 55","status":"0","correct":""},{"cod":"344","msg":"Rejei\u00e7\u00e3o: Duplicidade de NF-e informada na Exporta\u00e7\u00e3o Indireta (Chave de Acesso informada mais de uma vez)","status":"0","correct":""},{"cod":"345","msg":"Rejei\u00e7\u00e3o: Chave de Acesso informada na Exporta\u00e7\u00e3o Indireta n\u00e3o consta como NF-e referenciada","status":"0","correct":""},{"cod":"346","msg":"Rejei\u00e7\u00e3o: Somat\u00f3rio das quantidades informadas na Exporta\u00e7\u00e3o Indireta n\u00e3o corresponde a quantidade total do item","status":"0","correct":""},{"cod":"347","msg":"Rejei\u00e7\u00e3o: Descri\u00e7\u00e3o do Combust\u00edvel diverge da descri\u00e7\u00e3o adotada pela ANP","status":"0","correct":""},{"cod":"348","msg":"Rejei\u00e7\u00e3o: NFC-e com grupo RECOPI","status":"0","correct":""},{"cod":"349","msg":"Rejei\u00e7\u00e3o: N\u00famero RECOPI n\u00e3o informado","status":"0","correct":""},{"cod":"350","msg":"Rejei\u00e7\u00e3o: N\u00famero RECOPI inv\u00e1lido","status":"0","correct":""},{"cod":"351","msg":"Rejei\u00e7\u00e3o: Valor do ICMS da Opera\u00e7\u00e3o no CST=51 difere do produto BC e Al\u00edquota","status":"0","correct":""},{"cod":"352","msg":"Rejei\u00e7\u00e3o: Valor do ICMS Diferido no CST=51 difere do produto Valor ICMS Opera\u00e7\u00e3o e percentual diferimento","status":"0","correct":""},{"cod":"353","msg":"Rejei\u00e7\u00e3o: Valor do ICMS no CST=51 n\u00e3o corresponde a diferen\u00e7a do ICMS opera\u00e7\u00e3o e ICMS diferido","status":"0","correct":""},{"cod":"354","msg":"Rejei\u00e7\u00e3o: Informado grupo de devolu\u00e7\u00e3o de tributos para NF-e que n\u00e3o tem finalidade de devolu\u00e7\u00e3o de mercadoria","status":"0","correct":""},{"cod":"355","msg":"Rejei\u00e7\u00e3o: Informar o local de sa\u00edda do Pais no caso da exporta\u00e7\u00e3o","status":"0","correct":""},{"cod":"356","msg":"Rejei\u00e7\u00e3o: Informar o local de sa\u00edda do Pais somente no caso da exporta\u00e7\u00e3o","status":"0","correct":""},{"cod":"357","msg":"Rejei\u00e7\u00e3o: Chave de Acesso do grupo de Exporta\u00e7\u00e3o Indireta inexistente [nRef: xxx]","status":"0","correct":""},{"cod":"358","msg":"Rejei\u00e7\u00e3o: Chave de Acesso do grupo de Exporta\u00e7\u00e3o Indireta cancelada ou denegada [nRef: xxx]","status":"0","correct":""},{"cod":"359","msg":"Rejei\u00e7\u00e3o: NF-e de venda a \u00d3rg\u00e3o P\u00fablico sem informar a Nota de Empenho","status":"0","correct":""},{"cod":"360","msg":"Rejei\u00e7\u00e3o: NF-e com Nota de Empenho inv\u00e1lida para a UF.","status":"0","correct":""},{"cod":"361","msg":"Rejei\u00e7\u00e3o: NF-e com Nota de Empenho inexistente na UF.","status":"0","correct":""},{"cod":"362","msg":"Rejei\u00e7\u00e3o: Venda de combust\u00edvel sem informa\u00e7\u00e3o do Transportador","status":"0","correct":""},{"cod":"363","msg":"Total do ISS difere do somat\u00f3rio dos itens","status":"0","correct":""},{"cod":"364","msg":"Rejei\u00e7\u00e3o: Total do valor da dedu\u00e7\u00e3o do ISS difere do somat\u00f3rio dos itens","status":"0","correct":""},{"cod":"365","msg":"Rejei\u00e7\u00e3o: Total de outras reten\u00e7\u00f5es difere do somat\u00f3rio dos itens","status":"0","correct":""},{"cod":"366","msg":"Rejei\u00e7\u00e3o: Total do desconto incondicionado ISS difere do somat\u00f3rio dos itens","status":"0","correct":""},{"cod":"367","msg":"Rejei\u00e7\u00e3o: Total do desconto condicionado ISS difere do somat\u00f3rio dos itens","status":"0","correct":""},{"cod":"368","msg":"Rejei\u00e7\u00e3o: Total de ISS retido difere do somat\u00f3rio dos itens","status":"0","correct":""},{"cod":"369","msg":"Rejei\u00e7\u00e3o: N\u00e3o informado o grupo avulsa na emiss\u00e3o pelo Fisco","status":"0","correct":""},{"cod":"370","msg":"Rejei\u00e7\u00e3o: Nota Fiscal Avulsa com tipo de emiss\u00e3o inv\u00e1lido","status":"0","correct":""},{"cod":"372","msg":"Destinat\u00e1rio com identifica\u00e7\u00e3o de estrangeiro com caracteres inv\u00e1lidos","status":"0","correct":""},{"cod":"373","msg":"Descricao do primeiro item diferente de NOTA FISCAL EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL","status":"0","correct":""},{"cod":"374","msg":"CFOP incompat\u00edvel com o grupo de tributa\u00e7\u00e3o [nItem:nnn]","status":"0","correct":""},{"cod":"375","msg":"Informe no passo 1 a chave da NF-e referenciada.NF-e com CFOP 5929 (Lan\u00e7amento relativo a Cupom Fiscal) referencia uma NFC-e [nItem:nnn]","status":"0","correct":""},{"cod":"376","msg":"Data do Desembara\u00e7o Aduaneiro inv\u00e1lida [nItem:nnn]","status":"0","correct":""},{"cod":"378","msg":"Grupo de Combust\u00edvel sem a informa\u00e7\u00e3o de Encerrante [nItem:nnn]","status":"0","correct":""},{"cod":"379","msg":"Grupo de Encerrante na NF-e (modelo 55) para CFOP diferente de venda de combust\u00edvel para consumidor final [nItem:nnn]","status":"0","correct":""},{"cod":"380","msg":"Valor do Encerrante final n\u00e3o \u00e9 superior ao Encerrante inicial [nItem:nnn]","status":"0","correct":""},{"cod":"381","msg":"Grupo de tributa\u00e7\u00e3o ICMS90, informando dados do ICMS-ST [nItem:nnn]","status":"0","correct":""},{"cod":"382","msg":"CFOP n\u00e3o permitido para o CST informado [nItem:nnn]","status":"0","correct":""},{"cod":"383","msg":"Item com CSOSN indevido [nItem:nnn]","status":"0","correct":""},{"cod":"384","msg":"CSOSN n\u00e3o permitido para a UF [nItem:nnn]","status":"0","correct":""},{"cod":"385","msg":"Grupo de tributa\u00e7\u00e3o ICMS900, informando dados do ICMS-ST [nItem:nnn]","status":"0","correct":""},{"cod":"386","msg":"CFOP n\u00e3o permitido para o CSOSN informado [nItem:nnn]","status":"0","correct":""},{"cod":"387","msg":"C\u00f3digo de Enquadramento Legal do IPI inv\u00e1lido [nItem:nnn]","status":"0","correct":""},{"cod":"388","msg":"C\u00f3digo de Situa\u00e7\u00e3o Tribut\u00e1ria do IPI incompat\u00edvel com o C\u00f3digo de Enquadramento Legal do IPI [nItem:nnn]","status":"0","correct":""},{"cod":"389","msg":"C\u00f3digo Munic\u00edpio ISSQN inexistente [nItem:nnn]","status":"0","correct":""},{"cod":"390","msg":"Nota Fiscal com grupo de devolu\u00e7\u00e3o de tributos [nItem:nnn]","status":"0","correct":""},{"cod":"391","msg":"N\u00e3o informados os dados do cart\u00e3o de cr\u00e9dito \/ d\u00e9bito nas Formas de Pagamento da Nota Fiscal","status":"0","correct":""},{"cod":"392","msg":"N\u00e3o informados os dados da opera\u00e7\u00e3o de pagamento por cart\u00e3o de cr\u00e9dito \/ d\u00e9bito","status":"0","correct":""},{"cod":"393","msg":"NF-e com o grupo de Informa\u00e7\u00f5es Suplementares","status":"0","correct":""},{"cod":"394","msg":"Nota Fiscal sem a informa\u00e7\u00e3o do QR-Code","status":"0","correct":""},{"cod":"395","msg":"Endere\u00e7o do site da UF da Consulta via QRCode diverge do previsto","status":"0","correct":""},{"cod":"396","msg":"Par\u00e2metro do QR-Code inexistente (chAcesso)","status":"0","correct":""},{"cod":"397","msg":"Par\u00e2metro do QR-Code divergente da Nota Fiscal (chAcesso)","status":"0","correct":""},{"cod":"398","msg":"Par\u00e2metro nVersao do QR-Code difere do previsto","status":"0","correct":""},{"cod":"399","msg":"Par\u00e2metro de Identifica\u00e7\u00e3o do destinat\u00e1rio no QR-Code para Nota Fiscal sem identifica\u00e7\u00e3o do destinat\u00e1rio","status":"0","correct":""},{"cod":"401","msg":"Rejei\u00e7\u00e3o: CPF do remetente inv\u00e1lido","status":"0","correct":""},{"cod":"402","msg":"Rejei\u00e7\u00e3o: XML da \u00e1rea de dados com codifica\u00e7\u00e3o diferente de UTF-8","status":"0","correct":""},{"cod":"403","msg":"Rejei\u00e7\u00e3o: O grupo de informa\u00e7\u00f5es da NF-e avulsa \u00e9 de uso exclusivo do Fisco","status":"0","correct":""},{"cod":"404","msg":"Rejei\u00e7\u00e3o: Uso de prefixo de namespace n\u00e3o permitido","status":"0","correct":""},{"cod":"405","msg":"Rejei\u00e7\u00e3o: C\u00f3digo do pa\u00eds do emitente: d\u00edgito inv\u00e1lido","status":"0","correct":""},{"cod":"406","msg":"Rejei\u00e7\u00e3o: C\u00f3digo do pa\u00eds do destinat\u00e1rio: d\u00edgito inv\u00e1lido","status":"0","correct":""},{"cod":"407","msg":"Rejei\u00e7\u00e3o: O CPF s\u00f3 pode ser informado no campo emitente para a NF-e avulsa","status":"0","correct":""},{"cod":"408","msg":"Rejei\u00e7\u00e3o: Evento n\u00e3o dispon\u00edvel para Autor pessoa f\u00edsica","status":"0","correct":""},{"cod":"409","msg":"Rejei\u00e7\u00e3o: Campo cUF inexistente no elemento nfeCabecMsg do SOAP Header","status":"0","correct":""},{"cod":"410","msg":"Rejei\u00e7\u00e3o: UF informada no campo cUF n\u00e3o \u00e9 atendida pelo Web Service","status":"0","correct":""},{"cod":"411","msg":"Rejei\u00e7\u00e3o: Campo versaoDados inexistente no elemento nfeCabecMsg do SOAP Header","status":"0","correct":""},{"cod":"416","msg":"Rejei\u00e7\u00e3o: Falha na descompacta\u00e7\u00e3o da \u00e1rea de dados","status":"0","correct":""},{"cod":"417","msg":"Rejei\u00e7\u00e3o: Total do ICMS superior ao valor limite estabelecido","status":"0","correct":""},{"cod":"418","msg":"Rejei\u00e7\u00e3o: Total do ICMS ST superior ao valor limite estabelecido","status":"0","correct":""},{"cod":"420","msg":"Rejei\u00e7\u00e3o: Cancelamento para NF-e j\u00e1 cancelada","status":"0","correct":""},{"cod":"450","msg":"Rejei\u00e7\u00e3o: Modelo da NF-e diferente de 55","status":"0","correct":""},{"cod":"451","msg":"Rejei\u00e7\u00e3o: Processo de emiss\u00e3o informado inv\u00e1lido","status":"0","correct":""},{"cod":"452","msg":"Rejei\u00e7\u00e3o: Tipo Autorizador do Recibo diverge do \u00d3rg\u00e3o Autorizador","status":"0","correct":""},{"cod":"453","msg":"Rejei\u00e7\u00e3o: Ano de inutiliza\u00e7\u00e3o n\u00e3o pode ser superior ao Ano atual","status":"0","correct":""},{"cod":"454","msg":"Rejei\u00e7\u00e3o: Ano de inutiliza\u00e7\u00e3o n\u00e3o pode ser inferior a 2006","status":"0","correct":""},{"cod":"455","msg":"Rejei\u00e7\u00e3o: \u00d3rg\u00e3o Autor do evento diferente da UF da Chave de Acesso","status":"0","correct":""},{"cod":"461","msg":"Rejei\u00e7\u00e3o: Informado percentual de G\u00e1s Natural na mistura para produto diferente de GLP","status":"0","correct":""},{"cod":"462","msg":"C\u00f3digo Identificador do CSC no QR-Code n\u00e3o cadastrado na SEFAZ","status":"0","correct":""},{"cod":"463","msg":"C\u00f3digo Identificador do CSC no QR-Code foi revogado pela empresa","status":"0","correct":""},{"cod":"464","msg":"C\u00f3digo de Hash no QR-Code difere do calculado","status":"0","correct":""},{"cod":"465","msg":"Rejei\u00e7\u00e3o: N\u00famero de Controle da FCI inexistente","status":"0","correct":""},{"cod":"466","msg":"Rejei\u00e7\u00e3o: Evento com Tipo de Autor incompat\u00edvel","status":"0","correct":""},{"cod":"467","msg":"Rejei\u00e7\u00e3o: Dados da NF-e divergentes do EPEC","status":"0","correct":""},{"cod":"468","msg":"Rejei\u00e7\u00e3o: NF-e com Tipo Emiss\u00e3o = 4, sem EPEC correspondente","status":"0","correct":""},{"cod":"471","msg":"Rejei\u00e7\u00e3o: Informado NCM=00 indevidamente","status":"0","correct":""},{"cod":"476","msg":"Rejei\u00e7\u00e3o: C\u00f3digo da UF diverge da UF da primeira NF-e do Lote","status":"0","correct":""},{"cod":"477","msg":"Rejei\u00e7\u00e3o: C\u00f3digo do \u00f3rg\u00e3o diverge do \u00f3rg\u00e3o do primeiro evento do Lote","status":"0","correct":""},{"cod":"478","msg":"Rejei\u00e7\u00e3o: Local da entrega n\u00e3o informado para faturamento direto de ve\u00edculos novos","status":"0","correct":""},{"cod":"479","msg":"Emissor em situac\u0327a\u0303o irregular perante o fisco","status":"","correct":""},{"cod":"480","msg":"CNPJ da Chave de acesso da NF-e informada diverge do CNPJ do emitente","status":"","correct":""},{"cod":"481","msg":"UF da Chave de acesso diverge do co\u0301digo da UF informada","status":"","correct":""},{"cod":"482","msg":"AA da Chave de acesso inva\u0301lida","status":"","correct":""},{"cod":"483","msg":"MM da chave de acesso inva\u0301lido","status":"","correct":""},{"cod":"484","msg":"Rejei\u00e7\u00e3o: Chave de Acesso com tipo de emiss\u00e3o diferente de 4 (posi\u00e7\u00e3o 35 da Chave de Acesso)","status":"0","correct":""},{"cod":"485","msg":"Rejei\u00e7\u00e3o: Duplicidade de numera\u00e7\u00e3o do EPEC (Modelo, CNPJ, S\u00e9rie e N\u00famero)","status":"0","correct":""},{"cod":"486","msg":"DPEC na\u0303o localizada para o nu\u0301mero de registro de DPEC informado","status":"0","correct":""},{"cod":"487","msg":"Nenhuma DPEC localizada para a chave de acesso informada","status":"0","correct":""},{"cod":"488","msg":"Requisitante de Consulta na\u0303o tem o mesmo CNPJ base do emissor da DPEC","status":"0","correct":""},{"cod":"489","msg":"Rejei\u00e7\u00e3o: CNPJ informado inv\u00e1lido (DV ou zeros)","status":"0","correct":""},{"cod":"490","msg":"Rejei\u00e7\u00e3o: CPF informado inv\u00e1lido (DV ou zeros)","status":"0","correct":""},{"cod":"491","msg":"Rejei\u00e7\u00e3o: O tpEvento informado inv\u00e1lido","status":"0","correct":""},{"cod":"492","msg":"Rejei\u00e7\u00e3o: O verEvento informado inv\u00e1lido","status":"0","correct":""},{"cod":"493","msg":"Rejei\u00e7\u00e3o: Evento n\u00e3o atende o Schema XML espec\u00edfico","status":"0","correct":""},{"cod":"494","msg":"Rejei\u00e7\u00e3o: Chave de Acesso inexistente","status":"0","correct":""},{"cod":"496","msg":"N\u00e3o informado o tipo de integra\u00e7\u00e3o no pagamento com cart\u00e3o de cr\u00e9dito \/ d\u00e9bito","status":"0","correct":""},{"cod":"501","msg":"Rejei\u00e7\u00e3o: Pedido de Cancelamento intempestivo (NF-e autorizada a mais de 7 dias)","status":"0","correct":""},{"cod":"502","msg":"Rejei\u00e7\u00e3o: Erro na Chave de Acesso - Campo Id n\u00e3o corresponde \u00e0 concatena\u00e7\u00e3o dos campos correspondentes","status":"0","correct":""},{"cod":"503","msg":"Rejei\u00e7\u00e3o: S\u00e9rie utilizada fora da faixa permitida no SCAN (900-999)","status":"0","correct":""},{"cod":"504","msg":"Rejei\u00e7\u00e3o: Data de Entrada\/Sa\u00edda posterior ao permitido","status":"0","correct":""},{"cod":"505","msg":"Rejei\u00e7\u00e3o: Data de Entrada\/Sa\u00edda anterior ao permitido","status":"0","correct":""},{"cod":"506","msg":"Rejei\u00e7\u00e3o: Data de Sa\u00edda menor que a Data de Emiss\u00e3o","status":"0","correct":""},{"cod":"507","msg":"Rejei\u00e7\u00e3o: O CNPJ do destinat\u00e1rio\/remetente n\u00e3o deve ser informado em opera\u00e7\u00e3o com o exterior","status":"0","correct":""},{"cod":"508","msg":"Rejei\u00e7\u00e3o: CNPJ do destinat\u00e1rio com conte\u00fado nulo s\u00f3 \u00e9 v\u00e1lido em opera\u00e7\u00e3o com exterior","status":"0","correct":""},{"cod":"509","msg":"Rejei\u00e7\u00e3o: Informado c\u00f3digo de munic\u00edpio diferente de \u201c9999999\u201d para opera\u00e7\u00e3o com o exterior","status":"0","correct":""},{"cod":"510","msg":"Rejei\u00e7\u00e3o: Opera\u00e7\u00e3o com Exterior e C\u00f3digo Pa\u00eds destinat\u00e1rio \u00e9 1058 (Brasil) ou n\u00e3o informado","status":"0","correct":""},{"cod":"511","msg":"Rejei\u00e7\u00e3o: N\u00e3o \u00e9 de Opera\u00e7\u00e3o com Exterior e C\u00f3digo Pa\u00eds destinat\u00e1rio difere de 1058 (Brasil)","status":"0","correct":""},{"cod":"512","msg":"Rejei\u00e7\u00e3o: CNPJ do Local de Retirada inv\u00e1lido","status":"0","correct":""},{"cod":"513","msg":"Rejei\u00e7\u00e3o: C\u00f3digo Munic\u00edpio do Local de Retirada deve ser 9999999 para UF retirada = EX","status":"0","correct":""},{"cod":"514","msg":"Rejei\u00e7\u00e3o: CNPJ do Local de Entrega inv\u00e1lido","status":"0","correct":""},{"cod":"515","msg":"Rejei\u00e7\u00e3o: C\u00f3digo Munic\u00edpio do Local de Entrega deve ser 9999999 para UF entrega = EX","status":"0","correct":""},{"cod":"516","msg":"Rejei\u00e7\u00e3o: Falha no schema XML \u2013 inexiste a tag raiz esperada para a mensagem","status":"0","correct":""},{"cod":"517","msg":"Rejei\u00e7\u00e3o: Falha no schema XML \u2013 inexiste atributo versao na tag raiz da mensagem","status":"0","correct":""},{"cod":"518","msg":"Rejei\u00e7\u00e3o: CFOP de entrada para NF-e de sa\u00edda","status":"0","correct":""},{"cod":"519","msg":"Rejei\u00e7\u00e3o: CFOP de sa\u00edda para NF-e de entrada","status":"0","correct":""},{"cod":"520","msg":"Rejei\u00e7\u00e3o: CFOP de Opera\u00e7\u00e3o com Exterior e UF destinat\u00e1rio difere de EX","status":"0","correct":""},{"cod":"521","msg":"Rejei\u00e7\u00e3o: CFOP de Opera\u00e7\u00e3o Estadual e UF do emitente difere da UF do destinat\u00e1rio para destinat\u00e1rio contribuinte do ICMS.","status":"0","correct":""},{"cod":"522","msg":"Rejei\u00e7\u00e3o: CFOP de Opera\u00e7\u00e3o Estadual e UF emitente difere da UF remetente para remetente contribuinte do ICMS.","status":"0","correct":""},{"cod":"523","msg":"Rejei\u00e7\u00e3o: CFOP n\u00e3o \u00e9 de Opera\u00e7\u00e3o Estadual e UF emitente igual a UF destinat\u00e1rio.","status":"0","correct":""},{"cod":"524","msg":"Rejei\u00e7\u00e3o: CFOP de Opera\u00e7\u00e3o com Exterior e n\u00e3o informado NCM","status":"0","correct":""},{"cod":"525","msg":"Rejei\u00e7\u00e3o: CFOP de Importa\u00e7\u00e3o e n\u00e3o informado dados da DI","status":"0","correct":""},{"cod":"526","msg":"Ano-Mes da Chave de Acesso com atraso superior a 6 meses em relacao ao Ano-Mes atual","status":"0","correct":""},{"cod":"527","msg":"Rejei\u00e7\u00e3o: Opera\u00e7\u00e3o de Exporta\u00e7\u00e3o com informa\u00e7\u00e3o de ICMS incompat\u00edvel","status":"0","correct":""},{"cod":"528","msg":"Rejei\u00e7\u00e3o: Valor do ICMS difere do produto BC e Al\u00edquota","status":"0","correct":""},{"cod":"529","msg":"Rejei\u00e7\u00e3o: NCM de informa\u00e7\u00e3o obrigat\u00f3ria para produto tributado pelo IPI","status":"0","correct":""},{"cod":"530","msg":"Rejei\u00e7\u00e3o: Opera\u00e7\u00e3o com tributa\u00e7\u00e3o de ISSQN sem informar a Inscri\u00e7\u00e3o Municipal","status":"0","correct":""},{"cod":"531","msg":"Rejei\u00e7\u00e3o: Total da BC ICMS difere do somat\u00f3rio dos itens","status":"0","correct":""},{"cod":"532","msg":"Rejei\u00e7\u00e3o: Total do ICMS difere do somat\u00f3rio dos itens","status":"0","correct":""},{"cod":"533","msg":"Rejei\u00e7\u00e3o: Total da BC ICMS-ST difere do somat\u00f3rio dos itens","status":"0","correct":""},{"cod":"534","msg":"Rejei\u00e7\u00e3o: Total do ICMS-ST difere do somat\u00f3rio dos itens","status":"0","correct":""},{"cod":"535","msg":"Rejei\u00e7\u00e3o: Total do Frete difere do somat\u00f3rio dos itens","status":"0","correct":""},{"cod":"536","msg":"Rejei\u00e7\u00e3o: Total do Seguro difere do somat\u00f3rio dos itens","status":"0","correct":""},{"cod":"537","msg":"Rejei\u00e7\u00e3o: Total do Desconto difere do somat\u00f3rio dos itens","status":"0","correct":""},{"cod":"538","msg":"Rejei\u00e7\u00e3o: Total do IPI difere do somat\u00f3rio dos itens","status":"0","correct":""},{"cod":"539","msg":"Duplicidade de NF-e com diferen\u00e7a na Chave de Acesso [chNFe: 99999999999999999999999999999999999999999999][nRec:999999999999999]","status":"0","correct":""},{"cod":"540","msg":"Rejei\u00e7\u00e3o: CPF do Local de Retirada inv\u00e1lido","status":"0","correct":""},{"cod":"541","msg":"Rejei\u00e7\u00e3o: CPF do Local de Entrega inv\u00e1lido","status":"0","correct":""},{"cod":"542","msg":"Rejei\u00e7\u00e3o: CNPJ do Transportador inv\u00e1lido","status":"0","correct":""},{"cod":"543","msg":"Rejei\u00e7\u00e3o: CPF do Transportador inv\u00e1lido","status":"0","correct":""},{"cod":"544","msg":"Rejei\u00e7\u00e3o: IE do Transportador inv\u00e1lida","status":"0","correct":""},{"cod":"545","msg":"Rejei\u00e7\u00e3o: Falha no schema XML \u2013 vers\u00e3o informada na versaoDados do SOAPHeader diverge da vers\u00e3o da mensagem","status":"0","correct":""},{"cod":"546","msg":"Rejei\u00e7\u00e3o: Erro na Chave de Acesso \u2013 Campo Id \u2013 falta a literal NFe","status":"0","correct":""},{"cod":"547","msg":"Rejei\u00e7\u00e3o: D\u00edgito Verificador da Chave de Acesso da NF-e Referenciada inv\u00e1lido","status":"0","correct":""},{"cod":"548","msg":"Rejei\u00e7\u00e3o: CNPJ da NF referenciada inv\u00e1lido.","status":"0","correct":""},{"cod":"549","msg":"Rejei\u00e7\u00e3o: CNPJ da NF referenciada de produtor inv\u00e1lido.","status":"0","correct":""},{"cod":"550","msg":"Rejei\u00e7\u00e3o: CPF da NF referenciada de produtor inv\u00e1lido.","status":"0","correct":""},{"cod":"551","msg":"Rejei\u00e7\u00e3o: IE da NF referenciada de produtor inv\u00e1lido.","status":"0","correct":""},{"cod":"552","msg":"Rejei\u00e7\u00e3o: D\u00edgito Verificador da Chave de Acesso do CT-e Referenciado inv\u00e1lido","status":"0","correct":""},{"cod":"553","msg":"Rejei\u00e7\u00e3o: Tipo autorizador do recibo diverge do \u00d3rg\u00e3o Autorizador.","status":"0","correct":""},{"cod":"554","msg":"Rejei\u00e7\u00e3o: S\u00e9rie difere da faixa 0-899","status":"0","correct":""},{"cod":"555","msg":"Rejei\u00e7\u00e3o: Tipo autorizador do protocolo diverge do \u00d3rg\u00e3o Autorizador.","status":"0","correct":""},{"cod":"556","msg":"Rejei\u00e7\u00e3o: Justificativa de entrada em conting\u00eancia n\u00e3o deve ser informada para tipo de emiss\u00e3o normal","status":"0","correct":""},{"cod":"557","msg":"Rejei\u00e7\u00e3o: A Justificativa de entrada em conting\u00eancia deve ser informada.","status":"0","correct":""},{"cod":"558","msg":"Rejei\u00e7\u00e3o: Data de entrada em conting\u00eancia posterior a data de recebimento.","status":"0","correct":""},{"cod":"559","msg":"Rejei\u00e7\u00e3o: UF do Transportador n\u00e3o informada","status":"0","correct":""},{"cod":"560","msg":"Rejei\u00e7\u00e3o: CNPJ base do emitente difere do CNPJ base da primeira NF-e do lote recebido","status":"0","correct":""},{"cod":"561","msg":"Rejei\u00e7\u00e3o: M\u00eas de Emiss\u00e3o informado na Chave de Acesso difere do M\u00eas de Emiss\u00e3o da NF-e","status":"0","correct":""},{"cod":"562","msg":"Rejei\u00e7\u00e3o: C\u00f3digo Num\u00e9rico informado na Chave de Acesso difere do C\u00f3digo Num\u00e9rico da NF-e [chNFe:99999999999999999999999999999999999999999999]","status":"0","correct":""},{"cod":"563","msg":"Rejei\u00e7\u00e3o: J\u00e1 existe pedido de Inutiliza\u00e7\u00e3o com a mesma faixa de inutiliza\u00e7\u00e3o","status":"0","correct":""},{"cod":"564","msg":"Rejei\u00e7\u00e3o: Total do Produto \/ Servi\u00e7o difere do somat\u00f3rio dos itens","status":"0","correct":""},{"cod":"565","msg":"Rejei\u00e7\u00e3o: Falha no schema XML \u2013 inexiste a tag raiz esperada para o lote de NF-e","status":"0","correct":""},{"cod":"567","msg":"Rejei\u00e7\u00e3o: Falha no schema XML \u2013 vers\u00e3o informada na versaoDados do SOAPHeader diverge da vers\u00e3o do lote de NF-e","status":"0","correct":""},{"cod":"568","msg":"Rejei\u00e7\u00e3o: Falha no schema XML \u2013 inexiste atributo versao na tag raiz do lote de NF-e","status":"0","correct":""},{"cod":"569","msg":"Rejei\u00e7\u00e3o: Data de entrada em conting\u00eancia muito atrasada","status":"0","correct":""},{"cod":"570","msg":"Rejei\u00e7\u00e3o: Tipo de Emiss\u00e3o 3, 6 ou 7 s\u00f3 \u00e9 v\u00e1lido nas conting\u00eancias SCAN\/SVC","status":"0","correct":""},{"cod":"571","msg":"Rejei\u00e7\u00e3o: O tpEmis informado diferente de 3 para conting\u00eancia SCAN","status":"0","correct":""},{"cod":"572","msg":"Rejei\u00e7\u00e3o: Erro Atributo ID do evento n\u00e3o corresponde a concatena\u00e7\u00e3o dos campos (\u201cID\u201d + tpEvento + chNFe + nSeqEvento)","status":"0","correct":""},{"cod":"573","msg":"Rejei\u00e7\u00e3o: Duplicidade de Evento","status":"0","correct":""},{"cod":"574","msg":"Rejei\u00e7\u00e3o: O autor do evento diverge do emissor da NF-e","status":"0","correct":""},{"cod":"575","msg":"Rejei\u00e7\u00e3o: O autor do evento diverge do destinat\u00e1rio da NF-e","status":"0","correct":""},{"cod":"576","msg":"Rejei\u00e7\u00e3o: O autor do evento n\u00e3o \u00e9 um \u00f3rg\u00e3o autorizado a gerar o evento","status":"0","correct":""},{"cod":"577","msg":"Rejei\u00e7\u00e3o: A data do evento n\u00e3o pode ser menor que a data de emiss\u00e3o da NF-e","status":"0","correct":""},{"cod":"578","msg":"Rejei\u00e7\u00e3o: A data do evento n\u00e3o pode ser maior que a data do processamento","status":"0","correct":""},{"cod":"579","msg":"Rejei\u00e7\u00e3o: A data do evento n\u00e3o pode ser menor que a data de autoriza\u00e7\u00e3o para NF-e n\u00e3o emitida em conting\u00eancia","status":"0","correct":""},{"cod":"580","msg":"Rejei\u00e7\u00e3o: O evento exige uma NF-e autorizada","status":"0","correct":""},{"cod":"587","msg":"Rejei\u00e7\u00e3o: Usar somente o namespace padr\u00e3o da NF-e","status":"0","correct":""},{"cod":"588","msg":"Rejei\u00e7\u00e3o: N\u00e3o \u00e9 permitida a presen\u00e7a de caracteres de edi\u00e7\u00e3o no in\u00edcio\/fim da mensagem ou entre as tags da mensagem","status":"0","correct":""},{"cod":"589","msg":"Rejei\u00e7\u00e3o: N\u00famero do NSU informado superior ao maior NSU da base de dados da SEFAZ","status":"0","correct":""},{"cod":"590","msg":"Rejei\u00e7\u00e3o: Informado CST para emissor do Simples Nacional (CRT=1)","status":"0","correct":""},{"cod":"591","msg":"Rejei\u00e7\u00e3o: Informado CSOSN para emissor que n\u00e3o \u00e9 do Simples Nacional (CRT diferente de 1)","status":"0","correct":""},{"cod":"592","msg":"Rejei\u00e7\u00e3o: A NF-e deve ter pelo menos um item de produto sujeito ao ICMS","status":"0","correct":""},{"cod":"593","msg":"Rejei\u00e7\u00e3o: CNPJ-Base consultado difere do CNPJ-Base do Certificado Digital","status":"0","correct":""},{"cod":"594","msg":"Rejei\u00e7\u00e3o: O n\u00famero de sequencia do evento informado \u00e9 maior que o permitido","status":"0","correct":""},{"cod":"595","msg":"Rejei\u00e7\u00e3o: Obrigat\u00f3ria a informa\u00e7\u00e3o da justificativa do evento.","status":"0","correct":""},{"cod":"596","msg":"Rejei\u00e7\u00e3o: Evento apresentado fora do prazo: [prazo vigente]","status":"0","correct":""},{"cod":"597","msg":"Rejei\u00e7\u00e3o: CFOP de Importa\u00e7\u00e3o e n\u00e3o informado dados de IPI","status":"0","correct":""},{"cod":"598","msg":"Rejei\u00e7\u00e3o: NF-e emitida em ambiente de homologa\u00e7\u00e3o com Raz\u00e3o Social do destinat\u00e1rio diferente de NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL","status":"0","correct":""},{"cod":"599","msg":"Rejei\u00e7\u00e3o: CFOP de Importa\u00e7\u00e3o e n\u00e3o informado dados de II","status":"0","correct":""},{"cod":"600","msg":"CSOSN incompativel na operacao com Nao Contribuinte","status":"","correct":""},{"cod":"601","msg":"Rejei\u00e7\u00e3o: Total do II difere do somat\u00f3rio dos itens","status":"0","correct":""},{"cod":"602","msg":"Rejei\u00e7\u00e3o: Total do PIS difere do somat\u00f3rio dos itens sujeitos ao ICMS","status":"0","correct":""},{"cod":"603","msg":"Rejei\u00e7\u00e3o: Total do COFINS difere do somat\u00f3rio dos itens sujeitos ao ICMS","status":"0","correct":""},{"cod":"604","msg":"Rejei\u00e7\u00e3o: Total do vOutro difere do somat\u00f3rio dos itens","status":"0","correct":""},{"cod":"605","msg":"Rejei\u00e7\u00e3o: Total do vISS difere do somat\u00f3rio do vProd dos itens sujeitos ao ISSQN","status":"0","correct":""},{"cod":"606","msg":"Rejei\u00e7\u00e3o: Total do vBC do ISS difere do somat\u00f3rio dos itens","status":"0","correct":""},{"cod":"607","msg":"Rejei\u00e7\u00e3o: Total do ISS difere do somat\u00f3rio dos itens","status":"0","correct":""},{"cod":"608","msg":"Rejei\u00e7\u00e3o: Total do PIS difere do somat\u00f3rio dos itens sujeitos ao ISSQN","status":"0","correct":""},{"cod":"609","msg":"Rejei\u00e7\u00e3o: Total do COFINS difere do somat\u00f3rio dos itens sujeitos ao ISSQN","status":"0","correct":""},{"cod":"610","msg":"Rejei\u00e7\u00e3o: Total da NF difere do somat\u00f3rio dos Valores comp\u00f5e o valor Total da NF.","status":"0","correct":""},{"cod":"611","msg":"Rejei\u00e7\u00e3o: cEAN inv\u00e1lido","status":"0","correct":""},{"cod":"612","msg":"Rejei\u00e7\u00e3o: cEANTrib inv\u00e1lido","status":"0","correct":""},{"cod":"613","msg":"Rejei\u00e7\u00e3o: Chave de Acesso difere da existente em BD","status":"0","correct":""},{"cod":"614","msg":"Rejei\u00e7\u00e3o: Chave de Acesso inv\u00e1lida (C\u00f3digo UF inv\u00e1lido)","status":"0","correct":""},{"cod":"615","msg":"Rejei\u00e7\u00e3o: Chave de Acesso inv\u00e1lida (Ano menor que 06 ou Ano maior que Ano corrente)","status":"0","correct":""},{"cod":"616","msg":"Rejei\u00e7\u00e3o: Chave de Acesso inv\u00e1lida (M\u00eas menor que 1 ou M\u00eas maior que 12)","status":"0","correct":""},{"cod":"617","msg":"Rejei\u00e7\u00e3o: Chave de Acesso inv\u00e1lida (CNPJ zerado ou d\u00edgito inv\u00e1lido)","status":"0","correct":""},{"cod":"618","msg":"Rejei\u00e7\u00e3o: Chave de Acesso inv\u00e1lida (modelo diferente de 55 e 65)","status":"0","correct":""},{"cod":"619","msg":"Rejei\u00e7\u00e3o: Chave de Acesso inv\u00e1lida (n\u00famero NF = 0)","status":"0","correct":""},{"cod":"620","msg":"Rejei\u00e7\u00e3o: Chave de Acesso difere da existente em BD","status":"0","correct":""},{"cod":"621","msg":"Rejei\u00e7\u00e3o: CPF Emitente n\u00e3o cadastrado","status":"0","correct":""},{"cod":"622","msg":"Rejei\u00e7\u00e3o: IE emitente n\u00e3o vinculada ao CPF","status":"0","correct":""},{"cod":"623","msg":"Rejei\u00e7\u00e3o: CPF Destinat\u00e1rio n\u00e3o cadastrado","status":"0","correct":""},{"cod":"624","msg":"Rejei\u00e7\u00e3o: IE Destinat\u00e1rio n\u00e3o vinculada ao CPF","status":"0","correct":""},{"cod":"625","msg":"Rejei\u00e7\u00e3o: Inscri\u00e7\u00e3o SUFRAMA deve ser informada na venda com isen\u00e7\u00e3o para ZFM","status":"0","correct":""},{"cod":"626","msg":"Rejei\u00e7\u00e3o: CFOP de opera\u00e7\u00e3o isenta para ZFM diferente do previsto","status":"0","correct":""},{"cod":"627","msg":"Rejei\u00e7\u00e3o: O valor do ICMS desonerado deve ser informado","status":"0","correct":""},{"cod":"628","msg":"Rejei\u00e7\u00e3o: Total da NF superior ao valor limite estabelecido pela SEFAZ [Limite]","status":"0","correct":""},{"cod":"629","msg":"Rejei\u00e7\u00e3o: Valor do Produto difere do produto Valor Unit\u00e1rio de Comercializa\u00e7\u00e3o e Quantidade Comercial","status":"0","correct":""},{"cod":"630","msg":"Rejei\u00e7\u00e3o: Valor do Produto difere do produto Valor Unit\u00e1rio de Tributa\u00e7\u00e3o e Quantidade Tribut\u00e1vel","status":"0","correct":""},{"cod":"631","msg":"Rejei\u00e7\u00e3o: CNPJ-Base do Destinat\u00e1rio difere do CNPJ-Base do Certificado Digital","status":"0","correct":""},{"cod":"632","msg":"Rejei\u00e7\u00e3o: Solicita\u00e7\u00e3o fora de prazo, a NF-e n\u00e3o est\u00e1 mais dispon\u00edvel para download","status":"0","correct":""},{"cod":"633","msg":"Rejei\u00e7\u00e3o: NF-e indispon\u00edvel para download devido a aus\u00eancia de Manifesta\u00e7\u00e3o do Destinat\u00e1rio","status":"0","correct":""},{"cod":"634","msg":"Rejei\u00e7\u00e3o: Destinat\u00e1rio da NF-e n\u00e3o tem o mesmo CNPJ raiz do solicitante do download","status":"0","correct":""},{"cod":"635","msg":"Rejei\u00e7\u00e3o: NF-e com mesmo n\u00famero e s\u00e9rie j\u00e1 transmitida e aguardando processamento","status":"0","correct":""},{"cod":"650","msg":"Rejei\u00e7\u00e3o: Evento de \"Ci\u00eancia da Emiss\u00e3o\" para NF-e Cancelada ou Denegada","status":"0","correct":""},{"cod":"651","msg":"Rejei\u00e7\u00e3o: Evento de \"Desconhecimento da Opera\u00e7\u00e3o\" para NF-e Cancelada ou Denegada","status":"0","correct":""},{"cod":"653","msg":"Rejei\u00e7\u00e3o: NF-e Cancelada, arquivo indispon\u00edvel para download","status":"0","correct":""},{"cod":"654","msg":"Rejei\u00e7\u00e3o: NF-e Denegada, arquivo indispon\u00edvel para download","status":"0","correct":""},{"cod":"655","msg":"Rejei\u00e7\u00e3o: Evento de Ci\u00eancia da Emiss\u00e3o informado ap\u00f3s a manifesta\u00e7\u00e3o final do destinat\u00e1rio","status":"0","correct":""},{"cod":"656","msg":"Rejei\u00e7\u00e3o: Consumo Indevido","status":"0","correct":""},{"cod":"657","msg":"Rejei\u00e7\u00e3o: C\u00f3digo do \u00d3rg\u00e3o diverge do \u00f3rg\u00e3o autorizador","status":"0","correct":""},{"cod":"658","msg":"Rejei\u00e7\u00e3o: UF do destinat\u00e1rio da Chave de Acesso diverge da UF autorizadora","status":"0","correct":""},{"cod":"660","msg":"Rejei\u00e7\u00e3o: CFOP de Combust\u00edvel e n\u00e3o informado grupo de combust\u00edvel da NF-e","status":"0","correct":""},{"cod":"661","msg":"Rejei\u00e7\u00e3o: NF-e j\u00e1 existente para o n\u00famero do EPEC informado","status":"0","correct":""},{"cod":"662","msg":"Rejei\u00e7\u00e3o: Numera\u00e7\u00e3o do EPEC est\u00e1 inutilizada na Base de Dados da SEFAZ","status":"0","correct":""},{"cod":"663","msg":"Rejei\u00e7\u00e3o: Al\u00edquota do ICMS com valor superior a 4 por cento na opera\u00e7\u00e3o de sa\u00edda interestadual com produtos importados","status":"0","correct":""},{"cod":"678","msg":"Rejei\u00e7\u00e3o: NF referenciada com UF diferente da NF-e complementar","status":"0","correct":""},{"cod":"679","msg":"Rejei\u00e7\u00e3o: Modelo da NF-e referenciada diferente de 55\/65","status":"0","correct":""},{"cod":"680","msg":"Rejei\u00e7\u00e3o: Duplicidade de NF-e referenciada (Chave de Acesso referenciada mais de uma vez)","status":"0","correct":""},{"cod":"681","msg":"Rejei\u00e7\u00e3o: Duplicidade de NF Modelo 1 referenciada (CNPJ, Modelo, S\u00e9rie e N\u00famero)","status":"0","correct":""},{"cod":"682","msg":"Rejei\u00e7\u00e3o: Duplicidade de NF de Produtor referenciada (IE, Modelo, S\u00e9rie e N\u00famero)","status":"0","correct":""},{"cod":"683","msg":"Rejei\u00e7\u00e3o: Modelo do CT-e referenciado diferente de 57","status":"0","correct":""},{"cod":"684","msg":"Rejei\u00e7\u00e3o: Duplicidade de Cupom Fiscal referenciado (Modelo, N\u00famero de Ordem e COO)","status":"0","correct":""},{"cod":"685","msg":"Rejei\u00e7\u00e3o: Total do Valor Aproximado dos Tributos difere do somat\u00f3rio dos itens","status":"0","correct":""},{"cod":"686","msg":"Rejei\u00e7\u00e3o: NF Complementar referencia uma NF-e cancelada","status":"0","correct":""},{"cod":"687","msg":"Rejei\u00e7\u00e3o: NF Complementar referencia uma NF-e denegada","status":"0","correct":""},{"cod":"688","msg":"Rejei\u00e7\u00e3o: NF referenciada de Produtor com IE inexistente [nRef: xxx]","status":"0","correct":""},{"cod":"689","msg":"Rejei\u00e7\u00e3o: NF referenciada de Produtor com IE n\u00e3o vinculada ao CNPJ\/CPF informado [nRef: xxx]","status":"0","correct":""},{"cod":"690","msg":"Rejei\u00e7\u00e3o: Pedido de Cancelamento para NF-e com CT-e","status":"0","correct":""},{"cod":"691","msg":"Rejei\u00e7\u00e3o: Chave de Acesso da NF-e diverge da Chave de Acesso do EPEC","status":"0","correct":""},{"cod":"692","msg":"692-Rejeic\u0327a\u0303o: Existe EPEC registrado para esta Se\u0301rie e Nu\u0301mero [Chave EPEC: xxxxxxxxxxx]","status":"0","correct":""},{"cod":"693","msg":"Al\u00edquota de ICMS superior a definida para a opera\u00e7\u00e3o interestadual [nItem:999]","status":"0","correct":""},{"cod":"694","msg":"Pe\u00e7a orienta\u00e7\u00e3o ao seu contador sobre a partilha de ICMS entre estados. No caso da opera\u00e7\u00e3o ser com consumidor final (= 1 Sim), a UF do destinat\u00e1rio ser outra que a UF do emitente, e o tipo de contribuinte ser 9 - Na\u0303o Contribuinte, que pode ou na\u0303o possuir Inscric\u0327a\u0303o Estadual no Cadastro de Contribuintes do ICMS, as informa\u00e7\u00f5es de partilha de ICMS devem ser informadas no passo 3, como: pFCPUFDest, pICMSInter, pICMSInterPart, pICMSUFDest, vBCUFDest, vFCPUFDest, vICMSUFDest e vICMSUFRemet. N\u00e3o informado o grupo de ICMS para a UF de destino [nItem:999]","status":"0","correct":""},{"cod":"695","msg":" Informado indevidamente o grupo de ICMS para a UF de destino [nItem:999]","status":"0","correct":""},{"cod":"696","msg":"No passo 1, mude \"Consumidor Final\" para \"1 - Sim\"Operacao com nao contribuinte deve indicar operacao com consumidor final","status":"0","correct":""},{"cod":"697","msg":"Al\u00edquota interestadual do ICMS com origem diferente do previsto [nItem:999]","status":"0","correct":""},{"cod":"698","msg":"Pe\u00e7a orienta\u00e7\u00e3o ao seu contador sobre a partilha de ICMS entre estados. No caso da opera\u00e7\u00e3o ser com consumidor final (= 1 Sim), a UF do destinat\u00e1rio ser outra que a UF do emitente, e o tipo de contribuinte ser 9 - Na\u0303o Contribuinte, que pode ou na\u0303o possuir Inscric\u0327a\u0303o Estadual no Cadastro de Contribuintes do ICMS, as informa\u00e7\u00f5es de partilha de ICMS devem ser informadas no passo 3, como: pFCPUFDest, pICMSInter, pICMSInterPart, pICMSUFDest, vBCUFDest, vFCPUFDest, vICMSUFDest e vICMSUFRemet. Al\u00edquota interestadual do ICMS incompat\u00edvel com as UF envolvidas na opera\u00e7\u00e3o [nItem:999]","status":"0","correct":""},{"cod":"699","msg":"Percentual do ICMS Interestadual para a UF de destino difere do previsto para o ano da Data de Emiss\u00e3o [nItem:999]","status":"0","correct":""},{"cod":"700","msg":"Rejei\u00e7\u00e3o: Mensagem de Lote vers\u00e3o 3.xx. Enviar para o Web Service nfeAutorizacao","status":"0","correct":""},{"cod":"701","msg":"Rejei\u00e7\u00e3o: NF-e n\u00e3o pode utilizar a vers\u00e3o 3.00","status":"0","correct":""},{"cod":"702","msg":"Rejei\u00e7\u00e3o: NFC-e n\u00e3o \u00e9 aceita pela UF do Emitente","status":"0","correct":""},{"cod":"703","msg":"Rejei\u00e7\u00e3o: Data-Hora de Emiss\u00e3o posterior ao hor\u00e1rio de recebimento","status":"0","correct":""},{"cod":"704","msg":"Rejei\u00e7\u00e3o: NFC-e com Data-Hora de emiss\u00e3o atrasada","status":"0","correct":""},{"cod":"705","msg":"Rejei\u00e7\u00e3o: NFC-e com data de entrada\/sa\u00edda","status":"0","correct":""},{"cod":"706","msg":"Rejei\u00e7\u00e3o: NFC-e para opera\u00e7\u00e3o de entrada","status":"0","correct":""},{"cod":"707","msg":"Rejei\u00e7\u00e3o: NFC-e para opera\u00e7\u00e3o interestadual ou com o exterior","status":"0","correct":""},{"cod":"708","msg":"Rejei\u00e7\u00e3o: NFC-e n\u00e3o pode referenciar documento fiscal","status":"0","correct":""},{"cod":"709","msg":"Rejei\u00e7\u00e3o: NFC-e com formato de DANFE inv\u00e1lido","status":"0","correct":""},{"cod":"710","msg":"Rejei\u00e7\u00e3o: NF-e com formato de DANFE inv\u00e1lido","status":"0","correct":""},{"cod":"711","msg":"Rejei\u00e7\u00e3o: NF-e com conting\u00eancia off-line","status":"0","correct":""},{"cod":"712","msg":"Rejei\u00e7\u00e3o: NFC-e com conting\u00eancia off-line para a UF","status":"0","correct":""},{"cod":"713","msg":"Rejei\u00e7\u00e3o: Tipo de Emiss\u00e3o diferente de 6 ou 7 para conting\u00eancia da SVC acessada","status":"0","correct":""},{"cod":"714","msg":"Rejei\u00e7\u00e3o: NFC-e com conting\u00eancia DPEC inexistente","status":"0","correct":""},{"cod":"715","msg":"Rejei\u00e7\u00e3o: NFC-e com finalidade inv\u00e1lida","status":"0","correct":""},{"cod":"716","msg":"Rejei\u00e7\u00e3o: NFC-e em opera\u00e7\u00e3o n\u00e3o destinada a consumidor final","status":"0","correct":""},{"cod":"717","msg":"Rejei\u00e7\u00e3o: NFC-e em opera\u00e7\u00e3o n\u00e3o presencial","status":"0","correct":""},{"cod":"718","msg":"Rejei\u00e7\u00e3o: NFC-e n\u00e3o deve informar IE de Substituto Tribut\u00e1rio","status":"0","correct":""},{"cod":"719","msg":"Rejei\u00e7\u00e3o: NF-e sem a identifica\u00e7\u00e3o do destinat\u00e1rio","status":"0","correct":""},{"cod":"720","msg":"Rejei\u00e7\u00e3o: Na opera\u00e7\u00e3o com Exterior deve ser informada tag idEstrangeiro","status":"0","correct":""},{"cod":"721","msg":"Rejei\u00e7\u00e3o: Opera\u00e7\u00e3o interestadual deve informar CNPJ ou CPF.","status":"0","correct":""},{"cod":"722","msg":"Opera\u00e7\u00e3o interna com idEstrangeiro informado deve ser presencial","status":"0","correct":""},{"cod":"723","msg":"Rejei\u00e7\u00e3o: Opera\u00e7\u00e3o interna com idEstrangeiro informado deve ser para consumidor final","status":"0","correct":""},{"cod":"724","msg":"Rejei\u00e7\u00e3o: NF-e sem o nome do destinat\u00e1rio","status":"0","correct":""},{"cod":"725","msg":"Rejei\u00e7\u00e3o: NFC-e com CFOP inv\u00e1lido","status":"0","correct":""},{"cod":"726","msg":"Rejei\u00e7\u00e3o: NF-e sem a informa\u00e7\u00e3o de endere\u00e7o do destinat\u00e1rio","status":"0","correct":""},{"cod":"727","msg":"Rejei\u00e7\u00e3o: Opera\u00e7\u00e3o com Exterior e UF diferente de EX","status":"0","correct":""},{"cod":"728","msg":"Rejei\u00e7\u00e3o: NF-e sem informa\u00e7\u00e3o da IE do destinat\u00e1rio","status":"0","correct":""},{"cod":"729","msg":"Rejei\u00e7\u00e3o: NFC-e com informa\u00e7\u00e3o da IE do destinat\u00e1rio","status":"0","correct":""},{"cod":"730","msg":"Rejei\u00e7\u00e3o: NFC-e com Inscri\u00e7\u00e3o Suframa","status":"0","correct":""},{"cod":"731","msg":"Rejei\u00e7\u00e3o: CFOP de opera\u00e7\u00e3o com Exterior e idDest <> 3","status":"0","correct":""},{"cod":"732","msg":"Rejei\u00e7\u00e3o: CFOP de opera\u00e7\u00e3o interestadual e idDest <> 2","status":"0","correct":""},{"cod":"733","msg":"Rejei\u00e7\u00e3o: CFOP de opera\u00e7\u00e3o interna e idDest <> 1","status":"0","correct":""},{"cod":"734","msg":"Rejei\u00e7\u00e3o: NFC-e com Unidade de Comercializa\u00e7\u00e3o inv\u00e1lida","status":"0","correct":""},{"cod":"735","msg":"Rejei\u00e7\u00e3o: NFC-e com Unidade de Tributa\u00e7\u00e3o inv\u00e1lida","status":"0","correct":""},{"cod":"736","msg":"Rejei\u00e7\u00e3o: NFC-e com grupo de Ve\u00edculos novos","status":"0","correct":""},{"cod":"737","msg":"Rejei\u00e7\u00e3o: NFC-e com grupo de Medicamentos","status":"0","correct":""},{"cod":"738","msg":"Rejei\u00e7\u00e3o: NFC-e com grupo de Armamentos","status":"0","correct":""},{"cod":"739","msg":"Rejei\u00e7\u00e3o: NFC-e com grupo de Combust\u00edvel","status":"0","correct":""},{"cod":"740","msg":"Rejei\u00e7\u00e3o: NFC-e com CST 51-Diferimento","status":"0","correct":""},{"cod":"741","msg":"Rejei\u00e7\u00e3o: NFC-e com Partilha de ICMS entre UF","status":"0","correct":""},{"cod":"742","msg":"Rejei\u00e7\u00e3o: NFC-e com grupo do IPI","status":"0","correct":""},{"cod":"743","msg":"Rejei\u00e7\u00e3o: NFC-e com grupo do II","status":"0","correct":""},{"cod":"745","msg":"Rejei\u00e7\u00e3o: NF-e sem grupo do PIS","status":"0","correct":""},{"cod":"746","msg":"Rejei\u00e7\u00e3o: NFC-e com grupo do PIS-ST","status":"0","correct":""},{"cod":"748","msg":"Rejei\u00e7\u00e3o: NF-e sem grupo da COFINS","status":"0","correct":""},{"cod":"749","msg":"Rejei\u00e7\u00e3o: NFC-e com grupo da COFINS-ST","status":"0","correct":""},{"cod":"750","msg":"Rejei\u00e7\u00e3o: NFC-e com valor total superior ao permitido para destinat\u00e1rio n\u00e3o identificado (C\u00f3digo)","status":"0","correct":""},{"cod":"751","msg":"Rejei\u00e7\u00e3o: NFC-e com valor total superior ao permitido para destinat\u00e1rio n\u00e3o identificado (Nome)","status":"0","correct":""},{"cod":"752","msg":"Rejei\u00e7\u00e3o: NFC-e com valor total superior ao permitido para destinat\u00e1rio n\u00e3o identificado (Endere\u00e7o)","status":"0","correct":""},{"cod":"753","msg":"Rejei\u00e7\u00e3o: NFC-e com Frete","status":"0","correct":""},{"cod":"754","msg":"Rejei\u00e7\u00e3o: NFC-e com dados do Transportador","status":"0","correct":""},{"cod":"755","msg":"Rejei\u00e7\u00e3o: NFC-e com dados de Reten\u00e7\u00e3o do ICMS no Transporte","status":"0","correct":""},{"cod":"756","msg":"Rejei\u00e7\u00e3o: NFC-e com dados do ve\u00edculo de Transporte","status":"0","correct":""},{"cod":"757","msg":"Rejei\u00e7\u00e3o: NFC-e com dados de Reboque do ve\u00edculo de Transporte","status":"0","correct":""},{"cod":"758","msg":"Rejei\u00e7\u00e3o: NFC-e com dados do Vag\u00e3o de Transporte","status":"0","correct":""},{"cod":"759","msg":"Rejei\u00e7\u00e3o: NFC-e com dados da Balsa de Transporte","status":"0","correct":""},{"cod":"760","msg":"Rejei\u00e7\u00e3o: NFC-e com dados de cobran\u00e7a (Fatura, Duplicata)","status":"0","correct":""},{"cod":"762","msg":"Rejei\u00e7\u00e3o: NFC-e com dados de compras (Empenho, Pedido, Contrato)","status":"0","correct":""},{"cod":"763","msg":"Rejei\u00e7\u00e3o: NFC-e com dados de aquisi\u00e7\u00e3o de Cana","status":"0","correct":""},{"cod":"764","msg":"Rejei\u00e7\u00e3o: Solicitada resposta s\u00edncrona para Lote com mais de uma NF-e (indSinc=1)","status":"0","correct":""},{"cod":"765","msg":"Rejei\u00e7\u00e3o: Lote s\u00f3 poder\u00e1 conter NF-e ou NFC-e","status":"0","correct":""},{"cod":"766","msg":"Rejei\u00e7\u00e3o: NFC-e com CST 50-Suspens\u00e3o","status":"0","correct":""},{"cod":"767","msg":"Rejei\u00e7\u00e3o: NFC-e com somat\u00f3rio dos pagamentos diferente do total da Nota Fiscal","status":"0","correct":""},{"cod":"768","msg":"Rejei\u00e7\u00e3o: NF-e n\u00e3o deve possuir o grupo de Formas de Pagamento","status":"0","correct":""},{"cod":"769","msg":"Rejei\u00e7\u00e3o: A crit\u00e9rio da UF NFC-e deve possuir o grupo de Formas de Pagamento","status":"0","correct":""},{"cod":"770","msg":"Rejei\u00e7\u00e3o: NFC-e autorizada h\u00e1 mais de 24 horas.","status":"0","correct":""},{"cod":"771","msg":"Rejei\u00e7\u00e3o: Opera\u00e7\u00e3o Interestadual e UF de destino com EX","status":"0","correct":""},{"cod":"772","msg":"Rejei\u00e7\u00e3o: Opera\u00e7\u00e3o Interestadual e UF de destino igual \u00e0 UF do emitente","status":"0","correct":"Opera\u00e7\u00e3o indicada como interestadual mas a UF do destinat\u00e1rio \u00e9 a mesmo do emitente."},{"cod":"773","msg":"Rejei\u00e7\u00e3o: Opera\u00e7\u00e3o Interna e UF de destino difere da UF do emitente","status":"0","correct":"A UF do destinat\u00e1rio \u00e9 diferente do emitente"},{"cod":"774","msg":"Rejei\u00e7\u00e3o: NFC-e com indicador de item n\u00e3o participante do total","status":"0","correct":"Em NFCe todos os itens da notas integram o total, algum item n\u00e3o est\u00e1 dessa forma."},{"cod":"775","msg":"Rejei\u00e7\u00e3o: Modelo da NFC-e diferente de 65","status":"0","correct":"NFCe deve ter modelo 65 apenas, , informe o administrador do sistema"},{"cod":"776","msg":"Rejei\u00e7\u00e3o: Solicitada resposta s\u00edncrona para UF que n\u00e3o disponibiliza este atendimento (indSinc=1)","status":"0","correct":"N\u00e3o existe opere\u00e7\u00e3o sincrona, informe o administrador do sistema"},{"cod":"777","msg":"Rejei\u00e7\u00e3o: Obrigat\u00f3ria a informa\u00e7\u00e3o do NCM completo","status":"0","correct":"NCM incompleto, esse numero deve ter 8 digitos"},{"cod":"778","msg":"Rejei\u00e7\u00e3o: Informado NCM inexistente","status":"0","correct":"Verifique o c\u00f3digo NCM est\u00e1 errado. Lembre-se que esses c\u00f3digos mudam e ningu\u00e9m te avisa disso"},{"cod":"779","msg":"Rejei\u00e7\u00e3o: NFC-e com NCM incompat\u00edvel","status":"0","correct":"NCM do produto incompat\u00edvel com NFCe"},{"cod":"780","msg":"Rejei\u00e7\u00e3o: Total da NFC-e superior ao valor limite estabelecido pela SEFAZ [Limite]","status":"0","correct":"A NFCe indica um valor muito alto, acima do permitido"},{"cod":"781","msg":"Rejei\u00e7\u00e3o: Emissor n\u00e3o habilitado para emiss\u00e3o da NFC-e","status":"0","correct":"CNPJ n\u00e3o habilitado, entre em contado com SEFAZ"},{"cod":"782","msg":"Rejei\u00e7\u00e3o: NFC-e n\u00e3o \u00e9 autorizada pelo SCAN","status":"0","correct":"NFCe n\u00e3o pode usar essa conting\u00eacia"},{"cod":"783","msg":"Rejei\u00e7\u00e3o: NFC-e n\u00e3o \u00e9 autorizada pela SVC","status":"0","correct":"NFCe n\u00e3o pode usar essa conting\u00eacia"},{"cod":"784","msg":"Rejei\u00e7\u00e3o: NFC-e n\u00e3o permite o evento de Carta de Corre\u00e7\u00e3o","status":"0","correct":"NFCe n\u00e3o aceita carta de corre\u00e7\u00e3o, se existe erro cancele e emita outra NFCe"},{"cod":"785","msg":"Rejei\u00e7\u00e3o: NFC-e com entrega a domic\u00edlio n\u00e3o permitida pela UF","status":"0","correct":"Esta UF n\u00e3o permite essa opera\u00e7\u00e3o com entrega em domicilio"},{"cod":"786","msg":"Rejei\u00e7\u00e3o: NFC-e de entrega a domic\u00edlio sem dados do Transportador","status":"0","correct":"Entrega em domicilio sem dados do transportador"},{"cod":"787","msg":"Rejei\u00e7\u00e3o: NFC-e de entrega a domic\u00edlio sem a identifica\u00e7\u00e3o do destinat\u00e1rio","status":"0","correct":"Entrega em domicilio sem a identifica\u00e7\u00e3o do destinat\u00e1rio"},{"cod":"788","msg":"Rejei\u00e7\u00e3o: NFC-e de entrega a domic\u00edlio sem o endere\u00e7o do destinat\u00e1rio","status":"0","correct":"Indicada entrega em domicilio sem o endere\u00e7o do destinat\u00e1rio"},{"cod":"789","msg":"Rejei\u00e7\u00e3o: NFC-e para destinat\u00e1rio contribuinte de ICMS","status":"0","correct":"NFCe \u00e9 apenas para consumidores e n\u00e3o para contribuintes"},{"cod":"790","msg":"Rejei\u00e7\u00e3o: Opera\u00e7\u00e3o com Exterior para destinat\u00e1rio Contribuinte de ICMS","status":"0","correct":"Exporta\u00e7\u00e3o n\u00e3o pode ter um contribuinte do ICMS no exterior"},{"cod":"791","msg":"Rejei\u00e7\u00e3o: NF-e com indica\u00e7\u00e3o de destinat\u00e1rio isento de IE, com a informa\u00e7\u00e3o da IE do destinat\u00e1rio","status":"0","correct":"Foi indicada opera\u00e7\u00e3o com Contribuinte isento de Inscri\u00e7\u00e3o no cadastro de Contribuintes do ICMS e informada a IE do destinat\u00e1rio"},{"cod":"792","msg":"Rejei\u00e7\u00e3o: Informada a IE do destinat\u00e1rio para opera\u00e7\u00e3o com destinat\u00e1rio no Exterior","status":"0","correct":"Em opera\u00e7\u00f5es de exporta\u00e7\u00e3o n\u00e3o pode ser indicado um IE"},{"cod":"793","msg":"Rejei\u00e7\u00e3o: Informado Cap\u00edtulo do NCM inexistente","status":"0","correct":"Confira o NCM est\u00e1 incorreto"},{"cod":"794","msg":"Rejei\u00e7\u00e3o: NF-e com indicativo de NFC-e com entrega a domic\u00edlio","status":"0","correct":"NFC-e em opera\u00e7\u00e3o com entrega a domic\u00edlio e n\u00e3o foram informados os dados do destinat\u00e1rio"},{"cod":"795","msg":"Rejei\u00e7\u00e3o: Total do ICMS desonerado difere do somat\u00f3rio dos itens","status":"0","correct":"Valor da soma do ICMS desonerado dos itens n\u00e3o est\u00e1 igual ao valor do ICMS desonerado no total da nota. Verifique se o CST da nota est\u00e1 correto, caso esteja como por exemplo '00 - Tributado Integralmente' o valor do ICMS desonerado por item n\u00e3o ser\u00e1 destacado, gerado assim essa rejei\u00e7\u00e3o no envio."},{"cod":"796","msg":"Rejei\u00e7\u00e3o: Empresa sem Chave de Seguran\u00e7a para o QR-Code","status":"0","correct":"Confira o CSC e o CSCid"},{"cod":"798","msg":"Valor total do ICMS relativo Fundo de Combate \u00e0 Pobreza (FCP) da UF de destino difere do somat\u00f3rio do valor dos itens","status":"0","correct":""},{"cod":"799","msg":"Valor total do ICMS Interestadual da UF de destino difere do somat\u00f3rio dos itens","status":"0","correct":""},{"cod":"800","msg":"Valor total do ICMS Interestadual da UF do remetente difere do somat\u00f3rio dos itens","status":"0","correct":""},{"cod":"805","msg":"A SEFAZ do destinat\u00e1rio n\u00e3o permite Contribuinte Isento de Inscri\u00e7\u00e3o Estadual","status":"0","correct":""},{"cod":"806","msg":"A partir de 01.10.2016 \u00e9 obrigat\u00f3ria a informa\u00e7\u00e3o do CEST, C\u00f3digo Especificador de Substitui\u00e7\u00e3o Tribut\u00e1ria, um c\u00f3digo composto por 6 algarimos. No painel editar o produto voc\u00ea tem um bot\u00e3o \"Tabela CEST\" que exibe uma lista completa dos CESTs.Opera\u00e7\u00e3o com ICMS-ST sem informa\u00e7\u00e3o do CEST","status":"0","correct":""},{"cod":"807","msg":"NFC-e com grupo de ICMS para a UF do destinat\u00e1rio","status":"0","correct":""},{"cod":"817","msg":"Unidade Tributavel incompativel com o NCM informado na operacao com Comercio Exterior","status":"0","correct":""},{"cod":"999","msg":"Rejei\u00e7\u00e3o: Erro n\u00e3o catalogado (informar a mensagem de erro capturado no tratamento da exce\u00e7\u00e3o)","status":"0","correct":"Isso \u00e9 um problema provavelmente da SEFAZ"},{"cod":"","msg":null,"status":null,"correct":null}]
+[{
+        "cod": "100",
+        "msg": "Autorizado o uso da NF-e",
+        "status": "1",
+        "correct": ""
+    }, {
+        "cod": "101",
+        "msg": "Cancelamento de NF-e homologado",
+        "status": "1",
+        "correct": ""
+    }, {
+        "cod": "102",
+        "msg": "Inutiliza\u00e7\u00e3o de n\u00famero homologado",
+        "status": "1",
+        "correct": ""
+    }, {
+        "cod": "103",
+        "msg": "Lote recebido com sucesso",
+        "status": "1",
+        "correct": ""
+    }, {
+        "cod": "104",
+        "msg": "Lote processado",
+        "status": "1",
+        "correct": ""
+    }, {
+        "cod": "105",
+        "msg": "Lote em processamento",
+        "status": "1",
+        "correct": ""
+    }, {
+        "cod": "106",
+        "msg": "Lote n\u00e3o localizado",
+        "status": "0",
+        "correct": "O numero de recibo n\u00e3o foi localizado, confira"
+    }, {
+        "cod": "107",
+        "msg": "Servi\u00e7o em Opera\u00e7\u00e3o",
+        "status": "1",
+        "correct": ""
+    }, {
+        "cod": "108",
+        "msg": "Servi\u00e7o Paralisado Momentaneamente (curto prazo)",
+        "status": "0",
+        "correct": "Fora do ar AGUARDE!"
+    }, {
+        "cod": "109",
+        "msg": "Servi\u00e7o Paralisado sem Previs\u00e3o",
+        "status": "0",
+        "correct": "Fora do ar tente usar CONTING\u00caNCIA"
+    }, {
+        "cod": "110",
+        "msg": "Uso Denegado",
+        "status": "0",
+        "correct": "Cuidado algo errado com o registro da empresa na SEFAZ"
+    }, {
+        "cod": "111",
+        "msg": "Consulta cadastro com uma ocorr\u00eancia",
+        "status": "1",
+        "correct": ""
+    }, {
+        "cod": "112",
+        "msg": "Consulta cadastro com mais de uma ocorr\u00eancia",
+        "status": "1",
+        "correct": ""
+    }, {
+        "cod": "113",
+        "msg": "SVC em processo de desativa\u00e7\u00e3o SVC sera\u0301  desabilitada para a SEFAZ-XX em dd\/mm\/aa \u00e0s hh:mm horas",
+        "status": "0",
+        "correct": "Conting\u00eancia indispon\u00edvel"
+    }, {
+        "cod": "114",
+        "msg": "SVC-RS desabilitada pela SEFAZ de Origem",
+        "status": "0",
+        "correct": "Conting\u00eancia indispon\u00edvel"
+    }, {
+        "cod": "124",
+        "msg": "EPEC Autorizado",
+        "status": "1",
+        "correct": ""
+    }, {
+        "cod": "128",
+        "msg": "Lote de Evento Processado",
+        "status": "1",
+        "correct": ""
+    }, {
+        "cod": "135",
+        "msg": "Evento registrado e vinculado a NF-e",
+        "status": "1",
+        "correct": ""
+    }, {
+        "cod": "136",
+        "msg": "Evento registrado, mas n\u00e3o vinculado a NF-e",
+        "status": "1",
+        "correct": ""
+    }, {
+        "cod": "137",
+        "msg": "Nenhum documento localizado para o Destinat\u00e1rio",
+        "status": "1",
+        "correct": ""
+    }, {
+        "cod": "138",
+        "msg": "Documento localizado para o Destinat\u00e1rio",
+        "status": "1",
+        "correct": ""
+    }, {
+        "cod": "139",
+        "msg": "Pedido de Download processado",
+        "status": "1",
+        "correct": ""
+    }, {
+        "cod": "140",
+        "msg": "Download disponibilizado",
+        "status": "1",
+        "correct": ""
+    }, {
+        "cod": "142",
+        "msg": "Ambiente de Conting\u00eancia EPEC bloqueado para o Emitente",
+        "status": "0",
+        "correct": "EPEC bloqueado consultar a SEFAZ"
+    }, {
+        "cod": "150",
+        "msg": "Autorizado o uso da NF-e, autoriza\u00e7\u00e3o fora de prazo",
+        "status": "1",
+        "correct": ""
+    }, {
+        "cod": "151",
+        "msg": "Cancelamento de NF-e homologado fora de prazo",
+        "status": "1",
+        "correct": ""
+    }, {
+        "cod": "155",
+        "msg": "Cancelamento homologado fora de prazo",
+        "status": "1",
+        "correct": ""
+    }, {
+        "cod": "201",
+        "msg": "Rejei\u00e7\u00e3o: N\u00famero m\u00e1ximo de numera\u00e7\u00e3o a inutilizar ultrapassou o limite",
+        "status": "0",
+        "correct": "N\u00e3o podem ser inutilizados tantos numeros"
+    }, {
+        "cod": "202",
+        "msg": "Rejei\u00e7\u00e3o: Falha no reconhecimento da autoria ou integridade do arquivo digital",
+        "status": "0",
+        "correct": "Algo n\u00e3o esta correto no formato do arquivo"
+    }, {
+        "cod": "203",
+        "msg": "Rejei\u00e7\u00e3o: Emissor n\u00e3o habilitado para emiss\u00e3o de NF-e",
+        "status": "0",
+        "correct": "Voc\u00ea n\u00e3o est\u00e1 credenciado para usar esse servi\u00e7o"
+    }, {
+        "cod": "204",
+        "msg": "Duplicidade de NF-e [nRec:999999999999999]",
+        "status": "0",
+        "correct": "J\u00e1 existe outra NFe autorizada com esse mesmo numero"
+    }, {
+        "cod": "205",
+        "msg": "NF-e est\u00e1 denegada na base de dados da SEFAZ [nRec:999999999999999]",
+        "status": "0",
+        "correct": "Essa nota j\u00e1 existe e foi DENEGADA"
+    }, {
+        "cod": "206",
+        "msg": "Rejei\u00e7\u00e3o: NF-e j\u00e1 est\u00e1 inutilizada na Base de dados da SEFAZ",
+        "status": "0",
+        "correct": "Esse numero de NFe foi inutilizado anteriormente"
+    }, {
+        "cod": "207",
+        "msg": "Rejei\u00e7\u00e3o: CNPJ do emitente inv\u00e1lido",
+        "status": "0",
+        "correct": "Erro no CNPJ do emitente"
+    }, {
+        "cod": "208",
+        "msg": "Rejei\u00e7\u00e3o: CNPJ do destinat\u00e1rio inv\u00e1lido",
+        "status": "0",
+        "correct": "Erro no CNPJ do destinat\u00e1rio"
+    }, {
+        "cod": "209",
+        "msg": "Rejei\u00e7\u00e3o: IE do emitente inv\u00e1lida",
+        "status": "0",
+        "correct": "IE incorreta do emitente"
+    }, {
+        "cod": "210",
+        "msg": "Rejei\u00e7\u00e3o: IE do destinat\u00e1rio inv\u00e1lida",
+        "status": "0",
+        "correct": "IE incorreta do destinat\u00e1rio"
+    }, {
+        "cod": "211",
+        "msg": "Rejei\u00e7\u00e3o: IE do substituto inv\u00e1lida",
+        "status": "0",
+        "correct": "IE do substituto incorreta"
+    }, {
+        "cod": "212",
+        "msg": "Rejei\u00e7\u00e3o: Data de emiss\u00e3o NF-e posterior a data de recebimento",
+        "status": "0",
+        "correct": "Verifique o relogio do sistema ou a zona de tempo ou o hor\u00e1rio de ver\u00e3o"
+    }, {
+        "cod": "213",
+        "msg": "Rejei\u00e7\u00e3o: CNPJ-Base do Emitente difere do CNPJ-Base do Certificado Digital",
+        "status": "0",
+        "correct": "Voc\u00ea est\u00e1 usando um certificado de outro CNPJ"
+    }, {
+        "cod": "214",
+        "msg": "Rejei\u00e7\u00e3o: Tamanho da mensagem excedeu o limite estabelecido",
+        "status": "0",
+        "correct": "O tamanho da mensagem \u00e9 maior que o aceit\u00e1vel, reduza o numero de NFe ou de itens"
+    }, {
+        "cod": "215",
+        "msg": "Rejei\u00e7\u00e3o: Falha no schema XML",
+        "status": "0",
+        "correct": "Provavelmente foram encontrados caracteres estranhos e n\u00e3o suportados"
+    }, {
+        "cod": "216",
+        "msg": "Rejei\u00e7\u00e3o: Chave de Acesso difere da cadastrada",
+        "status": "0",
+        "correct": "A chave de acesso indicada est\u00e1 difernete a registra na SEFAZ"
+    }, {
+        "cod": "217",
+        "msg": "Rejei\u00e7\u00e3o: NF-e n\u00e3o consta na base de dados da SEFAZ",
+        "status": "0",
+        "correct": "Essa NFe n\u00e3o est\u00e1 registrada, ou n\u00e3o foi enviada ou foi rejetada"
+    }, {
+        "cod": "218",
+        "msg": "NF-e j\u00e1 est\u00e1 cancelada na base de dados da SEFAZ [nRec:999999999999999]",
+        "status": "0",
+        "correct": "N\u00e3o \u00e9 possivel realizar mais opera\u00e7\u00f5es com a NFE j\u00e1 cancelada"
+    }, {
+        "cod": "219",
+        "msg": "Rejei\u00e7\u00e3o: Circula\u00e7\u00e3o da NF-e verificada",
+        "status": "0",
+        "correct": "O cancelamento n\u00e3o \u00e9 mais possivel a circula\u00e7\u00e3o j\u00e1 foi identificada"
+    }, {
+        "cod": "220",
+        "msg": "Rejei\u00e7\u00e3o: Prazo de Cancelamento superior ao previsto na Legisla\u00e7\u00e3o",
+        "status": "0",
+        "correct": "As notas somente podem ser canceladas dentro do prazo"
+    }, {
+        "cod": "221",
+        "msg": "Rejei\u00e7\u00e3o: Confirmado o recebimento da NF-e pelo destinat\u00e1rio",
+        "status": "0",
+        "correct": "O recebimento j\u00e1 foi feito pelo destinat\u00e1rio n\u00e3o pode mais ser cancelada"
+    }, {
+        "cod": "222",
+        "msg": "Rejei\u00e7\u00e3o: Protocolo de Autoriza\u00e7\u00e3o de Uso difere do cadastrado",
+        "status": "0",
+        "correct": "O numero do protocolo indicado \u00e9 diferente do registrado"
+    }, {
+        "cod": "223",
+        "msg": "Rejei\u00e7\u00e3o: CNPJ do transmissor do lote difere do CNPJ do transmissor da consulta",
+        "status": "0",
+        "correct": "O certificado usado para autenticar a comunica\u00e7\u00e3o n\u00e3o \u00e9 o mesmo usado para assinar a NF-e"
+    }, {
+        "cod": "224",
+        "msg": "Rejei\u00e7\u00e3o: A faixa inicial \u00e9 maior que a faixa final",
+        "status": "0",
+        "correct": "Preste aten\u00e7\u00e3o aos numeros para inutilizar"
+    }, {
+        "cod": "225",
+        "msg": "Rejei\u00e7\u00e3o: Falha no Schema XML do lote de NFe",
+        "status": "0",
+        "correct": "Podem ser Espa\u00e7os entre as TAGs do XML; Quebras de Linhas; Caracteres especiais; Nome de TAGs errados; Vers\u00e3o do XML diferente do esperado pelo WebService"
+    }, {
+        "cod": "226",
+        "msg": "Rejei\u00e7\u00e3o: C\u00f3digo da UF do Emitente diverge da UF autorizadora",
+        "status": "0",
+        "correct": "O cUF indicado n\u00e3o corresponde a UF, avise o administrador"
+    }, {
+        "cod": "227",
+        "msg": "Rejei\u00e7\u00e3o: Erro na Chave de Acesso - Campo Id \u2013 falta a literal NFe",
+        "status": "0",
+        "correct": "Falha no atributo Id, avise o administrador"
+    }, {
+        "cod": "228",
+        "msg": "Rejei\u00e7\u00e3o: Data de Emiss\u00e3o muito atrasada",
+        "status": "0",
+        "correct": "Existe um limite de tempo para enviar uma solicita\u00e7\u00e3o e foi ultrapassado. Refa\u00e7a e reenvie"
+    }, {
+        "cod": "229",
+        "msg": "Rejei\u00e7\u00e3o: IE do emitente n\u00e3o informada",
+        "status": "0",
+        "correct": "A IE do emitente \u00e9 obrigat\u00f3ria"
+    }, {
+        "cod": "230",
+        "msg": "Rejei\u00e7\u00e3o: IE do emitente n\u00e3o cadastrada",
+        "status": "0",
+        "correct": "Emitente n\u00e3o cadastrado, verifique com a SEFAZ"
+    }, {
+        "cod": "231",
+        "msg": "Rejei\u00e7\u00e3o: IE do emitente n\u00e3o vinculada ao CNPJ",
+        "status": "0",
+        "correct": "A IE n\u00e3o pertence ao CNPJ, corrija"
+    }, {
+        "cod": "232",
+        "msg": "Rejei\u00e7\u00e3o: IE do destinat\u00e1rio n\u00e3o informada",
+        "status": "0",
+        "correct": "IE do destinat\u00e1rio deve ser informada nesse caso"
+    }, {
+        "cod": "233",
+        "msg": "Rejei\u00e7\u00e3o: IE do destinat\u00e1rio n\u00e3o cadastrada",
+        "status": "0",
+        "correct": "A IE do destinat\u00e1rio deve estar incorreta, verifique"
+    }, {
+        "cod": "234",
+        "msg": "Rejei\u00e7\u00e3o: IE do destinat\u00e1rio n\u00e3o vinculada ao CNPJ",
+        "status": "0",
+        "correct": "A IE do destinat\u00e1rio n\u00e3o pertence ao CNPJ do mesmo, verifique"
+    }, {
+        "cod": "235",
+        "msg": "Rejei\u00e7\u00e3o: Inscri\u00e7\u00e3o SUFRAMA inv\u00e1lida",
+        "status": "0",
+        "correct": "Numero da SUFRAMA incorreto, correija"
+    }, {
+        "cod": "236",
+        "msg": "Rejei\u00e7\u00e3o: Chave de Acesso com d\u00edgito verificador inv\u00e1lido",
+        "status": "0",
+        "correct": "O digito verificar \u00e9 calculado e est\u00e1 incorreto, informe o administrador"
+    }, {
+        "cod": "237",
+        "msg": "Rejei\u00e7\u00e3o: CPF do destinat\u00e1rio inv\u00e1lido",
+        "status": "0",
+        "correct": "O CFP do destinat\u00e1rio est\u00e1 errdo, corrija"
+    }, {
+        "cod": "238",
+        "msg": "Rejei\u00e7\u00e3o: Cabe\u00e7alho - Vers\u00e3o do arquivo XML superior a Vers\u00e3o vigente",
+        "status": "0",
+        "correct": "O numero da vers\u00e3o est\u00e1 incorreto, informe o administrador"
+    }, {
+        "cod": "239",
+        "msg": "Rejei\u00e7\u00e3o: Cabe\u00e7alho - Vers\u00e3o do arquivo XML n\u00e3o suportada",
+        "status": "0",
+        "correct": "Vers\u00e3o do documento errada, informe o adminstrador"
+    }, {
+        "cod": "240",
+        "msg": "Rejei\u00e7\u00e3o: Cancelamento\/Inutiliza\u00e7\u00e3o - Irregularidade Fiscal do Emitente",
+        "status": "0",
+        "correct": "Consulte a SEFAZ"
+    }, {
+        "cod": "241",
+        "msg": "Rejei\u00e7\u00e3o: Um n\u00famero da faixa j\u00e1 foi utilizado",
+        "status": "0",
+        "correct": "Essa inutiliza\u00e7\u00e3o j\u00e1 foi realizada."
+    }, {
+        "cod": "242",
+        "msg": "Rejei\u00e7\u00e3o: Cabe\u00e7alho - Falha no Schema XML",
+        "status": "0",
+        "correct": "Normalmente causado por caracteres inv\u00e1lidos, informe o administrador"
+    }, {
+        "cod": "243",
+        "msg": "Rejei\u00e7\u00e3o: XML Mal Formado",
+        "status": "0",
+        "correct": "Erro na montagem do XML, informe o administrador"
+    }, {
+        "cod": "244",
+        "msg": "Rejei\u00e7\u00e3o: CNPJ do Certificado Digital difere do CNPJ da Matriz e do CNPJ do Emitente",
+        "status": "0",
+        "correct": "O certificado utilizado \u00e9 incorreto"
+    }, {
+        "cod": "245",
+        "msg": "Rejei\u00e7\u00e3o: CNPJ Emitente n\u00e3o cadastrado",
+        "status": "0",
+        "correct": "Confira o CNPJ do emitente est\u00e1 errado"
+    }, {
+        "cod": "246",
+        "msg": "Rejei\u00e7\u00e3o: CNPJ Destinat\u00e1rio n\u00e3o cadastrado",
+        "status": "0",
+        "correct": "Confira o CNPJ do destinat\u00e1rio est\u00e1 errado"
+    }, {
+        "cod": "247",
+        "msg": "Rejei\u00e7\u00e3o: Sigla da UF do Emitente diverge da UF autorizadora",
+        "status": "0",
+        "correct": "O sistema est\u00e1 enviando para outro autorizador diverso da UF do emitente "
+    }, {
+        "cod": "248",
+        "msg": "Rejei\u00e7\u00e3o: UF do Recibo diverge da UF autorizadora",
+        "status": "0",
+        "correct": "O recibo usado \u00e9 de outra autoriazadora, verifique qual \u00e9 o recibo correto"
+    }, {
+        "cod": "249",
+        "msg": "Rejei\u00e7\u00e3o: UF da Chave de Acesso diverge da UF autorizadora",
+        "status": "0",
+        "correct": "A chave de acesso \u00e9 de outra autorizadora"
+    }, {
+        "cod": "250",
+        "msg": "Rejei\u00e7\u00e3o: UF diverge da UF autorizadora",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "251",
+        "msg": "Rejei\u00e7\u00e3o: UF\/Munic\u00edpio destinat\u00e1rio n\u00e3o pertence a SUFRAMA",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "252",
+        "msg": "Rejei\u00e7\u00e3o: Ambiente informado diverge do Ambiente de recebimento",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "253",
+        "msg": "Rejei\u00e7\u00e3o: Digito Verificador da chave de acesso composta inv\u00e1lida",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "254",
+        "msg": "Rejei\u00e7\u00e3o: NF-e complementar n\u00e3o possui NF referenciada",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "255",
+        "msg": "Rejei\u00e7\u00e3o: NF-e complementar possui mais de uma NF referenciada",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "256",
+        "msg": "Rejei\u00e7\u00e3o: Uma NF-e da faixa j\u00e1 est\u00e1 inutilizada na Base de dados da SEFAZ",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "257",
+        "msg": "Rejei\u00e7\u00e3o: Solicitante n\u00e3o habilitado para emiss\u00e3o da NF-e",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "258",
+        "msg": "Rejei\u00e7\u00e3o: CNPJ da consulta inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "259",
+        "msg": "Rejei\u00e7\u00e3o: CNPJ da consulta n\u00e3o cadastrado como contribuinte na UF",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "260",
+        "msg": "Rejei\u00e7\u00e3o: IE da consulta inv\u00e1lida",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "261",
+        "msg": "Rejei\u00e7\u00e3o: IE da consulta n\u00e3o cadastrada como contribuinte na UF",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "262",
+        "msg": "Rejei\u00e7\u00e3o: UF n\u00e3o fornece consulta por CPF",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "263",
+        "msg": "Rejei\u00e7\u00e3o: CPF da consulta inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "264",
+        "msg": "Rejei\u00e7\u00e3o: CPF da consulta n\u00e3o cadastrado como contribuinte na UF",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "265",
+        "msg": "Rejei\u00e7\u00e3o: Sigla da UF da consulta difere da UF do Web Service",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "266",
+        "msg": "Rejei\u00e7\u00e3o: S\u00e9rie utilizada n\u00e3o permitida no Web Service",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "267",
+        "msg": "Rejei\u00e7\u00e3o: NF Complementar referencia uma NF-e inexistente",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "268",
+        "msg": "Rejei\u00e7\u00e3o: NF Complementar referencia outra NF-e Complementar",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "269",
+        "msg": "Rejei\u00e7\u00e3o: CNPJ Emitente da NF Complementar difere do CNPJ da NF Referenciada",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "270",
+        "msg": "Rejei\u00e7\u00e3o: C\u00f3digo Munic\u00edpio do Fato Gerador: d\u00edgito inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "271",
+        "msg": "Rejei\u00e7\u00e3o: C\u00f3digo Munic\u00edpio do Fato Gerador: difere da UF do emitente",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "272",
+        "msg": "Rejei\u00e7\u00e3o: C\u00f3digo Munic\u00edpio do Emitente: d\u00edgito inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "273",
+        "msg": "Rejei\u00e7\u00e3o: C\u00f3digo Munic\u00edpio do Emitente: difere da UF do emitente",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "274",
+        "msg": "Rejei\u00e7\u00e3o: C\u00f3digo Munic\u00edpio do Destinat\u00e1rio: d\u00edgito inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "275",
+        "msg": "Rejei\u00e7\u00e3o: C\u00f3digo Munic\u00edpio do Destinat\u00e1rio: difere da UF do Destinat\u00e1rio",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "276",
+        "msg": "Rejei\u00e7\u00e3o: C\u00f3digo Munic\u00edpio do Local de Retirada: d\u00edgito inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "277",
+        "msg": "Rejei\u00e7\u00e3o: C\u00f3digo Munic\u00edpio do Local de Retirada: difere da UF do Local de Retirada",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "278",
+        "msg": "Rejei\u00e7\u00e3o: C\u00f3digo Munic\u00edpio do Local de Entrega: d\u00edgito inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "279",
+        "msg": "Rejei\u00e7\u00e3o: C\u00f3digo Munic\u00edpio do Local de Entrega: difere da UF do Local de Entrega",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "280",
+        "msg": "Rejei\u00e7\u00e3o: Certificado Transmissor inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "281",
+        "msg": "Rejei\u00e7\u00e3o: Certificado Transmissor Data Validade",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "282",
+        "msg": "Rejei\u00e7\u00e3o: Certificado Transmissor sem CNPJ",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "283",
+        "msg": "Rejei\u00e7\u00e3o: Certificado Transmissor - erro Cadeia de Certifica\u00e7\u00e3o",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "284",
+        "msg": "Rejei\u00e7\u00e3o: Certificado Transmissor revogado",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "285",
+        "msg": "Rejei\u00e7\u00e3o: Certificado Transmissor difere ICP-Brasil",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "286",
+        "msg": "Rejei\u00e7\u00e3o: Certificado Transmissor erro no acesso a LCR",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "287",
+        "msg": "Rejei\u00e7\u00e3o: C\u00f3digo Munic\u00edpio do FG - ISSQN: d\u00edgito inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "288",
+        "msg": "Rejei\u00e7\u00e3o: C\u00f3digo Munic\u00edpio do FG - Transporte: d\u00edgito inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "289",
+        "msg": "Rejei\u00e7\u00e3o: C\u00f3digo da UF informada diverge da UF solicitada",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "290",
+        "msg": "Rejei\u00e7\u00e3o: Certificado Assinatura inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "291",
+        "msg": "Rejei\u00e7\u00e3o: Certificado Assinatura Data Validade",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "292",
+        "msg": "Rejei\u00e7\u00e3o: Certificado Assinatura sem CNPJ",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "293",
+        "msg": "Rejei\u00e7\u00e3o: Certificado Assinatura - erro Cadeia de Certifica\u00e7\u00e3o",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "294",
+        "msg": "Rejei\u00e7\u00e3o: Certificado Assinatura revogado",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "295",
+        "msg": "Rejei\u00e7\u00e3o: Certificado Assinatura difere ICP-Brasil",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "296",
+        "msg": "Rejei\u00e7\u00e3o: Certificado Assinatura erro no acesso a LCR",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "297",
+        "msg": "Rejei\u00e7\u00e3o: Assinatura difere do calculado",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "298",
+        "msg": "Rejei\u00e7\u00e3o: Assinatura difere do padr\u00e3o do Sistema",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "299",
+        "msg": "Rejei\u00e7\u00e3o: XML da \u00e1rea de cabe\u00e7alho com codifica\u00e7\u00e3o diferente de UTF-8",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "301",
+        "msg": "Uso Denegado: Irregularidade fiscal do emitente",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "302",
+        "msg": "Uso Denegado: Irregularidade fiscal do destinat\u00e1rio",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "303",
+        "msg": "Uso Denegado: Destinat\u00e1rio n\u00e3o habilitado a operar na UF",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "304",
+        "msg": "Rejei\u00e7\u00e3o: Pedido de Cancelamento para NF-e com evento da Suframa",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "315",
+        "msg": "Data de Emiss\u00e3o anterior ao in\u00edcio da autoriza\u00e7\u00e3o de Nota Fiscal na UF",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "316",
+        "msg": "Nota Fiscal referenciada com a mesma Chave de Acesso da Nota Fiscal atual",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "317",
+        "msg": "NF modelo 1 referenciada com data de emiss\u00e3o inv\u00e1lida",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "318",
+        "msg": "Contranota de Produtor sem Nota Fiscal referenciada",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "319",
+        "msg": "Contranota de Produtor n\u00e3o pode referenciar somente Nota Fiscal de entrada",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "320",
+        "msg": "Contranota de Produtor referencia somente NF de outro emitente",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "321",
+        "msg": "Rejei\u00e7\u00e3o: NF-e de devolu\u00e7\u00e3o de mercadoria n\u00e3o possui documento fiscal referenciado",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "322",
+        "msg": "NF-e de devolu\u00e7\u00e3o com mais de um documento fiscal referenciado",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "323",
+        "msg": "Rejei\u00e7\u00e3o: CNPJ autorizado para download inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "324",
+        "msg": "Rejei\u00e7\u00e3o: CNPJ do destinat\u00e1rio j\u00e1 autorizado para download",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "325",
+        "msg": "Rejei\u00e7\u00e3o: CPF autorizado para download inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "326",
+        "msg": "Rejei\u00e7\u00e3o: CPF do destinat\u00e1rio j\u00e1 autorizado para download",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "327",
+        "msg": "Rejei\u00e7\u00e3o: CFOP inv\u00e1lido para NF-e com finalidade de devolu\u00e7\u00e3o de mercadoria",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "328",
+        "msg": "Rejei\u00e7\u00e3o: CFOP de devolu\u00e7\u00e3o de mercadoria para NF-e que n\u00e3o tem finalidade de devolu\u00e7\u00e3o de mercadoria",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "329",
+        "msg": "Rejei\u00e7\u00e3o: N\u00famero da DI \/DSI inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "330",
+        "msg": "Rejei\u00e7\u00e3o: Informar o Valor da AFRMM na importa\u00e7\u00e3o por via mar\u00edtima",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "331",
+        "msg": "Rejei\u00e7\u00e3o: Informar o CNPJ do adquirente ou do encomendante nesta forma de importa\u00e7\u00e3o",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "332",
+        "msg": "Rejei\u00e7\u00e3o: CNPJ do adquirente ou do encomendante da importa\u00e7\u00e3o inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "333",
+        "msg": "Rejei\u00e7\u00e3o: Informar a UF do adquirente ou do encomendante nesta forma de importa\u00e7\u00e3o",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "334",
+        "msg": "Rejei\u00e7\u00e3o: N\u00famero do processo de drawback n\u00e3o informado na importa\u00e7\u00e3o",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "335",
+        "msg": "Rejei\u00e7\u00e3o: N\u00famero do processo de drawback na importa\u00e7\u00e3o inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "336",
+        "msg": "Rejei\u00e7\u00e3o: Informado o grupo de exporta\u00e7\u00e3o no item para CFOP que n\u00e3o \u00e9 de exporta\u00e7\u00e3o",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "337",
+        "msg": "Rejei\u00e7\u00e3o: N\u00e3o informado o grupo de exporta\u00e7\u00e3o no item",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "338",
+        "msg": "Rejei\u00e7\u00e3o: N\u00famero do processo de drawback n\u00e3o informado na exporta\u00e7\u00e3o",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "339",
+        "msg": "Rejei\u00e7\u00e3o: N\u00famero do processo de drawback na exporta\u00e7\u00e3o inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "340",
+        "msg": "Rejei\u00e7\u00e3o: N\u00e3o informado o grupo de exporta\u00e7\u00e3o indireta no item",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "341",
+        "msg": "Rejei\u00e7\u00e3o: N\u00famero do registro de exporta\u00e7\u00e3o inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "342",
+        "msg": "Rejei\u00e7\u00e3o: Chave de Acesso informada na Exporta\u00e7\u00e3o Indireta com DV inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "343",
+        "msg": "Rejei\u00e7\u00e3o: Modelo da NF-e informada na Exporta\u00e7\u00e3o Indireta diferente de 55",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "344",
+        "msg": "Rejei\u00e7\u00e3o: Duplicidade de NF-e informada na Exporta\u00e7\u00e3o Indireta (Chave de Acesso informada mais de uma vez)",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "345",
+        "msg": "Rejei\u00e7\u00e3o: Chave de Acesso informada na Exporta\u00e7\u00e3o Indireta n\u00e3o consta como NF-e referenciada",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "346",
+        "msg": "Rejei\u00e7\u00e3o: Somat\u00f3rio das quantidades informadas na Exporta\u00e7\u00e3o Indireta n\u00e3o corresponde a quantidade total do item",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "347",
+        "msg": "Rejei\u00e7\u00e3o: Descri\u00e7\u00e3o do Combust\u00edvel diverge da descri\u00e7\u00e3o adotada pela ANP",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "348",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com grupo RECOPI",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "349",
+        "msg": "Rejei\u00e7\u00e3o: N\u00famero RECOPI n\u00e3o informado",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "350",
+        "msg": "Rejei\u00e7\u00e3o: N\u00famero RECOPI inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "351",
+        "msg": "Rejei\u00e7\u00e3o: Valor do ICMS da Opera\u00e7\u00e3o no CST=51 difere do produto BC e Al\u00edquota",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "352",
+        "msg": "Rejei\u00e7\u00e3o: Valor do ICMS Diferido no CST=51 difere do produto Valor ICMS Opera\u00e7\u00e3o e percentual diferimento",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "353",
+        "msg": "Rejei\u00e7\u00e3o: Valor do ICMS no CST=51 n\u00e3o corresponde a diferen\u00e7a do ICMS opera\u00e7\u00e3o e ICMS diferido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "354",
+        "msg": "Rejei\u00e7\u00e3o: Informado grupo de devolu\u00e7\u00e3o de tributos para NF-e que n\u00e3o tem finalidade de devolu\u00e7\u00e3o de mercadoria",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "355",
+        "msg": "Rejei\u00e7\u00e3o: Informar o local de sa\u00edda do Pais no caso da exporta\u00e7\u00e3o",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "356",
+        "msg": "Rejei\u00e7\u00e3o: Informar o local de sa\u00edda do Pais somente no caso da exporta\u00e7\u00e3o",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "357",
+        "msg": "Rejei\u00e7\u00e3o: Chave de Acesso do grupo de Exporta\u00e7\u00e3o Indireta inexistente [nRef: xxx]",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "358",
+        "msg": "Rejei\u00e7\u00e3o: Chave de Acesso do grupo de Exporta\u00e7\u00e3o Indireta cancelada ou denegada [nRef: xxx]",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "359",
+        "msg": "Rejei\u00e7\u00e3o: NF-e de venda a \u00d3rg\u00e3o P\u00fablico sem informar a Nota de Empenho",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "360",
+        "msg": "Rejei\u00e7\u00e3o: NF-e com Nota de Empenho inv\u00e1lida para a UF.",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "361",
+        "msg": "Rejei\u00e7\u00e3o: NF-e com Nota de Empenho inexistente na UF.",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "362",
+        "msg": "Rejei\u00e7\u00e3o: Venda de combust\u00edvel sem informa\u00e7\u00e3o do Transportador",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "363",
+        "msg": "Total do ISS difere do somat\u00f3rio dos itens",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "364",
+        "msg": "Rejei\u00e7\u00e3o: Total do valor da dedu\u00e7\u00e3o do ISS difere do somat\u00f3rio dos itens",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "365",
+        "msg": "Rejei\u00e7\u00e3o: Total de outras reten\u00e7\u00f5es difere do somat\u00f3rio dos itens",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "366",
+        "msg": "Rejei\u00e7\u00e3o: Total do desconto incondicionado ISS difere do somat\u00f3rio dos itens",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "367",
+        "msg": "Rejei\u00e7\u00e3o: Total do desconto condicionado ISS difere do somat\u00f3rio dos itens",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "368",
+        "msg": "Rejei\u00e7\u00e3o: Total de ISS retido difere do somat\u00f3rio dos itens",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "369",
+        "msg": "Rejei\u00e7\u00e3o: N\u00e3o informado o grupo avulsa na emiss\u00e3o pelo Fisco",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "370",
+        "msg": "Rejei\u00e7\u00e3o: Nota Fiscal Avulsa com tipo de emiss\u00e3o inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "372",
+        "msg": "Destinat\u00e1rio com identifica\u00e7\u00e3o de estrangeiro com caracteres inv\u00e1lidos",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "373",
+        "msg": "Descricao do primeiro item diferente de NOTA FISCAL EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "374",
+        "msg": "CFOP incompat\u00edvel com o grupo de tributa\u00e7\u00e3o [nItem:nnn]",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "375",
+        "msg": "Informe no passo 1 a chave da NF-e referenciada.NF-e com CFOP 5929 (Lan\u00e7amento relativo a Cupom Fiscal) referencia uma NFC-e [nItem:nnn]",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "376",
+        "msg": "Data do Desembara\u00e7o Aduaneiro inv\u00e1lida [nItem:nnn]",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "378",
+        "msg": "Grupo de Combust\u00edvel sem a informa\u00e7\u00e3o de Encerrante [nItem:nnn]",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "379",
+        "msg": "Grupo de Encerrante na NF-e (modelo 55) para CFOP diferente de venda de combust\u00edvel para consumidor final [nItem:nnn]",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "380",
+        "msg": "Valor do Encerrante final n\u00e3o \u00e9 superior ao Encerrante inicial [nItem:nnn]",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "381",
+        "msg": "Grupo de tributa\u00e7\u00e3o ICMS90, informando dados do ICMS-ST [nItem:nnn]",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "382",
+        "msg": "CFOP n\u00e3o permitido para o CST informado [nItem:nnn]",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "383",
+        "msg": "Item com CSOSN indevido [nItem:nnn]",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "384",
+        "msg": "CSOSN n\u00e3o permitido para a UF [nItem:nnn]",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "385",
+        "msg": "Grupo de tributa\u00e7\u00e3o ICMS900, informando dados do ICMS-ST [nItem:nnn]",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "386",
+        "msg": "CFOP n\u00e3o permitido para o CSOSN informado [nItem:nnn]",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "387",
+        "msg": "C\u00f3digo de Enquadramento Legal do IPI inv\u00e1lido [nItem:nnn]",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "388",
+        "msg": "C\u00f3digo de Situa\u00e7\u00e3o Tribut\u00e1ria do IPI incompat\u00edvel com o C\u00f3digo de Enquadramento Legal do IPI [nItem:nnn]",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "389",
+        "msg": "C\u00f3digo Munic\u00edpio ISSQN inexistente [nItem:nnn]",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "390",
+        "msg": "Nota Fiscal com grupo de devolu\u00e7\u00e3o de tributos [nItem:nnn]",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "391",
+        "msg": "N\u00e3o informados os dados do cart\u00e3o de cr\u00e9dito \/ d\u00e9bito nas Formas de Pagamento da Nota Fiscal",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "392",
+        "msg": "N\u00e3o informados os dados da opera\u00e7\u00e3o de pagamento por cart\u00e3o de cr\u00e9dito \/ d\u00e9bito",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "393",
+        "msg": "NF-e com o grupo de Informa\u00e7\u00f5es Suplementares",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "394",
+        "msg": "Nota Fiscal sem a informa\u00e7\u00e3o do QR-Code",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "395",
+        "msg": "Endere\u00e7o do site da UF da Consulta via QRCode diverge do previsto",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "396",
+        "msg": "Par\u00e2metro do QR-Code inexistente (chAcesso)",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "397",
+        "msg": "Par\u00e2metro do QR-Code divergente da Nota Fiscal (chAcesso)",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "398",
+        "msg": "Par\u00e2metro nVersao do QR-Code difere do previsto",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "399",
+        "msg": "Par\u00e2metro de Identifica\u00e7\u00e3o do destinat\u00e1rio no QR-Code para Nota Fiscal sem identifica\u00e7\u00e3o do destinat\u00e1rio",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "401",
+        "msg": "Rejei\u00e7\u00e3o: CPF do remetente inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "402",
+        "msg": "Rejei\u00e7\u00e3o: XML da \u00e1rea de dados com codifica\u00e7\u00e3o diferente de UTF-8",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "403",
+        "msg": "Rejei\u00e7\u00e3o: O grupo de informa\u00e7\u00f5es da NF-e avulsa \u00e9 de uso exclusivo do Fisco",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "404",
+        "msg": "Rejei\u00e7\u00e3o: Uso de prefixo de namespace n\u00e3o permitido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "405",
+        "msg": "Rejei\u00e7\u00e3o: C\u00f3digo do pa\u00eds do emitente: d\u00edgito inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "406",
+        "msg": "Rejei\u00e7\u00e3o: C\u00f3digo do pa\u00eds do destinat\u00e1rio: d\u00edgito inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "407",
+        "msg": "Rejei\u00e7\u00e3o: O CPF s\u00f3 pode ser informado no campo emitente para a NF-e avulsa",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "408",
+        "msg": "Rejei\u00e7\u00e3o: Evento n\u00e3o dispon\u00edvel para Autor pessoa f\u00edsica",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "409",
+        "msg": "Rejei\u00e7\u00e3o: Campo cUF inexistente no elemento nfeCabecMsg do SOAP Header",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "410",
+        "msg": "Rejei\u00e7\u00e3o: UF informada no campo cUF n\u00e3o \u00e9 atendida pelo Web Service",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "411",
+        "msg": "Rejei\u00e7\u00e3o: Campo versaoDados inexistente no elemento nfeCabecMsg do SOAP Header",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "416",
+        "msg": "Rejei\u00e7\u00e3o: Falha na descompacta\u00e7\u00e3o da \u00e1rea de dados",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "417",
+        "msg": "Rejei\u00e7\u00e3o: Total do ICMS superior ao valor limite estabelecido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "418",
+        "msg": "Rejei\u00e7\u00e3o: Total do ICMS ST superior ao valor limite estabelecido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "420",
+        "msg": "Rejei\u00e7\u00e3o: Cancelamento para NF-e j\u00e1 cancelada",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "450",
+        "msg": "Rejei\u00e7\u00e3o: Modelo da NF-e diferente de 55",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "451",
+        "msg": "Rejei\u00e7\u00e3o: Processo de emiss\u00e3o informado inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "452",
+        "msg": "Rejei\u00e7\u00e3o: Tipo Autorizador do Recibo diverge do \u00d3rg\u00e3o Autorizador",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "453",
+        "msg": "Rejei\u00e7\u00e3o: Ano de inutiliza\u00e7\u00e3o n\u00e3o pode ser superior ao Ano atual",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "454",
+        "msg": "Rejei\u00e7\u00e3o: Ano de inutiliza\u00e7\u00e3o n\u00e3o pode ser inferior a 2006",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "455",
+        "msg": "Rejei\u00e7\u00e3o: \u00d3rg\u00e3o Autor do evento diferente da UF da Chave de Acesso",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "461",
+        "msg": "Rejei\u00e7\u00e3o: Informado percentual de G\u00e1s Natural na mistura para produto diferente de GLP",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "462",
+        "msg": "C\u00f3digo Identificador do CSC no QR-Code n\u00e3o cadastrado na SEFAZ",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "463",
+        "msg": "C\u00f3digo Identificador do CSC no QR-Code foi revogado pela empresa",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "464",
+        "msg": "C\u00f3digo de Hash no QR-Code difere do calculado",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "465",
+        "msg": "Rejei\u00e7\u00e3o: N\u00famero de Controle da FCI inexistente",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "466",
+        "msg": "Rejei\u00e7\u00e3o: Evento com Tipo de Autor incompat\u00edvel",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "467",
+        "msg": "Rejei\u00e7\u00e3o: Dados da NF-e divergentes do EPEC",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "468",
+        "msg": "Rejei\u00e7\u00e3o: NF-e com Tipo Emiss\u00e3o = 4, sem EPEC correspondente",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "471",
+        "msg": "Rejei\u00e7\u00e3o: Informado NCM=00 indevidamente",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "476",
+        "msg": "Rejei\u00e7\u00e3o: C\u00f3digo da UF diverge da UF da primeira NF-e do Lote",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "477",
+        "msg": "Rejei\u00e7\u00e3o: C\u00f3digo do \u00f3rg\u00e3o diverge do \u00f3rg\u00e3o do primeiro evento do Lote",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "478",
+        "msg": "Rejei\u00e7\u00e3o: Local da entrega n\u00e3o informado para faturamento direto de ve\u00edculos novos",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "479",
+        "msg": "Emissor em situac\u0327a\u0303o irregular perante o fisco",
+        "status": "",
+        "correct": ""
+    }, {
+        "cod": "480",
+        "msg": "CNPJ da Chave de acesso da NF-e informada diverge do CNPJ do emitente",
+        "status": "",
+        "correct": ""
+    }, {
+        "cod": "481",
+        "msg": "UF da Chave de acesso diverge do co\u0301digo da UF informada",
+        "status": "",
+        "correct": ""
+    }, {
+        "cod": "482",
+        "msg": "AA da Chave de acesso inva\u0301lida",
+        "status": "",
+        "correct": ""
+    }, {
+        "cod": "483",
+        "msg": "MM da chave de acesso inva\u0301lido",
+        "status": "",
+        "correct": ""
+    }, {
+        "cod": "484",
+        "msg": "Rejei\u00e7\u00e3o: Chave de Acesso com tipo de emiss\u00e3o diferente de 4 (posi\u00e7\u00e3o 35 da Chave de Acesso)",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "485",
+        "msg": "Rejei\u00e7\u00e3o: Duplicidade de numera\u00e7\u00e3o do EPEC (Modelo, CNPJ, S\u00e9rie e N\u00famero)",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "486",
+        "msg": "DPEC na\u0303o localizada para o nu\u0301mero de registro de DPEC informado",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "487",
+        "msg": "Nenhuma DPEC localizada para a chave de acesso informada",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "488",
+        "msg": "Requisitante de Consulta na\u0303o tem o mesmo CNPJ base do emissor da DPEC",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "489",
+        "msg": "Rejei\u00e7\u00e3o: CNPJ informado inv\u00e1lido (DV ou zeros)",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "490",
+        "msg": "Rejei\u00e7\u00e3o: CPF informado inv\u00e1lido (DV ou zeros)",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "491",
+        "msg": "Rejei\u00e7\u00e3o: O tpEvento informado inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "492",
+        "msg": "Rejei\u00e7\u00e3o: O verEvento informado inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "493",
+        "msg": "Rejei\u00e7\u00e3o: Evento n\u00e3o atende o Schema XML espec\u00edfico",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "494",
+        "msg": "Rejei\u00e7\u00e3o: Chave de Acesso inexistente",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "496",
+        "msg": "N\u00e3o informado o tipo de integra\u00e7\u00e3o no pagamento com cart\u00e3o de cr\u00e9dito \/ d\u00e9bito",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "501",
+        "msg": "Rejei\u00e7\u00e3o: Pedido de Cancelamento intempestivo (NF-e autorizada a mais de 7 dias)",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "502",
+        "msg": "Rejei\u00e7\u00e3o: Erro na Chave de Acesso - Campo Id n\u00e3o corresponde \u00e0 concatena\u00e7\u00e3o dos campos correspondentes",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "503",
+        "msg": "Rejei\u00e7\u00e3o: S\u00e9rie utilizada fora da faixa permitida no SCAN (900-999)",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "504",
+        "msg": "Rejei\u00e7\u00e3o: Data de Entrada\/Sa\u00edda posterior ao permitido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "505",
+        "msg": "Rejei\u00e7\u00e3o: Data de Entrada\/Sa\u00edda anterior ao permitido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "506",
+        "msg": "Rejei\u00e7\u00e3o: Data de Sa\u00edda menor que a Data de Emiss\u00e3o",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "507",
+        "msg": "Rejei\u00e7\u00e3o: O CNPJ do destinat\u00e1rio\/remetente n\u00e3o deve ser informado em opera\u00e7\u00e3o com o exterior",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "508",
+        "msg": "Rejei\u00e7\u00e3o: CNPJ do destinat\u00e1rio com conte\u00fado nulo s\u00f3 \u00e9 v\u00e1lido em opera\u00e7\u00e3o com exterior",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "509",
+        "msg": "Rejei\u00e7\u00e3o: Informado c\u00f3digo de munic\u00edpio diferente de \u201c9999999\u201d para opera\u00e7\u00e3o com o exterior",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "510",
+        "msg": "Rejei\u00e7\u00e3o: Opera\u00e7\u00e3o com Exterior e C\u00f3digo Pa\u00eds destinat\u00e1rio \u00e9 1058 (Brasil) ou n\u00e3o informado",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "511",
+        "msg": "Rejei\u00e7\u00e3o: N\u00e3o \u00e9 de Opera\u00e7\u00e3o com Exterior e C\u00f3digo Pa\u00eds destinat\u00e1rio difere de 1058 (Brasil)",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "512",
+        "msg": "Rejei\u00e7\u00e3o: CNPJ do Local de Retirada inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "513",
+        "msg": "Rejei\u00e7\u00e3o: C\u00f3digo Munic\u00edpio do Local de Retirada deve ser 9999999 para UF retirada = EX",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "514",
+        "msg": "Rejei\u00e7\u00e3o: CNPJ do Local de Entrega inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "515",
+        "msg": "Rejei\u00e7\u00e3o: C\u00f3digo Munic\u00edpio do Local de Entrega deve ser 9999999 para UF entrega = EX",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "516",
+        "msg": "Rejei\u00e7\u00e3o: Falha no schema XML \u2013 inexiste a tag raiz esperada para a mensagem",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "517",
+        "msg": "Rejei\u00e7\u00e3o: Falha no schema XML \u2013 inexiste atributo versao na tag raiz da mensagem",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "518",
+        "msg": "Rejei\u00e7\u00e3o: CFOP de entrada para NF-e de sa\u00edda",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "519",
+        "msg": "Rejei\u00e7\u00e3o: CFOP de sa\u00edda para NF-e de entrada",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "520",
+        "msg": "Rejei\u00e7\u00e3o: CFOP de Opera\u00e7\u00e3o com Exterior e UF destinat\u00e1rio difere de EX",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "521",
+        "msg": "Rejei\u00e7\u00e3o: CFOP de Opera\u00e7\u00e3o Estadual e UF do emitente difere da UF do destinat\u00e1rio para destinat\u00e1rio contribuinte do ICMS.",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "522",
+        "msg": "Rejei\u00e7\u00e3o: CFOP de Opera\u00e7\u00e3o Estadual e UF emitente difere da UF remetente para remetente contribuinte do ICMS.",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "523",
+        "msg": "Rejei\u00e7\u00e3o: CFOP n\u00e3o \u00e9 de Opera\u00e7\u00e3o Estadual e UF emitente igual a UF destinat\u00e1rio.",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "524",
+        "msg": "Rejei\u00e7\u00e3o: CFOP de Opera\u00e7\u00e3o com Exterior e n\u00e3o informado NCM",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "525",
+        "msg": "Rejei\u00e7\u00e3o: CFOP de Importa\u00e7\u00e3o e n\u00e3o informado dados da DI",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "526",
+        "msg": "Ano-Mes da Chave de Acesso com atraso superior a 6 meses em relacao ao Ano-Mes atual",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "527",
+        "msg": "Rejei\u00e7\u00e3o: Opera\u00e7\u00e3o de Exporta\u00e7\u00e3o com informa\u00e7\u00e3o de ICMS incompat\u00edvel",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "528",
+        "msg": "Rejei\u00e7\u00e3o: Valor do ICMS difere do produto BC e Al\u00edquota",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "529",
+        "msg": "Rejei\u00e7\u00e3o: NCM de informa\u00e7\u00e3o obrigat\u00f3ria para produto tributado pelo IPI",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "530",
+        "msg": "Rejei\u00e7\u00e3o: Opera\u00e7\u00e3o com tributa\u00e7\u00e3o de ISSQN sem informar a Inscri\u00e7\u00e3o Municipal",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "531",
+        "msg": "Rejei\u00e7\u00e3o: Total da BC ICMS difere do somat\u00f3rio dos itens",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "532",
+        "msg": "Rejei\u00e7\u00e3o: Total do ICMS difere do somat\u00f3rio dos itens",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "533",
+        "msg": "Rejei\u00e7\u00e3o: Total da BC ICMS-ST difere do somat\u00f3rio dos itens",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "534",
+        "msg": "Rejei\u00e7\u00e3o: Total do ICMS-ST difere do somat\u00f3rio dos itens",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "535",
+        "msg": "Rejei\u00e7\u00e3o: Total do Frete difere do somat\u00f3rio dos itens",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "536",
+        "msg": "Rejei\u00e7\u00e3o: Total do Seguro difere do somat\u00f3rio dos itens",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "537",
+        "msg": "Rejei\u00e7\u00e3o: Total do Desconto difere do somat\u00f3rio dos itens",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "538",
+        "msg": "Rejei\u00e7\u00e3o: Total do IPI difere do somat\u00f3rio dos itens",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "539",
+        "msg": "Duplicidade de NF-e com diferen\u00e7a na Chave de Acesso [chNFe: 99999999999999999999999999999999999999999999][nRec:999999999999999]",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "540",
+        "msg": "Rejei\u00e7\u00e3o: CPF do Local de Retirada inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "541",
+        "msg": "Rejei\u00e7\u00e3o: CPF do Local de Entrega inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "542",
+        "msg": "Rejei\u00e7\u00e3o: CNPJ do Transportador inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "543",
+        "msg": "Rejei\u00e7\u00e3o: CPF do Transportador inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "544",
+        "msg": "Rejei\u00e7\u00e3o: IE do Transportador inv\u00e1lida",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "545",
+        "msg": "Rejei\u00e7\u00e3o: Falha no schema XML \u2013 vers\u00e3o informada na versaoDados do SOAPHeader diverge da vers\u00e3o da mensagem",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "546",
+        "msg": "Rejei\u00e7\u00e3o: Erro na Chave de Acesso \u2013 Campo Id \u2013 falta a literal NFe",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "547",
+        "msg": "Rejei\u00e7\u00e3o: D\u00edgito Verificador da Chave de Acesso da NF-e Referenciada inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "548",
+        "msg": "Rejei\u00e7\u00e3o: CNPJ da NF referenciada inv\u00e1lido.",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "549",
+        "msg": "Rejei\u00e7\u00e3o: CNPJ da NF referenciada de produtor inv\u00e1lido.",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "550",
+        "msg": "Rejei\u00e7\u00e3o: CPF da NF referenciada de produtor inv\u00e1lido.",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "551",
+        "msg": "Rejei\u00e7\u00e3o: IE da NF referenciada de produtor inv\u00e1lido.",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "552",
+        "msg": "Rejei\u00e7\u00e3o: D\u00edgito Verificador da Chave de Acesso do CT-e Referenciado inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "553",
+        "msg": "Rejei\u00e7\u00e3o: Tipo autorizador do recibo diverge do \u00d3rg\u00e3o Autorizador.",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "554",
+        "msg": "Rejei\u00e7\u00e3o: S\u00e9rie difere da faixa 0-899",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "555",
+        "msg": "Rejei\u00e7\u00e3o: Tipo autorizador do protocolo diverge do \u00d3rg\u00e3o Autorizador.",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "556",
+        "msg": "Rejei\u00e7\u00e3o: Justificativa de entrada em conting\u00eancia n\u00e3o deve ser informada para tipo de emiss\u00e3o normal",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "557",
+        "msg": "Rejei\u00e7\u00e3o: A Justificativa de entrada em conting\u00eancia deve ser informada.",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "558",
+        "msg": "Rejei\u00e7\u00e3o: Data de entrada em conting\u00eancia posterior a data de recebimento.",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "559",
+        "msg": "Rejei\u00e7\u00e3o: UF do Transportador n\u00e3o informada",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "560",
+        "msg": "Rejei\u00e7\u00e3o: CNPJ base do emitente difere do CNPJ base da primeira NF-e do lote recebido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "561",
+        "msg": "Rejei\u00e7\u00e3o: M\u00eas de Emiss\u00e3o informado na Chave de Acesso difere do M\u00eas de Emiss\u00e3o da NF-e",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "562",
+        "msg": "Rejei\u00e7\u00e3o: C\u00f3digo Num\u00e9rico informado na Chave de Acesso difere do C\u00f3digo Num\u00e9rico da NF-e [chNFe:99999999999999999999999999999999999999999999]",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "563",
+        "msg": "Rejei\u00e7\u00e3o: J\u00e1 existe pedido de Inutiliza\u00e7\u00e3o com a mesma faixa de inutiliza\u00e7\u00e3o",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "564",
+        "msg": "Rejei\u00e7\u00e3o: Total do Produto \/ Servi\u00e7o difere do somat\u00f3rio dos itens",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "565",
+        "msg": "Rejei\u00e7\u00e3o: Falha no schema XML \u2013 inexiste a tag raiz esperada para o lote de NF-e",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "567",
+        "msg": "Rejei\u00e7\u00e3o: Falha no schema XML \u2013 vers\u00e3o informada na versaoDados do SOAPHeader diverge da vers\u00e3o do lote de NF-e",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "568",
+        "msg": "Rejei\u00e7\u00e3o: Falha no schema XML \u2013 inexiste atributo versao na tag raiz do lote de NF-e",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "569",
+        "msg": "Rejei\u00e7\u00e3o: Data de entrada em conting\u00eancia muito atrasada",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "570",
+        "msg": "Rejei\u00e7\u00e3o: Tipo de Emiss\u00e3o 3, 6 ou 7 s\u00f3 \u00e9 v\u00e1lido nas conting\u00eancias SCAN\/SVC",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "571",
+        "msg": "Rejei\u00e7\u00e3o: O tpEmis informado diferente de 3 para conting\u00eancia SCAN",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "572",
+        "msg": "Rejei\u00e7\u00e3o: Erro Atributo ID do evento n\u00e3o corresponde a concatena\u00e7\u00e3o dos campos (\u201cID\u201d + tpEvento + chNFe + nSeqEvento)",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "573",
+        "msg": "Rejei\u00e7\u00e3o: Duplicidade de Evento",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "574",
+        "msg": "Rejei\u00e7\u00e3o: O autor do evento diverge do emissor da NF-e",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "575",
+        "msg": "Rejei\u00e7\u00e3o: O autor do evento diverge do destinat\u00e1rio da NF-e",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "576",
+        "msg": "Rejei\u00e7\u00e3o: O autor do evento n\u00e3o \u00e9 um \u00f3rg\u00e3o autorizado a gerar o evento",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "577",
+        "msg": "Rejei\u00e7\u00e3o: A data do evento n\u00e3o pode ser menor que a data de emiss\u00e3o da NF-e",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "578",
+        "msg": "Rejei\u00e7\u00e3o: A data do evento n\u00e3o pode ser maior que a data do processamento",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "579",
+        "msg": "Rejei\u00e7\u00e3o: A data do evento n\u00e3o pode ser menor que a data de autoriza\u00e7\u00e3o para NF-e n\u00e3o emitida em conting\u00eancia",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "580",
+        "msg": "Rejei\u00e7\u00e3o: O evento exige uma NF-e autorizada",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "587",
+        "msg": "Rejei\u00e7\u00e3o: Usar somente o namespace padr\u00e3o da NF-e",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "588",
+        "msg": "Rejei\u00e7\u00e3o: N\u00e3o \u00e9 permitida a presen\u00e7a de caracteres de edi\u00e7\u00e3o no in\u00edcio\/fim da mensagem ou entre as tags da mensagem",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "589",
+        "msg": "Rejei\u00e7\u00e3o: N\u00famero do NSU informado superior ao maior NSU da base de dados da SEFAZ",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "590",
+        "msg": "Rejei\u00e7\u00e3o: Informado CST para emissor do Simples Nacional (CRT=1)",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "591",
+        "msg": "Rejei\u00e7\u00e3o: Informado CSOSN para emissor que n\u00e3o \u00e9 do Simples Nacional (CRT diferente de 1)",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "592",
+        "msg": "Rejei\u00e7\u00e3o: A NF-e deve ter pelo menos um item de produto sujeito ao ICMS",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "593",
+        "msg": "Rejei\u00e7\u00e3o: CNPJ-Base consultado difere do CNPJ-Base do Certificado Digital",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "594",
+        "msg": "Rejei\u00e7\u00e3o: O n\u00famero de sequencia do evento informado \u00e9 maior que o permitido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "595",
+        "msg": "Rejei\u00e7\u00e3o: Obrigat\u00f3ria a informa\u00e7\u00e3o da justificativa do evento.",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "596",
+        "msg": "Rejei\u00e7\u00e3o: Evento apresentado fora do prazo: [prazo vigente]",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "597",
+        "msg": "Rejei\u00e7\u00e3o: CFOP de Importa\u00e7\u00e3o e n\u00e3o informado dados de IPI",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "598",
+        "msg": "Rejei\u00e7\u00e3o: NF-e emitida em ambiente de homologa\u00e7\u00e3o com Raz\u00e3o Social do destinat\u00e1rio diferente de NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "599",
+        "msg": "Rejei\u00e7\u00e3o: CFOP de Importa\u00e7\u00e3o e n\u00e3o informado dados de II",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "600",
+        "msg": "CSOSN incompativel na operacao com Nao Contribuinte",
+        "status": "",
+        "correct": ""
+    }, {
+        "cod": "601",
+        "msg": "Rejei\u00e7\u00e3o: Total do II difere do somat\u00f3rio dos itens",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "602",
+        "msg": "Rejei\u00e7\u00e3o: Total do PIS difere do somat\u00f3rio dos itens sujeitos ao ICMS",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "603",
+        "msg": "Rejei\u00e7\u00e3o: Total do COFINS difere do somat\u00f3rio dos itens sujeitos ao ICMS",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "604",
+        "msg": "Rejei\u00e7\u00e3o: Total do vOutro difere do somat\u00f3rio dos itens",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "605",
+        "msg": "Rejei\u00e7\u00e3o: Total do vISS difere do somat\u00f3rio do vProd dos itens sujeitos ao ISSQN",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "606",
+        "msg": "Rejei\u00e7\u00e3o: Total do vBC do ISS difere do somat\u00f3rio dos itens",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "607",
+        "msg": "Rejei\u00e7\u00e3o: Total do ISS difere do somat\u00f3rio dos itens",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "608",
+        "msg": "Rejei\u00e7\u00e3o: Total do PIS difere do somat\u00f3rio dos itens sujeitos ao ISSQN",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "609",
+        "msg": "Rejei\u00e7\u00e3o: Total do COFINS difere do somat\u00f3rio dos itens sujeitos ao ISSQN",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "610",
+        "msg": "Rejei\u00e7\u00e3o: Total da NF difere do somat\u00f3rio dos Valores comp\u00f5e o valor Total da NF.",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "611",
+        "msg": "Rejei\u00e7\u00e3o: cEAN inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "612",
+        "msg": "Rejei\u00e7\u00e3o: cEANTrib inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "613",
+        "msg": "Rejei\u00e7\u00e3o: Chave de Acesso difere da existente em BD",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "614",
+        "msg": "Rejei\u00e7\u00e3o: Chave de Acesso inv\u00e1lida (C\u00f3digo UF inv\u00e1lido)",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "615",
+        "msg": "Rejei\u00e7\u00e3o: Chave de Acesso inv\u00e1lida (Ano menor que 06 ou Ano maior que Ano corrente)",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "616",
+        "msg": "Rejei\u00e7\u00e3o: Chave de Acesso inv\u00e1lida (M\u00eas menor que 1 ou M\u00eas maior que 12)",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "617",
+        "msg": "Rejei\u00e7\u00e3o: Chave de Acesso inv\u00e1lida (CNPJ zerado ou d\u00edgito inv\u00e1lido)",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "618",
+        "msg": "Rejei\u00e7\u00e3o: Chave de Acesso inv\u00e1lida (modelo diferente de 55 e 65)",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "619",
+        "msg": "Rejei\u00e7\u00e3o: Chave de Acesso inv\u00e1lida (n\u00famero NF = 0)",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "620",
+        "msg": "Rejei\u00e7\u00e3o: Chave de Acesso difere da existente em BD",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "621",
+        "msg": "Rejei\u00e7\u00e3o: CPF Emitente n\u00e3o cadastrado",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "622",
+        "msg": "Rejei\u00e7\u00e3o: IE emitente n\u00e3o vinculada ao CPF",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "623",
+        "msg": "Rejei\u00e7\u00e3o: CPF Destinat\u00e1rio n\u00e3o cadastrado",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "624",
+        "msg": "Rejei\u00e7\u00e3o: IE Destinat\u00e1rio n\u00e3o vinculada ao CPF",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "625",
+        "msg": "Rejei\u00e7\u00e3o: Inscri\u00e7\u00e3o SUFRAMA deve ser informada na venda com isen\u00e7\u00e3o para ZFM",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "626",
+        "msg": "Rejei\u00e7\u00e3o: CFOP de opera\u00e7\u00e3o isenta para ZFM diferente do previsto",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "627",
+        "msg": "Rejei\u00e7\u00e3o: O valor do ICMS desonerado deve ser informado",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "628",
+        "msg": "Rejei\u00e7\u00e3o: Total da NF superior ao valor limite estabelecido pela SEFAZ [Limite]",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "629",
+        "msg": "Rejei\u00e7\u00e3o: Valor do Produto difere do produto Valor Unit\u00e1rio de Comercializa\u00e7\u00e3o e Quantidade Comercial",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "630",
+        "msg": "Rejei\u00e7\u00e3o: Valor do Produto difere do produto Valor Unit\u00e1rio de Tributa\u00e7\u00e3o e Quantidade Tribut\u00e1vel",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "631",
+        "msg": "Rejei\u00e7\u00e3o: CNPJ-Base do Destinat\u00e1rio difere do CNPJ-Base do Certificado Digital",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "632",
+        "msg": "Rejei\u00e7\u00e3o: Solicita\u00e7\u00e3o fora de prazo, a NF-e n\u00e3o est\u00e1 mais dispon\u00edvel para download",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "633",
+        "msg": "Rejei\u00e7\u00e3o: NF-e indispon\u00edvel para download devido a aus\u00eancia de Manifesta\u00e7\u00e3o do Destinat\u00e1rio",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "634",
+        "msg": "Rejei\u00e7\u00e3o: Destinat\u00e1rio da NF-e n\u00e3o tem o mesmo CNPJ raiz do solicitante do download",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "635",
+        "msg": "Rejei\u00e7\u00e3o: NF-e com mesmo n\u00famero e s\u00e9rie j\u00e1 transmitida e aguardando processamento",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "650",
+        "msg": "Rejei\u00e7\u00e3o: Evento de \"Ci\u00eancia da Emiss\u00e3o\" para NF-e Cancelada ou Denegada",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "651",
+        "msg": "Rejei\u00e7\u00e3o: Evento de \"Desconhecimento da Opera\u00e7\u00e3o\" para NF-e Cancelada ou Denegada",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "653",
+        "msg": "Rejei\u00e7\u00e3o: NF-e Cancelada, arquivo indispon\u00edvel para download",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "654",
+        "msg": "Rejei\u00e7\u00e3o: NF-e Denegada, arquivo indispon\u00edvel para download",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "655",
+        "msg": "Rejei\u00e7\u00e3o: Evento de Ci\u00eancia da Emiss\u00e3o informado ap\u00f3s a manifesta\u00e7\u00e3o final do destinat\u00e1rio",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "656",
+        "msg": "Rejei\u00e7\u00e3o: Consumo Indevido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "657",
+        "msg": "Rejei\u00e7\u00e3o: C\u00f3digo do \u00d3rg\u00e3o diverge do \u00f3rg\u00e3o autorizador",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "658",
+        "msg": "Rejei\u00e7\u00e3o: UF do destinat\u00e1rio da Chave de Acesso diverge da UF autorizadora",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "660",
+        "msg": "Rejei\u00e7\u00e3o: CFOP de Combust\u00edvel e n\u00e3o informado grupo de combust\u00edvel da NF-e",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "661",
+        "msg": "Rejei\u00e7\u00e3o: NF-e j\u00e1 existente para o n\u00famero do EPEC informado",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "662",
+        "msg": "Rejei\u00e7\u00e3o: Numera\u00e7\u00e3o do EPEC est\u00e1 inutilizada na Base de Dados da SEFAZ",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "663",
+        "msg": "Rejei\u00e7\u00e3o: Al\u00edquota do ICMS com valor superior a 4 por cento na opera\u00e7\u00e3o de sa\u00edda interestadual com produtos importados",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "678",
+        "msg": "Rejei\u00e7\u00e3o: NF referenciada com UF diferente da NF-e complementar",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "679",
+        "msg": "Rejei\u00e7\u00e3o: Modelo da NF-e referenciada diferente de 55\/65",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "680",
+        "msg": "Rejei\u00e7\u00e3o: Duplicidade de NF-e referenciada (Chave de Acesso referenciada mais de uma vez)",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "681",
+        "msg": "Rejei\u00e7\u00e3o: Duplicidade de NF Modelo 1 referenciada (CNPJ, Modelo, S\u00e9rie e N\u00famero)",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "682",
+        "msg": "Rejei\u00e7\u00e3o: Duplicidade de NF de Produtor referenciada (IE, Modelo, S\u00e9rie e N\u00famero)",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "683",
+        "msg": "Rejei\u00e7\u00e3o: Modelo do CT-e referenciado diferente de 57",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "684",
+        "msg": "Rejei\u00e7\u00e3o: Duplicidade de Cupom Fiscal referenciado (Modelo, N\u00famero de Ordem e COO)",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "685",
+        "msg": "Rejei\u00e7\u00e3o: Total do Valor Aproximado dos Tributos difere do somat\u00f3rio dos itens",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "686",
+        "msg": "Rejei\u00e7\u00e3o: NF Complementar referencia uma NF-e cancelada",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "687",
+        "msg": "Rejei\u00e7\u00e3o: NF Complementar referencia uma NF-e denegada",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "688",
+        "msg": "Rejei\u00e7\u00e3o: NF referenciada de Produtor com IE inexistente [nRef: xxx]",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "689",
+        "msg": "Rejei\u00e7\u00e3o: NF referenciada de Produtor com IE n\u00e3o vinculada ao CNPJ\/CPF informado [nRef: xxx]",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "690",
+        "msg": "Rejei\u00e7\u00e3o: Pedido de Cancelamento para NF-e com CT-e",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "691",
+        "msg": "Rejei\u00e7\u00e3o: Chave de Acesso da NF-e diverge da Chave de Acesso do EPEC",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "692",
+        "msg": "692-Rejeic\u0327a\u0303o: Existe EPEC registrado para esta Se\u0301rie e Nu\u0301mero [Chave EPEC: xxxxxxxxxxx]",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "693",
+        "msg": "Al\u00edquota de ICMS superior a definida para a opera\u00e7\u00e3o interestadual [nItem:999]",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "694",
+        "msg": "Pe\u00e7a orienta\u00e7\u00e3o ao seu contador sobre a partilha de ICMS entre estados. No caso da opera\u00e7\u00e3o ser com consumidor final (= 1 Sim), a UF do destinat\u00e1rio ser outra que a UF do emitente, e o tipo de contribuinte ser 9 - Na\u0303o Contribuinte, que pode ou na\u0303o possuir Inscric\u0327a\u0303o Estadual no Cadastro de Contribuintes do ICMS, as informa\u00e7\u00f5es de partilha de ICMS devem ser informadas no passo 3, como: pFCPUFDest, pICMSInter, pICMSInterPart, pICMSUFDest, vBCUFDest, vFCPUFDest, vICMSUFDest e vICMSUFRemet. N\u00e3o informado o grupo de ICMS para a UF de destino [nItem:999]",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "695",
+        "msg": " Informado indevidamente o grupo de ICMS para a UF de destino [nItem:999]",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "696",
+        "msg": "No passo 1, mude \"Consumidor Final\" para \"1 - Sim\"Operacao com nao contribuinte deve indicar operacao com consumidor final",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "697",
+        "msg": "Al\u00edquota interestadual do ICMS com origem diferente do previsto [nItem:999]",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "698",
+        "msg": "Pe\u00e7a orienta\u00e7\u00e3o ao seu contador sobre a partilha de ICMS entre estados. No caso da opera\u00e7\u00e3o ser com consumidor final (= 1 Sim), a UF do destinat\u00e1rio ser outra que a UF do emitente, e o tipo de contribuinte ser 9 - Na\u0303o Contribuinte, que pode ou na\u0303o possuir Inscric\u0327a\u0303o Estadual no Cadastro de Contribuintes do ICMS, as informa\u00e7\u00f5es de partilha de ICMS devem ser informadas no passo 3, como: pFCPUFDest, pICMSInter, pICMSInterPart, pICMSUFDest, vBCUFDest, vFCPUFDest, vICMSUFDest e vICMSUFRemet. Al\u00edquota interestadual do ICMS incompat\u00edvel com as UF envolvidas na opera\u00e7\u00e3o [nItem:999]",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "699",
+        "msg": "Percentual do ICMS Interestadual para a UF de destino difere do previsto para o ano da Data de Emiss\u00e3o [nItem:999]",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "700",
+        "msg": "Rejei\u00e7\u00e3o: Mensagem de Lote vers\u00e3o 3.xx. Enviar para o Web Service nfeAutorizacao",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "701",
+        "msg": "Rejei\u00e7\u00e3o: NF-e n\u00e3o pode utilizar a vers\u00e3o 3.00",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "702",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e n\u00e3o \u00e9 aceita pela UF do Emitente",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "703",
+        "msg": "Rejei\u00e7\u00e3o: Data-Hora de Emiss\u00e3o posterior ao hor\u00e1rio de recebimento",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "704",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com Data-Hora de emiss\u00e3o atrasada",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "705",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com data de entrada\/sa\u00edda",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "706",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e para opera\u00e7\u00e3o de entrada",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "707",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e para opera\u00e7\u00e3o interestadual ou com o exterior",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "708",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e n\u00e3o pode referenciar documento fiscal",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "709",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com formato de DANFE inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "710",
+        "msg": "Rejei\u00e7\u00e3o: NF-e com formato de DANFE inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "711",
+        "msg": "Rejei\u00e7\u00e3o: NF-e com conting\u00eancia off-line",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "712",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com conting\u00eancia off-line para a UF",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "713",
+        "msg": "Rejei\u00e7\u00e3o: Tipo de Emiss\u00e3o diferente de 6 ou 7 para conting\u00eancia da SVC acessada",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "714",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com conting\u00eancia DPEC inexistente",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "715",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com finalidade inv\u00e1lida",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "716",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e em opera\u00e7\u00e3o n\u00e3o destinada a consumidor final",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "717",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e em opera\u00e7\u00e3o n\u00e3o presencial",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "718",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e n\u00e3o deve informar IE de Substituto Tribut\u00e1rio",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "719",
+        "msg": "Rejei\u00e7\u00e3o: NF-e sem a identifica\u00e7\u00e3o do destinat\u00e1rio",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "720",
+        "msg": "Rejei\u00e7\u00e3o: Na opera\u00e7\u00e3o com Exterior deve ser informada tag idEstrangeiro",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "721",
+        "msg": "Rejei\u00e7\u00e3o: Opera\u00e7\u00e3o interestadual deve informar CNPJ ou CPF.",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "722",
+        "msg": "Opera\u00e7\u00e3o interna com idEstrangeiro informado deve ser presencial",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "723",
+        "msg": "Rejei\u00e7\u00e3o: Opera\u00e7\u00e3o interna com idEstrangeiro informado deve ser para consumidor final",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "724",
+        "msg": "Rejei\u00e7\u00e3o: NF-e sem o nome do destinat\u00e1rio",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "725",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com CFOP inv\u00e1lido",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "726",
+        "msg": "Rejei\u00e7\u00e3o: NF-e sem a informa\u00e7\u00e3o de endere\u00e7o do destinat\u00e1rio",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "727",
+        "msg": "Rejei\u00e7\u00e3o: Opera\u00e7\u00e3o com Exterior e UF diferente de EX",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "728",
+        "msg": "Rejei\u00e7\u00e3o: NF-e sem informa\u00e7\u00e3o da IE do destinat\u00e1rio",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "729",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com informa\u00e7\u00e3o da IE do destinat\u00e1rio",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "730",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com Inscri\u00e7\u00e3o Suframa",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "731",
+        "msg": "Rejei\u00e7\u00e3o: CFOP de opera\u00e7\u00e3o com Exterior e idDest <> 3",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "732",
+        "msg": "Rejei\u00e7\u00e3o: CFOP de opera\u00e7\u00e3o interestadual e idDest <> 2",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "733",
+        "msg": "Rejei\u00e7\u00e3o: CFOP de opera\u00e7\u00e3o interna e idDest <> 1",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "734",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com Unidade de Comercializa\u00e7\u00e3o inv\u00e1lida",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "735",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com Unidade de Tributa\u00e7\u00e3o inv\u00e1lida",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "736",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com grupo de Ve\u00edculos novos",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "737",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com grupo de Medicamentos",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "738",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com grupo de Armamentos",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "739",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com grupo de Combust\u00edvel",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "740",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com CST 51-Diferimento",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "741",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com Partilha de ICMS entre UF",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "742",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com grupo do IPI",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "743",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com grupo do II",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "745",
+        "msg": "Rejei\u00e7\u00e3o: NF-e sem grupo do PIS",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "746",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com grupo do PIS-ST",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "748",
+        "msg": "Rejei\u00e7\u00e3o: NF-e sem grupo da COFINS",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "749",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com grupo da COFINS-ST",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "750",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com valor total superior ao permitido para destinat\u00e1rio n\u00e3o identificado (C\u00f3digo)",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "751",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com valor total superior ao permitido para destinat\u00e1rio n\u00e3o identificado (Nome)",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "752",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com valor total superior ao permitido para destinat\u00e1rio n\u00e3o identificado (Endere\u00e7o)",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "753",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com Frete",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "754",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com dados do Transportador",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "755",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com dados de Reten\u00e7\u00e3o do ICMS no Transporte",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "756",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com dados do ve\u00edculo de Transporte",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "757",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com dados de Reboque do ve\u00edculo de Transporte",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "758",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com dados do Vag\u00e3o de Transporte",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "759",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com dados da Balsa de Transporte",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "760",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com dados de cobran\u00e7a (Fatura, Duplicata)",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "762",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com dados de compras (Empenho, Pedido, Contrato)",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "763",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com dados de aquisi\u00e7\u00e3o de Cana",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "764",
+        "msg": "Rejei\u00e7\u00e3o: Solicitada resposta s\u00edncrona para Lote com mais de uma NF-e (indSinc=1)",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "765",
+        "msg": "Rejei\u00e7\u00e3o: Lote s\u00f3 poder\u00e1 conter NF-e ou NFC-e",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "766",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com CST 50-Suspens\u00e3o",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "767",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com somat\u00f3rio dos pagamentos diferente do total da Nota Fiscal",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "768",
+        "msg": "Rejei\u00e7\u00e3o: NF-e n\u00e3o deve possuir o grupo de Formas de Pagamento",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "769",
+        "msg": "Rejei\u00e7\u00e3o: A crit\u00e9rio da UF NFC-e deve possuir o grupo de Formas de Pagamento",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "770",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e autorizada h\u00e1 mais de 24 horas.",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "771",
+        "msg": "Rejei\u00e7\u00e3o: Opera\u00e7\u00e3o Interestadual e UF de destino com EX",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "772",
+        "msg": "Rejei\u00e7\u00e3o: Opera\u00e7\u00e3o Interestadual e UF de destino igual \u00e0 UF do emitente",
+        "status": "0",
+        "correct": "Opera\u00e7\u00e3o indicada como interestadual mas a UF do destinat\u00e1rio \u00e9 a mesmo do emitente."
+    }, {
+        "cod": "773",
+        "msg": "Rejei\u00e7\u00e3o: Opera\u00e7\u00e3o Interna e UF de destino difere da UF do emitente",
+        "status": "0",
+        "correct": "A UF do destinat\u00e1rio \u00e9 diferente do emitente"
+    }, {
+        "cod": "774",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com indicador de item n\u00e3o participante do total",
+        "status": "0",
+        "correct": "Em NFCe todos os itens da notas integram o total, algum item n\u00e3o est\u00e1 dessa forma."
+    }, {
+        "cod": "775",
+        "msg": "Rejei\u00e7\u00e3o: Modelo da NFC-e diferente de 65",
+        "status": "0",
+        "correct": "NFCe deve ter modelo 65 apenas, , informe o administrador do sistema"
+    }, {
+        "cod": "776",
+        "msg": "Rejei\u00e7\u00e3o: Solicitada resposta s\u00edncrona para UF que n\u00e3o disponibiliza este atendimento (indSinc=1)",
+        "status": "0",
+        "correct": "N\u00e3o existe opere\u00e7\u00e3o sincrona, informe o administrador do sistema"
+    }, {
+        "cod": "777",
+        "msg": "Rejei\u00e7\u00e3o: Obrigat\u00f3ria a informa\u00e7\u00e3o do NCM completo",
+        "status": "0",
+        "correct": "NCM incompleto, esse numero deve ter 8 digitos"
+    }, {
+        "cod": "778",
+        "msg": "Rejei\u00e7\u00e3o: Informado NCM inexistente",
+        "status": "0",
+        "correct": "Verifique o c\u00f3digo NCM est\u00e1 errado. Lembre-se que esses c\u00f3digos mudam e ningu\u00e9m te avisa disso"
+    }, {
+        "cod": "779",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com NCM incompat\u00edvel",
+        "status": "0",
+        "correct": "NCM do produto incompat\u00edvel com NFCe"
+    }, {
+        "cod": "780",
+        "msg": "Rejei\u00e7\u00e3o: Total da NFC-e superior ao valor limite estabelecido pela SEFAZ [Limite]",
+        "status": "0",
+        "correct": "A NFCe indica um valor muito alto, acima do permitido"
+    }, {
+        "cod": "781",
+        "msg": "Rejei\u00e7\u00e3o: Emissor n\u00e3o habilitado para emiss\u00e3o da NFC-e",
+        "status": "0",
+        "correct": "CNPJ n\u00e3o habilitado, entre em contado com SEFAZ"
+    }, {
+        "cod": "782",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e n\u00e3o \u00e9 autorizada pelo SCAN",
+        "status": "0",
+        "correct": "NFCe n\u00e3o pode usar essa conting\u00eacia"
+    }, {
+        "cod": "783",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e n\u00e3o \u00e9 autorizada pela SVC",
+        "status": "0",
+        "correct": "NFCe n\u00e3o pode usar essa conting\u00eacia"
+    }, {
+        "cod": "784",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e n\u00e3o permite o evento de Carta de Corre\u00e7\u00e3o",
+        "status": "0",
+        "correct": "NFCe n\u00e3o aceita carta de corre\u00e7\u00e3o, se existe erro cancele e emita outra NFCe"
+    }, {
+        "cod": "785",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e com entrega a domic\u00edlio n\u00e3o permitida pela UF",
+        "status": "0",
+        "correct": "Esta UF n\u00e3o permite essa opera\u00e7\u00e3o com entrega em domicilio"
+    }, {
+        "cod": "786",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e de entrega a domic\u00edlio sem dados do Transportador",
+        "status": "0",
+        "correct": "Entrega em domicilio sem dados do transportador"
+    }, {
+        "cod": "787",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e de entrega a domic\u00edlio sem a identifica\u00e7\u00e3o do destinat\u00e1rio",
+        "status": "0",
+        "correct": "Entrega em domicilio sem a identifica\u00e7\u00e3o do destinat\u00e1rio"
+    }, {
+        "cod": "788",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e de entrega a domic\u00edlio sem o endere\u00e7o do destinat\u00e1rio",
+        "status": "0",
+        "correct": "Indicada entrega em domicilio sem o endere\u00e7o do destinat\u00e1rio"
+    }, {
+        "cod": "789",
+        "msg": "Rejei\u00e7\u00e3o: NFC-e para destinat\u00e1rio contribuinte de ICMS",
+        "status": "0",
+        "correct": "NFCe \u00e9 apenas para consumidores e n\u00e3o para contribuintes"
+    }, {
+        "cod": "790",
+        "msg": "Rejei\u00e7\u00e3o: Opera\u00e7\u00e3o com Exterior para destinat\u00e1rio Contribuinte de ICMS",
+        "status": "0",
+        "correct": "Exporta\u00e7\u00e3o n\u00e3o pode ter um contribuinte do ICMS no exterior"
+    }, {
+        "cod": "791",
+        "msg": "Rejei\u00e7\u00e3o: NF-e com indica\u00e7\u00e3o de destinat\u00e1rio isento de IE, com a informa\u00e7\u00e3o da IE do destinat\u00e1rio",
+        "status": "0",
+        "correct": "Foi indicada opera\u00e7\u00e3o com Contribuinte isento de Inscri\u00e7\u00e3o no cadastro de Contribuintes do ICMS e informada a IE do destinat\u00e1rio"
+    }, {
+        "cod": "792",
+        "msg": "Rejei\u00e7\u00e3o: Informada a IE do destinat\u00e1rio para opera\u00e7\u00e3o com destinat\u00e1rio no Exterior",
+        "status": "0",
+        "correct": "Em opera\u00e7\u00f5es de exporta\u00e7\u00e3o n\u00e3o pode ser indicado um IE"
+    }, {
+        "cod": "793",
+        "msg": "Rejei\u00e7\u00e3o: Informado Cap\u00edtulo do NCM inexistente",
+        "status": "0",
+        "correct": "Confira o NCM est\u00e1 incorreto"
+    }, {
+        "cod": "794",
+        "msg": "Rejei\u00e7\u00e3o: NF-e com indicativo de NFC-e com entrega a domic\u00edlio",
+        "status": "0",
+        "correct": "NFC-e em opera\u00e7\u00e3o com entrega a domic\u00edlio e n\u00e3o foram informados os dados do destinat\u00e1rio"
+    }, {
+        "cod": "795",
+        "msg": "Rejei\u00e7\u00e3o: Total do ICMS desonerado difere do somat\u00f3rio dos itens",
+        "status": "0",
+        "correct": "Valor da soma do ICMS desonerado dos itens n\u00e3o est\u00e1 igual ao valor do ICMS desonerado no total da nota. Verifique se o CST da nota est\u00e1 correto, caso esteja como por exemplo '00 - Tributado Integralmente' o valor do ICMS desonerado por item n\u00e3o ser\u00e1 destacado, gerado assim essa rejei\u00e7\u00e3o no envio."
+    }, {
+        "cod": "796",
+        "msg": "Rejei\u00e7\u00e3o: Empresa sem Chave de Seguran\u00e7a para o QR-Code",
+        "status": "0",
+        "correct": "Confira o CSC e o CSCid"
+    }, {
+        "cod": "798",
+        "msg": "Valor total do ICMS relativo Fundo de Combate \u00e0 Pobreza (FCP) da UF de destino difere do somat\u00f3rio do valor dos itens",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "799",
+        "msg": "Valor total do ICMS Interestadual da UF de destino difere do somat\u00f3rio dos itens",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "800",
+        "msg": "Valor total do ICMS Interestadual da UF do remetente difere do somat\u00f3rio dos itens",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "805",
+        "msg": "A SEFAZ do destinat\u00e1rio n\u00e3o permite Contribuinte Isento de Inscri\u00e7\u00e3o Estadual",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "806",
+        "msg": "A partir de 01.10.2016 \u00e9 obrigat\u00f3ria a informa\u00e7\u00e3o do CEST, C\u00f3digo Especificador de Substitui\u00e7\u00e3o Tribut\u00e1ria, um c\u00f3digo composto por 6 algarimos. No painel editar o produto voc\u00ea tem um bot\u00e3o \"Tabela CEST\" que exibe uma lista completa dos CESTs.Opera\u00e7\u00e3o com ICMS-ST sem informa\u00e7\u00e3o do CEST",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "807",
+        "msg": "NFC-e com grupo de ICMS para a UF do destinat\u00e1rio",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "817",
+        "msg": "Unidade Tributavel incompativel com o NCM informado na operacao com Comercio Exterior",
+        "status": "0",
+        "correct": ""
+    }, {
+        "cod": "999",
+        "msg": "Rejei\u00e7\u00e3o: Erro n\u00e3o catalogado (informar a mensagem de erro capturado no tratamento da exce\u00e7\u00e3o)",
+        "status": "0",
+        "correct": "Isso \u00e9 um problema provavelmente da SEFAZ"
+    }, {
+        "cod": "",
+        "msg": null,
+        "status": null,
+        "correct": null
+    }]
