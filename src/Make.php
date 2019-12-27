@@ -381,7 +381,11 @@ class Make
      */
     public function monta()
     {
-        $this->errors = $this->dom->errors;
+        if (!empty($this->errors)) {
+            $this->errors = array_merge($this->errors, $this->dom->errors);
+        } else {
+            $this->errors = $this->dom->errors;
+        }
         //cria a tag raiz da Nfe
         $this->buildNFe();
         //processa nfeRef e coloca as tags na tag ide
