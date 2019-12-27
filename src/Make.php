@@ -1715,8 +1715,18 @@ class Make
         $cean = !empty($std->cEAN) ? trim(strtoupper($std->cEAN)) : '';
         $ceantrib = !empty($std->cEANTrib) ? trim(strtoupper($std->cEANTrib)) : '';
         //throw exception if not is Valid
-        Gtin::isValid($cean);
-        Gtin::isValid($ceantrib);
+        try {
+            Gtin::isValid($cean);
+        } catch (\InvalidArgumentException $e) {
+            $this->errors[] = "cEANT {$cean} " . $e->getMessage();
+        }
+        
+        try {
+            Gtin::isValid($ceantrib);
+        } catch (\InvalidArgumentException $e) {
+            $this->errors[] = "cEANTrib {$ceantrib} " . $e->getMessage();
+        }
+        
         $identificador = 'I01 <prod> - ';
         $prod = $this->dom->createElement("prod");
         $this->dom->addChild(
