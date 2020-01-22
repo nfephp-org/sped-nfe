@@ -77,9 +77,14 @@ class Convert
         foreach ($this->notas as $nota) {
             $version = $this->layouts[$i];
             $parser = new Parser($version, $this->baselayout);
-            $this->xmls[] = $parser->toXml($nota);
-            if ($errors = $parser->getErrors()) {
-                throw new ParserException(implode(', ', $errors));
+            try {
+                $this->xmls[] = $parser->toXml($nota);
+            } catch (\Exception $e) {
+                if ($errors = $parser->getErrors()) {
+                    throw new ParserException(implode(', ', $errors));
+                } else {
+                    throw new RuntimeException($e->getMessage());
+                }
             }
             $i++;
         }
