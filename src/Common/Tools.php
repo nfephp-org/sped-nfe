@@ -170,6 +170,10 @@ class Tools
      * @var string
      */
     protected $typePerson = 'J';
+    /**
+     * @var string
+     */
+    protected $timezone;
 
     /**
      * Loads configurations and Digital Certificate, map all paths, set timezone and instanciate Contingency::class
@@ -200,7 +204,7 @@ class Tools
      */
     public function setEnvironmentTimeZone($acronym)
     {
-        date_default_timezone_set(TimeZoneByUF::get($acronym));
+        $this->timezone = TimeZoneByUF::get($acronym);
     }
 
     /**
