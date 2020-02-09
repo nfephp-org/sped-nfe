@@ -771,7 +771,7 @@ class Tools extends ToolsCommon
         $ev = $this->tpEv($tpEvento);
         $descEvento = $ev->desc;
         $cnpj = isset($this->config->cnpj) ? $this->config->cnpj : '';
-        $dt = new \DateTime(date(), new \DateTimeZone($this->timezone));
+        $dt = new \DateTime(date("Y-m-d H:i:sP"), new \DateTimeZone($this->timezone));
         $dhEvento = $dt->format('Y-m-d\TH:i:sP');
         $sSeqEvento = str_pad($nSeqEvento, 2, "0", STR_PAD_LEFT);
         $eventId = "ID".$tpEvento.$chave.$sSeqEvento;
