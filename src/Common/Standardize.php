@@ -177,7 +177,7 @@ class Standardize
     }
 
     /**
-     * Retruns JSON string form XML
+     * Returns JSON string form XML
      * @param string $xml
      * @return string
      */
