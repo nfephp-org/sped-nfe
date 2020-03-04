@@ -211,6 +211,51 @@ composer require nfephp-org/sped-nfe
 composer require nfephp-org/sped-nfe --prefer-dist --update-no-dev --prefer-stable --optimize-autoloader
 ```
 
+Dependendo do servidor, como um t2.micro (tier free da amazon), podem ocorrecer estouro de memoria ao rodar o composer. Para Esses casos pode-se fazer duas coisas:
+
+1ª Alternativa) Rodar o comando acima precedido de:
+
+```bash
+php -d memory_limit=-1 'which composer' 
+```
+
+2ª Alternativa) Aumentar / Criar um swap no servidor. Swap é uma memoria auxiliar que em casos como estes, aonde o composer por exemplo da out of memory, ela ajuda o servidor dando, no exemplo abaixo, mais 500mb de memoria.
+
+```bash
+sudo su
+
+swapon -s
+
+dd if=/dev/zero of=/swapfile count=4096 bs=1MiB
+
+chmod 600 /swapfile
+
+mkswap /swapfile
+
+swapon /swapfile
+
+swapon -s
+
+free -m
+
+
+# AQUI VOCÊ IRA ABRIR O EDITOR NANO
+nano /etc/fstab
+
+# COLOQUE ESSE A LINHA ABAIXO DENTRO DO NANO
+/swapfile   swap    swap    sw  0   0
+
+
+
+# EDITE O ARQUIVO SYSCTL.CONF
+nano /etc/sysctl.conf
+
+# COLOQUE O COMANDO ABAIXO DENTRO DO ARQUIVO
+vm.swappiness=10
+vm.vfs_cache_pressure=50
+```
+
+
 Rodando esse comando vamos INCLUIR a última versão STABLE da API, como uma dependência do seu projeto, capaz de emitir NFe e NFCe na versão 4.0.
 
 Se você não tem outras dependências, será criada uma pasta "vendor" na RAIZ de seu projeto, que conterá todas as dependências do seu projeto e as dos pacotes que você intalou com o composer. 
