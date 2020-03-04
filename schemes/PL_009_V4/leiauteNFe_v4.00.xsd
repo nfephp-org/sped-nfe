@@ -2016,7 +2016,8 @@ ambiente.</xs:documentation>
 2 - Lista Positiva (valor);
 3 - Lista Neutra (valor);
 4 - Margem Valor Agregado (%);
-5 - Pauta (valor);</xs:documentation>
+5 - Pauta (valor);
+6 - Valor da Operação;</xs:documentation>
 																					</xs:annotation>
 																					<xs:simpleType>
 																						<xs:restriction base="xs:string">
@@ -2027,6 +2028,7 @@ ambiente.</xs:documentation>
 																							<xs:enumeration value="3"/>
 																							<xs:enumeration value="4"/>
 																							<xs:enumeration value="5"/>
+																							<xs:enumeration value="6"/>
 																						</xs:restriction>
 																					</xs:simpleType>
 																				</xs:element>
@@ -2216,7 +2218,8 @@ ambiente.</xs:documentation>
 2 - Lista Positiva (valor);
 3 - Lista Neutra (valor);
 4 - Margem Valor Agregado (%);
-5 - Pauta (valor).</xs:documentation>
+5 - Pauta (valor);
+6 - Valor da Operação;</xs:documentation>
 																					</xs:annotation>
 																					<xs:simpleType>
 																						<xs:restriction base="xs:string">
@@ -2227,6 +2230,7 @@ ambiente.</xs:documentation>
 																							<xs:enumeration value="3"/>
 																							<xs:enumeration value="4"/>
 																							<xs:enumeration value="5"/>
+																							<xs:enumeration value="6"/>
 																						</xs:restriction>
 																					</xs:simpleType>
 																				</xs:element>
@@ -2658,7 +2662,8 @@ A exigência do preenchimento das informações do ICMS diferido fica à critér
 2 - Lista Positiva (valor);
 3 - Lista Neutra (valor);
 4 - Margem Valor Agregado (%);
-5 - Pauta (valor).</xs:documentation>
+5 - Pauta (valor);
+6 - Valor da Operação;</xs:documentation>
 																					</xs:annotation>
 																					<xs:simpleType>
 																						<xs:restriction base="xs:string">
@@ -2669,6 +2674,7 @@ A exigência do preenchimento das informações do ICMS diferido fica à critér
 																							<xs:enumeration value="3"/>
 																							<xs:enumeration value="4"/>
 																							<xs:enumeration value="5"/>
+																							<xs:enumeration value="6"/>
 																						</xs:restriction>
 																					</xs:simpleType>
 																				</xs:element>
@@ -2832,7 +2838,8 @@ A exigência do preenchimento das informações do ICMS diferido fica à critér
 2 - Lista Positiva (valor);
 3 - Lista Neutra (valor);
 4 - Margem Valor Agregado (%);
-5 - Pauta (valor).</xs:documentation>
+5 - Pauta (valor);
+6 - Valor da Operação;</xs:documentation>
 																						</xs:annotation>
 																						<xs:simpleType>
 																							<xs:restriction base="xs:string">
@@ -2843,6 +2850,7 @@ A exigência do preenchimento das informações do ICMS diferido fica à critér
 																								<xs:enumeration value="3"/>
 																								<xs:enumeration value="4"/>
 																								<xs:enumeration value="5"/>
+																								<xs:enumeration value="6"/>
 																							</xs:restriction>
 																						</xs:simpleType>
 																					</xs:element>
@@ -2989,7 +2997,8 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 2 - Lista Positiva (valor);
 3 - Lista Neutra (valor);
 4 - Margem Valor Agregado (%);
-5 - Pauta (valor).</xs:documentation>
+5 - Pauta (valor);
+6 - Valor da Operação;</xs:documentation>
 																					</xs:annotation>
 																					<xs:simpleType>
 																						<xs:restriction base="xs:string">
@@ -3000,6 +3009,7 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 																							<xs:enumeration value="3"/>
 																							<xs:enumeration value="4"/>
 																							<xs:enumeration value="5"/>
+																							<xs:enumeration value="6"/>
 																						</xs:restriction>
 																					</xs:simpleType>
 																				</xs:element>
@@ -3245,7 +3255,8 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 2 - Lista Positiva (valor);
 3 - Lista Neutra (valor);
 4 - Margem Valor Agregado (%);
-5 - Pauta (valor). (v2.0)</xs:documentation>
+5 - Pauta (valor). (v2.0);
+6 - Valor da Operação;</xs:documentation>
 																					</xs:annotation>
 																					<xs:simpleType>
 																						<xs:restriction base="xs:string">
@@ -3256,6 +3267,7 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 																							<xs:enumeration value="3"/>
 																							<xs:enumeration value="4"/>
 																							<xs:enumeration value="5"/>
+																							<xs:enumeration value="6"/>
 																						</xs:restriction>
 																					</xs:simpleType>
 																				</xs:element>
@@ -3349,7 +3361,8 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 2 - Lista Positiva (valor);
 3 - Lista Neutra (valor);
 4 - Margem Valor Agregado (%);
-5 - Pauta (valor). (v2.0)</xs:documentation>
+5 - Pauta (valor). (v2.0);
+6 - Valor da Operação;</xs:documentation>
 																					</xs:annotation>
 																					<xs:simpleType>
 																						<xs:restriction base="xs:string">
@@ -3360,6 +3373,7 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 																							<xs:enumeration value="3"/>
 																							<xs:enumeration value="4"/>
 																							<xs:enumeration value="5"/>
+																							<xs:enumeration value="6"/>
 																						</xs:restriction>
 																					</xs:simpleType>
 																				</xs:element>
@@ -3570,7 +3584,8 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 2 - Lista Positiva (valor);
 3 - Lista Neutra (valor);
 4 - Margem Valor Agregado (%);
-5 - Pauta (valor).</xs:documentation>
+5 - Pauta (valor);
+6 - Valor da Operação;</xs:documentation>
 																						</xs:annotation>
 																						<xs:simpleType>
 																							<xs:restriction base="xs:string">
@@ -3581,6 +3596,7 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 																								<xs:enumeration value="3"/>
 																								<xs:enumeration value="4"/>
 																								<xs:enumeration value="5"/>
+																								<xs:enumeration value="6"/>
 																							</xs:restriction>
 																						</xs:simpleType>
 																					</xs:element>
