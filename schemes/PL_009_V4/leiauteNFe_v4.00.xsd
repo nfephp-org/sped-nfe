@@ -11,8 +11,7 @@
 <!-- PL_009-v4a.2  adequação do campo placa para novo padrão do Mercosul - 06/2018 -->
 <!-- PL_009-v4a.3  adequação da lista TCListServ - 10/2018 -->
 <!-- PL_009-v4a.4  implementado alterações da NT 2018.005 -->
-
-<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.portalfiscal.inf.br/nfe" xmlns="http://www.portalfiscal.inf.br/nfe" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:editix="http://www.portalfiscal.inf.br/nfe" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns="http://www.portalfiscal.inf.br/nfe" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:editix="http://www.portalfiscal.inf.br/nfe" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.portalfiscal.inf.br/nfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v1.01.xsd"/>
 	<xs:include schemaLocation="tiposBasico_v4.00.xsd"/>
 	<xs:complexType name="TNFe">
@@ -82,7 +81,7 @@ SCAN 900-999</xs:documentation>
 											<xs:documentation>Data e Hora de emissão do Documento Fiscal (AAAA-MM-DDThh:mm:ssTZD) ex.: 2012-09-01T13:00:00-03:00</xs:documentation>
 										</xs:annotation>
 									</xs:element>
-									<xs:element minOccurs="0" name="dhSaiEnt" type="TDateTimeUTC">
+									<xs:element name="dhSaiEnt" type="TDateTimeUTC" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Data e Hora da saída ou de entrada da mercadoria / produto (AAAA-MM-DDTHH:mm:ssTZD)</xs:documentation>
 										</xs:annotation>
@@ -261,7 +260,7 @@ para tpEmis diferente de 1</xs:documentation>
 											</xs:simpleType>
 										</xs:element>
 									</xs:sequence>
-									<xs:element maxOccurs="500" minOccurs="0" name="NFref">
+									<xs:element name="NFref" minOccurs="0" maxOccurs="500">
 										<xs:annotation>
 											<xs:documentation>Grupo de infromações da NF referenciada</xs:documentation>
 										</xs:annotation>
@@ -473,7 +472,7 @@ Preencher com &quot;2B&quot;, quando se tratar de Cupom Fiscal emitido por máqu
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
-									<xs:element minOccurs="0" name="xFant">
+									<xs:element name="xFant" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Nome fantasia</xs:documentation>
 										</xs:annotation>
@@ -494,7 +493,7 @@ Preencher com &quot;2B&quot;, quando se tratar de Cupom Fiscal emitido por máqu
 											<xs:documentation>Inscrição Estadual do Emitente</xs:documentation>
 										</xs:annotation>
 									</xs:element>
-									<xs:element minOccurs="0" name="IEST" type="TIeST">
+									<xs:element name="IEST" type="TIeST" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Inscricao Estadual do Substituto Tributário</xs:documentation>
 										</xs:annotation>
@@ -514,7 +513,7 @@ Preencher com &quot;2B&quot;, quando se tratar de Cupom Fiscal emitido por máqu
 												</xs:restriction>
 											</xs:simpleType>
 										</xs:element>
-										<xs:element minOccurs="0" name="CNAE">
+										<xs:element name="CNAE" minOccurs="0">
 											<xs:annotation>
 												<xs:documentation>CNAE Fiscal</xs:documentation>
 											</xs:annotation>
@@ -546,7 +545,7 @@ Este campo será obrigatoriamente preenchido com:
 								</xs:sequence>
 							</xs:complexType>
 						</xs:element>
-						<xs:element minOccurs="0" name="avulsa">
+						<xs:element name="avulsa" minOccurs="0">
 							<xs:annotation>
 								<xs:documentation>Emissão de avulsa, informar os dados do Fisco emitente</xs:documentation>
 							</xs:annotation>
@@ -590,7 +589,7 @@ Este campo será obrigatoriamente preenchido com:
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
-									<xs:element minOccurs="0" name="fone">
+									<xs:element name="fone" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Telefone</xs:documentation>
 										</xs:annotation>
@@ -606,7 +605,7 @@ Este campo será obrigatoriamente preenchido com:
 											<xs:documentation>Sigla da Unidade da Federação</xs:documentation>
 										</xs:annotation>
 									</xs:element>
-									<xs:element minOccurs="0" name="nDAR">
+									<xs:element name="nDAR" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Número do Documento de Arrecadação de Receita</xs:documentation>
 										</xs:annotation>
@@ -617,12 +616,12 @@ Este campo será obrigatoriamente preenchido com:
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
-									<xs:element minOccurs="0" name="dEmi" type="TData">
+									<xs:element name="dEmi" type="TData" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Data de emissão do DAR (AAAA-MM-DD)</xs:documentation>
 										</xs:annotation>
 									</xs:element>
-									<xs:element minOccurs="0" name="vDAR" type="TDec_1302">
+									<xs:element name="vDAR" type="TDec_1302" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Valor Total constante no DAR</xs:documentation>
 										</xs:annotation>
@@ -638,7 +637,7 @@ Este campo será obrigatoriamente preenchido com:
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
-									<xs:element minOccurs="0" name="dPag" type="TData">
+									<xs:element name="dPag" type="TData" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Data de pagamento do DAR (AAAA-MM-DD)</xs:documentation>
 										</xs:annotation>
@@ -646,7 +645,7 @@ Este campo será obrigatoriamente preenchido com:
 								</xs:sequence>
 							</xs:complexType>
 						</xs:element>
-						<xs:element minOccurs="0" name="dest">
+						<xs:element name="dest" minOccurs="0">
 							<xs:annotation>
 								<xs:documentation>Identificação do Destinatário</xs:documentation>
 							</xs:annotation>
@@ -675,7 +674,7 @@ Este campo será obrigatoriamente preenchido com:
 											</xs:simpleType>
 										</xs:element>
 									</xs:choice>
-									<xs:element minOccurs="0" name="xNome">
+									<xs:element name="xNome" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Razão Social ou nome do destinatário</xs:documentation>
 										</xs:annotation>
@@ -686,7 +685,7 @@ Este campo será obrigatoriamente preenchido com:
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
-									<xs:element minOccurs="0" name="enderDest" type="TEndereco">
+									<xs:element name="enderDest" type="TEndereco" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Dados do endereço</xs:documentation>
 										</xs:annotation>
@@ -707,12 +706,12 @@ Este campo será obrigatoriamente preenchido com:
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
-									<xs:element minOccurs="0" name="IE" type="TIeDestNaoIsento">
+									<xs:element name="IE" type="TIeDestNaoIsento" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Inscrição Estadual (obrigatório nas operações com contribuintes do ICMS)</xs:documentation>
 										</xs:annotation>
 									</xs:element>
-									<xs:element minOccurs="0" name="ISUF">
+									<xs:element name="ISUF" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Inscrição na SUFRAMA (Obrigatório nas operações com as áreas com benefícios de incentivos fiscais sob controle da SUFRAMA) PL_005d - 11/08/09 - alterado para aceitar 8 ou 9 dígitos</xs:documentation>
 										</xs:annotation>
@@ -723,7 +722,7 @@ Este campo será obrigatoriamente preenchido com:
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
-									<xs:element minOccurs="0" name="IM">
+									<xs:element name="IM" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Inscrição Municipal do tomador do serviço</xs:documentation>
 										</xs:annotation>
@@ -734,7 +733,7 @@ Este campo será obrigatoriamente preenchido com:
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
-									<xs:element minOccurs="0" name="email">
+									<xs:element name="email" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Informar o e-mail do destinatário. O campo pode ser utilizado para informar o e-mail
 de recepção da NF-e indicada pelo destinatário</xs:documentation>
@@ -750,17 +749,17 @@ de recepção da NF-e indicada pelo destinatário</xs:documentation>
 								</xs:sequence>
 							</xs:complexType>
 						</xs:element>
-						<xs:element minOccurs="0" name="retirada" type="TLocal">
+						<xs:element name="retirada" type="TLocal" minOccurs="0">
 							<xs:annotation>
 								<xs:documentation>Identificação do Local de Retirada (informar apenas quando for diferente do endereço do remetente)</xs:documentation>
 							</xs:annotation>
 						</xs:element>
-						<xs:element minOccurs="0" name="entrega" type="TLocal">
+						<xs:element name="entrega" type="TLocal" minOccurs="0">
 							<xs:annotation>
 								<xs:documentation>Identificação do Local de Entrega (informar apenas quando for diferente do endereço do destinatário)</xs:documentation>
 							</xs:annotation>
 						</xs:element>
-						<xs:element maxOccurs="10" minOccurs="0" name="autXML">
+						<xs:element name="autXML" minOccurs="0" maxOccurs="10">
 							<xs:annotation>
 								<xs:documentation>Pessoas autorizadas para o download do XML da NF-e</xs:documentation>
 							</xs:annotation>
@@ -779,7 +778,7 @@ de recepção da NF-e indicada pelo destinatário</xs:documentation>
 								</xs:choice>
 							</xs:complexType>
 						</xs:element>
-						<xs:element maxOccurs="990" name="det">
+						<xs:element name="det" maxOccurs="990">
 							<xs:annotation>
 								<xs:documentation>Dados dos detalhes da NF-e</xs:documentation>
 							</xs:annotation>
@@ -836,7 +835,7 @@ Formato ”CFOP9999”.</xs:documentation>
 														</xs:restriction>
 													</xs:simpleType>
 												</xs:element>
-												<xs:element maxOccurs="8" minOccurs="0" name="NVE">
+												<xs:element name="NVE" minOccurs="0" maxOccurs="8">
 													<xs:annotation>
 														<xs:documentation>Nomenclatura de Valor aduaneio e Estatístico</xs:documentation>
 													</xs:annotation>
@@ -848,7 +847,7 @@ Formato ”CFOP9999”.</xs:documentation>
 													</xs:simpleType>
 												</xs:element>
 												<xs:sequence minOccurs="0">
-													<xs:element minOccurs="1" name="CEST">
+													<xs:element name="CEST">
 														<xs:annotation>
 															<xs:documentation>Codigo especificador da Substuicao Tributaria - CEST, que identifica a mercadoria sujeita aos regimes de  substituicao tributária e de antecipação do recolhimento  do imposto</xs:documentation>
 														</xs:annotation>
@@ -859,7 +858,7 @@ Formato ”CFOP9999”.</xs:documentation>
 															</xs:restriction>
 														</xs:simpleType>
 													</xs:element>
-													<xs:element minOccurs="0" name="indEscala">
+													<xs:element name="indEscala" minOccurs="0">
 														<xs:simpleType>
 															<xs:restriction base="xs:string">
 																<xs:enumeration value="S"/>
@@ -867,13 +866,13 @@ Formato ”CFOP9999”.</xs:documentation>
 															</xs:restriction>
 														</xs:simpleType>
 													</xs:element>
-													<xs:element minOccurs="0" name="CNPJFab" type="TCnpj">
+													<xs:element name="CNPJFab" type="TCnpj" minOccurs="0">
 														<xs:annotation>
 															<xs:documentation>CNPJ do Fabricante da Mercadoria, obrigatório para produto em escala NÃO relevante.</xs:documentation>
 														</xs:annotation>
 													</xs:element>
 												</xs:sequence>
-												<xs:element minOccurs="0" name="cBenef">
+												<xs:element name="cBenef" minOccurs="0">
 													<xs:simpleType>
 														<xs:restriction base="xs:string">
 															<xs:whiteSpace value="preserve"/>
@@ -881,7 +880,7 @@ Formato ”CFOP9999”.</xs:documentation>
 														</xs:restriction>
 													</xs:simpleType>
 												</xs:element>
-												<xs:element minOccurs="0" name="EXTIPI">
+												<xs:element name="EXTIPI" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Código EX TIPI (3 posições)</xs:documentation>
 													</xs:annotation>
@@ -961,22 +960,22 @@ Formato ”CFOP9999”.</xs:documentation>
 														<xs:documentation>Valor unitário de tributação - - alterado para aceitar 0 a 10 casas decimais e 11 inteiros</xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element minOccurs="0" name="vFrete" type="TDec_1302Opc">
+												<xs:element name="vFrete" type="TDec_1302Opc" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Valor Total do Frete</xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element minOccurs="0" name="vSeg" type="TDec_1302Opc">
+												<xs:element name="vSeg" type="TDec_1302Opc" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Valor Total do Seguro</xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element minOccurs="0" name="vDesc" type="TDec_1302Opc">
+												<xs:element name="vDesc" type="TDec_1302Opc" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Valor do Desconto</xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element minOccurs="0" name="vOutro" type="TDec_1302Opc">
+												<xs:element name="vOutro" type="TDec_1302Opc" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Outras despesas acessórias</xs:documentation>
 													</xs:annotation>
@@ -995,7 +994,7 @@ Formato ”CFOP9999”.</xs:documentation>
 														</xs:restriction>
 													</xs:simpleType>
 												</xs:element>
-												<xs:element maxOccurs="100" minOccurs="0" name="DI">
+												<xs:element name="DI" minOccurs="0" maxOccurs="100">
 													<xs:annotation>
 														<xs:documentation>Delcaração de Importação
 (NT 2011/004)</xs:documentation>
@@ -1062,7 +1061,7 @@ Formato ”CFOP9999”.</xs:documentation>
 																	</xs:restriction>
 																</xs:simpleType>
 															</xs:element>
-															<xs:element minOccurs="0" name="vAFRMM" type="TDec_1302">
+															<xs:element name="vAFRMM" type="TDec_1302" minOccurs="0">
 																<xs:annotation>
 																	<xs:documentation>Valor Adicional ao frete para renovação de marinha mercante</xs:documentation>
 																</xs:annotation>
@@ -1081,12 +1080,12 @@ Formato ”CFOP9999”.</xs:documentation>
 																	</xs:restriction>
 																</xs:simpleType>
 															</xs:element>
-															<xs:element minOccurs="0" name="CNPJ" type="TCnpj">
+															<xs:element name="CNPJ" type="TCnpj" minOccurs="0">
 																<xs:annotation>
 																	<xs:documentation>CNPJ do adquirente ou do encomendante</xs:documentation>
 																</xs:annotation>
 															</xs:element>
-															<xs:element minOccurs="0" name="UFTerceiro" type="TUfEmi">
+															<xs:element name="UFTerceiro" type="TUfEmi" minOccurs="0">
 																<xs:annotation>
 																	<xs:documentation>Sigla da UF do adquirente ou do encomendante</xs:documentation>
 																</xs:annotation>
@@ -1102,7 +1101,7 @@ Formato ”CFOP9999”.</xs:documentation>
 																	</xs:restriction>
 																</xs:simpleType>
 															</xs:element>
-															<xs:element maxOccurs="100" name="adi">
+															<xs:element name="adi" maxOccurs="100">
 																<xs:annotation>
 																	<xs:documentation>Adições (NT 2011/004)</xs:documentation>
 																</xs:annotation>
@@ -1141,12 +1140,12 @@ Formato ”CFOP9999”.</xs:documentation>
 																				</xs:restriction>
 																			</xs:simpleType>
 																		</xs:element>
-																		<xs:element minOccurs="0" name="vDescDI" type="TDec_1302Opc">
+																		<xs:element name="vDescDI" type="TDec_1302Opc" minOccurs="0">
 																			<xs:annotation>
 																				<xs:documentation>Valor do desconto do item da DI – adição</xs:documentation>
 																			</xs:annotation>
 																		</xs:element>
-																		<xs:element minOccurs="0" name="nDraw">
+																		<xs:element name="nDraw" minOccurs="0">
 																			<xs:annotation>
 																				<xs:documentation>Número do ato concessório de Drawback</xs:documentation>
 																			</xs:annotation>
@@ -1163,13 +1162,13 @@ Formato ”CFOP9999”.</xs:documentation>
 														</xs:sequence>
 													</xs:complexType>
 												</xs:element>
-												<xs:element maxOccurs="500" minOccurs="0" name="detExport">
+												<xs:element name="detExport" minOccurs="0" maxOccurs="500">
 													<xs:annotation>
 														<xs:documentation>Detalhe da exportação</xs:documentation>
 													</xs:annotation>
 													<xs:complexType>
 														<xs:sequence>
-															<xs:element minOccurs="0" name="nDraw">
+															<xs:element name="nDraw" minOccurs="0">
 																<xs:annotation>
 																	<xs:documentation>Número do ato concessório de Drawback</xs:documentation>
 																</xs:annotation>
@@ -1180,7 +1179,7 @@ Formato ”CFOP9999”.</xs:documentation>
 																	</xs:restriction>
 																</xs:simpleType>
 															</xs:element>
-															<xs:element minOccurs="0" name="exportInd">
+															<xs:element name="exportInd" minOccurs="0">
 																<xs:annotation>
 																	<xs:documentation>Exportação indireta</xs:documentation>
 																</xs:annotation>
@@ -1213,7 +1212,7 @@ Formato ”CFOP9999”.</xs:documentation>
 														</xs:sequence>
 													</xs:complexType>
 												</xs:element>
-												<xs:element minOccurs="0" name="xPed">
+												<xs:element name="xPed" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>pedido de compra - Informação de interesse do emissor para controle do B2B.</xs:documentation>
 													</xs:annotation>
@@ -1224,7 +1223,7 @@ Formato ”CFOP9999”.</xs:documentation>
 														</xs:restriction>
 													</xs:simpleType>
 												</xs:element>
-												<xs:element minOccurs="0" name="nItemPed">
+												<xs:element name="nItemPed" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Número do Item do Pedido de Compra - Identificação do número do item do pedido de Compra</xs:documentation>
 													</xs:annotation>
@@ -1235,12 +1234,12 @@ Formato ”CFOP9999”.</xs:documentation>
 														</xs:restriction>
 													</xs:simpleType>
 												</xs:element>
-												<xs:element minOccurs="0" name="nFCI" type="TGuid">
+												<xs:element name="nFCI" type="TGuid" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Número de controle da FCI - Ficha de Conteúdo de Importação.</xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element maxOccurs="500" minOccurs="0" name="rastro">
+												<xs:element name="rastro" minOccurs="0" maxOccurs="500">
 													<xs:complexType>
 														<xs:sequence>
 															<xs:element name="nLote">
@@ -1269,7 +1268,7 @@ Formato ”CFOP9999”.</xs:documentation>
 																	<xs:documentation>Data de validade. Informar o último dia do mês caso a validade não especifique o dia. Formato &quot;AAAA-MM-DD&quot;.</xs:documentation>
 																</xs:annotation>
 															</xs:element>
-															<xs:element minOccurs="0" name="cAgreg">
+															<xs:element name="cAgreg" minOccurs="0">
 																<xs:simpleType>
 																	<xs:restriction base="xs:string">
 																		<xs:whiteSpace value="preserve"/>
@@ -1587,7 +1586,7 @@ N-NormalVIN</xs:documentation>
 														</xs:annotation>
 														<xs:complexType>
 															<xs:sequence>
-																<xs:element minOccurs="1" name="cProdANVISA">
+																<xs:element name="cProdANVISA">
 																	<xs:annotation>
 																		<xs:documentation>Utilizar o número do registro ANVISA  ou preencher com o literal “ISENTO”, no caso de medicamento isento de registro na ANVISA.</xs:documentation>
 																	</xs:annotation>
@@ -1597,7 +1596,7 @@ N-NormalVIN</xs:documentation>
 																		</xs:restriction>
 																	</xs:simpleType>
 																</xs:element>
-																<xs:element minOccurs="0" name="xMotivoIsencao">
+																<xs:element name="xMotivoIsencao" minOccurs="0">
 																	<xs:annotation>
 																		<xs:documentation>Obs.: Para medicamento isento de registro na ANVISA, informar o número da decisão que o isenta, como por exemplo o número da Resolução da Diretoria Colegiada da ANVISA (RDC).</xs:documentation>
 																	</xs:annotation>
@@ -1608,7 +1607,7 @@ N-NormalVIN</xs:documentation>
 																		</xs:restriction>
 																	</xs:simpleType>
 																</xs:element>
-																<xs:element minOccurs="1" name="vPMC" type="TDec_1302">
+																<xs:element name="vPMC" type="TDec_1302">
 																	<xs:annotation>
 																		<xs:documentation>Preço Máximo ao Consumidor.</xs:documentation>
 																	</xs:annotation>
@@ -1616,7 +1615,7 @@ N-NormalVIN</xs:documentation>
 															</xs:sequence>
 														</xs:complexType>
 													</xs:element>
-													<xs:element maxOccurs="500" name="arma">
+													<xs:element name="arma" maxOccurs="500">
 														<xs:annotation>
 															<xs:documentation>Armamentos</xs:documentation>
 														</xs:annotation>
@@ -1698,27 +1697,27 @@ N-NormalVIN</xs:documentation>
 																		</xs:restriction>
 																	</xs:simpleType>
 																</xs:element>
-																<xs:element minOccurs="0" name="pGLP" type="TDec_0302a04Max100">
+																<xs:element name="pGLP" type="TDec_0302a04Max100" minOccurs="0">
 																	<xs:annotation>
 																		<xs:documentation>Percentual do GLP derivado do petróleo no produto GLP (cProdANP=210203001). Informar em número decimal o percentual do GLP derivado de petróleo no produto GLP. Valores 0 a 100.</xs:documentation>
 																	</xs:annotation>
 																</xs:element>
-																<xs:element minOccurs="0" name="pGNn" type="TDec_0302a04Max100">
+																<xs:element name="pGNn" type="TDec_0302a04Max100" minOccurs="0">
 																	<xs:annotation>
 																		<xs:documentation>Percentual de gás natural nacional - GLGNn para o produto GLP (cProdANP=210203001). Informar em número decimal o percentual do Gás Natural Nacional - GLGNn para o produto GLP. Valores de 0 a 100.</xs:documentation>
 																	</xs:annotation>
 																</xs:element>
-																<xs:element minOccurs="0" name="pGNi" type="TDec_0302a04Max100">
+																<xs:element name="pGNi" type="TDec_0302a04Max100" minOccurs="0">
 																	<xs:annotation>
 																		<xs:documentation>Percentual de gás natural importado GLGNi para o produto GLP (cProdANP=210203001). Informar em número deciaml o percentual do Gás Natural Importado - GLGNi para o produto GLP. Valores de 0 a 100.</xs:documentation>
 																	</xs:annotation>
 																</xs:element>
-																<xs:element minOccurs="0" name="vPart" type="TDec_1302">
+																<xs:element name="vPart" type="TDec_1302" minOccurs="0">
 																	<xs:annotation>
 																		<xs:documentation>Valor de partida (cProdANP=210203001). Deve ser informado neste campo o valor por quilograma sem ICMS.</xs:documentation>
 																	</xs:annotation>
 																</xs:element>
-																<xs:element minOccurs="0" name="CODIF">
+																<xs:element name="CODIF" minOccurs="0">
 																	<xs:annotation>
 																		<xs:documentation>Código de autorização / registro do CODIF. Informar apenas quando a UF utilizar o CODIF (Sistema de Controle do 			Diferimento do Imposto nas Operações com AEAC - Álcool Etílico Anidro Combustível).</xs:documentation>
 																	</xs:annotation>
@@ -1729,7 +1728,7 @@ N-NormalVIN</xs:documentation>
 																		</xs:restriction>
 																	</xs:simpleType>
 																</xs:element>
-																<xs:element minOccurs="0" name="qTemp" type="TDec_1204temperatura">
+																<xs:element name="qTemp" type="TDec_1204temperatura" minOccurs="0">
 																	<xs:annotation>
 																		<xs:documentation>Quantidade de combustível
 faturada à temperatura ambiente.
@@ -1745,7 +1744,7 @@ ambiente.</xs:documentation>
 																		<xs:documentation>Sigla da UF de Consumo</xs:documentation>
 																	</xs:annotation>
 																</xs:element>
-																<xs:element minOccurs="0" name="CIDE">
+																<xs:element name="CIDE" minOccurs="0">
 																	<xs:annotation>
 																		<xs:documentation>CIDE Combustíveis</xs:documentation>
 																	</xs:annotation>
@@ -1769,7 +1768,7 @@ ambiente.</xs:documentation>
 																		</xs:sequence>
 																	</xs:complexType>
 																</xs:element>
-																<xs:element minOccurs="0" name="encerrante">
+																<xs:element name="encerrante" minOccurs="0">
 																	<xs:annotation>
 																		<xs:documentation>Informações do grupo de &quot;encerrante&quot;</xs:documentation>
 																	</xs:annotation>
@@ -1786,7 +1785,7 @@ ambiente.</xs:documentation>
 																					</xs:restriction>
 																				</xs:simpleType>
 																			</xs:element>
-																			<xs:element minOccurs="0" name="nBomba">
+																			<xs:element name="nBomba" minOccurs="0">
 																				<xs:annotation>
 																					<xs:documentation>Numero de identificação da bomba ao qual o bico está interligado</xs:documentation>
 																				</xs:annotation>
@@ -1846,7 +1845,7 @@ ambiente.</xs:documentation>
 										</xs:annotation>
 										<xs:complexType>
 											<xs:sequence>
-												<xs:element minOccurs="0" name="vTotTrib" type="TDec_1302">
+												<xs:element name="vTotTrib" type="TDec_1302" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Valor estimado total de impostos federais, estaduais e municipais</xs:documentation>
 													</xs:annotation>
@@ -2016,8 +2015,8 @@ ambiente.</xs:documentation>
 2 - Lista Positiva (valor);
 3 - Lista Neutra (valor);
 4 - Margem Valor Agregado (%);
-5 - Pauta (valor);
-6 - Valor da Operação;</xs:documentation>
+5 - Pauta (valor)
+6-Valor da Operação;</xs:documentation>
 																					</xs:annotation>
 																					<xs:simpleType>
 																						<xs:restriction base="xs:string">
@@ -2032,12 +2031,12 @@ ambiente.</xs:documentation>
 																						</xs:restriction>
 																					</xs:simpleType>
 																				</xs:element>
-																				<xs:element minOccurs="0" name="pMVAST" type="TDec_0302a04Opc">
+																				<xs:element name="pMVAST" type="TDec_0302a04Opc" minOccurs="0">
 																					<xs:annotation>
 																						<xs:documentation>Percentual da Margem de Valor Adicionado ICMS ST</xs:documentation>
 																					</xs:annotation>
 																				</xs:element>
-																				<xs:element minOccurs="0" name="pRedBCST" type="TDec_0302a04Opc">
+																				<xs:element name="pRedBCST" type="TDec_0302a04Opc" minOccurs="0">
 																					<xs:annotation>
 																						<xs:documentation>Percentual de redução da BC ICMS ST</xs:documentation>
 																					</xs:annotation>
@@ -2218,8 +2217,8 @@ ambiente.</xs:documentation>
 2 - Lista Positiva (valor);
 3 - Lista Neutra (valor);
 4 - Margem Valor Agregado (%);
-5 - Pauta (valor);
-6 - Valor da Operação;</xs:documentation>
+5 - Pauta (valor).
+6 - Valor da Operação</xs:documentation>
 																					</xs:annotation>
 																					<xs:simpleType>
 																						<xs:restriction base="xs:string">
@@ -2234,12 +2233,12 @@ ambiente.</xs:documentation>
 																						</xs:restriction>
 																					</xs:simpleType>
 																				</xs:element>
-																				<xs:element minOccurs="0" name="pMVAST" type="TDec_0302a04Opc">
+																				<xs:element name="pMVAST" type="TDec_0302a04Opc" minOccurs="0">
 																					<xs:annotation>
 																						<xs:documentation>Percentual da Margem de Valor Adicionado ICMS ST</xs:documentation>
 																					</xs:annotation>
 																				</xs:element>
-																				<xs:element minOccurs="0" name="pRedBCST" type="TDec_0302a04Opc">
+																				<xs:element name="pRedBCST" type="TDec_0302a04Opc" minOccurs="0">
 																					<xs:annotation>
 																						<xs:documentation>Percentual de redução da BC ICMS ST</xs:documentation>
 																					</xs:annotation>
@@ -2407,7 +2406,7 @@ A exigência do preenchimento das informações do ICMS diferido fica à critér
 																						</xs:restriction>
 																					</xs:simpleType>
 																				</xs:element>
-																				<xs:element minOccurs="0" name="modBC">
+																				<xs:element name="modBC" minOccurs="0">
 																					<xs:annotation>
 																						<xs:documentation>Modalidade de determinação da BC do ICMS:
 0 - Margem Valor Agregado (%);
@@ -2425,37 +2424,37 @@ A exigência do preenchimento das informações do ICMS diferido fica à critér
 																						</xs:restriction>
 																					</xs:simpleType>
 																				</xs:element>
-																				<xs:element minOccurs="0" name="pRedBC" type="TDec_0302a04">
+																				<xs:element name="pRedBC" type="TDec_0302a04" minOccurs="0">
 																					<xs:annotation>
 																						<xs:documentation>Percentual de redução da BC</xs:documentation>
 																					</xs:annotation>
 																				</xs:element>
-																				<xs:element minOccurs="0" name="vBC" type="TDec_1302">
+																				<xs:element name="vBC" type="TDec_1302" minOccurs="0">
 																					<xs:annotation>
 																						<xs:documentation>Valor da BC do ICMS</xs:documentation>
 																					</xs:annotation>
 																				</xs:element>
-																				<xs:element minOccurs="0" name="pICMS" type="TDec_0302a04">
+																				<xs:element name="pICMS" type="TDec_0302a04" minOccurs="0">
 																					<xs:annotation>
 																						<xs:documentation>Alíquota do imposto</xs:documentation>
 																					</xs:annotation>
 																				</xs:element>
-																				<xs:element minOccurs="0" name="vICMSOp" type="TDec_1302">
+																				<xs:element name="vICMSOp" type="TDec_1302" minOccurs="0">
 																					<xs:annotation>
 																						<xs:documentation>Valor do ICMS da Operação</xs:documentation>
 																					</xs:annotation>
 																				</xs:element>
-																				<xs:element minOccurs="0" name="pDif" type="TDec_0302a04Max100">
+																				<xs:element name="pDif" type="TDec_0302a04Max100" minOccurs="0">
 																					<xs:annotation>
 																						<xs:documentation>Percentual do diferemento</xs:documentation>
 																					</xs:annotation>
 																				</xs:element>
-																				<xs:element minOccurs="0" name="vICMSDif" type="TDec_1302">
+																				<xs:element name="vICMSDif" type="TDec_1302" minOccurs="0">
 																					<xs:annotation>
 																						<xs:documentation>Valor do ICMS da diferido</xs:documentation>
 																					</xs:annotation>
 																				</xs:element>
-																				<xs:element minOccurs="0" name="vICMS" type="TDec_1302">
+																				<xs:element name="vICMS" type="TDec_1302" minOccurs="0">
 																					<xs:annotation>
 																						<xs:documentation>Valor do ICMS</xs:documentation>
 																					</xs:annotation>
@@ -2520,7 +2519,7 @@ A exigência do preenchimento das informações do ICMS diferido fica à critér
 																							<xs:documentation>Aliquota suportada pelo consumidor final.</xs:documentation>
 																						</xs:annotation>
 																					</xs:element>
-																					<xs:element minOccurs="0" name="vICMSSubstituto" type="TDec_1302">
+																					<xs:element name="vICMSSubstituto" type="TDec_1302" minOccurs="0">
 																						<xs:annotation>
 																							<xs:documentation>Valor do ICMS Próprio do Substituto cobrado em operação anterior</xs:documentation>
 																						</xs:annotation>
@@ -2662,8 +2661,8 @@ A exigência do preenchimento das informações do ICMS diferido fica à critér
 2 - Lista Positiva (valor);
 3 - Lista Neutra (valor);
 4 - Margem Valor Agregado (%);
-5 - Pauta (valor);
-6 - Valor da Operação;</xs:documentation>
+5 - Pauta (valor).
+6 - Valor da Operação</xs:documentation>
 																					</xs:annotation>
 																					<xs:simpleType>
 																						<xs:restriction base="xs:string">
@@ -2678,12 +2677,12 @@ A exigência do preenchimento das informações do ICMS diferido fica à critér
 																						</xs:restriction>
 																					</xs:simpleType>
 																				</xs:element>
-																				<xs:element minOccurs="0" name="pMVAST" type="TDec_0302a04Opc">
+																				<xs:element name="pMVAST" type="TDec_0302a04Opc" minOccurs="0">
 																					<xs:annotation>
 																						<xs:documentation>Percentual da Margem de Valor Adicionado ICMS ST</xs:documentation>
 																					</xs:annotation>
 																				</xs:element>
-																				<xs:element minOccurs="0" name="pRedBCST" type="TDec_0302a04Opc">
+																				<xs:element name="pRedBCST" type="TDec_0302a04Opc" minOccurs="0">
 																					<xs:annotation>
 																						<xs:documentation>Percentual de redução da BC ICMS ST</xs:documentation>
 																					</xs:annotation>
@@ -2796,7 +2795,7 @@ A exigência do preenchimento das informações do ICMS diferido fica à critér
 																							<xs:documentation>Valor da BC do ICMS</xs:documentation>
 																						</xs:annotation>
 																					</xs:element>
-																					<xs:element minOccurs="0" name="pRedBC" type="TDec_0302a04Opc">
+																					<xs:element name="pRedBC" type="TDec_0302a04Opc" minOccurs="0">
 																						<xs:annotation>
 																							<xs:documentation>Percentual de redução da BC</xs:documentation>
 																						</xs:annotation>
@@ -2838,8 +2837,8 @@ A exigência do preenchimento das informações do ICMS diferido fica à critér
 2 - Lista Positiva (valor);
 3 - Lista Neutra (valor);
 4 - Margem Valor Agregado (%);
-5 - Pauta (valor);
-6 - Valor da Operação;</xs:documentation>
+5 - Pauta (valor)
+6 - Valor da Operação.</xs:documentation>
 																						</xs:annotation>
 																						<xs:simpleType>
 																							<xs:restriction base="xs:string">
@@ -2854,12 +2853,12 @@ A exigência do preenchimento das informações do ICMS diferido fica à critér
 																							</xs:restriction>
 																						</xs:simpleType>
 																					</xs:element>
-																					<xs:element minOccurs="0" name="pMVAST" type="TDec_0302a04Opc">
+																					<xs:element name="pMVAST" type="TDec_0302a04Opc" minOccurs="0">
 																						<xs:annotation>
 																							<xs:documentation>Percentual da Margem de Valor Adicionado ICMS ST</xs:documentation>
 																						</xs:annotation>
 																					</xs:element>
-																					<xs:element minOccurs="0" name="pRedBCST" type="TDec_0302a04Opc">
+																					<xs:element name="pRedBCST" type="TDec_0302a04Opc" minOccurs="0">
 																						<xs:annotation>
 																							<xs:documentation>Percentual de redução da BC ICMS ST</xs:documentation>
 																						</xs:annotation>
@@ -2974,7 +2973,7 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 																						<xs:documentation>Valor da BC do ICMS</xs:documentation>
 																					</xs:annotation>
 																				</xs:element>
-																				<xs:element minOccurs="0" name="pRedBC" type="TDec_0302a04Opc">
+																				<xs:element name="pRedBC" type="TDec_0302a04Opc" minOccurs="0">
 																					<xs:annotation>
 																						<xs:documentation>Percentual de redução da BC</xs:documentation>
 																					</xs:annotation>
@@ -2997,8 +2996,8 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 2 - Lista Positiva (valor);
 3 - Lista Neutra (valor);
 4 - Margem Valor Agregado (%);
-5 - Pauta (valor);
-6 - Valor da Operação;</xs:documentation>
+5 - Pauta (valor).
+6 - Valor da Operação</xs:documentation>
 																					</xs:annotation>
 																					<xs:simpleType>
 																						<xs:restriction base="xs:string">
@@ -3013,12 +3012,12 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 																						</xs:restriction>
 																					</xs:simpleType>
 																				</xs:element>
-																				<xs:element minOccurs="0" name="pMVAST" type="TDec_0302a04Opc">
+																				<xs:element name="pMVAST" type="TDec_0302a04Opc" minOccurs="0">
 																					<xs:annotation>
 																						<xs:documentation>Percentual da Margem de Valor Adicionado ICMS ST</xs:documentation>
 																					</xs:annotation>
 																				</xs:element>
-																				<xs:element minOccurs="0" name="pRedBCST" type="TDec_0302a04Opc">
+																				<xs:element name="pRedBCST" type="TDec_0302a04Opc" minOccurs="0">
 																					<xs:annotation>
 																						<xs:documentation>Percentual de redução da BC ICMS ST</xs:documentation>
 																					</xs:annotation>
@@ -3083,12 +3082,12 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 																						<xs:documentation>Informar o valor da BC do ICMS ST retido na UF remetente</xs:documentation>
 																					</xs:annotation>
 																				</xs:element>
-																				<xs:element minOccurs="0" name="pST" type="TDec_0302a04Opc">
+																				<xs:element name="pST" type="TDec_0302a04Opc" minOccurs="0">
 																					<xs:annotation>
 																						<xs:documentation>Aliquota suportada pelo consumidor final.</xs:documentation>
 																					</xs:annotation>
 																				</xs:element>
-																				<xs:element minOccurs="0" name="vICMSSubstituto" type="TDec_1302">
+																				<xs:element name="vICMSSubstituto" type="TDec_1302" minOccurs="0">
 																					<xs:annotation>
 																						<xs:documentation>Valor do ICMS Próprio do Substituto cobrado em operação anterior</xs:documentation>
 																					</xs:annotation>
@@ -3255,8 +3254,8 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 2 - Lista Positiva (valor);
 3 - Lista Neutra (valor);
 4 - Margem Valor Agregado (%);
-5 - Pauta (valor). (v2.0);
-6 - Valor da Operação;</xs:documentation>
+5 - Pauta (valor). (v2.0)
+6 - Valor da Operação</xs:documentation>
 																					</xs:annotation>
 																					<xs:simpleType>
 																						<xs:restriction base="xs:string">
@@ -3271,12 +3270,12 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 																						</xs:restriction>
 																					</xs:simpleType>
 																				</xs:element>
-																				<xs:element minOccurs="0" name="pMVAST" type="TDec_0302a04Opc">
+																				<xs:element name="pMVAST" type="TDec_0302a04Opc" minOccurs="0">
 																					<xs:annotation>
 																						<xs:documentation>Percentual da Margem de Valor Adicionado ICMS ST (v2.0)</xs:documentation>
 																					</xs:annotation>
 																				</xs:element>
-																				<xs:element minOccurs="0" name="pRedBCST" type="TDec_0302a04Opc">
+																				<xs:element name="pRedBCST" type="TDec_0302a04Opc" minOccurs="0">
 																					<xs:annotation>
 																						<xs:documentation>Percentual de redução da BC ICMS ST  (v2.0)</xs:documentation>
 																					</xs:annotation>
@@ -3361,8 +3360,8 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 2 - Lista Positiva (valor);
 3 - Lista Neutra (valor);
 4 - Margem Valor Agregado (%);
-5 - Pauta (valor). (v2.0);
-6 - Valor da Operação;</xs:documentation>
+5 - Pauta (valor). (v2.0)
+6 - Valor da Operação</xs:documentation>
 																					</xs:annotation>
 																					<xs:simpleType>
 																						<xs:restriction base="xs:string">
@@ -3377,12 +3376,12 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 																						</xs:restriction>
 																					</xs:simpleType>
 																				</xs:element>
-																				<xs:element minOccurs="0" name="pMVAST" type="TDec_0302a04Opc">
+																				<xs:element name="pMVAST" type="TDec_0302a04Opc" minOccurs="0">
 																					<xs:annotation>
 																						<xs:documentation>Percentual da Margem de Valor Adicionado ICMS ST (v2.0)</xs:documentation>
 																					</xs:annotation>
 																				</xs:element>
-																				<xs:element minOccurs="0" name="pRedBCST" type="TDec_0302a04Opc">
+																				<xs:element name="pRedBCST" type="TDec_0302a04Opc" minOccurs="0">
 																					<xs:annotation>
 																						<xs:documentation>Percentual de redução da BC ICMS ST  (v2.0)</xs:documentation>
 																					</xs:annotation>
@@ -3458,7 +3457,7 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 																							<xs:documentation>Aliquota suportada pelo consumidor final.</xs:documentation>
 																						</xs:annotation>
 																					</xs:element>
-																					<xs:element minOccurs="0" name="vICMSSubstituto" type="TDec_1302">
+																					<xs:element name="vICMSSubstituto" type="TDec_1302" minOccurs="0">
 																						<xs:annotation>
 																							<xs:documentation>Valor do ICMS próprio do substituto</xs:documentation>
 																						</xs:annotation>
@@ -3559,7 +3558,7 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 																							<xs:documentation>Valor da BC do ICMS</xs:documentation>
 																						</xs:annotation>
 																					</xs:element>
-																					<xs:element minOccurs="0" name="pRedBC" type="TDec_0302a04Opc">
+																					<xs:element name="pRedBC" type="TDec_0302a04Opc" minOccurs="0">
 																						<xs:annotation>
 																							<xs:documentation>Percentual de redução da BC</xs:documentation>
 																						</xs:annotation>
@@ -3584,8 +3583,8 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 2 - Lista Positiva (valor);
 3 - Lista Neutra (valor);
 4 - Margem Valor Agregado (%);
-5 - Pauta (valor);
-6 - Valor da Operação;</xs:documentation>
+5 - Pauta (valor).
+6 - Valor da Operação</xs:documentation>
 																						</xs:annotation>
 																						<xs:simpleType>
 																							<xs:restriction base="xs:string">
@@ -3600,12 +3599,12 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 																							</xs:restriction>
 																						</xs:simpleType>
 																					</xs:element>
-																					<xs:element minOccurs="0" name="pMVAST" type="TDec_0302a04Opc">
+																					<xs:element name="pMVAST" type="TDec_0302a04Opc" minOccurs="0">
 																						<xs:annotation>
 																							<xs:documentation>Percentual da Margem de Valor Adicionado ICMS ST</xs:documentation>
 																						</xs:annotation>
 																					</xs:element>
-																					<xs:element minOccurs="0" name="pRedBCST" type="TDec_0302a04Opc">
+																					<xs:element name="pRedBCST" type="TDec_0302a04Opc" minOccurs="0">
 																						<xs:annotation>
 																							<xs:documentation>Percentual de redução da BC ICMS ST</xs:documentation>
 																						</xs:annotation>
@@ -3661,8 +3660,8 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 																</xs:choice>
 															</xs:complexType>
 														</xs:element>
-														<xs:element minOccurs="0" name="IPI" type="TIpi"/>
-														<xs:element minOccurs="0" name="II">
+														<xs:element name="IPI" type="TIpi" minOccurs="0"/>
+														<xs:element name="II" minOccurs="0">
 															<xs:annotation>
 																<xs:documentation>Dados do Imposto de Importação</xs:documentation>
 															</xs:annotation>
@@ -3693,7 +3692,7 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 														</xs:element>
 													</xs:sequence>
 													<xs:sequence>
-														<xs:element minOccurs="0" name="IPI" type="TIpi"/>
+														<xs:element name="IPI" type="TIpi" minOccurs="0"/>
 														<xs:element name="ISSQN">
 															<xs:annotation>
 																<xs:documentation>ISSQN</xs:documentation>
@@ -3725,27 +3724,27 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 																			<xs:documentation>Informar o Item da lista de serviços da LC 116/03 em que se classifica o serviço.</xs:documentation>
 																		</xs:annotation>
 																	</xs:element>
-																	<xs:element minOccurs="0" name="vDeducao" type="TDec_1302Opc">
+																	<xs:element name="vDeducao" type="TDec_1302Opc" minOccurs="0">
 																		<xs:annotation>
 																			<xs:documentation>Valor dedução para redução da base de cálculo</xs:documentation>
 																		</xs:annotation>
 																	</xs:element>
-																	<xs:element minOccurs="0" name="vOutro" type="TDec_1302Opc">
+																	<xs:element name="vOutro" type="TDec_1302Opc" minOccurs="0">
 																		<xs:annotation>
 																			<xs:documentation>Valor outras retenções</xs:documentation>
 																		</xs:annotation>
 																	</xs:element>
-																	<xs:element minOccurs="0" name="vDescIncond" type="TDec_1302Opc">
+																	<xs:element name="vDescIncond" type="TDec_1302Opc" minOccurs="0">
 																		<xs:annotation>
 																			<xs:documentation>Valor desconto incondicionado</xs:documentation>
 																		</xs:annotation>
 																	</xs:element>
-																	<xs:element minOccurs="0" name="vDescCond" type="TDec_1302Opc">
+																	<xs:element name="vDescCond" type="TDec_1302Opc" minOccurs="0">
 																		<xs:annotation>
 																			<xs:documentation>Valor desconto condicionado</xs:documentation>
 																		</xs:annotation>
 																	</xs:element>
-																	<xs:element minOccurs="0" name="vISSRet" type="TDec_1302Opc">
+																	<xs:element name="vISSRet" type="TDec_1302Opc" minOccurs="0">
 																		<xs:annotation>
 																			<xs:documentation>Valor Retenção ISS</xs:documentation>
 																		</xs:annotation>
@@ -3767,7 +3766,7 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 																			</xs:restriction>
 																		</xs:simpleType>
 																	</xs:element>
-																	<xs:element minOccurs="0" name="cServico">
+																	<xs:element name="cServico" minOccurs="0">
 																		<xs:annotation>
 																			<xs:documentation>Código do serviço prestado dentro do município</xs:documentation>
 																		</xs:annotation>
@@ -3779,12 +3778,12 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 																			</xs:restriction>
 																		</xs:simpleType>
 																	</xs:element>
-																	<xs:element minOccurs="0" name="cMun" type="TCodMunIBGE">
+																	<xs:element name="cMun" type="TCodMunIBGE" minOccurs="0">
 																		<xs:annotation>
 																			<xs:documentation>Código do Município de Incidência do Imposto</xs:documentation>
 																		</xs:annotation>
 																	</xs:element>
-																	<xs:element minOccurs="0" name="cPais">
+																	<xs:element name="cPais" minOccurs="0">
 																		<xs:annotation>
 																			<xs:documentation>Código de Pais</xs:documentation>
 																		</xs:annotation>
@@ -3795,7 +3794,7 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 																			</xs:restriction>
 																		</xs:simpleType>
 																	</xs:element>
-																	<xs:element minOccurs="0" name="nProcesso">
+																	<xs:element name="nProcesso" minOccurs="0">
 																		<xs:annotation>
 																			<xs:documentation>Número do Processo administrativo ou judicial de suspenção do processo</xs:documentation>
 																		</xs:annotation>
@@ -3824,7 +3823,7 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 														</xs:element>
 													</xs:sequence>
 												</xs:choice>
-												<xs:element minOccurs="0" name="PIS">
+												<xs:element name="PIS" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Dados do PIS</xs:documentation>
 													</xs:annotation>
@@ -4022,7 +4021,7 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 														</xs:choice>
 													</xs:complexType>
 												</xs:element>
-												<xs:element minOccurs="0" name="PISST">
+												<xs:element name="PISST" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Dados do PIS Substituição Tributária</xs:documentation>
 													</xs:annotation>
@@ -4062,7 +4061,7 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 														</xs:sequence>
 													</xs:complexType>
 												</xs:element>
-												<xs:element minOccurs="0" name="COFINS">
+												<xs:element name="COFINS" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Dados do COFINS</xs:documentation>
 													</xs:annotation>
@@ -4305,7 +4304,7 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 														</xs:choice>
 													</xs:complexType>
 												</xs:element>
-												<xs:element minOccurs="0" name="COFINSST">
+												<xs:element name="COFINSST" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Dados do COFINS da
 Substituição Tributaria;</xs:documentation>
@@ -4346,7 +4345,7 @@ Substituição Tributaria;</xs:documentation>
 														</xs:sequence>
 													</xs:complexType>
 												</xs:element>
-												<xs:element minOccurs="0" name="ICMSUFDest">
+												<xs:element name="ICMSUFDest" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Grupo a ser informado nas vendas interestarduais para consumidor final, não contribuinte de ICMS</xs:documentation>
 													</xs:annotation>
@@ -4357,12 +4356,12 @@ Substituição Tributaria;</xs:documentation>
 																	<xs:documentation>Valor da Base de Cálculo do ICMS na UF do destinatário.</xs:documentation>
 																</xs:annotation>
 															</xs:element>
-															<xs:element minOccurs="0" name="vBCFCPUFDest" type="TDec_1302">
+															<xs:element name="vBCFCPUFDest" type="TDec_1302" minOccurs="0">
 																<xs:annotation>
 																	<xs:documentation>Valor da Base de Cálculo do FCP na UF do destinatário.</xs:documentation>
 																</xs:annotation>
 															</xs:element>
-															<xs:element minOccurs="0" name="pFCPUFDest" type="TDec_0302a04">
+															<xs:element name="pFCPUFDest" type="TDec_0302a04" minOccurs="0">
 																<xs:annotation>
 																	<xs:documentation>Percentual adicional inserido na alíquota interna da UF de destino, relativo ao Fundo de Combate à Pobreza (FCP) naquela UF.</xs:documentation>
 																</xs:annotation>
@@ -4390,7 +4389,7 @@ Substituição Tributaria;</xs:documentation>
 																	<xs:documentation>Percentual de partilha para a UF do destinatário: - 40% em 2016; - 60% em 2017; - 80% em 2018; - 100% a partir de 2019.</xs:documentation>
 																</xs:annotation>
 															</xs:element>
-															<xs:element minOccurs="0" name="vFCPUFDest" type="TDec_1302">
+															<xs:element name="vFCPUFDest" type="TDec_1302" minOccurs="0">
 																<xs:annotation>
 																	<xs:documentation>Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP) da UF de destino.</xs:documentation>
 																</xs:annotation>
@@ -4411,7 +4410,7 @@ Substituição Tributaria;</xs:documentation>
 											</xs:sequence>
 										</xs:complexType>
 									</xs:element>
-									<xs:element minOccurs="0" name="impostoDevol">
+									<xs:element name="impostoDevol" minOccurs="0">
 										<xs:complexType>
 											<xs:sequence>
 												<xs:element name="pDevol" type="TDec_0302Max100">
@@ -4436,7 +4435,7 @@ Substituição Tributaria;</xs:documentation>
 											</xs:sequence>
 										</xs:complexType>
 									</xs:element>
-									<xs:element minOccurs="0" name="infAdProd">
+									<xs:element name="infAdProd" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Informações adicionais do produto (norma referenciada, informações complementares, etc)</xs:documentation>
 										</xs:annotation>
@@ -4488,17 +4487,17 @@ Substituição Tributaria;</xs:documentation>
 														<xs:documentation>Valor Total do ICMS desonerado</xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element minOccurs="0" name="vFCPUFDest" type="TDec_1302">
+												<xs:element name="vFCPUFDest" type="TDec_1302" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Valor total do ICMS relativo ao Fundo de Combate à Pobreza (FCP) para a UF de destino.</xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element minOccurs="0" name="vICMSUFDest" type="TDec_1302">
+												<xs:element name="vICMSUFDest" type="TDec_1302" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Valor total do ICMS de partilha para a UF do destinatário</xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element minOccurs="0" name="vICMSUFRemet" type="TDec_1302">
+												<xs:element name="vICMSUFRemet" type="TDec_1302" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Valor total do ICMS de partilha para a UF do remetente</xs:documentation>
 													</xs:annotation>
@@ -4583,7 +4582,7 @@ Substituição Tributaria;</xs:documentation>
 														<xs:documentation>Valor Total da NF-e</xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element minOccurs="0" name="vTotTrib" type="TDec_1302">
+												<xs:element name="vTotTrib" type="TDec_1302" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Valor estimado total de impostos federais, estaduais e municipais</xs:documentation>
 													</xs:annotation>
@@ -4591,33 +4590,33 @@ Substituição Tributaria;</xs:documentation>
 											</xs:sequence>
 										</xs:complexType>
 									</xs:element>
-									<xs:element minOccurs="0" name="ISSQNtot">
+									<xs:element name="ISSQNtot" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Totais referentes ao ISSQN</xs:documentation>
 										</xs:annotation>
 										<xs:complexType>
 											<xs:sequence>
-												<xs:element minOccurs="0" name="vServ" type="TDec_1302Opc">
+												<xs:element name="vServ" type="TDec_1302Opc" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Valor Total dos Serviços sob não-incidência ou não tributados pelo ICMS</xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element minOccurs="0" name="vBC" type="TDec_1302Opc">
+												<xs:element name="vBC" type="TDec_1302Opc" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Base de Cálculo do ISS</xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element minOccurs="0" name="vISS" type="TDec_1302Opc">
+												<xs:element name="vISS" type="TDec_1302Opc" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Valor Total do ISS</xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element minOccurs="0" name="vPIS" type="TDec_1302Opc">
+												<xs:element name="vPIS" type="TDec_1302Opc" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Valor do PIS sobre serviços</xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element minOccurs="0" name="vCOFINS" type="TDec_1302Opc">
+												<xs:element name="vCOFINS" type="TDec_1302Opc" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Valor do COFINS sobre serviços</xs:documentation>
 													</xs:annotation>
@@ -4627,32 +4626,32 @@ Substituição Tributaria;</xs:documentation>
 														<xs:documentation>Data da prestação do serviço  (AAAA-MM-DD)</xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element minOccurs="0" name="vDeducao" type="TDec_1302Opc">
+												<xs:element name="vDeducao" type="TDec_1302Opc" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Valor dedução para redução da base de cálculo</xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element minOccurs="0" name="vOutro" type="TDec_1302Opc">
+												<xs:element name="vOutro" type="TDec_1302Opc" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Valor outras retenções</xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element minOccurs="0" name="vDescIncond" type="TDec_1302Opc">
+												<xs:element name="vDescIncond" type="TDec_1302Opc" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Valor desconto incondicionado</xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element minOccurs="0" name="vDescCond" type="TDec_1302Opc">
+												<xs:element name="vDescCond" type="TDec_1302Opc" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Valor desconto condicionado</xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element minOccurs="0" name="vISSRet" type="TDec_1302Opc">
+												<xs:element name="vISSRet" type="TDec_1302Opc" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Valor Total Retenção ISS</xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element minOccurs="0" name="cRegTrib">
+												<xs:element name="cRegTrib" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Código do regime especial de tributação</xs:documentation>
 													</xs:annotation>
@@ -4671,43 +4670,43 @@ Substituição Tributaria;</xs:documentation>
 											</xs:sequence>
 										</xs:complexType>
 									</xs:element>
-									<xs:element minOccurs="0" name="retTrib">
+									<xs:element name="retTrib" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Retenção de Tributos Federais</xs:documentation>
 										</xs:annotation>
 										<xs:complexType>
 											<xs:sequence>
-												<xs:element minOccurs="0" name="vRetPIS" type="TDec_1302Opc">
+												<xs:element name="vRetPIS" type="TDec_1302Opc" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Valor Retido de PIS</xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element minOccurs="0" name="vRetCOFINS" type="TDec_1302Opc">
+												<xs:element name="vRetCOFINS" type="TDec_1302Opc" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Valor Retido de COFINS</xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element minOccurs="0" name="vRetCSLL" type="TDec_1302Opc">
+												<xs:element name="vRetCSLL" type="TDec_1302Opc" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Valor Retido de CSLL</xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element minOccurs="0" name="vBCIRRF" type="TDec_1302Opc">
+												<xs:element name="vBCIRRF" type="TDec_1302Opc" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Base de Cálculo do IRRF</xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element minOccurs="0" name="vIRRF" type="TDec_1302Opc">
+												<xs:element name="vIRRF" type="TDec_1302Opc" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Valor Retido de IRRF</xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element minOccurs="0" name="vBCRetPrev" type="TDec_1302Opc">
+												<xs:element name="vBCRetPrev" type="TDec_1302Opc" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Base de Cálculo da Retenção da Previdêncica Social</xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element minOccurs="0" name="vRetPrev" type="TDec_1302Opc">
+												<xs:element name="vRetPrev" type="TDec_1302Opc" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Valor da Retenção da Previdêncica Social</xs:documentation>
 													</xs:annotation>
@@ -4746,7 +4745,7 @@ Substituição Tributaria;</xs:documentation>
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
-									<xs:element minOccurs="0" name="transporta">
+									<xs:element name="transporta" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Dados do transportador</xs:documentation>
 										</xs:annotation>
@@ -4764,7 +4763,7 @@ Substituição Tributaria;</xs:documentation>
 														</xs:annotation>
 													</xs:element>
 												</xs:choice>
-												<xs:element minOccurs="0" name="xNome">
+												<xs:element name="xNome" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Razão Social ou nome do transportador</xs:documentation>
 													</xs:annotation>
@@ -4775,12 +4774,12 @@ Substituição Tributaria;</xs:documentation>
 														</xs:restriction>
 													</xs:simpleType>
 												</xs:element>
-												<xs:element minOccurs="0" name="IE" type="TIeDest">
+												<xs:element name="IE" type="TIeDest" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Inscrição Estadual (v2.0)</xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element minOccurs="0" name="xEnder">
+												<xs:element name="xEnder" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Endereço completo</xs:documentation>
 													</xs:annotation>
@@ -4791,7 +4790,7 @@ Substituição Tributaria;</xs:documentation>
 														</xs:restriction>
 													</xs:simpleType>
 												</xs:element>
-												<xs:element minOccurs="0" name="xMun">
+												<xs:element name="xMun" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Nome do munícipio</xs:documentation>
 													</xs:annotation>
@@ -4802,7 +4801,7 @@ Substituição Tributaria;</xs:documentation>
 														</xs:restriction>
 													</xs:simpleType>
 												</xs:element>
-												<xs:element minOccurs="0" name="UF" type="TUf">
+												<xs:element name="UF" type="TUf" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Sigla da UF</xs:documentation>
 													</xs:annotation>
@@ -4810,7 +4809,7 @@ Substituição Tributaria;</xs:documentation>
 											</xs:sequence>
 										</xs:complexType>
 									</xs:element>
-									<xs:element minOccurs="0" name="retTransp">
+									<xs:element name="retTransp" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Dados da retenção  ICMS do Transporte</xs:documentation>
 										</xs:annotation>
@@ -4857,18 +4856,18 @@ Substituição Tributaria;</xs:documentation>
 									</xs:element>
 									<xs:choice>
 										<xs:sequence minOccurs="0">
-											<xs:element minOccurs="0" name="veicTransp" type="TVeiculo">
+											<xs:element name="veicTransp" type="TVeiculo" minOccurs="0">
 												<xs:annotation>
 													<xs:documentation>Dados do veículo</xs:documentation>
 												</xs:annotation>
 											</xs:element>
-											<xs:element maxOccurs="5" minOccurs="0" name="reboque" type="TVeiculo">
+											<xs:element name="reboque" type="TVeiculo" minOccurs="0" maxOccurs="5">
 												<xs:annotation>
 													<xs:documentation>Dados do reboque/Dolly (v2.0)</xs:documentation>
 												</xs:annotation>
 											</xs:element>
 										</xs:sequence>
-										<xs:element minOccurs="0" name="vagao">
+										<xs:element name="vagao" minOccurs="0">
 											<xs:annotation>
 												<xs:documentation>Identificação do vagão (v2.0)</xs:documentation>
 											</xs:annotation>
@@ -4879,7 +4878,7 @@ Substituição Tributaria;</xs:documentation>
 												</xs:restriction>
 											</xs:simpleType>
 										</xs:element>
-										<xs:element minOccurs="0" name="balsa">
+										<xs:element name="balsa" minOccurs="0">
 											<xs:annotation>
 												<xs:documentation>Identificação da balsa (v2.0)</xs:documentation>
 											</xs:annotation>
@@ -4891,13 +4890,13 @@ Substituição Tributaria;</xs:documentation>
 											</xs:simpleType>
 										</xs:element>
 									</xs:choice>
-									<xs:element maxOccurs="5000" minOccurs="0" name="vol">
+									<xs:element name="vol" minOccurs="0" maxOccurs="5000">
 										<xs:annotation>
 											<xs:documentation>Dados dos volumes</xs:documentation>
 										</xs:annotation>
 										<xs:complexType>
 											<xs:sequence>
-												<xs:element minOccurs="0" name="qVol">
+												<xs:element name="qVol" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Quantidade de volumes transportados</xs:documentation>
 													</xs:annotation>
@@ -4908,7 +4907,7 @@ Substituição Tributaria;</xs:documentation>
 														</xs:restriction>
 													</xs:simpleType>
 												</xs:element>
-												<xs:element minOccurs="0" name="esp">
+												<xs:element name="esp" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Espécie dos volumes transportados</xs:documentation>
 													</xs:annotation>
@@ -4919,7 +4918,7 @@ Substituição Tributaria;</xs:documentation>
 														</xs:restriction>
 													</xs:simpleType>
 												</xs:element>
-												<xs:element minOccurs="0" name="marca">
+												<xs:element name="marca" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Marca dos volumes transportados</xs:documentation>
 													</xs:annotation>
@@ -4930,7 +4929,7 @@ Substituição Tributaria;</xs:documentation>
 														</xs:restriction>
 													</xs:simpleType>
 												</xs:element>
-												<xs:element minOccurs="0" name="nVol">
+												<xs:element name="nVol" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Numeração dos volumes transportados</xs:documentation>
 													</xs:annotation>
@@ -4941,17 +4940,17 @@ Substituição Tributaria;</xs:documentation>
 														</xs:restriction>
 													</xs:simpleType>
 												</xs:element>
-												<xs:element minOccurs="0" name="pesoL" type="TDec_1203">
+												<xs:element name="pesoL" type="TDec_1203" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Peso líquido (em kg)</xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element minOccurs="0" name="pesoB" type="TDec_1203">
+												<xs:element name="pesoB" type="TDec_1203" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Peso bruto (em kg)</xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element maxOccurs="5000" minOccurs="0" name="lacres">
+												<xs:element name="lacres" minOccurs="0" maxOccurs="5000">
 													<xs:complexType>
 														<xs:sequence>
 															<xs:element name="nLacre">
@@ -4974,19 +4973,19 @@ Substituição Tributaria;</xs:documentation>
 								</xs:sequence>
 							</xs:complexType>
 						</xs:element>
-						<xs:element minOccurs="0" name="cobr">
+						<xs:element name="cobr" minOccurs="0">
 							<xs:annotation>
 								<xs:documentation>Dados da cobrança da NF-e</xs:documentation>
 							</xs:annotation>
 							<xs:complexType>
 								<xs:sequence>
-									<xs:element minOccurs="0" name="fat">
+									<xs:element name="fat" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Dados da fatura</xs:documentation>
 										</xs:annotation>
 										<xs:complexType>
 											<xs:sequence>
-												<xs:element minOccurs="0" name="nFat">
+												<xs:element name="nFat" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Número da fatura</xs:documentation>
 													</xs:annotation>
@@ -4997,17 +4996,17 @@ Substituição Tributaria;</xs:documentation>
 														</xs:restriction>
 													</xs:simpleType>
 												</xs:element>
-												<xs:element minOccurs="0" name="vOrig" type="TDec_1302">
+												<xs:element name="vOrig" type="TDec_1302" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Valor original da fatura</xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element minOccurs="0" name="vDesc" type="TDec_1302">
+												<xs:element name="vDesc" type="TDec_1302" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Valor do desconto da fatura</xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element minOccurs="0" name="vLiq" type="TDec_1302">
+												<xs:element name="vLiq" type="TDec_1302" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Valor líquido da fatura</xs:documentation>
 													</xs:annotation>
@@ -5015,13 +5014,13 @@ Substituição Tributaria;</xs:documentation>
 											</xs:sequence>
 										</xs:complexType>
 									</xs:element>
-									<xs:element maxOccurs="120" minOccurs="0" name="dup">
+									<xs:element name="dup" minOccurs="0" maxOccurs="120">
 										<xs:annotation>
 											<xs:documentation>Dados das duplicatas NT 2011/004</xs:documentation>
 										</xs:annotation>
 										<xs:complexType>
 											<xs:sequence>
-												<xs:element minOccurs="0" name="nDup">
+												<xs:element name="nDup" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Número da duplicata</xs:documentation>
 													</xs:annotation>
@@ -5032,7 +5031,7 @@ Substituição Tributaria;</xs:documentation>
 														</xs:restriction>
 													</xs:simpleType>
 												</xs:element>
-												<xs:element minOccurs="0" name="dVenc" type="TData">
+												<xs:element name="dVenc" type="TData" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Data de vencimento da duplicata (AAAA-MM-DD)</xs:documentation>
 													</xs:annotation>
@@ -5048,19 +5047,19 @@ Substituição Tributaria;</xs:documentation>
 								</xs:sequence>
 							</xs:complexType>
 						</xs:element>
-						<xs:element minOccurs="1" name="pag">
+						<xs:element name="pag">
 							<xs:annotation>
 								<xs:documentation>Dados de Pagamento. Obrigatório apenas para (NFC-e) NT 2012/004</xs:documentation>
 							</xs:annotation>
 							<xs:complexType>
 								<xs:sequence>
-									<xs:element maxOccurs="100" minOccurs="1" name="detPag">
+									<xs:element name="detPag" maxOccurs="100">
 										<xs:annotation>
 											<xs:documentation>Grupo de detalhamento da forma de pagamento.</xs:documentation>
 										</xs:annotation>
 										<xs:complexType>
 											<xs:sequence>
-												<xs:element minOccurs="0" name="indPag">
+												<xs:element name="indPag" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Indicador da Forma de Pagamento:0-Pagamento à Vista;1-Pagamento à Prazo;</xs:documentation>
 													</xs:annotation>
@@ -5100,7 +5099,7 @@ Substituição Tributaria;</xs:documentation>
 														<xs:documentation>Valor do Pagamento. Esta tag poderá ser omitida quando a tag tPag=90 (Sem Pagamento), caso contrário deverá ser preenchida.</xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element minOccurs="0" name="card">
+												<xs:element name="card" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Grupo de Cartões</xs:documentation>
 													</xs:annotation>
@@ -5120,12 +5119,12 @@ Substituição Tributaria;</xs:documentation>
 																	</xs:restriction>
 																</xs:simpleType>
 															</xs:element>
-															<xs:element minOccurs="0" name="CNPJ" type="TCnpj">
+															<xs:element name="CNPJ" type="TCnpj" minOccurs="0">
 																<xs:annotation>
 																	<xs:documentation>CNPJ da credenciadora de cartão de crédito/débito</xs:documentation>
 																</xs:annotation>
 															</xs:element>
-															<xs:element minOccurs="0" name="tBand">
+															<xs:element name="tBand" minOccurs="0">
 																<xs:annotation>
 																	<xs:documentation>Bandeira da operadora de cartão de crédito/débito:01–Visa; 02–Mastercard; 03–American Express; 04–Sorocred;05-Diners Club;06-Elo;07-Hipercard;08-Aura;09-Cabal;99–Outros</xs:documentation>
 																</xs:annotation>
@@ -5145,7 +5144,7 @@ Substituição Tributaria;</xs:documentation>
 																	</xs:restriction>
 																</xs:simpleType>
 															</xs:element>
-															<xs:element minOccurs="0" name="cAut">
+															<xs:element name="cAut" minOccurs="0">
 																<xs:annotation>
 																	<xs:documentation>Número de autorização da operação cartão de crédito/débito</xs:documentation>
 																</xs:annotation>
@@ -5162,7 +5161,7 @@ Substituição Tributaria;</xs:documentation>
 											</xs:sequence>
 										</xs:complexType>
 									</xs:element>
-									<xs:element minOccurs="0" name="vTroco" type="TDec_1302">
+									<xs:element name="vTroco" type="TDec_1302" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Valor do Troco.</xs:documentation>
 										</xs:annotation>
@@ -5170,13 +5169,13 @@ Substituição Tributaria;</xs:documentation>
 								</xs:sequence>
 							</xs:complexType>
 						</xs:element>
-						<xs:element minOccurs="0" name="infAdic">
+						<xs:element name="infAdic" minOccurs="0">
 							<xs:annotation>
 								<xs:documentation>Informações adicionais da NF-e</xs:documentation>
 							</xs:annotation>
 							<xs:complexType>
 								<xs:sequence>
-									<xs:element minOccurs="0" name="infAdFisco">
+									<xs:element name="infAdFisco" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Informações adicionais de interesse do Fisco (v2.0)</xs:documentation>
 										</xs:annotation>
@@ -5187,7 +5186,7 @@ Substituição Tributaria;</xs:documentation>
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
-									<xs:element minOccurs="0" name="infCpl">
+									<xs:element name="infCpl" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Informações complementares de interesse do Contribuinte</xs:documentation>
 										</xs:annotation>
@@ -5198,7 +5197,7 @@ Substituição Tributaria;</xs:documentation>
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
-									<xs:element maxOccurs="10" minOccurs="0" name="obsCont">
+									<xs:element name="obsCont" minOccurs="0" maxOccurs="10">
 										<xs:annotation>
 											<xs:documentation>Campo de uso livre do contribuinte
 informar o nome do campo no atributo xCampo
@@ -5225,7 +5224,7 @@ e o conteúdo do campo no xTexto</xs:documentation>
 											</xs:attribute>
 										</xs:complexType>
 									</xs:element>
-									<xs:element maxOccurs="10" minOccurs="0" name="obsFisco">
+									<xs:element name="obsFisco" minOccurs="0" maxOccurs="10">
 										<xs:annotation>
 											<xs:documentation>Campo de uso exclusivo do Fisco
 informar o nome do campo no atributo xCampo
@@ -5252,7 +5251,7 @@ e o conteúdo do campo no xTexto</xs:documentation>
 											</xs:attribute>
 										</xs:complexType>
 									</xs:element>
-									<xs:element maxOccurs="100" minOccurs="0" name="procRef">
+									<xs:element name="procRef" minOccurs="0" maxOccurs="100">
 										<xs:annotation>
 											<xs:documentation>Grupo de informações do  processo referenciado</xs:documentation>
 										</xs:annotation>
@@ -5296,7 +5295,7 @@ concessório</xs:documentation>
 								</xs:sequence>
 							</xs:complexType>
 						</xs:element>
-						<xs:element minOccurs="0" name="exporta">
+						<xs:element name="exporta" minOccurs="0">
 							<xs:annotation>
 								<xs:documentation>Informações de exportação</xs:documentation>
 							</xs:annotation>
@@ -5318,7 +5317,7 @@ concessório</xs:documentation>
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
-									<xs:element minOccurs="0" name="xLocDespacho">
+									<xs:element name="xLocDespacho" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Descrição do local de despacho</xs:documentation>
 										</xs:annotation>
@@ -5332,13 +5331,13 @@ concessório</xs:documentation>
 								</xs:sequence>
 							</xs:complexType>
 						</xs:element>
-						<xs:element minOccurs="0" name="compra">
+						<xs:element name="compra" minOccurs="0">
 							<xs:annotation>
 								<xs:documentation>Informações de compras  (Nota de Empenho, Pedido e Contrato)</xs:documentation>
 							</xs:annotation>
 							<xs:complexType>
 								<xs:sequence>
-									<xs:element minOccurs="0" name="xNEmp">
+									<xs:element name="xNEmp" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Informação da Nota de Empenho de compras públicas (NT2011/004)</xs:documentation>
 										</xs:annotation>
@@ -5349,7 +5348,7 @@ concessório</xs:documentation>
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
-									<xs:element minOccurs="0" name="xPed">
+									<xs:element name="xPed" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Informação do pedido</xs:documentation>
 										</xs:annotation>
@@ -5360,7 +5359,7 @@ concessório</xs:documentation>
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
-									<xs:element minOccurs="0" name="xCont">
+									<xs:element name="xCont" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Informação do contrato</xs:documentation>
 										</xs:annotation>
@@ -5374,7 +5373,7 @@ concessório</xs:documentation>
 								</xs:sequence>
 							</xs:complexType>
 						</xs:element>
-						<xs:element minOccurs="0" name="cana">
+						<xs:element name="cana" minOccurs="0">
 							<xs:annotation>
 								<xs:documentation>Informações de registro aquisições de cana</xs:documentation>
 							</xs:annotation>
@@ -5402,7 +5401,7 @@ concessório</xs:documentation>
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
-									<xs:element maxOccurs="31" name="forDia">
+									<xs:element name="forDia" maxOccurs="31">
 										<xs:annotation>
 											<xs:documentation>Fornecimentos diários</xs:documentation>
 										</xs:annotation>
@@ -5446,7 +5445,7 @@ concessório</xs:documentation>
 											<xs:documentation>Total Geral</xs:documentation>
 										</xs:annotation>
 									</xs:element>
-									<xs:element maxOccurs="10" minOccurs="0" name="deduc">
+									<xs:element name="deduc" minOccurs="0" maxOccurs="10">
 										<xs:annotation>
 											<xs:documentation>Deduções - Taxas e Contribuições</xs:documentation>
 										</xs:annotation>
@@ -5489,7 +5488,7 @@ concessório</xs:documentation>
 								</xs:sequence>
 							</xs:complexType>
 						</xs:element>
-						<xs:element minOccurs="0" name="infRespTec" type="TInfRespTec">
+						<xs:element name="infRespTec" type="TInfRespTec" minOccurs="0">
 							<xs:annotation>
 								<xs:documentation>Informações do Responsável Técnico pela emissão do DF-e</xs:documentation>
 							</xs:annotation>
@@ -5516,7 +5515,7 @@ concessório</xs:documentation>
 					<xs:field xpath="@nItem"/>
 				</xs:unique>
 			</xs:element>
-			<xs:element minOccurs="0" name="infNFeSupl">
+			<xs:element name="infNFeSupl" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Informações suplementares Nota Fiscal</xs:documentation>
 				</xs:annotation>
@@ -5535,7 +5534,7 @@ concessório</xs:documentation>
 								</xs:restriction>
 							</xs:simpleType>
 						</xs:element>
-						<xs:element minOccurs="1" name="urlChave">
+						<xs:element name="urlChave">
 							<xs:annotation>
 								<xs:documentation>Informar a URL da &quot;Consulta por chave de acesso da NFC-e&quot;. A mesma URL que deve estar informada no DANFE NFC-e para consulta por chave de acesso.</xs:documentation>
 							</xs:annotation>
@@ -5585,12 +5584,12 @@ concessório</xs:documentation>
 								<xs:documentation>Data e hora de processamento, no formato AAAA-MM-DDTHH:MM:SSTZD. Deve ser preenchida com data e hora da gravação no Banco em caso de Confirmação. Em caso de Rejeição, com data e hora do recebimento do Lote de NF-e enviado.</xs:documentation>
 							</xs:annotation>
 						</xs:element>
-						<xs:element minOccurs="0" name="nProt" type="TProt">
+						<xs:element name="nProt" type="TProt" minOccurs="0">
 							<xs:annotation>
 								<xs:documentation>Número do Protocolo de Status da NF-e. 1 posição (1 – Secretaria de Fazenda Estadual 2 – Receita Federal); 2 - códiga da UF - 2 posições ano; 10 seqüencial no ano.</xs:documentation>
 							</xs:annotation>
 						</xs:element>
-						<xs:element minOccurs="0" name="digVal" type="ds:DigestValueType">
+						<xs:element name="digVal" type="ds:DigestValueType" minOccurs="0">
 							<xs:annotation>
 								<xs:documentation>Digest Value da NF-e processada. Utilizado para conferir a integridade da NF-e original.</xs:documentation>
 							</xs:annotation>
@@ -5633,7 +5632,7 @@ concessório</xs:documentation>
 					<xs:attribute name="Id" type="xs:ID" use="optional"/>
 				</xs:complexType>
 			</xs:element>
-			<xs:element minOccurs="0" ref="ds:Signature"/>
+			<xs:element ref="ds:Signature" minOccurs="0"/>
 		</xs:sequence>
 		<xs:attribute name="versao" type="TVerNFe" use="required"/>
 	</xs:complexType>
@@ -5655,7 +5654,7 @@ concessório</xs:documentation>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element maxOccurs="50" name="NFe" type="TNFe"/>
+			<xs:element name="NFe" type="TNFe" maxOccurs="50"/>
 		</xs:sequence>
 		<xs:attribute name="versao" type="TVerNFe" use="required"/>
 	</xs:complexType>
@@ -5697,7 +5696,7 @@ concessório</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:choice>
-				<xs:element minOccurs="0" name="infRec">
+				<xs:element name="infRec" minOccurs="0">
 					<xs:annotation>
 						<xs:documentation>Dados do Recibo do Lote</xs:documentation>
 					</xs:annotation>
@@ -5716,7 +5715,7 @@ concessório</xs:documentation>
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
-				<xs:element minOccurs="0" name="protNFe" type="TProtNFe">
+				<xs:element name="protNFe" type="TProtNFe" minOccurs="0">
 					<xs:annotation>
 						<xs:documentation>Protocolo de status resultado do processamento sincrono da NFC-e</xs:documentation>
 					</xs:annotation>
@@ -5812,7 +5811,7 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 					</xs:simpleType>
 				</xs:element>
 			</xs:sequence>
-			<xs:element maxOccurs="50" minOccurs="0" name="protNFe" type="TProtNFe">
+			<xs:element name="protNFe" type="TProtNFe" minOccurs="0" maxOccurs="50">
 				<xs:annotation>
 					<xs:documentation>Protocolo de status resultado do processamento da NF-e</xs:documentation>
 				</xs:annotation>
@@ -5857,7 +5856,7 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element minOccurs="0" name="xCpl">
+			<xs:element name="xCpl" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Complemento</xs:documentation>
 				</xs:annotation>
@@ -5900,7 +5899,7 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 					<xs:documentation>Sigla da UF, informar EX para operações com o exterior.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element minOccurs="0" name="CEP">
+			<xs:element name="CEP" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>CEP</xs:documentation>
 				</xs:annotation>
@@ -5911,7 +5910,7 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element minOccurs="0" name="cPais">
+			<xs:element name="cPais" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Código de Pais</xs:documentation>
 				</xs:annotation>
@@ -5922,7 +5921,7 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element minOccurs="0" name="xPais">
+			<xs:element name="xPais" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Nome do país</xs:documentation>
 				</xs:annotation>
@@ -5933,7 +5932,7 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element minOccurs="0" name="fone">
+			<xs:element name="fone" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Telefone, preencher com Código DDD + número do telefone , nas operações com exterior é permtido informar o código do país + código da localidade + número do telefone</xs:documentation>
 				</xs:annotation>
@@ -5973,7 +5972,7 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element minOccurs="0" name="xCpl">
+			<xs:element name="xCpl" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Complemento</xs:documentation>
 				</xs:annotation>
@@ -6027,7 +6026,7 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element minOccurs="0" name="cPais">
+			<xs:element name="cPais" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Código do país</xs:documentation>
 				</xs:annotation>
@@ -6037,7 +6036,7 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element minOccurs="0" name="xPais">
+			<xs:element name="xPais" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Nome do país</xs:documentation>
 				</xs:annotation>
@@ -6048,7 +6047,7 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element minOccurs="0" name="fone">
+			<xs:element name="fone" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Preencher com Código DDD + número do telefone (v.2.0)</xs:documentation>
 				</xs:annotation>
@@ -6078,7 +6077,7 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 			</xs:choice>
-			<xs:element minOccurs="0" name="xNome">
+			<xs:element name="xNome" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Razão Social ou Nome do Expedidor/Recebedor</xs:documentation>
 				</xs:annotation>
@@ -6111,7 +6110,7 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element minOccurs="0" name="xCpl">
+			<xs:element name="xCpl" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Complemento</xs:documentation>
 				</xs:annotation>
@@ -6154,7 +6153,7 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 					<xs:documentation>Sigla da UF</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element minOccurs="0" name="CEP">
+			<xs:element name="CEP" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>CEP</xs:documentation>
 				</xs:annotation>
@@ -6165,7 +6164,7 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element minOccurs="0" name="cPais">
+			<xs:element name="cPais" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Código de Pais</xs:documentation>
 				</xs:annotation>
@@ -6176,7 +6175,7 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element minOccurs="0" name="xPais">
+			<xs:element name="xPais" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Nome do país</xs:documentation>
 				</xs:annotation>
@@ -6187,7 +6186,7 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element minOccurs="0" name="fone">
+			<xs:element name="fone" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Telefone, preencher com Código DDD + número do telefone , nas operações com exterior é permtido informar o código do país + código da localidade + número do telefone</xs:documentation>
 				</xs:annotation>
@@ -6198,7 +6197,7 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element minOccurs="0" name="email">
+			<xs:element name="email" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Informar o e-mail do expedidor/Recebedor. O campo pode ser utilizado para informar o e-mail de recepção da NF-e indicada pelo expedidor</xs:documentation>
 				</xs:annotation>
@@ -6210,7 +6209,7 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element minOccurs="0" name="IE" type="TIe">
+			<xs:element name="IE" type="TIe" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Inscrição Estadual (v2.0)</xs:documentation>
 				</xs:annotation>
@@ -6307,7 +6306,7 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 					<xs:documentation>Sigla da UF</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element minOccurs="0" name="RNTC">
+			<xs:element name="RNTC" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Registro Nacional de Transportador de Carga (ANTT)</xs:documentation>
 				</xs:annotation>
@@ -6601,12 +6600,12 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 			<xs:documentation>Tipo: Dados do IPI</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element minOccurs="0" name="CNPJProd" type="TCnpj">
+			<xs:element name="CNPJProd" type="TCnpj" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>CNPJ do produtor da mercadoria, quando diferente do emitente. Somente para os casos de exportação direta ou indireta.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element minOccurs="0" name="cSelo">
+			<xs:element name="cSelo" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Código do selo de controle do IPI</xs:documentation>
 				</xs:annotation>
@@ -6617,7 +6616,7 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element minOccurs="0" name="qSelo">
+			<xs:element name="qSelo" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Quantidade de selo de controle do IPI</xs:documentation>
 				</xs:annotation>
