@@ -532,7 +532,7 @@ class Tools extends ToolsCommon
             . "<chNFeRef>$chNFeRef</chNFeRef>";
         return $this->sefazEvento($uf, $chave, self::EVT_CANCELASUBSTITUICAO, $nSeqEvento, $tagAdic);
     }
-    
+
     /**
      * Request the registration of the manifestation of recipient
      * @param string $chave
@@ -624,7 +624,7 @@ class Tools extends ToolsCommon
             $ev = $this->tpEv($evt->tpEvento);
             $descEvento = $ev->desc;
             $cnpj = $this->config->cnpj;
-            $dt = new \DateTime(date(), new \DateTimeZone($this->timezone));
+            $dt = new \DateTime('now', new \DateTimeZone($this->timezone));
             $dhEvento = $dt->format('Y-m-d\TH:i:sP');
             $sSeqEvento = str_pad($evt->nSeqEvento, 2, "0", STR_PAD_LEFT);
             $eventId = "ID".$evt->tpEvento.$evt->chave.$sSeqEvento;
@@ -660,7 +660,7 @@ class Tools extends ToolsCommon
             );
             $batchRequest .= Strings::clearXmlString($request, true);
         }
-        $dt = new \DateTime(date(), new \DateTimeZone($this->timezone));
+        $dt = new \DateTime('now', new \DateTimeZone($this->timezone));
         $lote = $dt->format('YmdHis') . rand(0, 9);
         $request = "<envEvento xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
             . "<idLote>$lote</idLote>"
