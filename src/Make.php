@@ -4756,8 +4756,6 @@ class Make
             'vUnid'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        //totalizador
-        $this->stdTot->vIPI += (float) $std->vIPI;
         $ipi = $this->dom->createElement('IPI');
         $this->dom->addChild(
             $ipi,
@@ -4796,6 +4794,8 @@ class Make
             "[item $std->item] Código de Enquadramento Legal do IPI"
         );
         if ($std->CST == '00' || $std->CST == '49' || $std->CST == '50' || $std->CST == '99') {
+            //totalizador
+            $this->stdTot->vIPI += (float) $std->vIPI;
             $ipiTrib = $this->dom->createElement('IPITrib');
             $this->dom->addChild(
                 $ipiTrib,
