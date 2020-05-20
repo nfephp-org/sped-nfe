@@ -506,7 +506,7 @@ class Make
             'xJust'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         if (empty($std->cNF)) {
             $std->cNF = Keys::random($std->nNF);
         }
@@ -1729,13 +1729,13 @@ class Make
         } catch (\InvalidArgumentException $e) {
             $this->errors[] = "cEANT {$cean} " . $e->getMessage();
         }
-        
+
         try {
             Gtin::isValid($ceantrib);
         } catch (\InvalidArgumentException $e) {
             $this->errors[] = "cEANTrib {$ceantrib} " . $e->getMessage();
         }
-        
+
         $identificador = 'I01 <prod> - ';
         $prod = $this->dom->createElement("prod");
         $this->dom->addChild(
@@ -7215,7 +7215,7 @@ class Make
                 $this->dom->appChild($det, $child, "Inclusão do node imposto");
             }
             //insere impostoDevol
-            if (!empty($this->aImpostoDevol)) {
+            if (!empty($this->aImpostoDevol[$nItem])) {
                 $child = $this->aImpostoDevol[$nItem];
                 $this->dom->appChild($det, $child, "Inclusão do node impostoDevol");
             }
@@ -7373,7 +7373,7 @@ class Make
             $this->errors[] = "A chave informada está incorreta [$chave] => [correto: $chaveMontada].";
         }
     }
-    
+
     /**
      * Retorna os erros detectados
      * @return array
@@ -7418,7 +7418,7 @@ class Make
         $comb = $CSRT . $this->chNFe;
         return base64_encode(sha1($comb, true));
     }
-    
+
     protected function conditionalNumberFormatting($value = null, $decimal = 2)
     {
         if (is_numeric($value)) {
