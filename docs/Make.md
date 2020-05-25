@@ -1133,7 +1133,7 @@ $std->vICMSRet = 2.40;
 $std->CFOP = '5353';
 $std->cMunFG = '3518800';
 
-$nfe->tagveicTransp($std);
+$nfe->tagretTransp($std);
 ```
 
 ### function tagveicTransp($std):DOMElement
