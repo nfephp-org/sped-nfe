@@ -278,6 +278,15 @@
     </producao>
   </UF>
   <UF>
+    <sigla>RR</sigla>
+    <homologacao>
+       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">http://200.174.88.103:8080/nfce/servlet/qrcode</NfeConsultaQR>
+    </homologacao>
+    <producao>
+       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">https://www.sefaz.rr.gov.br/servlet/qrcode</NfeConsultaQR>
+    </producao>
+  </UF>
+  <UF>
     <sigla>RS</sigla>
     <homologacao>
        <NfeAutorizacao method="nfeAutorizacaoLote" operation="NFeAutorizacao4" version="4.00">https://nfce-homologacao.sefazrs.rs.gov.br/ws/NfeAutorizacao/NFeAutorizacao4.asmx</NfeAutorizacao>
