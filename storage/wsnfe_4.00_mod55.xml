@@ -152,7 +152,7 @@
             <NfeInutilizacao method="nfeInutilizacaoNF" operation="NFeInutilizacao4" version="4.00">https://homologacao.sefaz.mt.gov.br/nfews/v2/services/NfeInutilizacao4</NfeInutilizacao>
             <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NFeRetAutorizacao4" version="4.00">https://homologacao.sefaz.mt.gov.br/nfews/v2/services/NfeRetAutorizacao4</NfeRetAutorizacao>
             <RecepcaoEvento method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="1.00">https://homologacao.sefaz.mt.gov.br/nfews/v2/services/RecepcaoEvento4</RecepcaoEvento>
-            <NfeConsultaCadastro method="consultaCadastro4" operation="CadConsultaCadastro4" version="2.00">https://homologacao.sefaz.mt.gov.br/nfews/v2/services/CadConsultaCadastro4</NfeConsultaCadastro>
+            <NfeConsultaCadastro method="consultaCadastro" operation="CadConsultaCadastro4" version="2.00">https://homologacao.sefaz.mt.gov.br/nfews/v2/services/CadConsultaCadastro4</NfeConsultaCadastro>
         </homologacao>
         <producao>
             <NfeStatusServico method="nfeStatusServicoNF" operation="NFeStatusServico4" version="4.00">https://nfe.sefaz.mt.gov.br/nfews/v2/services/NfeStatusServico4</NfeStatusServico>
@@ -161,7 +161,7 @@
             <NfeInutilizacao method="nfeInutilizacaoNF" operation="NFeInutilizacao4" version="4.00">https://nfe.sefaz.mt.gov.br/nfews/v2/services/NfeInutilizacao4</NfeInutilizacao>
             <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NFeRetAutorizacao4" version="4.00">https://nfe.sefaz.mt.gov.br/nfews/v2/services/NfeRetAutorizacao4</NfeRetAutorizacao>
             <RecepcaoEvento method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="1.00">https://nfe.sefaz.mt.gov.br/nfews/v2/services/RecepcaoEvento4</RecepcaoEvento>
-            <NfeConsultaCadastro method="consultaCadastro4" operation="CadConsultaCadastro4" version="2.00">https://nfe.sefaz.mt.gov.br/nfews/v2/services/CadConsultaCadastro4</NfeConsultaCadastro>
+            <NfeConsultaCadastro method="consultaCadastro" operation="CadConsultaCadastro4" version="2.00">https://nfe.sefaz.mt.gov.br/nfews/v2/services/CadConsultaCadastro4</NfeConsultaCadastro>
         </producao>
     </UF>
     <UF>
