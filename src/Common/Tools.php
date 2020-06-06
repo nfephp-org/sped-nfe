@@ -194,7 +194,6 @@ class Tools
         if (empty($contingency)) {
             $this->contingency = new Contingency();
         }
-        $this->soap = new SoapCurl($certificate);
     }
 
     /**
