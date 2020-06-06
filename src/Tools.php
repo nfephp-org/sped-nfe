@@ -277,7 +277,7 @@ class Tools extends ToolsCommon
             . "</ConsCad>";
         if (strtoupper($uf) == 'MT') {
             $request = "<nfeDadosMsg>$request</nfeDadosMsg>" ;
-        }    
+        }
         $this->isValid($this->urlVersion, $request, 'consCad');
         $this->lastRequest = $request;
         $parameters = ['nfeDadosMsg' => $request];
