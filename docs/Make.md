@@ -676,7 +676,7 @@ $std = new stdClass();
 $std->item = 1; //item da NFe
 $std->orig;
 $std->CST;
-$std->modBC
+$std->modBC;
 $std->vBC;
 $std->pICMS;
 $std->vICMS;
