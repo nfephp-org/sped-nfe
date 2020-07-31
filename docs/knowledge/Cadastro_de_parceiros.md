@@ -8,7 +8,7 @@ Esse cadastro envolve todo e qualquer participante de operações fiscais, como:
 
 Com base nas regras do EFD ICMS, temos:
 
-- Não é permitida a troca de Inscrição Estadual de um participante já declarado em EFDs anteriores, ou seja, caso haja a alteração de uma IE de um participante um novo registro deve ser criado OBRIGTÓRIAMENTE.
+- Não é permitida a troca de Inscrição Estadual de um participante já declarado em EFDs anteriores, ou seja, caso haja a alteração de uma IE de um participante um novo registro deve ser criado OBRIGATORIAMENTE.
 
 
 
