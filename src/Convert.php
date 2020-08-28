@@ -17,6 +17,7 @@ namespace NFePHP\NFe;
 use NFePHP\NFe\Common\ValidTXT;
 use NFePHP\NFe\Exception\DocumentsException;
 use NFePHP\NFe\Exception\ParserException;
+use NFePHP\NFe\Exception\RuntimeException;
 use NFePHP\NFe\Factories\Parser;
 
 class Convert
