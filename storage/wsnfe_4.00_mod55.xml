@@ -130,7 +130,7 @@
             <NfeConsultaProtocolo method="nfeConsultaNF" operation="NFeConsultaProtocolo4" version="4.00">https://hom.nfe.sefaz.ms.gov.br/ws/NFeConsultaProtocolo4</NfeConsultaProtocolo>
             <NfeInutilizacao method="nfeInutilizacaoNF" operation="NFeInutilizacao4" version="4.00">https://hom.nfe.sefaz.ms.gov.br/ws/NFeInutilizacao4</NfeInutilizacao>
             <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NFeRetAutorizacao4" version="4.00">https://hom.nfe.sefaz.ms.gov.br/ws/NFeRetAutorizacao4</NfeRetAutorizacao>
-            <RecepcaoEvento method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="4.00">https://hom.nfe.sefaz.ms.gov.br/ws/NFeRecepcaoEvento4</RecepcaoEvento>
+            <RecepcaoEvento method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="1.00">https://hom.nfe.sefaz.ms.gov.br/ws/NFeRecepcaoEvento4</RecepcaoEvento>
             <NfeConsultaCadastro method="consultaCadastro4" operation="CadConsultaCadastro4" version="4.00">https://hom.nfe.sefaz.ms.gov.br/ws/CadConsultaCadastro4</NfeConsultaCadastro>
         </homologacao>
         <producao>
@@ -139,7 +139,7 @@
             <NfeConsultaProtocolo method="nfeConsultaNF" operation="NFeConsultaProtocolo4" version="4.00">https://nfe.sefaz.ms.gov.br/ws/NFeConsultaProtocolo4</NfeConsultaProtocolo>
             <NfeInutilizacao method="nfeInutilizacaoNF" operation="NFeInutilizacao4" version="4.00">https://nfe.sefaz.ms.gov.br/ws/NFeInutilizacao4</NfeInutilizacao>
             <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NFeRetAutorizacao4" version="4.00">https://nfe.sefaz.ms.gov.br/ws/NFeRetAutorizacao4</NfeRetAutorizacao>
-            <RecepcaoEvento method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="4.00">https://nfe.sefaz.ms.gov.br/ws/NFeRecepcaoEvento4</RecepcaoEvento>
+            <RecepcaoEvento method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="1.00">https://nfe.sefaz.ms.gov.br/ws/NFeRecepcaoEvento4</RecepcaoEvento>
             <NfeConsultaCadastro method="consultaCadastro4" operation="CadConsultaCadastro4" version="4.00">https://nfe.sefaz.ms.gov.br/ws/CadConsultaCadastro4</NfeConsultaCadastro>
         </producao>
     </UF>
