@@ -9,7 +9,7 @@ namespace NFePHP\NFe;
  *
  * @category  API
  * @package   NFePHP\NFe\
- * @copyright Copyright (c) 2008-2019
+ * @copyright Copyright (c) 2008-2020
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
  * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
