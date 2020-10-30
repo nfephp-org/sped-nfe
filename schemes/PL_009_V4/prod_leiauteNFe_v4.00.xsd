@@ -11,7 +11,6 @@
 <!-- PL_009-v4a.2  adequação do campo placa para novo padrão do Mercosul - 06/2018 -->
 <!-- PL_009-v4a.3  adequação da lista TCListServ - 10/2018 -->
 <!-- PL_009-v4a.4  implementado alterações da NT 2018.005 -->
-<!-- PL_009-v4b  implementado alterações da NT 2020.006 -->
 <xs:schema xmlns="http://www.portalfiscal.inf.br/nfe" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:editix="http://www.portalfiscal.inf.br/nfe" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.portalfiscal.inf.br/nfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v1.01.xsd"/>
 	<xs:include schemaLocation="tiposBasico_v4.00.xsd"/>
@@ -214,20 +213,6 @@ SCAN 900-999</xs:documentation>
 												<xs:enumeration value="4"/>
 												<xs:enumeration value="5"/>
 												<xs:enumeration value="9"/>
-											</xs:restriction>
-										</xs:simpleType>
-									</xs:element>
-									<xs:element name="indIntermed" minOccurs="0">
-										<xs:annotation>
-											<xs:documentation>IIndicador de intermediador/marketplace 
-											0=Operação sem intermediador (em site ou plataforma própria) 
-											1=Operação em site ou plataforma de terceiros (intermediadores/marketplace)</xs:documentation>
-										</xs:annotation>
-										<xs:simpleType>
-											<xs:restriction base="xs:string">
-												<xs:whiteSpace value="preserve"/>
-												<xs:enumeration value="0"/>
-												<xs:enumeration value="1"/>
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
@@ -5104,10 +5089,6 @@ Substituição Tributaria;</xs:documentation>
 															<xs:enumeration value="13"/>
 															<xs:enumeration value="14"/>
 															<xs:enumeration value="15"/>
-															<xs:enumeration value="16"/>
-															<xs:enumeration value="17"/>
-															<xs:enumeration value="18"/>
-															<xs:enumeration value="19"/>
 															<xs:enumeration value="90"/>
 															<xs:enumeration value="99"/>
 														</xs:restriction>
@@ -5140,7 +5121,7 @@ Substituição Tributaria;</xs:documentation>
 															</xs:element>
 															<xs:element name="CNPJ" type="TCnpj" minOccurs="0">
 																<xs:annotation>
-																	<xs:documentation>CNPJ da instituição de pagamento</xs:documentation>
+																	<xs:documentation>CNPJ da credenciadora de cartão de crédito/débito</xs:documentation>
 																</xs:annotation>
 															</xs:element>
 															<xs:element name="tBand" minOccurs="0">
@@ -5184,31 +5165,6 @@ Substituição Tributaria;</xs:documentation>
 										<xs:annotation>
 											<xs:documentation>Valor do Troco.</xs:documentation>
 										</xs:annotation>
-									</xs:element>
-								</xs:sequence>
-							</xs:complexType>
-						</xs:element>
-						<xs:element name="infIntermed" minOccurs="0">
-							<xs:annotation>
-								<xs:documentation>Grupo de Informações do Intermediador da Transação</xs:documentation>
-							</xs:annotation>
-							<xs:complexType>
-								<xs:sequence>
-									<xs:element name="CNPJ" type="TCnpj">
-										<xs:annotation>
-											<xs:documentation>CNPJ do Intermediador da Transação (agenciador, plataforma de delivery, marketplace e similar) de serviços e de negócios.</xs:documentation>
-										</xs:annotation>
-									</xs:element>
-									<xs:element name="idCadIntTran">
-										<xs:annotation>
-											<xs:documentation>Identificador cadastrado no intermediador</xs:documentation>
-										</xs:annotation>
-										<xs:simpleType>
-											<xs:restriction base="TString">
-												<xs:minLength value="2"/>
-												<xs:maxLength value="60"/>
-											</xs:restriction>
-										</xs:simpleType>
 									</xs:element>
 								</xs:sequence>
 							</xs:complexType>
