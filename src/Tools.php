@@ -8,7 +8,7 @@ namespace NFePHP\NFe;
  *
  * @category  NFePHP
  * @package   NFePHP\NFe\Tools
- * @copyright NFePHP Copyright (c) 2008-2019
+ * @copyright NFePHP Copyright (c) 2008-2020
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
  * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
@@ -33,6 +33,7 @@ class Tools extends ToolsCommon
     const EVT_CANCELA = 110111; //only seq=1
     const EVT_CANCELASUBSTITUICAO = 110112;
     const EVT_EPEC = 110140; //only seq=1
+    const EVT_ATORINTERESSADO = 110150;
 
     /**
      * Request authorization to issue NFe in batch with one or more documents
@@ -404,6 +405,43 @@ class Tools extends ToolsCommon
             . $xCorrecao
             . "</xCorrecao><xCondUso>$xCondUso</xCondUso>";
         return $this->sefazEvento($uf, $chave, self::EVT_CCE, $nSeqEvento, $tagAdic);
+    }
+    
+    /**
+     * Evento do Ator Interessado
+     * NOTA: NT2020.007
+     * @param string $chave
+     * @param int $tpAutor
+     * @param string $verAplic
+     * @param int $nSeqEvento
+     * @param array $interessados
+     * @return string
+     */
+    public function sefazAtorInteressado(
+        $chave,
+        $tpAutor,
+        $verAplic,
+        $nSeqEvento = 1,
+        $interessados = []
+    ) {
+        $xCondUso = 'O emitente ou destinatário da NF-e, declara que permite o '
+            . 'transportador declarado no campo CNPJ/CPF deste evento a '
+            . 'autorizar os transportadores subcontratados ou redespachados '
+            . 'a terem acesso ao download da NFe';
+        $tagAdic = "<cOrgaoAutor>{$this->urlcUF}</cOrgaoAutor>"
+            . "<tpAutor>{$tpAutor}</tpAutor>"
+            . "<verAplic>{$verAplic}</verAplic>";
+        foreach ($interessados as $aut) {
+            $obj = (object) $aut;
+            $tagAdic .= "<autXML>";
+            $tagAdic .=  !empty($obj->CNPJ)
+                ? "<CNPJ>{$obj->CNPJ}</CNPJ>"
+                : "<CPF>{$obj->CPF}</CPF>";
+            $tagAdic .= "<tpAutorizacao>{$obj->tpAutorizacao}</tpAutorizacao>"
+                . "</autXML>";
+        }
+        $tagAdic .= "<xCondUso>$xCondUso</xCondUso>";
+        return $this->sefazEvento($uf, $chave, self::EVT_ATORINTERESSADO, $nSeqEvento, $tagAdic);
     }
 
     /**
@@ -1027,6 +1065,10 @@ class Tools extends ToolsCommon
             case self::EVT_NAO_REALIZADA: // Manifestação Operacao não Realizada
                 $std->alias = 'EvNaoRealizada';
                 $std->desc = 'Operacao nao Realizada';
+                break;
+            case self::EVT_ATORINTERESSADO: //ator interessado
+                $std->alias = 'EvAtorInteressado';
+                $std->desc = 'Ator interessado na NF-e';
                 break;
             default:
                 $msg = "O código do tipo de evento informado não corresponde a "

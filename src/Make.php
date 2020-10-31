@@ -9,7 +9,7 @@ namespace NFePHP\NFe;
  *
  * @category  API
  * @package   NFePHP\NFe\
- * @copyright Copyright (c) 2008-2019
+ * @copyright Copyright (c) 2008-2020
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
  * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
@@ -141,6 +141,10 @@ class Make
      * @var array of DOMElements
      */
     protected $aDetPag = [];
+    /**
+     * @var DOMElement
+     */
+    protected $intermed;
     /**
      * @var array of DOMElements
      */
@@ -423,6 +427,8 @@ class Make
         //[42] tag pag (398a YA01)
         //processa Pag e coloca as tags na tag pag
         $this->buildTagPag();
+        //[43] tag infIntermed (398.26 YB01) NT 2020.006_1.00
+        $this->dom->appChild($this->infNFe, $this->intermed, 'Falta tag "infNFe"');
         //[44] tag infAdic (399 Z01)
         $this->dom->appChild($this->infNFe, $this->infAdic, 'Falta tag "infNFe"');
         //[48] tag exporta (402 ZA01)
@@ -473,7 +479,7 @@ class Make
 
     /**
      * Informações de identificação da NF-e B01 pai A01
-     * NOTA: Ajustado para NT2016_002_v1.30
+     * NOTA: Ajustado para NT2020_006_v1.00
      * tag NFe/infNFe/ide
      * @param  stdClass $std
      * @return DOMElement
@@ -500,6 +506,7 @@ class Make
             'finNFe',
             'indFinal',
             'indPres',
+            'indIntermed',
             'procEmi',
             'verProc',
             'dhCont',
@@ -656,6 +663,13 @@ class Make
             $std->indPres,
             true,
             $identificador . "Indicador de presença do comprador no estabelecimento comercial no momento da operação"
+        );
+        $this->dom->addChild(
+            $ide,
+            "indIntermed",
+            $std->indIntermed ?? null,
+            false,
+            $identificador . "Indicador de intermediador/marketplace"
         );
         $this->dom->addChild(
             $ide,
@@ -6394,6 +6408,32 @@ class Make
             $this->dom->appChild($this->pag, $detPag, 'Falta tag "Pag"');
         }
         return $detPag;
+    }
+    
+    public function tagIntermed(stdClass $std)
+    {
+        $possible = [
+            'CNPJ',
+            'idCadIntTran'
+        ];
+        $std = $this->equilizeParameters($std, $possible);
+        $tag = $this->dom->createElement("infIntermed");
+        $this->dom->addChild(
+            $tag,
+            "CNPJ",
+            $std->CNPJ,
+            true,
+            "CNPJ do Intermediador da Transação (agenciador, plataforma de "
+            . "delivery, marketplace e similar) de serviços e de negócios"
+        );
+        $this->dom->addChild(
+            $tag,
+            "idCadIntTran",
+            $std->idCadIntTran,
+            true,
+            "Identificador cadastrado no intermediador"
+        );
+        return $this->intermed = $tag;
     }
 
     /**
