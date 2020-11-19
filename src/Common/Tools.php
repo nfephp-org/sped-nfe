@@ -608,6 +608,12 @@ class Tools
         $dom = new \DOMDocument();
         $dom->loadXML($xml);
         $model = $dom->getElementsByTagName('mod')->item(0)->nodeValue;
-        return $model == $this->modelo;
+        $check = $model == $this->modelo;
+        $correct = $this->modelo == 55 ? 65 : 55;
+        if (!$check) {
+            throw new InvalidArgumentException('Você passou um XML de modelo incorreto. '
+                . "Use o método \$tools->model({$correct}), para selecionar o "
+                . 'modelo correto a ser usado');
+        }
     }
 }

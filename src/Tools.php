@@ -74,14 +74,9 @@ class Tools extends ToolsCommon
         $check = true;
         foreach ($aXml as $xml) {
             //verifica se o modelo do XML é o mesmo setado na classe
-            $check = $check && $this->checkModelFromXml($xml);
+            //gera um exception se não for
+            $this->checkModelFromXml($xml);
             $ax[] = trim(preg_replace("/<\?xml.*?\?>/", "", $xml));
-        }
-        if (!$check) {
-            $correct = $this->modelo == 55 ? 65 : 55;
-            throw new InvalidArgumentException('Você passou um XML de modelo incorreto. '
-                . "Use o método \$tools->model({$correct}), para selecionar o "
-                . 'modelo correto a ser usado');
         }
         $sxml = trim(implode("", $ax));
         $this->servico($servico, $this->config->siglaUF, $this->tpAmb);
