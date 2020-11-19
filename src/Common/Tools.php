@@ -597,4 +597,17 @@ class Tools
             $this->soap = new SoapCurl($this->certificate);
         }
     }
+    
+    /**
+     * Verify if xml model is equal as modelo property
+     * @param string $xml
+     * @return bool
+     */
+    protected function checkModelFromXml($xml)
+    {
+        $dom = new \DOMDocument();
+        $dom->loadXML($xml);
+        $model = $dom->getElementsByTagName('mod')->item(0)->nodeValue;
+        return $model == $this->modelo;
+    }
 }
