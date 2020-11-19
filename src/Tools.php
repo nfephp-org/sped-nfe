@@ -71,7 +71,6 @@ class Tools extends ToolsCommon
             $aXml = $xmls;
         }
         $ax = [];
-        $check = true;
         foreach ($aXml as $xml) {
             //verifica se o modelo do XML é o mesmo setado na classe
             //gera um exception se não for
