@@ -416,6 +416,11 @@ class Make
         foreach ($this->aDet as $det) {
             $this->dom->appChild($this->infNFe, $det, 'Falta tag "infNFe"');
         }
+        //força a construção do total caso não sejam chamado metodo tagICMSTot()
+        if (empty($this->total)) {
+            $std = new \stdClass();
+            $this->tagICMSTot($std);
+        }
         //[28a] tag total (326 W01)
         $this->dom->appChild($this->infNFe, $this->total, 'Falta tag "infNFe"');
         //mota a tag vol
@@ -7468,15 +7473,12 @@ class Make
         return base64_encode(sha1($comb, true));
     }
     
-    
-    
     /**
      * Formatação numerica condicional
      * @param string|float|int|null $value
      * @param int $decimal
      * @return string
      */
-
     protected function conditionalNumberFormatting($value = null, $decimal = 2)
     {
         if (is_numeric($value)) {
