@@ -243,7 +243,7 @@ class Complements
         if ($retProt === null) {
             throw DocumentsException::wrongDocument(3, "&lt;protNFe&gt;");
         }
-        $digProt = '000';
+        $digProt = null;
         foreach ($retProt as $rp) {
             $infProt = $rp->getElementsByTagName('infProt')->item(0);
             $cStat = $infProt->getElementsByTagName('cStat')->item(0)->nodeValue;
@@ -272,6 +272,12 @@ class Complements
                     );
                 }
             }
+        }
+        if (empty($digProt)) {
+            $prot = $ret->getElementsByTagName('protNFe')->item(0);
+            $cStat = $prot->getElementsByTagName('cStat')->item(0)->nodeValue;
+            $xMotivo= $prot->getElementsByTagName('xMotivo')->item(0)->nodeValue;
+            throw DocumentsException::wrongDocument(18, "[{$cStat}] {$xMotivo}");
         }
         if ($digNFe !== $digProt) {
             throw DocumentsException::wrongDocument(5, "Os digest são diferentes");
