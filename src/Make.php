@@ -4716,7 +4716,7 @@ class Make
         $this->dom->addChild(
             $icmsUFDest,
             "pICMSInter",
-            $this->conditionalNumberFormatting($std->pICMSInter, 4),
+            $this->conditionalNumberFormatting($std->pICMSInter, 2),
             true,
             "[item $std->item] Alíquota interestadual das UF envolvidas"
         );
