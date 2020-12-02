@@ -138,6 +138,9 @@ while ($ultNSU <= $maxNSU) {
         //processar o conteudo do NSU, da forma que melhor lhe interessar
         //esse processamento depende do seu aplicativo
     }
+    if ($ultNSU == $maxNSU) {
+       break; //CUIDADO para não deixar seu loop infinito !!
+    }
     sleep(2);
 }
 ```
