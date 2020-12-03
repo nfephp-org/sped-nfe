@@ -452,7 +452,10 @@ class Make
         $this->checkNFeKey($this->dom);
         $this->xml = $this->dom->saveXML();
         if (count($this->errors) > 0) {
-            throw new RuntimeException('Existem erros nas tags. Obtenha os erros com getErrors().');
+            $domErrors = $this->errors;
+            $msgDefault = array('Existem erros nas tags. Obtenha os erros com getErrors().');
+            $msg = implode(', ', array_merge($domErrors, $msgDefault));
+            throw new RuntimeException($msg);
         }
         return $this->xml;
     }
