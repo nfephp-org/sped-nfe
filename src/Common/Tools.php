@@ -520,7 +520,7 @@ class Tools
             $this->urlService,
             $this->urlMethod,
             $this->urlAction,
-            SOAP_1_2,
+            2,
             $parameters,
             $this->soapnamespaces,
             $request,
