@@ -22,7 +22,7 @@
         "RO": "www.sefin.ro.gov.br\/nfce\/consulta",
         "RR": "www.sefaz.rr.gov.br\/nfce\/consulta",
         "RS": "www.sefaz.rs.gov.br\/nfce\/consulta",
-        "SC": "",
+        "SC": "http:\/hom.sat.sef.sc.gov.br\/nfce\/consulta",
         "SE": "http:\/\/www.nfce.se.gov.br\/nfce\/consulta",
         "SP": "https:\/\/www.nfce.fazenda.sp.gov.br\/NFCeConsultaPublica",
         "TO": "www.sefaz.to.gov.br\/nfce\/consulta",
@@ -53,7 +53,7 @@
         "RR": "www.sefaz.rr.gov.br\/nfce\/consulta",
         "RS": "www.sefaz.rs.gov.br\/nfce\/consulta",
         "SE": "http:\/\/www.hom.nfe.se.gov.br\/nfce\/consulta",
-        "SC": "",
+        "SC": "http:\/hom.sat.sef.sc.gov.br\/nfce\/consulta",
         "SP": "https:\/\/www.homologacao.nfce.fazenda.sp.gov.br\/NFCeConsultaPublica",
         "TO": "www.sefaz.to.gov.br\/nfce\/consulta"
     }
