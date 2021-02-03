@@ -5092,7 +5092,7 @@ class Make
                     $pisItem,
                     'vPIS',
                     $this->conditionalNumberFormatting($std->vPIS),
-                    true,
+                    ($std->vPIS !== null) ? true : false,
                     "[item $std->item] Valor do PIS"
                 );
                 //totalizador
