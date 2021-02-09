@@ -6416,7 +6416,7 @@ class Make
     
     /**
      * Dados do intermediador
-     * 
+     *
      * @param stdClass $std
      * @return \DomElement
      */
