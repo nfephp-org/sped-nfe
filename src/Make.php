@@ -28,7 +28,6 @@ use DateTime;
 
 class Make
 {
-
     /**
      * @var array
      */
@@ -6415,6 +6414,12 @@ class Make
         return $detPag;
     }
     
+    /**
+     * Dados do intermediador
+     *
+     * @param stdClass $std
+     * @return \DomElement
+     */
     public function tagIntermed(stdClass $std)
     {
         $possible = [

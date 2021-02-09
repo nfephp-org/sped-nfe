@@ -95,13 +95,13 @@ class Complements
         $domnfe->formatOutput = false;
         $domnfe->preserveWhiteSpace = false;
         $domnfe->loadXML($nfe);
+        $nfeproc = $domnfe->getElementsByTagName('nfeProc')->item(0);
         $proNFe = $domnfe->getElementsByTagName('protNFe')->item(0);
         if (empty($proNFe)) {
             //not protocoladed NFe
             throw DocumentsException::wrongDocument(1);
         }
         $chaveNFe = $proNFe->getElementsByTagName('chNFe')->item(0)->nodeValue;
-
         $domcanc = new DOMDocument('1.0', 'utf-8');
         $domcanc->formatOutput = false;
         $domcanc->preserveWhiteSpace = false;
@@ -127,20 +127,12 @@ class Complements
                 )
                 && $chaveEvento == $chaveNFe
             ) {
-                $proNFe->getElementsByTagName('cStat')
-                    ->item(0)
-                    ->nodeValue = '101';
-                $proNFe->getElementsByTagName('nProt')
-                    ->item(0)
-                    ->nodeValue = $nProt;
-                $proNFe->getElementsByTagName('xMotivo')
-                    ->item(0)
-                    ->nodeValue = 'Cancelamento de NF-e homologado';
-                $procXML = Strings::clearProtocoledXML($domnfe->saveXML());
+                $node = $domnfe->importNode($evento, true);
+                $domnfe->documentElement->appendChild($node);
                 break;
             }
         }
-        return $procXML;
+        return $domnfe->saveXML();
     }
 
     /**
