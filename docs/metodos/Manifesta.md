@@ -19,6 +19,14 @@ O destinatário deve apresentar uma manifestação conclusiva dentro de um prazo
 
 **Método:** nfeRecepcaoEvento
 
+**Lista de Eventos**
+|Evento|Código|Justificativa Obrigatória?|
+|------|:----:|-------------------------:|
+|Confirmação da Operação|210200|Não|
+|Ciência da Emissão|210210|Não|
+|Desconhecimento da Operação|210220|Não|
+|Operação não Realizada|210240|Sim|
+
 ## [Veja os Prazos para manifestação](PrazoManifestacao.md) 
 
 
