@@ -114,6 +114,7 @@
     "Y02":"Y02|nFat|vOrig|vDesc|vLiq|",
     "Y07":"Y07|nDup|dVenc|vDup|",
     "YA":"YA|indPag|tPag|vPag|CNPJ|tBand|cAut|tpIntegra|",
+    "YB":"YB|CNPJ|idCadIntTran|",
     "Z":"Z|infAdFisco|infCpl|",
     "Z04":"Z04|xCampo|xTexto|",
     "Z07":"Z07|xCampo|xTexto|",
