@@ -118,6 +118,7 @@
     "YA":"YA|vTroco|",
     "YA01":"YA01|indPag|tPag|vPag|",
     "YA04":"YA04|tpIntegra|CNPJ|tBand|cAut|",
+    "YB":"YB|CNPJ|idCadIntTran|",
     "Z":"Z|infAdFisco|infCpl|",
     "Z04":"Z04|xCampo|xTexto|",
     "Z07":"Z07|xCampo|xTexto|",
