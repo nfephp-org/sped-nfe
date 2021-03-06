@@ -9,6 +9,9 @@ Esses stdClass podem ser criados diretamente como demonstrado nos exemplos abaix
 
 ## *NOTA: Ajustado para NT 2018.001 v1.00* Usar novos campos dessa NT em produção somente a partir de 29/04/2019. 
 ## *NOTA: Ajustado para NT 2018.001 v1.10* Usar novos campos dessa NT em produção somente a partir de 29/04/2019. 
+## *NOTA: Ajustado para NT 2020.006 User o novo campo na tgIde() e novo método sefazIntermed() em produção a partir de 05/04/2021.
+## *NOTA: Ajustado para NT 2020.007 User o novo método sefazAtorInteressado() em produção a partir de 05/04/2021.
+
 
 > Existe um provável ERRO nos XSDs PL_009_V4, fornecidos em 02/01/2019, onde estabelece um comprimento para o campo hashCSRT de 28 digitos base64Binary, **quando na verdade são gerados 30 digitos segundo esta formatação**.
 
@@ -86,6 +89,9 @@ $std->tpAmb = 2;
 $std->finNFe = 1;
 $std->indFinal = 0;
 $std->indPres = 0;
+
+$std->indIntermed = null; //usar a partir de 05/04/2021
+
 $std->procEmi = 0;
 $std->verProc = '3.10.31';
 $std->dhCont = null;
@@ -93,6 +99,7 @@ $std->xJust = null;
 
 $nfe->tagide($std);
 ```
+
 
 ### function tagrefNFe($std):DOMElement
 Node referente a NFe referenciada
@@ -1301,11 +1308,33 @@ $nfe->tagdetPag($std);
 > vPag=0.00 **mas pode ter valor se a venda for à vista**
 >
 > tPag é usualmente:
+
 > - 15 = Boleto Bancário
+> - 16 = Depósito Bancário
+> - 17 = Pagamento Instantâneo (PIX)
+> - 18 = Transferência bancária, Carteira Digital
+> - 19 = Programa de fidelidade, Cashback, Crédito Virtual
 > - 90 = Sem pagamento
+> - 98 = Regime Especial NFF
 > - 99 = Outros
 >
 > *Porém podem haver casos que os outros nodes e valores tenham de ser usados.*
+
+
+### function tagIntermed($std):DOMElement
+Node referente aos dados do Intermediador NT 2020.006
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$std = new stdClass();
+$std->CNPJ = '12345678901234';
+$std->idCadIntTran = 'fulano';
+
+$nfe->tagIntermed($std);
+```
 
 
 ### function taginfAdic($std):DOMElement
