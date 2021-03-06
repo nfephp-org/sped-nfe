@@ -34,6 +34,8 @@ class Tools extends ToolsCommon
     const EVT_CANCELASUBSTITUICAO = 110112;
     const EVT_EPEC = 110140; //only seq=1
     const EVT_ATORINTERESSADO = 110150;
+    const EVT_COMPROVANTE_ENTREGA = 110130;
+    const EVT_CANCELAMENTO_COMPROVANTE_ENTREGA = 110131;
 
     /**
      * Request authorization to issue NFe in batch with one or more documents
@@ -640,6 +642,62 @@ class Tools extends ToolsCommon
         }
         return $this->sefazEventoLote('AN', $evt);
     }
+    
+    /**
+     * Send event for delivery receipt
+     * @param \stdClass $std
+     * @return string
+     */
+    public function sefazComprovanteEntrega(\stdClass $std)
+    {
+        $hash = sha1($std->chave . $std->imagem);
+        $datahash = date('Y-m-d\TH:i:sP');
+        $cod = UFList::getCodeByUF($this->config->siglaUF);
+        $tagAdic = "<cOrgaoAutor>{$cod}</cOrgaoAutor>"
+            . "<tpAutor>{$std->tipo_autor}</tpAutor>"
+            . "<verAplic>{$std->verAplic}</verAplic>"
+            . "<dhEntrega>{$std->data_recebimento}</dhEntrega>"
+            . "<nDoc>{$std->documento_recebedor}</nDoc>"
+            . "<xNome>{$std->nome_recebedor}</xNome>";
+        if (!empty($std->latitude) && !empty($std->longitude)) {    
+            $tagAdic .= "<latGPS>{$std->latitude}</latGPS>"
+            . "<longGPS>{$std->longitude}</longGPS>";
+        }    
+        $tagAdic .= "<hashComprovante>{$hash}</hashComprovante>"
+            . "<dhHashComprovante>{$datahash}</dhHashComprovante>";
+        $tpEvento = self::EVT_COMPROVANTE_ENTREGA;
+        $chave = $std->chave;
+        $nSeqEvento = 1;
+        return $this->sefazEvento('AN', $chave, $tpEvento, $nSeqEvento, $tagAdic);
+    }
+    
+    /**
+     * Send event for cancel delivery receipt
+     * @param \stdClass $std
+     * @return string
+     */
+    public function sefazCancelaComprovanteEntrega(\stdClass $std)
+    {
+        $hash = sha1($std->chave . $std->imagem);
+        $datahash = date('Y-m-d\TH:i:sP');
+        $cod = UFList::getCodeByUF($this->config->siglaUF);
+        $tagAdic = "<cOrgaoAutor>{$cod}</cOrgaoAutor>"
+            . "<tpAutor>{$std->tipo_autor}</tpAutor>"
+            . "<verAplic>{$std->verAplic}</verAplic>"
+            . "<dhEntrega>{$std->data_recebimento}</dhEntrega>"
+            . "<nDoc>{$std->documento_recebedor}</nDoc>"
+            . "<xNome>{$std->nome_recebedor}</xNome>";
+        if (!empty($std->latitude) && !empty($std->longitude)) {    
+            $tagAdic .= "<latGPS>{$std->latitude}</latGPS>"
+            . "<longGPS>{$std->longitude}</longGPS>";
+        }    
+        $tagAdic .= "<hashComprovante>{$hash}</hashComprovante>"
+            . "<dhHashComprovante>{$datahash}</dhHashComprovante>";
+        $tpEvento = self::EVT_CANCELAMENTO_COMPROVANTE_ENTREGA;
+        $chave = $std->chave;
+        $nSeqEvento = 1;
+        return $this->sefazEvento('AN', $chave, $tpEvento, $nSeqEvento, $tagAdic);
+    }
 
     /**
      * Send event to SEFAZ in batch
@@ -1037,6 +1095,14 @@ class Tools extends ToolsCommon
             case self::EVT_EPEC: // Emissão em contingência EPEC
                 $std->alias = 'EPEC';
                 $std->desc = 'EPEC';
+                break;
+            case self::EVT_COMPROVANTE_ENTREGA:
+                $std->alias = 'CompEntrega';
+                $std->desc = 'Comprovante de Entrega';
+                break;
+            case self::EVT_CANCELAMENTO_COMPROVANTE_ENTREGA:
+                $std->alias = 'CancCompEntrega';
+                $std->desc = 'Cancelamento do Comprovante de Entrega';
                 break;
             case 111500:
             case 111501:
