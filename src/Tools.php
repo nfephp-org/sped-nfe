@@ -659,10 +659,10 @@ class Tools extends ToolsCommon
             . "<dhEntrega>{$std->data_recebimento}</dhEntrega>"
             . "<nDoc>{$std->documento_recebedor}</nDoc>"
             . "<xNome>{$std->nome_recebedor}</xNome>";
-        if (!empty($std->latitude) && !empty($std->longitude)) {    
+        if (!empty($std->latitude) && !empty($std->longitude)) {
             $tagAdic .= "<latGPS>{$std->latitude}</latGPS>"
             . "<longGPS>{$std->longitude}</longGPS>";
-        }    
+        }
         $tagAdic .= "<hashComprovante>{$hash}</hashComprovante>"
             . "<dhHashComprovante>{$datahash}</dhHashComprovante>";
         $tpEvento = self::EVT_COMPROVANTE_ENTREGA;
@@ -687,10 +687,10 @@ class Tools extends ToolsCommon
             . "<dhEntrega>{$std->data_recebimento}</dhEntrega>"
             . "<nDoc>{$std->documento_recebedor}</nDoc>"
             . "<xNome>{$std->nome_recebedor}</xNome>";
-        if (!empty($std->latitude) && !empty($std->longitude)) {    
+        if (!empty($std->latitude) && !empty($std->longitude)) {
             $tagAdic .= "<latGPS>{$std->latitude}</latGPS>"
             . "<longGPS>{$std->longitude}</longGPS>";
-        }    
+        }
         $tagAdic .= "<hashComprovante>{$hash}</hashComprovante>"
             . "<dhHashComprovante>{$datahash}</dhHashComprovante>";
         $tpEvento = self::EVT_CANCELAMENTO_COMPROVANTE_ENTREGA;
