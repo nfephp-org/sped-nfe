@@ -1801,8 +1801,16 @@ class Parser
     {
         $this->make->tagdetPag($std);
     }
-
-
+    
+    /**
+     * Create tag infIntermed [YB]
+     * YB|CNPJ|idCadIntTran
+     * @param type $std
+     */
+    protected function ybEntity($std)
+    {
+        $this->make->tagIntermed($std);
+    }
 
     /**
      * Create a tag infAdic [Z]
