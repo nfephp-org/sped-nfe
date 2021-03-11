@@ -200,7 +200,7 @@ class Complements
         return self::join(
             $req->saveXML($inutNFe),
             $ret->saveXML($retInutNFe),
-            'procInutNFe',
+            'ProcInutNFe',
             $versao
         );
     }
