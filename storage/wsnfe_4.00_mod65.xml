@@ -310,10 +310,10 @@
   <UF>
     <sigla>SC</sigla>
     <homologacao>
-      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">http://hom.sat.sef.sc.gov.br/nfce/consulta</NfeConsultaQR>
+      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">https://hom.sat.sef.sc.gov.br/nfce/consulta</NfeConsultaQR>
     </homologacao>
     <producao>
-      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">http://sat.sef.sc.gov.br/nfce/consulta</NfeConsultaQR>
+      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">https://sat.sef.sc.gov.br/nfce/consulta</NfeConsultaQR>
     </producao>
   </UF>
   <UF>
