@@ -671,7 +671,7 @@ class Make
         $this->dom->addChild(
             $ide,
             "indIntermed",
-            $std->indIntermed ?? null,
+            isset($std->indIntermed) ? $std->indIntermed : null,
             false,
             $identificador . "Indicador de intermediador/marketplace"
         );
@@ -6342,6 +6342,7 @@ class Make
         $possible = [
             'indPag',
             'tPag',
+            'xPag',
             'vPag',
             'CNPJ',
             'tBand',
@@ -6364,6 +6365,13 @@ class Make
             $std->tPag,
             true,
             "Forma de pagamento"
+        );
+        $this->dom->addChild(
+            $detPag,
+            "xPag",
+            !empty($std->xPag) ? $std->xPag : null,
+            false,
+            "Descricao da Forma de pagamento"
         );
         $this->dom->addChild(
             $detPag,
