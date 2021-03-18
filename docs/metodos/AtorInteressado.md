@@ -1,4 +1,4 @@
-# EVENTO DE ATOR INTERESSADO
+# EVENTO DE ATOR INTERESSADO (NT2020.007_v1.00a)
 
 **Função:** Serviço destinado à recepção de mensagem de Evento da NF-e.
 

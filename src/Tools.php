@@ -654,7 +654,7 @@ class Tools extends ToolsCommon
         $datahash = date('Y-m-d\TH:i:sP');
         $cod = UFList::getCodeByUF($this->config->siglaUF);
         $tagAdic = "<cOrgaoAutor>{$cod}</cOrgaoAutor>"
-            . "<tpAutor>{$std->tipo_autor}</tpAutor>"
+            . "<tpAutor>1</tpAutor>"
             . "<verAplic>{$std->verAplic}</verAplic>"
             . "<dhEntrega>{$std->data_recebimento}</dhEntrega>"
             . "<nDoc>{$std->documento_recebedor}</nDoc>"
@@ -665,40 +665,15 @@ class Tools extends ToolsCommon
         }
         $tagAdic .= "<hashComprovante>{$hash}</hashComprovante>"
             . "<dhHashComprovante>{$datahash}</dhHashComprovante>";
-        $tpEvento = self::EVT_COMPROVANTE_ENTREGA;
+        $tpEvento = self::EVT_COMPROVANTE_ENTREGA;    
+        if ($std->cancelar == true) {
+            $tpEvento = self::EVT_CANCELAMENTO_COMPROVANTE_ENTREGA;
+        }
         $chave = $std->chave;
         $nSeqEvento = 1;
         return $this->sefazEvento('AN', $chave, $tpEvento, $nSeqEvento, $tagAdic);
     }
     
-    /**
-     * Send event for cancel delivery receipt
-     * @param \stdClass $std
-     * @return string
-     */
-    public function sefazCancelaComprovanteEntrega(\stdClass $std)
-    {
-        $hash = sha1($std->chave . $std->imagem);
-        $datahash = date('Y-m-d\TH:i:sP');
-        $cod = UFList::getCodeByUF($this->config->siglaUF);
-        $tagAdic = "<cOrgaoAutor>{$cod}</cOrgaoAutor>"
-            . "<tpAutor>{$std->tipo_autor}</tpAutor>"
-            . "<verAplic>{$std->verAplic}</verAplic>"
-            . "<dhEntrega>{$std->data_recebimento}</dhEntrega>"
-            . "<nDoc>{$std->documento_recebedor}</nDoc>"
-            . "<xNome>{$std->nome_recebedor}</xNome>";
-        if (!empty($std->latitude) && !empty($std->longitude)) {
-            $tagAdic .= "<latGPS>{$std->latitude}</latGPS>"
-            . "<longGPS>{$std->longitude}</longGPS>";
-        }
-        $tagAdic .= "<hashComprovante>{$hash}</hashComprovante>"
-            . "<dhHashComprovante>{$datahash}</dhHashComprovante>";
-        $tpEvento = self::EVT_CANCELAMENTO_COMPROVANTE_ENTREGA;
-        $chave = $std->chave;
-        $nSeqEvento = 1;
-        return $this->sefazEvento('AN', $chave, $tpEvento, $nSeqEvento, $tagAdic);
-    }
-
     /**
      * Send event to SEFAZ in batch
      * @param string $uf
