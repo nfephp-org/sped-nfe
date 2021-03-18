@@ -2,11 +2,15 @@
 
 ### Campos alterados
 
+*NOTA: essas campos adicionais ainda são apenas OPCIONAIS, ou seja pode passar em branco*
+
 B|cUF|cNF|natOp|mod|serie|nNF|dhEmi|dhSaiEnt|tpNF|idDest|cMunFG|tpImp|tpEmis|cDV|tpAmb|finNFe|indFinal|indPres|**indIntermed**|procEmi|verProc|dhCont|xJust|
 
 YA|indPag|tPag|vPag|CNPJ|tBand|cAut|tpIntegra|**xPag**|
 
 ### Campos inclusos
+
+*NOTA: apenas incluir essa linha caso o compo indIntermed for igual a 1*
 
 **YB|CNPJ|idCadIntTran|**
 
