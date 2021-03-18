@@ -6368,10 +6368,10 @@ class Make
         );
         $this->dom->addChild(
             $detPag,
-            "tPag",
+            "xPag",
             !empty($std->xPag) ? $std->xPag : null,
             false,
-            "Forma de pagamento"
+            "Descricao da Forma de pagamento"
         );
         $this->dom->addChild(
             $detPag,
