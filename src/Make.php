@@ -671,7 +671,7 @@ class Make
         $this->dom->addChild(
             $ide,
             "indIntermed",
-            $std->indIntermed ?? null,
+            isset($std->indIntermed) ? $std->indIntermed : null,
             false,
             $identificador . "Indicador de intermediador/marketplace"
         );
