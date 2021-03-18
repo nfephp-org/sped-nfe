@@ -1776,7 +1776,7 @@ class Parser
 
     /**
      * Creates tag detPag and card [YA]
-     * YA|tPag|vPag|CNPJ|tBand|cAut|tpIntegra|
+     * YA|tPag|vPag|CNPJ|tBand|cAut|tpIntegra|xPag|
      * SEBRAE
      * YA|troco|
      * @param stdClass $std
