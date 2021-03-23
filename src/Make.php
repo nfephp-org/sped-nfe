@@ -7323,6 +7323,7 @@ class Make
         $this->stdTot->vNF = $this->stdTot->vProd
             - $this->stdTot->vDesc
             + $this->stdTot->vST
+            + $this->stdTot->vFCPST            
             + $this->stdTot->vFrete
             + $this->stdTot->vSeg
             + $this->stdTot->vOutro
