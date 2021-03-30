@@ -4009,6 +4009,7 @@ class Make
             'vICMSEfet'
         ];
         $std = $this->equilizeParameters($std, $possible);
+        $this->stdTot->vFCPSTRet += (float) !empty($std->vFCPSTRet) ? $std->vFCPSTRet : 0;
         $icmsST = $this->dom->createElement("ICMSST");
         $this->dom->addChild(
             $icmsST,
