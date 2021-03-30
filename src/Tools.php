@@ -665,7 +665,7 @@ class Tools extends ToolsCommon
         }
         $tagAdic .= "<hashComprovante>{$hash}</hashComprovante>"
             . "<dhHashComprovante>{$datahash}</dhHashComprovante>";
-        $tpEvento = self::EVT_COMPROVANTE_ENTREGA;    
+        $tpEvento = self::EVT_COMPROVANTE_ENTREGA;
         if ($std->cancelar == true) {
             $tpEvento = self::EVT_CANCELAMENTO_COMPROVANTE_ENTREGA;
         }
