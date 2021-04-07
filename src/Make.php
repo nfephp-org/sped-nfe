@@ -1162,7 +1162,7 @@ class Make
             }
         }
         $xNome = $std->xNome;
-        if ($this->tpAmb == '2') {
+        if ($this->tpAmb == '2' && !empty($xNome)) {
             $xNome = 'NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
             //a exigência do CNPJ 99999999000191 não existe mais
         }
