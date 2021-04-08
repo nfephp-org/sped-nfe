@@ -2799,14 +2799,14 @@ class Make
         $this->dom->addChild(
             $encerrante,
             "vEncIni",
-            $this->conditionalNumberFormatting($std->vEncIni),
+            $this->conditionalNumberFormatting($std->vEncIni, 3),
             true,
             "$identificador [item $std->item] Valor do Encerrante no início do abastecimento"
         );
         $this->dom->addChild(
             $encerrante,
             "vEncFin",
-            $this->conditionalNumberFormatting($std->vEncFin),
+            $this->conditionalNumberFormatting($std->vEncFin, 3),
             true,
             "$identificador [item $std->item] Valor do Encerrante no final do abastecimento"
         );
