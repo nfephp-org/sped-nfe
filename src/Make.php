@@ -1165,6 +1165,8 @@ class Make
         if ($this->tpAmb == '2' && !empty($xNome)) {
             $xNome = 'NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
             //a exigência do CNPJ 99999999000191 não existe mais
+        } elseif ($this->tpAmb == '2' && $this->mod == '65') {
+            $xNome = 'NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
         }
         if (!empty($std->CNPJ)) {
             $this->dom->addChild(
