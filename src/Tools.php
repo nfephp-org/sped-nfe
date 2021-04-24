@@ -414,39 +414,28 @@ class Tools extends ToolsCommon
     
     /**
      * Evento do Ator Interessado
-     * NOTA: NT2020.007
-     * @param string $chave
-     * @param int $tpAutor
-     * @param string $verAplic
-     * @param int $nSeqEvento
-     * @param array $interessados
+     * NOTA: NT2020.007_v1.00a
+     * @param \stdClass $std
      * @return string
      */
-    public function sefazAtorInteressado(
-        $chave,
-        $tpAutor,
-        $verAplic,
-        $nSeqEvento = 1,
-        $interessados = []
-    ) {
+    public function sefazAtorInteressado($std)
+    {
         $xCondUso = 'O emitente ou destinatário da NF-e, declara que permite o '
             . 'transportador declarado no campo CNPJ/CPF deste evento a '
             . 'autorizar os transportadores subcontratados ou redespachados '
             . 'a terem acesso ao download da NFe';
-        $tagAdic = "<cOrgaoAutor>{$this->urlcUF}</cOrgaoAutor>"
-            . "<tpAutor>{$tpAutor}</tpAutor>"
-            . "<verAplic>{$verAplic}</verAplic>";
-        foreach ($interessados as $aut) {
-            $obj = (object) $aut;
-            $tagAdic .= "<autXML>";
-            $tagAdic .=  !empty($obj->CNPJ)
-                ? "<CNPJ>{$obj->CNPJ}</CNPJ>"
-                : "<CPF>{$obj->CPF}</CPF>";
-            $tagAdic .= "<tpAutorizacao>{$obj->tpAutorizacao}</tpAutorizacao>"
+        $cUF = UFList::getCodeByUF($this->config->siglaUF);
+        $tagAdic = "<cOrgaoAutor>{$cUF}</cOrgaoAutor>"
+            . "<tpAutor>{$std->tpAutor}</tpAutor>"
+            . "<verAplic>{$std->verAplic}</verAplic>"
+            . "<autXML>";
+            $tagAdic .=  !empty($std->CNPJ)
+                ? "<CNPJ>{$std->CNPJ}</CNPJ>"
+                : "<CPF>{$std->CPF}</CPF>";
+            $tagAdic .= "<tpAutorizacao>{$std->tpAutorizacao}</tpAutorizacao>"
                 . "</autXML>";
-        }
         $tagAdic .= "<xCondUso>$xCondUso</xCondUso>";
-        return $this->sefazEvento($uf, $chave, self::EVT_ATORINTERESSADO, $nSeqEvento, $tagAdic);
+        return $this->sefazEvento($uf, $std->chNFe, self::EVT_ATORINTERESSADO, $nSeqEvento, $tagAdic);
     }
 
     /**

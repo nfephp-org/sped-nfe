@@ -18,8 +18,8 @@ O Transportador precisa dos dados da NF-e para instrumentalizar seus processos d
 
 ## Exemplo de Uso
 
-### public function sefazAtorInteressado($chNFe, $tpAutor, $verAplic, $nSeqEvento = 1, $interessados)
-Inclui atores interessados conforme descrito na documentação da SEFAZ
+### public function sefazAtorInteressado($std)
+Inclui atores interessados (transportadores permitindo oou não a baixar o xml da NFe), conforme descrito na documentação da SEFAZ
 
 ```php
 use NFePHP\NFe\Tools;
@@ -31,15 +31,15 @@ try {
     $tools = new Tools($configJson, $certificate);
     $tools->model('55');
 
-    $chNFe = '12345678901234567890123456789012345678901234'; //chave de 44 digitos da nota do fornecedor
-    $tpAutor = 1; //1-emitente 2-destinatário 3-transportador indica quem está incluindo ou removendo atores
-    $verAplic = '1.2.3'; //versão da aplicação que está gerando o evento
-    $nSeqEvento = 1; //numero sequencial do evento, incrementar ao incluir outros ou remover
-    $interessados = [
-        0 => ['CNPJ'=>'12345678901234', 'tpAutorizacao' => 1], //tpAutorizacao  1-permite 0-não permite
-        1 => ['CPF' = '12345678901', 'tpAutorizacao' => 1]
-    ];
-
+    $std = new \stdClass();
+    $std->chNFe = '12345678901234567890123456789012345678901234'; //chave de 44 digitos da nota do fornecedor
+    $std->tpAutor = 1; //1-emitente 2-destinatário 3-transportador indica quem está incluindo ou removendo atores
+    $std->verAplic = '1.2.3'; //versão da aplicação que está gerando o evento
+    $std->nSeqEvento = 1; //numero sequencial do evento, incrementar ao incluir outros ou remover
+    $std->tpAutorizacao = 1; //0-não autorizo ou 1-autorizo
+    $std->CNPJ = '12345678901234';
+    $std->CPF = null
+    
     $response = $tools->sefaAtorInteressado($std);
 
     //você pode padronizar os dados de retorno atraves da classe abaixo
