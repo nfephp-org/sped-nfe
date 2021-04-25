@@ -435,7 +435,13 @@ class Tools extends ToolsCommon
             $tagAdic .= "<tpAutorizacao>{$std->tpAutorizacao}</tpAutorizacao>"
                 . "</autXML>";
         $tagAdic .= "<xCondUso>$xCondUso</xCondUso>";
-        return $this->sefazEvento($uf, $std->chNFe, self::EVT_ATORINTERESSADO, $nSeqEvento, $tagAdic);
+        return $this->sefazEvento(
+            $this->config->siglaUF,
+            $std->chNFe,
+            self::EVT_ATORINTERESSADO,
+            $std->nSeqEvento,
+            $tagAdic
+        );
     }
 
     /**
