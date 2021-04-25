@@ -21,16 +21,17 @@ try {
     
     //evento de comprovante de entregua
     $std = new \stdClass();
-    $std->chave = '12345678901234567890123456789012345678901234';
-    $std->verAplic = '1.0.0';
-    $std->data_recebimento = '2021-03-18T12:45:29-03:00';
-    $std->documento_recebedor = '12345678901';
-    $std->nome_recebedor = 'Fulano de Tal';
-    $std->latitude = null;
-    $std->longitude = null;
-    $std->imagem = null;
+    $std->chNFe = '12345678901234567890123456789012345678901234'; //chave de 44 digitos da nota do fornecedor
+    $std->imagem = 'kakakakakakakakak'; // aqui pode ser colocada uma imagem ou uma string que fará parte do hash 
+    $std->nSeqEvento = 1;
+    $std->verAplic = '1.2.3'; //versão da aplicação que está gerando o evento
+    $std->data_recebimento = '2021-04-25T10:34:13-03:00'; //data de recebimento
+    $std->documento_recebedor = '12345678901'; //numero do documento do recebedor
+    $std->nome_recebedor = 'Jose da Silva';
+    $std->latitude = -23.61849;
+    $std->longitude = -46.60987;
     $std->cancelar = false; //permite cancelar um comprovante de entrega se for true
-
+    
     $xmlResp = $tools->sefazComprovanteEntrega($std);
     
     //transforma o xml de retorno em um stdClass

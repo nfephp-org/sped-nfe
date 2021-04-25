@@ -46,15 +46,18 @@ try {
     $tools->loadSoapClass($soap);
 
     $std = new \stdClass();
-    $std->chNFe = '42200714403043000122550010000056591412970518'; //chave de 44 digitos da nota do fornecedor
-    $std->tpAutor = 1; //1-emitente 2-destinatário 3-transportador indica quem está incluindo ou removendo atores
+    $std->chNFe = '12345678901234567890123456789012345678901234'; //chave de 44 digitos da nota do fornecedor
+    $std->imagem = 'kakakakakakakakak'; // aqui pode ser colocada uma imagem ou uma string que fará parte do hash 
+    $std->nSeqEvento = 1;
     $std->verAplic = '1.2.3'; //versão da aplicação que está gerando o evento
-    $std->nSeqEvento = 1; //numero sequencial do evento, incrementar ao incluir outros ou remover
-    $std->tpAutorizacao = 1; //0-não autorizo ou 1-autorizo
-    $std->CNPJ = '12345678901234';
-    $std->CPF = null;
+    $std->data_recebimento = '2021-04-25T10:34:13-03:00'; //data de recebimento
+    $std->documento_recebedor = '12345678901'; //numero do documento do recebedor
+    $std->nome_recebedor = 'Jose da Silva';
+    $std->latitude = -23.61849;
+    $std->longitude = -46.60987;
+    $std->cancelar = false;
     
-    $response = $tools->sefazAtorInteressado($std);
+    $response = $tools->sefazComprovanteEntrega($std);
     
     $fake = NFePHP\NFe\Common\FakePretty::prettyPrint($response);
     //header('Content-type: text/plain; charset=UTF-8');

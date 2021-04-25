@@ -418,25 +418,25 @@ class Tools extends ToolsCommon
      * @param \stdClass $std
      * @return string
      */
-    public function sefazAtorInteressado($std)
+    public function sefazAtorInteressado(\stdClass $std)
     {
         $xCondUso = 'O emitente ou destinatário da NF-e, declara que permite o '
             . 'transportador declarado no campo CNPJ/CPF deste evento a '
-            . 'autorizar os transportadores subcontratados ou redespachados '
-            . 'a terem acesso ao download da NFe';
+            . 'autorizar os transportadores subcontratados ou redespachados a '
+            . 'terem acesso ao download da NF-e';
         $cUF = UFList::getCodeByUF($this->config->siglaUF);
         $tagAdic = "<cOrgaoAutor>{$cUF}</cOrgaoAutor>"
             . "<tpAutor>{$std->tpAutor}</tpAutor>"
             . "<verAplic>{$std->verAplic}</verAplic>"
             . "<autXML>";
-            $tagAdic .=  !empty($std->CNPJ)
-                ? "<CNPJ>{$std->CNPJ}</CNPJ>"
-                : "<CPF>{$std->CPF}</CPF>";
-            $tagAdic .= "<tpAutorizacao>{$std->tpAutorizacao}</tpAutorizacao>"
-                . "</autXML>";
-        $tagAdic .= "<xCondUso>$xCondUso</xCondUso>";
+        $tagAdic .=  !empty($std->CNPJ)
+            ? "<CNPJ>{$std->CNPJ}</CNPJ>"
+            : "<CPF>{$std->CPF}</CPF>";
+        $tagAdic .= "</autXML>"
+            . "<tpAutorizacao>{$std->tpAutorizacao}</tpAutorizacao>"    
+            . "<xCondUso>$xCondUso</xCondUso>";
         return $this->sefazEvento(
-            $this->config->siglaUF,
+            'AN',
             $std->chNFe,
             self::EVT_ATORINTERESSADO,
             $std->nSeqEvento,
@@ -645,7 +645,7 @@ class Tools extends ToolsCommon
      */
     public function sefazComprovanteEntrega(\stdClass $std)
     {
-        $hash = sha1($std->chave . $std->imagem);
+        $hash = sha1($std->chNFe . $std->imagem);
         $datahash = date('Y-m-d\TH:i:sP');
         $cod = UFList::getCodeByUF($this->config->siglaUF);
         $tagAdic = "<cOrgaoAutor>{$cod}</cOrgaoAutor>"
@@ -664,9 +664,13 @@ class Tools extends ToolsCommon
         if ($std->cancelar == true) {
             $tpEvento = self::EVT_CANCELAMENTO_COMPROVANTE_ENTREGA;
         }
-        $chave = $std->chave;
-        $nSeqEvento = 1;
-        return $this->sefazEvento('AN', $chave, $tpEvento, $nSeqEvento, $tagAdic);
+        return $this->sefazEvento(
+            'AN',
+            $std->chNFe,
+            $tpEvento,
+            $std->nSeqEvento,
+            $tagAdic
+        );
     }
     
     /**
@@ -836,6 +840,15 @@ class Tools extends ToolsCommon
         $nSeqEvento = 1,
         $tagAdic = ''
     ) {
+        $eventos = [
+            '110150' => ['versao' => '1.00', 'nome' => 'envEventoAtorInteressado'],
+            '110112' => ['versao' => '1.00', 'nome' => 'eventoCancSubst']
+        ];
+        $verEvento = $this->urlVersion;
+        if (!empty($eventos[$tpEvento])) {
+            $evt = $eventos[$tpEvento];
+            $verEvento = $evt['versao'];
+        }    
         $ignore = $tpEvento == self::EVT_EPEC;
         $servico = 'RecepcaoEvento';
         $this->checkContingencyForWebServices($servico);
@@ -861,8 +874,8 @@ class Tools extends ToolsCommon
             . "<dhEvento>$dhEvento</dhEvento>"
             . "<tpEvento>$tpEvento</tpEvento>"
             . "<nSeqEvento>$nSeqEvento</nSeqEvento>"
-            . "<verEvento>$this->urlVersion</verEvento>"
-            . "<detEvento versao=\"$this->urlVersion\">"
+            . "<verEvento>$verEvento</verEvento>"
+            . "<detEvento versao=\"$verEvento\">"
             . "<descEvento>$descEvento</descEvento>"
             . "$tagAdic"
             . "</detEvento>"
@@ -883,7 +896,12 @@ class Tools extends ToolsCommon
             . "<idLote>$lote</idLote>"
             . $request
             . "</envEvento>";
-        $this->isValid($this->urlVersion, $request, 'envEvento');
+        if (!empty($eventos[$tpEvento])) {
+            $evt = $eventos[$tpEvento];
+            $this->isValid($evt['versao'], $request, $evt['nome']);
+        } else {
+            //$this->isValid($this->urlVersion, $request, 'envEvento');
+        }    
         $this->lastRequest = $request;
         //return $request;
         $parameters = ['nfeDadosMsg' => $request];
