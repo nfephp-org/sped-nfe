@@ -56,7 +56,7 @@
 								<xs:restriction base="xs:string">
 									<xs:whiteSpace value="preserve"/>
 									<xs:pattern value="[0-9]{6}"/>
-									<xs:enumeration value="110112"/>
+									<xs:enumeration value="110150"/>
 								</xs:restriction>
 							</xs:simpleType>
 						</xs:element>
@@ -231,7 +231,7 @@ Outros valores: 1=Empresa Emitente, 2=Empresa destinatária; 3=Empresa; 5=Fisco;
 								<xs:restriction base="xs:string">
 									<xs:whiteSpace value="preserve"/>
 									<xs:pattern value="[0-9]{6}"/>
-									<xs:enumeration value="110112"/>
+									<xs:enumeration value="110150"/>
 								</xs:restriction>
 							</xs:simpleType>
 						</xs:element>
