@@ -1,6 +1,11 @@
-# CONTINGENCIA EPEC
+# CONTINGENCIA EPEC Evento Prévio de Emissão em Contingência
 
-A emissão do EPEC poderá ser adotada por qualquer emissor que esteja impossibilitado de transmissão e/ou recepção das autorizações de uso de suas NF-e, adotando os seguintes passos:
+A emissão do EPEC poderá ser adotada por qualquer emissor que esteja impossibilitado de transmissão e/ou recepção das autorizações de uso de suas NF-e.
+
+O evento EPEC não é uma contignência completa como SVCAN ou SVCRS, é apenas uma forma de antecipar o envio OFICIAL na NFe. Esse evento autoriza provisóriamente a circulação da mercadoria, mas não confima a autorização definitiva do documento fiscal.
+
+Além disso existem outra implicações em emitir por EPEC, pois a emissão REAL (com o envio do XML da NFe) ficará dependente da sincronização entre a Receita e a Sefaz autorizadora, somente após essa sincronização é que a NFe será processada e aceita (ou rejeitada) pela autorizadora.
+
 
 **Função:** serviço destinado à recepção de evento EPEC de NF-e.
 
@@ -59,7 +64,7 @@ try {
 //seta a contingência a classe tools
     $tools->contingency = $contingency;
     
-// carregue o xml da NFe gerar normalmente e que deseja enviar como evento EPEC.
+// carregue o xml da NFe gerado normalmente e que deseja enviar como evento EPEC.
     $xml = "<Nfe>..."; //xml de nfe modelo 55 
     
 //envia o xml para pedir autorização a Receita Federal
