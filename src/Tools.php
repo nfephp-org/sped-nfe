@@ -440,7 +440,7 @@ class Tools extends ToolsCommon
             ? "<CNPJ>{$std->CNPJ}</CNPJ>"
             : "<CPF>{$std->CPF}</CPF>";
         $tagAdic .= "</autXML>"
-            . "<tpAutorizacao>{$std->tpAutorizacao}</tpAutorizacao>"    
+            . "<tpAutorizacao>{$std->tpAutorizacao}</tpAutorizacao>"
             . "<xCondUso>$xCondUso</xCondUso>";
         return $this->sefazEvento(
             'AN',
@@ -885,7 +885,7 @@ class Tools extends ToolsCommon
         if (!empty($eventos[$tpEvento])) {
             $evt = $eventos[$tpEvento];
             $verEvento = $evt['versao'];
-        }    
+        }
         $ignore = $tpEvento == self::EVT_EPEC;
         $servico = 'RecepcaoEvento';
         $this->checkContingencyForWebServices($servico);
@@ -938,7 +938,7 @@ class Tools extends ToolsCommon
             $this->isValid($evt['versao'], $request, $evt['nome']);
         } else {
             $this->isValid($this->urlVersion, $request, 'envEvento');
-        }    
+        }
         $this->lastRequest = $request;
         //return $request;
         $parameters = ['nfeDadosMsg' => $request];
