@@ -38,9 +38,9 @@ try {
     $std->nSeqEvento = 1; //numero sequencial do evento, incrementar ao incluir outros ou remover
     $std->tpAutorizacao = 1; //0-não autorizo ou 1-autorizo
     $std->CNPJ = '12345678901234';
-    $std->CPF = null
+    $std->CPF = null;
     
-    $response = $tools->sefaAtorInteressado($std);
+    $response = $tools->sefazsAtorInteressado($std);
 
     //você pode padronizar os dados de retorno atraves da classe abaixo
     //de forma a facilitar a extração dos dados do XML
