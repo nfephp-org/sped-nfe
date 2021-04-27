@@ -103,7 +103,7 @@ try {
 
 // IMPORTANTE: esse documento ainda não está autorizado de forma definitiva !!!
 // para encerrar o processo esse documento deverá ser enviado a SEFAZ 
-// quando não estiver mais em contingência EPEC e sim com a operção NORMAL !!!
+// quando não estiver mais em contingência EPEC e sim com a operação NORMAL !!!
 
     header('Content-type: text/xml; charset=UTF-8');
     echo $response;
