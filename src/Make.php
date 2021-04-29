@@ -41,6 +41,10 @@ class Make
      */
     public $xml;
     /**
+     * @var stdClass
+     */
+    public $stdTot;
+    /**
      * @var string
      */
     protected $version;
@@ -272,10 +276,6 @@ class Make
      * @var array of DOMElements
      */
     protected $aProcRef = [];
-    /**
-     * @var stdClass
-     */
-    protected $stdTot;
     /**
      * @var DOMElement
      */
