@@ -7464,20 +7464,11 @@ class Make
      */
     protected function equilizeParameters(stdClass $std, $possible)
     {
-        $arr = get_object_vars($std);
-        foreach ($possible as $key) {
-            if (!array_key_exists($key, $arr)) {
-                $std->$key = null;
-            } else {
-                if (is_string($std->$key)) {
-                    $std->$key = trim(Strings::replaceUnacceptableCharacters($std->$key));
-                    if ($this->replaceAccentedChars) {
-                        $std->$key = Strings::toASCII($std->$key);
-                    }
-                }
-            }
-        }
-        return $std;
+        return Strings::equilizeParameters(
+            $std,
+            $possible,
+            $this->replaceAccentedChars
+        );
     }
 
     /**
@@ -7504,24 +7495,4 @@ class Make
         }
         return null;
     }
-
-    /*
-    protected function conditionalNumberFormatting($value = null, array $decimal): string
-    {
-        if (!is_numeric($value)) {
-            return null;
-        }
-        $num = (float) $value;
-        $l = explode('.', $num);
-        $declen = 0;
-        if (!empty($l[1])) {
-            $declen = strlen($l[1]);
-        }
-        if ($declen < $decimal[0]) {
-            return number_format($num, $decimal[0], '.', '');
-        } elseif ($declen > $decimal[1]) {
-            return number_format($num, $decimal[1], '.', '');
-        }
-        return $num;
-    }*/
 }
