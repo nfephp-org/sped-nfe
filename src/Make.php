@@ -7195,15 +7195,20 @@ class Make
         foreach ($this->aDI as $nItem => $aDI) {
             $prod = $this->aProd[$nItem];
             foreach ($aDI as $child) {
-                $node = $prod->getElementsByTagName("xPed")->item(0);
-                if (!empty($node)) {
-                    $prod->insertBefore($child, $node);
+                $nodexped = $prod->getElementsByTagName("xPed")->item(0);
+                if (!empty($nodexped)) {
+                    $prod->insertBefore($child, $nodexped);
                 } else {
-                    $node = $prod->getElementsByTagName("FCI")->item(0);
-                    if (!empty($node)) {
-                        $prod->insertBefore($child, $node);
+                    $nodenItemPed = $prod->getElementsByTagName("nItemPed")->item(0);
+                    if (!empty($nodenItemPed)) {
+                        $prod->insertBefore($child, $nodenItemPed);
                     } else {
-                        $this->dom->appChild($prod, $child, "Inclusão do node DI");
+                        $node = $prod->getElementsByTagName("FCI")->item(0);
+                        if (!empty($node)) {
+                            $prod->insertBefore($child, $node);
+                        } else {
+                            $this->dom->appChild($prod, $child, "Inclusão do node DI");
+                        }
                     }
                 }
             }
