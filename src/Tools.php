@@ -309,14 +309,14 @@ class Tools extends ToolsCommon
      * If $uf is NOT empty ignore contingency mode
      * @param string $uf  initials of federation unit
      * @param int $tpAmb
+     * @param bool $ignoreContingency
      * @return string xml soap response
      */
-    public function sefazStatus($uf = '', $tpAmb = null)
+    public function sefazStatus($uf = '', $tpAmb = null, $ignoreContingency = true)
     {
         if (empty($tpAmb)) {
             $tpAmb = $this->tpAmb;
         }
-        $ignoreContingency = true;
         if (empty($uf)) {
             $uf = $this->config->siglaUF;
             $ignoreContingency = false;
