@@ -545,7 +545,7 @@
 	<xs:simpleType name="TPlaca">
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
-			<xs:pattern value="[A-Z]{2,3}[0-9]{4}|[A-Z]{3,4}[0-9]{3}"/>
+			<xs:pattern value="[A-Z]{2,3}[0-9]{4}|[A-Z]{3,4}[0-9]{3}|[A-Z0-9]{7}"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TCOrgaoIBGE">

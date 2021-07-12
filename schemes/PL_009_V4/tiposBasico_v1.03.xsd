@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by sas-softwares@procergs.rs.gov.br (PROCERGS) -->
 <!-- PL_006u - 21/07/14 - Inclusão do tipo Básico TPlaca // v2.0-->
 <!-- PL_006u - 06/05/14 - Alterações Fuso-Horario // v2.0-->
 <!-- PL_006h - 13/05/11 - correções da NT 2011/004  // v2.0-->
@@ -777,7 +778,7 @@ acrescentado:
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
-			<xs:pattern value="[!-ÿ]{1}[ -ÿ]{0,}[!-ÿ]{1}|[!-ÿ]{1}"/>
+			<xs:pattern value="[!-ÿ]{1}[ -ÿ]*[!-ÿ]{1}|[!-ÿ]{1}"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TData">
@@ -849,7 +850,22 @@ acrescentado:
 			<xs:enumeration value="90"/>
 			<xs:enumeration value="91"/>
 			<xs:enumeration value="92"/>
-			<xs:enumeration value="94"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TLatitude">
+		<xs:annotation>
+			<xs:documentation>Coordenada geográfica Latitude</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]\.[0-9]{6}|[1-8][0-9]\.[0-9]{6}|90\.[0-9]{6}|-[0-9]\.[0-9]{6}|-[1-8][0-9]\.[0-9]{6}|-90\.[0-9]{6}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TLongitude">
+		<xs:annotation>
+			<xs:documentation>Coordenada geográfica Longitude</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]\.[0-9]{6}|[1-9][0-9]\.[0-9]{6}|1[0-7][0-9]\.[0-9]{6}|180\.[0-9]{6}|-[0-9]\.[0-9]{6}|-[1-9][0-9]\.[0-9]{6}|-1[0-7][0-9]\.[0-9]{6}|-180\.[0-9]{6}"/>
 		</xs:restriction>
 	</xs:simpleType>
 </xs:schema>

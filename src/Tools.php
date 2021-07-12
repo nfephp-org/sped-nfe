@@ -662,24 +662,30 @@ class Tools extends ToolsCommon
         if (empty($std->verAplic) && !empty($this->verAplic)) {
             $std->verAplic = $this->verAplic;
         }
-        $hash = sha1($std->chNFe . $std->imagem);
+        $hash = base64_encode(sha1($std->chNFe . $std->imagem, true));
         $datahash = date('Y-m-d\TH:i:sP');
         $cod = UFList::getCodeByUF($this->config->siglaUF);
-        $tagAdic = "<cOrgaoAutor>{$cod}</cOrgaoAutor>"
-            . "<tpAutor>1</tpAutor>"
-            . "<verAplic>{$std->verAplic}</verAplic>"
-            . "<dhEntrega>{$std->data_recebimento}</dhEntrega>"
-            . "<nDoc>{$std->documento_recebedor}</nDoc>"
-            . "<xNome>{$std->nome_recebedor}</xNome>";
-        if (!empty($std->latitude) && !empty($std->longitude)) {
-            $tagAdic .= "<latGPS>{$std->latitude}</latGPS>"
-            . "<longGPS>{$std->longitude}</longGPS>";
-        }
-        $tagAdic .= "<hashComprovante>{$hash}</hashComprovante>"
-            . "<dhHashComprovante>{$datahash}</dhHashComprovante>";
-        $tpEvento = self::EVT_COMPROVANTE_ENTREGA;
-        if ($std->cancelar == true) {
+        $cancelar = !empty($std->cancelar) ? $std->cancelar : false;
+        if (!$cancelar) {
+            $tagAdic = "<cOrgaoAutor>{$cod}</cOrgaoAutor>"
+                . "<tpAutor>1</tpAutor>"
+                . "<verAplic>{$std->verAplic}</verAplic>"
+                . "<dhEntrega>{$std->data_recebimento}</dhEntrega>"
+                . "<nDoc>{$std->documento_recebedor}</nDoc>"
+                . "<xNome>{$std->nome_recebedor}</xNome>";
+            if (!empty($std->latitude) && !empty($std->longitude)) {
+                $tagAdic .= "<latGPS>{$std->latitude}</latGPS>"
+                    . "<longGPS>{$std->longitude}</longGPS>";
+            }
+            $tagAdic .= "<hashComprovante>{$hash}</hashComprovante>"
+                . "<dhHashComprovante>{$datahash}</dhHashComprovante>";
+            $tpEvento = self::EVT_COMPROVANTE_ENTREGA;
+        } else {
             $tpEvento = self::EVT_CANCELAMENTO_COMPROVANTE_ENTREGA;
+            $tagAdic = "<cOrgaoAutor>{$cod}</cOrgaoAutor>"
+                . "<tpAutor>1</tpAutor>"
+                . "<verAplic>{$std->verAplic}</verAplic>"
+                . "<nProtEvento>{$std->nProcEvento}</nProtEvento>";
         }
         return $this->sefazEvento(
             'AN',
@@ -870,8 +876,8 @@ class Tools extends ToolsCommon
             self::EVT_CANCELA => ['versao' => '1.00', 'nome' => 'envEventoCancNFe'],
             self::EVT_CANCELASUBSTITUICAO => ['versao' => '1.00', 'nome' => 'envEventoCancSubst'],
             self::EVT_ATORINTERESSADO => ['versao' => '1.00', 'nome' => 'envEventoAtorInteressado'],
-            self::EVT_COMPROVANTE_ENTREGA => ['versao' => '1.00', 'nome' => 'envEventoComprovanteEntrega'],
-            self::EVT_CANCELAMENTO_COMPROVANTE_ENTREGA => ['versao' => '1.00', 'nome' => 'envEventoComprovanteEntrega'],
+            self::EVT_COMPROVANTE_ENTREGA => ['versao' => '1.00', 'nome' => 'envEventoEntregaNFe'],
+            self::EVT_CANCELAMENTO_COMPROVANTE_ENTREGA => ['versao' => '1.00', 'nome' => 'envEventoCancEntregaNFe'],
             self::EVT_CIENCIA => ['versao' => '1.00', 'nome' => 'envConfRecebto'],
             self::EVT_CONFIRMACAO => ['versao' => '1.00', 'nome' => 'envConfRecebto'],
             self::EVT_DESCONHECIMENTO => ['versao' => '1.00', 'nome' => 'envConfRecebto'],
@@ -1123,11 +1129,11 @@ class Tools extends ToolsCommon
                 break;
             case self::EVT_COMPROVANTE_ENTREGA:
                 $std->alias = 'CompEntrega';
-                $std->desc = 'Comprovante de Entrega';
+                $std->desc = 'Comprovante de Entrega da NF-e';
                 break;
             case self::EVT_CANCELAMENTO_COMPROVANTE_ENTREGA:
                 $std->alias = 'CancCompEntrega';
-                $std->desc = 'Cancelamento do Comprovante de Entrega';
+                $std->desc = 'Cancelamento Comprovante de Entrega da NF-e';
                 break;
             case 111500:
             case 111501:
