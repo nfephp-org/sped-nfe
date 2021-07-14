@@ -5062,34 +5062,37 @@ class Make
                     true,
                     "[item $std->item] Código de Situação Tributária do PIS"
                 );
-                $this->dom->addChild(
-                    $pisItem,
-                    'vBC',
-                    $this->conditionalNumberFormatting($std->vBC),
-                    ($std->vBC !== null) ? true : false,
-                    "[item $std->item] Valor da Base de Cálculo do PIS"
-                );
-                $this->dom->addChild(
-                    $pisItem,
-                    'pPIS',
-                    $this->conditionalNumberFormatting($std->pPIS, 4),
-                    ($std->pPIS !== null) ? true : false,
-                    "[item $std->item] Alíquota do PIS (em percentual)"
-                );
-                $this->dom->addChild(
-                    $pisItem,
-                    'qBCProd',
-                    $this->conditionalNumberFormatting($std->qBCProd, 4),
-                    ($std->qBCProd !== null) ? true : false,
-                    "[item $std->item] Quantidade Vendida"
-                );
-                $this->dom->addChild(
-                    $pisItem,
-                    'vAliqProd',
-                    $this->conditionalNumberFormatting($std->vAliqProd, 4),
-                    ($std->vAliqProd !== null) ? true : false,
-                    "[item $std->item] Alíquota do PIS (em reais)"
-                );
+                if (!isset($std->qBCProd)) {
+                    $this->dom->addChild(
+                        $pisItem,
+                        'vBC',
+                        $this->conditionalNumberFormatting($std->vBC),
+                        ($std->vBC !== null) ? true : false,
+                        "[item $std->item] Valor da Base de Cálculo do PIS"
+                    );
+                    $this->dom->addChild(
+                        $pisItem,
+                        'pPIS',
+                        $this->conditionalNumberFormatting($std->pPIS, 4),
+                        ($std->pPIS !== null) ? true : false,
+                        "[item $std->item] Alíquota do PIS (em percentual)"
+                    );
+                } else {
+                    $this->dom->addChild(
+                        $pisItem,
+                        'qBCProd',
+                        $this->conditionalNumberFormatting($std->qBCProd, 4),
+                        ($std->qBCProd !== null) ? true : false,
+                        "[item $std->item] Quantidade Vendida"
+                    );
+                    $this->dom->addChild(
+                        $pisItem,
+                        'vAliqProd',
+                        $this->conditionalNumberFormatting($std->vAliqProd, 4),
+                        ($std->vAliqProd !== null) ? true : false,
+                        "[item $std->item] Alíquota do PIS (em reais)"
+                    );
+                }
                 $this->dom->addChild(
                     $pisItem,
                     'vPIS',
@@ -7104,34 +7107,37 @@ class Make
             true,
             "Código de Situação Tributária da COFINS"
         );
-        $this->dom->addChild(
-            $confinsoutr,
-            "vBC",
-            $this->conditionalNumberFormatting($std->vBC),
-            ($std->vBC !== null) ? true : false,
-            "Valor da Base de Cálculo da COFINS"
-        );
-        $this->dom->addChild(
-            $confinsoutr,
-            "pCOFINS",
-            $this->conditionalNumberFormatting($std->pCOFINS, 4),
-            ($std->pCOFINS !== null) ? true : false,
-            "Alíquota da COFINS (em percentual)"
-        );
-        $this->dom->addChild(
-            $confinsoutr,
-            "qBCProd",
-            $this->conditionalNumberFormatting($std->qBCProd, 4),
-            ($std->qBCProd !== null) ? true : false,
-            "Quantidade Vendida"
-        );
-        $this->dom->addChild(
-            $confinsoutr,
-            "vAliqProd",
-            $this->conditionalNumberFormatting($std->vAliqProd, 4),
-            ($std->vAliqProd !== null) ? true : false,
-            "Alíquota da COFINS (em reais)"
-        );
+        if (!isset($std->qBCProd)) {
+            $this->dom->addChild(
+                $confinsoutr,
+                "vBC",
+                $this->conditionalNumberFormatting($std->vBC),
+                ($std->vBC !== null) ? true : false,
+                "Valor da Base de Cálculo da COFINS"
+            );
+            $this->dom->addChild(
+                $confinsoutr,
+                "pCOFINS",
+                $this->conditionalNumberFormatting($std->pCOFINS, 4),
+                ($std->pCOFINS !== null) ? true : false,
+                "Alíquota da COFINS (em percentual)"
+            );
+        } else {
+            $this->dom->addChild(
+                $confinsoutr,
+                "qBCProd",
+                $this->conditionalNumberFormatting($std->qBCProd, 4),
+                ($std->qBCProd !== null) ? true : false,
+                "Quantidade Vendida"
+            );
+            $this->dom->addChild(
+                $confinsoutr,
+                "vAliqProd",
+                $this->conditionalNumberFormatting($std->vAliqProd, 4),
+                ($std->vAliqProd !== null) ? true : false,
+                "Alíquota da COFINS (em reais)"
+            );
+        }
         $this->dom->addChild(
             $confinsoutr,
             "vCOFINS",
