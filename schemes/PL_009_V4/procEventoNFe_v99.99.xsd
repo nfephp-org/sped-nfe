@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/nfe" targetNamespace="http://www.portalfiscal.inf.br/nfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v1.01.xsd"/>
+	<xs:include schemaLocation="envCancelPProrrogNFe_v1.0.xsd"/>
+	<xs:include schemaLocation="retEnvCancelPProrrogNFe_v1.0.xsd"/>
+	<xs:element name="procEventoNFe">
+	  <xs:complexType>
+		<xs:sequence>
+			<xs:element name="evento">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="envEvento" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="retEvento">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="retEnvEvento" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="versao">
+			<xs:annotation>
+			  <xs:documentation>Versão do leiaute</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:whiteSpace value="preserve"/>
+					<xs:pattern value="[0-9]{2}\.[0-9]{2}"/>
+				</xs:restriction>
+			</xs:simpleType>
+	    </xs:attribute>
+	  </xs:complexType>
+	</xs:element>
+</xs:schema>

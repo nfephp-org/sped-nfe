@@ -802,7 +802,10 @@ class Tools extends ToolsCommon
         $dest = $dom->getElementsByTagName('dest')->item(0);
         $cOrgaoAutor = UFList::getCodeByUF($this->config->siglaUF);
         $chNFe = substr($infNFe->getAttribute('Id'), 3, 44);
-        
+        $ufchave = substr($chNFe, 0, 2);
+        if ($cOrgaoAutor !== $ufchave) {
+            throw new RuntimeException("O autor [{$cOrgaoAutor}] não é da mesma UF que a NFe [{$ufchave}]");
+        }
         // EPEC
         $dhEmi = $dom->getElementsByTagName('dhEmi')->item(0)->nodeValue;
         $tpNF = $dom->getElementsByTagName('tpNF')->item(0)->nodeValue;
@@ -886,6 +889,7 @@ class Tools extends ToolsCommon
             self::EVT_PRORROGACAO_2 => ['versao' => '1.00', 'nome' => 'envRemIndus'],
             self::EVT_CANCELA_PRORROGACAO_1 => ['versao' => '1.00', 'nome' => 'envRemIndus'],
             self::EVT_CANCELA_PRORROGACAO_2 => ['versao' => '1.00', 'nome' => 'envRemIndus'],
+            self::EVT_EPEC => ['versao' => '1.00', 'nome' => 'envEPEC'],
         ];
         $verEvento = $this->urlVersion;
         if (!empty($eventos[$tpEvento])) {
@@ -947,6 +951,7 @@ class Tools extends ToolsCommon
         }
         $this->lastRequest = $request;
         //return $request;
+        
         $parameters = ['nfeDadosMsg' => $request];
         $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
         $this->lastResponse = $this->sendRequest($body, $parameters);
