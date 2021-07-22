@@ -803,10 +803,11 @@ class Tools extends ToolsCommon
         $cOrgaoAutor = UFList::getCodeByUF($this->config->siglaUF);
         $chNFe = substr($infNFe->getAttribute('Id'), 3, 44);
         $ufchave = substr($chNFe, 0, 2);
-        if ($cOrgaoAutor !== $ufchave) {
+        if ($cOrgaoAutor != $ufchave) {
             throw new RuntimeException("O autor [{$cOrgaoAutor}] não é da mesma UF que a NFe [{$ufchave}]");
         }
         // EPEC
+        $verProc= $dom->getElementsByTagName('verProc')->item(0)->nodeValue;
         $dhEmi = $dom->getElementsByTagName('dhEmi')->item(0)->nodeValue;
         $tpNF = $dom->getElementsByTagName('tpNF')->item(0)->nodeValue;
         $emitIE = $emit->getElementsByTagName('IE')->item(0)->nodeValue;
@@ -821,7 +822,8 @@ class Tools extends ToolsCommon
         if (!empty($dID)) {
             $destID = "<CNPJ>$dID</CNPJ>";
         } else {
-            $dID = $dest->getElementsByTagName('CPF')->item(0)->nodeValue;
+            $dID = !empty($dest->getElementsByTagName('CPF')->item(0)->nodeValue)
+                ? $dest->getElementsByTagName('CPF')->item(0)->nodeValue : null;
             if (!empty($dID)) {
                 $destID = "<CPF>$dID</CPF>";
             } else {
@@ -838,8 +840,12 @@ class Tools extends ToolsCommon
         if (!empty($dIE)) {
             $destIE = "<IE>{$dIE}</IE>";
         }
-        if (empty($verAplic) && !empty($this->verAplic)) {
-            $verAplic = $this->verAplic;
+        if (empty($verAplic)) {
+            if (!empty($this->verAplic)) {
+                $verAplic = $this->verAplic;
+            } else {
+                $verAplic = $verProc;
+            }
         }
         $tagAdic = "<cOrgaoAutor>$cOrgaoAutor</cOrgaoAutor>"
             . "<tpAutor>1</tpAutor>"
