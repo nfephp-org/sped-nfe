@@ -1868,7 +1868,8 @@ class Make
             "cBarraTrib",
             $std->cBarraTrib ?? null,
             false,
-            $identificador . "[item $std->item] cBarraTrib Código de Barras da unidade tributável que seja diferente do padrão GTIN"
+            $identificador . "[item $std->item] cBarraTrib Código de Barras da "
+            . "unidade tributável que seja diferente do padrão GTIN"
         );
         $this->dom->addChild(
             $prod,
@@ -3455,21 +3456,24 @@ class Make
                     'pFCPDif',
                     $this->conditionalNumberFormatting($std->pFCPDif),
                     false,
-                    "$identificador [item $std->item] Percentual do diferimento do ICMS relativo ao Fundo de Combate à Pobreza (FCP)"
+                    "$identificador [item $std->item] Percentual do diferimento "
+                    . "do ICMS relativo ao Fundo de Combate à Pobreza (FCP)"
                 );
                 $this->dom->addChild(
                     $icms,
                     'vFCPDif',
                     $this->conditionalNumberFormatting($std->vFCPDif),
                     false,
-                    "$identificador [item $std->item] Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP) diferido"
+                    "$identificador [item $std->item] Valor do ICMS relativo ao "
+                    . "Fundo de Combate à Pobreza (FCP) diferido"
                 );
                 $this->dom->addChild(
                     $icms,
                     'vFCPEfet',
                     $this->conditionalNumberFormatting($std->vFCPEfet),
                     false,
-                    "$identificador [item $std->item] Valor efetivo do ICMS relativo ao Fundo de Combate à Pobreza (FCP)"
+                    "$identificador [item $std->item] Valor efetivo do ICMS relativo "
+                    . "ao Fundo de Combate à Pobreza (FCP)"
                 );
                 break;
             case '60':
@@ -5219,7 +5223,7 @@ class Make
         ];
         $std = $this->equilizeParameters($std, $possible);
         if ($std->indSomaPISST == 1) {
-            $this->stdTot->vPISST += $std->vPIS; 
+            $this->stdTot->vPISST += $std->vPIS;
         }
         $pisst = $this->dom->createElement('PISST');
         if (!isset($std->qBCProd)) {
@@ -5393,7 +5397,7 @@ class Make
         ];
         $std = $this->equilizeParameters($std, $possible);
         if ($std->indSomaCOFINSST == 1) {
-            $this->stdTot->vCOFINSST += $std->vCOFINS; 
+            $this->stdTot->vCOFINSST += $std->vCOFINS;
         }
         $cofinsst = $this->dom->createElement("COFINSST");
         if (!isset($std->qBCProd)) {
