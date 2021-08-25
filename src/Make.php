@@ -2908,7 +2908,7 @@ class Make
             'vICMSEfet',
             'vICMSSubstituto',
             'vICMSSTDeson',
-            'motDesICMSST ',
+            'motDesICMSST',
             'pFCPDif',
             'vFCPDif',
             'vFCPEfet',
