@@ -2329,7 +2329,7 @@ class Make
         $this->dom->addChild(
             $rastro,
             "cAgreg",
-            Strings::onlyNumbers($std->cAgreg),
+            $std->cAgreg,
             false,
             $identificador . "[item $std->item] Código de Agregação"
         );
