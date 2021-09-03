@@ -318,6 +318,7 @@ class Make
         $this->stdTot->vII = 0;
         $this->stdTot->vIPI = 0;
         $this->stdTot->vIPIDevol = 0;
+        $this->stdTot->vServ = 0;
         $this->stdTot->vPIS = 0;
         $this->stdTot->vCOFINS = 0;
         $this->stdTot->vPISST = 0;
@@ -3358,6 +3359,8 @@ class Make
                 );
                 break;
             case '51':
+                $this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
+                
                 $icms = $this->dom->createElement("ICMS51");
                 $this->dom->addChild(
                     $icms,
@@ -5873,6 +5876,8 @@ class Make
             'cRegTrib'
         ];
         $std = $this->equilizeParameters($std, $possible);
+        $this->stdTot->vServ = (float) round($std->vServ, 2) ?? 0;
+        
         $this->buildTotal();
         $ISSQNTot = $this->dom->createElement("ISSQNtot");
         $this->dom->addChild(
@@ -7447,19 +7452,7 @@ class Make
         if (empty($this->total)) {
             $this->total = $this->dom->createElement("total");
         }
-
-        $this->stdTot->vNF = $this->stdTot->vProd
-            - $this->stdTot->vDesc
-            + $this->stdTot->vST
-            + $this->stdTot->vFCPST
-            + $this->stdTot->vFrete
-            + $this->stdTot->vSeg
-            + $this->stdTot->vOutro
-            + $this->stdTot->vII
-            + $this->stdTot->vIPI
-            + $this->stdTot->vIPIDevol
-            + $this->stdTot->vPISST
-            + $this->stdTot->vCOFINSST;
+        
         //round all values
         $this->stdTot->vBC = round($this->stdTot->vBC, 2);
         $this->stdTot->vICMS = round($this->stdTot->vICMS, 2);
@@ -7484,6 +7477,21 @@ class Make
         $this->stdTot->vOutro = round($this->stdTot->vOutro, 2);
         $this->stdTot->vNF = round($this->stdTot->vNF, 2);
         $this->stdTot->vTotTrib = round($this->stdTot->vTotTrib, 2);
+        
+        $this->stdTot->vNF = $this->stdTot->vProd
+            - $this->stdTot->vDesc
+            - $this->stdTot->vICMSDeson
+            + $this->stdTot->vST
+            + $this->stdTot->vFCPST
+            + $this->stdTot->vFrete
+            + $this->stdTot->vSeg
+            + $this->stdTot->vOutro
+            + $this->stdTot->vII
+            + $this->stdTot->vIPI
+            + $this->stdTot->vIPIDevol
+            + $this->stdTot->vServ
+            + $this->stdTot->vPISST
+            + $this->stdTot->vCOFINSST;
     }
 
     /**
