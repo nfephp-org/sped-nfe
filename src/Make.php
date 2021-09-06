@@ -45,6 +45,10 @@ class Make
      */
     public $stdTot;
     /**
+     * @var stdClass
+     */
+    protected $stdISSQNTot;
+    /**
      * @var string
      */
     protected $version;
@@ -318,7 +322,7 @@ class Make
         $this->stdTot->vII = 0;
         $this->stdTot->vIPI = 0;
         $this->stdTot->vIPIDevol = 0;
-        $this->stdTot->vServ = 0;
+        // $this->stdTot->vServ = 0;
         $this->stdTot->vPIS = 0;
         $this->stdTot->vCOFINS = 0;
         $this->stdTot->vPISST = 0;
@@ -326,6 +330,20 @@ class Make
         $this->stdTot->vOutro = 0;
         $this->stdTot->vNF = 0;
         $this->stdTot->vTotTrib = 0;
+
+        $this->stdISSQNTot = new \stdClass();
+        $this->stdISSQNTot->vServ = 0;
+        $this->stdISSQNTot->vBC = 0;
+        $this->stdISSQNTot->vISS = 0;
+        $this->stdISSQNTot->vPIS = 0;
+        $this->stdISSQNTot->vCOFINS = 0;
+        $this->stdISSQNTot->dCompet = date('Y-m-d');
+        $this->stdISSQNTot->vDeducao = 0;
+        $this->stdISSQNTot->vOutro = 0;
+        $this->stdISSQNTot->vDescIncond = 0;
+        $this->stdISSQNTot->vDescCond = 0;
+        $this->stdISSQNTot->vISSRet = 0;
+        $this->stdISSQNTot->cRegTrib = 0;
     }
 
     /**
@@ -422,6 +440,11 @@ class Make
         if (empty($this->total)) {
             $std = new \stdClass();
             $this->tagICMSTot($std);
+        }
+        // se houver valor de serviços, força a criação da tag ISSQNTot
+        if ($this->stdISSQNTot->vServ > 0.0) {
+            $std = new \stdClass();
+            $this->tagISSQNTot($std);
         }
         //[28a] tag total (326 W01)
         $this->dom->appChild($this->infNFe, $this->total, 'Falta tag "infNFe"');
@@ -1705,9 +1728,10 @@ class Make
      * NOTA: Ajustado para NT2016_002_v1.30
      * NOTA: Ajustado para NT2020_005_v1.20
      * @param stdClass $std
+     * @param stdClass $stdImposto uma das tags (tagISSQN_U01 ou tagICMS_N01), para poder diferir de um Produto ou Serviço
      * @return DOMElement
      */
-    public function tagprod(stdClass $std)
+    public function tagprod(stdClass $std, stdClass $stdImposto = null)
     {
         $possible = [
             'item',
@@ -1740,7 +1764,16 @@ class Make
         $std = $this->equilizeParameters($std, $possible);
         //totalizador
         if ($std->indTot == 1) {
-            $this->stdTot->vProd += (float) $std->vProd;
+
+            // se houver a tag de imposto informada e exite o valor de serviço, consideramos como um serviço
+            if ($stdImposto && property_exists($stdImposto, 'vISSQN')) {
+                $this->stdISSQNTot->vServ += (float) $std->vProd;
+            }
+
+            // caso contrário, consideramos como um produto
+            else {
+                $this->stdTot->vProd += (float) $std->vProd;
+            }
         }
         $this->stdTot->vFrete += (float) $std->vFrete;
         $this->stdTot->vSeg += (float) $std->vSeg;
@@ -3360,7 +3393,7 @@ class Make
                 break;
             case '51':
                 $this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
-                
+
                 $icms = $this->dom->createElement("ICMS51");
                 $this->dom->addChild(
                     $icms,
@@ -5041,7 +5074,7 @@ class Make
             'vAliqProd'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         switch ($std->CST) {
             case '01':
             case '02':
@@ -5480,6 +5513,11 @@ class Make
             'indIncentivo'
         ];
         $std = $this->equilizeParameters($std, $possible);
+
+        // Adiciona o totalizador
+        $this->stdISSQNTot->vBC += (float) ($std->vBC ?? 0.0);
+        $this->stdISSQNTot->vISS += (float) ($std->vISSQN ?? 0.0);
+
         $issqn = $this->dom->createElement("ISSQN");
         $this->dom->addChild(
             $issqn,
@@ -5861,106 +5899,123 @@ class Make
      */
     public function tagISSQNTot(stdClass $std)
     {
-        $possible = [
-            'vServ',
-            'vBC',
-            'vISS',
-            'vPIS',
-            'vCOFINS',
-            'dCompet',
-            'vDeducao',
-            'vOutro',
-            'vDescIncond',
-            'vDescCond',
-            'vISSRet',
-            'cRegTrib'
-        ];
-        $std = $this->equilizeParameters($std, $possible);
-        $this->stdTot->vServ = (float) round($std->vServ, 2) ?? 0;
-        
+        // $possible = [
+        //     'vServ',
+        //     'vBC',
+        //     'vISS',
+        //     'vPIS',
+        //     'vCOFINS',
+        //     'dCompet',
+        //     'vDeducao',
+        //     'vOutro',
+        //     'vDescIncond',
+        //     'vDescCond',
+        //     'vISSRet',
+        //     'cRegTrib'
+        // ];
+
+        // $std = $this->equilizeParameters($std, $possible);
+        // $this->stdTot->vServ = (float) round($std->vServ, 2) ?? 0;
+
         $this->buildTotal();
+
+        $vServ = isset($std->vServ) ? $std->vServ : $this->stdISSQNTot->vServ;
+        $vBC = isset($std->vBC) ? $std->vBC : $this->stdISSQNTot->vBC;
+        $vISS = isset($std->vISS) ? $std->vISS : $this->stdISSQNTot->vISS;
+
+        // As Tags abaixo não precisam ser criadas se o valor for zerado
+        $vPIS = (isset($std->vPIS) ? $std->vPIS : $this->stdISSQNTot->vPIS) ?: null;
+        $vCOFINS = (isset($std->vCOFINS) ? $std->vCOFINS : $this->stdISSQNTot->vCOFINS) ?: null;
+        $dCompet = (isset($std->dCompet) ? $std->dCompet : $this->stdISSQNTot->dCompet) ?: null;
+        $vDeducao = (isset($std->vDeducao) ? $std->vDeducao : $this->stdISSQNTot->vDeducao) ?: null;
+        $vOutro = (isset($std->vOutro) ? $std->vOutro : $this->stdISSQNTot->vOutro) ?: null;
+        $vDescIncond = (isset($std->vDescIncond) ? $std->vDescIncond : $this->stdISSQNTot->vDescIncond) ?: null;
+        $vDescCond = (isset($std->vDescCond) ? $std->vDescCond : $this->stdISSQNTot->vDescCond) ?: null;
+        $vISSRet = (isset($std->vISSRet) ? $std->vISSRet : $this->stdISSQNTot->vISSRet) ?: null;
+        $cRegTrib = (isset($std->cRegTrib) ? $std->cRegTrib : $this->stdISSQNTot->cRegTrib) ?: null;
+
         $ISSQNTot = $this->dom->createElement("ISSQNtot");
         $this->dom->addChild(
             $ISSQNTot,
             "vServ",
-            $this->conditionalNumberFormatting($std->vServ),
+            $this->conditionalNumberFormatting($vServ),
             false,
             "Valor total dos Serviços sob não incidência ou não tributados pelo ICMS"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vBC",
-            $this->conditionalNumberFormatting($std->vBC),
+            $this->conditionalNumberFormatting($vBC),
             false,
             "Valor total Base de Cálculo do ISS"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vISS",
-            $this->conditionalNumberFormatting($std->vISS),
+            $this->conditionalNumberFormatting($vISS),
             false,
             "Valor total do ISS"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vPIS",
-            $this->conditionalNumberFormatting($std->vPIS),
+            $this->conditionalNumberFormatting($vPIS),
             false,
             "Valor total do PIS sobre serviços"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vCOFINS",
-            $this->conditionalNumberFormatting($std->vCOFINS),
+            $this->conditionalNumberFormatting($vCOFINS),
             false,
             "Valor total da COFINS sobre serviços"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "dCompet",
-            $std->dCompet,
+            $dCompet,
             true,
             "Data da prestação do serviço"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vDeducao",
-            $this->conditionalNumberFormatting($std->vDeducao),
+            $this->conditionalNumberFormatting($vDeducao),
             false,
             "Valor total dedução para redução da Base de Cálculo"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vOutro",
-            $this->conditionalNumberFormatting($std->vOutro),
+            $this->conditionalNumberFormatting($vOutro),
             false,
             "Valor total outras retenções"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vDescIncond",
-            $this->conditionalNumberFormatting($std->vDescIncond),
+            $this->conditionalNumberFormatting($vDescIncond),
             false,
             "Valor total desconto incondicionado"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vDescCond",
-            $this->conditionalNumberFormatting($std->vDescCond),
+            $this->conditionalNumberFormatting($vDescCond),
             false,
             "Valor total desconto condicionado"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vISSRet",
-            $this->conditionalNumberFormatting($std->vISSRet),
+            $this->conditionalNumberFormatting($vISSRet),
             false,
             "Valor total retenção ISS"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "cRegTrib",
-            $std->cRegTrib,
+            $cRegTrib,
             false,
             "Código do Regime Especial de Tributação"
         );
@@ -6547,7 +6602,7 @@ class Make
         }
         return $detPag;
     }
-    
+
     /**
      * Dados do intermediador
      *
@@ -7452,7 +7507,7 @@ class Make
         if (empty($this->total)) {
             $this->total = $this->dom->createElement("total");
         }
-        
+
         //round all values
         $this->stdTot->vBC = round($this->stdTot->vBC, 2);
         $this->stdTot->vICMS = round($this->stdTot->vICMS, 2);
@@ -7477,7 +7532,7 @@ class Make
         $this->stdTot->vOutro = round($this->stdTot->vOutro, 2);
         $this->stdTot->vNF = round($this->stdTot->vNF, 2);
         $this->stdTot->vTotTrib = round($this->stdTot->vTotTrib, 2);
-        
+
         $this->stdTot->vNF = $this->stdTot->vProd
             - $this->stdTot->vDesc
             - $this->stdTot->vICMSDeson
@@ -7489,7 +7544,8 @@ class Make
             + $this->stdTot->vII
             + $this->stdTot->vIPI
             + $this->stdTot->vIPIDevol
-            + $this->stdTot->vServ
+            // + $this->stdTot->vServ
+            + $this->stdISSQNTot->vServ
             + $this->stdTot->vPISST
             + $this->stdTot->vCOFINSST;
     }
@@ -7616,7 +7672,7 @@ class Make
         $comb = $CSRT . $this->chNFe;
         return base64_encode(sha1($comb, true));
     }
-    
+
     /**
      * Formatação numerica condicional
      * @param string|float|int|null $value
