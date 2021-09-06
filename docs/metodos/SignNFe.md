@@ -1,6 +1,6 @@
 # ASSINATURA DE NFe
 
-Realiza a ssinatura digital do XML com o certificado A1.
+Realiza assinatura digital do XML com o certificado A1.
 
 **Função:** Para um documento ser aceito pelas SEFAZ é necessária a assinatura para a garantia de autenticidade.
 
