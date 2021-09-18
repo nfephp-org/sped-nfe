@@ -1715,6 +1715,7 @@ class Make
             'cEAN',
             'cBarra',
             'xProd',
+            'CEST',
             'NCM',
             'cBenef',
             'EXTIPI',
@@ -1797,6 +1798,13 @@ class Make
             $xProd,
             true,
             $identificador . "[item $std->item] Descrição do produto ou serviço"
+        );
+        $this->dom->addChild(
+            $prod,
+            "CEST",
+            $std->CEST,
+            false,
+            $identificador . "[item $std->item] Código CEST com 7 dígitos"
         );
         $this->dom->addChild(
             $prod,
