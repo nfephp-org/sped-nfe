@@ -105,6 +105,14 @@ class Standardize
                 return $key;
             }
         }
+        $result = $dom->getElementsByTagName('nfeResultMsg')->item(0);
+        if (!empty($result)) {
+            $cont = $result->textContent;
+            if (empty($cont)) {
+                throw new Exception('O retorno da SEFAZ veio em BRANCO, '
+                    . 'ou seja devido a um erro ou instabilidade na própria SEFAZ.');
+            }
+        }
         //documento does not belong to the SPED-NFe project
         throw DocumentsException::wrongDocument(7);
     }
@@ -173,7 +181,7 @@ class Standardize
     }
 
     /**
-     * Retruns JSON string form XML
+     * Returns JSON string form XML
      * @param string $xml
      * @return string
      */

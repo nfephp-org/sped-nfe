@@ -1776,7 +1776,7 @@ class Parser
 
     /**
      * Creates tag detPag and card [YA]
-     * YA|tPag|vPag|CNPJ|tBand|cAut|tpIntegra|
+     * YA|tPag|vPag|CNPJ|tBand|cAut|tpIntegra|xPag|
      * SEBRAE
      * YA|troco|
      * @param stdClass $std
@@ -1801,8 +1801,16 @@ class Parser
     {
         $this->make->tagdetPag($std);
     }
-
-
+    
+    /**
+     * Create tag infIntermed [YB]
+     * YB|CNPJ|idCadIntTran
+     * @param type $std
+     */
+    protected function ybEntity($std)
+    {
+        $this->make->tagIntermed($std);
+    }
 
     /**
      * Create a tag infAdic [Z]

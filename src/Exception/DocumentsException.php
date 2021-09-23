@@ -30,7 +30,8 @@ class DocumentsException extends \InvalidArgumentException implements ExceptionI
         14 => "Falha na validação do TXT:\n {{msg}}.",
         15 => "Um TXT de NFe deve ser passado como parâmetro, e nada foi passado.",
         16 => "O txt tem um campo não definido {{msg}}",
-        17 => "O txt não está no formato adequado."
+        17 => "O txt não está no formato adequado.",
+        18 => "Houve rejeição! {{msg}}",
     ];
 
     public static function wrongDocument($code, $msg = '')

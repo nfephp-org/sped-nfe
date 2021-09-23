@@ -1,0 +1,186 @@
+<NFe xmlns="http://www.portalfiscal.inf.br/nfe">
+    <infNFe Id="NFe35210452567322000119550010000000224922299865" versao="4.00">
+        <ide>
+            <cUF>35</cUF>
+            <cNF>92229986</cNF>
+            <natOp>VENDA PRODUTO</natOp>
+            <mod>55</mod>
+            <serie>1</serie>
+            <nNF>22</nNF>
+            <dhEmi>2021-04-26T17:20:47-03:00</dhEmi>
+            <tpNF>1</tpNF>
+            <idDest>1</idDest>
+            <cMunFG>3550308</cMunFG>
+            <tpImp>1</tpImp>
+            <tpEmis>4</tpEmis>
+            <cDV>5</cDV>
+            <tpAmb>2</tpAmb>
+            <finNFe>1</finNFe>
+            <indFinal>0</indFinal>
+            <indPres>9</indPres>
+            <indIntermed>0</indIntermed>
+            <procEmi>0</procEmi>
+            <verProc>4.13</verProc>
+            <dhCont>2021-04-27T17:07:56-03:00</dhCont>
+            <xJust>SEFAZ fora do AR</xJust>
+        </ide>
+        <emit>
+            <CNPJ>52567322000119</CNPJ>
+            <xNome>FAKE LTDA</xNome>
+            <xFant>FIMATEC</xFant>
+            <enderEmit>
+                <xLgr>RUA DOS ANONIMOS</xLgr>
+                <nro>100</nro>
+                <xCpl>SALA 2</xCpl>
+                <xBairro>IPIRANGA</xBairro>
+                <cMun>3550308</cMun>
+                <xMun>SAO PAULO</xMun>
+                <UF>SP</UF>
+                <CEP>04207132</CEP>
+                <cPais>1058</cPais>
+                <xPais>Brasil</xPais>
+                <fone>1120555555</fone>
+            </enderEmit>
+            <IE>113421114210</IE>
+            <IM>99753940</IM>
+            <CNAE>0131380</CNAE>
+            <CRT>3</CRT>
+        </emit>
+        <dest>
+            <CNPJ>07677840000131</CNPJ>
+            <xNome>NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL</xNome>
+            <enderDest>
+                <xLgr>RUA UM</xLgr>
+                <nro>323</nro>
+                <xBairro>BRAS</xBairro>
+                <cMun>3550308</cMun>
+                <xMun>SAO PAULO</xMun>
+                <UF>SP</UF>
+                <CEP>03040210</CEP>
+                <cPais>1058</cPais>
+                <xPais>Brasil</xPais>
+                <fone>99999999</fone>
+            </enderDest>
+            <indIEDest>1</indIEDest>
+            <IE>11433235443</IE>
+            <email>seila@seila.com.br</email>
+        </dest>
+        <det nItem="1">
+            <prod>
+                <cProd>1234</cProd>
+                <cEAN>SEM GTIN</cEAN>
+                <xProd>DALIA</xProd>
+                <NCM>60063210</NCM>
+                <CFOP>5101</CFOP>
+                <uCom>KG</uCom>
+                <qCom>1.0000</qCom>
+                <vUnCom>15.0000000000</vUnCom>
+                <vProd>15.00</vProd>
+                <cEANTrib>SEM GTIN</cEANTrib>
+                <uTrib>KG</uTrib>
+                <qTrib>1.0000</qTrib>
+                <vUnTrib>15.0000000000</vUnTrib>
+                <indTot>1</indTot>
+            </prod>
+            <imposto>
+                <ICMS>
+                    <ICMS20>
+                        <orig>0</orig>
+                        <CST>20</CST>
+                        <modBC>3</modBC>
+                        <pRedBC>33.3300</pRedBC>
+                        <vBC>10.00</vBC>
+                        <pICMS>18.0000</pICMS>
+                        <vICMS>1.80</vICMS>
+                    </ICMS20>
+                </ICMS>
+                <IPI>
+                    <cEnq>122</cEnq>
+                    <IPINT>
+                        <CST>55</CST>
+                    </IPINT>
+                </IPI>
+                <PIS>
+                    <PISAliq>
+                        <CST>01</CST>
+                        <vBC>15.00</vBC>
+                        <pPIS>1.6500</pPIS>
+                        <vPIS>0.25</vPIS>
+                    </PISAliq>
+                </PIS>
+                <COFINS>
+                    <COFINSAliq>
+                        <CST>01</CST>
+                        <vBC>15.00</vBC>
+                        <pCOFINS>7.6000</pCOFINS>
+                        <vCOFINS>1.14</vCOFINS>
+                    </COFINSAliq>
+                </COFINS>
+            </imposto>
+            <infAdProd>LOTE 1234</infAdProd>
+        </det>
+        <total>
+            <ICMSTot>
+                <vBC>10.00</vBC>
+                <vICMS>1.80</vICMS>
+                <vICMSDeson>0.00</vICMSDeson>
+                <vFCP>0.00</vFCP>
+                <vBCST>0.00</vBCST>
+                <vST>0.00</vST>
+                <vFCPST>0.00</vFCPST>
+                <vFCPSTRet>0.00</vFCPSTRet>
+                <vProd>15.00</vProd>
+                <vFrete>0.00</vFrete>
+                <vSeg>0.00</vSeg>
+                <vDesc>0.00</vDesc>
+                <vII>0.00</vII>
+                <vIPI>0.00</vIPI>
+                <vIPIDevol>0.00</vIPIDevol>
+                <vPIS>0.25</vPIS>
+                <vCOFINS>1.14</vCOFINS>
+                <vOutro>0.00</vOutro>
+                <vNF>15.00</vNF>
+            </ICMSTot>
+        </total>
+        <transp>
+            <modFrete>0</modFrete>
+        </transp>
+        <pag>
+            <detPag>
+                <indPag>1</indPag>
+                <tPag>01</tPag>
+                <vPag>15.00</vPag>
+            </detPag>
+            <vTroco>0.00</vTroco>
+        </pag>
+        <infAdic>
+            <infAdFisco>SAIDA COM SUSPENSAO DO IPI CONFORME ART 29 DA LEI 10.637 BC RED EM 33,33% CFE ART 52, ANEXO II RICMS/00 E DECRETO 62.560 de 05-05-2017</infAdFisco>
+        </infAdic>
+        <infRespTec>
+            <CNPJ>52567322000119</CNPJ>
+            <xContato>Fulano de Tal</xContato>
+            <email>fulano@fake.com.br</email>
+            <fone>1120555555</fone>
+        </infRespTec>
+    </infNFe>
+    <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+        <SignedInfo>
+            <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+            <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+            <Reference URI="#NFe35210452567322000119550010000000224922299865">
+                <Transforms>
+                    <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                    <Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+                </Transforms>
+                <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+                <DigestValue>ReBcPBnN/NEZ2EemNARy30sLbFc=</DigestValue>
+            </Reference>
+        </SignedInfo>
+        <SignatureValue>qmAJjSvF2MgsNLOzCGXbK+QAJlz85/siEBJEqZvImnSjvunwMpR3dSDn2qwLFjw5SfN+r4selfQPKy5X8NeePlaIuXHX2lYAzFeFxGzmkIm86uKhJHdmgB3q0AkovofhpMWVrMsh1k3lj1BjA5pmbuYLAh3R7DZe4Yh77oXwraY=</SignatureValue>
+        <KeyInfo>
+            <X509Data>
+                <X509Certificate>MIIEqzCCA5OgAwIBAgIDMTg4MA0GCSqGSIb3DQEBBQUAMIGSMQswCQYDVQQGEwJCUjELMAkGA1UECBMCUlMxFTATBgNVBAcTDFBvcnRvIEFsZWdyZTEdMBsGA1UEChMUVGVzdGUgUHJvamV0byBORmUgUlMxHTAbBgNVBAsTFFRlc3RlIFByb2pldG8gTkZlIFJTMSEwHwYDVQQDExhORmUgLSBBQyBJbnRlcm1lZGlhcmlhIDEwHhcNMDkwNTIyMTcwNzAzWhcNMTAxMDAyMTcwNzAzWjCBnjELMAkGA1UECBMCUlMxHTAbBgNVBAsTFFRlc3RlIFByb2pldG8gTkZlIFJTMR0wGwYDVQQKExRUZXN0ZSBQcm9qZXRvIE5GZSBSUzEVMBMGA1UEBxMMUE9SVE8gQUxFR1JFMQswCQYDVQQGEwJCUjEtMCsGA1UEAxMkTkZlIC0gQXNzb2NpYWNhbyBORi1lOjk5OTk5MDkwOTEwMjcwMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCx1O/e1Q+xh+wCoxa4pr/5aEFt2dEX9iBJyYu/2a78emtorZKbWeyK435SRTbHxHSjqe1sWtIhXBaFa2dHiukT1WJyoAcXwB1GtxjT2VVESQGtRiujMa+opus6dufJJl7RslAjqN/ZPxcBXaezt0nHvnUB/uB1K8WT9G7ES0V17wIDAQABo4IBfjCCAXowIgYDVR0jAQEABBgwFoAUPT5TqhNWAm+ZpcVsvB7malDBjEQwDwYDVR0TAQH/BAUwAwEBADAPBgNVHQ8BAf8EBQMDAOAAMAwGA1UdIAEBAAQCMAAwgawGA1UdEQEBAASBoTCBnqA4BgVgTAEDBKAvBC0yMjA4MTk3Nzk5OTk5OTk5OTk5MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDCgEgYFYEwBAwKgCQQHREZULU5GZaAZBgVgTAEDA6AQBA45OTk5OTA5MDkxMDI3MKAXBgVgTAEDB6AOBAwwMDAwMDAwMDAwMDCBGmRmdC1uZmVAcHJvY2VyZ3MucnMuZ292LmJyMCAGA1UdJQEB/wQWMBQGCCsGAQUFBwMCBggrBgEFBQcDBDBTBgNVHR8BAQAESTBHMEWgQ6BBhj9odHRwOi8vbmZlY2VydGlmaWNhZG8uc2VmYXoucnMuZ292LmJyL0xDUi9BQ0ludGVybWVkaWFyaWEzOC5jcmwwDQYJKoZIhvcNAQEFBQADggEBAJFytXuiS02eJO0iMQr/Hi+Ox7/vYiPewiDL7s5EwO8A9jKx9G2Baz0KEjcdaeZk9a2NzDEgX9zboPxhw0RkWahVCP2xvRFWswDIa2WRUT/LHTEuTeKCJ0iF/um/kYM8PmWxPsDWzvsCCRp146lc0lz9LGm5ruPVYPZ/7DAoimUk3bdCMW/rzkVYg7iitxHrhklxH7YWQHUwbcqPt7Jv0RJxclc1MhQlV2eM2MO1iIlk8Eti86dRrJVoicR1bwc6/YDqDp4PFONTi1ddewRu6elGS74AzCcNYRSVTINYiZLpBZO0uivrnTEnsFguVnNtWb9MAHGt3tkR0gAVs6S0fm8=</X509Certificate>
+            </X509Data>
+        </KeyInfo>
+    </Signature>
+</NFe>

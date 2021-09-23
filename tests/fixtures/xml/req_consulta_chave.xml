@@ -1,1 +1,16 @@
-<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://www.w3.org/2003/05/soap-envelope"><soap:Header><nfeCabecMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NfeConsulta2"><cUF>35</cUF><versaoDados>3.10</versaoDados></nfeCabecMsg></soap:Header><soap:Body><nfeDadosMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NfeConsulta2"><consSitNFe xmlns="http://www.portalfiscal.inf.br/nfe" versao="3.10"><tpAmb>2</tpAmb><xServ>CONSULTAR</xServ><chNFe>35150300822602000124550010009923461099234656</chNFe></consSitNFe></nfeDadosMsg></soap:Body></soap:Envelope>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://www.w3.org/2003/05/soap-envelope"><soap:Header>
+    <nfeCabecMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NfeConsulta2">
+        <cUF>35</cUF>
+        <versaoDados>3.10</versaoDados>
+    </nfeCabecMsg>
+</soap:Header>
+<soap:Body>
+    <nfeDadosMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NfeConsulta2">
+        <consSitNFe xmlns="http://www.portalfiscal.inf.br/nfe" versao="3.10">
+            <tpAmb>2</tpAmb>
+            <xServ>CONSULTAR</xServ>
+            <chNFe>35150300822602000124550010009923461099234656</chNFe>
+        </consSitNFe>
+    </nfeDadosMsg>
+</soap:Body>
+</soap:Envelope>

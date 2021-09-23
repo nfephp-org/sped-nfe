@@ -1,7 +1,7 @@
 {
     "NOTAFISCAL":"NOTAFISCAL|qtd|",
     "A":"A|versao|Id|pk_nItem|",
-    "B":"B|cUF|cNF|natOp|mod|serie|nNF|dhEmi|dhSaiEnt|tpNF|idDest|cMunFG|tpImp|tpEmis|cDV|tpAmb|finNFe|indFinal|indPres|procEmi|verProc|dhCont|xJust|",
+    "B":"B|cUF|cNF|natOp|mod|serie|nNF|dhEmi|dhSaiEnt|tpNF|idDest|cMunFG|tpImp|tpEmis|cDV|tpAmb|finNFe|indFinal|indPres|indIntermed|procEmi|verProc|dhCont|xJust|",
     "BA":"BA|",
     "BA02":"BA02|refNFe|",
     "BA03":"BA03|cUF|AAMM|CNPJ|mod|serie|nNF|",
@@ -114,6 +114,7 @@
     "Y02":"Y02|nFat|vOrig|vDesc|vLiq|",
     "Y07":"Y07|nDup|dVenc|vDup|",
     "YA":"YA|indPag|tPag|vPag|CNPJ|tBand|cAut|tpIntegra|",
+    "YB":"YB|CNPJ|idCadIntTran|",
     "Z":"Z|infAdFisco|infCpl|",
     "Z04":"Z04|xCampo|xTexto|",
     "Z07":"Z07|xCampo|xTexto|",

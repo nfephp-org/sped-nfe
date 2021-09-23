@@ -9,7 +9,7 @@ namespace NFePHP\NFe;
  *
  * @category  API
  * @package   NFePHP\NFe\
- * @copyright Copyright (c) 2008-2019
+ * @copyright Copyright (c) 2008-2020
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
  * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
@@ -28,7 +28,6 @@ use DateTime;
 
 class Make
 {
-
     /**
      * @var array
      */
@@ -41,6 +40,10 @@ class Make
      * @var string
      */
     public $xml;
+    /**
+     * @var stdClass
+     */
+    public $stdTot;
     /**
      * @var string
      */
@@ -141,6 +144,10 @@ class Make
      * @var array of DOMElements
      */
     protected $aDetPag = [];
+    /**
+     * @var DOMElement
+     */
+    protected $intermed;
     /**
      * @var array of DOMElements
      */
@@ -270,10 +277,6 @@ class Make
      */
     protected $aProcRef = [];
     /**
-     * @var stdClass
-     */
-    protected $stdTot;
-    /**
      * @var DOMElement
      */
     protected $infRespTec;
@@ -315,8 +318,11 @@ class Make
         $this->stdTot->vII = 0;
         $this->stdTot->vIPI = 0;
         $this->stdTot->vIPIDevol = 0;
+        $this->stdTot->vServ = 0;
         $this->stdTot->vPIS = 0;
         $this->stdTot->vCOFINS = 0;
+        $this->stdTot->vPISST = 0;
+        $this->stdTot->vCOFINSST = 0;
         $this->stdTot->vOutro = 0;
         $this->stdTot->vNF = 0;
         $this->stdTot->vTotTrib = 0;
@@ -381,7 +387,11 @@ class Make
      */
     public function monta()
     {
-        $this->errors = $this->dom->errors;
+        if (!empty($this->errors)) {
+            $this->errors = array_merge($this->errors, $this->dom->errors);
+        } else {
+            $this->errors = $this->dom->errors;
+        }
         //cria a tag raiz da Nfe
         $this->buildNFe();
         //processa nfeRef e coloca as tags na tag ide
@@ -408,6 +418,11 @@ class Make
         foreach ($this->aDet as $det) {
             $this->dom->appChild($this->infNFe, $det, 'Falta tag "infNFe"');
         }
+        //força a construção do total caso não sejam chamado metodo tagICMSTot()
+        if (empty($this->total)) {
+            $std = new \stdClass();
+            $this->tagICMSTot($std);
+        }
         //[28a] tag total (326 W01)
         $this->dom->appChild($this->infNFe, $this->total, 'Falta tag "infNFe"');
         //mota a tag vol
@@ -419,6 +434,8 @@ class Make
         //[42] tag pag (398a YA01)
         //processa Pag e coloca as tags na tag pag
         $this->buildTagPag();
+        //[43] tag infIntermed (398.26 YB01) NT 2020.006_1.00
+        $this->dom->appChild($this->infNFe, $this->intermed, 'Falta tag "infNFe"');
         //[44] tag infAdic (399 Z01)
         $this->dom->appChild($this->infNFe, $this->infAdic, 'Falta tag "infNFe"');
         //[48] tag exporta (402 ZA01)
@@ -469,7 +486,7 @@ class Make
 
     /**
      * Informações de identificação da NF-e B01 pai A01
-     * NOTA: Ajustado para NT2016_002_v1.30
+     * NOTA: Ajustado para NT2020_006_v1.00
      * tag NFe/infNFe/ide
      * @param  stdClass $std
      * @return DOMElement
@@ -496,13 +513,14 @@ class Make
             'finNFe',
             'indFinal',
             'indPres',
+            'indIntermed',
             'procEmi',
             'verProc',
             'dhCont',
             'xJust'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         if (empty($std->cNF)) {
             $std->cNF = Keys::random($std->nNF);
         }
@@ -652,6 +670,13 @@ class Make
             $std->indPres,
             true,
             $identificador . "Indicador de presença do comprador no estabelecimento comercial no momento da operação"
+        );
+        $this->dom->addChild(
+            $ide,
+            "indIntermed",
+            isset($std->indIntermed) ? $std->indIntermed : null,
+            false,
+            $identificador . "Indicador de intermediador/marketplace"
         );
         $this->dom->addChild(
             $ide,
@@ -925,20 +950,23 @@ class Make
         $std = $this->equilizeParameters($std, $possible);
         $identificador = 'C01 <emit> - ';
         $this->emit = $this->dom->createElement("emit");
-        $this->dom->addChild(
-            $this->emit,
-            "CNPJ",
-            Strings::onlyNumbers($std->CNPJ),
-            false,
-            $identificador . "CNPJ do emitente"
-        );
-        $this->dom->addChild(
-            $this->emit,
-            "CPF",
-            Strings::onlyNumbers($std->CPF),
-            false,
-            $identificador . "CPF do remetente"
-        );
+        if (!empty($std->CNPJ)) {
+            $this->dom->addChild(
+                $this->emit,
+                "CNPJ",
+                Strings::onlyNumbers($std->CNPJ),
+                false,
+                $identificador . "CNPJ do emitente"
+            );
+        } elseif (!empty($std->CPF)) {
+            $this->dom->addChild(
+                $this->emit,
+                "CPF",
+                Strings::onlyNumbers($std->CPF),
+                false,
+                $identificador . "CPF do remetente"
+            );
+        }
         $this->dom->addChild(
             $this->emit,
             "xNome",
@@ -977,13 +1005,15 @@ class Make
             false,
             $identificador . "Inscrição Municipal do Prestador de Serviço do emitente"
         );
-        $this->dom->addChild(
-            $this->emit,
-            "CNAE",
-            Strings::onlyNumbers($std->CNAE),
-            false,
-            $identificador . "CNAE fiscal do emitente"
-        );
+        if (!empty($std->IM) && !empty($std->CNAE)) {
+            $this->dom->addChild(
+                $this->emit,
+                "CNAE",
+                Strings::onlyNumbers($std->CNAE),
+                false,
+                $identificador . "CNAE fiscal do emitente"
+            );
+        }
         $this->dom->addChild(
             $this->emit,
             "CRT",
@@ -1135,9 +1165,11 @@ class Make
             }
         }
         $xNome = $std->xNome;
-        if ($this->tpAmb == '2') {
+        if ($this->tpAmb == '2' && !empty($xNome)) {
             $xNome = 'NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
             //a exigência do CNPJ 99999999000191 não existe mais
+        } elseif ($this->tpAmb == '2' && $this->mod == '65') {
+            $xNome = 'NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
         }
         if (!empty($std->CNPJ)) {
             $this->dom->addChild(
@@ -1671,6 +1703,7 @@ class Make
      * Detalhamento de Produtos e Serviços I01 pai H01
      * tag NFe/infNFe/det[]/prod
      * NOTA: Ajustado para NT2016_002_v1.30
+     * NOTA: Ajustado para NT2020_005_v1.20
      * @param stdClass $std
      * @return DOMElement
      */
@@ -1680,6 +1713,7 @@ class Make
             'item',
             'cProd',
             'cEAN',
+            'cBarra',
             'xProd',
             'NCM',
             'cBenef',
@@ -1690,6 +1724,7 @@ class Make
             'vUnCom',
             'vProd',
             'cEANTrib',
+            'cBarraTrib',
             'uTrib',
             'qTrib',
             'vUnTrib',
@@ -1715,8 +1750,18 @@ class Make
         $cean = !empty($std->cEAN) ? trim(strtoupper($std->cEAN)) : '';
         $ceantrib = !empty($std->cEANTrib) ? trim(strtoupper($std->cEANTrib)) : '';
         //throw exception if not is Valid
-        Gtin::isValid($cean);
-        Gtin::isValid($ceantrib);
+        try {
+            Gtin::isValid($cean);
+        } catch (\InvalidArgumentException $e) {
+            $this->errors[] = "cEANT {$cean} " . $e->getMessage();
+        }
+
+        try {
+            Gtin::isValid($ceantrib);
+        } catch (\InvalidArgumentException $e) {
+            $this->errors[] = "cEANTrib {$ceantrib} " . $e->getMessage();
+        }
+
         $identificador = 'I01 <prod> - ';
         $prod = $this->dom->createElement("prod");
         $this->dom->addChild(
@@ -1734,6 +1779,13 @@ class Make
             $identificador . "[item $std->item] GTIN (Global Trade Item Number) do produto, antigo "
             . "código EAN ou código de barras",
             true
+        );
+        $this->dom->addChild(
+            $prod,
+            "cBarra",
+            $std->cBarra ?? null,
+            false,
+            $identificador . "[item $std->item] cBarra Código de barras diferente do padrão GTIN"
         );
         $xProd = $std->xProd;
         if ($this->tpAmb == '2' && $this->mod == '65' && $std->item === 1) {
@@ -1785,21 +1837,21 @@ class Make
         $this->dom->addChild(
             $prod,
             "qCom",
-            $std->qCom,
+            $this->conditionalNumberFormatting($std->qCom, 4),
             true,
             $identificador . "[item $std->item] Quantidade Comercial do produto"
         );
         $this->dom->addChild(
             $prod,
             "vUnCom",
-            $std->vUnCom,
+            $this->conditionalNumberFormatting($std->vUnCom, 10),
             true,
             $identificador . "[item $std->item] Valor Unitário de Comercialização do produto"
         );
         $this->dom->addChild(
             $prod,
             "vProd",
-            $std->vProd,
+            $this->conditionalNumberFormatting($std->vProd),
             true,
             $identificador . "[item $std->item] Valor Total Bruto dos Produtos ou Serviços"
         );
@@ -1814,6 +1866,14 @@ class Make
         );
         $this->dom->addChild(
             $prod,
+            "cBarraTrib",
+            $std->cBarraTrib ?? null,
+            false,
+            $identificador . "[item $std->item] cBarraTrib Código de Barras da "
+            . "unidade tributável que seja diferente do padrão GTIN"
+        );
+        $this->dom->addChild(
+            $prod,
             "uTrib",
             $std->uTrib,
             true,
@@ -1822,14 +1882,14 @@ class Make
         $this->dom->addChild(
             $prod,
             "qTrib",
-            $std->qTrib,
+            $this->conditionalNumberFormatting($std->qTrib, 4),
             true,
             $identificador . "[item $std->item] Quantidade Tributável do produto"
         );
         $this->dom->addChild(
             $prod,
             "vUnTrib",
-            $std->vUnTrib,
+            $this->conditionalNumberFormatting($std->vUnTrib, 10),
             true,
             $identificador . "[item $std->item] Valor Unitário de tributação do produto"
         );
@@ -2270,7 +2330,7 @@ class Make
         $this->dom->addChild(
             $rastro,
             "cAgreg",
-            Strings::onlyNumbers($std->cAgreg),
+            $std->cAgreg,
             false,
             $identificador . "[item $std->item] Código de Agregação"
         );
@@ -2693,7 +2753,7 @@ class Make
             $this->dom->addChild(
                 $tagCIDE,
                 "qBCProd",
-                $std->qBCProd,
+                $this->conditionalNumberFormatting($std->qBCProd, 4),
                 true,
                 "$identificador [item $std->item] BC da CIDE"
             );
@@ -2762,14 +2822,14 @@ class Make
         $this->dom->addChild(
             $encerrante,
             "vEncIni",
-            $this->conditionalNumberFormatting($std->vEncIni),
+            $this->conditionalNumberFormatting($std->vEncIni, 3),
             true,
             "$identificador [item $std->item] Valor do Encerrante no início do abastecimento"
         );
         $this->dom->addChild(
             $encerrante,
             "vEncFin",
-            $this->conditionalNumberFormatting($std->vEncFin),
+            $this->conditionalNumberFormatting($std->vEncFin, 3),
             true,
             "$identificador [item $std->item] Valor do Encerrante no final do abastecimento"
         );
@@ -2805,6 +2865,7 @@ class Make
     /**
      * Informações do ICMS da Operação própria e ST N01 pai M01
      * tag NFe/infNFe/det[]/imposto/ICMS
+     * NOTA: ajustado NT 2020.005-v1.20
      * @param stdClass $std
      * @return DOMElement
      */
@@ -2846,7 +2907,12 @@ class Make
             'vBCEfet',
             'pICMSEfet',
             'vICMSEfet',
-            'vICMSSubstituto'
+            'vICMSSubstituto',
+            'vICMSSTDeson',
+            'motDesICMSST',
+            'pFCPDif',
+            'vFCPDif',
+            'vFCPEfet',
         ];
         $std = $this->equilizeParameters($std, $possible);
         //totalização generica
@@ -3054,6 +3120,20 @@ class Make
                     $this->conditionalNumberFormatting($std->vFCPST),
                     false,
                     "$identificador [item $std->item] Valor do FCP ST"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'vICMSSTDeson',
+                    $this->conditionalNumberFormatting($std->vICMSSTDeson),
+                    false,
+                    "$identificador [item $std->item] Valor do ICMS- ST desonerado"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'motDesICMSST',
+                    $std->motDesICMSST ?? null,
+                    false,
+                    "$identificador [item $std->item] Motivo da desoneração do ICMS- ST"
                 );
                 break;
             case '20':
@@ -3280,8 +3360,7 @@ class Make
                 break;
             case '51':
                 $this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
-                $this->stdTot->vICMS += (float) !empty($std->vICMS) ? $std->vICMS : 0;
-
+                
                 $icms = $this->dom->createElement("ICMS51");
                 $this->dom->addChild(
                     $icms,
@@ -3374,6 +3453,30 @@ class Make
                     $this->conditionalNumberFormatting($std->vFCP),
                     false,
                     "$identificador [item $std->item] Valor do FCP"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'pFCPDif',
+                    $this->conditionalNumberFormatting($std->pFCPDif),
+                    false,
+                    "$identificador [item $std->item] Percentual do diferimento "
+                    . "do ICMS relativo ao Fundo de Combate à Pobreza (FCP)"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'vFCPDif',
+                    $this->conditionalNumberFormatting($std->vFCPDif),
+                    false,
+                    "$identificador [item $std->item] Valor do ICMS relativo ao "
+                    . "Fundo de Combate à Pobreza (FCP) diferido"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'vFCPEfet',
+                    $this->conditionalNumberFormatting($std->vFCPEfet),
+                    false,
+                    "$identificador [item $std->item] Valor efetivo do ICMS relativo "
+                    . "ao Fundo de Combate à Pobreza (FCP)"
                 );
                 break;
             case '60':
@@ -3630,6 +3733,20 @@ class Make
                     false,
                     "$identificador [item $std->item] Motivo da desoneração do ICMS"
                 );
+                $this->dom->addChild(
+                    $icms,
+                    'vICMSSTDeson',
+                    $this->conditionalNumberFormatting($std->vICMSSTDeson),
+                    false,
+                    "$identificador [item $std->item] Valor do ICMS- ST desonerado"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'motDesICMSST',
+                    $std->motDesICMSST ?? null,
+                    false,
+                    "$identificador [item $std->item] Motivo da desoneração do ICMS- ST"
+                );
                 break;
             case '90':
                 $this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
@@ -3786,6 +3903,20 @@ class Make
                     $std->motDesICMS,
                     false,
                     "$identificador [item $std->item] Motivo da desoneração do ICMS"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'vICMSSTDeson',
+                    $this->conditionalNumberFormatting($std->vICMSSTDeson),
+                    false,
+                    "$identificador [item $std->item] Valor do ICMS- ST desonerado"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'motDesICMSST',
+                    $std->motDesICMSST ?? null,
+                    false,
+                    "$identificador [item $std->item] Motivo da desoneração do ICMS- ST"
                 );
                 break;
         }
@@ -3975,6 +4106,7 @@ class Make
             'vICMSEfet'
         ];
         $std = $this->equilizeParameters($std, $possible);
+        $this->stdTot->vFCPSTRet += (float) !empty($std->vFCPSTRet) ? $std->vFCPSTRet : 0;
         $icmsST = $this->dom->createElement("ICMSST");
         $this->dom->addChild(
             $icmsST,
@@ -4135,7 +4267,7 @@ class Make
         $std = $this->equilizeParameters($std, $possible);
         //totalizador generico
         $this->stdTot->vFCPST += (float) !empty($std->vFCPST) ? $std->vFCPST : 0;
-        $this->stdTot->vFCPSTRet += (float) !empty($std->vFCPST) ? $std->vFCPSTRet : 0;
+        $this->stdTot->vFCPSTRet += (float) !empty($std->vFCPSTRet) ? $std->vFCPSTRet : 0;
         switch ($std->CSOSN) {
             case '101':
                 $icmsSN = $this->dom->createElement("ICMSSN101");
@@ -4468,7 +4600,7 @@ class Make
                 $this->dom->addChild(
                     $icmsSN,
                     'vICMSEfet',
-                    $std->vICMSEfet,
+                    $this->conditionalNumberFormatting($std->vICMSEfet),
                     isset($std->vICMSEfet) ? true : false,
                     "[item $std->item] Valor do ICMS efetivo"
                 );
@@ -4503,7 +4635,7 @@ class Make
                 $this->dom->addChild(
                     $icmsSN,
                     'vBC',
-                    $std->vBC,
+                    $this->conditionalNumberFormatting($std->vBC),
                     isset($std->vBC) ? true : false,
                     "[item $std->item] Valor da BC do ICMS"
                 );
@@ -4566,7 +4698,7 @@ class Make
                 $this->dom->addChild(
                     $icmsSN,
                     'vICMSST',
-                    $std->vICMSST,
+                    $this->conditionalNumberFormatting($std->vICMSST),
                     isset($std->vICMSST) ? true : false,
                     "[item $std->item] Valor do ICMS ST"
                 );
@@ -4653,14 +4785,14 @@ class Make
         $this->dom->addChild(
             $icmsUFDest,
             "vBCUFDest",
-            $std->vBCUFDest,
+            $this->conditionalNumberFormatting($std->vBCUFDest),
             true,
             "[item $std->item] Valor da BC do ICMS na UF do destinatário"
         );
         $this->dom->addChild(
             $icmsUFDest,
             "vBCFCPUFDest",
-            $std->vBCFCPUFDest,
+            $this->conditionalNumberFormatting($std->vBCFCPUFDest),
             false,
             "[item $std->item] Valor da BC do ICMS na UF do destinatário"
         );
@@ -4695,21 +4827,21 @@ class Make
         $this->dom->addChild(
             $icmsUFDest,
             "vFCPUFDest",
-            $std->vFCPUFDest,
+            $this->conditionalNumberFormatting($std->vFCPUFDest),
             false,
             "[item $std->item] Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP) da UF de destino"
         );
         $this->dom->addChild(
             $icmsUFDest,
             "vICMSUFDest",
-            $std->vICMSUFDest,
+            $this->conditionalNumberFormatting($std->vICMSUFDest),
             true,
             "[item $std->item] Valor do ICMS de partilha para a UF do destinatário"
         );
         $this->dom->addChild(
             $icmsUFDest,
             "vICMSUFRemet",
-            $std->vICMSUFRemet,
+            $this->conditionalNumberFormatting($std->vICMSUFRemet),
             true,
             "[item $std->item] Valor do ICMS de partilha para a UF do remetente"
         );
@@ -4740,8 +4872,6 @@ class Make
             'vUnid'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        //totalizador
-        $this->stdTot->vIPI += (float) $std->vIPI;
         $ipi = $this->dom->createElement('IPI');
         $this->dom->addChild(
             $ipi,
@@ -4780,6 +4910,8 @@ class Make
             "[item $std->item] Código de Enquadramento Legal do IPI"
         );
         if ($std->CST == '00' || $std->CST == '49' || $std->CST == '50' || $std->CST == '99') {
+            //totalizador
+            $this->stdTot->vIPI += (float) $std->vIPI;
             $ipiTrib = $this->dom->createElement('IPITrib');
             $this->dom->addChild(
                 $ipiTrib,
@@ -4805,7 +4937,7 @@ class Make
             $this->dom->addChild(
                 $ipiTrib,
                 "qUnid",
-                $std->qUnid,
+                $this->conditionalNumberFormatting($std->qUnid, 4),
                 false,
                 "[item $std->item] Quantidade total na unidade padrão para tributação (somente para os "
                 . "produtos tributados por unidade)"
@@ -4813,7 +4945,7 @@ class Make
             $this->dom->addChild(
                 $ipiTrib,
                 "vUnid",
-                $std->vUnid,
+                $this->conditionalNumberFormatting($std->vUnid, 4),
                 false,
                 "[item $std->item] Valor por Unidade Tributável"
             );
@@ -4909,8 +5041,7 @@ class Make
             'vAliqProd'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        //totalizador
-        $this->stdTot->vPIS += (float) !empty($std->vPIS) ? $std->vPIS : 0;
+        
         switch ($std->CST) {
             case '01':
             case '02':
@@ -4943,6 +5074,8 @@ class Make
                     true,
                     "[item $std->item] Valor do PIS"
                 );
+                //totalizador
+                $this->stdTot->vPIS += (float) !empty($std->vPIS) ? $std->vPIS : 0;
                 break;
             case '03':
                 $pisItem = $this->dom->createElement('PISQtde');
@@ -4956,14 +5089,14 @@ class Make
                 $this->dom->addChild(
                     $pisItem,
                     'qBCProd',
-                    $std->qBCProd,
+                    $this->conditionalNumberFormatting($std->qBCProd, 4),
                     true,
                     "[item $std->item] Quantidade Vendida"
                 );
                 $this->dom->addChild(
                     $pisItem,
                     'vAliqProd',
-                    $std->vAliqProd,
+                    $this->conditionalNumberFormatting($std->vAliqProd, 4),
                     true,
                     "[item $std->item] Alíquota do PIS (em reais)"
                 );
@@ -4974,6 +5107,8 @@ class Make
                     true,
                     "[item $std->item] Valor do PIS"
                 );
+                //totalizador
+                $this->stdTot->vPIS += (float) !empty($std->vPIS) ? $std->vPIS : 0;
                 break;
             case '04':
             case '05':
@@ -5022,41 +5157,46 @@ class Make
                     true,
                     "[item $std->item] Código de Situação Tributária do PIS"
                 );
-                $this->dom->addChild(
-                    $pisItem,
-                    'vBC',
-                    $this->conditionalNumberFormatting($std->vBC),
-                    ($std->vBC !== null) ? true : false,
-                    "[item $std->item] Valor da Base de Cálculo do PIS"
-                );
-                $this->dom->addChild(
-                    $pisItem,
-                    'pPIS',
-                    $this->conditionalNumberFormatting($std->pPIS, 4),
-                    ($std->pPIS !== null) ? true : false,
-                    "[item $std->item] Alíquota do PIS (em percentual)"
-                );
-                $this->dom->addChild(
-                    $pisItem,
-                    'qBCProd',
-                    $std->qBCProd,
-                    ($std->qBCProd !== null) ? true : false,
-                    "[item $std->item] Quantidade Vendida"
-                );
-                $this->dom->addChild(
-                    $pisItem,
-                    'vAliqProd',
-                    $std->vAliqProd,
-                    ($std->vAliqProd !== null) ? true : false,
-                    "[item $std->item] Alíquota do PIS (em reais)"
-                );
+                if (!isset($std->qBCProd)) {
+                    $this->dom->addChild(
+                        $pisItem,
+                        'vBC',
+                        $this->conditionalNumberFormatting($std->vBC),
+                        ($std->vBC !== null) ? true : false,
+                        "[item $std->item] Valor da Base de Cálculo do PIS"
+                    );
+                    $this->dom->addChild(
+                        $pisItem,
+                        'pPIS',
+                        $this->conditionalNumberFormatting($std->pPIS, 4),
+                        ($std->pPIS !== null) ? true : false,
+                        "[item $std->item] Alíquota do PIS (em percentual)"
+                    );
+                } else {
+                    $this->dom->addChild(
+                        $pisItem,
+                        'qBCProd',
+                        $this->conditionalNumberFormatting($std->qBCProd, 4),
+                        ($std->qBCProd !== null) ? true : false,
+                        "[item $std->item] Quantidade Vendida"
+                    );
+                    $this->dom->addChild(
+                        $pisItem,
+                        'vAliqProd',
+                        $this->conditionalNumberFormatting($std->vAliqProd, 4),
+                        ($std->vAliqProd !== null) ? true : false,
+                        "[item $std->item] Alíquota do PIS (em reais)"
+                    );
+                }
                 $this->dom->addChild(
                     $pisItem,
                     'vPIS',
                     $this->conditionalNumberFormatting($std->vPIS),
-                    true,
+                    ($std->vPIS !== null) ? true : false,
                     "[item $std->item] Valor do PIS"
                 );
+                //totalizador
+                $this->stdTot->vPIS += (float) !empty($std->vPIS) ? $std->vPIS : 0;
                 break;
         }
         $pis = $this->dom->createElement('PIS');
@@ -5081,9 +5221,13 @@ class Make
             'vBC',
             'pPIS',
             'qBCProd',
-            'vAliqProd'
+            'vAliqProd',
+            'indSomaPISST',
         ];
         $std = $this->equilizeParameters($std, $possible);
+        if ($std->indSomaPISST == 1) {
+            $this->stdTot->vPISST += $std->vPIS;
+        }
         $pisst = $this->dom->createElement('PISST');
         if (!isset($std->qBCProd)) {
             $this->dom->addChild(
@@ -5104,14 +5248,14 @@ class Make
             $this->dom->addChild(
                 $pisst,
                 'qBCProd',
-                $std->qBCProd,
+                $this->conditionalNumberFormatting($std->qBCProd, 4),
                 true,
                 "[item $std->item] Quantidade Vendida"
             );
             $this->dom->addChild(
                 $pisst,
                 'vAliqProd',
-                $std->vAliqProd,
+                $this->conditionalNumberFormatting($std->vAliqProd, 4),
                 true,
                 "[item $std->item] Alíquota do PIS (em reais)"
             );
@@ -5122,6 +5266,13 @@ class Make
             $this->conditionalNumberFormatting($std->vPIS),
             true,
             "[item $std->item] Valor do PIS"
+        );
+        $this->dom->addChild(
+            $pisst,
+            'indSomaPISST',
+            isset($std->indSomaPISST) ? $std->indSomaPISST : null,
+            false,
+            "[item $std->item] Indica se o valor do PISST compõe o valor total da NF-e"
         );
         $this->aPISST[$std->item] = $pisst;
         return $pisst;
@@ -5145,12 +5296,12 @@ class Make
             'vAliqProd'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        //totalizador
-        $this->stdTot->vCOFINS += (float) $std->vCOFINS;
         switch ($std->CST) {
             case '01':
             case '02':
                 $confinsItem = $this->buildCOFINSAliq($std);
+                //totalizador
+                $this->stdTot->vCOFINS += (float) $std->vCOFINS;
                 break;
             case '03':
                 $confinsItem = $this->dom->createElement('COFINSQtde');
@@ -5164,14 +5315,14 @@ class Make
                 $this->dom->addChild(
                     $confinsItem,
                     'qBCProd',
-                    $std->qBCProd,
+                    $this->conditionalNumberFormatting($std->qBCProd, 4),
                     true,
                     "[item $std->item] Quantidade Vendida"
                 );
                 $this->dom->addChild(
                     $confinsItem,
                     'vAliqProd',
-                    $std->vAliqProd,
+                    $this->conditionalNumberFormatting($std->vAliqProd, 4),
                     true,
                     "[item $std->item] Alíquota do COFINS (em reais)"
                 );
@@ -5182,6 +5333,8 @@ class Make
                     true,
                     "[item $std->item] Valor do COFINS"
                 );
+                //totalizador
+                $this->stdTot->vCOFINS += (float) $std->vCOFINS;
                 break;
             case '04':
             case '05':
@@ -5216,6 +5369,8 @@ class Make
             case '98':
             case '99':
                 $confinsItem = $this->buildCOFINSoutr($std);
+                //totalizador
+                $this->stdTot->vCOFINS += (float) $std->vCOFINS;
                 break;
         }
         $confins = $this->dom->createElement('COFINS');
@@ -5240,9 +5395,13 @@ class Make
             'vBC',
             'pCOFINS',
             'qBCProd',
-            'vAliqProd'
+            'vAliqProd',
+            'indSomaCOFINSST'
         ];
         $std = $this->equilizeParameters($std, $possible);
+        if ($std->indSomaCOFINSST == 1) {
+            $this->stdTot->vCOFINSST += $std->vCOFINS;
+        }
         $cofinsst = $this->dom->createElement("COFINSST");
         if (!isset($std->qBCProd)) {
             $this->dom->addChild(
@@ -5263,14 +5422,14 @@ class Make
             $this->dom->addChild(
                 $cofinsst,
                 "qBCProd",
-                $std->qBCProd,
+                $this->conditionalNumberFormatting($std->qBCProd, 4),
                 true,
                 "[item $std->item] Quantidade Vendida"
             );
             $this->dom->addChild(
                 $cofinsst,
                 "vAliqProd",
-                $std->vAliqProd,
+                $this->conditionalNumberFormatting($std->vAliqProd, 4),
                 true,
                 "[item $std->item] Alíquota da COFINS (em reais)"
             );
@@ -5280,6 +5439,13 @@ class Make
             "vCOFINS",
             $this->conditionalNumberFormatting($std->vCOFINS),
             true,
+            "[item $std->item] Valor da COFINS"
+        );
+        $this->dom->addChild(
+            $cofinsst,
+            "indSomaCOFINSST",
+            isset($std->indSomaCOFINSST) ? $std->indSomaCOFINSST : null,
+            false,
             "[item $std->item] Valor da COFINS"
         );
         $this->aCOFINSST[$std->item] = $cofinsst;
@@ -5517,28 +5683,28 @@ class Make
         $this->dom->addChild(
             $ICMSTot,
             "vBC",
-            number_format($vBC, 2, '.', ''),
+            $this->conditionalNumberFormatting($vBC),
             true,
             "Base de Cálculo do ICMS"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vICMS",
-            number_format($vICMS, 2, '.', ''),
+            $this->conditionalNumberFormatting($vICMS),
             true,
             "Valor Total do ICMS"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vICMSDeson",
-            number_format($vICMSDeson, 2, '.', ''),
+            $this->conditionalNumberFormatting($vICMSDeson),
             true,
             "Valor Total do ICMS desonerado"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vFCPUFDest",
-            $vFCPUFDest,
+            $this->conditionalNumberFormatting($vFCPUFDest),
             false,
             "Valor total do ICMS relativo ao Fundo de Combate à Pobreza(FCP) "
             . "para a UF de destino"
@@ -5546,14 +5712,14 @@ class Make
         $this->dom->addChild(
             $ICMSTot,
             "vICMSUFDest",
-            $vICMSUFDest,
+            $this->conditionalNumberFormatting($vICMSUFDest),
             false,
             "Valor total do ICMS de partilha para a UF do destinatário"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vICMSUFRemet",
-            $vICMSUFRemet,
+            $this->conditionalNumberFormatting($vICMSUFRemet),
             false,
             "Valor total do ICMS de partilha para a UF do remetente"
         );
@@ -5561,7 +5727,7 @@ class Make
         $this->dom->addChild(
             $ICMSTot,
             "vFCP",
-            $vFCP,
+            $this->conditionalNumberFormatting($vFCP),
             false,
             "Valor total do ICMS relativo ao Fundo de Combate à Pobreza(FCP) "
             . "para a UF de destino"
@@ -5569,14 +5735,14 @@ class Make
         $this->dom->addChild(
             $ICMSTot,
             "vBCST",
-            number_format($vBCST, 2, '.', ''),
+            $this->conditionalNumberFormatting($vBCST),
             true,
             "Base de Cálculo do ICMS ST"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vST",
-            number_format($vST, 2, '.', ''),
+            $this->conditionalNumberFormatting($vST),
             true,
             "Valor Total do ICMS ST"
         );
@@ -5584,7 +5750,7 @@ class Make
         $this->dom->addChild(
             $ICMSTot,
             "vFCPST",
-            $vFCPST,
+            $this->conditionalNumberFormatting($vFCPST),
             false, //true para 4.00
             "Valor Total do FCP (Fundo de Combate à Pobreza) "
             . "retido por substituição tributária"
@@ -5593,7 +5759,7 @@ class Make
         $this->dom->addChild(
             $ICMSTot,
             "vFCPSTRet",
-            $vFCPSTRet,
+            $this->conditionalNumberFormatting($vFCPSTRet),
             false, //true para 4.00
             "Valor Total do FCP retido anteriormente por "
             . "Substituição Tributária"
@@ -5601,42 +5767,42 @@ class Make
         $this->dom->addChild(
             $ICMSTot,
             "vProd",
-            number_format($vProd, 2, '.', ''),
+            $this->conditionalNumberFormatting($vProd),
             true,
             "Valor Total dos produtos e serviços"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vFrete",
-            number_format($vFrete, 2, '.', ''),
+            $this->conditionalNumberFormatting($vFrete),
             true,
             "Valor Total do Frete"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vSeg",
-            number_format($vSeg, 2, '.', ''),
+            $this->conditionalNumberFormatting($vSeg),
             true,
             "Valor Total do Seguro"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vDesc",
-            number_format($vDesc, 2, '.', ''),
+            $this->conditionalNumberFormatting($vDesc),
             true,
             "Valor Total do Desconto"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vII",
-            number_format($vII, 2, '.', ''),
+            $this->conditionalNumberFormatting($vII),
             true,
             "Valor Total do II"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vIPI",
-            number_format($vIPI, 2, '.', ''),
+            $this->conditionalNumberFormatting($vIPI),
             true,
             "Valor Total do IPI"
         );
@@ -5644,42 +5810,42 @@ class Make
         $this->dom->addChild(
             $ICMSTot,
             "vIPIDevol",
-            $vIPIDevol,
+            $this->conditionalNumberFormatting($vIPIDevol),
             false,
             "Valor Total do IPI"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vPIS",
-            number_format($vPIS, 2, '.', ''),
+            $this->conditionalNumberFormatting($vPIS),
             true,
             "Valor do PIS"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vCOFINS",
-            number_format($vCOFINS, 2, '.', ''),
+            $this->conditionalNumberFormatting($vCOFINS),
             true,
             "Valor da COFINS"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vOutro",
-            number_format($vOutro, 2, '.', ''),
+            $this->conditionalNumberFormatting($vOutro),
             true,
             "Outras Despesas acessórias"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vNF",
-            number_format($vNF, 2, '.', ''),
+            $this->conditionalNumberFormatting($vNF),
             true,
             "Valor Total da NF-e"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vTotTrib",
-            $vTotTrib,
+            $this->conditionalNumberFormatting($vTotTrib),
             false,
             "Valor aproximado total de tributos federais, estaduais e municipais."
         );
@@ -5710,6 +5876,8 @@ class Make
             'cRegTrib'
         ];
         $std = $this->equilizeParameters($std, $possible);
+        $this->stdTot->vServ = (float) round($std->vServ, 2) ?? 0;
+        
         $this->buildTotal();
         $ISSQNTot = $this->dom->createElement("ISSQNtot");
         $this->dom->addChild(
@@ -6186,7 +6354,7 @@ class Make
         $this->dom->addChild(
             $vol,
             "qVol",
-            $std->qVol,
+            $this->conditionalNumberFormatting($std->qVol, 0),
             false,
             "Quantidade de volumes transportados"
         );
@@ -6289,6 +6457,7 @@ class Make
      * Grupo de Formas de Pagamento YA01a pai YA01
      * NOTA: Ajuste NT_2016_002_v1.30
      * NOTA: Ajuste NT_2016_002_v1 51
+     * NOTA: Ajuste NT_2020_006
      * tag NFe/infNFe/pag/detPag
      * @param stdClass $std
      * @return DOMElement
@@ -6298,6 +6467,7 @@ class Make
         $possible = [
             'indPag',
             'tPag',
+            'xPag',
             'vPag',
             'CNPJ',
             'tBand',
@@ -6320,6 +6490,13 @@ class Make
             $std->tPag,
             true,
             "Forma de pagamento"
+        );
+        $this->dom->addChild(
+            $detPag,
+            "xPag",
+            !empty($std->xPag) ? $std->xPag : null,
+            false,
+            "Descricao da Forma de pagamento"
         );
         $this->dom->addChild(
             $detPag,
@@ -6369,6 +6546,38 @@ class Make
             $this->dom->appChild($this->pag, $detPag, 'Falta tag "Pag"');
         }
         return $detPag;
+    }
+    
+    /**
+     * Dados do intermediador
+     *
+     * @param stdClass $std
+     * @return \DomElement
+     */
+    public function tagIntermed(stdClass $std)
+    {
+        $possible = [
+            'CNPJ',
+            'idCadIntTran'
+        ];
+        $std = $this->equilizeParameters($std, $possible);
+        $tag = $this->dom->createElement("infIntermed");
+        $this->dom->addChild(
+            $tag,
+            "CNPJ",
+            $std->CNPJ,
+            true,
+            "CNPJ do Intermediador da Transação (agenciador, plataforma de "
+            . "delivery, marketplace e similar) de serviços e de negócios"
+        );
+        $this->dom->addChild(
+            $tag,
+            "idCadIntTran",
+            $std->idCadIntTran,
+            true,
+            "Identificador cadastrado no intermediador"
+        );
+        return $this->intermed = $tag;
     }
 
     /**
@@ -6733,7 +6942,7 @@ class Make
         $this->dom->addChild(
             $forDia,
             "qtde",
-            $std->qtde,
+            $this->conditionalNumberFormatting($std->qtde, 10),
             true,
             "Quantidade"
         );
@@ -7017,34 +7226,37 @@ class Make
             true,
             "Código de Situação Tributária da COFINS"
         );
-        $this->dom->addChild(
-            $confinsoutr,
-            "vBC",
-            $this->conditionalNumberFormatting($std->vBC),
-            ($std->vBC !== null) ? true : false,
-            "Valor da Base de Cálculo da COFINS"
-        );
-        $this->dom->addChild(
-            $confinsoutr,
-            "pCOFINS",
-            $this->conditionalNumberFormatting($std->pCOFINS, 4),
-            ($std->pCOFINS !== null) ? true : false,
-            "Alíquota da COFINS (em percentual)"
-        );
-        $this->dom->addChild(
-            $confinsoutr,
-            "qBCProd",
-            $std->qBCProd,
-            ($std->qBCProd !== null) ? true : false,
-            "Quantidade Vendida"
-        );
-        $this->dom->addChild(
-            $confinsoutr,
-            "vAliqProd",
-            $std->vAliqProd,
-            ($std->vAliqProd !== null) ? true : false,
-            "Alíquota da COFINS (em reais)"
-        );
+        if (!isset($std->qBCProd)) {
+            $this->dom->addChild(
+                $confinsoutr,
+                "vBC",
+                $this->conditionalNumberFormatting($std->vBC),
+                ($std->vBC !== null) ? true : false,
+                "Valor da Base de Cálculo da COFINS"
+            );
+            $this->dom->addChild(
+                $confinsoutr,
+                "pCOFINS",
+                $this->conditionalNumberFormatting($std->pCOFINS, 4),
+                ($std->pCOFINS !== null) ? true : false,
+                "Alíquota da COFINS (em percentual)"
+            );
+        } else {
+            $this->dom->addChild(
+                $confinsoutr,
+                "qBCProd",
+                $this->conditionalNumberFormatting($std->qBCProd, 4),
+                ($std->qBCProd !== null) ? true : false,
+                "Quantidade Vendida"
+            );
+            $this->dom->addChild(
+                $confinsoutr,
+                "vAliqProd",
+                $this->conditionalNumberFormatting($std->vAliqProd, 4),
+                ($std->vAliqProd !== null) ? true : false,
+                "Alíquota da COFINS (em reais)"
+            );
+        }
         $this->dom->addChild(
             $confinsoutr,
             "vCOFINS",
@@ -7108,15 +7320,20 @@ class Make
         foreach ($this->aDI as $nItem => $aDI) {
             $prod = $this->aProd[$nItem];
             foreach ($aDI as $child) {
-                $node = $prod->getElementsByTagName("xPed")->item(0);
-                if (!empty($node)) {
-                    $prod->insertBefore($child, $node);
+                $nodexped = $prod->getElementsByTagName("xPed")->item(0);
+                if (!empty($nodexped)) {
+                    $prod->insertBefore($child, $nodexped);
                 } else {
-                    $node = $prod->getElementsByTagName("FCI")->item(0);
-                    if (!empty($node)) {
-                        $prod->insertBefore($child, $node);
+                    $nodenItemPed = $prod->getElementsByTagName("nItemPed")->item(0);
+                    if (!empty($nodenItemPed)) {
+                        $prod->insertBefore($child, $nodenItemPed);
                     } else {
-                        $this->dom->appChild($prod, $child, "Inclusão do node DI");
+                        $node = $prod->getElementsByTagName("FCI")->item(0);
+                        if (!empty($node)) {
+                            $prod->insertBefore($child, $node);
+                        } else {
+                            $this->dom->appChild($prod, $child, "Inclusão do node DI");
+                        }
                     }
                 }
             }
@@ -7199,7 +7416,7 @@ class Make
                 $this->dom->appChild($det, $child, "Inclusão do node imposto");
             }
             //insere impostoDevol
-            if (!empty($this->aImpostoDevol)) {
+            if (!empty($this->aImpostoDevol[$nItem])) {
                 $child = $this->aImpostoDevol[$nItem];
                 $this->dom->appChild($det, $child, "Inclusão do node impostoDevol");
             }
@@ -7235,16 +7452,7 @@ class Make
         if (empty($this->total)) {
             $this->total = $this->dom->createElement("total");
         }
-
-        $this->stdTot->vNF = $this->stdTot->vProd
-            - $this->stdTot->vDesc
-            + $this->stdTot->vST
-            + $this->stdTot->vFrete
-            + $this->stdTot->vSeg
-            + $this->stdTot->vOutro
-            + $this->stdTot->vII
-            + $this->stdTot->vIPI
-            + $this->stdTot->vIPIDevol;
+        
         //round all values
         $this->stdTot->vBC = round($this->stdTot->vBC, 2);
         $this->stdTot->vICMS = round($this->stdTot->vICMS, 2);
@@ -7269,6 +7477,21 @@ class Make
         $this->stdTot->vOutro = round($this->stdTot->vOutro, 2);
         $this->stdTot->vNF = round($this->stdTot->vNF, 2);
         $this->stdTot->vTotTrib = round($this->stdTot->vTotTrib, 2);
+        
+        $this->stdTot->vNF = $this->stdTot->vProd
+            - $this->stdTot->vDesc
+            - $this->stdTot->vICMSDeson
+            + $this->stdTot->vST
+            + $this->stdTot->vFCPST
+            + $this->stdTot->vFrete
+            + $this->stdTot->vSeg
+            + $this->stdTot->vOutro
+            + $this->stdTot->vII
+            + $this->stdTot->vIPI
+            + $this->stdTot->vIPIDevol
+            + $this->stdTot->vServ
+            + $this->stdTot->vPISST
+            + $this->stdTot->vCOFINSST;
     }
 
     /**
@@ -7357,7 +7580,7 @@ class Make
             $this->errors[] = "A chave informada está incorreta [$chave] => [correto: $chaveMontada].";
         }
     }
-    
+
     /**
      * Retorna os erros detectados
      * @return array
@@ -7376,20 +7599,11 @@ class Make
      */
     protected function equilizeParameters(stdClass $std, $possible)
     {
-        $arr = get_object_vars($std);
-        foreach ($possible as $key) {
-            if (!array_key_exists($key, $arr)) {
-                $std->$key = null;
-            } else {
-                if (is_string($std->$key)) {
-                    $std->$key = trim(Strings::replaceUnacceptableCharacters($std->$key));
-                    if ($this->replaceAccentedChars) {
-                        $std->$key = Strings::toASCII($std->$key);
-                    }
-                }
-            }
-        }
-        return $std;
+        return Strings::equilizeParameters(
+            $std,
+            $possible,
+            $this->replaceAccentedChars
+        );
     }
 
     /**
@@ -7403,6 +7617,12 @@ class Make
         return base64_encode(sha1($comb, true));
     }
     
+    /**
+     * Formatação numerica condicional
+     * @param string|float|int|null $value
+     * @param int $decimal
+     * @return string
+     */
     protected function conditionalNumberFormatting($value = null, $decimal = 2)
     {
         if (is_numeric($value)) {

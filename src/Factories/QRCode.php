@@ -177,7 +177,7 @@ class QRCode
         $iCount = 0;
         $tot = strlen($str);
         do {
-            $hex .= sprintf("%02x", ord($str{$iCount}));
+            $hex .= sprintf("%02x", ord($str[$iCount]));
             $iCount++;
         } while ($iCount < $tot);
         return $hex;

@@ -1,6 +1,14 @@
 # SPED-NFE 
 
-Framework para geração e comunicação das NFe com as SEFAZ autorizadoras, e visa fornecer os meios para gerar, assinar e enviar os dados relativos ao projeto Sped NFe das SEFAZ.
+Biblioteca para geração e comunicação das NFe com as SEFAZ autorizadoras, e visa fornecer os meios para gerar, assinar e enviar os dados relativos ao projeto Sped NFe das SEFAZ.
+
+## Atualizado 
+
+- NT 2020.006 Intermediarios
+- NT 2020.007 Evento Ator Interessado na NFe - Transportador
+- NT 2021_001 Evento de COMPROVANTE DE ENTREGA
+
+> **NOTA: Estas NT afetam principalmente o uso do TXT para conversão em XML, mesmo que os campos ainda não sejam exigidos.**
 
 ## TODO: A conversão com o PADRÃO SEBRAE ainda está incompleta!!
 
@@ -24,9 +32,7 @@ Framework para geração e comunicação das NFe com as SEFAZ autorizadoras, e v
 
 ### NFe (modelo 55) TODOS
 
-### NFCe (modelo 65) Todos, menos SC 
-
-- SC ainda não participa (previsão de uso em 2020, com Gadget Fiscal tipo SAT@ECF de SP).
+### NFCe (modelo 65) Todos
 
 ### NFe com eCPF (emissor pessoa física)
 

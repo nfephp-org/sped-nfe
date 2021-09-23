@@ -1,49 +1,26 @@
 ## LAYOUT NFe v4.00 - FORMATO LOCAL do NFePHP *(diferente do emissor SEBRAE)*
-- Nota Técnica 2016.002 - v1.10
-- Nota Técnica 2016.002 - v1.20
-- Nota Técnica 2016.002 - v1.30
-- Nota Técnica 2016.002 - v1.31
-- Nota Técnica 2016.002 - v1.40
-- Nota Técnica 2016.002 - v1.41
-- Nota Técnica 2016.002 - v1.42
-- Nota Técnica 2016.002 - v1.50
-- Nota Técnica 2016.002 - v1.51
-- Nota Técnica 2016.002 - v1.60
-- Nota Técnica 2018.005 - v1.00
-- Nota Técnica 2018.005 - v1.10
-- Nota Técnica 2018.005 - v1.20
-- Nota Técnica 2018.005 - v1.30
 
-> As regras de validação ZD01-10 e ZD02-10 (identificação do responsável técnico), ficarão para implementação futura, exceto para as UF: AM, MS, PE, PR, SC e TO, nas quais estas regras já estão em vigor em ambiente de teste na data da publicação da versão 1.30 desta NT, e entrarão em vigor em ambiente de produção no dia 03 de junho de 2019.
+### Campos alterados
 
-### Campos alterados e inclusos, indicados em negrito (validos a partir de 03/06/2019):
+*NOTA: essas campos adicionais ainda são apenas OPCIONAIS, ou seja pode passar em branco*
 
-> F|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|**CEP|cPais|xPais|fone|email|IE|**
+B|cUF|cNF|natOp|mod|serie|nNF|dhEmi|dhSaiEnt|tpNF|idDest|cMunFG|tpImp|tpEmis|cDV|tpAmb|finNFe|indFinal|indPres|**indIntermed**|procEmi|verProc|dhCont|xJust|
 
-> **F02b|xNome|**
+YA|indPag|tPag|vPag|CNPJ|tBand|cAut|tpIntegra|**xPag**|
 
-> G|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|**CEP|cPais|xPais|fone|email|IE|**
+### Campos inclusos
 
-> **G02b|xNome|**
+*NOTA: apenas incluir essa linha caso o compo indIntermed for igual a 1*
 
-> K|cProdANVISA|vPMC|**xMotivoIsencao|**
-
-> N08|orig|CST|vBCSTRet|pST|vICMSSTRet|vBCFCPSTRet|pFCPSTRet|vFCPSTRet|pRedBCEfet|vBCEfet|pICMSEfet|vICMSEfet|**vICMSSubstituto|**
-
-> N10b|orig|CST|vBCSTRet|vICMSSTRet|vBCSTDest|vICMSSTDest|**vBCFCPSTRet|pFCPSTRet|vFCPSTRet|pST|vICMSSubstituto|pRedBCEfet|vBCEfet|pICMSEfet|vICMSEfet|**
-
-> N10g|orig|CSOSN|vBCSTRet|pST|vICMSSTRet|vBCFCPSTRet|pFCPSTRet|vFCPSTRet|pRedBCEfet|vBCEfet|pICMSEfet|vICMSEfet|**vICMSSubstituto|**
-
-> **ZD|CNPJ|xContato|email|fone|CSRT|idCSRT|**
-
-### *Estas alterações somente serão validas em produção a partir de 03/06/2019*
+**YB|CNPJ|idCadIntTran|**
 
 ```
-NOTAFISCAL|numero de notas|
+
+NOTAFISCAL|qtd|
 
 A|versao|Id|pk_nItem|
 
-B|cUF|cNF|natOp|mod|serie|nNF|dhEmi|dhSaiEnt|tpNF|idDest|cMunFG|tpImp|tpEmis|cDV|tp Amb|finNFe|indFinal|indPres|procEmi|verProc|dhCont|xJust|
+B|cUF|cNF|natOp|mod|serie|nNF|dhEmi|dhSaiEnt|tpNF|idDest|cMunFG|tpImp|tpEmis|cDV|tpAmb|finNFe|indFinal|indPres|indIntermed|procEmi|verProc|dhCont|xJust|
 
 BA|
 
@@ -81,17 +58,21 @@ E03a|idEstrangeiro|
 
 E05|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|CEP|cPais|xPais|fone|
 
-F|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|
+F|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|CEP|cPais|xPais|fone|email|IE|
 
 F02|CNPJ|
 
 F02a|CPF|
 
-G|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|
+F02b|xNome|
+
+G|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|CEP|cPais|xPais|fone|email|IE|
 
 G02|CNPJ|
 
 G02a|CPF|
+
+G02b|xNome|
 
 GA|
 
@@ -119,7 +100,7 @@ I80|nLote|qLote|dFab|dVal|cAgreg|
 
 JA|tpOp|chassi|cCor|xCor|pot|cilin|pesoL|pesoB|nSerie|tpComb|nMotor|CMT|dist|anoMod|anoFab|tpPint|tpVeic|espVeic|VIN|condVeic|cMod|cCorDENATRAN|lota|tpRest|
 
-K|cProdANVISA|vPMC|
+K|cProdANVISA|vPMC|xMotivoIsencao|
 
 L|tpArma|nSerie|nCano|descr|
 
@@ -147,7 +128,7 @@ N06|orig|CST|vICMSDeson|motDesICMS|
 
 N07|orig|CST|modBC|pRedBC|vBC|pICMS|vICMSOp|pDif|vICMSDif|vICMS|vBCFCP|pFCP|vFCP|
 
-N08|orig|CST|vBCSTRet|pST|vICMSSTRet|vBCFCPSTRet|pFCPSTRet|vFCPSTRet|pRedBCEfet|vBCEfet|pICMSEfet|vICMSEfet|
+N08|orig|CST|vBCSTRet|pST|vICMSSTRet|vBCFCPSTRet|pFCPSTRet|vFCPSTRet|pRedBCEfet|vBCEfet|pICMSEfet|vICMSEfet|vICMSSubstituto|
 
 N09|orig|CST|modBC|pRedBC|vBC|pICMS|vICMS|vBCFCP|pFCP|vFCP|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|vICMSDeson|motDesICMS|
 
@@ -155,7 +136,7 @@ N10|orig|CST|modBC|vBC|pRedBC|pICMS|vICMS|vBCFCP|pFCP|vFCP|modBCST|pMVAST|pRedBC
 
 N10a|orig|CST|modBC|vBC|pRedBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|pBCOp|UFST|
 
-N10b|orig|CST|vBCSTRet|vICMSSTRet|vBCSTDest|vICMSSTDest|
+N10b|orig|CST|vBCSTRet|vICMSSTRet|vBCSTDest|vICMSSTDest|vBCFCPSTRet|pFCPSTRet|vFCPSTRet|pST|vICMSSubstituto|pRedBCEfet|vBCEfet|pICMSEfet|vICMSEfet|
 
 N10c|orig|CSOSN|pCredSN|vCredICMSSN|
 
@@ -165,7 +146,7 @@ N10e|orig|CSOSN|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vF
 
 N10f|orig|CSOSN|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|
 
-N10g|orig|CSOSN|vBCSTRet|pST|vICMSSTRet|vBCFCPSTRet|pFCPSTRet|vFCPSTRet|pRedBCEfet|vBCEfet|pICMSEfet|vICMSEfet|
+N10g|orig|CSOSN|vBCSTRet|pST|vICMSSTRet|vBCFCPSTRet|pFCPSTRet|vFCPSTRet|pRedBCEfet|vBCEfet|pICMSEfet|vICMSEfet|vICMSSubstituto|
 
 N10h|orig|CSOSN|modBC|vBC|pRedBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|pCredSN|vCredICMSSN|
 
@@ -263,7 +244,9 @@ Y02|nFat|vOrig|vDesc|vLiq|
 
 Y07|nDup|dVenc|vDup|
 
-YA|indPag|tPag|vPag|CNPJ|tBand|cAut|tpIntegra|
+YA|indPag|tPag|vPag|CNPJ|tBand|cAut|tpIntegra|xPag|
+
+YB|CNPJ|idCadIntTran|
 
 Z|infAdFisco|infCpl|
 
@@ -283,6 +266,8 @@ ZC04|dia|qtde|
 
 ZC10|xDed|vDed|
 
-ZX01|qrcode|urlChave|
+ZD|CNPJ|xContato|email|fone|CSRT|idCSRT|
+
+ZX01|qrcode|urlChave|"
 
 ```

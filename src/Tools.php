@@ -8,7 +8,7 @@ namespace NFePHP\NFe;
  *
  * @category  NFePHP
  * @package   NFePHP\NFe\Tools
- * @copyright NFePHP Copyright (c) 2008-2019
+ * @copyright NFePHP Copyright (c) 2008-2020
  * @license   http://www.gnu.org/licenses/lgpl.txt LGPLv3+
  * @license   https://opensource.org/licenses/MIT MIT
  * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
@@ -33,6 +33,13 @@ class Tools extends ToolsCommon
     const EVT_CANCELA = 110111; //only seq=1
     const EVT_CANCELASUBSTITUICAO = 110112;
     const EVT_EPEC = 110140; //only seq=1
+    const EVT_ATORINTERESSADO = 110150; //many seq=n
+    const EVT_COMPROVANTE_ENTREGA = 110130; //many seq=n
+    const EVT_CANCELAMENTO_COMPROVANTE_ENTREGA = 110131; ///many seq=n
+    const EVT_PRORROGACAO_1 = 111500;
+    const EVT_PRORROGACAO_2 = 111501;
+    const EVT_CANCELA_PRORROGACAO_1 = 111502;
+    const EVT_CANCELA_PRORROGACAO_2 = 111503;
 
     /**
      * Request authorization to issue NFe in batch with one or more documents
@@ -71,6 +78,9 @@ class Tools extends ToolsCommon
         }
         $ax = [];
         foreach ($aXml as $xml) {
+            //verifica se o modelo do XML é o mesmo setado na classe
+            //gera um exception se não for
+            $this->checkModelFromXml($xml);
             $ax[] = trim(preg_replace("/<\?xml.*?\?>/", "", $xml));
         }
         $sxml = trim(implode("", $ax));
@@ -275,6 +285,9 @@ class Tools extends ToolsCommon
             . "$filter"
             . "</infCons>"
             . "</ConsCad>";
+        if (strtoupper($uf) == 'MT') {
+            $request = "<nfeDadosMsg>$request</nfeDadosMsg>" ;
+        }
         $this->isValid($this->urlVersion, $request, 'consCad');
         $this->lastRequest = $request;
         $parameters = ['nfeDadosMsg' => $request];
@@ -296,14 +309,14 @@ class Tools extends ToolsCommon
      * If $uf is NOT empty ignore contingency mode
      * @param string $uf  initials of federation unit
      * @param int $tpAmb
+     * @param bool $ignoreContingency
      * @return string xml soap response
      */
-    public function sefazStatus($uf = '', $tpAmb = null)
+    public function sefazStatus($uf = '', $tpAmb = null, $ignoreContingency = true)
     {
         if (empty($tpAmb)) {
             $tpAmb = $this->tpAmb;
         }
-        $ignoreContingency = true;
         if (empty($uf)) {
             $uf = $this->config->siglaUF;
             $ignoreContingency = false;
@@ -402,28 +415,65 @@ class Tools extends ToolsCommon
             . "</xCorrecao><xCondUso>$xCondUso</xCondUso>";
         return $this->sefazEvento($uf, $chave, self::EVT_CCE, $nSeqEvento, $tagAdic);
     }
+    
+    /**
+     * Evento do Ator Interessado
+     * NOTA: NT2020.007_v1.00a
+     * @param \stdClass $std
+     * @return string
+     */
+    public function sefazAtorInteressado(\stdClass $std)
+    {
+        $xCondUso = 'O emitente ou destinatário da NF-e, declara que permite o '
+            . 'transportador declarado no campo CNPJ/CPF deste evento a '
+            . 'autorizar os transportadores subcontratados ou redespachados a '
+            . 'terem acesso ao download da NF-e';
+        if (empty($std->verAplic) && !empty($this->verAplic)) {
+            $std->verAplic = $this->verAplic;
+        }
+        $cUF = UFList::getCodeByUF($this->config->siglaUF);
+        $tagAdic = "<cOrgaoAutor>{$cUF}</cOrgaoAutor>"
+            . "<tpAutor>{$std->tpAutor}</tpAutor>"
+            . "<verAplic>{$std->verAplic}</verAplic>"
+            . "<autXML>";
+        $tagAdic .=  !empty($std->CNPJ)
+            ? "<CNPJ>{$std->CNPJ}</CNPJ>"
+            : "<CPF>{$std->CPF}</CPF>";
+        $tagAdic .= "</autXML>"
+            . "<tpAutorizacao>{$std->tpAutorizacao}</tpAutorizacao>"
+            . "<xCondUso>$xCondUso</xCondUso>";
+        return $this->sefazEvento(
+            'AN',
+            $std->chNFe,
+            self::EVT_ATORINTERESSADO,
+            $std->nSeqEvento,
+            $tagAdic
+        );
+    }
 
     /**
      * Request extension of the term of return of products of an NF-e of
      * consignment for industrialization to order with suspension of ICMS
      * in interstate operations
-     * @param  string  $chNFe
-     * @param  string  $nProt
-     * @param  integer $tipo 1-primerio prazo, 2-segundo prazo
-     * @param  array   $itens
-     * @param  integer $nSeqEvento
+     * @param string $chNFe
+     * @param string $nProt
+     * @param integer $tipo 1-primerio prazo, 2-segundo prazo
+     * @param array $itens
+     * @param integer $nSeqEvento
      * @return string
      */
     public function sefazEPP(
         $chNFe,
         $nProt,
-        $itens = array(),
+        $itens = [],
         $tipo = 1,
         $nSeqEvento = 1
     ) {
         $uf = UFList::getUFByCode(substr($chNFe, 0, 2));
+        //pedido de prorrogação primero prazo
         $tpEvento = 111500;
         if ($tipo == 2) {
+            //pedido de prorrogação segundo prazo
             $tpEvento = 111501;
         }
         $tagAdic = "<nProt>$nProt</nProt>";
@@ -449,24 +499,26 @@ class Tools extends ToolsCommon
      * by order with suspension of ICMS in interstate operations
      * @param string $chave
      * @param string $nProt
+     * @param integer $tipo 1-primerio prazo, 2-segundo prazo
      * @param integer $nSeqEvento
      * @return string
      * @throws InvalidArgumentException
      */
-    public function sefazECPP($chave, $nProt, $nSeqEvento = 1)
+    public function sefazECPP($chave, $nProt, $tipo, $nSeqEvento = 1)
     {
         if (empty($chave) || empty($nProt)) {
-            throw new InvalidArgumentException('A chave ou o numero do protocolo estao vazios!');
+            throw new InvalidArgumentException('A chave ou o numero do protocolo estão vazios!');
         }
         $uf = UFList::getUFByCode(substr($chave, 0, 2));
-        $tpEvento = 111502;
-        $origEvent = 111500;
-        if ($nSeqEvento == 2) {
-            $tpEvento = 111503;
-            $origEvent = 111501;
+        $tpEvento = self::EVT_CANCELA_PRORROGACAO_1; //111502;
+        $origEvent = self::EVT_PRORROGACAO_1; //111500;
+        if ($tipo == 2) {
+            //pedido de cancelamento do segundo prazo
+            $tpEvento = self::EVT_CANCELA_PRORROGACAO_2; //111503;
+            $origEvent = self::EVT_PRORROGACAO_2; //111501;
         }
         $sSeqEvento = str_pad($nSeqEvento, 2, "0", STR_PAD_LEFT);
-        $idPedidoCancelado = "ID$origEvent$chave$sSeqEvento";
+        $idPedidoCancelado = "ID{$origEvent}{$chave}{$sSeqEvento}";
         $tagAdic = "<idPedidoCancelado>"
                 . "$idPedidoCancelado"
                 . "</idPedidoCancelado>"
@@ -496,21 +548,24 @@ class Tools extends ToolsCommon
 
     /**
      * Requires nfe cancellation by substitution
-     * @param  string $chave key of NFe
-     * @param  string $xJust justificative 255 characters max
-     * @param  string $nProt protocol number
-     * @param  string $chNFeRef key of New NFe
-     * @param  string $verAplic version of applicative
+     * @param string $chave key of NFe
+     * @param string $xJust justificative 255 characters max
+     * @param string $nProt protocol number
+     * @param string $chNFeRef key of New NFe
+     * @param string $verAplic version of applicative
      * @return string
      * @throws InvalidArgumentException
      */
-    public function sefazCancelaPorSubstituicao($chave, $xJust, $nProt, $chNFeRef, $verAplic)
+    public function sefazCancelaPorSubstituicao($chave, $xJust, $nProt, $chNFeRef, $verAplic = null)
     {
         if ($this->modelo != 65) {
             throw new InvalidArgumentException(
                 'Cancelamento pro Substituição deve ser usado apenas para '
                 . 'operações com modelo 65 NFCe'
             );
+        }
+        if (empty($verAplic) && !empty($this->verAplic)) {
+            $verAplic = $this->verAplic;
         }
         if (empty($chave) || empty($xJust) || empty($nProt)
             || empty($chNFeRef) || empty($verAplic)) {
@@ -532,7 +587,7 @@ class Tools extends ToolsCommon
             . "<chNFeRef>$chNFeRef</chNFeRef>";
         return $this->sefazEvento($uf, $chave, self::EVT_CANCELASUBSTITUICAO, $nSeqEvento, $tagAdic);
     }
-    
+
     /**
      * Request the registration of the manifestation of recipient
      * @param string $chave
@@ -596,7 +651,51 @@ class Tools extends ToolsCommon
         }
         return $this->sefazEventoLote('AN', $evt);
     }
-
+    
+    /**
+     * Send event for delivery receipt
+     * @param \stdClass $std
+     * @return string
+     */
+    public function sefazComprovanteEntrega(\stdClass $std)
+    {
+        if (empty($std->verAplic) && !empty($this->verAplic)) {
+            $std->verAplic = $this->verAplic;
+        }
+        $hash = base64_encode(sha1($std->chNFe . $std->imagem, true));
+        $datahash = date('Y-m-d\TH:i:sP');
+        $cod = UFList::getCodeByUF($this->config->siglaUF);
+        $cancelar = !empty($std->cancelar) ? $std->cancelar : false;
+        if (!$cancelar) {
+            $tagAdic = "<cOrgaoAutor>{$cod}</cOrgaoAutor>"
+                . "<tpAutor>1</tpAutor>"
+                . "<verAplic>{$std->verAplic}</verAplic>"
+                . "<dhEntrega>{$std->data_recebimento}</dhEntrega>"
+                . "<nDoc>{$std->documento_recebedor}</nDoc>"
+                . "<xNome>{$std->nome_recebedor}</xNome>";
+            if (!empty($std->latitude) && !empty($std->longitude)) {
+                $tagAdic .= "<latGPS>{$std->latitude}</latGPS>"
+                    . "<longGPS>{$std->longitude}</longGPS>";
+            }
+            $tagAdic .= "<hashComprovante>{$hash}</hashComprovante>"
+                . "<dhHashComprovante>{$datahash}</dhHashComprovante>";
+            $tpEvento = self::EVT_COMPROVANTE_ENTREGA;
+        } else {
+            $tpEvento = self::EVT_CANCELAMENTO_COMPROVANTE_ENTREGA;
+            $tagAdic = "<cOrgaoAutor>{$cod}</cOrgaoAutor>"
+                . "<tpAutor>1</tpAutor>"
+                . "<verAplic>{$std->verAplic}</verAplic>"
+                . "<nProtEvento>{$std->nProcEvento}</nProtEvento>";
+        }
+        return $this->sefazEvento(
+            'AN',
+            $std->chNFe,
+            $tpEvento,
+            $std->nSeqEvento,
+            $tagAdic
+        );
+    }
+    
     /**
      * Send event to SEFAZ in batch
      * @param string $uf
@@ -624,7 +723,7 @@ class Tools extends ToolsCommon
             $ev = $this->tpEv($evt->tpEvento);
             $descEvento = $ev->desc;
             $cnpj = $this->config->cnpj;
-            $dt = new \DateTime();
+            $dt = new \DateTime('now', new \DateTimeZone($this->timezone));
             $dhEvento = $dt->format('Y-m-d\TH:i:sP');
             $sSeqEvento = str_pad($evt->nSeqEvento, 2, "0", STR_PAD_LEFT);
             $eventId = "ID".$evt->tpEvento.$evt->chave.$sSeqEvento;
@@ -660,7 +759,7 @@ class Tools extends ToolsCommon
             );
             $batchRequest .= Strings::clearXmlString($request, true);
         }
-        $dt = new \DateTime();
+        $dt = new \DateTime('now', new \DateTimeZone($this->timezone));
         $lote = $dt->format('YmdHis') . rand(0, 9);
         $request = "<envEvento xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
             . "<idLote>$lote</idLote>"
@@ -676,21 +775,24 @@ class Tools extends ToolsCommon
 
     /**
      * Request authorization for issuance in contingency EPEC
-     * @param  string $xml
+     * @param string $xml
+     * @param string $verAplic
      * @return string
      * @throws InvalidArgumentException
      * @throws RuntimeException
      */
-    public function sefazEPEC(&$xml)
+    public function sefazEPEC(&$xml, $verAplic = null)
     {
         if (empty($xml)) {
-            throw new InvalidArgumentException('EPEC: parametro xml esta vazio!');
+            throw new InvalidArgumentException('EPEC: parâmetro xml esta vazio!');
         }
         $nSeqEvento = 1;
         if ($this->contingency->type !== 'EPEC') {
             throw new RuntimeException('A contingencia EPEC deve estar ativada!');
         }
+        //ajusta a NFe para a contingência definida e assina novamente
         $xml = $this->correctNFeForContingencyMode($xml);
+        //extrai os dados da NFe
         $dom = new \DOMDocument('1.0', 'UTF-8');
         $dom->preserveWhiteSpace = false;
         $dom->formatOutput = false;
@@ -700,7 +802,12 @@ class Tools extends ToolsCommon
         $dest = $dom->getElementsByTagName('dest')->item(0);
         $cOrgaoAutor = UFList::getCodeByUF($this->config->siglaUF);
         $chNFe = substr($infNFe->getAttribute('Id'), 3, 44);
+        $ufchave = substr($chNFe, 0, 2);
+        if ($cOrgaoAutor != $ufchave) {
+            throw new RuntimeException("O autor [{$cOrgaoAutor}] não é da mesma UF que a NFe [{$ufchave}]");
+        }
         // EPEC
+        $verProc= $dom->getElementsByTagName('verProc')->item(0)->nodeValue;
         $dhEmi = $dom->getElementsByTagName('dhEmi')->item(0)->nodeValue;
         $tpNF = $dom->getElementsByTagName('tpNF')->item(0)->nodeValue;
         $emitIE = $emit->getElementsByTagName('IE')->item(0)->nodeValue;
@@ -709,12 +816,14 @@ class Tools extends ToolsCommon
         $vNF = $total->getElementsByTagName('vNF')->item(0)->nodeValue;
         $vICMS = $total->getElementsByTagName('vICMS')->item(0)->nodeValue;
         $vST = $total->getElementsByTagName('vST')->item(0)->nodeValue;
-        $dID = !empty($dest->getElementsByTagName('CNPJ')->item(0)) ?
-                $dest->getElementsByTagName('CNPJ')->item(0)->nodeValue : null;
+        $dID = !empty($dest->getElementsByTagName('CNPJ')->item(0))
+            ? $dest->getElementsByTagName('CNPJ')->item(0)->nodeValue
+            : null;
         if (!empty($dID)) {
             $destID = "<CNPJ>$dID</CNPJ>";
         } else {
-            $dID = $dest->getElementsByTagName('CPF')->item(0)->nodeValue;
+            $dID = !empty($dest->getElementsByTagName('CPF')->item(0)->nodeValue)
+                ? $dest->getElementsByTagName('CPF')->item(0)->nodeValue : null;
             if (!empty($dID)) {
                 $destID = "<CPF>$dID</CPF>";
             } else {
@@ -724,27 +833,34 @@ class Tools extends ToolsCommon
                 $destID = "<idEstrangeiro>$dID</idEstrangeiro>";
             }
         }
-        $dIE = !empty($dest->getElementsByTagName('IE')->item(0)->nodeValue) ?
-                $dest->getElementsByTagName('IE')->item(0)->nodeValue : '';
+        $dIE = !empty($dest->getElementsByTagName('IE')->item(0)->nodeValue)
+            ? $dest->getElementsByTagName('IE')->item(0)->nodeValue
+            : '';
         $destIE = '';
         if (!empty($dIE)) {
-            $destIE = "<IE>$dIE</IE>";
+            $destIE = "<IE>{$dIE}</IE>";
+        }
+        if (empty($verAplic)) {
+            if (!empty($this->verAplic)) {
+                $verAplic = $this->verAplic;
+            } else {
+                $verAplic = $verProc;
+            }
         }
         $tagAdic = "<cOrgaoAutor>$cOrgaoAutor</cOrgaoAutor>"
             . "<tpAutor>1</tpAutor>"
-            . "<verAplic>$this->verAplic</verAplic>"
-            . "<dhEmi>$dhEmi</dhEmi>"
-            . "<tpNF>$tpNF</tpNF>"
-            . "<IE>$emitIE</IE>"
+            . "<verAplic>{$verAplic}</verAplic>"
+            . "<dhEmi>{$dhEmi}</dhEmi>"
+            . "<tpNF>{$tpNF}</tpNF>"
+            . "<IE>{$emitIE}</IE>"
             . "<dest>"
-            . "<UF>$destUF</UF>"
+            . "<UF>{$destUF}</UF>"
             . $destID
             . $destIE
-            . "<vNF>$vNF</vNF>"
-            . "<vICMS>$vICMS</vICMS>"
-            . "<vST>$vST</vST>"
+            . "<vNF>{$vNF}</vNF>"
+            . "<vICMS>{$vICMS}</vICMS>"
+            . "<vST>{$vST}</vST>"
             . "</dest>";
-
         return $this->sefazEvento('AN', $chNFe, self::EVT_EPEC, $nSeqEvento, $tagAdic);
     }
 
@@ -764,6 +880,28 @@ class Tools extends ToolsCommon
         $nSeqEvento = 1,
         $tagAdic = ''
     ) {
+        $eventos = [
+            self::EVT_CCE => ['versao' => '1.00', 'nome' => 'envCCe'],
+            self::EVT_CANCELA => ['versao' => '1.00', 'nome' => 'envEventoCancNFe'],
+            self::EVT_CANCELASUBSTITUICAO => ['versao' => '1.00', 'nome' => 'envEventoCancSubst'],
+            self::EVT_ATORINTERESSADO => ['versao' => '1.00', 'nome' => 'envEventoAtorInteressado'],
+            self::EVT_COMPROVANTE_ENTREGA => ['versao' => '1.00', 'nome' => 'envEventoEntregaNFe'],
+            self::EVT_CANCELAMENTO_COMPROVANTE_ENTREGA => ['versao' => '1.00', 'nome' => 'envEventoCancEntregaNFe'],
+            self::EVT_CIENCIA => ['versao' => '1.00', 'nome' => 'envConfRecebto'],
+            self::EVT_CONFIRMACAO => ['versao' => '1.00', 'nome' => 'envConfRecebto'],
+            self::EVT_DESCONHECIMENTO => ['versao' => '1.00', 'nome' => 'envConfRecebto'],
+            self::EVT_NAO_REALIZADA => ['versao' => '1.00', 'nome' => 'envConfRecebto'],
+            self::EVT_PRORROGACAO_1 => ['versao' => '1.00', 'nome' => 'envRemIndus'],
+            self::EVT_PRORROGACAO_2 => ['versao' => '1.00', 'nome' => 'envRemIndus'],
+            self::EVT_CANCELA_PRORROGACAO_1 => ['versao' => '1.00', 'nome' => 'envRemIndus'],
+            self::EVT_CANCELA_PRORROGACAO_2 => ['versao' => '1.00', 'nome' => 'envRemIndus'],
+            self::EVT_EPEC => ['versao' => '1.00', 'nome' => 'envEPEC'],
+        ];
+        $verEvento = $this->urlVersion;
+        if (!empty($eventos[$tpEvento])) {
+            $evt = $eventos[$tpEvento];
+            $verEvento = $evt['versao'];
+        }
         $ignore = $tpEvento == self::EVT_EPEC;
         $servico = 'RecepcaoEvento';
         $this->checkContingencyForWebServices($servico);
@@ -771,7 +909,7 @@ class Tools extends ToolsCommon
         $ev = $this->tpEv($tpEvento);
         $descEvento = $ev->desc;
         $cnpj = isset($this->config->cnpj) ? $this->config->cnpj : '';
-        $dt = new \DateTime();
+        $dt = new \DateTime(date("Y-m-d H:i:sP"), new \DateTimeZone($this->timezone));
         $dhEvento = $dt->format('Y-m-d\TH:i:sP');
         $sSeqEvento = str_pad($nSeqEvento, 2, "0", STR_PAD_LEFT);
         $eventId = "ID".$tpEvento.$chave.$sSeqEvento;
@@ -789,8 +927,8 @@ class Tools extends ToolsCommon
             . "<dhEvento>$dhEvento</dhEvento>"
             . "<tpEvento>$tpEvento</tpEvento>"
             . "<nSeqEvento>$nSeqEvento</nSeqEvento>"
-            . "<verEvento>$this->urlVersion</verEvento>"
-            . "<detEvento versao=\"$this->urlVersion\">"
+            . "<verEvento>$verEvento</verEvento>"
+            . "<detEvento versao=\"$verEvento\">"
             . "<descEvento>$descEvento</descEvento>"
             . "$tagAdic"
             . "</detEvento>"
@@ -811,9 +949,15 @@ class Tools extends ToolsCommon
             . "<idLote>$lote</idLote>"
             . $request
             . "</envEvento>";
-        $this->isValid($this->urlVersion, $request, 'envEvento');
+        if (!empty($eventos[$tpEvento])) {
+            $evt = $eventos[$tpEvento];
+            $this->isValid($evt['versao'], $request, $evt['nome']);
+        } else {
+            $this->isValid($this->urlVersion, $request, 'envEvento');
+        }
         $this->lastRequest = $request;
         //return $request;
+        
         $parameters = ['nfeDadosMsg' => $request];
         $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
         $this->lastResponse = $this->sendRequest($body, $parameters);
@@ -906,7 +1050,7 @@ class Tools extends ToolsCommon
             . "</admCscNFCe>";
         }
         //o xsd não está disponivel
-        //$this->isValid($this->urlVersion, $request, 'cscNFCe');
+        $this->isValid($this->urlVersion, $request, 'admCscNFCe');
         $this->lastRequest = $request;
         $parameters = ['nfeDadosMsg' => $request];
         $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
@@ -994,6 +1138,14 @@ class Tools extends ToolsCommon
                 $std->alias = 'EPEC';
                 $std->desc = 'EPEC';
                 break;
+            case self::EVT_COMPROVANTE_ENTREGA:
+                $std->alias = 'CompEntrega';
+                $std->desc = 'Comprovante de Entrega da NF-e';
+                break;
+            case self::EVT_CANCELAMENTO_COMPROVANTE_ENTREGA:
+                $std->alias = 'CancCompEntrega';
+                $std->desc = 'Cancelamento Comprovante de Entrega da NF-e';
+                break;
             case 111500:
             case 111501:
                 //EPP
@@ -1024,6 +1176,10 @@ class Tools extends ToolsCommon
             case self::EVT_NAO_REALIZADA: // Manifestação Operacao não Realizada
                 $std->alias = 'EvNaoRealizada';
                 $std->desc = 'Operacao nao Realizada';
+                break;
+            case self::EVT_ATORINTERESSADO: //ator interessado
+                $std->alias = 'EvAtorInteressado';
+                $std->desc = 'Ator interessado na NF-e';
                 break;
             default:
                 $msg = "O código do tipo de evento informado não corresponde a "

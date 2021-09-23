@@ -24,7 +24,6 @@ class Contingency
     const OFFLINE = 'OFFLINE';
     const EPEC = 'EPEC';
     const FSDA = 'FS-DA';
-    
     const TPEMIS_FSDA = 5;
     const TPEMIS_OFFLINE = 9;
 

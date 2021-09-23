@@ -9,6 +9,9 @@ Esses stdClass podem ser criados diretamente como demonstrado nos exemplos abaix
 
 ## *NOTA: Ajustado para NT 2018.001 v1.00* Usar novos campos dessa NT em produção somente a partir de 29/04/2019. 
 ## *NOTA: Ajustado para NT 2018.001 v1.10* Usar novos campos dessa NT em produção somente a partir de 29/04/2019. 
+## *NOTA: Ajustado para NT 2020.006 User o novo campo na tgIde() e novo método sefazIntermed() em produção a partir de 05/04/2021.
+## *NOTA: Ajustado para NT 2020.007 User o novo método sefazAtorInteressado() em produção a partir de 05/04/2021.
+
 
 > Existe um provável ERRO nos XSDs PL_009_V4, fornecidos em 02/01/2019, onde estabelece um comprimento para o campo hashCSRT de 28 digitos base64Binary, **quando na verdade são gerados 30 digitos segundo esta formatação**.
 
@@ -86,6 +89,7 @@ $std->tpAmb = 2;
 $std->finNFe = 1;
 $std->indFinal = 0;
 $std->indPres = 0;
+$std->indIntermed = null;
 $std->procEmi = 0;
 $std->verProc = '3.10.31';
 $std->dhCont = null;
@@ -93,6 +97,7 @@ $std->xJust = null;
 
 $nfe->tagide($std);
 ```
+
 
 ### function tagrefNFe($std):DOMElement
 Node referente a NFe referenciada
@@ -351,11 +356,10 @@ $std = new stdClass();
 $std->item = 1; //item da NFe
 $std->cProd;
 $std->cEAN;
+$std->cBarra;
 $std->xProd;
 $std->NCM;
-
-$std->cBenef; //incluido no layout 4.00
-
+$std->cBenef;
 $std->EXTIPI;
 $std->CFOP;
 $std->uCom;
@@ -363,6 +367,7 @@ $std->qCom;
 $std->vUnCom;
 $std->vProd;
 $std->cEANTrib;
+$std->cBarraTrib;
 $std->uTrib;
 $std->qTrib;
 $std->vUnTrib;
@@ -676,7 +681,7 @@ $std = new stdClass();
 $std->item = 1; //item da NFe
 $std->orig;
 $std->CST;
-$std->modBC
+$std->modBC;
 $std->vBC;
 $std->pICMS;
 $std->vICMS;
@@ -708,7 +713,12 @@ $std->pRedBCEfet;
 $std->vBCEfet;
 $std->pICMSEfet;
 $std->vICMSEfet;
-$std->vICMSSubstituto; //NT2018.005_1.10_Fevereiro de 2019
+$std->vICMSSubstituto; //NT 2020.005 v1.20
+$std->vICMSSTDeson; //NT 2020.005 v1.20
+$std->motDesICMSST; //NT 2020.005 v1.20
+$std->pFCPDif; //NT 2020.005 v1.20
+$std->vFCPDif; //NT 2020.005 v1.20
+$std->vFCPEfet; //NT 2020.005 v1.20
 
 $nfe->tagICMS($std);
 ```
@@ -911,6 +921,8 @@ $std->vBC = 1000.00
 $std->pPIS = 1.60;
 $std->qBCProd = null;
 $std->vAliqProd = null;
+$std->indSomaPISST = 0; //0=Valor do PISST não compõe o valor total da NF-e
+                        //1=Valor do PISST compõe o valor total da NF-e
 
 $nfe->tagPISST($std);
 ```
@@ -948,6 +960,8 @@ $std->vBC = 2893.00;
 $std->pCOFINS = 10.00;
 $std->qBCProd = null;
 $std->vAliqProd = null;
+$std->indSomaCOFINSST = 0; //0=Valor do COFINS ST não compõe o valor total da NF-e
+                           //1=Valor do COFINS ST compõe o valor total da NF-e
 
 $nfe->tagCOFINSST($std);
 ```
@@ -1133,7 +1147,7 @@ $std->vICMSRet = 2.40;
 $std->CFOP = '5353';
 $std->cMunFG = '3518800';
 
-$nfe->tagveicTransp($std);
+$nfe->tagretTransp($std);
 ```
 
 ### function tagveicTransp($std):DOMElement
@@ -1301,11 +1315,33 @@ $nfe->tagdetPag($std);
 > vPag=0.00 **mas pode ter valor se a venda for à vista**
 >
 > tPag é usualmente:
+
 > - 15 = Boleto Bancário
+> - 16 = Depósito Bancário
+> - 17 = Pagamento Instantâneo (PIX)
+> - 18 = Transferência bancária, Carteira Digital
+> - 19 = Programa de fidelidade, Cashback, Crédito Virtual
 > - 90 = Sem pagamento
+> - 98 = Regime Especial NFF
 > - 99 = Outros
 >
 > *Porém podem haver casos que os outros nodes e valores tenham de ser usados.*
+
+
+### function tagIntermed($std):DOMElement
+Node referente aos dados do Intermediador NT 2020.006
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$std = new stdClass();
+$std->CNPJ = '12345678901234';
+$std->idCadIntTran = 'fulano';
+
+$nfe->tagIntermed($std);
+```
 
 
 ### function taginfAdic($std):DOMElement

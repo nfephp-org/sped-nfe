@@ -170,6 +170,10 @@ class Tools
      * @var string
      */
     protected $typePerson = 'J';
+    /**
+     * @var string
+     */
+    protected $timezone;
 
     /**
      * Loads configurations and Digital Certificate, map all paths, set timezone and instanciate Contingency::class
@@ -190,7 +194,6 @@ class Tools
         if (empty($contingency)) {
             $this->contingency = new Contingency();
         }
-        $this->soap = new SoapCurl($certificate);
     }
 
     /**
@@ -200,7 +203,7 @@ class Tools
      */
     public function setEnvironmentTimeZone($acronym)
     {
-        date_default_timezone_set(TimeZoneByUF::get($acronym));
+        $this->timezone = TimeZoneByUF::get($acronym);
     }
 
     /**
@@ -343,7 +346,7 @@ class Tools
     public function signNFe($xml)
     {
         if (empty($xml)) {
-            throw new InvalidArgumentException('$xml');
+            throw new InvalidArgumentException('O argumento xml passado para ser assinado está vazio.');
         }
         //remove all invalid strings
         $xml = Strings::clearXmlString($xml);
@@ -513,7 +516,7 @@ class Tools
             throw new \RuntimeException('Em contingencia FSDA ou OFFLINE não é possivel acessar os webservices.');
         }
         $this->checkSoap();
-        return (string) $this->soap->send(
+        $response = (string) $this->soap->send(
             $this->urlService,
             $this->urlMethod,
             $this->urlAction,
@@ -523,6 +526,7 @@ class Tools
             $request,
             $this->objHeader
         );
+        return Strings::normalize($response);
     }
 
     /**
@@ -591,6 +595,25 @@ class Tools
     {
         if (empty($this->soap)) {
             $this->soap = new SoapCurl($this->certificate);
+        }
+    }
+    
+    /**
+     * Verify if xml model is equal as modelo property
+     * @param string $xml
+     * @return bool
+     */
+    protected function checkModelFromXml($xml)
+    {
+        $dom = new \DOMDocument();
+        $dom->loadXML($xml);
+        $model = $dom->getElementsByTagName('mod')->item(0)->nodeValue;
+        $check = $model == $this->modelo;
+        $correct = $this->modelo == 55 ? 65 : 55;
+        if (!$check) {
+            throw new InvalidArgumentException('Você passou um XML de modelo incorreto. '
+                . "Use o método \$tools->model({$correct}), para selecionar o "
+                . 'modelo correto a ser usado');
         }
     }
 }
