@@ -1740,12 +1740,12 @@ class Make
         $std = $this->equilizeParameters($std, $possible);
         //totalizador
         if ($std->indTot == 1) {
-            $this->stdTot->vProd += (float) $std->vProd;
+            $this->stdTot->vProd += (float) conditionalNumberFormatting($std->vProd);
         }
-        $this->stdTot->vFrete += (float) $std->vFrete;
-        $this->stdTot->vSeg += (float) $std->vSeg;
-        $this->stdTot->vDesc += (float) $std->vDesc;
-        $this->stdTot->vOutro += (float) $std->vOutro;
+        $this->stdTot->vFrete += (float) conditionalNumberFormatting($std->vFrete);
+        $this->stdTot->vSeg += (float) conditionalNumberFormatting($std->vSeg);
+        $this->stdTot->vDesc += (float) conditionalNumberFormatting($std->vDesc);
+        $this->stdTot->vOutro += (float) conditionalNumberFormatting($std->vOutro);
 
         $cean = !empty($std->cEAN) ? trim(strtoupper($std->cEAN)) : '';
         $ceantrib = !empty($std->cEANTrib) ? trim(strtoupper($std->cEANTrib)) : '';
