@@ -1764,12 +1764,12 @@ class Make
         $std = $this->equilizeParameters($std, $possible);
         //totalizador
         if ($std->indTot == 1) {
-            $this->stdTot->vProd += (float) conditionalNumberFormatting($std->vProd);
+            $this->stdTot->vProd += (float) $this->conditionalNumberFormatting($std->vProd);
         }
-        $this->stdTot->vFrete += (float) conditionalNumberFormatting($std->vFrete);
-        $this->stdTot->vSeg += (float) conditionalNumberFormatting($std->vSeg);
-        $this->stdTot->vDesc += (float) conditionalNumberFormatting($std->vDesc);
-        $this->stdTot->vOutro += (float) conditionalNumberFormatting($std->vOutro);
+        $this->stdTot->vFrete += (float) $this->conditionalNumberFormatting($std->vFrete);
+        $this->stdTot->vSeg += (float) $this->conditionalNumberFormatting($std->vSeg);
+        $this->stdTot->vDesc += (float) $this->conditionalNumberFormatting($std->vDesc);
+        $this->stdTot->vOutro += (float) $this->conditionalNumberFormatting($std->vOutro);
 
         $cean = !empty($std->cEAN) ? trim(strtoupper($std->cEAN)) : '';
         $ceantrib = !empty($std->cEANTrib) ? trim(strtoupper($std->cEANTrib)) : '';
@@ -5511,7 +5511,6 @@ class Make
 
         // totalizador
         if ($this->aProd[$std->item]->getElementsByTagName('indTot')->item(0)->nodeValue == 1) {
-
             // Captura o valor do item
             $vProd = (float) ($this->aProd[$std->item]->getElementsByTagName('vProd')->item(0)->nodeValue);
 
