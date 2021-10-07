@@ -1,0 +1,132 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Instantiated class NFePHP\\\\NFe\\\\Common\\\\Exception not found\\.$#"
+			count: 1
+			path: src/Common/Standardize.php
+
+		-
+			message: "#^Throwing object of an unknown class NFePHP\\\\NFe\\\\Common\\\\Exception\\.$#"
+			count: 1
+			path: src/Common/Standardize.php
+
+		-
+			message: "#^Access to an undefined property object\\:\\:\\$method\\.$#"
+			count: 1
+			path: src/Common/Tools.php
+
+		-
+			message: "#^Access to an undefined property object\\:\\:\\$operation\\.$#"
+			count: 1
+			path: src/Common/Tools.php
+
+		-
+			message: "#^Access to an undefined property object\\:\\:\\$version\\.$#"
+			count: 1
+			path: src/Common/Tools.php
+
+		-
+			message: "#^Method NFePHP\\\\NFe\\\\Common\\\\Tools\\:\\:checkModelFromXml\\(\\) should return bool but return statement is missing\\.$#"
+			count: 1
+			path: src/Common/Tools.php
+
+		-
+			message: "#^Parameter \\#1 \\$code of static method NFePHP\\\\Common\\\\UFList\\:\\:getUFByCode\\(\\) expects int, string given\\.$#"
+			count: 2
+			path: src/Common/Tools.php
+
+		-
+			message: "#^Parameter \\#3 \\$tpAmb of method NFePHP\\\\NFe\\\\Common\\\\Tools\\:\\:servico\\(\\) expects int, string given\\.$#"
+			count: 1
+			path: src/Common/Tools.php
+
+		-
+			message: "#^Parameter \\#1 \\$version of static method NFePHP\\\\NFe\\\\Common\\\\ValidTXT\\:\\:loadStructure\\(\\) expects float, string given\\.$#"
+			count: 1
+			path: src/Common/ValidTXT.php
+
+		-
+			message: "#^Parameter \\#2 \\$class_name of function simplexml_load_string expects string, null given\\.$#"
+			count: 1
+			path: src/Common/Webservices.php
+
+		-
+			message: "#^Unsafe usage of new static\\(\\)\\.$#"
+			count: 1
+			path: src/Convert.php
+
+		-
+			message: "#^Unsafe usage of new static\\(\\)\\.$#"
+			count: 1
+			path: src/Exception/DocumentsException.php
+
+		-
+			message: "#^Variable \\$tpEmis might not be defined\\.$#"
+			count: 1
+			path: src/Factories/Contingency.php
+
+		-
+			message: "#^Parameter \\#1 \\$code of static method NFePHP\\\\Common\\\\UFList\\:\\:getUFByCode\\(\\) expects int, string given\\.$#"
+			count: 1
+			path: src/Factories/ContingencyNFe.php
+
+		-
+			message: "#^Parameter \\#1 \\$std of method NFePHP\\\\NFe\\\\Make\\:\\:tagIntermed\\(\\) expects stdClass, NFePHP\\\\NFe\\\\Factories\\\\type given\\.$#"
+			count: 1
+			path: src/Factories/Parser.php
+
+		-
+			message: "#^Parameter \\$std of method NFePHP\\\\NFe\\\\Factories\\\\Parser\\:\\:ybEntity\\(\\) has invalid typehint type NFePHP\\\\NFe\\\\Factories\\\\type\\.$#"
+			count: 1
+			path: src/Factories/Parser.php
+
+		-
+			message: "#^Parameter \\#1 \\$number of function number_format expects float, string given\\.$#"
+			count: 1
+			path: src/Factories/QRCode.php
+
+		-
+			message: "#^Method NFePHP\\\\NFe\\\\Make\\:\\:conditionalNumberFormatting\\(\\) should return string but returns null\\.$#"
+			count: 1
+			path: src/Make.php
+
+		-
+			message: "#^Parameter \\#1 \\$code of static method NFePHP\\\\Common\\\\UFList\\:\\:getUFByCode\\(\\) expects int, string given\\.$#"
+			count: 3
+			path: src/Tools.php
+
+		-
+			message: "#^Parameter \\#1 \\$input of function str_pad expects string, int given\\.$#"
+			count: 5
+			path: src/Tools.php
+
+		-
+			message: "#^Parameter \\#1 \\$input of function str_pad expects string, int\\<min, \\-1\\>\\|int\\<1, max\\> given\\.$#"
+			count: 2
+			path: src/Tools.php
+
+		-
+			message: "#^Parameter \\#2 \\$tpAmb of method NFePHP\\\\NFe\\\\Tools\\:\\:sefazConsultaChave\\(\\) expects int\\|null, string given\\.$#"
+			count: 1
+			path: src/Tools.php
+
+		-
+			message: "#^Parameter \\#1 \\$content of static method NFePHP\\\\NFe\\\\Common\\\\Config\\:\\:validate\\(\\) expects string, array\\<string, array\\<string, string\\>\\|int\\|string\\> given\\.$#"
+			count: 1
+			path: tests/Common/ConfigTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$xml of method NFePHP\\\\NFe\\\\Common\\\\Standardize\\:\\:whichIs\\(\\) expects string, int given\\.$#"
+			count: 1
+			path: tests/Common/StandardizeTest.php
+
+		-
+			message: "#^Undefined variable\\: \\$xml$#"
+			count: 3
+			path: tests/Common/StandardizeTest.php
+
+		-
+			message: "#^Parameter \\#2 \\$amb of method NFePHP\\\\NFe\\\\Common\\\\Webservices\\:\\:get\\(\\) expects int, string given\\.$#"
+			count: 2
+			path: tests/Common/WebservicesTest.php
+

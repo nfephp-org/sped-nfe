@@ -1,0 +1,40 @@
+name: Pipeline para o admin
+on:
+  push:
+    branches:
+      - master
+      - setup-phpstan
+
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  testsuite:
+    name: Testes Automatizados
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-version: ['7.2', '7.3', '7.4']
+
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: mbstring, intl, mysql, zlib, dom, openssl, soap, json, simplexml, libxml
+
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: Composer Install
+        run: |
+          composer install --no-progress -o --no-ansi --no-interaction
+
+      - name: Análises estáticas
+        run: |
+          composer stan
+
+      - name: Rodando PHPUnit
+        run: |
+          composer test
