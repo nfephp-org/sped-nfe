@@ -152,31 +152,23 @@ try {
     $std->xPed = NULL;
     $std->nItemPed = NULL;
     $std->indTot = 1;
+    $make->tagprod($std);
 
     // Monta a tag de impostos mas não adiciona no xml
-    $ISSQN = new stdClass();
-    $ISSQN->item = 1; //item da NFe
-    $ISSQN->vBC = 2.0;
-    $ISSQN->vAliq = 8.0;
-    $ISSQN->vISSQN = 0.16;
-    $ISSQN->cMunFG = 1300029;
-    $ISSQN->cMun = 1300029;
-    $ISSQN->cPais = '1058';
-    $ISSQN->cListServ = '01.01';
-    $ISSQN->indISS = 1;
-    $ISSQN->indIncentivo = 2;
-
-    // Aqui está a mudança principal, informar a tag imposto para totalizar o valor do serviço automaticamente
-    $prod = $make->tagprod($std, $ISSQN);
-
-    //Imposto
     $std = new stdClass();
     $std->item = 1; //item da NFe
-    $std->vTotTrib = 0;
-    $make->tagimposto($std);
+    $std->vBC = 2.0;
+    $std->vAliq = 8.0;
+    $std->vISSQN = 0.16;
+    $std->cMunFG = 1300029;
+    $std->cMun = 1300029;
+    $std->cPais = '1058';
+    $std->cListServ = '01.01';
+    $std->indISS = 1;
+    $std->indIncentivo = 2;
 
     // Adiciona a tag de imposto ISSQN no xml
-    $make->tagISSQN($ISSQN);
+    $make->tagISSQN($std);
 
     //Imposto
     $std = new stdClass();
