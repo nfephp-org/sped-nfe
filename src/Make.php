@@ -16,6 +16,7 @@ namespace NFePHP\NFe;
  * @author    Roberto L. Machado <linux.rlm at gmail dot com>
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
+
 use NFePHP\Common\Keys;
 use NFePHP\Common\DOMImproved as Dom;
 use NFePHP\Common\Strings;
@@ -554,12 +555,12 @@ class Make
         $std->cNF = str_pad($std->cNF, 8, '0', STR_PAD_LEFT);
         if (intval($std->cNF) == intval($std->nNF)) {
             throw new InvalidArgumentException("O valor [{$std->cNF}] não é "
-            . "aceitável para cNF, não pode ser igual ao de nNF, vide NT2019.001");
+                . "aceitável para cNF, não pode ser igual ao de nNF, vide NT2019.001");
         }
         if (method_exists(Keys::class, 'cNFIsValid')) {
             if (!Keys::cNFIsValid($std->cNF)) {
                 throw new InvalidArgumentException("O valor [{$std->cNF}] para cNF "
-                . "é invalido, deve respeitar a NT2019.001");
+                    . "é invalido, deve respeitar a NT2019.001");
             }
         }
         $this->tpAmb = $std->tpAmb;
@@ -1728,10 +1729,9 @@ class Make
      * NOTA: Ajustado para NT2016_002_v1.30
      * NOTA: Ajustado para NT2020_005_v1.20
      * @param stdClass $std
-     * @param stdClass $stdImposto uma das tags (tagISSQN_U01 ou tagICMS_N01), para poder diferir de um Produto ou Serviço
      * @return DOMElement
      */
-    public function tagprod(stdClass $std, stdClass $stdImposto = null)
+    public function tagprod(stdClass $std)
     {
         $possible = [
             'item',
@@ -1764,16 +1764,7 @@ class Make
         $std = $this->equilizeParameters($std, $possible);
         //totalizador
         if ($std->indTot == 1) {
-
-            // se houver a tag de imposto informada e exite o valor de serviço, consideramos como um serviço
-            if ($stdImposto && property_exists($stdImposto, 'vISSQN')) {
-                $this->stdISSQNTot->vServ += (float) $std->vProd;
-            }
-
-            // caso contrário, consideramos como um produto
-            else {
-                $this->stdTot->vProd += (float) $std->vProd;
-            }
+            $this->stdTot->vProd += (float) $std->vProd;
         }
         $this->stdTot->vFrete += (float) $std->vFrete;
         $this->stdTot->vSeg += (float) $std->vSeg;
@@ -1810,7 +1801,7 @@ class Make
             $cean,
             true,
             $identificador . "[item $std->item] GTIN (Global Trade Item Number) do produto, antigo "
-            . "código EAN ou código de barras",
+                . "código EAN ou código de barras",
             true
         );
         $this->dom->addChild(
@@ -1894,7 +1885,7 @@ class Make
             $ceantrib,
             true,
             $identificador . "[item $std->item] GTIN (Global Trade Item Number) da unidade tributável, antigo "
-            . "código EAN ou código de barras",
+                . "código EAN ou código de barras",
             true
         );
         $this->dom->addChild(
@@ -1903,7 +1894,7 @@ class Make
             $std->cBarraTrib ?? null,
             false,
             $identificador . "[item $std->item] cBarraTrib Código de Barras da "
-            . "unidade tributável que seja diferente do padrão GTIN"
+                . "unidade tributável que seja diferente do padrão GTIN"
         );
         $this->dom->addChild(
             $prod,
@@ -3008,7 +2999,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pFCP, 4),
                     false,
                     "$identificador [item $std->item] Percentual do Fundo de "
-                    . "Combate à Pobreza (FCP)"
+                        . "Combate à Pobreza (FCP)"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -3016,7 +3007,7 @@ class Make
                     $this->conditionalNumberFormatting($std->vFCP),
                     false,
                     "$identificador [item $std->item] Valor do Fundo de Combate "
-                    . "à Pobreza (FCP)"
+                        . "à Pobreza (FCP)"
                 );
                 break;
             case '10':
@@ -3081,7 +3072,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pFCP, 4),
                     false,
                     "$identificador [item $std->item] Percentual do Fundo de "
-                    . "Combate à Pobreza (FCP)"
+                        . "Combate à Pobreza (FCP)"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -3145,7 +3136,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pFCPST, 4),
                     false,
                     "$identificador [item $std->item] Percentual do Fundo de "
-                    . "Combate à Pobreza (FCP) ST"
+                        . "Combate à Pobreza (FCP) ST"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -3236,7 +3227,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pFCP, 4),
                     false,
                     "$identificador [item $std->item] Percentual do Fundo de "
-                    . "Combate à Pobreza (FCP)"
+                        . "Combate à Pobreza (FCP)"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -3334,7 +3325,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pFCPST, 4),
                     false,
                     "$identificador [item $std->item] Percentual do Fundo de "
-                    . "Combate à Pobreza (FCP) ST"
+                        . "Combate à Pobreza (FCP) ST"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -3478,7 +3469,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pFCP, 4),
                     false,
                     "$identificador [item $std->item] Percentual do Fundo de "
-                    . "Combate à Pobreza (FCP)"
+                        . "Combate à Pobreza (FCP)"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -3493,7 +3484,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pFCPDif),
                     false,
                     "$identificador [item $std->item] Percentual do diferimento "
-                    . "do ICMS relativo ao Fundo de Combate à Pobreza (FCP)"
+                        . "do ICMS relativo ao Fundo de Combate à Pobreza (FCP)"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -3501,7 +3492,7 @@ class Make
                     $this->conditionalNumberFormatting($std->vFCPDif),
                     false,
                     "$identificador [item $std->item] Valor do ICMS relativo ao "
-                    . "Fundo de Combate à Pobreza (FCP) diferido"
+                        . "Fundo de Combate à Pobreza (FCP) diferido"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -3509,7 +3500,7 @@ class Make
                     $this->conditionalNumberFormatting($std->vFCPEfet),
                     false,
                     "$identificador [item $std->item] Valor efetivo do ICMS relativo "
-                    . "ao Fundo de Combate à Pobreza (FCP)"
+                        . "ao Fundo de Combate à Pobreza (FCP)"
                 );
                 break;
             case '60':
@@ -3562,7 +3553,7 @@ class Make
                     $this->conditionalNumberFormatting($std->vBCFCPSTRet),
                     false,
                     "$identificador [item $std->item] Valor da Base de Cálculo "
-                    . "do FCP retido anteriormente por ST"
+                        . "do FCP retido anteriormente por ST"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -3570,7 +3561,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pFCPSTRet, 4),
                     false,
                     "$identificador [item $std->item] Percentual do FCP retido "
-                    . "anteriormente por Substituição Tributária"
+                        . "anteriormente por Substituição Tributária"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -3578,7 +3569,7 @@ class Make
                     $this->conditionalNumberFormatting($std->vFCPSTRet),
                     false,
                     "$identificador [item $std->item] Valor do FCP retido por "
-                    . "Substituição Tributária"
+                        . "Substituição Tributária"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -3586,7 +3577,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pRedBCEfet, 4),
                     false,
                     "$identificador [item $std->item] Percentual de redução "
-                    . "para obtenção da base de cálculo efetiva (vBCEfet)"
+                        . "para obtenção da base de cálculo efetiva (vBCEfet)"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -3679,7 +3670,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pFCP, 4),
                     false,
                     "$identificador [item $std->item] Percentual do Fundo de "
-                    . "Combate à Pobreza (FCP)"
+                        . "Combate à Pobreza (FCP)"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -3743,7 +3734,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pFCPST, 4),
                     false,
                     "$identificador [item $std->item] Percentual do Fundo de "
-                    . "Combate à Pobreza (FCP) ST"
+                        . "Combate à Pobreza (FCP) ST"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -3850,7 +3841,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pFCP, 4),
                     false,
                     "$identificador [item $std->item] Percentual do Fundo de "
-                    . "Combate à Pobreza (FCP)"
+                        . "Combate à Pobreza (FCP)"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -3914,7 +3905,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pFCPST, 4),
                     false,
                     "$identificador [item $std->item] Percentual do Fundo de "
-                    . "Combate à Pobreza (FCP) ST"
+                        . "Combate à Pobreza (FCP) ST"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -4331,7 +4322,7 @@ class Make
                     $this->conditionalNumberFormatting($std->vCredICMSSN),
                     true,
                     "[item $std->item] Valor crédito do ICMS que pode ser aproveitado nos termos do"
-                    . " art. 23 da LC 123 (Simples Nacional)"
+                        . " art. 23 da LC 123 (Simples Nacional)"
                 );
                 break;
             case '102':
@@ -4421,7 +4412,7 @@ class Make
                     $this->conditionalNumberFormatting($std->vBCFCPST),
                     isset($std->vBCFCPST) ? true : false,
                     "[item $std->item] Valor da Base de Cálculo do FCP "
-                    . "retido por Substituição Tributária"
+                        . "retido por Substituição Tributária"
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -4429,7 +4420,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pFCPST, 4),
                     isset($std->pFCPST) ? true : false,
                     "[item $std->item] Percentual do FCP retido por "
-                    . "Substituição Tributária"
+                        . "Substituição Tributária"
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -4451,7 +4442,7 @@ class Make
                     $this->conditionalNumberFormatting($std->vCredICMSSN),
                     false,
                     "[item $std->item] Valor crédito do ICMS que pode ser aproveitado nos "
-                    . "termos do art. 23 da LC 123 (Simples Nacional)"
+                        . "termos do art. 23 da LC 123 (Simples Nacional)"
                 );
                 break;
             case '202':
@@ -4522,7 +4513,7 @@ class Make
                     $this->conditionalNumberFormatting($std->vBCFCPST),
                     isset($std->vBCFCPST) ? true : false,
                     "[item $std->item] Valor da Base de Cálculo do FCP "
-                    . "retido por Substituição Tributária"
+                        . "retido por Substituição Tributária"
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -4530,7 +4521,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pFCPST, 4),
                     isset($std->pFCPST) ? true : false,
                     "[item $std->item] Percentual do FCP retido por "
-                    . "Substituição Tributária"
+                        . "Substituição Tributária"
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -4590,7 +4581,7 @@ class Make
                     $this->conditionalNumberFormatting($std->vBCFCPSTRet, 2),
                     isset($std->vBCFCPSTRet) ? true : false,
                     "[item $std->item] Valor da Base de Cálculo do FCP "
-                    . "retido anteriormente por Substituição Tributária"
+                        . "retido anteriormente por Substituição Tributária"
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -4598,7 +4589,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pFCPSTRet, 4),
                     isset($std->pFCPSTRet) ? true : false,
                     "[item $std->item] Percentual do FCP retido anteriormente por "
-                    . "Substituição Tributária"
+                        . "Substituição Tributária"
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -4606,7 +4597,7 @@ class Make
                     $this->conditionalNumberFormatting($std->vFCPSTRet),
                     isset($std->vFCPSTRet) ? true : false,
                     "[item $std->item] Valor do FCP retido anteiormente por "
-                    . "Substituição Tributária"
+                        . "Substituição Tributária"
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -4614,7 +4605,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pRedBCEfet, 4),
                     isset($std->pRedBCEfet) ? true : false,
                     "[item $std->item] Percentual de redução da base "
-                    . "de cálculo efetiva"
+                        . "de cálculo efetiva"
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -4741,7 +4732,7 @@ class Make
                     $this->conditionalNumberFormatting($std->vBCFCPST),
                     isset($std->vBCFCPST) ? true : false,
                     "[item $std->item] Valor da Base de Cálculo do FCP "
-                    . "retido por Substituição Tributária"
+                        . "retido por Substituição Tributária"
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -4749,7 +4740,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pFCPST, 4),
                     isset($std->pFCPST) ? true : false,
                     "[item $std->item] Percentual do FCP retido por "
-                    . "Substituição Tributária"
+                        . "Substituição Tributária"
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -4771,7 +4762,7 @@ class Make
                     $this->conditionalNumberFormatting($std->vCredICMSSN),
                     isset($std->vCredICMSSN) ? true : false,
                     "[item $std->item] Valor crédito do ICMS que pode ser aproveitado nos termos do"
-                    . " art. 23 da LC 123 (Simples Nacional)"
+                        . " art. 23 da LC 123 (Simples Nacional)"
                 );
                 break;
         }
@@ -4919,7 +4910,7 @@ class Make
             $std->CNPJProd,
             false,
             "[item $std->item] CNPJ do produtor da mercadoria, quando diferente do emitente. "
-            . "Somente para os casos de exportação direta ou indireta."
+                . "Somente para os casos de exportação direta ou indireta."
         );
         $this->dom->addChild(
             $ipi,
@@ -4973,7 +4964,7 @@ class Make
                 $this->conditionalNumberFormatting($std->qUnid, 4),
                 false,
                 "[item $std->item] Quantidade total na unidade padrão para tributação (somente para os "
-                . "produtos tributados por unidade)"
+                    . "produtos tributados por unidade)"
             );
             $this->dom->addChild(
                 $ipiTrib,
@@ -5518,6 +5509,17 @@ class Make
         $this->stdISSQNTot->vBC += (float) ($std->vBC ?? 0.0);
         $this->stdISSQNTot->vISS += (float) ($std->vISSQN ?? 0.0);
 
+        // totalizador
+        if ($this->aProd[$std->item]->getElementsByTagName('indTot')->item(0)->nodeValue == 1) {
+
+            // Captura o valor do item
+            $vProd = (float) ($this->aProd[$std->item]->getElementsByTagName('vProd')->item(0)->nodeValue);
+
+            // Remove o valor to totalizador de produtos e Adiciona o valor do item no totalizador de serviços
+            $this->stdTot->vProd -= $vProd;
+            $this->stdISSQNTot->vServ += $vProd;
+        }
+
         $issqn = $this->dom->createElement("ISSQN");
         $this->dom->addChild(
             $issqn,
@@ -5745,7 +5747,7 @@ class Make
             $this->conditionalNumberFormatting($vFCPUFDest),
             false,
             "Valor total do ICMS relativo ao Fundo de Combate à Pobreza(FCP) "
-            . "para a UF de destino"
+                . "para a UF de destino"
         );
         $this->dom->addChild(
             $ICMSTot,
@@ -5768,7 +5770,7 @@ class Make
             $this->conditionalNumberFormatting($vFCP),
             false,
             "Valor total do ICMS relativo ao Fundo de Combate à Pobreza(FCP) "
-            . "para a UF de destino"
+                . "para a UF de destino"
         );
         $this->dom->addChild(
             $ICMSTot,
@@ -5791,7 +5793,7 @@ class Make
             $this->conditionalNumberFormatting($vFCPST),
             false, //true para 4.00
             "Valor Total do FCP (Fundo de Combate à Pobreza) "
-            . "retido por substituição tributária"
+                . "retido por substituição tributária"
         );
         //incluso na 4.00
         $this->dom->addChild(
@@ -5800,7 +5802,7 @@ class Make
             $this->conditionalNumberFormatting($vFCPSTRet),
             false, //true para 4.00
             "Valor Total do FCP retido anteriormente por "
-            . "Substituição Tributária"
+                . "Substituição Tributária"
         );
         $this->dom->addChild(
             $ICMSTot,
@@ -5899,24 +5901,6 @@ class Make
      */
     public function tagISSQNTot(stdClass $std)
     {
-        // $possible = [
-        //     'vServ',
-        //     'vBC',
-        //     'vISS',
-        //     'vPIS',
-        //     'vCOFINS',
-        //     'dCompet',
-        //     'vDeducao',
-        //     'vOutro',
-        //     'vDescIncond',
-        //     'vDescCond',
-        //     'vISSRet',
-        //     'cRegTrib'
-        // ];
-
-        // $std = $this->equilizeParameters($std, $possible);
-        // $this->stdTot->vServ = (float) round($std->vServ, 2) ?? 0;
-
         $this->buildTotal();
 
         $vServ = isset($std->vServ) ? $std->vServ : $this->stdISSQNTot->vServ;
@@ -6623,7 +6607,7 @@ class Make
             $std->CNPJ,
             true,
             "CNPJ do Intermediador da Transação (agenciador, plataforma de "
-            . "delivery, marketplace e similar) de serviços e de negócios"
+                . "delivery, marketplace e similar) de serviços e de negócios"
         );
         $this->dom->addChild(
             $tag,
@@ -7088,7 +7072,7 @@ class Make
             $std->CNPJ,
             true,
             "Informar o CNPJ da pessoa jurídica responsável pelo sistema "
-            . "utilizado na emissão do documento fiscal eletrônico"
+                . "utilizado na emissão do documento fiscal eletrônico"
         );
         $this->dom->addChild(
             $infRespTec,
@@ -7096,7 +7080,7 @@ class Make
             $std->xContato,
             true,
             "Informar o nome da pessoa a ser contatada na empresa desenvolvedora "
-            . "do sistema utilizado na emissão do documento fiscal eletrônico"
+                . "do sistema utilizado na emissão do documento fiscal eletrônico"
         );
         $this->dom->addChild(
             $infRespTec,
@@ -7104,7 +7088,7 @@ class Make
             $std->email,
             true,
             "Informar o e-mail da pessoa a ser contatada na empresa "
-            . "desenvolvedora do sistema."
+                . "desenvolvedora do sistema."
         );
         $this->dom->addChild(
             $infRespTec,
@@ -7112,7 +7096,7 @@ class Make
             $std->fone,
             true,
             "Informar o telefone da pessoa a ser contatada na empresa "
-            . "desenvolvedora do sistema."
+                . "desenvolvedora do sistema."
         );
         if (!empty($std->CSRT) && !empty($std->idCSRT)) {
             $this->csrt = $std->CSRT;
