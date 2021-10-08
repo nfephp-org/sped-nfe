@@ -19,24 +19,37 @@ class StandardizeTest extends NFeTestCase
     {
         $this->expectException(\NFePHP\NFe\Exception\DocumentsException::class);
         $st = new Standardize();
-        $resp = $st->whichIs('jslsj ks slk lk');
-        $resp = $st->whichIs($xml);
+        $st->whichIs('jslsj ks slk lk');
     }
 
     public function testWhichIsFailNotXMLNumber()
     {
         $this->expectException(\NFePHP\NFe\Exception\DocumentsException::class);
         $st = new Standardize();
-        $resp = $st->whichIs(100);
-        $resp = $st->whichIs($xml);
+        //@phpstan-ignore-next-line
+        $st->whichIs(100);
     }
 
     public function testWhichIsFailNotXMLSpace()
     {
         $this->expectException(\NFePHP\NFe\Exception\DocumentsException::class);
         $st = new Standardize();
-        $resp = $st->whichIs('  ');
-        $resp = $st->whichIs($xml);
+        $st->whichIs('  ');
+    }
+
+    public function testWhichIsFailNotXMLNull()
+    {
+        $this->expectException(\NFePHP\NFe\Exception\DocumentsException::class);
+        $st = new Standardize();
+        //@phpstan-ignore-next-line
+        $st->whichIs(null);
+    }
+
+    public function testWhichIsFailNotXMLEmptyString()
+    {
+        $this->expectException(\NFePHP\NFe\Exception\DocumentsException::class);
+        $st = new Standardize();
+        $st->whichIs('');
     }
 
     public function testWhichIsFailNotBelongToNFe()

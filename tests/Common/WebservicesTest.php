@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 class WebservicesTest extends TestCase
 {
-    const SEFAZ_AMB_HOMOLOG = '2';
+    const SEFAZ_AMB_HOMOLOG = 2;
     const NFE_MODELO_55 = 55;
     const AN_INVALID_BRAZILIAN_UF_ABREV = 'XY';
 
