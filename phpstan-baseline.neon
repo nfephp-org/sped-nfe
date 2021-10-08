@@ -109,24 +109,3 @@ parameters:
 			message: "#^Parameter \\#2 \\$tpAmb of method NFePHP\\\\NFe\\\\Tools\\:\\:sefazConsultaChave\\(\\) expects int\\|null, string given\\.$#"
 			count: 1
 			path: src/Tools.php
-
-		-
-			message: "#^Parameter \\#1 \\$content of static method NFePHP\\\\NFe\\\\Common\\\\Config\\:\\:validate\\(\\) expects string, array\\<string, array\\<string, string\\>\\|int\\|string\\> given\\.$#"
-			count: 1
-			path: tests/Common/ConfigTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$xml of method NFePHP\\\\NFe\\\\Common\\\\Standardize\\:\\:whichIs\\(\\) expects string, int given\\.$#"
-			count: 1
-			path: tests/Common/StandardizeTest.php
-
-		-
-			message: "#^Undefined variable\\: \\$xml$#"
-			count: 3
-			path: tests/Common/StandardizeTest.php
-
-		-
-			message: "#^Parameter \\#2 \\$amb of method NFePHP\\\\NFe\\\\Common\\\\Webservices\\:\\:get\\(\\) expects int, string given\\.$#"
-			count: 2
-			path: tests/Common/WebservicesTest.php
-

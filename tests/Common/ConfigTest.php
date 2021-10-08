@@ -60,7 +60,8 @@ class ConfigTest extends NFeTestCase
                 "proxyPass" => ""
             ]
         ];
-        $resp = Config::validate($config);
+        //@phpstan-ignore-next-line
+        Config::validate($config);
     }
 
     public function testValidadeFailWithoutJsonString()
