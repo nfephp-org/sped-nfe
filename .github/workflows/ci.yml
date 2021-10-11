@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - master
-      - setup-phpstan
+      - alterando-dependencias
 
   pull_request:
     branches:
@@ -28,13 +28,13 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
-      - name: Set phpunit version
-        if: matrix.php-version == '7.0' || matrix.php-version == '7.1'
-        run: composer require "phpunit/phpunit:^6.0" -W --dev
-
       - name: Uninstall phpstan on unsupported php version
         if: matrix.php-version == '7.0'
         run: composer remove phpstan/phpstan --dev
+
+      - name: Set phpunit version
+        if: matrix.php-version == '7.0' || matrix.php-version == '7.1'
+        run: composer require "phpunit/phpunit:^6.0" -W --dev
 
       - name: Composer Install
         run: |
