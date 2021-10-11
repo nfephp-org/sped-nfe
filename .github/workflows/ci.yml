@@ -1,9 +1,9 @@
-name: Pipeline para o admin
+name: Pipeline
 on:
   push:
     branches:
       - master
-      - setup-phpstan
+      - alterando-dependencias
 
   pull_request:
     branches:
@@ -14,8 +14,9 @@ jobs:
     name: Testes Automatizados
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        php-version: ['7.2', '7.3', '7.4']
+        php-version: ['7.0', '7.1', '7.2', '7.3', '7.4']
 
     steps:
       - name: Setup PHP
@@ -27,11 +28,20 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
+      - name: Uninstall phpstan on unsupported php version
+        if: matrix.php-version == '7.0'
+        run: composer remove phpstan/phpstan --dev
+
+      - name: Set phpunit version
+        if: matrix.php-version == '7.0' || matrix.php-version == '7.1'
+        run: composer require "phpunit/phpunit:^6.0" -W --dev
+
       - name: Composer Install
         run: |
           composer install --no-progress -o --no-ansi --no-interaction
 
       - name: Análises estáticas
+        if: matrix.php-version != '7.0' && matrix.php-version != '7.1'
         run: |
           composer stan
 
