@@ -1,7 +1,5 @@
 <?php
 
-namespace NFePHP\NFe;
-
 /**
  * Class responsible for communication with SEFAZ extends
  * NFePHP\NFe\Common\Tools
@@ -15,6 +13,8 @@ namespace NFePHP\NFe;
  * @author    Roberto L. Machado <linux.rlm at gmail dot com>
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
+
+namespace NFePHP\NFe;
 
 use NFePHP\Common\Strings;
 use NFePHP\Common\Signer;
@@ -361,7 +361,7 @@ class Tools extends ToolsCommon
         }
         //monta a consulta
         $consulta = "<distDFeInt xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
-            . "<tpAmb>".$this->tpAmb."</tpAmb>"
+            . "<tpAmb>" . $this->tpAmb . "</tpAmb>"
             . "<cUFAutor>$cUF</cUFAutor>";
         if ($this->typePerson === 'J') {
             $consulta .= "<CNPJ>$cnpj</CNPJ>";
@@ -415,7 +415,7 @@ class Tools extends ToolsCommon
             . "</xCorrecao><xCondUso>$xCondUso</xCondUso>";
         return $this->sefazEvento($uf, $chave, self::EVT_CCE, $nSeqEvento, $tagAdic);
     }
-    
+
     /**
      * Evento do Ator Interessado
      * NOTA: NT2020.007_v1.00a
@@ -482,7 +482,7 @@ class Tools extends ToolsCommon
                 . $item[0]
                 . "\"><qtdeItem>"
                 . $item[1]
-                ."</qtdeItem></itemPedido>";
+                . "</qtdeItem></itemPedido>";
         }
         return $this->sefazEvento(
             $uf,
@@ -567,8 +567,10 @@ class Tools extends ToolsCommon
         if (empty($verAplic) && !empty($this->verAplic)) {
             $verAplic = $this->verAplic;
         }
-        if (empty($chave) || empty($xJust) || empty($nProt)
-            || empty($chNFeRef) || empty($verAplic)) {
+        if (
+            empty($chave) || empty($xJust) || empty($nProt)
+            || empty($chNFeRef) || empty($verAplic)
+        ) {
             throw new InvalidArgumentException(
                 'CancelamentoPorSubs: chave da NFCe cancelada, justificativa, '
                 . 'protocolo, chave da NFCe substituta, ou versão do aplicativo '
@@ -651,7 +653,7 @@ class Tools extends ToolsCommon
         }
         return $this->sefazEventoLote('AN', $evt);
     }
-    
+
     /**
      * Send event for delivery receipt
      * @param \stdClass $std
@@ -695,7 +697,7 @@ class Tools extends ToolsCommon
             $tagAdic
         );
     }
-    
+
     /**
      * Send event to SEFAZ in batch
      * @param string $uf
@@ -726,7 +728,7 @@ class Tools extends ToolsCommon
             $dt = new \DateTime('now', new \DateTimeZone($this->timezone));
             $dhEvento = $dt->format('Y-m-d\TH:i:sP');
             $sSeqEvento = str_pad($evt->nSeqEvento, 2, "0", STR_PAD_LEFT);
-            $eventId = "ID".$evt->tpEvento.$evt->chave.$sSeqEvento;
+            $eventId = "ID" . $evt->tpEvento . $evt->chave . $sSeqEvento;
             $cOrgao = UFList::getCodeByUF($uf);
             $request = "<evento xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
                 . "<infEvento Id=\"$eventId\">"
@@ -807,7 +809,7 @@ class Tools extends ToolsCommon
             throw new RuntimeException("O autor [{$cOrgaoAutor}] não é da mesma UF que a NFe [{$ufchave}]");
         }
         // EPEC
-        $verProc= $dom->getElementsByTagName('verProc')->item(0)->nodeValue;
+        $verProc = $dom->getElementsByTagName('verProc')->item(0)->nodeValue;
         $dhEmi = $dom->getElementsByTagName('dhEmi')->item(0)->nodeValue;
         $tpNF = $dom->getElementsByTagName('tpNF')->item(0)->nodeValue;
         $emitIE = $emit->getElementsByTagName('IE')->item(0)->nodeValue;
@@ -912,7 +914,7 @@ class Tools extends ToolsCommon
         $dt = new \DateTime(date("Y-m-d H:i:sP"), new \DateTimeZone($this->timezone));
         $dhEvento = $dt->format('Y-m-d\TH:i:sP');
         $sSeqEvento = str_pad($nSeqEvento, 2, "0", STR_PAD_LEFT);
-        $eventId = "ID".$tpEvento.$chave.$sSeqEvento;
+        $eventId = "ID" . $tpEvento . $chave . $sSeqEvento;
         $cOrgao = UFList::getCodeByUF($uf);
         $request = "<evento xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
             . "<infEvento Id=\"$eventId\">"
@@ -944,7 +946,7 @@ class Tools extends ToolsCommon
             $this->canonical
         );
         $request = Strings::clearXmlString($request, true);
-        $lote = $dt->format('YmdHis').rand(0, 9);
+        $lote = $dt->format('YmdHis') . rand(0, 9);
         $request = "<envEvento xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
             . "<idLote>$lote</idLote>"
             . $request
@@ -957,7 +959,7 @@ class Tools extends ToolsCommon
         }
         $this->lastRequest = $request;
         //return $request;
-        
+
         $parameters = ['nfeDadosMsg' => $request];
         $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
         $this->lastResponse = $this->sendRequest($body, $parameters);
@@ -986,7 +988,7 @@ class Tools extends ToolsCommon
         $cnpj = $this->config->cnpj;
         //monta a consulta
         $request = "<distDFeInt xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
-            . "<tpAmb>".$this->tpAmb."</tpAmb>"
+            . "<tpAmb>" . $this->tpAmb . "</tpAmb>"
             . "<cUFAutor>$cUF</cUFAutor>";
         if ($this->typePerson === 'J') {
             $request .= "<CNPJ>$cnpj</CNPJ>";
@@ -1044,8 +1046,8 @@ class Tools extends ToolsCommon
             . "<indOp>$indOp</indOp>"
             . "<raizCNPJ>$raizCNPJ</raizCNPJ>"
             . "<dadosCsc>"
-            . "<idCsc>".$this->config->CSCid."</idCsc>"
-            . "<codigoCsc>".$this->config->CSC."</codigoCsc>"
+            . "<idCsc>" . $this->config->CSCid . "</idCsc>"
+            . "<codigoCsc>" . $this->config->CSC . "</codigoCsc>"
             . "</dadosCsc>"
             . "</admCscNFCe>";
         }

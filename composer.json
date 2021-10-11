@@ -50,7 +50,7 @@
     "scripts": {
         "test": "vendor/bin/phpunit -c phpunit.xml.dist",
         "phpcbf": "vendor/bin/phpcbf src/ tests/",
-        "phpcs": "vendor/bin/phpcs tests/",
+        "phpcs": "vendor/bin/phpcs src/ tests/",
         "stan": "vendor/bin/phpstan analyse src/ tests/"
     },
     "extra": {

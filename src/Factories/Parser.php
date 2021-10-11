@@ -1,7 +1,5 @@
 <?php
 
-namespace NFePHP\NFe\Factories;
-
 /**
  * Classe de conversão do TXT para XML
  * NOTA: ajustado para Nota Técnica 2018.005 Versão 1.00 – Dezembro de 2018
@@ -14,6 +12,8 @@ namespace NFePHP\NFe\Factories;
  * @author    Roberto L. Machado <linux.rlm at gmail dot com>
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
+
+namespace NFePHP\NFe\Factories;
 
 use NFePHP\NFe\Make;
 use NFePHP\NFe\Exception\DocumentsException;
@@ -121,7 +121,7 @@ class Parser
             $comp = "_v1.2";
         }
         $this->baselayout = $baselayout;
-        $path = realpath(__DIR__."/../../storage/txtstructure$ver" . $comp . ".json");
+        $path = realpath(__DIR__ . "/../../storage/txtstructure$ver" . $comp . ".json");
         $this->structure = json_decode(file_get_contents($path), true);
         $this->make = new Make();
     }
@@ -161,7 +161,7 @@ class Parser
             if (empty($fields)) {
                 continue;
             }
-            $metodo = strtolower(str_replace(' ', '', $fields[0])).'Entity';
+            $metodo = strtolower(str_replace(' ', '', $fields[0])) . 'Entity';
             if (!method_exists(__CLASS__, $metodo)) {
                 throw DocumentsException::wrongDocument(16, $lin); //campo não definido
             }
@@ -180,7 +180,7 @@ class Parser
     protected static function fieldsToStd($dfls, $struct)
     {
         $sfls = explode('|', $struct);
-        $len = count($sfls)-1;
+        $len = count($sfls) - 1;
         $std = new \stdClass();
         for ($i = 1; $i < $len; $i++) {
             $name = $sfls[$i];
@@ -494,7 +494,7 @@ class Parser
         $this->stdRetirada->CPF = $std->CPF;
         $this->buildFEntity();
     }
-    
+
     /**
      * Create tag retirada [F02b], with xNome belongs to [F]
      * F02a|xNome|
@@ -554,7 +554,7 @@ class Parser
         $this->stdEntrega->CPF = $std->CPF;
         $this->buildGEntity();
     }
-    
+
     /**
      * Create tag entrega [G02b], with xNome belongs to [G]
      * G02b|xNome|
@@ -566,7 +566,7 @@ class Parser
         $this->stdEntrega->xNome = $std->xNome;
         $this->buildGEntity();
     }
-    
+
 
     /**
      * Create tag entrega [G]
@@ -627,7 +627,7 @@ class Parser
         if (!empty($std->infAdProd)) {
             $this->make->taginfAdProd($std);
         }
-        $this->item = (integer) $std->item;
+        $this->item = (int) $std->item;
     }
 
     /**
@@ -1801,7 +1801,7 @@ class Parser
     {
         $this->make->tagdetPag($std);
     }
-    
+
     /**
      * Create tag infIntermed [YB]
      * YB|CNPJ|idCadIntTran
@@ -1910,7 +1910,7 @@ class Parser
     {
         $this->make->tagdeduc($std);
     }
-    
+
     /**
      * Create tag infRespTec [ZD01]
      * ZD|CNPJ|xContato|email|fone|CSRTidCSRT|

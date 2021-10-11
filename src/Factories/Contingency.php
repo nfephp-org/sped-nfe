@@ -1,7 +1,5 @@
 <?php
 
-namespace NFePHP\NFe\Factories;
-
 /**
  * Class Contingency make a structure to set contingency mode
  *
@@ -14,6 +12,8 @@ namespace NFePHP\NFe\Factories;
  * @author    Roberto L. Machado <linux.rlm at gmail dot com>
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
+
+namespace NFePHP\NFe\Factories;
 
 use NFePHP\Common\Strings;
 
@@ -85,33 +85,33 @@ class Contingency
     {
         $dt = new \DateTime('now');
         $list = array(
-            'AC'=>'SVCAN',
-            'AL'=>'SVCAN',
-            'AM'=>'SVCAN',
-            'AP'=>'SVCRS',
-            'BA'=>'SVCRS',
-            'CE'=>'SVCRS',
-            'DF'=>'SVCAN',
-            'ES'=>'SVCRS',
-            'GO'=>'SVCRS',
-            'MA'=>'SVCRS',
-            'MG'=>'SVCAN',
-            'MS'=>'SVCRS',
-            'MT'=>'SVCRS',
-            'PA'=>'SVCRS',
-            'PB'=>'SVCAN',
-            'PE'=>'SVCRS',
-            'PI'=>'SVCRS',
-            'PR'=>'SVCRS',
-            'RJ'=>'SVCAN',
-            'RN'=>'SVCRS',
-            'RO'=>'SVCAN',
-            'RR'=>'SVCAN',
-            'RS'=>'SVCAN',
-            'SC'=>'SVCAN',
-            'SE'=>'SVCAN',
-            'SP'=>'SVCAN',
-            'TO'=>'SVCAN'
+            'AC' => 'SVCAN',
+            'AL' => 'SVCAN',
+            'AM' => 'SVCAN',
+            'AP' => 'SVCRS',
+            'BA' => 'SVCRS',
+            'CE' => 'SVCRS',
+            'DF' => 'SVCAN',
+            'ES' => 'SVCRS',
+            'GO' => 'SVCRS',
+            'MA' => 'SVCRS',
+            'MG' => 'SVCAN',
+            'MS' => 'SVCRS',
+            'MT' => 'SVCRS',
+            'PA' => 'SVCRS',
+            'PB' => 'SVCAN',
+            'PE' => 'SVCRS',
+            'PI' => 'SVCRS',
+            'PR' => 'SVCRS',
+            'RJ' => 'SVCAN',
+            'RN' => 'SVCRS',
+            'RO' => 'SVCAN',
+            'RR' => 'SVCAN',
+            'RS' => 'SVCAN',
+            'SC' => 'SVCAN',
+            'SE' => 'SVCAN',
+            'SP' => 'SVCAN',
+            'TO' => 'SVCAN'
         );
         $type = strtoupper(str_replace('-', '', $type));
 

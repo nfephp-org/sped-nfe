@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - master
-      - correcoes-formatacao-psr12
+      - develop
 
   pull_request:
     branches:

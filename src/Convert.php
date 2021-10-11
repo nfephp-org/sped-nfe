@@ -1,7 +1,5 @@
 <?php
 
-namespace NFePHP\NFe;
-
 /**
  * Converts NFe from text format to xml
  * @category  API
@@ -13,6 +11,8 @@ namespace NFePHP\NFe;
  * @author    Roberto L. Machado <linux.rlm at gmail dot com>
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
+
+namespace NFePHP\NFe;
 
 use NFePHP\NFe\Common\ValidTXT;
 use NFePHP\NFe\Exception\DocumentsException;
@@ -67,7 +67,7 @@ class Convert
     public function toXml()
     {
         //$txt = Strings::removeSomeAlienCharsfromTxt($this->txt);
-        
+
         if (!$this->isNFe($this->txt)) {
             throw DocumentsException::wrongDocument(12, '');
         }
@@ -133,15 +133,15 @@ class Convert
             if (substr($linha, 0, 2) == 'A|') {
                 $resp[$xCount]['init'] = $iCount;
                 if ($xCount > 0) {
-                    $resp[$xCount -1]['fim'] = $iCount;
+                    $resp[$xCount - 1]['fim'] = $iCount;
                 }
                 $xCount += 1;
             }
             $iCount += 1;
         }
-        $resp[$xCount-1]['fim'] = $iCount;
+        $resp[$xCount - 1]['fim'] = $iCount;
         foreach ($resp as $marc) {
-            $length = $marc['fim']-$marc['init'];
+            $length = $marc['fim'] - $marc['init'];
             $aNotas[] = array_slice($array, $marc['init'], $length, false);
         }
         return $aNotas;

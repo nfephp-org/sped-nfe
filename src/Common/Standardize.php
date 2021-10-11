@@ -1,7 +1,5 @@
 <?php
 
-namespace NFePHP\NFe\Common;
-
 /**
  * Class for identification and convertion of eletronic documents in xml
  * for documents used in sped-nfe, sped-esocial, sped-cte, sped-mdfe, etc.
@@ -15,6 +13,8 @@ namespace NFePHP\NFe\Common;
  * @author    Roberto L. Machado <linux.rlm at gmail dot com>
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
+
+namespace NFePHP\NFe\Common;
 
 use NFePHP\Common\Validator;
 use NFePHP\NFe\Exception\DocumentsException;
