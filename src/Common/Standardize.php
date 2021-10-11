@@ -109,7 +109,7 @@ class Standardize
         if (!empty($result)) {
             $cont = $result->textContent;
             if (empty($cont)) {
-                throw new Exception('O retorno da SEFAZ veio em BRANCO, '
+                throw new \Exception('O retorno da SEFAZ veio em BRANCO, '
                     . 'ou seja devido a um erro ou instabilidade na própria SEFAZ.');
             }
         }

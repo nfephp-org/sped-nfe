@@ -1,16 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Instantiated class NFePHP\\\\NFe\\\\Common\\\\Exception not found\\.$#"
-			count: 1
-			path: src/Common/Standardize.php
-
-		-
-			message: "#^Throwing object of an unknown class NFePHP\\\\NFe\\\\Common\\\\Exception\\.$#"
-			count: 1
-			path: src/Common/Standardize.php
-
-		-
 			message: "#^Access to an undefined property object\\:\\:\\$method\\.$#"
 			count: 1
 			path: src/Common/Tools.php
