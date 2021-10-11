@@ -539,7 +539,7 @@ class Tools
         if ($this->modelo == 65) {
             $file = str_replace('55', '65', $file);
         }
-        
+
         $path = $this->pathwsfiles . $file;
         if (! file_exists($path)) {
             return '';
@@ -597,7 +597,7 @@ class Tools
             $this->soap = new SoapCurl($this->certificate);
         }
     }
-    
+
     /**
      * Verify if xml model is equal as modelo property
      * @param string $xml
