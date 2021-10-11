@@ -32,7 +32,7 @@
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "*",
-        "phpunit/phpunit": "^8.0",
+        "phpunit/phpunit": "^6",
         "scrutinizer/ocular": "^1.3",
         "phpstan/phpstan": "^0.12.99",
         "phpcompatibility/php-compatibility": "^9.3"
