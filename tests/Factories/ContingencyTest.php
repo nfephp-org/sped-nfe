@@ -1,4 +1,5 @@
 <?php
+
 namespace NFePHP\NFe\Tests\Factories;
 
 use NFePHP\NFe\Factories\Contingency;
@@ -11,7 +12,7 @@ class ContingencyTest extends NFeTestCase
         $contingency = new Contingency();
         $this->assertInstanceOf('NFePHP\NFe\Factories\Contingency', $contingency);
     }
-    
+
     public function testActivate()
     {
         $contingency = new Contingency();
@@ -21,7 +22,7 @@ class ContingencyTest extends NFeTestCase
         $this->assertEquals($std->type, 'SVCAN');
         $this->assertEquals($std->tpEmis, 6);
     }
-    
+
     public function testLoad()
     {
         $cont = [
@@ -39,7 +40,7 @@ class ContingencyTest extends NFeTestCase
         $this->assertEquals($cont['type'], $contingency->type);
         $this->assertEquals($cont['tpEmis'], $contingency->tpEmis);
     }
-    
+
     public function testDeactivate()
     {
         $cont = [
