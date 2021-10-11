@@ -28,11 +28,16 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
+      - name: Set phpunit version
+        if: matrix.php-version == '7.0' || matrix.php-version == '7.1'
+        run: composer require "phpunit/phpunit:^7.5" -W --dev
+
       - name: Composer Install
         run: |
           composer install --no-progress -o --no-ansi --no-interaction
 
       - name: Análises estáticas
+        if: matrix.php-version != '7.0' && matrix.php-version != '7.1'
         run: |
           composer stan
 
