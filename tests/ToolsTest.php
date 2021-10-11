@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace NFePHP\NFe\Tests;
@@ -9,6 +10,7 @@ use NFePHP\NFe\Tools;
 class ToolsTest extends NFeTestCase
 {
     use URIConsultaNfce;
+
     /**
      * @var Tools
      */

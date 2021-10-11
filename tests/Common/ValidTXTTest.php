@@ -24,7 +24,7 @@ class ValidTXTTest extends NFeTestCase
             $actual,
             "\$canonicalize = true"
         );
-         * 
+         *
          */
     }
 
@@ -57,7 +57,7 @@ class ValidTXTTest extends NFeTestCase
             $actual,
             "\$canonicalize = true"
         );
-         * 
+         *
          */
     }
 }

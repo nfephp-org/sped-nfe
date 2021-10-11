@@ -11,35 +11,35 @@ class ComplementsTest extends NFeTestCase
     {
         //$nfeprotocoled = Complements::toAuthorize($request, $response);
     }
-    
+
     public function testToAuthorizeInut()
     {
     }
-    
+
     public function testToAuthorizeEvent()
     {
     }
-    
+
     public function testToAuthorizeFailWrongDocument()
     {
     }
-    
+
     public function testToAuthorizeFailNotXML()
     {
     }
-    
+
     public function testToAuthorizeFailWrongNode()
     {
     }
-    
+
     public function testCancelRegister()
     {
     }
-    
+
     public function testCancelRegisterFailNotNFe()
     {
     }
-    
+
     public function testB2B()
     {
     }

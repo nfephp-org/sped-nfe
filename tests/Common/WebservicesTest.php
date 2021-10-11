@@ -1,11 +1,13 @@
 <?php
-declare(strict_types=1);
+
 /**
  * Created by PhpStorm.
  * User: fernando
  * Date: 28/09/18
  * Time: 18:00
  */
+
+declare(strict_types=1);
 
 namespace NFePHP\NFe\Tests\Common;
 

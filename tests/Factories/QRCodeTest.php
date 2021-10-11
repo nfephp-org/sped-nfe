@@ -24,7 +24,7 @@ class QRCodeTest extends NFeTestCase
         $versao = '200';
         $urlqr = 'https://www.homologacao.nfce.fazenda.sp.gov.br/NFCeConsultaPublica/Paginas/ConsultaQRCode.aspx';
 
-        $expected = file_get_contents($this->fixturesPath.'xml/nfce_com_qrcode.xml');
+        $expected = file_get_contents($this->fixturesPath . 'xml/nfce_com_qrcode.xml');
         $expectedDom = new \DOMDocument('1.0', 'UTF-8');
         $expectedDom->formatOutput = false;
         $expectedDom->preserveWhiteSpace = false;
