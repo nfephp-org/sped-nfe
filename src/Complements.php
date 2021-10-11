@@ -25,7 +25,7 @@ class Complements
             //wrong document, this document is not able to recieve a protocol
             throw DocumentsException::wrongDocument(0, $key);
         }
-        $func = "add".$key."Protocol";
+        $func = "add" . $key . "Protocol";
         return self::$func($request, $response);
     }
 
@@ -121,7 +121,8 @@ class Complements
             $tpEvento = $infEvento->getElementsByTagName('tpEvento')
                 ->item(0)
                 ->nodeValue;
-            if (in_array($cStat, ['135', '136', '155'])
+            if (
+                in_array($cStat, ['135', '136', '155'])
                 && ($tpEvento == Tools::EVT_CANCELA
                     || $tpEvento == Tools::EVT_CANCELASUBSTITUICAO
                 )
@@ -185,7 +186,8 @@ class Complements
         $retserie = $retInfInut->getElementsByTagName('serie')->item(0)->nodeValue;
         $retnNFIni = $retInfInut->getElementsByTagName('nNFIni')->item(0)->nodeValue;
         $retnNFFin = $retInfInut->getElementsByTagName('nNFFin')->item(0)->nodeValue;
-        if ($versao != $retversao ||
+        if (
+            $versao != $retversao ||
             $tpAmb != $rettpAmb ||
             $cUF != $retcUF ||
             $ano != $retano ||
@@ -268,7 +270,7 @@ class Complements
         if (empty($digProt)) {
             $prot = $ret->getElementsByTagName('protNFe')->item(0);
             $cStat = $prot->getElementsByTagName('cStat')->item(0)->nodeValue;
-            $xMotivo= $prot->getElementsByTagName('xMotivo')->item(0)->nodeValue;
+            $xMotivo = $prot->getElementsByTagName('xMotivo')->item(0)->nodeValue;
             throw DocumentsException::wrongDocument(18, "[{$cStat}] {$xMotivo}");
         }
         if ($digNFe !== $digProt) {
@@ -340,7 +342,7 @@ class Complements
     {
         $xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
                 . "<$nodename versao=\"$versao\" "
-                . "xmlns=\"".self::$urlPortal."\">";
+                . "xmlns=\"" . self::$urlPortal . "\">";
         $xml .= $first;
         $xml .= $second;
         $xml .= "</$nodename>";

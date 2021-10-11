@@ -1,7 +1,5 @@
 <?php
 
-namespace NFePHP\NFe;
-
 /**
  * Classe a construção do xml da NFe modelo 55 e modelo 65
  * Esta classe basica está estruturada para montar XML da NFe para o
@@ -16,6 +14,8 @@ namespace NFePHP\NFe;
  * @author    Roberto L. Machado <linux.rlm at gmail dot com>
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
+
+namespace NFePHP\NFe;
 
 use NFePHP\Common\Keys;
 use NFePHP\Common\DOMImproved as Dom;

@@ -1,7 +1,5 @@
 <?php
 
-namespace NFePHP\NFe\Common;
-
 /**
  * Class for validation of GTIN
  *
@@ -14,6 +12,8 @@ namespace NFePHP\NFe\Common;
  * @author    Roberto L. Machado <linux.rlm at gmail dot com>
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
+
+namespace NFePHP\NFe\Common;
 
 use NFePHP\Gtin\Gtin as GB;
 

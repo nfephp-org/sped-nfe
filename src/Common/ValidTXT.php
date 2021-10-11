@@ -17,9 +17,9 @@ namespace NFePHP\NFe\Common;
 
 class ValidTXT
 {
-    const LOCAL="LOCAL";
+    const LOCAL = "LOCAL";
     const LOCAL_V12 = "LOCAL_V12";
-    const SEBRAE="SEBRAE";
+    const SEBRAE = "SEBRAE";
 
     /**
      * Loads structure of txt from json file in storage folder
@@ -37,7 +37,7 @@ class ValidTXT
         } elseif (strtoupper($baselayout) === 'LOCAL_V12') {
             $comp = '_v1.2';
         }
-        $file = $path . '/txtstructure' . ($version*100) . $comp . '.json';
+        $file = $path . '/txtstructure' . ($version * 100) . $comp . '.json';
         if (!is_file($file)) {
             throw new \InvalidArgumentException("O arquivo de estrutura para a "
                 . "versão de layout indicada no TXT, não foi encontrado [$file].");
@@ -102,12 +102,12 @@ class ValidTXT
                 $errors[] = "ERRO: ($num) Essa referência não está definida. [$row]";
                 continue;
             }
-            $count = count($fields)-1;
-            $default = count(explode('|', $entities[$ref]))-1;
+            $count = count($fields) - 1;
+            $default = count(explode('|', $entities[$ref])) - 1;
             if ($default !== $count) {
                 $errors[] = "ERRO: ($num) O número de parâmetros na linha "
                     . "está errado (esperado #$default) -> (encontrado #$count). [ $row ] Esperado [ "
-                    . $entities[$ref]." ]";
+                    . $entities[$ref] . " ]";
                 continue;
             }
             foreach ($fields as $field) {
@@ -129,15 +129,15 @@ class ValidTXT
                     continue;
                 }
                 $newfield = preg_replace(
-                    '/[\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F]'.
-                    '|[\x00-\x7F][\x80-\xBF]+'.
-                    '|([\xC0\xC1]|[\xF0-\xFF])[\x80-\xBF]*'.
-                    '|[\xC2-\xDF]((?![\x80-\xBF])|[\x80-\xBF]{2,})'.
+                    '/[\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F]' .
+                    '|[\x00-\x7F][\x80-\xBF]+' .
+                    '|([\xC0\xC1]|[\xF0-\xFF])[\x80-\xBF]*' .
+                    '|[\xC2-\xDF]((?![\x80-\xBF])|[\x80-\xBF]{2,})' .
                     '|[\xE0-\xEF](([\x80-\xBF](?![\x80-\xBF]))|(?![\x80-\xBF]{2})|[\x80-\xBF]{3,})/S',
                     '?',
                     $field
                 );
-                 $newfield = preg_replace('/\xE0[\x80-\x9F][\x80-\xBF]'.
+                 $newfield = preg_replace('/\xE0[\x80-\x9F][\x80-\xBF]' .
                     '|\xED[\xA0-\xBF][\x80-\xBF]/S', '?', $newfield);
                 if ($field != $newfield) {
                     $errors[] = "ERRO: ($num) Existem caracteres não UTF-8, não permitidos, "

@@ -1,7 +1,5 @@
 <?php
 
-namespace NFePHP\NFe\Common;
-
 /**
  * Class base responsible for communication with SEFAZ
  *
@@ -14,6 +12,8 @@ namespace NFePHP\NFe\Common;
  * @author    Roberto L. Machado <linux.rlm at gmail dot com>
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
+
+namespace NFePHP\NFe\Common;
 
 use DOMDocument;
 use InvalidArgumentException;
@@ -294,8 +294,8 @@ class Tools
         $this->versao = $version;
         $this->config->schemes = $this->availableVersions[$version];
         $this->pathschemes = realpath(
-            __DIR__ . '/../../schemes/'. $this->config->schemes
-        ).'/';
+            __DIR__ . '/../../schemes/' . $this->config->schemes
+        ) . '/';
 
         return $this->versao;
     }
@@ -395,7 +395,7 @@ class Tools
      */
     protected function isValid($version, $body, $method)
     {
-        $schema = $this->pathschemes.$method."_v$version.xsd";
+        $schema = $this->pathschemes . $method . "_v$version.xsd";
         if (!is_file($schema)) {
             return true;
         }
@@ -428,7 +428,8 @@ class Tools
         //se a contingencia é OFFLINE ou FSDA nenhum servidor está disponivel
         //se a contigencia EPEC está ativa apenas o envio de Lote está ativo,
         //então gerar um RunTimeException
-        if ($type == 'FSDA'
+        if (
+            $type == 'FSDA'
             || $type == 'OFFLINE'
             || ($type == 'EPEC' && $service != 'RecepcaoEvento')
         ) {

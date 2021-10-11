@@ -1,7 +1,5 @@
 <?php
 
-namespace NFePHP\NFe\Factories;
-
 /**
  * Class QRCode create a string to make a QRCode string to NFCe
  * NOTE: this class only works with model 65 NFCe only
@@ -15,6 +13,8 @@ namespace NFePHP\NFe\Factories;
  * @author    Roberto L. Machado <linux.rlm at gmail dot com>
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
+
+namespace NFePHP\NFe\Factories;
 
 use DOMDocument;
 use NFePHP\NFe\Exception\DocumentsException;
@@ -144,16 +144,16 @@ class QRCode
         $tpEmis,
         $cDest
     ) {
-        $ver = $versao/100;
+        $ver = $versao / 100;
         $cscId = (int) $idToken;
         $csc = $token;
         if (strpos($url, '?p=') === false) {
-            $url = $url.'?p=';
+            $url = $url . '?p=';
         }
         if ($tpEmis != 9) {
             //emissão on-line
             $seq = "$chNFe|$ver|$tpAmb|$cscId";
-            $hash = strtoupper(sha1($seq.$csc));
+            $hash = strtoupper(sha1($seq . $csc));
             return "$url$seq|$hash";
         }
         //emissão off-line
@@ -162,7 +162,7 @@ class QRCode
         $valor = number_format($vNF, 2, '.', '');
         $digHex = self::str2Hex($digVal);
         $seq = "$chNFe|$ver|$tpAmb|$dia|$valor|$digHex|$cscId";
-        $hash = strtoupper(sha1($seq.$csc));
+        $hash = strtoupper(sha1($seq . $csc));
         return "$url$seq|$hash";
     }
 

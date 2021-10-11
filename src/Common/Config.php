@@ -1,7 +1,5 @@
 <?php
 
-namespace NFePHP\NFe\Common;
-
 /**
  * Validation of config
  *
@@ -14,6 +12,8 @@ namespace NFePHP\NFe\Common;
  * @author    Roberto L. Machado <linux.rlm at gmail dot com>
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
+
+namespace NFePHP\NFe\Common;
 
 use JsonSchema\Validator as JsonValid;
 use NFePHP\NFe\Exception\DocumentsException;
@@ -46,7 +46,7 @@ class Config
      */
     protected static function validInputData($data)
     {
-        $filejsonschema = __DIR__. "/../../storage/config.schema";
+        $filejsonschema = __DIR__ . "/../../storage/config.schema";
         $validator = new JsonValid();
         $validator->check($data, (object)['$ref' => 'file://' . $filejsonschema]);
         if (!$validator->isValid()) {
