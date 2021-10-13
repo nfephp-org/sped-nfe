@@ -6245,6 +6245,7 @@ class Make
     /**
      * Grupo Veículo Transporte X18 pai X17.1
      * tag NFe/infNFe/transp/veicTransp (opcional)
+     * Ajustado NT 2020.005 v1.20
      * @param stdClass $std
      * @return DOMElement
      */
@@ -6259,21 +6260,21 @@ class Make
         $veicTransp = $this->dom->createElement("veicTransp");
         $this->dom->addChild(
             $veicTransp,
-            "placa",
+            "placa", // X19
             $std->placa,
             true,
             "Placa do Veículo"
         );
         $this->dom->addChild(
             $veicTransp,
-            "UF",
+            "UF", // X20
             $std->UF,
-            true,
+            false,
             "Sigla da UF do Veículo"
         );
         $this->dom->addChild(
             $veicTransp,
-            "RNTC",
+            "RNTC", // X21
             $std->RNTC,
             false,
             "Registro Nacional de Transportador de Carga (ANTT) do Veículo"
@@ -6289,6 +6290,7 @@ class Make
     /**
      * Grupo Reboque X22 pai X17.1
      * tag NFe/infNFe/transp/reboque (opcional)
+     * Ajustado NT 2020.005 v1.20
      * @param stdClass $std
      * @return DOMElement
      */
@@ -6303,21 +6305,21 @@ class Make
         $reboque = $this->dom->createElement("reboque");
         $this->dom->addChild(
             $reboque,
-            "placa",
+            "placa", // X23
             $std->placa,
             true,
             "Placa do Veículo Reboque"
         );
         $this->dom->addChild(
             $reboque,
-            "UF",
+            "UF", // X24
             $std->UF,
-            true,
+            false,
             "Sigla da UF do Veículo Reboque"
         );
         $this->dom->addChild(
             $reboque,
-            "RNTC",
+            "RNTC", // X25
             $std->RNTC,
             false,
             "Registro Nacional de Transportador de Carga (ANTT) do Veículo Reboque"
