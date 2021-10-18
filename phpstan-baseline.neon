@@ -61,16 +61,6 @@ parameters:
 			path: src/Factories/ContingencyNFe.php
 
 		-
-			message: "#^Parameter \\#1 \\$std of method NFePHP\\\\NFe\\\\Make\\:\\:tagIntermed\\(\\) expects stdClass, NFePHP\\\\NFe\\\\Factories\\\\type given\\.$#"
-			count: 1
-			path: src/Factories/Parser.php
-
-		-
-			message: "#^Parameter \\$std of method NFePHP\\\\NFe\\\\Factories\\\\Parser\\:\\:ybEntity\\(\\) has invalid typehint type NFePHP\\\\NFe\\\\Factories\\\\type\\.$#"
-			count: 1
-			path: src/Factories/Parser.php
-
-		-
 			message: "#^Parameter \\#1 \\$number of function number_format expects float, string given\\.$#"
 			count: 1
 			path: src/Factories/QRCode.php

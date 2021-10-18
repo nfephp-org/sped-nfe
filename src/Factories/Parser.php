@@ -1779,7 +1779,9 @@ class Parser
      * YA|tPag|vPag|CNPJ|tBand|cAut|tpIntegra|xPag|
      * SEBRAE
      * YA|troco|
+     * 
      * @param stdClass $std
+     * 
      * @return void
      */
     protected function yaEntity($std)
@@ -1794,7 +1796,8 @@ class Parser
     /**
      * Creates tag detPag and card [YA]
      * SEBRAE
-     * YA01|indPag|tPag|vPag|",
+     * YA01|indPag|tPag|vPag|"
+     * 
      * @param stdClass $std
      */
     protected function ya01Entity($std)
@@ -1805,6 +1808,7 @@ class Parser
     /**
      * Create tag infIntermed [YB]
      * YB|CNPJ|idCadIntTran
+     * 
      * @param stdClass $std
      */
     protected function ybEntity($std)
@@ -1815,7 +1819,9 @@ class Parser
     /**
      * Create a tag infAdic [Z]
      * Z|infAdFisco|infCpl|
+     * 
      * @param stdClass $std
+     * 
      * @return void
      */
     protected function zEntity($std)
