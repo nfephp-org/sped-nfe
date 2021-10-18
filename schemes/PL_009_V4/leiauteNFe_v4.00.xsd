@@ -6700,6 +6700,7 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 			<xs:enumeration value="11.02"/>
 			<xs:enumeration value="11.03"/>
 			<xs:enumeration value="11.04"/>
+			<xs:enumeration value="11.05"/>
 			<xs:enumeration value="12.01"/>
 			<xs:enumeration value="12.02"/>
 			<xs:enumeration value="12.03"/>

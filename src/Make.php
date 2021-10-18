@@ -6002,7 +6002,12 @@ class Make
             false,
             "Código do Regime Especial de Tributação"
         );
-        $this->dom->appChild($this->total, $ISSQNTot, '');
+        if (!empty($this->total->getElementsByTagName('retTrib')->item(0))) {
+            //caso exista a tag retTrib
+            $this->dom->appChildBefore($this->total, $ISSQNTot, 'retTrib');
+        } else {
+            $this->dom->appChild($this->total, $ISSQNTot, '');
+        }
         return $ISSQNTot;
     }
 
