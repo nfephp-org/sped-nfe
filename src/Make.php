@@ -442,11 +442,6 @@ class Make
             $std = new \stdClass();
             $this->tagICMSTot($std);
         }
-        // se houver valor de serviços, força a criação da tag ISSQNTot
-        if ($this->stdISSQNTot->vServ > 0.0) {
-            $std = new \stdClass();
-            $this->tagISSQNTot($std);
-        }
         //[28a] tag total (326 W01)
         $this->dom->appChild($this->infNFe, $this->total, 'Falta tag "infNFe"');
         //mota a tag vol
