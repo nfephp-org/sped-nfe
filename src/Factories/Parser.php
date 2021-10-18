@@ -1805,7 +1805,7 @@ class Parser
     /**
      * Create tag infIntermed [YB]
      * YB|CNPJ|idCadIntTran
-     * @param type $std
+     * @param stdClass $std
      */
     protected function ybEntity($std)
     {

@@ -292,7 +292,7 @@ class Tools extends ToolsCommon
         $this->lastRequest = $request;
         $parameters = ['nfeDadosMsg' => $request];
         if ($this->urlVersion === '2.00') {
-            $this->objHeader = new \SOAPHeader(
+            $this->objHeader = new \SoapHeader(
                 $this->urlNamespace,
                 'nfeCabecMsg',
                 ['cUF' => $this->urlcUF, 'versaoDados' => $this->urlVersion]
