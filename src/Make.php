@@ -6597,7 +6597,7 @@ class Make
      * Dados do intermediador
      *
      * @param stdClass $std
-     * 
+     *
      * @return \DomElement
      */
     public function tagIntermed(stdClass $std)
