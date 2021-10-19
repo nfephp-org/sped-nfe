@@ -7742,12 +7742,15 @@ class Make
     /**
      * Função que adiciona o valor da tag no total dos impostos, com base no tipo do item (produto ou serviço)
      *
-     * Por exemplo, quero totalizar o PIS e COFINS dos itens, eu chamo essa função e a mesma confere se o item em questão é um produto ou um serviço
+     * Por exemplo, quer totalizar o PIS e COFINS dos itens:
+     * chame essa função e a mesma confere se o item em questão é um produto ou um serviço
      */
     private function totaliza($item, $tag, $valor)
     {
 
-        if (!array_key_exists($item, $this->itens)) return;
+        if (!array_key_exists($item, $this->itens)) {
+            return;
+        }
 
         $tipo = $this->itens[$item]['tipo'] ?? null;
 
@@ -7775,14 +7778,11 @@ class Make
 
         // se houver o valor do item (apenas se o indTot=1)
         if ($vlr = $it['valor'] ?? null) {
-
             // se for um produto
             if ($tipo === 'produto') {
                 $this->stdICMSTot->vProd += $vlr;
-            }
-
-            // se for serviço
-            else {
+            } else {
+                // se for serviço
                 $this->stdISSQNtot->vServ += $vlr;
             }
         }
