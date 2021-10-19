@@ -297,16 +297,16 @@ class Make
     /**
      * @var DOMElement
      */
-    protected $ICMSTot;
+    protected $ICMSTot = null;
     /**
      * @var DOMElement
      */
-    protected $ISSQNtot;
+    protected $ISSQNtot = null;
 
     /**
      * Itens que possuem tributação de ISSQN (serviços)
      * [nItem => {tipo: string(servico|produto), valor: float}]
-     * @var \stdClass[]
+     * @var array<mixed, mixed>
      */
     protected $itens = [];
 
@@ -463,7 +463,7 @@ class Make
         $this->dom->appChild($this->total, $this->ICMSTot, '');
 
         // Força a construção do total de issqn se houver valor de serviço e se a tag ainda não foi criada
-        if ($this->stdISSQNtot->vServ && !$this->ISSQNtot) {
+        if ($this->stdISSQNtot->vServ > 0 && $this->ISSQNtot == null) {
             $std = new \stdClass();
             $this->tagISSQNTot($std);
         }
