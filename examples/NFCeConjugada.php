@@ -170,6 +170,24 @@ try {
     // Adiciona a tag de imposto ISSQN no xml
     $make->tagISSQN($std);
 
+    //PIS
+    $std = new stdClass();
+    $std->item = 1; //item da NFe
+    $std->CST = '99';
+    $std->vBC = 2.0;
+    $std->pPIS = 10.0;
+    $std->vPIS = 0.20;
+    $pis = $make->tagPIS($std);
+
+    //COFINS
+    $std = new stdClass();
+    $std->item = 1; //item da NFe
+    $std->CST = '99';
+    $std->vBC = 2.0;
+    $std->pCOFINS = 10.0;
+    $std->vCOFINS = 0.20;
+    $make->tagCOFINS($std);
+
     //Imposto
     $std = new stdClass();
     $std->item = 1; //item da NFe
@@ -232,8 +250,8 @@ try {
     $std->item = 2; //item da NFe
     $std->CST = '99';
     $std->vBC = 0.01;
-    $std->pPIS = 0.0;
-    $std->vPIS = 0.0;
+    $std->pPIS = 100;
+    $std->vPIS = 0.01;
     $pis = $make->tagPIS($std);
 
     //COFINS
@@ -241,8 +259,8 @@ try {
     $std->item = 2; //item da NFe
     $std->CST = '99';
     $std->vBC = 0.01;
-    $std->pCOFINS = 0.0;
-    $std->vCOFINS = 0.0;
+    $std->pCOFINS = 100;
+    $std->vCOFINS = 0.01;
     $make->tagCOFINS($std);
 
     //transp OBRIGATÓRIA
@@ -271,6 +289,16 @@ try {
     //$std->CSRT = 'G8063VRTNDMO886SFNK5LDUDEI24XJ22YIPO'; //Código de Segurança do Responsável Técnico
     //$std->idCSRT = '01'; //Identificador do CSRT
     $make->taginfRespTec($std);
+
+    // TESTE DE CONSIDERAR O VALOR INFORMADO NESSA TAG DE TOTAL ANTES DE CONSIDERAR A TOTALIZADA PELA CLASSE
+    // $teste = new \stdClass;
+    // $teste->vProd = 200;
+    // $make->tagICMSTot($teste);
+
+    // TESTE DE CONSIDERAR O VALOR INFORMADO NESSA TAG DE TOTAL ANTES DE CONSIDERAR A TOTALIZADA PELA CLASSE
+    // $teste = new \stdClass;
+    // $teste->vServ = 200;
+    // $make->tagISSQNTot($teste);
 
     $make->monta();
     $xml = $make->getXML();
