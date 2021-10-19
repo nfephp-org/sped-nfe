@@ -210,7 +210,7 @@ class Tools extends ToolsCommon
         $idInut = "ID"
             . $this->urlcUF
             . $strAno
-            . $cnpj
+            . str_pad($cnpj, 14, '0', STR_PAD_LEFT)
             . $this->modelo
             . $strSerie
             . $strInicio
@@ -231,6 +231,25 @@ class Tools extends ToolsCommon
             "<nNFFin>$nFin</nNFFin>" .
             "<xJust>$xJust</xJust>" .
             "</infInut></inutNFe>";
+        //inutizaçao para produtor rural com CPF em MT
+        $flag = false;
+        if ($this->config->siglaUF == 'MT' && strlen($cnpj) == 11) {
+            //montagem do corpo da mensagem
+            $msg = "<inutNFe xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">" .
+                "<infInut Id=\"$idInut\">" .
+                "<tpAmb>$tpAmb</tpAmb>" .
+                "<xServ>INUTILIZAR</xServ>" .
+                "<cUF>$this->urlcUF</cUF>" .
+                "<ano>$strAno</ano>" .
+                "<CPF>$cnpj</CPF>" .
+                "<mod>$this->modelo</mod>" .
+                "<serie>$nSerie</serie>" .
+                "<nNFIni>$nIni</nNFIni>" .
+                "<nNFFin>$nFin</nNFFin>" .
+                "<xJust>$xJust</xJust>" .
+                "</infInut></inutNFe>";
+            $flag = true;
+        }
         //assina a solicitação
         $request = Signer::sign(
             $this->certificate,
@@ -241,7 +260,11 @@ class Tools extends ToolsCommon
             $this->canonical
         );
         $request = Strings::clearXmlString($request, true);
-        $this->isValid($this->urlVersion, $request, 'inutNFe');
+        if (!$flag) {
+            $this->isValid($this->urlVersion, $request, 'inutNFe');
+        } else {
+            $this->isValid($this->urlVersion, $request, 'MT_inutNFe');
+        }
         $this->lastRequest = $request;
         $parameters = ['nfeDadosMsg' => $request];
         $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
