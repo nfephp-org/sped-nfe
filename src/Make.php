@@ -5537,7 +5537,7 @@ class Make
 
         // Adiciona o totalizador, somente se maior que ZERO
         empty($std->vBC) ?: $this->stdISSQNTot->vBC += (float) $std->vBC;
-        empty($std->vISS) ?: $this->stdISSQNTot->vISS += $std->vISSQN ?? 0.0;
+        empty($std->vISSQN) ?: $this->stdISSQNTot->vISS += $std->vISSQN ?? 0.0;
         empty($std->vISSRet) ?: $this->stdISSQNTot->vISSRet += $std->vISSRet ?? 0.0;
         empty($std->vDeducao) ?: $this->stdISSQNTot->vDeducao += $std->vDeducao ?? 0.0;
         empty($std->vOutro) ?: $this->stdISSQNTot->vOutro += $std->vOutro ?? 0.0;
