@@ -5976,6 +5976,7 @@ class Make
         $possible = [
             'vServ',
             'vBC',
+            'vISS',
             'vPIS',
             'vCOFINS',
             'dCompet',
