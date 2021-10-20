@@ -573,8 +573,7 @@ class Make
             'xJust'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $this->finNFe = $std->finNFe;
-        
+
         if (empty($std->cNF)) {
             $std->cNF = Keys::random($std->nNF);
         }
@@ -5257,7 +5256,7 @@ class Make
         if (isset($pisItem)) {
             $pis->appendChild($pisItem);
         }
-        
+
         $this->aPIS[$std->item] = $pis;
         return $pis;
     }
@@ -5546,7 +5545,7 @@ class Make
         empty($std->vDescCond) ?: $this->stdISSQNTot->vDescCond += $std->vDescCond ?? 0.0;
 
         array_push($this->aItensServ, $std->item);
-        
+
         // totalizador
         if ($this->aProd[$std->item]->getElementsByTagName('indTot')->item(0)->nodeValue == 1) {
             // Captura o valor do item
@@ -5746,10 +5745,10 @@ class Make
             'vICMSUFRemet',
         ];
         if (isset($std)) {
-            $std = $this->equilizeParameters($std, $possible);  
-        }    
+            $std = $this->equilizeParameters($std, $possible);
+        }
         $this->stdICMSTot = $std;
-        
+
         $vBC = isset($std->vBC) ? $std->vBC : $this->stdTot->vBC;
         $vICMS = isset($std->vICMS) ? $std->vICMS : $this->stdTot->vICMS;
         $vICMSDeson = !empty($std->vICMSDeson) ? $std->vICMSDeson : $this->stdTot->vICMSDeson;
@@ -5965,7 +5964,7 @@ class Make
      * Grupo Totais referentes ao ISSQN W17 pai W01
      * tag NFe/infNFe/total/ISSQNTot (opcional)
      * @param stdClass|null $std
-     * @return DOMElement
+     * @return DOMElement|void
      */
     public function tagISSQNTot(stdClass $std = null)
     {
@@ -5988,10 +5987,10 @@ class Make
             'cRegTrib'
         ];
         if (isset($std)) {
-            $std = $this->equilizeParameters($std, $possible);    
-        }    
+            $std = $this->equilizeParameters($std, $possible);
+        }
         $this->stdISSQN = $std;
-        
+
         $vServ = isset($std->vServ) ? $std->vServ : $this->stdISSQNTot->vServ;
         $vBC = isset($std->vBC) ? $std->vBC : $this->stdISSQNTot->vBC;
         $vISS = isset($std->vISS) ? $std->vISS : $this->stdISSQNTot->vISS;
@@ -6016,7 +6015,7 @@ class Make
         $vDescIncond = ($vDescIncond > 0) ? number_format($vDescIncond, 2, '.', '') : null;
         $vDescCond = ($vDescCond > 0) ? number_format($vDescCond, 2, '.', '') : null;
         $vISSRet = ($vISSRet > 0) ? number_format($vISSRet, 2, '.', '') : null;
-        
+
         $ISSQNTot = $this->dom->createElement("ISSQNtot");
         $this->dom->addChild(
             $ISSQNTot,
@@ -7631,12 +7630,11 @@ class Make
             + $this->stdTot->vPISST
             + $this->stdTot->vCOFINSST;
     }
-    
+
     protected function buildISSQNTot()
     {
         //totaliza PIS e COFINS dos Itens de Serviço
-        foreach($this->aItensServ as $item)
-        {
+        foreach ($this->aItensServ as $item) {
             if (!empty($this->aPIS[$item])) {
                 $vPIS = (float) $this->getNodeValue($this->aPIS[$item], 'vPIS');
                 $this->stdISSQNTot->vPIS += (float) $vPIS;
@@ -7649,7 +7647,7 @@ class Make
                 $this->stdISSQNTot->vCOFINS += (float) $vCOFINS;
                 //remove esse valor do total já contabiizado no stdTot
                 $this->stdTot->vCOFINS -= $vCOFINS;
-            }    
+            }
         }
         $this->stdISSQNTot->vServ = $this->conditionalNumberFormatting($this->stdISSQNTot->vServ);
         $this->stdISSQNTot->vBC = $this->conditionalNumberFormatting($this->stdISSQNTot->vBC);
@@ -7662,7 +7660,7 @@ class Make
         $this->stdISSQNTot->vDescCond = $this->conditionalNumberFormatting($this->stdISSQNTot->vDescCond);
         $this->stdISSQNTot->vISSRet = $this->conditionalNumberFormatting($this->stdISSQNTot->vISSRet);
     }
-    
+
     private function getNodeValue(DOMElement $node, string $name)
     {
         $dom = new Dom('1.0', 'utf-8');
