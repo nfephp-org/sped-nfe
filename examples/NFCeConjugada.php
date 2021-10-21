@@ -141,9 +141,9 @@ try {
     $std->cBarraTrib = NULL;
     $std->qCom = '1';
     $std->qTrib = '1';
-    $std->vUnCom = '2';
-    $std->vUnTrib = '2';
-    $std->vProd = '2';
+    $std->vUnCom = '200';
+    $std->vUnTrib = '200';
+    $std->vProd = '200';
     $std->vDesc = NULL;
     $std->vOutro = NULL;
     $std->vSeg = NULL;
@@ -153,6 +153,24 @@ try {
     $std->nItemPed = NULL;
     $std->indTot = 1;
     $make->tagprod($std);
+    
+    //PIS
+    $std = new stdClass();
+    $std->item = 1; //item da NFe
+    $std->CST = '99';
+    $std->vBC = 200;
+    $std->pPIS = 0.65;
+    $std->vPIS = 13;
+    $pis = $make->tagPIS($std);
+    
+    //COFINS
+    $std = new stdClass();
+    $std->item = 1; //item da NFe
+    $std->CST = '99';
+    $std->vBC = 200;
+    $std->pCOFINS = 3;
+    $std->vCOFINS = 60;
+    $make->tagCOFINS($std);
 
     // Monta a tag de impostos mas não adiciona no xml
     $std = new stdClass();
@@ -166,7 +184,6 @@ try {
     $std->cListServ = '01.01';
     $std->indISS = 1;
     $std->indIncentivo = 2;
-
     // Adiciona a tag de imposto ISSQN no xml
     $make->tagISSQN($std);
 
@@ -192,9 +209,9 @@ try {
     $std->cBarraTrib = NULL;
     $std->qCom = '1';
     $std->qTrib = '1';
-    $std->vUnCom = '0.01';
-    $std->vUnTrib = '0.01';
-    $std->vProd = '0.01';
+    $std->vUnCom = '10.00';
+    $std->vUnTrib = '10.00';
+    $std->vProd = '10.00';
     $std->vDesc = NULL;
     $std->vOutro = NULL;
     $std->vSeg = NULL;
@@ -203,7 +220,6 @@ try {
     $std->xPed = NULL;
     $std->nItemPed = NULL;
     $std->indTot = 1;
-
     // Como aqui se trata de um produto comum, não precisa passar a tag do imposto para a tag prod
     $prod = $make->tagprod($std);
 
@@ -215,11 +231,11 @@ try {
 
     $std = new stdClass();
     $std->item = 2; //item da NFe
-    $std->orig = '7';
-    $std->CST = '41';
-    $std->vICMS = 0.0008;
-    $std->pICMS = 8.0;
-    $std->vBC = 0.01;
+    $std->orig = '0';
+    $std->CST = '00';
+    $std->vICMS = 1.8;
+    $std->pICMS = 18.0;
+    $std->vBC = 10.00;
     $std->modBC = '3';
     $std->pFCP = NULL;
     $std->vFCP = NULL;
@@ -230,19 +246,19 @@ try {
     //PIS
     $std = new stdClass();
     $std->item = 2; //item da NFe
-    $std->CST = '99';
-    $std->vBC = 0.01;
-    $std->pPIS = 0.0;
-    $std->vPIS = 0.0;
+    $std->CST = '65';
+    $std->vBC = 10;
+    $std->pPIS = 0.65;
+    $std->vPIS = 0.65;
     $pis = $make->tagPIS($std);
 
     //COFINS
     $std = new stdClass();
     $std->item = 2; //item da NFe
     $std->CST = '99';
-    $std->vBC = 0.01;
-    $std->pCOFINS = 0.0;
-    $std->vCOFINS = 0.0;
+    $std->vBC = 10;
+    $std->pCOFINS = 3;
+    $std->vCOFINS = 3;
     $make->tagCOFINS($std);
 
     //transp OBRIGATÓRIA
@@ -271,6 +287,15 @@ try {
     //$std->CSRT = 'G8063VRTNDMO886SFNK5LDUDEI24XJ22YIPO'; //Código de Segurança do Responsável Técnico
     //$std->idCSRT = '01'; //Identificador do CSRT
     $make->taginfRespTec($std);
+    
+    $std = new \stdClass();
+    $make->tagICMSTot($std);
+    
+    $std = new \stdClass();
+    $std->dCompet = '2010-09-12';
+    $std->cRegTrib = 6;
+    $make->tagISSQNTot($std);
+    $make->tagISSQNTot($std);
 
     $make->monta();
     $xml = $make->getXML();
