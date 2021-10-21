@@ -317,6 +317,10 @@ class Make
      * @var \stdClass
      */
     protected $stdICMSTot;
+    /**
+     * @var bool
+     */
+    protected $flagISSQNCalc = false;
 
     /**
      * Função construtora cria um objeto DOMDocument
@@ -461,20 +465,14 @@ class Make
         foreach ($this->aDet as $det) {
             $this->dom->appChild($this->infNFe, $det, 'Falta tag "infNFe"');
         }
-        //força a construção do total caso não sejam chamado metodo tagICMSTot()
-        if (empty($this->total)) {
-            $this->total = $this->dom->createElement("total");
-            if (empty($this->ISSQNTot)) {
-                $this->tagISSQNTot($this->stdISSQN);
-            }
-            if (empty($this->ICMSTot)) {
-                $this->tagICMSTot($this->stdICMSTot);
-            }
-            $this->dom->appChild($this->total, $this->ICMSTot, 'Falta tag "total"');
-            $this->dom->appChild($this->total, $this->ISSQNTot, 'Falta tag "total"');
-            if (!empty($this->retTrib)) {
-                $this->dom->appChild($this->total, $this->retTrib, 'Falta tag "total"');
-            }
+        //força a construção do total
+        $this->total = $this->dom->createElement("total");
+        $this->tagISSQNTot($this->stdISSQN);
+        $this->tagICMSTot($this->stdICMSTot);
+        $this->dom->appChild($this->total, $this->ICMSTot, 'Falta tag "total"');
+        $this->dom->appChild($this->total, $this->ISSQNTot, 'Falta tag "total"');
+        if (!empty($this->retTrib)) {
+            $this->dom->appChild($this->total, $this->retTrib, 'Falta tag "total"');
         }
         //[28a] tag total (326 W01)
         $this->dom->appChild($this->infNFe, $this->total, 'Falta tag "infNFe"');
@@ -5956,7 +5954,6 @@ class Make
             "Valor aproximado total de tributos federais, estaduais e municipais."
         );
         $this->ICMSTot = $ICMSTot;
-        //$this->dom->appChild($this->total, $ICMSTot, '');
         return $ICMSTot;
     }
 
@@ -7634,6 +7631,10 @@ class Make
 
     protected function buildISSQNTot()
     {
+        if ($this->flagISSQNCalc) {
+            return;
+        }
+
         //totaliza PIS e COFINS dos Itens de Serviço
         foreach ($this->aItensServ as $item) {
             if (!empty($this->aPIS[$item])) {
@@ -7660,6 +7661,8 @@ class Make
         $this->stdISSQNTot->vDescIncond = $this->conditionalNumberFormatting($this->stdISSQNTot->vDescIncond);
         $this->stdISSQNTot->vDescCond = $this->conditionalNumberFormatting($this->stdISSQNTot->vDescCond);
         $this->stdISSQNTot->vISSRet = $this->conditionalNumberFormatting($this->stdISSQNTot->vISSRet);
+
+        $this->flagISSQNCalc = true;
     }
 
     private function getNodeValue(DOMElement $node, string $name)
