@@ -165,7 +165,7 @@ public $type;
 
 public $motive;
 
-@var int
+@var string
 > Motivo da entrada em contingência, texto com no minimo 15 caracteres e no máximo 255.
 
 > NOTA: remova todo e qualquer caracter especial desse texto.
@@ -184,22 +184,22 @@ public $tpEmis;
 
 ## Methods
 
+Construtor, caso seja passado o parametro, uma string JSON, a condição de contingência contida nessa string será registrada na classe.
+Caso nada seja passado a classe irá considerar condição de emissão normal.
 ```
 Contingency::construct($string)
 ```
-Construtor, caso seja passado o parametro, uma string JSON, a condição de contingencia contida nessa string será registrada na classe.
-Caso nada seja passado a classe irá considerar condição de emissão normal.
 
+Essa é outra forma de passar o parametro (string JSON) para a classe.
 ```
 Contingency::load($string)
 ```
-Essa é outra forma de passar o paramtro (string JSON) para a classe.
 
+Esse método ativa o modo de continência da classe.
+Os parametros são:
 ```
 Contingency::activate($acronym, $motive, $type)
 ```
-Esse método ativa o modo de contignência da classe.
-Os parametros são:
 
 $acronym --- sigla do estado
 
@@ -213,8 +213,7 @@ $type --- podem ser usadas as constantes:
 - Contingency::OFFLINE
 - Contingency::EPEC
 
-
+Esse método desativa o modo de contingência e retorna uma string json com os valores padrões.
 ```
 Contingency::deactivate()
 ```
-Esse método desativa o modo de contingência e retorna uma string json com os valores padrões.
