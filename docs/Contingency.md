@@ -4,9 +4,9 @@ Em condições normais as NFe emitidas tem a propriedade &lt;tpEmis&gt; com o va
 
 Quando a conexão via internet com a SEFAZ autorizadora não é possivel, existem alternativas para permitir a emissão dos documentos mesmo nessas condições (offline).
 
-Para uma melhor compreensão, o ENCAT lançou um documento que visa facilitar o entendimento:
+Para uma melhor compreensão, o ENCAT lançou um documento que visa facilitar o entendimento, ele pode ser encontrado em:
 
-[Manual de Boas Práticas no desenvolvimento de emissor de NFC-e – BP 2018.001 – versão 1.0](http://www.nfe.fazenda.gov.br/portal/exibirArquivo.aspx?conteudo=gONQatXTm1U=)
+[Página Principal](http://www.nfe.fazenda.gov.br/portal/principal.aspx) > Documentos > Manuais > Manual de Boas Práticas no desenvolvimento de emissor de NFC-e – BP 2018.001 – versão 1.0
 
 Após lê-lo, os procedimentos abaixo podem ser realizadas na biblioteca, há uma sessão interessante sobre contigência.
 
