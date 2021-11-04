@@ -2788,7 +2788,7 @@ class Make
         $this->dom->addChild(
             $comb,
             "qTemp",
-            $this->conditionalNumberFormatting($std->qTemp, 2),
+            $this->conditionalNumberFormatting($std->qTemp, 4),
             false,
             "$identificador [item $std->item] Quantidade de combustível faturada à temperatura ambiente."
         );
