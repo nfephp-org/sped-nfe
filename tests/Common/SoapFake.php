@@ -11,26 +11,21 @@ class SoapFake extends SoapBase implements SoapInterface
      * @var string
      */
     protected $returnValue;
+    protected $sendParams = [];
 
+    //@phpstan-ignore-next-line
     public function send($url, $operation = '', $action = '', $soapver = SOAP_1_2, $parameters = [], $namespaces = [], $request = '', $soapheader = null)
     {
-        $envelope = $this->makeEnvelopeSoap(
-            $request,
-            $namespaces,
-            $soapver,
-            $soapheader
-        );
-        $msgSize = strlen($envelope);
-        $parameters = [
-            "Content-Type: application/soap+xml;charset=utf-8;",
-            "Content-length: $msgSize"
+        $this->sendParams = [
+            'url' => $url,
+            'operation' => $operation,
+            'action' => $action,
+            'soapver' => $soapver,
+            'parameters' => $parameters,
+            'namespaces' => $namespaces,
+            'request' => $request,
+            'soapheader' => $soapheader,
         ];
-        if (!empty($action)) {
-            $parameters[0] .= "action=$action";
-        }
-        $this->requestHead = implode("\n", $parameters);
-        $this->requestBody = $envelope;
-
         return $this->returnValue;
     }
 
@@ -42,5 +37,10 @@ class SoapFake extends SoapBase implements SoapInterface
     public function getRequestBody(): string
     {
         return $this->requestBody;
+    }
+
+    public function getSendParams(): array
+    {
+        return $this->sendParams;
     }
 }
