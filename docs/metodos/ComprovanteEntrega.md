@@ -31,6 +31,7 @@ try {
     $std->latitude = -23.61849;
     $std->longitude = -46.60987;
     $std->cancelar = false; //permite cancelar um comprovante de entrega se for true
+    if ($std->cancelar) $std->nProcEvento = '131210143577444'; // aqui vai o protocolo do evento de entrega
     
     $xmlResp = $tools->sefazComprovanteEntrega($std);
     
@@ -46,7 +47,7 @@ try {
         $cStat = $std->retEvento->infEvento->cStat;
         if ($cStat == '135' || $cStat == '136') {
             //SUCESSO PROTOCOLAR A SOLICITAÇÂO ANTES DE GUARDAR
-            $xml = Complements::toAuthorize($tools->lastRequest, $response);
+            $xml = Complements::toAuthorize($tools->lastRequest, $xmlResp);
             //grave o XML protocolado 
         } else {
             //houve alguma falha no evento 
