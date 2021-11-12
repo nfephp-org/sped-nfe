@@ -116,7 +116,8 @@ class ToolsTest extends NFeTestCase
     {
         $xml = $this->getCleanXml(__DIR__ . '/fixtures/xml/exemplo_xml_envia_lote_modelo_65.xml');
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Envio sincrono deve ser usado para enviar uma UNICA nota por vez. Você está tentando enviar varias.');
+        $this->expectExceptionMessage('Envio sincrono deve ser usado para enviar uma UNICA nota por vez. ' .
+            'Você está tentando enviar varias.');
         $this->tools->sefazEnviaLote([$xml, $xml], "1", 1);
     }
 
@@ -155,7 +156,9 @@ class ToolsTest extends NFeTestCase
      */
     protected function buildRequestExpected($xml, $idLote)
     {
-        return '<nfeDadosMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NFeAutorizacao4"><enviNFe xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00"><idLote>'. $idLote .'</idLote><indSinc>1</indSinc>'. $xml .'</enviNFe></nfeDadosMsg>';
+        return '<nfeDadosMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NFeAutorizacao4">' .
+            '<enviNFe xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00"><idLote>' . $idLote .
+            '</idLote><indSinc>1</indSinc>' . $xml . '</enviNFe></nfeDadosMsg>';
     }
 
     /**

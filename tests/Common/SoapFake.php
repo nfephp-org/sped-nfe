@@ -16,8 +16,16 @@ class SoapFake extends SoapBase implements SoapInterface
     protected $sendParams = [];
 
     //@phpstan-ignore-next-line
-    public function send($url, $operation = '', $action = '', $soapver = SOAP_1_2, $parameters = [], $namespaces = [], $request = '', $soapheader = null)
-    {
+    public function send(
+        $url,
+        $operation = '',
+        $action = '',
+        $soapver = SOAP_1_2,
+        $parameters = [],
+        $namespaces = [],
+        $request = '',
+        $soapheader = null
+    ) {
         $this->sendParams = [
             'url' => $url,
             'operation' => $operation,
@@ -31,17 +39,27 @@ class SoapFake extends SoapBase implements SoapInterface
         return $this->returnValue;
     }
 
-    public function setReturnValue(string $returnValue): void
+    /**
+     * @param string $returnValue
+     * @return void
+     */
+    public function setReturnValue(string $returnValue)
     {
         $this->returnValue = $returnValue;
     }
 
-    public function getRequestBody(): string
+    /**
+     * @return string
+     */
+    public function getRequestBody()
     {
         return $this->requestBody;
     }
 
-    public function getSendParams(): array
+    /**
+     * @return array
+     */
+    public function getSendParams()
     {
         return $this->sendParams;
     }

@@ -7,8 +7,12 @@
 
     <config name="installed_paths" value="vendor/phpcompatibility/php-compatibility" />
 
-    <rule  ref="PSR12">
+    <rule ref="PSR12">
         <exclude name="PSR12.Properties.ConstantVisibility.NotFound"/>
+    </rule>
+
+    <rule ref="PSR1.Methods.CamelCapsMethodName.NotCamelCaps">
+        <exclude-pattern>*/tests/*</exclude-pattern>
     </rule>
 
 </ruleset>
