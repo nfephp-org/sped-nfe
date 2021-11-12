@@ -3,6 +3,7 @@
 namespace NFePHP\NFe\Tests\Common;
 
 use NFePHP\Common\Certificate;
+use NFePHP\Common\Strings;
 use NFePHP\NFe\Tools;
 use NFePHP\NFe\Factories\Contingency;
 
@@ -20,5 +21,14 @@ class ToolsFake extends Tools
     public function getSoap(): SoapFake
     {
         return $this->soap;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRequest()
+    {
+        $params = $this->getSoap()->getSendParams();
+        return $params['request'];
     }
 }

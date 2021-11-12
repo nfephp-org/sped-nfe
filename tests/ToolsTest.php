@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NFePHP\NFe\Tests;
 
 use NFePHP\Common\Certificate;
+use NFePHP\Common\Strings;
 use NFePHP\NFe\Common\Standardize;
 use NFePHP\NFe\Tests\Common\ToolsFake;
 use NFePHP\NFe\Tools;
@@ -104,7 +105,19 @@ class ToolsTest extends NFeTestCase
     public function test_sefaz_envia_lote_parametro_invalido()
     {
         $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Envia Lote: XMLs de NF-e deve ser um array!');
         $this->tools->sefazEnviaLote(""); //@phpstan-ignore-line
+    }
+
+    /**
+     * @return void
+     */
+    public function test_sefaz_envia_lote_varios_xml_sincronos()
+    {
+        $xml = $this->getCleanXml(__DIR__ . '/fixtures/xml/exemplo_xml_envia_lote_modelo_65.xml');
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Envio sincrono deve ser usado para enviar uma UNICA nota por vez. Você está tentando enviar varias.');
+        $this->tools->sefazEnviaLote([$xml, $xml], "1", 1);
     }
 
     /**
@@ -112,19 +125,13 @@ class ToolsTest extends NFeTestCase
      */
     public function test_sefaz_envia_lote_xml_valido_modelo_65()
     {
-        $xml = $this->getXml(__DIR__ . '/fixtures/xml/exemplo_xml_envia_lote_modelo_65.xml');
-        $responseBody = file_get_contents(__DIR__ . '/fixtures/xml/exemplo_retorno_sucesso_envia_lote.xml');
-        $this->tools->getSoap()->setReturnValue($responseBody);
-        $this->tools->model(65);
-        $idLote = 1636667815;
-        $request = '<nfeDadosMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NFeAutorizacao4"><enviNFe xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00"><idLote>'. $idLote .'</idLote><indSinc>1</indSinc>'. $xml .'</enviNFe></nfeDadosMsg>';
-        $resposta = $this->tools->sefazEnviaLote([$xml], (string)$idLote, 1);
-        $params = $this->tools->getSoap()->getSendParams();
-        $this->assertEquals(str_replace("\n", "", $request), str_replace("\n", "", $params['request']));
-        $standard = new Standardize($resposta);
-        $std = $standard->toStd();
-        $this->assertEquals("100", $std->protNFe->infProt->cStat);
-        $this->assertEquals("Autorizado o uso da NF-e", $std->protNFe->infProt->xMotivo);
+        $xml = $this->getCleanXml(__DIR__ . '/fixtures/xml/exemplo_xml_envia_lote_modelo_65.xml');
+        $tools = $this->getToolsForModelWithSuccessReturn(65);
+        $idLote = "1636667815";
+        $resposta = $tools->sefazEnviaLote([$xml], $idLote, 1);
+        $this->assertTrue(is_string($resposta));
+        $request = $this->buildRequestExpected($xml, $idLote);
+        $this->assertEquals($request, $tools->getRequest());
     }
 
     /**
@@ -132,28 +139,46 @@ class ToolsTest extends NFeTestCase
      */
     public function test_sefaz_envia_lote_xml_valido_modelo_55()
     {
-        $xml = $this->getXml(__DIR__ . '/fixtures/xml/exemplo_xml_envia_lote_modelo_55.xml');
-        $responseBody = file_get_contents(__DIR__ . '/fixtures/xml/exemplo_retorno_sucesso_envia_lote.xml');
-        $this->tools->getSoap()->setReturnValue($responseBody);
-        $idLote = 1636667815;
-        $request = '<nfeDadosMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NFeAutorizacao4"><enviNFe xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00"><idLote>'. $idLote .'</idLote><indSinc>1</indSinc>'. $xml .'</enviNFe></nfeDadosMsg>';
-        $resposta = $this->tools->sefazEnviaLote([$xml], (string)$idLote, 1);
-        $params = $this->tools->getSoap()->getSendParams();
-        $this->assertEquals(str_replace("\n", "", $request), str_replace("\n", "", $params['request']));
-        $standard = new Standardize($resposta);
-        $std = $standard->toStd();
-        $this->assertEquals("100", $std->protNFe->infProt->cStat);
-        $this->assertEquals("Autorizado o uso da NF-e", $std->protNFe->infProt->xMotivo);
+        $xml = $this->getCleanXml(__DIR__ . '/fixtures/xml/exemplo_xml_envia_lote_modelo_55.xml');
+        $tools = $this->getToolsForModelWithSuccessReturn(55);
+        $idLote = "1636667815";
+        $resposta = $this->tools->sefazEnviaLote([$xml], $idLote, 1);
+        $this->assertTrue(is_string($resposta));
+        $request = $this->buildRequestExpected($xml, $idLote);
+        $this->assertEquals($request, $tools->getRequest());
     }
 
     /**
-     * @param string $caminho
+     * @param string $xml
+     * @param int|string $idLote
+     * @return string
+     */
+    protected function buildRequestExpected($xml, $idLote)
+    {
+        return '<nfeDadosMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NFeAutorizacao4"><enviNFe xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00"><idLote>'. $idLote .'</idLote><indSinc>1</indSinc>'. $xml .'</enviNFe></nfeDadosMsg>';
+    }
+
+    /**
+     * @param int $model
+     * @return \NFePHP\NFe\Tests\Common\ToolsFake
+     */
+    protected function getToolsForModelWithSuccessReturn($model = 55): ToolsFake
+    {
+        $responseBody = file_get_contents(__DIR__ . '/fixtures/xml/exemplo_retorno_sucesso_envia_lote.xml');
+        $this->tools->getSoap()->setReturnValue($responseBody);
+        $this->tools->model($model);
+
+        return $this->tools;
+    }
+
+    /**
+     * @param string $filePath
      * @return false|string
      * @throws \Exception
      */
-    protected function getXml($caminho)
+    protected function getCleanXml($filePath)
     {
-        $xml = simplexml_load_file($caminho, 'SimpleXMLElement', LIBXML_NOBLANKS);
+        $xml = simplexml_load_file($filePath, 'SimpleXMLElement', LIBXML_NOBLANKS);
         $customXML = new \SimpleXMLElement($xml->asXML());
         $dom = dom_import_simplexml($customXML);
         return $dom->ownerDocument->saveXML($dom->ownerDocument->documentElement);

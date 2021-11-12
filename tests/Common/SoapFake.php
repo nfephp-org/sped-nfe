@@ -11,6 +11,8 @@ class SoapFake extends SoapBase implements SoapInterface
      * @var string
      */
     protected $returnValue;
+
+    /** @var array  */
     protected $sendParams = [];
 
     //@phpstan-ignore-next-line
