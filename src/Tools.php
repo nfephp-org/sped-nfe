@@ -366,9 +366,10 @@ class Tools extends ToolsCommon
      * @param integer $ultNSU  last NSU number recived
      * @param integer $numNSU  NSU number you wish to consult
      * @param string $fonte data source 'AN' and for some cases it may be 'RS'
+     * @param string $chave you wish to consult
      * @return string
      */
-    public function sefazDistDFe($ultNSU = 0, $numNSU = 0, $fonte = 'AN')
+    public function sefazDistDFe($ultNSU = 0, $numNSU = 0, $fonte = 'AN', $chave = '')
     {
         //carrega serviço
         $servico = 'NfeDistribuicaoDFe';
@@ -381,6 +382,8 @@ class Tools extends ToolsCommon
         if ($numNSU != 0) {
             $numNSU = str_pad($numNSU, 15, '0', STR_PAD_LEFT);
             $tagNSU = "<consNSU><NSU>$numNSU</NSU></consNSU>";
+        } else if (strlen($chave) == 44 && is_numeric($chave)) {
+            $tagNSU = "<consChNFe><chNFe>$chave</chNFe></consChNFe>";
         }
         //monta a consulta
         $consulta = "<distDFeInt xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
