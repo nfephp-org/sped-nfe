@@ -382,7 +382,7 @@ class Tools extends ToolsCommon
         if ($numNSU != 0) {
             $numNSU = str_pad($numNSU, 15, '0', STR_PAD_LEFT);
             $tagNSU = "<consNSU><NSU>$numNSU</NSU></consNSU>";
-        } else if (strlen($chave) == 44 && is_numeric($chave)) {
+        } elseif (strlen($chave) == 44 && is_numeric($chave)) {
             $tagNSU = "<consChNFe><chNFe>$chave</chNFe></consChNFe>";
         }
         //monta a consulta
