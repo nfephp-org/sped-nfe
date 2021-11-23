@@ -3411,6 +3411,7 @@ class Make
                 break;
             case '51':
                 $this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
+                $this->stdTot->vICMS += (float) !empty($std->vICMS) ? $std->vICMS : 0;
 
                 $icms = $this->dom->createElement("ICMS51");
                 $this->dom->addChild(
