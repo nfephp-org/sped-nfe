@@ -23,7 +23,6 @@ class GtinTest extends TestCase
     public function test_is_invalid_1()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('GTIN [7898357410010] digito verificador é INVALIDO.');
         Gtin::isValid('7898357410010');
     }
 
@@ -33,7 +32,6 @@ class GtinTest extends TestCase
     public function test_is_invalid_2()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Um numero GTIN contêm apenas numeros [abc] não é aceito.');
         Gtin::isValid('abc');
     }
 }
