@@ -150,6 +150,20 @@ class ToolsTest extends NFeTestCase
     }
 
     /**
+     * @return void
+     */
+    public function test_sefaz_envia_lote_xml_valido_modelo_55_compactado()
+    {
+        $xml = $this->getCleanXml(__DIR__ . '/fixtures/xml/exemplo_xml_envia_lote_modelo_55.xml');
+        $tools = $this->getToolsForModelWithSuccessReturn(55);
+        $idLote = "1636667815";
+        $resposta = $this->tools->sefazEnviaLote([$xml], $idLote, 1, true);
+        $this->assertTrue(is_string($resposta));
+        $request = $this->buildExpectedNfe($xml, $idLote);
+        $this->assertEquals($request, $tools->getRequest());
+    }
+
+    /**
      * @param string $xml
      * @param int|string $idLote
      * @return string
@@ -159,6 +173,16 @@ class ToolsTest extends NFeTestCase
         return '<nfeDadosMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NFeAutorizacao4">' .
             '<enviNFe xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00"><idLote>' . $idLote .
             '</idLote><indSinc>1</indSinc>' . $xml . '</enviNFe></nfeDadosMsg>';
+    }
+
+    protected function buildExpectedNfe($xml, $idLote): string
+    {
+        $request = '<enviNFe xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00"><idLote>' . $idLote .
+            '</idLote><indSinc>1</indSinc>' . $xml . '</enviNFe>';
+        $gzdata = base64_encode(gzencode($request, 9, FORCE_GZIP));
+
+        return '<nfeDadosMsgZip xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NFeAutorizacao4">' .
+            $gzdata . '</nfeDadosMsgZip>';
     }
 
     /**
