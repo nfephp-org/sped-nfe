@@ -7,7 +7,6 @@ use PHPUnit\Framework\TestCase;
 
 class GtinTest extends TestCase
 {
-
     /**
      * @return void
      */
