@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/nfe" targetNamespace="http://www.portalfiscal.inf.br/nfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="leiauteInutNFe_v3.10.xsd"/>
+	<xs:element name="ProcInutNFe" type="TProcInutNFe">
+		<xs:annotation>
+			<xs:documentation>Pedido de inutilização de númeração de  NF-e processado</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

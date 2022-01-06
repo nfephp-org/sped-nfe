@@ -90,7 +90,7 @@ class Contingency
             'AM' => 'SVCAN',
             'AP' => 'SVCRS',
             'BA' => 'SVCRS',
-            'CE' => 'SVCRS',
+            'CE' => 'SVCAN',
             'DF' => 'SVCAN',
             'ES' => 'SVCRS',
             'GO' => 'SVCRS',

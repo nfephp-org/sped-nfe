@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  PL_006f versao com correcoes no xServ para tornar a literal CONS-CAD obrigatoria 21/05/2010 -->
+<!--  PL_006c versao com correcoes 24/12/2009 -->
+<xs:schema xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns="http://www.portalfiscal.inf.br/nfe" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.portalfiscal.inf.br/nfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="tiposBasico_v1.03.xsd"/>
+	<xs:complexType name="TConsCad">
+		<xs:annotation>
+			<xs:documentation>Tipo Pedido de Consulta de cadastro de contribuintes</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="infCons">
+				<xs:annotation>
+					<xs:documentation>Dados do Pedido de Consulta de cadastro de contribuintes</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="xServ">
+							<xs:annotation>
+								<xs:documentation>Serviço Solicitado</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="TServ">
+									<xs:enumeration value="CONS-CAD"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="UF" type="TUfCons">
+							<xs:annotation>
+								<xs:documentation>sigla da UF consultada, utilizar SU para SUFRAMA</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:choice>
+							<xs:annotation>
+								<xs:documentation>argumento de pesquisa</xs:documentation>
+							</xs:annotation>
+							<xs:element name="IE" type="TIe">
+								<xs:annotation>
+									<xs:documentation>Inscrição Estadual do contribuinte </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="CNPJ" type="TCnpjVar">
+								<xs:annotation>
+									<xs:documentation>CNPJ do contribuinte</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="CPF" type="TCpfVar">
+								<xs:annotation>
+									<xs:documentation>CPF do contribuinte</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:choice>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="versao" type="TVerConsCad" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="TRetConsCad">
+		<xs:annotation>
+			<xs:documentation>Tipo Retorno Pedido de Consulta de cadastro de contribuintes</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="infCons">
+				<xs:annotation>
+					<xs:documentation>Dados do Resultado doDados do Pedido de Consulta de cadastro de contribuintes</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="verAplic" type="TVerAplic">
+							<xs:annotation>
+								<xs:documentation>Versão do Aplicativo que processou o pedido de consulta de cadastro</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="cStat" type="TStat">
+							<xs:annotation>
+								<xs:documentation>Código do status da mensagem enviada.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="xMotivo" type="TMotivo">
+							<xs:annotation>
+								<xs:documentation>Descrição literal do status do serviço solicitado.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="UF" type="TUfCons">
+							<xs:annotation>
+								<xs:documentation>sigla da UF consultada, utilizar SU para SUFRAMA</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:choice>
+							<xs:annotation>
+								<xs:documentation>argumento de pesquisa</xs:documentation>
+							</xs:annotation>
+							<xs:element name="IE" type="TIe">
+								<xs:annotation>
+									<xs:documentation>Inscrição Estadual do contribuinte </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="CNPJ" type="TCnpjVar">
+								<xs:annotation>
+									<xs:documentation>CNPJ do contribuinte</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="CPF" type="TCpfVar">
+								<xs:annotation>
+									<xs:documentation>CPF do contribuinte</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:choice>
+						<xs:element name="dhCons" type="xs:dateTime">
+							<xs:annotation>
+								<xs:documentation>Data da Consulta</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="cUF" type="TCodUfIBGE">
+							<xs:annotation>
+								<xs:documentation>código da UF de atendimento</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="infCad" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Informações cadastrais do contribuinte consultado</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="IE" type="TIe">
+										<xs:annotation>
+											<xs:documentation>Número da Inscrição Estadual do contribuinte</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:choice>
+										<xs:element name="CNPJ" type="TCnpjVar">
+											<xs:annotation>
+												<xs:documentation>Número do CNPJ  do contribuinte</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="CPF" type="TCpfVar">
+											<xs:annotation>
+												<xs:documentation>Número do CPF do contribuinte</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:choice>
+									<xs:element name="UF" type="TUf">
+										<xs:annotation>
+											<xs:documentation>Sigla da UF de localização do contribuinte. Em algumas situações, a UF de localização pode ser diferente da UF consultada. Ex. IE de Substituto Tributário.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="cSit">
+										<xs:annotation>
+											<xs:documentation>Situação cadastral do contribuinte:
+0 - não habilitado
+1 - habilitado</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:token">
+												<xs:enumeration value="0"/>
+												<xs:enumeration value="1"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="indCredNFe">
+										<xs:annotation>
+											<xs:documentation>Indicador de contribuinte credenciado a emitir NF-e.
+0 - Não credenciado para emissão da NF-e;
+1 - Credenciado;
+2 - Credenciado com obrigatoriedade para todas operações;
+3 - Credenciado com obrigatoriedade parcial;
+4 – a SEFAZ não fornece a informação.
+Este indicador significa apenas que o contribuinte é credenciado para emitir NF-e na SEFAZ consultada.</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:whiteSpace value="preserve"/>
+												<xs:enumeration value="0"/>
+												<xs:enumeration value="1"/>
+												<xs:enumeration value="2"/>
+												<xs:enumeration value="3"/>
+												<xs:enumeration value="4"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="indCredCTe">
+										<xs:annotation>
+											<xs:documentation>Indicador de contribuinte credenciado a emitir CT-e.
+0 - Não credenciado para emissão da CT-e;
+1 - Credenciado;
+2 - Credenciado com obrigatoriedade para todas operações;
+3 - Credenciado com obrigatoriedade parcial;
+4 – a SEFAZ não fornece a informação.
+Este indicador significa apenas que o contribuinte é credenciado para emitir CT-e na SEFAZ consultada.</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:whiteSpace value="preserve"/>
+												<xs:enumeration value="0"/>
+												<xs:enumeration value="1"/>
+												<xs:enumeration value="2"/>
+												<xs:enumeration value="3"/>
+												<xs:enumeration value="4"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="xNome">
+										<xs:annotation>
+											<xs:documentation>Razão Social ou nome do contribuinte</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="TString">
+												<xs:minLength value="1"/>
+												<xs:maxLength value="60"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="xFant" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Razão Social ou nome do contribuinte</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="TString">
+												<xs:minLength value="1"/>
+												<xs:maxLength value="60"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="xRegApur" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Regime de Apuração do ICMS</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:token">
+												<xs:minLength value="1"/>
+												<xs:maxLength value="60"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="CNAE" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>CNAE Fiscal do contribuinte</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:token">
+												<xs:pattern value="[0-9]{6,7}"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="dIniAtiv" type="xs:date" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Data de início de atividades do contribuinte</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="dUltSit" type="xs:date" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Data da última modificação da situação cadastral do contribuinte.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="dBaixa" type="xs:date" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Data de ocorrência da baixa do contribuinte.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="IEUnica" type="TIe" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Inscrição Estadual Única</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="IEAtual" type="TIe" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Inscrição Estadual atual</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="ender" type="TEndereco" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Endereço</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="versao" type="TVerConsCad" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="TEndereco">
+		<xs:annotation>
+			<xs:documentation>Tipo Dados do Endereço</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="xLgr" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Logradouro</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="TString">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="255"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="nro" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Número</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="TString">
+						<xs:maxLength value="60"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="xCpl" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Complemento</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="TString">
+						<xs:maxLength value="60"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="xBairro" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Bairro</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="TString">
+						<xs:maxLength value="60"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="cMun" type="TCodMunIBGE" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Código do município (utilizar a tabela do IBGE), informar 9999999 para operações com o exterior.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="xMun" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Nome do município</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="TString">
+						<xs:maxLength value="60"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="CEP" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>CEP</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:pattern value="[0-9]{7,8}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="TUfCons">
+		<xs:annotation>
+			<xs:documentation>Tipo Sigla da UF consultada</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="AC"/>
+			<xs:enumeration value="AL"/>
+			<xs:enumeration value="AM"/>
+			<xs:enumeration value="AP"/>
+			<xs:enumeration value="BA"/>
+			<xs:enumeration value="CE"/>
+			<xs:enumeration value="DF"/>
+			<xs:enumeration value="ES"/>
+			<xs:enumeration value="GO"/>
+			<xs:enumeration value="MA"/>
+			<xs:enumeration value="MG"/>
+			<xs:enumeration value="MS"/>
+			<xs:enumeration value="MT"/>
+			<xs:enumeration value="PA"/>
+			<xs:enumeration value="PB"/>
+			<xs:enumeration value="PE"/>
+			<xs:enumeration value="PI"/>
+			<xs:enumeration value="PR"/>
+			<xs:enumeration value="RJ"/>
+			<xs:enumeration value="RN"/>
+			<xs:enumeration value="RO"/>
+			<xs:enumeration value="RR"/>
+			<xs:enumeration value="RS"/>
+			<xs:enumeration value="SC"/>
+			<xs:enumeration value="SE"/>
+			<xs:enumeration value="SP"/>
+			<xs:enumeration value="TO"/>
+			<xs:enumeration value="SU"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TVerConsCad">
+		<xs:annotation>
+			<xs:documentation>Tipo Versão do Leiaute da Consulta Cadastro 2.00</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:pattern value="2\.00"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns="http://www.portalfiscal.inf.br/nfe" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.portalfiscal.inf.br/nfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="leiauteConsStatServ_v3.10.xsd"/>
+	<xs:element name="consStatServ" type="TConsStatServ">
+		<xs:annotation>
+			<xs:documentation>Schema XML de validação do Pedido de Consulta do Status do Serviço</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>
