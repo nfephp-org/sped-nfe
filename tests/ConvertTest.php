@@ -3,7 +3,7 @@
 namespace NFePHP\NFe\Tests;
 
 use NFePHP\NFe\Convert;
-use PHPStan\Testing\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class ConvertTest extends TestCase
 {
