@@ -159,7 +159,7 @@ class QRCode
         //emissão off-line
         $dt = new \DateTime($dhEmi);
         $dia = $dt->format('d');
-        $valor = number_format($vNF, 2, '.', '');
+        $valor = number_format((float)$vNF, 2, '.', '');
         $digHex = self::str2Hex($digVal);
         $seq = "$chNFe|$ver|$tpAmb|$dia|$valor|$digHex|$cscId";
         $hash = strtoupper(sha1($seq . $csc));

@@ -154,7 +154,7 @@ class Tools extends ToolsCommon
         if (strlen($chave) != 44 || !is_numeric($chave)) {
             throw new InvalidArgumentException("Consulta chave: chave \"$chave\" invalida!");
         }
-        $uf = UFList::getUFByCode(substr($chave, 0, 2));
+        $uf = UFList::getUFByCode((int)substr($chave, 0, 2));
         if (empty($tpAmb)) {
             $tpAmb = $this->tpAmb;
         }
@@ -204,9 +204,9 @@ class Tools extends ToolsCommon
         if (empty($ano)) {
             $strAno = (string) date('y');
         }
-        $strSerie = str_pad($nSerie, 3, '0', STR_PAD_LEFT);
-        $strInicio = str_pad($nIni, 9, '0', STR_PAD_LEFT);
-        $strFinal = str_pad($nFin, 9, '0', STR_PAD_LEFT);
+        $strSerie = str_pad((string)$nSerie, 3, '0', STR_PAD_LEFT);
+        $strInicio = str_pad((string)$nIni, 9, '0', STR_PAD_LEFT);
+        $strFinal = str_pad((string)$nFin, 9, '0', STR_PAD_LEFT);
         $idInut = "ID"
             . $this->urlcUF
             . $strAno
@@ -376,10 +376,10 @@ class Tools extends ToolsCommon
         $this->servico($servico, $fonte, $this->tpAmb, true);
         $cUF = UFList::getCodeByUF($this->config->siglaUF);
         $cnpj = $this->config->cnpj;
-        $ultNSU = str_pad($ultNSU, 15, '0', STR_PAD_LEFT);
+        $ultNSU = str_pad((string)$ultNSU, 15, '0', STR_PAD_LEFT);
         $tagNSU = "<distNSU><ultNSU>$ultNSU</ultNSU></distNSU>";
         if ($numNSU != 0) {
-            $numNSU = str_pad($numNSU, 15, '0', STR_PAD_LEFT);
+            $numNSU = str_pad((string)$numNSU, 15, '0', STR_PAD_LEFT);
             $tagNSU = "<consNSU><NSU>$numNSU</NSU></consNSU>";
         }
         //monta a consulta
@@ -492,7 +492,7 @@ class Tools extends ToolsCommon
         $tipo = 1,
         $nSeqEvento = 1
     ) {
-        $uf = UFList::getUFByCode(substr($chNFe, 0, 2));
+        $uf = UFList::getUFByCode((int)substr($chNFe, 0, 2));
         //pedido de prorrogação primero prazo
         $tpEvento = 111500;
         if ($tipo == 2) {
@@ -532,7 +532,7 @@ class Tools extends ToolsCommon
         if (empty($chave) || empty($nProt)) {
             throw new InvalidArgumentException('A chave ou o numero do protocolo estão vazios!');
         }
-        $uf = UFList::getUFByCode(substr($chave, 0, 2));
+        $uf = UFList::getUFByCode((int)substr($chave, 0, 2));
         $tpEvento = self::EVT_CANCELA_PRORROGACAO_1; //111502;
         $origEvent = self::EVT_PRORROGACAO_1; //111500;
         if ($tipo == 2) {
@@ -540,7 +540,7 @@ class Tools extends ToolsCommon
             $tpEvento = self::EVT_CANCELA_PRORROGACAO_2; //111503;
             $origEvent = self::EVT_PRORROGACAO_2; //111501;
         }
-        $sSeqEvento = str_pad($nSeqEvento, 2, "0", STR_PAD_LEFT);
+        $sSeqEvento = str_pad((string)$nSeqEvento, 2, "0", STR_PAD_LEFT);
         $idPedidoCancelado = "ID{$origEvent}{$chave}{$sSeqEvento}";
         $tagAdic = "<idPedidoCancelado>"
                 . "$idPedidoCancelado"
@@ -936,7 +936,7 @@ class Tools extends ToolsCommon
         $cnpj = isset($this->config->cnpj) ? $this->config->cnpj : '';
         $dt = new \DateTime(date("Y-m-d H:i:sP"), new \DateTimeZone($this->timezone));
         $dhEvento = $dt->format('Y-m-d\TH:i:sP');
-        $sSeqEvento = str_pad($nSeqEvento, 2, "0", STR_PAD_LEFT);
+        $sSeqEvento = str_pad((string)$nSeqEvento, 2, "0", STR_PAD_LEFT);
         $eventId = "ID" . $tpEvento . $chave . $sSeqEvento;
         $cOrgao = UFList::getCodeByUF($uf);
         $request = "<evento xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
@@ -1107,7 +1107,7 @@ class Tools extends ToolsCommon
         $protocol = $dom->getElementsByTagName('nProt')->item(0)->nodeValue;
         $digval = $dom->getElementsByTagName('DigestValue')->item(0)->nodeValue;
         //consulta a NFe
-        $response = $this->sefazConsultaChave($chNFe, $tpAmb);
+        $response = $this->sefazConsultaChave($chNFe, (int)$tpAmb);
         $ret = new \DOMDocument('1.0', 'UTF-8');
         $ret->preserveWhiteSpace = false;
         $ret->formatOutput = false;

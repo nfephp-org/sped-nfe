@@ -3,6 +3,9 @@ includes:
 
 parameters:
     level: 5
+    paths:
+        - src
+        - tests
     checkMissingIterableValueType: false
     checkGenericClassInNonGenericObjectType: false
     treatPhpDocTypesAsCertain: false

@@ -61,31 +61,7 @@ parameters:
 			path: src/Factories/ContingencyNFe.php
 
 		-
-			message: "#^Parameter \\#1 \\$number of function number_format expects float, string given\\.$#"
-			count: 1
-			path: src/Factories/QRCode.php
-
-		-
 			message: "#^Method NFePHP\\\\NFe\\\\Make\\:\\:conditionalNumberFormatting\\(\\) should return string but returns null\\.$#"
 			count: 1
 			path: src/Make.php
 
-		-
-			message: "#^Parameter \\#1 \\$code of static method NFePHP\\\\Common\\\\UFList\\:\\:getUFByCode\\(\\) expects int, string given\\.$#"
-			count: 3
-			path: src/Tools.php
-
-		-
-			message: "#^Parameter \\#1 \\$input of function str_pad expects string, int given\\.$#"
-			count: 5
-			path: src/Tools.php
-
-		-
-			message: "#^Parameter \\#1 \\$input of function str_pad expects string, int\\<min, \\-1\\>\\|int\\<1, max\\> given\\.$#"
-			count: 2
-			path: src/Tools.php
-
-		-
-			message: "#^Parameter \\#2 \\$tpAmb of method NFePHP\\\\NFe\\\\Tools\\:\\:sefazConsultaChave\\(\\) expects int\\|null, string given\\.$#"
-			count: 1
-			path: src/Tools.php
