@@ -274,7 +274,7 @@ class Complements
             throw DocumentsException::wrongDocument(18, "[{$cStat}] {$xMotivo}");
         }
         if ($digNFe !== $digProt) {
-            throw DocumentsException::wrongDocument(5, "Os digest são diferentes");
+            throw DocumentsException::wrongDocument(5, "Os digest são diferentes [{$chave}]");
         }
         return $req->saveXML();
     }
