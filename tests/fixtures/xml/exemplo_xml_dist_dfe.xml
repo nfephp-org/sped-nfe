@@ -1,0 +1,12 @@
+<nfeDistDFeInteresse xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NFeDistribuicaoDFe">
+    <nfeDadosMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NFeDistribuicaoDFe">
+        <distDFeInt xmlns="http://www.portalfiscal.inf.br/nfe" versao="1.01">
+            <tpAmb>2</tpAmb>
+            <cUFAutor>35</cUFAutor>
+            <CNPJ>99999999999999</CNPJ>
+            <consNSU>
+                <NSU>000000000000200</NSU>
+            </consNSU>
+        </distDFeInt>
+    </nfeDadosMsg>
+</nfeDistDFeInteresse>

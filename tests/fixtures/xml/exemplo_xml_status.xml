@@ -1,0 +1,7 @@
+<nfeDadosMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NFeStatusServico4">
+    <consStatServ xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00">
+        <tpAmb>2</tpAmb>
+        <cUF>43</cUF>
+        <xServ>STATUS</xServ>
+    </consStatServ>
+</nfeDadosMsg>

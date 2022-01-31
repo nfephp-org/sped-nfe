@@ -386,7 +386,7 @@ class Tools extends ToolsCommon
         $consulta = "<distDFeInt xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
             . "<tpAmb>" . $this->tpAmb . "</tpAmb>"
             . "<cUFAutor>$cUF</cUFAutor>";
-        if ($this->typePerson === 'J') {
+        if ($this->typePerson === 'J' || empty($this->typePerson)) {
             $consulta .= "<CNPJ>$cnpj</CNPJ>";
         } else {
             $consulta .= "<CPF>$cnpj</CPF>";

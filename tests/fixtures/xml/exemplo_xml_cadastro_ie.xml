@@ -1,0 +1,9 @@
+<nfeDadosMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/CadConsultaCadastro4">
+    <ConsCad xmlns="http://www.portalfiscal.inf.br/nfe" versao="2.00">
+        <infCons>
+            <xServ>CONS-CAD</xServ>
+            <UF>RS</UF>
+            <IE>1234567</IE>
+        </infCons>
+    </ConsCad>
+</nfeDadosMsg>
