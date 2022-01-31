@@ -1,0 +1,7 @@
+<nfeDadosMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NFeConsultaProtocolo4">
+    <consSitNFe xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00">
+        <tpAmb>2</tpAmb>
+        <xServ>CONSULTAR</xServ>
+        <chNFe>43211105730928000145650010000002401717268120</chNFe>
+    </consSitNFe>
+</nfeDadosMsg>
