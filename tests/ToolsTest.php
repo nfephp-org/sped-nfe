@@ -36,6 +36,14 @@ class ToolsTest extends NFeTestCase
         $this->tools->sefazConsultaRecibo('');
     }
 
+    public function test_sefaz_consulta_recibo_valido()
+    {
+        $this->tools->sefazConsultaRecibo('143220020730398');
+        $request = $this->tools->getRequest();
+        $esperado = $this->getCleanXml(__DIR__ . '/fixtures/xml/exemplo_request_consulta_recibo.xml');
+        $this->assertSame($esperado, $request);
+    }
+
     /**
      * Testa a consulta pela chave validando o parâmetro da chave vazio.
      */
@@ -43,6 +51,14 @@ class ToolsTest extends NFeTestCase
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->tools->sefazConsultaChave('');
+    }
+
+    public function test_sefaz_consulta_chave_valida()
+    {
+        $this->tools->sefazConsultaChave('43211105730928000145650010000002401717268120');
+        $request = $this->tools->getRequest();
+        $esperado = $this->getCleanXml(__DIR__ . '/fixtures/xml/exemplo_request_consulta_chave.xml');
+        $this->assertSame($esperado, $request);
     }
 
     /**
