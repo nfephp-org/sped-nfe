@@ -184,7 +184,7 @@ class ToolsTest extends NFeTestCase
      */
     public function test_sefaz_inutiliza()
     {
-        $this->tools->sefazInutiliza(1, 1, 10, 'Testando Inutilização', 1, 22);
+        $this->tools->sefazInutiliza(1, 1, 10, 'Testando Inutilização', 1, '22');
         $request = $this->tools->getRequest();
         $esperado = $this->getCleanXml(__DIR__ . '/fixtures/xml/exemplo_xml_inutiliza.xml');
         $this->assertSame($esperado, $request);
