@@ -596,7 +596,7 @@ class Tools
      */
     protected function checkSoap()
     {
-        if ($this->soap) {
+        if (!$this->soap) {
             $this->soap = new SoapCurl($this->certificate);
         }
     }
