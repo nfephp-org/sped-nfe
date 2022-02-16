@@ -15,7 +15,6 @@ Biblioteca para geração e comunicação das NFe com as SEFAZ autorizadoras, e 
 *Utilize o chat do Gitter para iniciar discussões específicas sobre o desenvolvimento deste pacote.*
 
 [![Chat][ico-gitter]][link-gitter]
-[![Build Status][ico-travis]][link-travis]
 [![Coverage Status][ico-scrutinizer]][link-scrutinizer]
 [![Quality Score][ico-code-quality]][link-code-quality]
 
@@ -185,7 +184,6 @@ Este pacote está diponibilizado sob LGPLv3 ou MIT License (MIT). Leia  [Arquivo
 [ico-stars]: https://img.shields.io/github/stars/nfephp-org/sped-nfe.svg?style=flat-square
 [ico-forks]: https://img.shields.io/github/forks/nfephp-org/sped-nfe.svg?style=flat-square
 [ico-issues]: https://img.shields.io/github/issues/nfephp-org/sped-nfe.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/nfephp-org/sped-nfe/master.svg?style=flat-square
 [ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/nfephp-org/sped-nfe.svg?style=flat-square
 [ico-code-quality]: https://img.shields.io/scrutinizer/g/nfephp-org/sped-nfe.svg?style=flat-square
 [ico-downloads]: https://img.shields.io/packagist/dt/nfephp-org/sped-nfe.svg?style=flat-square
@@ -195,7 +193,6 @@ Este pacote está diponibilizado sob LGPLv3 ou MIT License (MIT). Leia  [Arquivo
 
 
 [link-packagist]: https://packagist.org/packages/nfephp-org/sped-nfe
-[link-travis]: https://travis-ci.org/nfephp-org/sped-nfe
 [link-scrutinizer]: https://scrutinizer-ci.com/g/nfephp-org/sped-nfe/code-structure
 [link-code-quality]: https://scrutinizer-ci.com/g/nfephp-org/sped-nfe
 [link-downloads]: https://packagist.org/packages/nfephp-org/sped-nfe
