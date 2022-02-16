@@ -344,7 +344,6 @@ class Tools extends ToolsCommon
             $uf = $this->config->siglaUF;
             $ignoreContingency = false;
         }
-        throw new \Exception('dasdasjkdasdsada');
         $servico = 'NfeStatusServico';
         $this->checkContingencyForWebServices($servico);
         $this->servico($servico, $uf, $tpAmb, $ignoreContingency);
