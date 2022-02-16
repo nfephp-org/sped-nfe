@@ -65,7 +65,7 @@ class Tools
     public $contingency;
     /**
      * soap class
-     * @var SoapInterface
+     * @var ?SoapInterface
      */
     public $soap;
     /**
@@ -596,7 +596,7 @@ class Tools
      */
     protected function checkSoap()
     {
-        if (empty($this->soap)) {
+        if ($this->soap) {
             $this->soap = new SoapCurl($this->certificate);
         }
     }

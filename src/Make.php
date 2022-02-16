@@ -66,7 +66,7 @@ class Make
      */
     protected $tpAmb = 2;
     /**
-     * @var DOMElement
+     * @var ?DOMElement
      */
     protected $NFe;
     /**
@@ -86,7 +86,7 @@ class Make
      */
     protected $enderEmit;
     /**
-     * @var DOMElement
+     * @var ?DOMElement
      */
     protected $dest;
     /**
@@ -106,7 +106,7 @@ class Make
      */
     protected $total;
     /**
-     * @var DOMElement
+     * @var ?DOMElement
      */
     protected $cobr;
     /**
@@ -114,7 +114,7 @@ class Make
      */
     protected $transp;
     /**
-     * @var DOMElement
+     * @var ?DOMElement
      */
     protected $infAdic;
     /**
@@ -306,7 +306,7 @@ class Make
      */
     protected $ICMSTot;
     /**
-     * @var DOMElement
+     * @var ?DOMElement
      */
     protected $retTrib;
     /**
@@ -471,7 +471,7 @@ class Make
         $this->tagICMSTot($this->stdICMSTot);
         $this->dom->appChild($this->total, $this->ICMSTot, 'Falta tag "total"');
         $this->dom->appChild($this->total, $this->ISSQNTot, 'Falta tag "total"');
-        if (!empty($this->retTrib)) {
+        if ($this->retTrib) {
             $this->dom->appChild($this->total, $this->retTrib, 'Falta tag "total"');
         }
         //[28a] tag total (326 W01)
@@ -1321,7 +1321,7 @@ class Make
         $std = $this->equilizeParameters($std, $possible);
 
         $identificador = 'E05 <enderDest> - ';
-        if (empty($this->dest)) {
+        if (!$this->dest) {
             throw new RuntimeException('A TAG dest deve ser criada antes do endereço do mesmo.');
         }
         $this->enderDest = $this->dom->createElement("enderDest");
@@ -7229,7 +7229,7 @@ class Make
      */
     protected function buildNFe()
     {
-        if (empty($this->NFe)) {
+        if (!$this->NFe) {
             $this->NFe = $this->dom->createElement("NFe");
             $this->NFe->setAttribute("xmlns", "http://www.portalfiscal.inf.br/nfe");
         }
@@ -7682,7 +7682,7 @@ class Make
      */
     protected function buildCobr()
     {
-        if (empty($this->cobr)) {
+        if (!$this->cobr) {
             $this->cobr = $this->dom->createElement("cobr");
         }
     }
@@ -7696,7 +7696,7 @@ class Make
      */
     protected function buildInfAdic()
     {
-        if (empty($this->infAdic)) {
+        if (!$this->infAdic) {
             $this->infAdic = $this->dom->createElement("infAdic");
         }
         return $this->infAdic;

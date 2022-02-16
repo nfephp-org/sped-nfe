@@ -36,11 +36,6 @@ parameters:
 			path: src/Common/ValidTXT.php
 
 		-
-			message: "#^Parameter \\#2 \\$class_name of function simplexml_load_string expects string, null given\\.$#"
-			count: 1
-			path: src/Common/Webservices.php
-
-		-
 			message: "#^Unsafe usage of new static\\(\\)\\.$#"
 			count: 1
 			path: src/Convert.php
