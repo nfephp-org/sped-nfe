@@ -180,6 +180,72 @@ class ToolsTest extends NFeTestCase
     }
 
     /**
+     * @return void
+     */
+    public function test_sefaz_inutiliza()
+    {
+        $this->tools->sefazInutiliza(1, 1, 10, 'Testando Inutilização', 1, '22');
+        $request = $this->tools->getRequest();
+        $esperado = $this->getCleanXml(__DIR__ . '/fixtures/xml/exemplo_xml_inutiliza.xml');
+        $this->assertSame($esperado, $request);
+    }
+
+    /**
+     * @return void
+     */
+    public function test_sefaz_cadastro_cnpj()
+    {
+        $this->tools->sefazCadastro('RS', '20532295000154');
+        $request = $this->tools->getRequest();
+        $esperado = $this->getCleanXml(__DIR__ . '/fixtures/xml/exemplo_xml_cadastro_cnpj.xml');
+        $this->assertSame($esperado, $request);
+    }
+
+    /**
+     * @return void
+     */
+    public function test_sefaz_cadastro_ie()
+    {
+        $this->tools->sefazCadastro('RS', '', '1234567');
+        $request = $this->tools->getRequest();
+        $esperado = $this->getCleanXml(__DIR__ . '/fixtures/xml/exemplo_xml_cadastro_ie.xml');
+        $this->assertSame($esperado, $request);
+    }
+
+    /**
+     * @return void
+     */
+    public function test_sefaz_cadastro_cpf()
+    {
+        $this->tools->sefazCadastro('RS', '', '', '60140174028');
+        $request = $this->tools->getRequest();
+        $esperado = $this->getCleanXml(__DIR__ . '/fixtures/xml/exemplo_xml_cadastro_cpf.xml');
+        $this->assertSame($esperado, $request);
+    }
+
+    /**
+     * @return void
+     */
+    public function test_sefaz_status()
+    {
+        $this->tools->sefazStatus('RS');
+        $request = $this->tools->getRequest();
+        $esperado = $this->getCleanXml(__DIR__ . '/fixtures/xml/exemplo_xml_status.xml');
+        $this->assertSame($esperado, $request);
+    }
+
+    /**
+     * @return void
+     */
+    public function test_sefaz_dist_dfe()
+    {
+        $this->tools->sefazDistDFe(100, 200);
+        $request = $this->tools->getRequest();
+        $esperado = $this->getCleanXml(__DIR__ . '/fixtures/xml/exemplo_xml_dist_dfe.xml');
+        $this->assertSame($esperado, $request);
+    }
+
+    /**
      * @param string $xml
      * @param int|string $idLote
      * @return string
