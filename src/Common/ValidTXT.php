@@ -63,11 +63,11 @@ class ValidTXT
 
         foreach ($rows as $row) {
             $fields = explode('|', $row);
-            if (empty($fields)) {
+            if (count($fields) == 0) {
                 continue;
             }
             $ref = strtoupper($fields[0]);
-            if (empty($ref)) {
+            if (!$ref) {
                 continue;
             }
             if ($ref === 'NOTAFISCAL') {

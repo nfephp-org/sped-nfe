@@ -13,7 +13,7 @@ class ComplementsTest extends NFeTestCase
         $request = file_get_contents(__DIR__ . '/fixtures/xml/exemplo_xml_envia_lote_modelo_55.xml');
         $response = file_get_contents(__DIR__ . '/fixtures/xml/retEnviNFe.xml');
         $nfeProtocoled = Complements::toAuthorize($request, $response);
-        $this->assertContains('143220000009921', $nfeProtocoled);
+        $this->assertStringContainsString('143220000009921', $nfeProtocoled);
     }
 
     public function test_to_authorize_nfe_invalid_digest()

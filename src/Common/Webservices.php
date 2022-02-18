@@ -35,7 +35,7 @@ class Webservices
     /**
      * Gets webservices parameters for specific conditions
      * @param string $sigla
-     * @param int $amb 1-Produção ou 2-Homologação
+     * @param int|string $amb 1-Produção ou 2-Homologação
      * @param int $modelo "55" ou "65"
      * @return \stdClass
      * @see storage/autorizadores.json
@@ -102,7 +102,7 @@ class Webservices
      */
     protected function convert($xml)
     {
-        $resp = simplexml_load_string($xml, null, LIBXML_NOCDATA);
+        $resp = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
         $aWS = [];
         foreach ($resp->children() as $element) {
             $sigla = (string) $element->sigla;

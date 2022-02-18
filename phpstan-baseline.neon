@@ -26,19 +26,9 @@ parameters:
 			path: src/Common/Tools.php
 
 		-
-			message: "#^Parameter \\#3 \\$tpAmb of method NFePHP\\\\NFe\\\\Common\\\\Tools\\:\\:servico\\(\\) expects int, string given\\.$#"
-			count: 1
-			path: src/Common/Tools.php
-
-		-
 			message: "#^Parameter \\#1 \\$version of static method NFePHP\\\\NFe\\\\Common\\\\ValidTXT\\:\\:loadStructure\\(\\) expects float, string given\\.$#"
 			count: 1
 			path: src/Common/ValidTXT.php
-
-		-
-			message: "#^Parameter \\#2 \\$class_name of function simplexml_load_string expects string, null given\\.$#"
-			count: 1
-			path: src/Common/Webservices.php
 
 		-
 			message: "#^Unsafe usage of new static\\(\\)\\.$#"

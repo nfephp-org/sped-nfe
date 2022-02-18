@@ -232,7 +232,7 @@ class MakeTest extends TestCase
         $this->assertEmpty($ide->getElementsByTagName('xJust')->item(0));
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->make = new Make();
     }

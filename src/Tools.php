@@ -642,7 +642,7 @@ class Tools extends ToolsCommon
      * @throws InvalidArgumentException
      * @throws RuntimeException
      */
-    public function sefazManifestaLote(\stdClass $std)
+    public function sefazManifestaLote(?\stdClass $std)
     {
         $allowed = [
             self::EVT_CONFIRMACAO,
@@ -650,7 +650,7 @@ class Tools extends ToolsCommon
             self::EVT_DESCONHECIMENTO,
             self::EVT_NAO_REALIZADA,
         ];
-        if (empty($std) || empty($std->evento)) {
+        if (!$std || empty($std->evento)) {
             throw new InvalidArgumentException('Manifestacao: parametro "std" ou evento estao vazios!');
         }
         if (count($std->evento) > 20) {
@@ -729,9 +729,9 @@ class Tools extends ToolsCommon
      * @throws RuntimeException
      * @throws InvalidArgumentException
      */
-    public function sefazEventoLote($uf, \stdClass $std)
+    public function sefazEventoLote($uf, ?\stdClass $std)
     {
-        if (empty($uf) || empty($std)) {
+        if (empty($uf) || !$std) {
             throw new InvalidArgumentException('Evento Lote: UF ou parametro "std" vazio!');
         }
         if (count($std->evento) > 20) {

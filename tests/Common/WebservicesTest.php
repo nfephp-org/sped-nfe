@@ -25,7 +25,7 @@ class WebservicesTest extends TestCase
      */
     protected $xml;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $filepath = __DIR__ . '/../../storage/wsnfe_4.00_mod55.xml';
         $this->xml = file_get_contents($filepath);

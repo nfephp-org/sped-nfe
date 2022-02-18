@@ -70,7 +70,7 @@ class Parser
      */
     protected $stdAutXML;
     /**
-     * @var stdClass
+     * @var ?stdClass
      */
     protected $stdComb;
     /**
@@ -158,7 +158,7 @@ class Parser
     {
         foreach ($nota as $lin) {
             $fields = explode('|', $lin);
-            if (empty($fields)) {
+            if (count($fields) == 0) {
                 continue;
             }
             $metodo = strtolower(str_replace(' ', '', $fields[0])) . 'Entity';
@@ -818,7 +818,7 @@ class Parser
      */
     protected function buildLAEntity()
     {
-        if (!empty($this->stdComb)) {
+        if ($this->stdComb) {
             $this->make->tagcomb($this->stdComb);
         }
     }

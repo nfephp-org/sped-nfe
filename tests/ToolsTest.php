@@ -19,7 +19,7 @@ class ToolsTest extends NFeTestCase
      */
     protected $tools;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->tools = new ToolsFake(
             $this->configJson,
