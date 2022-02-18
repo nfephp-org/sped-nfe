@@ -35,10 +35,6 @@ jobs:
       - name: Check php code style
         run: composer phpcs
 
-      - name: Análises estáticas
-        run: |
-          composer stan
-
       - name: Rodando PHPUnit
         run: |
           composer test
