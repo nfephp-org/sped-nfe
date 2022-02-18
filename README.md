@@ -14,6 +14,8 @@ Biblioteca para geração e comunicação das NFe com as SEFAZ autorizadoras, e 
 
 *Utilize o chat do Gitter para iniciar discussões específicas sobre o desenvolvimento deste pacote.*
 
+![PHP Supported Version][ico-php]
+![Actions](https://github.com/nfephp-org/sped-nfe/actions/workflows/ci.yml/badge.svg)
 [![Chat][ico-gitter]][link-gitter]
 [![Coverage Status][ico-scrutinizer]][link-scrutinizer]
 [![Quality Score][ico-code-quality]][link-code-quality]
@@ -180,6 +182,7 @@ Roberto L. Machado (owner and developer)
 
 Este pacote está diponibilizado sob LGPLv3 ou MIT License (MIT). Leia  [Arquivo de Licença](LICENSE.md) para maiores informações.
 
+[ico-php]: https://img.shields.io/packagist/php-v/nfephp-org/sped-da
 [ico-stable]: https://poser.pugx.org/nfephp-org/sped-nfe/version
 [ico-stars]: https://img.shields.io/github/stars/nfephp-org/sped-nfe.svg?style=flat-square
 [ico-forks]: https://img.shields.io/github/forks/nfephp-org/sped-nfe.svg?style=flat-square
