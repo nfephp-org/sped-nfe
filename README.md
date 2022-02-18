@@ -17,8 +17,6 @@ Biblioteca para geração e comunicação das NFe com as SEFAZ autorizadoras, e 
 ![PHP Supported Version][ico-php]
 ![Actions](https://github.com/nfephp-org/sped-nfe/actions/workflows/ci.yml/badge.svg)
 [![Chat][ico-gitter]][link-gitter]
-[![Coverage Status][ico-scrutinizer]][link-scrutinizer]
-[![Quality Score][ico-code-quality]][link-code-quality]
 
 [![Latest Stable Version][ico-stable]][link-packagist]
 [![Latest Version on Packagist][ico-version]][link-packagist]
@@ -187,8 +185,6 @@ Este pacote está diponibilizado sob LGPLv3 ou MIT License (MIT). Leia  [Arquivo
 [ico-stars]: https://img.shields.io/github/stars/nfephp-org/sped-nfe.svg?style=flat-square
 [ico-forks]: https://img.shields.io/github/forks/nfephp-org/sped-nfe.svg?style=flat-square
 [ico-issues]: https://img.shields.io/github/issues/nfephp-org/sped-nfe.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/nfephp-org/sped-nfe.svg?style=flat-square
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/nfephp-org/sped-nfe.svg?style=flat-square
 [ico-downloads]: https://img.shields.io/packagist/dt/nfephp-org/sped-nfe.svg?style=flat-square
 [ico-version]: https://img.shields.io/packagist/v/nfephp-org/sped-nfe.svg?style=flat-square
 [ico-license]: https://poser.pugx.org/nfephp-org/nfephp/license.svg?style=flat-square
@@ -196,8 +192,6 @@ Este pacote está diponibilizado sob LGPLv3 ou MIT License (MIT). Leia  [Arquivo
 
 
 [link-packagist]: https://packagist.org/packages/nfephp-org/sped-nfe
-[link-scrutinizer]: https://scrutinizer-ci.com/g/nfephp-org/sped-nfe/code-structure
-[link-code-quality]: https://scrutinizer-ci.com/g/nfephp-org/sped-nfe
 [link-downloads]: https://packagist.org/packages/nfephp-org/sped-nfe
 [link-author]: https://github.com/nfephp-org
 [link-issues]: https://github.com/nfephp-org/sped-nfe/issues

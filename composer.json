@@ -46,9 +46,8 @@
         "ext-libxml": "*"
     },
     "require-dev": {
-        "squizlabs/php_codesniffer": "*",
+        "squizlabs/php_codesniffer": "^3.6",
         "phpunit/phpunit": "^9.3",
-        "scrutinizer/ocular": "^1.8",
         "phpstan/phpstan": "^1.4",
         "phpcompatibility/php-compatibility": "^9.3"
     },
