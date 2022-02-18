@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['7.0', '7.1', '7.2', '7.3', '7.4']
+        php-version: ["7.4", "8.0", "8.1"]
 
     steps:
       - name: Setup PHP
@@ -28,24 +28,14 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
-      - name: Uninstall phpstan on unsupported php version
-        if: matrix.php-version == '7.0'
-        run: composer remove phpstan/phpstan --dev
-
-      - name: Set phpunit version
-        if: matrix.php-version == '7.0' || matrix.php-version == '7.1'
-        run: composer require "phpunit/phpunit:^6.0" -W --dev
-
       - name: Composer Install
         run: |
           composer install --no-progress -o --no-ansi --no-interaction
 
       - name: Check php code style
-        if: matrix.php-version == '7.4'
         run: composer phpcs
 
       - name: Análises estáticas
-        if: matrix.php-version != '7.0' && matrix.php-version != '7.1'
         run: |
           composer stan
 
