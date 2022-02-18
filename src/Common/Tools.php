@@ -473,7 +473,7 @@ class Tools
      * Assembles all the necessary parameters for soap communication
      * @param string $service
      * @param string $uf
-     * @param int $tpAmb 1-Production or 2-Homologation
+     * @param int|string $tpAmb 1-Production or 2-Homologation
      * @param bool $ignoreContingency
      * @throws RuntimeException
      * @return void
