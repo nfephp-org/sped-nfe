@@ -22,24 +22,20 @@
             "role": "Developer"
         },
         {
+            "name": "Gustavo Lidani",
+            "email": "lidanig0@gmail.com",
+            "homepage": "https://github.com/lidani",
+            "role": "Developer"
+        },
+        {
             "name": "Comunidade NFePHP",
             "homepage": "https://github.com/nfephp-org/sped-nfe/graphs/contributors"
         }
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:smallsoft-desenvolvimento3/sped-gtin.git"
-        },
-        {
-            "type": "vcs",
-            "url": "git@github.com:smallsoft-desenvolvimento3/sped-common.git"
-        }
-    ],
     "require": {
         "php": ">= 7.4",
-        "nfephp-org/sped-common": "dev-php8.0-support",
-        "nfephp-org/sped-gtin": "dev-php8.0-support",
+        "nfephp-org/sped-common": "^5.1.0",
+        "nfephp-org/sped-gtin": "^1.1.0",
         "justinrainbow/json-schema": "^5.2",
         "ext-zlib": "*",
         "ext-dom": "*",
