@@ -642,7 +642,7 @@ class Tools extends ToolsCommon
      * @throws InvalidArgumentException
      * @throws RuntimeException
      */
-    public function sefazManifestaLote(?\stdClass $std)
+    public function sefazManifestaLote(\stdClass $std)
     {
         $allowed = [
             self::EVT_CONFIRMACAO,
@@ -729,7 +729,7 @@ class Tools extends ToolsCommon
      * @throws RuntimeException
      * @throws InvalidArgumentException
      */
-    public function sefazEventoLote($uf, ?\stdClass $std)
+    public function sefazEventoLote($uf, \stdClass $std)
     {
         if (empty($uf) || !$std) {
             throw new InvalidArgumentException('Evento Lote: UF ou parametro "std" vazio!');
