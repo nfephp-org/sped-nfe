@@ -24,15 +24,9 @@ class Standardize
 {
     private string $node = '';
     private string $json = '';
-    /**
-     * @var string
-     */
-    public $key = '';
+    public string $key = '';
     private object $sxml;
-    /**
-     * @var array
-     */
-    public $rootTagList = [
+    public array $rootTagList = [
         'distDFeInt',
         'resNFe',
         'resEvento',
@@ -160,7 +154,6 @@ class Standardize
 
     /**
      * Returns the SimpleXml Object
-     * @param string $xml
      */
     public function simpleXml(string $xml = null): object
     {
@@ -172,7 +165,6 @@ class Standardize
 
     /**
      * Returns JSON string form XML
-     * @param string $xml
      */
     public function toJson(string $xml = null): string
     {
@@ -184,7 +176,6 @@ class Standardize
 
     /**
      * Returns array from XML
-     * @param string $xml
      */
     public function toArray(string $xml = null): array
     {

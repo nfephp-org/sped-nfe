@@ -58,9 +58,6 @@ class Tools extends ToolsCommon
         bool $compactar = false,
         array &$xmls = []
     ): string {
-        if (!is_array($aXml)) {
-            throw new InvalidArgumentException('Envia Lote: XMLs de NF-e deve ser um array!');
-        }
         if ($indSinc == 1 && count($aXml) > 1) {
             throw new InvalidArgumentException('Envio sincrono deve ser usado para enviar '
                 . 'uma UNICA nota por vez. Você está tentando enviar varias.');
