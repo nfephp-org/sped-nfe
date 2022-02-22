@@ -21,11 +21,6 @@ parameters:
 			path: src/Common/Tools.php
 
 		-
-			message: "#^Parameter \\#1 \\$code of static method NFePHP\\\\Common\\\\UFList\\:\\:getUFByCode\\(\\) expects int, string given\\.$#"
-			count: 2
-			path: src/Common/Tools.php
-
-		-
 			message: "#^Parameter \\#1 \\$version of static method NFePHP\\\\NFe\\\\Common\\\\ValidTXT\\:\\:loadStructure\\(\\) expects float, string given\\.$#"
 			count: 1
 			path: src/Common/ValidTXT.php
@@ -44,11 +39,6 @@ parameters:
 			message: "#^Variable \\$tpEmis might not be defined\\.$#"
 			count: 1
 			path: src/Factories/Contingency.php
-
-		-
-			message: "#^Parameter \\#1 \\$code of static method NFePHP\\\\Common\\\\UFList\\:\\:getUFByCode\\(\\) expects int, string given\\.$#"
-			count: 1
-			path: src/Factories/ContingencyNFe.php
 
 		-
 			message: "#^Method NFePHP\\\\NFe\\\\Make\\:\\:conditionalNumberFormatting\\(\\) should return string but returns null\\.$#"
