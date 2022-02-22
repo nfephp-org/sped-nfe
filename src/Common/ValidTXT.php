@@ -24,8 +24,9 @@ class ValidTXT
     /**
      * Loads structure of txt from json file in storage folder
      * @throws \InvalidArgumentException
+     * @return mixed
      */
-    public static function loadStructure(float $version = 4.00, string $baselayout = self::LOCAL): mixed
+    public static function loadStructure(float $version = 4.00, string $baselayout = self::LOCAL)
     {
         $path = realpath(__DIR__ . "/../../storage");
         $comp = '';
