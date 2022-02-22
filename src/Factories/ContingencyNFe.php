@@ -47,7 +47,7 @@ class ContingencyNFe
         }
         $motivo = trim(Strings::replaceUnacceptableCharacters($contingency->motive));
 
-        $tz = TimeZoneByUF::get(UFList::getUFByCode($cUF));
+        $tz = TimeZoneByUF::get(UFList::getUFByCode((int)$cUF));
         $dt = new \DateTime(date("Y-m-d H:i:sP"), new \DateTimeZone($tz));
 
         $dt->setTimestamp($contingency->timestamp);

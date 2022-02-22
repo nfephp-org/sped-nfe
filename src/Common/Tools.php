@@ -331,7 +331,7 @@ class Tools
     public function validKeyByUF($chave)
     {
         $uf = $this->config->siglaUF;
-        if ($uf != UFList::getUFByCode(substr($chave, 0, 2))) {
+        if ($uf != UFList::getUFByCode((int)substr($chave, 0, 2))) {
             throw new \InvalidArgumentException(
                 "A chave da NFe indicada [$chave] não pertence a [$uf]."
             );
@@ -564,7 +564,7 @@ class Tools
         $this->modelo = 65;
         $cUF = $dom->getElementsByTagName('cUF')->item(0)->nodeValue;
         $tpAmb = $dom->getElementsByTagName('tpAmb')->item(0)->nodeValue;
-        $uf = UFList::getUFByCode($cUF);
+        $uf = UFList::getUFByCode((int)$cUF);
         $this->servico('NfeConsultaQR', $uf, $tpAmb);
         $signed = QRCode::putQRTag(
             $dom,
