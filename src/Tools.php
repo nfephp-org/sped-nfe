@@ -650,7 +650,7 @@ class Tools extends ToolsCommon
             self::EVT_DESCONHECIMENTO,
             self::EVT_NAO_REALIZADA,
         ];
-        if (!$std || empty($std->evento)) {
+        if (empty($std->evento)) {
             throw new InvalidArgumentException('Manifestacao: parametro "std" ou evento estao vazios!');
         }
         if (count($std->evento) > 20) {
@@ -731,7 +731,7 @@ class Tools extends ToolsCommon
      */
     public function sefazEventoLote($uf, \stdClass $std)
     {
-        if (empty($uf) || !$std) {
+        if (empty($uf)) {
             throw new InvalidArgumentException('Evento Lote: UF ou parametro "std" vazio!');
         }
         if (count($std->evento) > 20) {
