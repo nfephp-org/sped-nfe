@@ -22,9 +22,9 @@ use NFePHP\NFe\Factories\Parser;
 
 class Convert
 {
-    const LOCAL = "LOCAL";
-    const LOCAL_V12 = "LOCAL_V12";
-    const SEBRAE = "SEBRAE";
+    public const LOCAL = "LOCAL";
+    public const LOCAL_V12 = "LOCAL_V12";
+    public const SEBRAE = "SEBRAE";
 
     protected $txt;
     protected $dados;
@@ -145,7 +145,7 @@ class Convert
      */
     protected function checkQtdNFe()
     {
-        $num = count($this->notas);
+        $num = is_countable($this->notas) ? count($this->notas) : 0;
         if ($num != $this->numNFe) {
             throw DocumentsException::wrongDocument(13, '');
         }

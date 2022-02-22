@@ -25,21 +25,21 @@ use InvalidArgumentException;
 
 class Tools extends ToolsCommon
 {
-    const EVT_CONFIRMACAO = 210200; //only one per nfe seq=n
-    const EVT_CIENCIA = 210210; //only one per nfe seq=1
-    const EVT_DESCONHECIMENTO = 210220; //only one per nfe seq=n
-    const EVT_NAO_REALIZADA = 210240; //only one per nfe but seq=n
-    const EVT_CCE = 110110; //many seq=n
-    const EVT_CANCELA = 110111; //only seq=1
-    const EVT_CANCELASUBSTITUICAO = 110112;
-    const EVT_EPEC = 110140; //only seq=1
-    const EVT_ATORINTERESSADO = 110150; //many seq=n
-    const EVT_COMPROVANTE_ENTREGA = 110130; //many seq=n
-    const EVT_CANCELAMENTO_COMPROVANTE_ENTREGA = 110131; ///many seq=n
-    const EVT_PRORROGACAO_1 = 111500;
-    const EVT_PRORROGACAO_2 = 111501;
-    const EVT_CANCELA_PRORROGACAO_1 = 111502;
-    const EVT_CANCELA_PRORROGACAO_2 = 111503;
+    public const EVT_CONFIRMACAO = 210200; //only one per nfe seq=n
+    public const EVT_CIENCIA = 210210; //only one per nfe seq=1
+    public const EVT_DESCONHECIMENTO = 210220; //only one per nfe seq=n
+    public const EVT_NAO_REALIZADA = 210240; //only one per nfe but seq=n
+    public const EVT_CCE = 110110; //many seq=n
+    public const EVT_CANCELA = 110111; //only seq=1
+    public const EVT_CANCELASUBSTITUICAO = 110112;
+    public const EVT_EPEC = 110140; //only seq=1
+    public const EVT_ATORINTERESSADO = 110150; //many seq=n
+    public const EVT_COMPROVANTE_ENTREGA = 110130; //many seq=n
+    public const EVT_CANCELAMENTO_COMPROVANTE_ENTREGA = 110131; ///many seq=n
+    public const EVT_PRORROGACAO_1 = 111500;
+    public const EVT_PRORROGACAO_2 = 111501;
+    public const EVT_CANCELA_PRORROGACAO_1 = 111502;
+    public const EVT_CANCELA_PRORROGACAO_2 = 111503;
 
     /**
      * Request authorization to issue NFe in batch with one or more documents
@@ -632,7 +632,7 @@ class Tools extends ToolsCommon
         if (empty($std->evento)) {
             throw new InvalidArgumentException('Manifestacao: parametro "std" ou evento estao vazios!');
         }
-        if (count($std->evento) > 20) {
+        if ((is_countable($std->evento) ? count($std->evento) : 0) > 20) {
             throw new RuntimeException('Manifestacao: o lote de eventos esta limitado a 20!');
         }
         $evt = new \stdClass();
@@ -708,7 +708,7 @@ class Tools extends ToolsCommon
         if (empty($uf)) {
             throw new InvalidArgumentException('Evento Lote: UF ou parametro "std" vazio!');
         }
-        if (count($std->evento) > 20) {
+        if ((is_countable($std->evento) ? count($std->evento) : 0) > 20) {
             throw new RuntimeException('Evento Lote: o lote de eventos esta limitado a 20!');
         }
         $servico = 'RecepcaoEvento';
@@ -759,7 +759,7 @@ class Tools extends ToolsCommon
             $batchRequest .= Strings::clearXmlString($request, true);
         }
         $dt = new \DateTime('now', new \DateTimeZone($this->timezone));
-        $lote = $dt->format('YmdHis') . rand(0, 9);
+        $lote = $dt->format('YmdHis') . random_int(0, 9);
         $request = "<envEvento xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
             . "<idLote>$lote</idLote>"
             . $batchRequest
@@ -899,7 +899,7 @@ class Tools extends ToolsCommon
         $this->servico($servico, $uf, $this->tpAmb, $ignore);
         $ev = $this->tpEv($tpEvento);
         $descEvento = $ev->desc;
-        $cnpj = isset($this->config->cnpj) ? $this->config->cnpj : '';
+        $cnpj = $this->config->cnpj ?? '';
         $dt = new \DateTime(date("Y-m-d H:i:sP"), new \DateTimeZone($this->timezone));
         $dhEvento = $dt->format('Y-m-d\TH:i:sP');
         $sSeqEvento = str_pad((string)$nSeqEvento, 2, "0", STR_PAD_LEFT);
@@ -935,7 +935,7 @@ class Tools extends ToolsCommon
             $this->canonical
         );
         $request = Strings::clearXmlString($request, true);
-        $lote = $dt->format('YmdHis') . rand(0, 9);
+        $lote = $dt->format('YmdHis') . random_int(0, 9);
         $request = "<envEvento xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
             . "<idLote>$lote</idLote>"
             . $request

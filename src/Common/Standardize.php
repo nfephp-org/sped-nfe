@@ -22,22 +22,13 @@ use stdClass;
 
 class Standardize
 {
-    /**
-     * @var string
-     */
-    private $node = '';
-    /**
-     * @var string
-     */
-    private $json = '';
+    private string $node = '';
+    private string $json = '';
     /**
      * @var string
      */
     public $key = '';
-    /**
-     * @var object
-     */
-    private $sxml;
+    private object $sxml;
     /**
      * @var array
      */

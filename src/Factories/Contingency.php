@@ -19,13 +19,13 @@ use NFePHP\Common\Strings;
 
 class Contingency
 {
-    const SVCAN = 'SVCAN';
-    const SVCRS = 'SVCRS';
-    const OFFLINE = 'OFFLINE';
-    const EPEC = 'EPEC';
-    const FSDA = 'FS-DA';
-    const TPEMIS_FSDA = 5;
-    const TPEMIS_OFFLINE = 9;
+    public const SVCAN = 'SVCAN';
+    public const SVCRS = 'SVCRS';
+    public const OFFLINE = 'OFFLINE';
+    public const EPEC = 'EPEC';
+    public const FSDA = 'FS-DA';
+    public const TPEMIS_FSDA = 5;
+    public const TPEMIS_OFFLINE = 9;
 
     /**
      * @var \stdClass

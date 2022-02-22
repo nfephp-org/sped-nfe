@@ -96,7 +96,7 @@ class Webservices
      */
     protected function convert(string $xml)
     {
-        $resp = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+        $resp = simplexml_load_string($xml, \SimpleXMLElement::class, LIBXML_NOCDATA);
         $aWS = [];
         foreach ($resp->children() as $element) {
             $sigla = (string) $element->sigla;
@@ -117,6 +117,7 @@ class Webservices
      */
     protected function extract(SimpleXMLElement $node, string $environment): array
     {
+        $amb = [];
         $amb[$environment] = [];
         foreach ($node->children() as $children) {
             $name = (string) $children->getName();

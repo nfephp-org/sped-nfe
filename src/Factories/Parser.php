@@ -21,9 +21,9 @@ use stdClass;
 
 class Parser
 {
-    const LOCAL = "LOCAL";
-    const LOCAL_V12 = "LOCAL_V12";
-    const SEBRAE = "SEBRAE";
+    public const LOCAL = "LOCAL";
+    public const LOCAL_V12 = "LOCAL_V12";
+    public const SEBRAE = "SEBRAE";
 
     /**
      * @var array
@@ -155,11 +155,11 @@ class Parser
                 continue;
             }
             $metodo = strtolower(str_replace(' ', '', $fields[0])) . 'Entity';
-            if (!method_exists(__CLASS__, $metodo)) {
+            if (!method_exists(self::class, $metodo)) {
                 throw DocumentsException::wrongDocument(16, $lin); //campo não definido
             }
             $struct = $this->structure[strtoupper($fields[0])];
-            $std = $this->fieldsToStd($fields, $struct);
+            $std = static::fieldsToStd($fields, $struct);
             $this->$metodo($std);
         }
     }

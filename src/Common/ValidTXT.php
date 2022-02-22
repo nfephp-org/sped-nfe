@@ -17,9 +17,9 @@ namespace NFePHP\NFe\Common;
 
 class ValidTXT
 {
-    const LOCAL = "LOCAL";
-    const LOCAL_V12 = "LOCAL_V12";
-    const SEBRAE = "SEBRAE";
+    public const LOCAL = "LOCAL";
+    public const LOCAL_V12 = "LOCAL_V12";
+    public const SEBRAE = "SEBRAE";
 
     /**
      * Loads structure of txt from json file in storage folder

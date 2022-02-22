@@ -715,7 +715,7 @@ class Make
         $this->dom->addChild(
             $ide,
             "indIntermed",
-            isset($std->indIntermed) ? $std->indIntermed : null,
+            $std->indIntermed ?? null,
             false,
             $identificador . "Indicador de intermediador/marketplace"
         );
@@ -2267,7 +2267,7 @@ class Make
             $identificador . "[item $std->item] Quantidade do item realmente exportado"
         );
         //obtem o ultimo detExport
-        $nDE = count($this->aDetExport[$std->item]) - 1;
+        $nDE = (is_countable($this->aDetExport[$std->item]) ? count($this->aDetExport[$std->item]) : 0) - 1;
         if ($nDE < 0) {
             throw new RuntimeException('A TAG detExportInd deve ser criada depois da detExport, pois pertence a ela.');
         }
@@ -5239,7 +5239,7 @@ class Make
         $this->dom->addChild(
             $pisst,
             'indSomaPISST',
-            isset($std->indSomaPISST) ? $std->indSomaPISST : null,
+            $std->indSomaPISST ?? null,
             false,
             "[item $std->item] Indica se o valor do PISST compõe o valor total da NF-e"
         );
@@ -5409,7 +5409,7 @@ class Make
         $this->dom->addChild(
             $cofinsst,
             "indSomaCOFINSST",
-            isset($std->indSomaCOFINSST) ? $std->indSomaCOFINSST : null,
+            $std->indSomaCOFINSST ?? null,
             false,
             "[item $std->item] Valor da COFINS"
         );
@@ -5654,8 +5654,8 @@ class Make
         }
         $this->stdICMSTot = $std;
 
-        $vBC = isset($std->vBC) ? $std->vBC : $this->stdTot->vBC;
-        $vICMS = isset($std->vICMS) ? $std->vICMS : $this->stdTot->vICMS;
+        $vBC = $std->vBC ?? $this->stdTot->vBC;
+        $vICMS = $std->vICMS ?? $this->stdTot->vICMS;
         $vICMSDeson = !empty($std->vICMSDeson) ? $std->vICMSDeson : $this->stdTot->vICMSDeson;
         $vBCST = !empty($std->vBCST) ? $std->vBCST : $this->stdTot->vBCST;
         $vST = !empty($std->vST) ? $std->vST : $this->stdTot->vST;
@@ -5895,18 +5895,18 @@ class Make
         }
         $this->stdISSQN = $std;
 
-        $vServ = isset($std->vServ) ? $std->vServ : $this->stdISSQNTot->vServ;
-        $vBC = isset($std->vBC) ? $std->vBC : $this->stdISSQNTot->vBC;
-        $vISS = isset($std->vISS) ? $std->vISS : $this->stdISSQNTot->vISS;
-        $vPIS = isset($std->vPIS) ? $std->vPIS : $this->stdISSQNTot->vPIS;
-        $vCOFINS = isset($std->vCOFINS) ? $std->vCOFINS : $this->stdISSQNTot->vCOFINS;
-        $dCompet = isset($std->dCompet) ? $std->dCompet : date('Y-m-d');
-        $vDeducao = isset($std->vDeducao) ? $std->vDeducao : $this->stdISSQNTot->vDeducao;
-        $vOutro = isset($std->vOutro) ? $std->vOutro : $this->stdISSQNTot->vOutro;
-        $vDescIncond = isset($std->vDescIncond) ? $std->vDescIncond : $this->stdISSQNTot->vDescIncond;
-        $vDescCond = isset($std->vDescCond) ? $std->vDescCond : $this->stdISSQNTot->vDescCond;
-        $vISSRet = isset($std->vISSRet) ? $std->vISSRet : $this->stdISSQNTot->vISSRet;
-        $cRegTrib = isset($std->cRegTrib) ? $std->cRegTrib : $this->stdISSQNTot->cRegTrib;
+        $vServ = $std->vServ ?? $this->stdISSQNTot->vServ;
+        $vBC = $std->vBC ?? $this->stdISSQNTot->vBC;
+        $vISS = $std->vISS ?? $this->stdISSQNTot->vISS;
+        $vPIS = $std->vPIS ?? $this->stdISSQNTot->vPIS;
+        $vCOFINS = $std->vCOFINS ?? $this->stdISSQNTot->vCOFINS;
+        $dCompet = $std->dCompet ?? date('Y-m-d');
+        $vDeducao = $std->vDeducao ?? $this->stdISSQNTot->vDeducao;
+        $vOutro = $std->vOutro ?? $this->stdISSQNTot->vOutro;
+        $vDescIncond = $std->vDescIncond ?? $this->stdISSQNTot->vDescIncond;
+        $vDescCond = $std->vDescCond ?? $this->stdISSQNTot->vDescCond;
+        $vISSRet = $std->vISSRet ?? $this->stdISSQNTot->vISSRet;
+        $cRegTrib = $std->cRegTrib ?? $this->stdISSQNTot->cRegTrib;
 
         //nulificar caso seja menor ou igual a ZERO
         $vServ = ($vServ > 0) ? number_format($vServ, 2, '.', '') : null;
