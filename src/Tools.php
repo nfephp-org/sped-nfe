@@ -177,8 +177,14 @@ class Tools extends ToolsCommon
      * @param string $ano
      * @throws InvalidArgumentException
      */
-    public function sefazInutiliza(int $nSerie, int $nIni, int $nFin, string $xJust, int $tpAmb = null, string $ano = null): string
-    {
+    public function sefazInutiliza(
+        int $nSerie,
+        int $nIni,
+        int $nFin,
+        string $xJust,
+        int $tpAmb = null,
+        string $ano = null
+    ): string {
         if (empty($nIni) || empty($nFin) || empty($xJust)) {
             throw new InvalidArgumentException('Inutilizacao: parametros incompletos!');
         }
@@ -553,8 +559,13 @@ class Tools extends ToolsCommon
      * @param string $verAplic version of applicative
      * @throws InvalidArgumentException
      */
-    public function sefazCancelaPorSubstituicao(string $chave, string $xJust, string $nProt, string $chNFeRef, string $verAplic = null): string
-    {
+    public function sefazCancelaPorSubstituicao(
+        string $chave,
+        string $xJust,
+        string $nProt,
+        string $chNFeRef,
+        string $verAplic = null
+    ): string {
         if ($this->modelo != 65) {
             throw new InvalidArgumentException(
                 'Cancelamento pro Substituição deve ser usado apenas para '
