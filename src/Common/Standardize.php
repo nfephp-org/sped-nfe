@@ -73,20 +73,20 @@ class Standardize
 
     /**
      * Constructor
-     * @param string $xml
      */
-    public function __construct($xml = null)
+    public function __construct(?string $xml = null)
     {
-        $this->toStd($xml);
+        if (!empty($xml)) {
+            $this->toStd($xml);
+        }
     }
 
     /**
      * Identify node and extract from XML for convertion type
-     * @param string $xml
      * @return string identificated node name
      * @throws \InvalidArgumentException
      */
-    public function whichIs($xml)
+    public function whichIs(string $xml): string
     {
         if (!Validator::isXML($xml)) {
             //invalid document is not a XML
@@ -119,19 +119,16 @@ class Standardize
 
     /**
      * Returns extract node from XML
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->node;
     }
 
     /**
      * Returns stdClass converted from xml
-     * @param string $xml
-     * @return stdClass
      */
-    public function toStd($xml = null)
+    public function toStd(?string $xml = null): stdClass
     {
         if (!empty($xml)) {
             $this->key = $this->whichIs($xml);
@@ -155,9 +152,8 @@ class Standardize
 
     /**
      * Return QRCODE and urlChave from XML
-     * @return array
      */
-    private function getQRCode()
+    private function getQRCode(): array
     {
         $dom = new \DOMDocument('1.0', 'UTF-8');
         $dom->preserveWhiteSpace = false;
@@ -174,9 +170,8 @@ class Standardize
     /**
      * Returns the SimpleXml Object
      * @param string $xml
-     * @return object
      */
-    public function simpleXml($xml = null)
+    public function simpleXml(string $xml = null): object
     {
         if (!empty($xml)) {
             $this->toStd($xml);
@@ -187,9 +182,8 @@ class Standardize
     /**
      * Returns JSON string form XML
      * @param string $xml
-     * @return string
      */
-    public function toJson($xml = null)
+    public function toJson(string $xml = null): string
     {
         if (!empty($xml)) {
             $this->toStd($xml);
@@ -200,9 +194,8 @@ class Standardize
     /**
      * Returns array from XML
      * @param string $xml
-     * @return array
      */
-    public function toArray($xml = null)
+    public function toArray(string $xml = null): array
     {
         if (!empty($xml)) {
             $this->toStd($xml);

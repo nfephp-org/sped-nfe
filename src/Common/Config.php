@@ -23,9 +23,8 @@ class Config
     /**
      * Validate method
      * @param string $content config.json
-     * @return \stdClass
      */
-    public static function validate($content)
+    public static function validate(string $content): \stdClass
     {
         if (!is_string($content)) {
             throw DocumentsException::wrongDocument(8, "Não foi passado um json.");
@@ -40,11 +39,9 @@ class Config
 
     /**
      * Validation with JsonValid::class
-     * @param object $data
-     * @return boolean
      * @throws DocumentsException
      */
-    protected static function validInputData($data)
+    protected static function validInputData(object $data): bool
     {
         $filejsonschema = __DIR__ . "/../../storage/config.schema";
         $validator = new JsonValid();

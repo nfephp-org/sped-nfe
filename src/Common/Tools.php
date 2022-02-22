@@ -178,10 +178,8 @@ class Tools
     /**
      * Loads configurations and Digital Certificate, map all paths, set timezone and instanciate Contingency::class
      * @param string $configJson content of config in json format
-     * @param Certificate $certificate
-     * @param Contingency|null $contingency
      */
-    public function __construct($configJson, Certificate $certificate, Contingency $contingency = null)
+    public function __construct(string $configJson, Certificate $certificate, Contingency $contingency = null)
     {
         $this->pathwsfiles = realpath(__DIR__ . '/../../storage') . '/';
         //valid config json string
@@ -199,9 +197,8 @@ class Tools
     /**
      * Sets environment time zone
      * @param string $acronym (ou seja a sigla do estado)
-     * @return void
      */
-    public function setEnvironmentTimeZone($acronym)
+    public function setEnvironmentTimeZone(string $acronym): void
     {
         $this->timezone = TimeZoneByUF::get($acronym);
     }
@@ -210,9 +207,8 @@ class Tools
      * Return J or F from existing type in ASN.1 certificate
      * J - pessoa juridica (CNPJ)
      * F - pessoa física (CPF)
-     * @return string
      */
-    public function getTypeOfPersonFromCertificate()
+    public function getTypeOfPersonFromCertificate(): string
     {
         $cnpj = $this->certificate->getCnpj();
         $type = 'J';
@@ -232,9 +228,8 @@ class Tools
 
     /**
      * Set application version
-     * @param string $ver
      */
-    public function setVerAplic($ver)
+    public function setVerAplic(string $ver)
     {
         $this->verAplic = $ver;
     }
@@ -243,10 +238,8 @@ class Tools
      * Load Soap Class
      * Soap Class may be \NFePHP\Common\Soap\SoapNative
      * or \NFePHP\Common\Soap\SoapCurl
-     * @param SoapInterface $soap
-     * @return void
      */
-    public function loadSoapClass(SoapInterface $soap)
+    public function loadSoapClass(SoapInterface $soap): void
     {
         $this->soap = $soap;
         $this->soap->loadCertificate($this->certificate);
@@ -254,10 +247,8 @@ class Tools
 
     /**
      * Set OPENSSL Algorithm using OPENSSL constants
-     * @param int $algorithm
-     * @return void
      */
-    public function setSignAlgorithm($algorithm = OPENSSL_ALGO_SHA1)
+    public function setSignAlgorithm(int $algorithm = OPENSSL_ALGO_SHA1): void
     {
         $this->algorithm = $algorithm;
     }
@@ -267,7 +258,7 @@ class Tools
      * @param int $model
      * @return int modelo class parameter
      */
-    public function model($model = null)
+    public function model(int $model = null): int
     {
         if ($model == 55 || $model == 65) {
             $this->modelo = $model;
@@ -278,10 +269,9 @@ class Tools
     /**
      * Set or get parameter layout version
      * @param string $version
-     * @return string
      * @throws InvalidArgumentException
      */
-    public function version($version = null)
+    public function version(string $version = null): string
     {
         if (null === $version) {
             return $this->versao;
@@ -307,28 +297,25 @@ class Tools
      * @param string $acronym Sigla do estado
      * @return int number cUF
      */
-    public function getcUF($acronym)
+    public function getcUF(string $acronym): int
     {
         return UFlist::getCodeByUF($acronym);
     }
 
     /**
      * Recover state acronym from cUF number
-     * @param int $cUF
      * @return string acronym sigla
      */
-    public function getAcronym($cUF)
+    public function getAcronym(int $cUF): string
     {
         return UFlist::getUFByCode($cUF);
     }
 
     /**
      * Validate cUF from the key content and returns the state acronym
-     * @param string $chave
-     * @return string
      * @throws InvalidArgumentException
      */
-    public function validKeyByUF($chave)
+    public function validKeyByUF(string $chave): string
     {
         $uf = $this->config->siglaUF;
         if ($uf != UFList::getUFByCode((int)substr($chave, 0, 2))) {
@@ -345,7 +332,7 @@ class Tools
      * @return string signed NFe xml
      * @throws RuntimeException
      */
-    public function signNFe($xml)
+    public function signNFe(string $xml): string
     {
         if (empty($xml)) {
             throw new InvalidArgumentException('O argumento xml passado para ser assinado está vazio.');
@@ -380,9 +367,8 @@ class Tools
     /**
      * Corrects NFe fields when in contingency mode
      * @param string $xml NFe xml content
-     * @return string
      */
-    protected function correctNFeForContingencyMode($xml)
+    protected function correctNFeForContingencyMode(string $xml): string
     {
         return $this->contingency->type == '' ? $xml : $this->signNFe($xml);
     }
@@ -391,11 +377,8 @@ class Tools
      * Performs xml validation with its respective XSD structure definition document
      * NOTE: if don't exists the XSD file will return true
      * @param string $version layout version
-     * @param string $body
-     * @param string $method
-     * @return bool
      */
-    protected function isValid($version, $body, $method)
+    protected function isValid(string $version, string $body, string $method): bool
     {
         $schema = $this->pathschemes . $method . "_v$version.xsd";
         if (!is_file($schema)) {
@@ -406,10 +389,9 @@ class Tools
 
     /**
      * Verifies the existence of the service
-     * @param string $service
      * @throws RuntimeException
      */
-    protected function checkContingencyForWebServices($service)
+    protected function checkContingencyForWebServices(string $service)
     {
         $permit = [
             55 => ['SVCAN', 'SVCRS', 'EPEC', 'FSDA'],
@@ -445,10 +427,8 @@ class Tools
 
     /**
      * Alter environment from "homologacao" to "producao" and vice-versa
-     * @param int $tpAmb
-     * @return void
      */
-    public function setEnvironment($tpAmb = 2)
+    public function setEnvironment(int $tpAmb = 2): void
     {
         if (!empty($tpAmb) && ($tpAmb == 1 || $tpAmb == 2)) {
             $this->tpAmb = $tpAmb;
@@ -458,10 +438,8 @@ class Tools
 
     /**
      * Set option for canonical transformation see C14n
-     * @param array $opt
-     * @return array
      */
-    public function canonicalOptions(array $opt = [true, false, null, null])
+    public function canonicalOptions(array $opt = [true, false, null, null]): array
     {
         if (!empty($opt) && is_array($opt)) {
             $this->canonical = $opt;
@@ -471,14 +449,10 @@ class Tools
 
     /**
      * Assembles all the necessary parameters for soap communication
-     * @param string $service
-     * @param string $uf
      * @param int|string $tpAmb 1-Production or 2-Homologation
-     * @param bool $ignoreContingency
      * @throws RuntimeException
-     * @return void
      */
-    protected function servico($service, $uf, $tpAmb, $ignoreContingency = false)
+    protected function servico(string $service, string $uf, $tpAmb, bool $ignoreContingency = false): void
     {
         $webs = new Webservices($this->getXmlUrlPath());
         $sigla = $uf;
@@ -508,12 +482,9 @@ class Tools
 
     /**
      * Send request message to webservice
-     * @param string $request
-     * @param array $parameters
-     * @return string
      * @throws RuntimeException
      */
-    protected function sendRequest($request, array $parameters = [])
+    protected function sendRequest(string $request, array $parameters = []): string
     {
         if (in_array($this->contingency->tpEmis, [Contingency::TPEMIS_FSDA, Contingency::TPEMIS_OFFLINE])) {
             throw new \RuntimeException('Em contingencia FSDA ou OFFLINE não é possivel acessar os webservices.');
@@ -534,9 +505,8 @@ class Tools
 
     /**
      * Recover path to xml data base with list of soap services
-     * @return string
      */
-    protected function getXmlUrlPath()
+    protected function getXmlUrlPath(): string
     {
         $file = "wsnfe_" . $this->versao . "_mod55.xml";
         if ($this->modelo == 65) {
@@ -552,10 +522,8 @@ class Tools
 
     /**
      * Add QRCode Tag to signed XML from a NFCe
-     * @param DOMDocument $dom
-     * @return string
      */
-    protected function addQRCode(DOMDocument $dom)
+    protected function addQRCode(DOMDocument $dom): string
     {
         if (empty($this->config->CSC) || empty($this->config->CSCid)) {
             throw new \RuntimeException("O QRCode não pode ser criado pois faltam dados CSC e/ou CSCId");
@@ -582,9 +550,8 @@ class Tools
      * Get URI for search NFCe by key (chave)
      * @param string $uf Abbreviation of the UF
      * @param string $tpAmb SEFAZ environment, 1-Production or 2-Homologation
-     * @return string
      */
-    protected function getURIConsultaNFCe($uf, $tpAmb)
+    protected function getURIConsultaNFCe(string $uf, string $tpAmb): string
     {
         $arr = json_decode(file_get_contents($this->pathwsfiles . 'uri_consulta_nfce.json'), true);
         $std = json_decode(json_encode($arr[$tpAmb]));
@@ -603,10 +570,8 @@ class Tools
 
     /**
      * Verify if xml model is equal as modelo property
-     * @param string $xml
-     * @return bool
      */
-    protected function checkModelFromXml($xml)
+    protected function checkModelFromXml(string $xml): void
     {
         $dom = new \DOMDocument();
         $dom->loadXML($xml);

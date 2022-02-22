@@ -120,8 +120,7 @@ class ToolsTest extends NFeTestCase
      */
     public function test_sefaz_envia_lote_parametro_invalido()
     {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Envia Lote: XMLs de NF-e deve ser um array!');
+        $this->expectException(\TypeError::class);
         $this->tools->sefazEnviaLote(""); //@phpstan-ignore-line
     }
 

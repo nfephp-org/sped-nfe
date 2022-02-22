@@ -13,12 +13,8 @@ class Header
 {
     /**
      * Return header
-     * @param string $namespace
-     * @param int $cUF
-     * @param string $version
-     * @return string
      */
-    public static function get($namespace, $cUF, $version)
+    public static function get(string $namespace, int $cUF, string $version): string
     {
         return "<nfeCabecMsg "
             . "xmlns=\"$namespace\">"

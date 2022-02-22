@@ -21,10 +21,9 @@ class Gtin
 {
     /**
      * Verify if GTIN is valid with dv
-     * @param string $gtin
      * @return boolean
      */
-    public static function isValid($gtin)
+    public static function isValid(string $gtin): bool
     {
         if ($gtin === '' || $gtin === 'SEM GTIN') {
             return true;

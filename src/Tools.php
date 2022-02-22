@@ -52,12 +52,12 @@ class Tools extends ToolsCommon
      * @throws InvalidArgumentException
      */
     public function sefazEnviaLote(
-        $aXml,
-        $idLote = '',
-        $indSinc = 0,
-        $compactar = false,
-        &$xmls = []
-    ) {
+        array $aXml,
+        string $idLote = '',
+        int $indSinc = 0,
+        bool $compactar = false,
+        array &$xmls = []
+    ): string {
         if (!is_array($aXml)) {
             throw new InvalidArgumentException('Envia Lote: XMLs de NF-e deve ser um array!');
         }
@@ -106,12 +106,10 @@ class Tools extends ToolsCommon
 
     /**
      * Check status of Batch of NFe sent by receipt of this shipment
-     * @param string $recibo
      * @param int $tpAmb
-     * @return string
      * @throws InvalidArgumentException
      */
-    public function sefazConsultaRecibo($recibo, $tpAmb = null)
+    public function sefazConsultaRecibo(string $recibo, int $tpAmb = null): string
     {
         if (empty($recibo)) {
             throw new InvalidArgumentException('Consulta Recibo: numero do recibo vazio!');
@@ -141,12 +139,10 @@ class Tools extends ToolsCommon
 
     /**
      * Check the NFe status for the 44-digit key and retrieve the protocol
-     * @param string $chave
      * @param int $tpAmb
-     * @return string
      * @throws InvalidArgumentException
      */
-    public function sefazConsultaChave($chave, $tpAmb = null)
+    public function sefazConsultaChave(string $chave, int $tpAmb = null): string
     {
         if (empty($chave)) {
             throw new InvalidArgumentException('Consulta chave: a chave esta vazia!');
@@ -177,16 +173,11 @@ class Tools extends ToolsCommon
 
     /**
      * Request to disable one or an NFe sequence of a given series
-     * @param int $nSerie
-     * @param int $nIni
-     * @param int $nFin
-     * @param string $xJust
      * @param int $tpAmb
      * @param string $ano
-     * @return string
      * @throws InvalidArgumentException
      */
-    public function sefazInutiliza($nSerie, $nIni, $nFin, $xJust, $tpAmb = null, $ano = null)
+    public function sefazInutiliza(int $nSerie, int $nIni, int $nFin, string $xJust, int $tpAmb = null, string $ano = null): string
     {
         if (empty($nIni) || empty($nFin) || empty($xJust)) {
             throw new InvalidArgumentException('Inutilizacao: parametros incompletos!');
@@ -284,7 +275,7 @@ class Tools extends ToolsCommon
      * @return string xml soap response
      * @throws InvalidArgumentException
      */
-    public function sefazCadastro($uf, $cnpj = '', $iest = '', $cpf = '')
+    public function sefazCadastro(string $uf, string $cnpj = '', string $iest = '', string $cpf = ''): string
     {
         $filter = '';
         if (!empty($cnpj)) {
@@ -332,10 +323,9 @@ class Tools extends ToolsCommon
      * If $uf is NOT empty ignore contingency mode
      * @param string $uf  initials of federation unit
      * @param int $tpAmb
-     * @param bool $ignoreContingency
      * @return string xml soap response
      */
-    public function sefazStatus($uf = '', $tpAmb = null, $ignoreContingency = true)
+    public function sefazStatus(string $uf = '', int $tpAmb = null, bool $ignoreContingency = true): string
     {
         if (empty($tpAmb)) {
             $tpAmb = $this->tpAmb;
@@ -366,9 +356,8 @@ class Tools extends ToolsCommon
      * @param integer $ultNSU  last NSU number recived
      * @param integer $numNSU  NSU number you wish to consult
      * @param string $fonte data source 'AN' and for some cases it may be 'RS'
-     * @return string
      */
-    public function sefazDistDFe($ultNSU = 0, $numNSU = 0, $fonte = 'AN')
+    public function sefazDistDFe(int $ultNSU = 0, int $numNSU = 0, string $fonte = 'AN'): string
     {
         //carrega serviço
         $servico = 'NfeDistribuicaoDFe';
@@ -410,13 +399,9 @@ class Tools extends ToolsCommon
 
     /**
      * Request authorization for Letter of Correction
-     * @param string $chave
-     * @param string $xCorrecao
-     * @param int $nSeqEvento
-     * @return string
      * @throws InvalidArgumentException
      */
-    public function sefazCCe($chave, $xCorrecao, $nSeqEvento = 1)
+    public function sefazCCe(string $chave, string $xCorrecao, int $nSeqEvento = 1): string
     {
         if (empty($chave) || empty($xCorrecao)) {
             throw new InvalidArgumentException('CC-e: chave ou motivo da correcao vazio!');
@@ -442,10 +427,8 @@ class Tools extends ToolsCommon
     /**
      * Evento do Ator Interessado
      * NOTA: NT2020.007_v1.00a
-     * @param \stdClass $std
-     * @return string
      */
-    public function sefazAtorInteressado(\stdClass $std)
+    public function sefazAtorInteressado(\stdClass $std): string
     {
         $xCondUso = 'O emitente ou destinatário da NF-e, declara que permite o '
             . 'transportador declarado no campo CNPJ/CPF deste evento a '
@@ -478,20 +461,16 @@ class Tools extends ToolsCommon
      * Request extension of the term of return of products of an NF-e of
      * consignment for industrialization to order with suspension of ICMS
      * in interstate operations
-     * @param string $chNFe
-     * @param string $nProt
      * @param integer $tipo 1-primerio prazo, 2-segundo prazo
-     * @param array $itens
      * @param integer $nSeqEvento
-     * @return string
      */
     public function sefazEPP(
-        $chNFe,
-        $nProt,
-        $itens = [],
-        $tipo = 1,
-        $nSeqEvento = 1
-    ) {
+        string $chNFe,
+        string $nProt,
+        array $itens = [],
+        int $tipo = 1,
+        int $nSeqEvento = 1
+    ): string {
         $uf = UFList::getUFByCode((int)substr($chNFe, 0, 2));
         //pedido de prorrogação primero prazo
         $tpEvento = 111500;
@@ -520,14 +499,11 @@ class Tools extends ToolsCommon
      * Request the cancellation of the request for an extension of the term
      * of return of products of an NF-e of consignment for industrialization
      * by order with suspension of ICMS in interstate operations
-     * @param string $chave
-     * @param string $nProt
      * @param integer $tipo 1-primerio prazo, 2-segundo prazo
      * @param integer $nSeqEvento
-     * @return string
      * @throws InvalidArgumentException
      */
-    public function sefazECPP($chave, $nProt, $tipo, $nSeqEvento = 1)
+    public function sefazECPP(string $chave, string $nProt, int $tipo, int $nSeqEvento = 1): string
     {
         if (empty($chave) || empty($nProt)) {
             throw new InvalidArgumentException('A chave ou o numero do protocolo estão vazios!');
@@ -554,10 +530,9 @@ class Tools extends ToolsCommon
      * @param  string $chave key of NFe
      * @param  string $xJust justificative 255 characters max
      * @param  string $nProt protocol number
-     * @return string
      * @throws InvalidArgumentException
      */
-    public function sefazCancela($chave, $xJust, $nProt)
+    public function sefazCancela(string $chave, string $xJust, string $nProt): string
     {
         if (empty($chave) || empty($xJust) || empty($nProt)) {
             throw new InvalidArgumentException('Cancelamento: chave, just ou numprot vazio!');
@@ -576,10 +551,9 @@ class Tools extends ToolsCommon
      * @param string $nProt protocol number
      * @param string $chNFeRef key of New NFe
      * @param string $verAplic version of applicative
-     * @return string
      * @throws InvalidArgumentException
      */
-    public function sefazCancelaPorSubstituicao($chave, $xJust, $nProt, $chNFeRef, $verAplic = null)
+    public function sefazCancelaPorSubstituicao(string $chave, string $xJust, string $nProt, string $chNFeRef, string $verAplic = null): string
     {
         if ($this->modelo != 65) {
             throw new InvalidArgumentException(
@@ -615,14 +589,10 @@ class Tools extends ToolsCommon
 
     /**
      * Request the registration of the manifestation of recipient
-     * @param string $chave
-     * @param int $tpEvento
      * @param string $xJust Justification for not carrying out the operation
-     * @param int $nSeqEvento
-     * @return string
      * @throws InvalidArgumentException
      */
-    public function sefazManifesta($chave, $tpEvento, $xJust = '', $nSeqEvento = 1)
+    public function sefazManifesta(string $chave, int $tpEvento, string $xJust = '', int $nSeqEvento = 1): string
     {
         if (empty($chave) || empty($tpEvento)) {
             throw new InvalidArgumentException('Manifestacao: chave ou tipo de evento vazio!');
@@ -637,12 +607,10 @@ class Tools extends ToolsCommon
 
     /**
      * Request the registration of the manifestation of recipient in batch
-     * @param \stdClass $std
-     * @return string
      * @throws InvalidArgumentException
      * @throws RuntimeException
      */
-    public function sefazManifestaLote(\stdClass $std)
+    public function sefazManifestaLote(\stdClass $std): string
     {
         $allowed = [
             self::EVT_CONFIRMACAO,
@@ -679,10 +647,8 @@ class Tools extends ToolsCommon
 
     /**
      * Send event for delivery receipt
-     * @param \stdClass $std
-     * @return string
      */
-    public function sefazComprovanteEntrega(\stdClass $std)
+    public function sefazComprovanteEntrega(\stdClass $std): string
     {
         if (empty($std->verAplic) && !empty($this->verAplic)) {
             $std->verAplic = $this->verAplic;
@@ -723,13 +689,10 @@ class Tools extends ToolsCommon
 
     /**
      * Send event to SEFAZ in batch
-     * @param string $uf
-     * @param \stdClass $std
-     * @return string
      * @throws RuntimeException
      * @throws InvalidArgumentException
      */
-    public function sefazEventoLote($uf, \stdClass $std)
+    public function sefazEventoLote(string $uf, \stdClass $std): string
     {
         if (empty($uf)) {
             throw new InvalidArgumentException('Evento Lote: UF ou parametro "std" vazio!');
@@ -800,13 +763,11 @@ class Tools extends ToolsCommon
 
     /**
      * Request authorization for issuance in contingency EPEC
-     * @param string $xml
      * @param string $verAplic
-     * @return string
      * @throws InvalidArgumentException
      * @throws RuntimeException
      */
-    public function sefazEPEC(&$xml, $verAplic = null)
+    public function sefazEPEC(string &$xml, string $verAplic = null): string
     {
         if (empty($xml)) {
             throw new InvalidArgumentException('EPEC: parâmetro xml esta vazio!');
@@ -891,20 +852,14 @@ class Tools extends ToolsCommon
 
     /**
      * Send event to SEFAZ
-     * @param string $uf
-     * @param string $chave
-     * @param int $tpEvento
-     * @param int $nSeqEvento
-     * @param string $tagAdic
-     * @return string
      */
     public function sefazEvento(
-        $uf,
-        $chave,
-        $tpEvento,
-        $nSeqEvento = 1,
-        $tagAdic = ''
-    ) {
+        string $uf,
+        string $chave,
+        int $tpEvento,
+        int $nSeqEvento = 1,
+        string $tagAdic = ''
+    ): string {
         $eventos = [
             self::EVT_CCE => ['versao' => '1.00', 'nome' => 'envCCe'],
             self::EVT_CANCELA => ['versao' => '1.00', 'nome' => 'envEventoCancNFe'],
@@ -993,11 +948,9 @@ class Tools extends ToolsCommon
      * Request the NFe download already manifested by its recipient, by the key
      * using new service in NfeDistribuicaoDFe
      * NOTA: NfeDownloadNF is deactivated
-     * @param  string $chave
-     * @return string
      * @throws InvalidArgumentException
      */
-    public function sefazDownload($chave)
+    public function sefazDownload(string $chave): string
     {
         if (empty($chave)) {
             throw new InvalidArgumentException('Download: chave esta vazia!');
@@ -1041,11 +994,10 @@ class Tools extends ToolsCommon
      *                   1 - Consulta CSC Ativos;
      *                   2 - Solicita novo CSC;
      *                   3 - Revoga CSC Ativo
-     * @return string
      * @throws InvalidArgumentException
      * @throws RuntimeException
      */
-    public function sefazCsc($indOp)
+    public function sefazCsc(int $indOp): string
     {
         if (empty($indOp) || $indOp < 1 || $indOp > 3) {
             throw new InvalidArgumentException('CSC: identificador operacao invalido!');
@@ -1085,11 +1037,9 @@ class Tools extends ToolsCommon
 
     /**
      * Checks the validity of an NFe, normally used for received NFe
-     * @param string $nfe
-     * @return bool
      * @throws InvalidArgumentException
      */
-    public function sefazValidate($nfe)
+    public function sefazValidate(string $nfe): bool
     {
         if (empty($nfe)) {
             throw new InvalidArgumentException('Validacao NF-e: a string da NF-e esta vazia!');
@@ -1137,11 +1087,9 @@ class Tools extends ToolsCommon
 
     /**
      * Returns alias and description event from event code.
-     * @param  int $tpEvento
-     * @return \stdClass
      * @throws \RuntimeException
      */
-    private function tpEv($tpEvento)
+    private function tpEv(int $tpEvento): \stdClass
     {
         $std = new \stdClass();
         $std->alias = '';

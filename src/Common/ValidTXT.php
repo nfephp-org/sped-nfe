@@ -23,12 +23,9 @@ class ValidTXT
 
     /**
      * Loads structure of txt from json file in storage folder
-     * @param float $version
-     * @param string $baselayout
      * @throws \InvalidArgumentException
-     * @return mixed
      */
-    public static function loadStructure($version = 4.00, $baselayout = self::LOCAL)
+    public static function loadStructure(float $version = 4.00, string $baselayout = self::LOCAL): mixed
     {
         $path = realpath(__DIR__ . "/../../storage");
         $comp = '';
@@ -50,11 +47,8 @@ class ValidTXT
      * Verifies the validity of txt according to the rules of the code
      * If is valid returns empty array
      * Else return array with errors
-     * @param string $txt
-     * @param string $baselayout
-     * @return array
      */
-    public static function isValid($txt, $baselayout = self::LOCAL)
+    public static function isValid(string $txt, string $baselayout = self::LOCAL): array
     {
         $errors = [];
         $txt = str_replace(["\r", "\t"], '', trim($txt));

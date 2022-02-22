@@ -39,7 +39,7 @@ class StandardizeTest extends NFeTestCase
 
     public function testWhichIsFailNotXMLNull()
     {
-        $this->expectException(\NFePHP\NFe\Exception\DocumentsException::class);
+        $this->expectException(\TypeError::class);
         $st = new Standardize();
         //@phpstan-ignore-next-line
         $st->whichIs(null);

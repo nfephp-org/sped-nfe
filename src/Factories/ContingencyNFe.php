@@ -14,10 +14,8 @@ class ContingencyNFe
     /**
      * Corrects NFe fields when in contingency mode
      * @param string $xml NFe xml content
-     * @param Contingency $contingency
-     * @return string
      */
-    public static function adjust($xml, Contingency $contingency)
+    public static function adjust(string $xml, Contingency $contingency): string
     {
         if ($contingency->type == '') {
             return $xml;
