@@ -32,17 +32,16 @@ class QRCode
      * @param string $versao version of field
      * @param string $urlqr URL for search by QRCode
      * @param string $urichave URL for search by chave layout 4.00 only
-     * @return string
      * @throws DocumentsException
      */
     public static function putQRTag(
         \DOMDocument $dom,
-        $token,
-        $idToken,
-        $versao,
-        $urlqr,
-        $urichave = ''
-    ) {
+        string $token,
+        string $idToken,
+        string $versao,
+        string $urlqr,
+        string $urichave = ''
+    ): string {
         $token = trim($token);
         $idToken = trim($idToken);
         $versao = trim($versao);
@@ -116,34 +115,21 @@ class QRCode
 
     /**
      * Return a QRCode version 2 string to be used in NFCe layout 4.00
-     * @param  string $chNFe
-     * @param  string $url
-     * @param  string $tpAmb
-     * @param  string $dhEmi
-     * @param  string $vNF
-     * @param  string $vICMS
-     * @param  string $digVal
-     * @param  string $token
-     * @param  string $idToken
-     * @param  string $versao
-     * @param  int    $tpEmis
-     * @param  string $cDest
-     * @return string
      */
     protected static function get200(
-        $chNFe,
-        $url,
-        $tpAmb,
-        $dhEmi,
-        $vNF,
-        $vICMS,
-        $digVal,
-        $token,
-        $idToken,
-        $versao,
-        $tpEmis,
-        $cDest
-    ) {
+        string $chNFe,
+        string $url,
+        string $tpAmb,
+        string $dhEmi,
+        string $vNF,
+        string $vICMS,
+        string $digVal,
+        string $token,
+        string $idToken,
+        string $versao,
+        int $tpEmis,
+        string $cDest
+    ): string {
         $ver = $versao / 100;
         $cscId = (int) $idToken;
         $csc = $token;
@@ -168,10 +154,8 @@ class QRCode
 
     /**
      * Convert string to hexadecimal ASCII equivalent
-     * @param  string $str
-     * @return string
      */
-    protected static function str2Hex($str)
+    protected static function str2Hex(string $str): string
     {
         $hex = "";
         $iCount = 0;

@@ -16,11 +16,6 @@ parameters:
 			path: src/Common/Tools.php
 
 		-
-			message: "#^Method NFePHP\\\\NFe\\\\Common\\\\Tools\\:\\:checkModelFromXml\\(\\) should return bool but return statement is missing\\.$#"
-			count: 1
-			path: src/Common/Tools.php
-
-		-
 			message: "#^Parameter \\#1 \\$version of static method NFePHP\\\\NFe\\\\Common\\\\ValidTXT\\:\\:loadStructure\\(\\) expects float, string given\\.$#"
 			count: 1
 			path: src/Common/ValidTXT.php
@@ -39,9 +34,4 @@ parameters:
 			message: "#^Variable \\$tpEmis might not be defined\\.$#"
 			count: 1
 			path: src/Factories/Contingency.php
-
-		-
-			message: "#^Method NFePHP\\\\NFe\\\\Make\\:\\:conditionalNumberFormatting\\(\\) should return string but returns null\\.$#"
-			count: 1
-			path: src/Make.php
 

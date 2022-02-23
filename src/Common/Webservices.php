@@ -27,20 +27,18 @@ class Webservices
      * @param string $xml path or xml content from
      *               nfe_ws3_mod55 or nfe_ws3_mod65
      */
-    public function __construct($xml)
+    public function __construct(string $xml)
     {
         $this->toStd($xml);
     }
 
     /**
      * Gets webservices parameters for specific conditions
-     * @param string $sigla
      * @param int|string $amb 1-Produção ou 2-Homologação
      * @param int $modelo "55" ou "65"
-     * @return \stdClass
      * @see storage/autorizadores.json
      */
-    public function get($sigla, $amb, $modelo)
+    public function get(string $sigla, $amb, int $modelo): \stdClass
     {
         $autfile = realpath(__DIR__ . '/../../storage/autorizadores.json');
         $autorizadores = json_decode(file_get_contents($autfile), true);
@@ -76,10 +74,8 @@ class Webservices
 
     /**
      * Return WS parameters in a stdClass
-     * @param string $xml
-     * @return \stdClass
      */
-    public function toStd($xml = '')
+    public function toStd(string $xml = ''): \stdClass
     {
         if (!empty($xml)) {
             $this->convert($xml);
@@ -89,20 +85,18 @@ class Webservices
 
     /**
      * Return WS parameters in json format
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return (string) $this->json;
     }
 
     /**
      * Read WS xml and convert to json and stdClass
-     * @param string $xml
      */
-    protected function convert($xml)
+    protected function convert(string $xml)
     {
-        $resp = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+        $resp = simplexml_load_string($xml, \SimpleXMLElement::class, LIBXML_NOCDATA);
         $aWS = [];
         foreach ($resp->children() as $element) {
             $sigla = (string) $element->sigla;
@@ -120,12 +114,10 @@ class Webservices
 
     /**
      * Extract data from wbservices XML strorage to a array
-     * @param SimpleXMLElement $node
-     * @param string $environment
-     * @return array
      */
-    protected function extract(SimpleXMLElement $node, $environment)
+    protected function extract(SimpleXMLElement $node, string $environment): array
     {
+        $amb = [];
         $amb[$environment] = [];
         foreach ($node->children() as $children) {
             $name = (string) $children->getName();

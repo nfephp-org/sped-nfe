@@ -22,9 +22,9 @@ use NFePHP\NFe\Factories\Parser;
 
 class Convert
 {
-    const LOCAL = "LOCAL";
-    const LOCAL_V12 = "LOCAL_V12";
-    const SEBRAE = "SEBRAE";
+    public const LOCAL = "LOCAL";
+    public const LOCAL_V12 = "LOCAL_V12";
+    public const SEBRAE = "SEBRAE";
 
     protected $txt;
     protected $dados;
@@ -36,10 +36,8 @@ class Convert
 
     /**
      * Constructor method
-     * @param string $txt
-     * @param string $baselayout
      */
-    public function __construct($txt = '', $baselayout = self::LOCAL)
+    public function __construct(string $txt = '', string $baselayout = self::LOCAL)
     {
         $this->baselayout = $baselayout;
         if (!empty($txt)) {
@@ -49,11 +47,8 @@ class Convert
 
     /**
      * Static method to convert Txt to Xml
-     * @param string $txt
-     * @param string $baselayout
-     * @return array
      */
-    public static function parse($txt, $baselayout = self::LOCAL)
+    public static function parse(string $txt, string $baselayout = self::LOCAL): array
     {
         $conv = new static($txt, $baselayout);
         return $conv->toXml();
@@ -61,10 +56,9 @@ class Convert
 
     /**
      * Convert all nfe in XML, one by one
-     * @return array
      * @throws \NFePHP\NFe\Exception\DocumentsException
      */
-    public function toXml()
+    public function toXml(): array
     {
         //$txt = Strings::removeSomeAlienCharsfromTxt($this->txt);
 
@@ -94,10 +88,9 @@ class Convert
 
     /**
      * Check if it is an NFe in TXT format
-     * @param string $txt
      * @return boolean
      */
-    protected function isNFe($txt)
+    protected function isNFe(string $txt): bool
     {
         if (empty($txt)) {
             throw DocumentsException::wrongDocument(15, '');
@@ -113,10 +106,8 @@ class Convert
 
     /**
      * Separate nfe into elements of an array
-     * @param  array $array
-     * @return array
      */
-    protected function sliceNotas($array)
+    protected function sliceNotas(array $array): array
     {
         $aNotas = [];
         $annu = explode('|', $array[0]);
@@ -154,7 +145,7 @@ class Convert
      */
     protected function checkQtdNFe()
     {
-        $num = count($this->notas);
+        $num = is_countable($this->notas) ? count($this->notas) : 0;
         if ($num != $this->numNFe) {
             throw DocumentsException::wrongDocument(13, '');
         }
@@ -173,9 +164,8 @@ class Convert
 
     /**
      * Read and set all layouts versions in NFes
-     * @param array $nota
      */
-    protected function loadLayoutsVersions($nota)
+    protected function loadLayoutsVersions(array $nota)
     {
         if (empty($nota)) {
             throw DocumentsException::wrongDocument(17, '');
@@ -191,10 +181,9 @@ class Convert
 
     /**
      * Valid txt structure
-     * @param array $nota
      * @throws \NFePHP\NFe\Exception\DocumentsException
      */
-    protected function isValidTxt($nota)
+    protected function isValidTxt(array $nota)
     {
         $errors = ValidTXT::isValid(implode("\n", $nota), $this->baselayout);
         if (!empty($errors)) {

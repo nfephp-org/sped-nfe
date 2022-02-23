@@ -13,11 +13,8 @@ class Complements
 
     /**
      * Authorize document adding his protocol
-     * @param string $request
-     * @param string $response
-     * @return string
      */
-    public static function toAuthorize($request, $response)
+    public static function toAuthorize(string $request, string $response): string
     {
         $st = new Standardize();
         $key = ucfirst($st->whichIs($request));
@@ -34,10 +31,9 @@ class Complements
      * @param  string $nfe xml nfe string content
      * @param  string $b2b xml b2b string content
      * @param  string $tagB2B name B2B tag default 'NFeB2BFin' from ANFAVEA
-     * @return string
      * @throws \InvalidArgumentException
      */
-    public static function b2bTag($nfe, $b2b, $tagB2B = 'NFeB2BFin')
+    public static function b2bTag(string $nfe, string $b2b, string $tagB2B = 'NFeB2BFin'): string
     {
         $domnfe = new DOMDocument('1.0', 'UTF-8');
         $domnfe->preserveWhiteSpace = false;
@@ -85,10 +81,9 @@ class Complements
      *       after its cancellation.
      * @param  string $nfe content of autorized NFe XML
      * @param  string $cancelamento content of SEFAZ response
-     * @return string
      * @throws \InvalidArgumentException
      */
-    public static function cancelRegister($nfe, $cancelamento)
+    public static function cancelRegister(string $nfe, string $cancelamento): string
     {
         $procXML = $nfe;
         $domnfe = new DOMDocument('1.0', 'utf-8');
@@ -138,12 +133,9 @@ class Complements
 
     /**
      * Authorize Inutilization of numbers
-     * @param string $request
-     * @param string $response
-     * @return string
      * @throws \InvalidArgumentException
      */
-    protected static function addInutNFeProtocol($request, $response)
+    protected static function addInutNFeProtocol(string $request, string $response): string
     {
         $req = new DOMDocument('1.0', 'UTF-8');
         $req->preserveWhiteSpace = false;
@@ -209,12 +201,9 @@ class Complements
 
     /**
      * Authorize NFe
-     * @param string $request
-     * @param string $response
-     * @return string
      * @throws \InvalidArgumentException
      */
-    protected static function addNFeProtocol($request, $response)
+    protected static function addNFeProtocol(string $request, string $response): string
     {
         $req = new DOMDocument('1.0', 'UTF-8');
         $req->preserveWhiteSpace = false;
@@ -281,12 +270,9 @@ class Complements
 
     /**
      * Authorize Event
-     * @param string $request
-     * @param string $response
-     * @return string
      * @throws \InvalidArgumentException
      */
-    protected static function addEnvEventoProtocol($request, $response)
+    protected static function addEnvEventoProtocol(string $request, string $response): string
     {
         $ev = new \DOMDocument('1.0', 'UTF-8');
         $ev->preserveWhiteSpace = false;
@@ -332,13 +318,8 @@ class Complements
 
     /**
      * Join the pieces of the source document with those of the answer
-     * @param string $first
-     * @param string $second
-     * @param string $nodename
-     * @param string $versao
-     * @return string
      */
-    protected static function join($first, $second, $nodename, $versao)
+    protected static function join(string $first, string $second, string $nodename, string $versao): string
     {
         $xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
                 . "<$nodename versao=\"$versao\" "
