@@ -41,7 +41,7 @@ class Config
      * Validation with JsonValid::class
      * @throws DocumentsException
      */
-    protected static function validInputData(object $data): bool
+    protected static function validInputData(\stdClass $data): bool
     {
         $filejsonschema = __DIR__ . "/../../storage/config.schema";
         $validator = new JsonValid();
