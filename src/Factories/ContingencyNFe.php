@@ -14,10 +14,8 @@ class ContingencyNFe
     /**
      * Corrects NFe fields when in contingency mode
      * @param string $xml NFe xml content
-     * @param Contingency $contingency
-     * @return string
      */
-    public static function adjust($xml, Contingency $contingency)
+    public static function adjust(string $xml, Contingency $contingency): string
     {
         if ($contingency->type == '') {
             return $xml;
@@ -46,10 +44,10 @@ class ContingencyNFe
             $doc = $emit->getElementsByTagName('CPF')->item(0)->nodeValue;
         }
         $motivo = trim(Strings::replaceUnacceptableCharacters($contingency->motive));
-        
-        $tz = TimeZoneByUF::get(UFList::getUFByCode($cUF));
+
+        $tz = TimeZoneByUF::get(UFList::getUFByCode((int)$cUF));
         $dt = new \DateTime(date("Y-m-d H:i:sP"), new \DateTimeZone($tz));
-        
+
         $dt->setTimestamp($contingency->timestamp);
         $ide->getElementsByTagName('tpEmis')
             ->item(0)
@@ -82,7 +80,7 @@ class ContingencyNFe
             $cNF
         );
         $ide->getElementsByTagName('cDV')->item(0)->nodeValue = substr($chave, -1);
-        $infNFe->setAttribute('Id', 'NFe'.$chave);
+        $infNFe->setAttribute('Id', 'NFe' . $chave);
         return Strings::clearXmlString($dom->saveXML(), true);
     }
 }

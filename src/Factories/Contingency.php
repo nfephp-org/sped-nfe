@@ -1,7 +1,5 @@
 <?php
 
-namespace NFePHP\NFe\Factories;
-
 /**
  * Class Contingency make a structure to set contingency mode
  *
@@ -15,17 +13,19 @@ namespace NFePHP\NFe\Factories;
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
 
+namespace NFePHP\NFe\Factories;
+
 use NFePHP\Common\Strings;
 
 class Contingency
 {
-    const SVCAN = 'SVCAN';
-    const SVCRS = 'SVCRS';
-    const OFFLINE = 'OFFLINE';
-    const EPEC = 'EPEC';
-    const FSDA = 'FS-DA';
-    const TPEMIS_FSDA = 5;
-    const TPEMIS_OFFLINE = 9;
+    public const SVCAN = 'SVCAN';
+    public const SVCRS = 'SVCRS';
+    public const OFFLINE = 'OFFLINE';
+    public const EPEC = 'EPEC';
+    public const FSDA = 'FS-DA';
+    public const TPEMIS_FSDA = 5;
+    public const TPEMIS_OFFLINE = 9;
 
     /**
      * @var \stdClass
@@ -50,9 +50,8 @@ class Contingency
 
     /**
      * Constructor
-     * @param string $contingency
      */
-    public function __construct($contingency = '')
+    public function __construct(string $contingency = '')
     {
         $this->deactivate();
         if (!empty($contingency)) {
@@ -62,10 +61,8 @@ class Contingency
 
     /**
      * Load json string with contingency configurations
-     * @param string $contingency
-     * @return void
      */
-    public function load($contingency)
+    public function load(string $contingency): void
     {
         $this->config = json_decode($contingency);
         $this->type = $this->config->type;
@@ -77,41 +74,39 @@ class Contingency
     /**
      * Create a object with contingency data
      * @param string $acronym Sigla do estado
-     * @param string $motive
      * @param string $type Opcional parameter only used if FS-DA, EPEC or OFFLINE
-     * @return string
      */
-    public function activate($acronym, $motive, $type = '')
+    public function activate(string $acronym, string $motive, string $type = ''): string
     {
         $dt = new \DateTime('now');
         $list = array(
-            'AC'=>'SVCAN',
-            'AL'=>'SVCAN',
-            'AM'=>'SVCAN',
-            'AP'=>'SVCRS',
-            'BA'=>'SVCRS',
-            'CE'=>'SVCRS',
-            'DF'=>'SVCAN',
-            'ES'=>'SVCRS',
-            'GO'=>'SVCRS',
-            'MA'=>'SVCRS',
-            'MG'=>'SVCAN',
-            'MS'=>'SVCRS',
-            'MT'=>'SVCRS',
-            'PA'=>'SVCRS',
-            'PB'=>'SVCAN',
-            'PE'=>'SVCRS',
-            'PI'=>'SVCRS',
-            'PR'=>'SVCRS',
-            'RJ'=>'SVCAN',
-            'RN'=>'SVCRS',
-            'RO'=>'SVCAN',
-            'RR'=>'SVCAN',
-            'RS'=>'SVCAN',
-            'SC'=>'SVCAN',
-            'SE'=>'SVCAN',
-            'SP'=>'SVCAN',
-            'TO'=>'SVCAN'
+            'AC' => 'SVCAN',
+            'AL' => 'SVCAN',
+            'AM' => 'SVCAN',
+            'AP' => 'SVCRS',
+            'BA' => 'SVCRS',
+            'CE' => 'SVCAN',
+            'DF' => 'SVCAN',
+            'ES' => 'SVCRS',
+            'GO' => 'SVCRS',
+            'MA' => 'SVCRS',
+            'MG' => 'SVCAN',
+            'MS' => 'SVCRS',
+            'MT' => 'SVCRS',
+            'PA' => 'SVCRS',
+            'PB' => 'SVCAN',
+            'PE' => 'SVCRS',
+            'PI' => 'SVCRS',
+            'PR' => 'SVCRS',
+            'RJ' => 'SVCAN',
+            'RN' => 'SVCRS',
+            'RO' => 'SVCAN',
+            'RR' => 'SVCAN',
+            'RS' => 'SVCAN',
+            'SC' => 'SVCAN',
+            'SE' => 'SVCAN',
+            'SP' => 'SVCAN',
+            'TO' => 'SVCAN'
         );
         $type = strtoupper(str_replace('-', '', $type));
 
@@ -124,9 +119,8 @@ class Contingency
 
     /**
      * Deactivate contingency mode
-     * @return string
      */
-    public function deactivate()
+    public function deactivate(): string
     {
         $this->config = $this->configBuild(0, '', '');
         $this->timestamp = 0;
@@ -138,21 +132,16 @@ class Contingency
 
     /**
      * Returns a json string format
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return json_encode($this->config);
     }
 
     /**
      * Build parameter config as stdClass
-     * @param int $timestamp
-     * @param string $motive
-     * @param string $type
-     * @return \stdClass
      */
-    private function configBuild($timestamp, $motive, $type)
+    private function configBuild(int $timestamp, string $motive, string $type): \stdClass
     {
         switch ($type) {
             case 'EPEC':

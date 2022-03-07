@@ -1,0 +1,37 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Access to an undefined property object\\:\\:\\$method\\.$#"
+			count: 1
+			path: src/Common/Tools.php
+
+		-
+			message: "#^Access to an undefined property object\\:\\:\\$operation\\.$#"
+			count: 1
+			path: src/Common/Tools.php
+
+		-
+			message: "#^Access to an undefined property object\\:\\:\\$version\\.$#"
+			count: 1
+			path: src/Common/Tools.php
+
+		-
+			message: "#^Parameter \\#1 \\$version of static method NFePHP\\\\NFe\\\\Common\\\\ValidTXT\\:\\:loadStructure\\(\\) expects float, string given\\.$#"
+			count: 1
+			path: src/Common/ValidTXT.php
+
+		-
+			message: "#^Unsafe usage of new static\\(\\)\\.$#"
+			count: 1
+			path: src/Convert.php
+
+		-
+			message: "#^Unsafe usage of new static\\(\\)\\.$#"
+			count: 1
+			path: src/Exception/DocumentsException.php
+
+		-
+			message: "#^Variable \\$tpEmis might not be defined\\.$#"
+			count: 1
+			path: src/Factories/Contingency.php
+

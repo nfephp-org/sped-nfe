@@ -4,9 +4,9 @@ Em condições normais as NFe emitidas tem a propriedade &lt;tpEmis&gt; com o va
 
 Quando a conexão via internet com a SEFAZ autorizadora não é possivel, existem alternativas para permitir a emissão dos documentos mesmo nessas condições (offline).
 
-Para uma melhor compreensão, o ENCAT lançou um documento que visa facilitar o entendimento:
+Para uma melhor compreensão, o ENCAT lançou um documento que visa facilitar o entendimento, ele pode ser encontrado em:
 
-[Manual de Boas Práticas no desenvolvimento de emissor de NFC-e – BP 2018.001 – versão 1.0](http://www.nfe.fazenda.gov.br/portal/exibirArquivo.aspx?conteudo=gONQatXTm1U=)
+[Página Principal](http://www.nfe.fazenda.gov.br/portal/principal.aspx) > Documentos > Manuais > Manual de Boas Práticas no desenvolvimento de emissor de NFC-e – BP 2018.001 – versão 1.0
 
 Após lê-lo, os procedimentos abaixo podem ser realizadas na biblioteca, há uma sessão interessante sobre contigência.
 
@@ -165,7 +165,7 @@ public $type;
 
 public $motive;
 
-@var int
+@var string
 > Motivo da entrada em contingência, texto com no minimo 15 caracteres e no máximo 255.
 
 > NOTA: remova todo e qualquer caracter especial desse texto.
@@ -184,22 +184,22 @@ public $tpEmis;
 
 ## Methods
 
+Construtor, caso seja passado o parametro, uma string JSON, a condição de contingência contida nessa string será registrada na classe.
+Caso nada seja passado a classe irá considerar condição de emissão normal.
 ```
 Contingency::construct($string)
 ```
-Construtor, caso seja passado o parametro, uma string JSON, a condição de contingencia contida nessa string será registrada na classe.
-Caso nada seja passado a classe irá considerar condição de emissão normal.
 
+Essa é outra forma de passar o parametro (string JSON) para a classe.
 ```
 Contingency::load($string)
 ```
-Essa é outra forma de passar o paramtro (string JSON) para a classe.
 
+Esse método ativa o modo de continência da classe.
+Os parametros são:
 ```
 Contingency::activate($acronym, $motive, $type)
 ```
-Esse método ativa o modo de contignência da classe.
-Os parametros são:
 
 $acronym --- sigla do estado
 
@@ -213,8 +213,7 @@ $type --- podem ser usadas as constantes:
 - Contingency::OFFLINE
 - Contingency::EPEC
 
-
+Esse método desativa o modo de contingência e retorna uma string json com os valores padrões.
 ```
 Contingency::deactivate()
 ```
-Esse método desativa o modo de contingência e retorna uma string json com os valores padrões.

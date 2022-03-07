@@ -41,16 +41,16 @@ try {
 
     $std = new \stdClass();
     $std->chNFe = '12345678901234567890123456789012345678901234'; //chave de 44 digitos da nota do fornecedor
-    //$std->imagem = 'kakakakakakakakak'; // aqui pode ser colocada uma imagem ou uma string que fará parte do hash 
+    $std->imagem = 'kakakakakakakakak'; // aqui pode ser colocada uma imagem ou uma string que fará parte do hash 
     $std->nSeqEvento = 1;
-    //$std->verAplic = '1.2.3'; //opcional se declarado anteriormente - versão da aplicação que está gerando o evento
-    //$std->data_recebimento = '2021-04-25T10:34:13-03:00'; //data de recebimento
-    //$std->documento_recebedor = '12345678901'; //numero do documento do recebedor
-    //$std->nome_recebedor = 'Jose da Silva';
-    //$std->latitude = '-23.618490'; 
-    //$std->longitude = '-46.609870';
-    $std->cancelar = true; //permite cancelar um comprovante de entrega se for true
-    $std->nProcEvento = "123456789012345"; //15 digitos
+    $std->verAplic = '1.2.3'; //opcional se declarado anteriormente - versão da aplicação que está gerando o evento
+    $std->data_recebimento = '2021-04-25T10:34:13-03:00'; //data de recebimento
+    $std->documento_recebedor = '12345678901'; //numero do documento do recebedor
+    $std->nome_recebedor = 'Jose da Silva';
+    $std->latitude = '-3.717355'; //-3.717355133051874
+    $std->longitude = '-53.740541'; //-53.74054150914449
+    $std->cancelar = false; //permite cancelar um comprovante de entrega se for true
+    //$std->nProcEvento = "123456789012345"; //15 digitos
     
     $response = $tools->sefazComprovanteEntrega($std);
 

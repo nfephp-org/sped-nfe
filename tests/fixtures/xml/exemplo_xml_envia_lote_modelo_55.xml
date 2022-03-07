@@ -1,0 +1,174 @@
+<NFe xmlns="http://www.portalfiscal.inf.br/nfe">
+    <infNFe versao="4.00" Id="NFe43211105730928000145650010000002401717268120">
+        <ide>
+            <cUF>43</cUF>
+            <cNF>71726812</cNF>
+            <natOp>Venda</natOp>
+            <mod>55</mod>
+            <serie>1</serie>
+            <nNF>240</nNF>
+            <dhEmi>2021-11-11T18:56:55-03:00</dhEmi>
+            <tpNF>1</tpNF>
+            <idDest>1</idDest>
+            <cMunFG>4322608</cMunFG>
+            <tpImp>4</tpImp>
+            <tpEmis>1</tpEmis>
+            <cDV>9</cDV>
+            <tpAmb>2</tpAmb>
+            <finNFe>1</finNFe>
+            <indFinal>1</indFinal>
+            <indPres>1</indPres>
+            <procEmi>0</procEmi>
+            <verProc>1.00</verProc>
+        </ide>
+        <emit>
+            <CNPJ>42530613000180</CNPJ>
+            <xNome>NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL</xNome>
+            <xFant>Empresa Fake</xFant>
+            <enderEmit>
+                <xLgr>RUA OSVALDO ABC</xLgr>
+                <nro>911</nro>
+                <xBairro>CENTRO</xBairro>
+                <cMun>4322608</cMun>
+                <xMun>Ven&#xE2;ncio Aires</xMun>
+                <UF>RS</UF>
+                <CEP>95800000</CEP>
+                <xPais>Brasil</xPais>
+                <fone>5199999999</fone>
+            </enderEmit>
+            <IE>9999999999</IE>
+            <CRT>1</CRT>
+        </emit>
+        <dest>
+            <CNPJ>07134266000176</CNPJ>
+            <xNome>Destinatario Fake</xNome>
+            <enderDest>
+                <xLgr>RUA ABC</xLgr>
+                <nro>913</nro>
+                <xBairro>CENTRO</xBairro>
+                <cMun>4322608</cMun>
+                <xMun>Venâncio Aires</xMun>
+                <UF>RS</UF>
+                <CEP>95800000</CEP>
+                <cPais>1058</cPais>
+                <xPais>BRASIL</xPais>
+            </enderDest>
+            <indIEDest>1</indIEDest>
+            <IE>1234567890</IE>
+            <email>contato@teste.com.br</email>
+        </dest>
+        <det nItem="1">
+            <prod>
+                <cProd>teste</cProd>
+                <cEAN>SEM GTIN</cEAN>
+                <xProd>NOTA FISCAL EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL</xProd>
+                <NCM>64042000</NCM>
+                <CFOP>5102</CFOP>
+                <uCom>UN</uCom>
+                <qCom>1.0000</qCom>
+                <vUnCom>1.0000</vUnCom>
+                <vProd>1.00</vProd>
+                <cEANTrib>SEM GTIN</cEANTrib>
+                <uTrib>UN</uTrib>
+                <qTrib>1.0000</qTrib>
+                <vUnTrib>1.0000</vUnTrib>
+                <indTot>1</indTot>
+            </prod>
+            <imposto>
+                <vTotTrib>0.30</vTotTrib>
+                <ICMS>
+                    <ICMSSN102>
+                        <orig>0</orig>
+                        <CSOSN>102</CSOSN>
+                    </ICMSSN102>
+                </ICMS>
+                <PIS>
+                    <PISOutr>
+                        <CST>99</CST>
+                        <vBC>0.00</vBC>
+                        <pPIS>0.00</pPIS>
+                        <vPIS>0.00</vPIS>
+                    </PISOutr>
+                </PIS>
+                <COFINS>
+                    <COFINSOutr>
+                        <CST>99</CST>
+                        <vBC>0.00</vBC>
+                        <pCOFINS>0.00</pCOFINS>
+                        <vCOFINS>0.00</vCOFINS>
+                    </COFINSOutr>
+                </COFINS>
+            </imposto>
+        </det>
+        <total>
+            <ICMSTot>
+                <vBC>0.00</vBC>
+                <vICMS>0.00</vICMS>
+                <vICMSDeson>0.00</vICMSDeson>
+                <vFCP>0.00</vFCP>
+                <vBCST>0.00</vBCST>
+                <vST>0.00</vST>
+                <vFCPST>0.00</vFCPST>
+                <vFCPSTRet>0.00</vFCPSTRet>
+                <vProd>1.00</vProd>
+                <vFrete>0.00</vFrete>
+                <vSeg>0.00</vSeg>
+                <vDesc>0.00</vDesc>
+                <vII>0.00</vII>
+                <vIPI>0.00</vIPI>
+                <vIPIDevol>0.00</vIPIDevol>
+                <vPIS>0.00</vPIS>
+                <vCOFINS>0.00</vCOFINS>
+                <vOutro>0.00</vOutro>
+                <vNF>1.00</vNF>
+                <vTotTrib>0.30</vTotTrib>
+            </ICMSTot>
+        </total>
+        <transp>
+            <modFrete>9</modFrete>
+        </transp>
+        <pag>
+            <detPag>
+                <tPag>01</tPag>
+                <vPag>1.00</vPag>
+            </detPag>
+        </pag>
+        <infAdic>
+            <infAdFisco>DOCUMENTO EMITIDO POR ME OU EPP OPTANTE PELO SIMPLES NACIONAL. N&#xC3;O GERA DIREITO A CR&#xC9;DITO.</infAdFisco>
+        </infAdic>
+        <infRespTec>
+            <CNPJ>44738030000175</CNPJ>
+            <xContato>Contato Teste</xContato>
+            <email>teste@teste.com.br</email>
+            <fone>12345678901</fone>
+        </infRespTec>
+    </infNFe>
+    <infNFeSupl>
+        <qrCode>https://www.sefaz.rs.gov.br/NFCE/NFCE-COM.aspx?p=43211105730928000145650010000002401717268120|2|2|1|75FFAFF74CF8ABDD0153D4D18E27CE17DE14B83F</qrCode>
+        <urlChave>www.sefaz.rs.gov.br/nfce/consulta</urlChave>
+    </infNFeSupl>
+    <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+        <SignedInfo>
+            <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+            <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+            <Reference URI="#NFe43211105730928000145650010000002401717268120">
+                <Transforms>
+                    <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                    <Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+                </Transforms>
+                <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+                <DigestValue>aWpBMlDjIlWUn2ALNSdwzLi2ntE=</DigestValue>
+            </Reference>
+        </SignedInfo>
+        <SignatureValue>
+            BX0WHjsK4qAysObfxqc2iV7hohUZi9z1sLX2kcyqAVYYhcOof8N87z/ZSuX6fyfwfPa8FAdqjrzMSrhRDWFgSWXDlYabPm3g6AcDHUeS3Oo8FIhU5Asb9pGM/KTIAD8BOIqysiOGEpzvsIs+cyNxC4oG21XmSzXSPgxXx1VlU6CMjA1Nn6+LE2PUmvg3T/jHPKl9JW1KfFIh2ce5esWwhbaULcu4DP4gvZvR1CUe4v/yrtUD6PUety12avYX3LCa4WrsnxbUMp6QuffHblej6WTX4TJMwNB7/PpxnpzBRBxIgeqOIbGjrT7XK7GFhMyROZN76bSPhAqAgy3MTjXh9Q==
+        </SignatureValue>
+        <KeyInfo>
+            <X509Data>
+                <X509Certificate>
+                    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
+                </X509Certificate>
+            </X509Data>
+        </KeyInfo>
+    </Signature>
+</NFe>

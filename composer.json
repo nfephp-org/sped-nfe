@@ -2,14 +2,29 @@
     "name": "nfephp-org/sped-nfe",
     "type": "library",
     "description": "API para geração e comunicação da NFe e NFCe com as SEFAZ autorizadoras.",
-    "keywords": ["nfe","nfce","sped","nfephp"],
+    "keywords": [
+        "nfe",
+        "nfce",
+        "sped",
+        "nfephp"
+    ],
     "homepage": "https://github.com/nfephp-org/sped-nfe",
-    "license": ["LGPL-3.0-or-later", "GPL-3.0-or-later", "MIT"],
+    "license": [
+        "LGPL-3.0-or-later",
+        "GPL-3.0-or-later",
+        "MIT"
+    ],
     "authors": [
         {
             "name": "Roberto L. Machado",
             "email": "linux.rlm@gmail.com.br",
-            "homepage": "http://www.nfephp.org",
+            "homepage": "https://www.nfephp.com.br/",
+            "role": "Developer"
+        },
+        {
+            "name": "Gustavo Lidani",
+            "email": "lidanig0@gmail.com",
+            "homepage": "https://github.com/lidani",
             "role": "Developer"
         },
         {
@@ -18,9 +33,9 @@
         }
     ],
     "require": {
-        "php" : ">= 7.0",
-        "nfephp-org/sped-common" : "^5.0",
-        "nfephp-org/sped-gtin" : "^1.0",
+        "php": ">= 7.4",
+        "nfephp-org/sped-common": "^5.1.0",
+        "nfephp-org/sped-gtin": "^1.1.0",
         "justinrainbow/json-schema": "^5.2",
         "ext-zlib": "*",
         "ext-dom": "*",
@@ -31,15 +46,14 @@
         "ext-libxml": "*"
     },
     "require-dev": {
-        "squizlabs/php_codesniffer": "^3.4",
-        "phpunit/phpunit": "^7.5",
-        "scrutinizer/ocular": "^1.3",
-        "sebastian/phpcpd": "^4.1",
-        "phpstan/phpstan": "^0.9.2"
+        "squizlabs/php_codesniffer": "^3.6",
+        "phpunit/phpunit": "^9.3",
+        "phpstan/phpstan": "^1.4",
+        "phpcompatibility/php-compatibility": "^9.3"
     },
     "autoload": {
         "psr-4": {
-          "NFePHP\\NFe\\": "src/"
+            "NFePHP\\NFe\\": "src/"
         }
     },
     "autoload-dev": {
@@ -49,9 +63,9 @@
     },
     "scripts": {
         "test": "vendor/bin/phpunit -c phpunit.xml.dist",
-        "phpcbf": "vendor/bin/phpcbf --standard=psr2 src",
-        "phpcs": "vendor/bin/phpcs --standard=psr2 src",
-        "phpstan": "vendor/bin/phpstan analyse src/ --level 1"
+        "phpcbf": "vendor/bin/phpcbf src/",
+        "phpcs": "vendor/bin/phpcs src/",
+        "stan": "vendor/bin/phpstan analyse src/"
     },
     "extra": {
         "branch-alias": {

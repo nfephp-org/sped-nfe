@@ -1,7 +1,5 @@
 <?php
 
-namespace NFePHP\NFe;
-
 /**
  * Classe a construção do xml da NFe modelo 55 e modelo 65
  * Esta classe basica está estruturada para montar XML da NFe para o
@@ -16,6 +14,9 @@ namespace NFePHP\NFe;
  * @author    Roberto L. Machado <linux.rlm at gmail dot com>
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
+
+namespace NFePHP\NFe;
+
 use NFePHP\Common\Keys;
 use NFePHP\Common\DOMImproved as Dom;
 use NFePHP\Common\Strings;
@@ -45,6 +46,10 @@ class Make
      */
     public $stdTot;
     /**
+     * @var stdClass
+     */
+    protected $stdISSQNTot;
+    /**
      * @var string
      */
     protected $version;
@@ -61,7 +66,7 @@ class Make
      */
     protected $tpAmb = 2;
     /**
-     * @var DOMElement
+     * @var ?DOMElement
      */
     protected $NFe;
     /**
@@ -81,7 +86,7 @@ class Make
      */
     protected $enderEmit;
     /**
-     * @var DOMElement
+     * @var ?DOMElement
      */
     protected $dest;
     /**
@@ -101,7 +106,7 @@ class Make
      */
     protected $total;
     /**
-     * @var DOMElement
+     * @var ?DOMElement
      */
     protected $cobr;
     /**
@@ -109,7 +114,7 @@ class Make
      */
     protected $transp;
     /**
-     * @var DOMElement
+     * @var ?DOMElement
      */
     protected $infAdic;
     /**
@@ -288,6 +293,34 @@ class Make
      * @var boolean
      */
     protected $replaceAccentedChars = false;
+    /**
+     * @var array
+     */
+    protected $aItensServ = [];
+    /**
+     * @var DOMElement
+     */
+    protected $ISSQNTot;
+    /**
+     * @var DOMElement
+     */
+    protected $ICMSTot;
+    /**
+     * @var ?DOMElement
+     */
+    protected $retTrib;
+    /**
+     * @var \stdClass
+     */
+    protected $stdISSQN;
+    /**
+     * @var \stdClass
+     */
+    protected $stdICMSTot;
+    /**
+     * @var bool
+     */
+    protected $flagISSQNCalc = false;
 
     /**
      * Função construtora cria um objeto DOMDocument
@@ -318,7 +351,7 @@ class Make
         $this->stdTot->vII = 0;
         $this->stdTot->vIPI = 0;
         $this->stdTot->vIPIDevol = 0;
-        $this->stdTot->vServ = 0;
+        // $this->stdTot->vServ = 0;
         $this->stdTot->vPIS = 0;
         $this->stdTot->vCOFINS = 0;
         $this->stdTot->vPISST = 0;
@@ -326,22 +359,34 @@ class Make
         $this->stdTot->vOutro = 0;
         $this->stdTot->vNF = 0;
         $this->stdTot->vTotTrib = 0;
+
+        $this->stdISSQNTot = new \stdClass();
+        $this->stdISSQNTot->vServ = null;
+        $this->stdISSQNTot->vBC = null;
+        $this->stdISSQNTot->vISS = null;
+        $this->stdISSQNTot->vPIS = null;
+        $this->stdISSQNTot->vCOFINS = null;
+        $this->stdISSQNTot->dCompet = null;
+        $this->stdISSQNTot->vDeducao = null;
+        $this->stdISSQNTot->vOutro = null;
+        $this->stdISSQNTot->vDescIncond = null;
+        $this->stdISSQNTot->vDescCond = null;
+        $this->stdISSQNTot->vISSRet = null;
+        $this->stdISSQNTot->cRegTrib = null;
     }
 
     /**
      * Set character convertion to ASCII only ou not
-     * @param bool $option
      */
-    public function setOnlyAscii($option = false)
+    public function setOnlyAscii(bool $option = false)
     {
         $this->replaceAccentedChars = $option;
     }
 
     /**
      * Returns xml string and assembly it is necessary
-     * @return string
      */
-    public function getXML()
+    public function getXML(): string
     {
         if (empty($this->xml)) {
             $this->montaNFe();
@@ -351,27 +396,24 @@ class Make
 
     /**
      * Retorns the key number of NFe (44 digits)
-     * @return string
      */
-    public function getChave()
+    public function getChave(): string
     {
         return $this->chNFe;
     }
 
     /**
      * Returns the model of NFe 55 or 65
-     * @return int
      */
-    public function getModelo()
+    public function getModelo(): int
     {
         return $this->mod;
     }
 
     /**
      * Call method of xml assembly. For compatibility only.
-     * @return string
      */
-    public function montaNFe()
+    public function montaNFe(): string
     {
         return $this->monta();
     }
@@ -382,10 +424,9 @@ class Make
      * The xml of the NFe must be retrieved by the getXML() function or
      * directly by the public property $xml
      *
-     * @return string
      * @throws RuntimeException
      */
-    public function monta()
+    public function monta(): string
     {
         if (!empty($this->errors)) {
             $this->errors = array_merge($this->errors, $this->dom->errors);
@@ -418,10 +459,14 @@ class Make
         foreach ($this->aDet as $det) {
             $this->dom->appChild($this->infNFe, $det, 'Falta tag "infNFe"');
         }
-        //força a construção do total caso não sejam chamado metodo tagICMSTot()
-        if (empty($this->total)) {
-            $std = new \stdClass();
-            $this->tagICMSTot($std);
+        //força a construção do total
+        $this->total = $this->dom->createElement("total");
+        $this->tagISSQNTot($this->stdISSQN);
+        $this->tagICMSTot($this->stdICMSTot);
+        $this->dom->appChild($this->total, $this->ICMSTot, 'Falta tag "total"');
+        $this->dom->appChild($this->total, $this->ISSQNTot, 'Falta tag "total"');
+        if ($this->retTrib) {
+            $this->dom->appChild($this->total, $this->retTrib, 'Falta tag "total"');
         }
         //[28a] tag total (326 W01)
         $this->dom->appChild($this->infNFe, $this->total, 'Falta tag "infNFe"');
@@ -462,10 +507,8 @@ class Make
     /**
      * Informações da NF-e A01 pai NFe
      * tag NFe/infNFe
-     * @param  stdClass $std
-     * @return DOMElement
      */
-    public function taginfNFe(stdClass $std)
+    public function taginfNFe(stdClass $std): DOMElement
     {
         $possible = ['Id', 'versao', 'pk_nItem'];
         $std = $this->equilizeParameters($std, $possible);
@@ -488,10 +531,8 @@ class Make
      * Informações de identificação da NF-e B01 pai A01
      * NOTA: Ajustado para NT2020_006_v1.00
      * tag NFe/infNFe/ide
-     * @param  stdClass $std
-     * @return DOMElement
      */
-    public function tagide(stdClass $std)
+    public function tagide(stdClass $std): DOMElement
     {
         $possible = [
             'cUF',
@@ -531,12 +572,12 @@ class Make
         $std->cNF = str_pad($std->cNF, 8, '0', STR_PAD_LEFT);
         if (intval($std->cNF) == intval($std->nNF)) {
             throw new InvalidArgumentException("O valor [{$std->cNF}] não é "
-            . "aceitável para cNF, não pode ser igual ao de nNF, vide NT2019.001");
+                . "aceitável para cNF, não pode ser igual ao de nNF, vide NT2019.001");
         }
         if (method_exists(Keys::class, 'cNFIsValid')) {
             if (!Keys::cNFIsValid($std->cNF)) {
                 throw new InvalidArgumentException("O valor [{$std->cNF}] para cNF "
-                . "é invalido, deve respeitar a NT2019.001");
+                    . "é invalido, deve respeitar a NT2019.001");
             }
         }
         $this->tpAmb = $std->tpAmb;
@@ -674,7 +715,7 @@ class Make
         $this->dom->addChild(
             $ide,
             "indIntermed",
-            isset($std->indIntermed) ? $std->indIntermed : null,
+            $std->indIntermed ?? null,
             false,
             $identificador . "Indicador de intermediador/marketplace"
         );
@@ -715,10 +756,8 @@ class Make
     /**
      * Chave de acesso da NF-e referenciada BA02 pai BA01
      * tag NFe/infNFe/ide/NFref/refNFe
-     * @param  stdClass $std
-     * @return DOMElement
      */
-    public function tagrefNFe(stdClass $std)
+    public function tagrefNFe(stdClass $std): DOMElement
     {
         $possible = ['refNFe'];
         $std = $this->equilizeParameters($std, $possible);
@@ -732,10 +771,8 @@ class Make
     /**
      * Informação da NF modelo 1/1A referenciada BA03 pai BA01
      * tag NFe/infNFe/ide/NFref/NF DOMNode
-     * @param  stdClass $std
-     * @return DOMElement
      */
-    public function tagrefNF(stdClass $std)
+    public function tagrefNF(stdClass $std): DOMElement
     {
         $possible = ['cUF', 'AAMM', 'CNPJ', 'mod', 'serie', 'nNF'];
         $std = $this->equilizeParameters($std, $possible);
@@ -792,10 +829,8 @@ class Make
     /**
      * Informações da NF de produtor rural referenciada BA10 pai BA01
      * tag NFe/infNFe/ide/NFref/refNFP
-     * @param  stdClass $std
-     * @return DOMElement
      */
-    public function tagrefNFP(stdClass $std)
+    public function tagrefNFP(stdClass $std): DOMElement
     {
         $possible = [
             'cUF',
@@ -875,10 +910,8 @@ class Make
     /**
      * Chave de acesso do CT-e referenciada BA19 pai BA01
      * tag NFe/infNFe/ide/NFref/refCTe
-     * @param  stdClass $std
-     * @return DOMElement
      */
-    public function tagrefCTe(stdClass $std)
+    public function tagrefCTe(stdClass $std): DOMElement
     {
         $possible = ['refCTe'];
         $std = $this->equilizeParameters($std, $possible);
@@ -892,10 +925,8 @@ class Make
     /**
      * Informações do Cupom Fiscal referenciado BA20 pai BA01
      * tag NFe/infNFe/ide/NFref/refECF
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagrefECF(stdClass $std)
+    public function tagrefECF(stdClass $std): DOMElement
     {
         $possible = ['mod', 'nECF', 'nCOO'];
         $std = $this->equilizeParameters($std, $possible);
@@ -931,10 +962,8 @@ class Make
     /**
      * Identificação do emitente da NF-e C01 pai A01
      * tag NFe/infNFe/emit
-     * @param  stdClass $std
-     * @return DOMElement
      */
-    public function tagemit(stdClass $std)
+    public function tagemit(stdClass $std): DOMElement
     {
         $possible = [
             'xNome',
@@ -1027,10 +1056,8 @@ class Make
     /**
      * Endereço do emitente C05 pai C01
      * tag NFe/infNFe/emit/endEmit
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagenderEmit(stdClass $std)
+    public function tagenderEmit(stdClass $std): DOMElement
     {
         $possible = [
             'xLgr',
@@ -1134,10 +1161,8 @@ class Make
     /**
      * Identificação do Destinatário da NF-e E01 pai A01
      * tag NFe/infNFe/dest (opcional para modelo 65)
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagdest(stdClass $std)
+    public function tagdest(stdClass $std): DOMElement
     {
         $possible = [
             'xNome',
@@ -1249,10 +1274,8 @@ class Make
      * Endereço do Destinatário da NF-e E05 pai E01
      * tag NFe/infNFe/dest/enderDest  (opcional para modelo 65)
      * Os dados do destinatário devem ser inseridos antes deste método
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagenderDest(stdClass $std)
+    public function tagenderDest(stdClass $std): DOMElement
     {
         $possible = [
             'xLgr',
@@ -1270,7 +1293,7 @@ class Make
         $std = $this->equilizeParameters($std, $possible);
 
         $identificador = 'E05 <enderDest> - ';
-        if (empty($this->dest)) {
+        if (!$this->dest) {
             throw new RuntimeException('A TAG dest deve ser criada antes do endereço do mesmo.');
         }
         $this->enderDest = $this->dom->createElement("enderDest");
@@ -1363,10 +1386,8 @@ class Make
      * Identificação do Local de retirada F01 pai A01
      * tag NFe/infNFe/retirada (opcional)
      * NOTA: ajustado para NT 2018.005
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagretirada(stdClass $std)
+    public function tagretirada(stdClass $std): DOMElement
     {
         $possible = [
             'xLgr',
@@ -1508,10 +1529,8 @@ class Make
      * Identificação do Local de entrega G01 pai A01
      * tag NFe/infNFe/entrega (opcional)
      * NOTA: ajustado para NT 2018.005
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagentrega(stdClass $std)
+    public function tagentrega(stdClass $std): DOMElement
     {
         $possible = [
             'xLgr',
@@ -1652,10 +1671,8 @@ class Make
     /**
      * Pessoas autorizadas para o download do XML da NF-e G50 pai A01
      * tag NFe/infNFe/autXML
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagautXML(stdClass $std)
+    public function tagautXML(stdClass $std): DOMElement
     {
         $possible = ['CNPJ', 'CPF'];
         $std = $this->equilizeParameters($std, $possible);
@@ -1684,10 +1701,8 @@ class Make
     /**
      * Informações adicionais do produto V01 pai H01
      * tag NFe/infNFe/det[]/infAdProd
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function taginfAdProd(stdClass $std)
+    public function taginfAdProd(stdClass $std): DOMElement
     {
         $possible = ['item', 'infAdProd'];
         $std = $this->equilizeParameters($std, $possible);
@@ -1704,10 +1719,8 @@ class Make
      * tag NFe/infNFe/det[]/prod
      * NOTA: Ajustado para NT2016_002_v1.30
      * NOTA: Ajustado para NT2020_005_v1.20
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagprod(stdClass $std)
+    public function tagprod(stdClass $std): DOMElement
     {
         $possible = [
             'item',
@@ -1740,12 +1753,12 @@ class Make
         $std = $this->equilizeParameters($std, $possible);
         //totalizador
         if ($std->indTot == 1) {
-            $this->stdTot->vProd += (float) $std->vProd;
+            $this->stdTot->vProd += (float) $this->conditionalNumberFormatting($std->vProd);
         }
-        $this->stdTot->vFrete += (float) $std->vFrete;
-        $this->stdTot->vSeg += (float) $std->vSeg;
-        $this->stdTot->vDesc += (float) $std->vDesc;
-        $this->stdTot->vOutro += (float) $std->vOutro;
+        $this->stdTot->vFrete += (float) $this->conditionalNumberFormatting($std->vFrete);
+        $this->stdTot->vSeg += (float) $this->conditionalNumberFormatting($std->vSeg);
+        $this->stdTot->vDesc += (float) $this->conditionalNumberFormatting($std->vDesc);
+        $this->stdTot->vOutro += (float) $this->conditionalNumberFormatting($std->vOutro);
 
         $cean = !empty($std->cEAN) ? trim(strtoupper($std->cEAN)) : '';
         $ceantrib = !empty($std->cEANTrib) ? trim(strtoupper($std->cEANTrib)) : '';
@@ -1777,7 +1790,7 @@ class Make
             $cean,
             true,
             $identificador . "[item $std->item] GTIN (Global Trade Item Number) do produto, antigo "
-            . "código EAN ou código de barras",
+                . "código EAN ou código de barras",
             true
         );
         $this->dom->addChild(
@@ -1861,7 +1874,7 @@ class Make
             $ceantrib,
             true,
             $identificador . "[item $std->item] GTIN (Global Trade Item Number) da unidade tributável, antigo "
-            . "código EAN ou código de barras",
+                . "código EAN ou código de barras",
             true
         );
         $this->dom->addChild(
@@ -1870,7 +1883,7 @@ class Make
             $std->cBarraTrib ?? null,
             false,
             $identificador . "[item $std->item] cBarraTrib Código de Barras da "
-            . "unidade tributável que seja diferente do padrão GTIN"
+                . "unidade tributável que seja diferente do padrão GTIN"
         );
         $this->dom->addChild(
             $prod,
@@ -1958,10 +1971,8 @@ class Make
      * NVE NOMENCLATURA DE VALOR ADUANEIRO E ESTATÍSTICA
      * Podem ser até 8 NVE's por item
      *
-     * @param stdClass $std
-     * @return DOMElement|null
      */
-    public function tagNVE(stdClass $std)
+    public function tagNVE(stdClass $std): ?DOMElement
     {
         $possible = ['item', 'NVE'];
         $std = $this->equilizeParameters($std, $possible);
@@ -1981,10 +1992,8 @@ class Make
      * vide NT2015.003  I05C pai
      * tag NFe/infNFe/det[item]/prod/CEST (opcional)
      * NOTA: Ajustado para NT2016_002_v1.30
-     * @param  stdClass $std
-     * @return DOMElement
      */
-    public function tagCEST(stdClass $std)
+    public function tagCEST(stdClass $std): DOMElement
     {
         $possible = ['item', 'CEST', 'indEscala', 'CNPJFab'];
         $std = $this->equilizeParameters($std, $possible);
@@ -2020,10 +2029,8 @@ class Make
 
     /**
      * tag NFe/infNFe/det[item]/prod/nRECOPI
-     * @param  stdClass $std
-     * @return DOMElement
      */
-    public function tagRECOPI(stdClass $std)
+    public function tagRECOPI(stdClass $std): DOMElement
     {
         $possible = ['item', 'nRECOPI'];
         $std = $this->equilizeParameters($std, $possible);
@@ -2035,10 +2042,8 @@ class Make
     /**
      * Declaração de Importação I8 pai I01
      * tag NFe/infNFe/det[]/prod/DI
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagDI(stdClass $std)
+    public function tagDI(stdClass $std): DOMElement
     {
         $possible = [
             'item',
@@ -2143,10 +2148,8 @@ class Make
     /**
      * Adições I25 pai I18
      * tag NFe/infNFe/det[]/prod/DI/adi
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagadi(stdClass $std)
+    public function tagadi(stdClass $std): DOMElement
     {
         $possible = [
             'item',
@@ -2206,10 +2209,8 @@ class Make
     /**
      * Grupo de informações de exportação para o item I50 pai I01
      * tag NFe/infNFe/det[]/prod/detExport
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagdetExport(stdClass $std)
+    public function tagdetExport(stdClass $std): DOMElement
     {
         $possible = [
             'item',
@@ -2232,10 +2233,8 @@ class Make
     /**
      * Grupo de informações de exportação para o item I52 pai I52
      * tag NFe/infNFe/det[]/prod/detExport
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagdetExportInd(stdClass $std)
+    public function tagdetExportInd(stdClass $std): DOMElement
     {
         $possible = [
             'item',
@@ -2268,7 +2267,7 @@ class Make
             $identificador . "[item $std->item] Quantidade do item realmente exportado"
         );
         //obtem o ultimo detExport
-        $nDE = count($this->aDetExport[$std->item]) - 1;
+        $nDE = (is_countable($this->aDetExport[$std->item]) ? count($this->aDetExport[$std->item]) : 0) - 1;
         if ($nDE < 0) {
             throw new RuntimeException('A TAG detExportInd deve ser criada depois da detExport, pois pertence a ela.');
         }
@@ -2283,10 +2282,8 @@ class Make
      * Rastreabilidade do produto podem ser até 500 por item TAG I80 pai I01
      * NOTA: Ajustado para NT2016_002_v1.00
      * tag NFe/infNFe/det[]/prod/rastro
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagRastro(stdClass $std)
+    public function tagRastro(stdClass $std): DOMElement
     {
         $possible = [
             'item',
@@ -2341,10 +2338,8 @@ class Make
     /**
      * Detalhamento de Veículos novos J01 pai I90
      * tag NFe/infNFe/det[]/prod/veicProd (opcional)
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagveicProd(stdClass $std)
+    public function tagveicProd(stdClass $std): DOMElement
     {
         $possible = [
             'item',
@@ -2552,10 +2547,8 @@ class Make
      * Detalhamento de medicamentos K01 pai I90
      * NOTA: Ajustado para NT2018.005
      * tag NFe/infNFe/det[]/prod/med (opcional)
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagmed(stdClass $std)
+    public function tagmed(stdClass $std): DOMElement
     {
         $possible = [
             'item',
@@ -2594,10 +2587,8 @@ class Make
     /**
      * Detalhamento de armas L01 pai I90
      * tag NFe/infNFe/det[]/prod/arma (opcional)
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagarma(stdClass $std)
+    public function tagarma(stdClass $std): DOMElement
     {
         $possible = [
             'item',
@@ -2651,10 +2642,8 @@ class Make
      *
      * NOTA: Ajustado para NT2016_002_v1.30
      * LA|cProdANP|descANP|pGLP|pGNn|pGNi|vPart|CODIF|qTemp|UFCons|
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagcomb(stdClass $std)
+    public function tagcomb(stdClass $std): DOMElement
     {
         $possible = [
             'item',
@@ -2782,10 +2771,8 @@ class Make
      * encerrante que permite o controle sobre as operações de venda de combustíveis
      * LA11 pai LA01
      * tag NFe/infNFe/det[]/prod/comb/encerrante (opcional)
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagencerrante(stdClass $std)
+    public function tagencerrante(stdClass $std): DOMElement
     {
         $possible = [
             'item',
@@ -2840,10 +2827,8 @@ class Make
     /**
      * Impostos com o valor total tributado M01 pai H01
      * tag NFe/infNFe/det[]/imposto
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagimposto(stdClass $std)
+    public function tagimposto(stdClass $std): DOMElement
     {
         $possible = ['item', 'vTotTrib'];
         $std = $this->equilizeParameters($std, $possible);
@@ -2866,10 +2851,8 @@ class Make
      * Informações do ICMS da Operação própria e ST N01 pai M01
      * tag NFe/infNFe/det[]/imposto/ICMS
      * NOTA: ajustado NT 2020.005-v1.20
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagICMS(stdClass $std)
+    public function tagICMS(stdClass $std): DOMElement
     {
         $possible = [
             'item',
@@ -2975,7 +2958,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pFCP, 4),
                     false,
                     "$identificador [item $std->item] Percentual do Fundo de "
-                    . "Combate à Pobreza (FCP)"
+                        . "Combate à Pobreza (FCP)"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -2983,7 +2966,7 @@ class Make
                     $this->conditionalNumberFormatting($std->vFCP),
                     false,
                     "$identificador [item $std->item] Valor do Fundo de Combate "
-                    . "à Pobreza (FCP)"
+                        . "à Pobreza (FCP)"
                 );
                 break;
             case '10':
@@ -3048,7 +3031,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pFCP, 4),
                     false,
                     "$identificador [item $std->item] Percentual do Fundo de "
-                    . "Combate à Pobreza (FCP)"
+                        . "Combate à Pobreza (FCP)"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -3112,7 +3095,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pFCPST, 4),
                     false,
                     "$identificador [item $std->item] Percentual do Fundo de "
-                    . "Combate à Pobreza (FCP) ST"
+                        . "Combate à Pobreza (FCP) ST"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -3203,7 +3186,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pFCP, 4),
                     false,
                     "$identificador [item $std->item] Percentual do Fundo de "
-                    . "Combate à Pobreza (FCP)"
+                        . "Combate à Pobreza (FCP)"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -3301,7 +3284,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pFCPST, 4),
                     false,
                     "$identificador [item $std->item] Percentual do Fundo de "
-                    . "Combate à Pobreza (FCP) ST"
+                        . "Combate à Pobreza (FCP) ST"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -3360,7 +3343,8 @@ class Make
                 break;
             case '51':
                 $this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
-                
+                $this->stdTot->vICMS += (float) !empty($std->vICMS) ? $std->vICMS : 0;
+
                 $icms = $this->dom->createElement("ICMS51");
                 $this->dom->addChild(
                     $icms,
@@ -3445,7 +3429,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pFCP, 4),
                     false,
                     "$identificador [item $std->item] Percentual do Fundo de "
-                    . "Combate à Pobreza (FCP)"
+                        . "Combate à Pobreza (FCP)"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -3460,7 +3444,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pFCPDif),
                     false,
                     "$identificador [item $std->item] Percentual do diferimento "
-                    . "do ICMS relativo ao Fundo de Combate à Pobreza (FCP)"
+                        . "do ICMS relativo ao Fundo de Combate à Pobreza (FCP)"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -3468,7 +3452,7 @@ class Make
                     $this->conditionalNumberFormatting($std->vFCPDif),
                     false,
                     "$identificador [item $std->item] Valor do ICMS relativo ao "
-                    . "Fundo de Combate à Pobreza (FCP) diferido"
+                        . "Fundo de Combate à Pobreza (FCP) diferido"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -3476,7 +3460,7 @@ class Make
                     $this->conditionalNumberFormatting($std->vFCPEfet),
                     false,
                     "$identificador [item $std->item] Valor efetivo do ICMS relativo "
-                    . "ao Fundo de Combate à Pobreza (FCP)"
+                        . "ao Fundo de Combate à Pobreza (FCP)"
                 );
                 break;
             case '60':
@@ -3529,7 +3513,7 @@ class Make
                     $this->conditionalNumberFormatting($std->vBCFCPSTRet),
                     false,
                     "$identificador [item $std->item] Valor da Base de Cálculo "
-                    . "do FCP retido anteriormente por ST"
+                        . "do FCP retido anteriormente por ST"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -3537,7 +3521,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pFCPSTRet, 4),
                     false,
                     "$identificador [item $std->item] Percentual do FCP retido "
-                    . "anteriormente por Substituição Tributária"
+                        . "anteriormente por Substituição Tributária"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -3545,7 +3529,7 @@ class Make
                     $this->conditionalNumberFormatting($std->vFCPSTRet),
                     false,
                     "$identificador [item $std->item] Valor do FCP retido por "
-                    . "Substituição Tributária"
+                        . "Substituição Tributária"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -3553,7 +3537,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pRedBCEfet, 4),
                     false,
                     "$identificador [item $std->item] Percentual de redução "
-                    . "para obtenção da base de cálculo efetiva (vBCEfet)"
+                        . "para obtenção da base de cálculo efetiva (vBCEfet)"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -3646,7 +3630,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pFCP, 4),
                     false,
                     "$identificador [item $std->item] Percentual do Fundo de "
-                    . "Combate à Pobreza (FCP)"
+                        . "Combate à Pobreza (FCP)"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -3710,7 +3694,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pFCPST, 4),
                     false,
                     "$identificador [item $std->item] Percentual do Fundo de "
-                    . "Combate à Pobreza (FCP) ST"
+                        . "Combate à Pobreza (FCP) ST"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -3817,7 +3801,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pFCP, 4),
                     false,
                     "$identificador [item $std->item] Percentual do Fundo de "
-                    . "Combate à Pobreza (FCP)"
+                        . "Combate à Pobreza (FCP)"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -3881,7 +3865,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pFCPST, 4),
                     false,
                     "$identificador [item $std->item] Percentual do Fundo de "
-                    . "Combate à Pobreza (FCP) ST"
+                        . "Combate à Pobreza (FCP) ST"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -3932,10 +3916,8 @@ class Make
      * Grupo de Partilha do ICMS entre a UF de origem e UF de destino ou
      * a UF definida na legislação. N10a pai N01
      * tag NFe/infNFe/det[]/imposto/ICMS/ICMSPart
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagICMSPart(stdClass $std)
+    public function tagICMSPart(stdClass $std): DOMElement
     {
         $possible = [
             'item',
@@ -4082,10 +4064,8 @@ class Make
      * interestaduais com repasses através do Substituto Tributário
      * NOTA: ajustado NT 2018.005
      * tag NFe/infNFe/det[]/imposto/ICMS/ICMSST N10b pai N01
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagICMSST(stdClass $std)
+    public function tagICMSST(stdClass $std): DOMElement
     {
         $possible = [
             'item',
@@ -4227,10 +4207,8 @@ class Make
     /**
      * Tributação ICMS pelo Simples Nacional N10c pai N01
      * tag NFe/infNFe/det[]/imposto/ICMS/ICMSSN N10c pai N01
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagICMSSN(stdClass $std)
+    public function tagICMSSN(stdClass $std): DOMElement
     {
         $possible = [
             'item',
@@ -4298,7 +4276,7 @@ class Make
                     $this->conditionalNumberFormatting($std->vCredICMSSN),
                     true,
                     "[item $std->item] Valor crédito do ICMS que pode ser aproveitado nos termos do"
-                    . " art. 23 da LC 123 (Simples Nacional)"
+                        . " art. 23 da LC 123 (Simples Nacional)"
                 );
                 break;
             case '102':
@@ -4388,7 +4366,7 @@ class Make
                     $this->conditionalNumberFormatting($std->vBCFCPST),
                     isset($std->vBCFCPST) ? true : false,
                     "[item $std->item] Valor da Base de Cálculo do FCP "
-                    . "retido por Substituição Tributária"
+                        . "retido por Substituição Tributária"
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -4396,7 +4374,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pFCPST, 4),
                     isset($std->pFCPST) ? true : false,
                     "[item $std->item] Percentual do FCP retido por "
-                    . "Substituição Tributária"
+                        . "Substituição Tributária"
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -4418,7 +4396,7 @@ class Make
                     $this->conditionalNumberFormatting($std->vCredICMSSN),
                     false,
                     "[item $std->item] Valor crédito do ICMS que pode ser aproveitado nos "
-                    . "termos do art. 23 da LC 123 (Simples Nacional)"
+                        . "termos do art. 23 da LC 123 (Simples Nacional)"
                 );
                 break;
             case '202':
@@ -4489,7 +4467,7 @@ class Make
                     $this->conditionalNumberFormatting($std->vBCFCPST),
                     isset($std->vBCFCPST) ? true : false,
                     "[item $std->item] Valor da Base de Cálculo do FCP "
-                    . "retido por Substituição Tributária"
+                        . "retido por Substituição Tributária"
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -4497,7 +4475,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pFCPST, 4),
                     isset($std->pFCPST) ? true : false,
                     "[item $std->item] Percentual do FCP retido por "
-                    . "Substituição Tributária"
+                        . "Substituição Tributária"
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -4557,7 +4535,7 @@ class Make
                     $this->conditionalNumberFormatting($std->vBCFCPSTRet, 2),
                     isset($std->vBCFCPSTRet) ? true : false,
                     "[item $std->item] Valor da Base de Cálculo do FCP "
-                    . "retido anteriormente por Substituição Tributária"
+                        . "retido anteriormente por Substituição Tributária"
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -4565,7 +4543,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pFCPSTRet, 4),
                     isset($std->pFCPSTRet) ? true : false,
                     "[item $std->item] Percentual do FCP retido anteriormente por "
-                    . "Substituição Tributária"
+                        . "Substituição Tributária"
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -4573,7 +4551,7 @@ class Make
                     $this->conditionalNumberFormatting($std->vFCPSTRet),
                     isset($std->vFCPSTRet) ? true : false,
                     "[item $std->item] Valor do FCP retido anteiormente por "
-                    . "Substituição Tributária"
+                        . "Substituição Tributária"
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -4581,7 +4559,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pRedBCEfet, 4),
                     isset($std->pRedBCEfet) ? true : false,
                     "[item $std->item] Percentual de redução da base "
-                    . "de cálculo efetiva"
+                        . "de cálculo efetiva"
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -4708,7 +4686,7 @@ class Make
                     $this->conditionalNumberFormatting($std->vBCFCPST),
                     isset($std->vBCFCPST) ? true : false,
                     "[item $std->item] Valor da Base de Cálculo do FCP "
-                    . "retido por Substituição Tributária"
+                        . "retido por Substituição Tributária"
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -4716,7 +4694,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pFCPST, 4),
                     isset($std->pFCPST) ? true : false,
                     "[item $std->item] Percentual do FCP retido por "
-                    . "Substituição Tributária"
+                        . "Substituição Tributária"
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -4738,7 +4716,7 @@ class Make
                     $this->conditionalNumberFormatting($std->vCredICMSSN),
                     isset($std->vCredICMSSN) ? true : false,
                     "[item $std->item] Valor crédito do ICMS que pode ser aproveitado nos termos do"
-                    . " art. 23 da LC 123 (Simples Nacional)"
+                        . " art. 23 da LC 123 (Simples Nacional)"
                 );
                 break;
         }
@@ -4760,10 +4738,8 @@ class Make
      * tag NFe/infNFe/det[]/imposto/ICMSUFDest (opcional)
      * Grupo a ser informado nas vendas interestaduais para consumidor final,
      * não contribuinte do ICMS
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagICMSUFDest(stdClass $std)
+    public function tagICMSUFDest(stdClass $std): DOMElement
     {
         $possible = [
             'item',
@@ -4852,10 +4828,8 @@ class Make
     /**
      * Grupo IPI O01 pai M01
      * tag NFe/infNFe/det[]/imposto/IPI (opcional)
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagIPI(stdClass $std)
+    public function tagIPI(stdClass $std): DOMElement
     {
         $possible = [
             'item',
@@ -4886,7 +4860,7 @@ class Make
             $std->CNPJProd,
             false,
             "[item $std->item] CNPJ do produtor da mercadoria, quando diferente do emitente. "
-            . "Somente para os casos de exportação direta ou indireta."
+                . "Somente para os casos de exportação direta ou indireta."
         );
         $this->dom->addChild(
             $ipi,
@@ -4940,7 +4914,7 @@ class Make
                 $this->conditionalNumberFormatting($std->qUnid, 4),
                 false,
                 "[item $std->item] Quantidade total na unidade padrão para tributação (somente para os "
-                . "produtos tributados por unidade)"
+                    . "produtos tributados por unidade)"
             );
             $this->dom->addChild(
                 $ipiTrib,
@@ -4975,10 +4949,8 @@ class Make
     /**
      * Grupo Imposto de Importação P01 pai M01
      * tag NFe/infNFe/det[]/imposto/II
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagII(stdClass $std)
+    public function tagII(stdClass $std): DOMElement
     {
         $possible = [
             'item',
@@ -5026,10 +4998,8 @@ class Make
     /**
      * Grupo PIS Q01 pai M01
      * tag NFe/infNFe/det[]/imposto/PIS
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagPIS(stdClass $std)
+    public function tagPIS(stdClass $std): DOMElement
     {
         $possible = [
             'item',
@@ -5041,7 +5011,7 @@ class Make
             'vAliqProd'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        
+
         switch ($std->CST) {
             case '01':
             case '02':
@@ -5203,6 +5173,7 @@ class Make
         if (isset($pisItem)) {
             $pis->appendChild($pisItem);
         }
+
         $this->aPIS[$std->item] = $pis;
         return $pis;
     }
@@ -5210,10 +5181,8 @@ class Make
     /**
      * Grupo PIS Substituição Tributária R01 pai M01
      * tag NFe/infNFe/det[]/imposto/PISST (opcional)
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagPISST(stdClass $std)
+    public function tagPISST(stdClass $std): DOMElement
     {
         $possible = [
             'item',
@@ -5270,7 +5239,7 @@ class Make
         $this->dom->addChild(
             $pisst,
             'indSomaPISST',
-            isset($std->indSomaPISST) ? $std->indSomaPISST : null,
+            $std->indSomaPISST ?? null,
             false,
             "[item $std->item] Indica se o valor do PISST compõe o valor total da NF-e"
         );
@@ -5281,10 +5250,8 @@ class Make
     /**
      * Grupo COFINS S01 pai M01
      * tag det[item]/imposto/COFINS (opcional)
-     * @param  stdClass $std
-     * @return DOMElement
      */
-    public function tagCOFINS(stdClass $std)
+    public function tagCOFINS(stdClass $std): DOMElement
     {
         $possible = [
             'item',
@@ -5384,10 +5351,8 @@ class Make
     /**
      * Grupo COFINS Substituição Tributária T01 pai M01
      * tag NFe/infNFe/det[]/imposto/COFINSST (opcional)
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagCOFINSST(stdClass $std)
+    public function tagCOFINSST(stdClass $std): DOMElement
     {
         $possible = [
             'item',
@@ -5444,7 +5409,7 @@ class Make
         $this->dom->addChild(
             $cofinsst,
             "indSomaCOFINSST",
-            isset($std->indSomaCOFINSST) ? $std->indSomaCOFINSST : null,
+            $std->indSomaCOFINSST ?? null,
             false,
             "[item $std->item] Valor da COFINS"
         );
@@ -5455,10 +5420,8 @@ class Make
     /**
      * Grupo ISSQN U01 pai M01
      * tag NFe/infNFe/det[]/imposto/ISSQN (opcional)
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagISSQN(stdClass $std)
+    public function tagISSQN(stdClass $std): DOMElement
     {
         $possible = [
             'item',
@@ -5480,6 +5443,28 @@ class Make
             'indIncentivo'
         ];
         $std = $this->equilizeParameters($std, $possible);
+
+        // Adiciona o totalizador, somente se maior que ZERO
+        empty($std->vBC) ?: $this->stdISSQNTot->vBC += (float) $std->vBC;
+        empty($std->vISSQN) ?: $this->stdISSQNTot->vISS += $std->vISSQN ?? 0.0;
+        empty($std->vISSRet) ?: $this->stdISSQNTot->vISSRet += $std->vISSRet ?? 0.0;
+        empty($std->vDeducao) ?: $this->stdISSQNTot->vDeducao += $std->vDeducao ?? 0.0;
+        empty($std->vOutro) ?: $this->stdISSQNTot->vOutro += $std->vOutro ?? 0.0;
+        empty($std->vDescIncond) ?: $this->stdISSQNTot->vDescIncond += $std->vDescIncond ?? 0.0;
+        empty($std->vDescCond) ?: $this->stdISSQNTot->vDescCond += $std->vDescCond ?? 0.0;
+
+        array_push($this->aItensServ, $std->item);
+
+        // totalizador
+        if ($this->aProd[$std->item]->getElementsByTagName('indTot')->item(0)->nodeValue == 1) {
+            // Captura o valor do item
+            $vProd = (float) ($this->aProd[$std->item]->getElementsByTagName('vProd')->item(0)->nodeValue);
+
+            // Remove o valor to totalizador de produtos e Adiciona o valor do item no totalizador de serviços
+            $this->stdTot->vProd -= $vProd;
+            $this->stdISSQNTot->vServ += $vProd;
+        }
+
         $issqn = $this->dom->createElement("ISSQN");
         $this->dom->addChild(
             $issqn,
@@ -5600,10 +5585,8 @@ class Make
     /**
      * Informação do Imposto devolvido U50 pai H01
      * tag NFe/infNFe/det[]/impostoDevol (opcional)
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagimpostoDevol(stdClass $std)
+    public function tagimpostoDevol(stdClass $std): DOMElement
     {
         $possible = [
             'item',
@@ -5637,14 +5620,42 @@ class Make
     /**
      * Grupo Totais referentes ao ICMS W02 pai W01
      * tag NFe/infNFe/total/ICMSTot
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagICMSTot(stdClass $std)
+    public function tagICMSTot(stdClass $std = null): DOMElement
     {
         $this->buildTotal();
-        $vBC = isset($std->vBC) ? $std->vBC : $this->stdTot->vBC;
-        $vICMS = isset($std->vICMS) ? $std->vICMS : $this->stdTot->vICMS;
+        $possible = [
+            'vBC',
+            'vICMS',
+            'vICMSDeson',
+            'vBCST',
+            'vST',
+            'vProd',
+            'vFrete',
+            'vSeg',
+            'vDesc',
+            'vII',
+            'vIPI',
+            'vPIS',
+            'vCOFINS',
+            'vOutro',
+            'vNF',
+            'vIPIDevol',
+            'vTotTrib',
+            'vFCP',
+            'vFCPST',
+            'vFCPSTRet',
+            'vFCPUFDest',
+            'vICMSUFDest',
+            'vICMSUFRemet',
+        ];
+        if (isset($std)) {
+            $std = $this->equilizeParameters($std, $possible);
+        }
+        $this->stdICMSTot = $std;
+
+        $vBC = $std->vBC ?? $this->stdTot->vBC;
+        $vICMS = $std->vICMS ?? $this->stdTot->vICMS;
         $vICMSDeson = !empty($std->vICMSDeson) ? $std->vICMSDeson : $this->stdTot->vICMSDeson;
         $vBCST = !empty($std->vBCST) ? $std->vBCST : $this->stdTot->vBCST;
         $vST = !empty($std->vST) ? $std->vST : $this->stdTot->vST;
@@ -5707,7 +5718,7 @@ class Make
             $this->conditionalNumberFormatting($vFCPUFDest),
             false,
             "Valor total do ICMS relativo ao Fundo de Combate à Pobreza(FCP) "
-            . "para a UF de destino"
+                . "para a UF de destino"
         );
         $this->dom->addChild(
             $ICMSTot,
@@ -5730,7 +5741,7 @@ class Make
             $this->conditionalNumberFormatting($vFCP),
             false,
             "Valor total do ICMS relativo ao Fundo de Combate à Pobreza(FCP) "
-            . "para a UF de destino"
+                . "para a UF de destino"
         );
         $this->dom->addChild(
             $ICMSTot,
@@ -5753,7 +5764,7 @@ class Make
             $this->conditionalNumberFormatting($vFCPST),
             false, //true para 4.00
             "Valor Total do FCP (Fundo de Combate à Pobreza) "
-            . "retido por substituição tributária"
+                . "retido por substituição tributária"
         );
         //incluso na 4.00
         $this->dom->addChild(
@@ -5762,7 +5773,7 @@ class Make
             $this->conditionalNumberFormatting($vFCPSTRet),
             false, //true para 4.00
             "Valor Total do FCP retido anteriormente por "
-            . "Substituição Tributária"
+                . "Substituição Tributária"
         );
         $this->dom->addChild(
             $ICMSTot,
@@ -5849,18 +5860,22 @@ class Make
             false,
             "Valor aproximado total de tributos federais, estaduais e municipais."
         );
-        $this->dom->appChild($this->total, $ICMSTot, '');
+        $this->ICMSTot = $ICMSTot;
         return $ICMSTot;
     }
 
     /**
      * Grupo Totais referentes ao ISSQN W17 pai W01
      * tag NFe/infNFe/total/ISSQNTot (opcional)
-     * @param stdClass $std
-     * @return DOMElement
+     * @return DOMElement|void
      */
-    public function tagISSQNTot(stdClass $std)
+    public function tagISSQNTot(stdClass $std = null)
     {
+        if (empty($this->aItensServ)) {
+            //não existem itens com ISSQN
+            return;
+        }
+        $this->buildISSQNTot();
         $possible = [
             'vServ',
             'vBC',
@@ -5875,106 +5890,130 @@ class Make
             'vISSRet',
             'cRegTrib'
         ];
-        $std = $this->equilizeParameters($std, $possible);
-        $this->stdTot->vServ = (float) round($std->vServ, 2) ?? 0;
-        
-        $this->buildTotal();
+        if (isset($std)) {
+            $std = $this->equilizeParameters($std, $possible);
+        }
+        $this->stdISSQN = $std;
+
+        $vServ = $std->vServ ?? $this->stdISSQNTot->vServ;
+        $vBC = $std->vBC ?? $this->stdISSQNTot->vBC;
+        $vISS = $std->vISS ?? $this->stdISSQNTot->vISS;
+        $vPIS = $std->vPIS ?? $this->stdISSQNTot->vPIS;
+        $vCOFINS = $std->vCOFINS ?? $this->stdISSQNTot->vCOFINS;
+        $dCompet = $std->dCompet ?? date('Y-m-d');
+        $vDeducao = $std->vDeducao ?? $this->stdISSQNTot->vDeducao;
+        $vOutro = $std->vOutro ?? $this->stdISSQNTot->vOutro;
+        $vDescIncond = $std->vDescIncond ?? $this->stdISSQNTot->vDescIncond;
+        $vDescCond = $std->vDescCond ?? $this->stdISSQNTot->vDescCond;
+        $vISSRet = $std->vISSRet ?? $this->stdISSQNTot->vISSRet;
+        $cRegTrib = $std->cRegTrib ?? $this->stdISSQNTot->cRegTrib;
+
+        //nulificar caso seja menor ou igual a ZERO
+        $vServ = ($vServ > 0) ? number_format($vServ, 2, '.', '') : null;
+        $vBC = ($vBC > 0) ? number_format($vBC, 2, '.', '') : null;
+        $vISS = ($vISS > 0) ? number_format($vISS, 2, '.', '') : null;
+        $vPIS = ($vPIS > 0) ? number_format($vPIS, 2, '.', '') : null;
+        $vCOFINS = ($vCOFINS > 0) ? number_format($vCOFINS, 2, '.', '') : null;
+        $vDeducao = ($vDeducao > 0) ? number_format($vDeducao, 2, '.', '') : null;
+        $vOutro = ($vOutro > 0) ? number_format($vOutro, 2, '.', '') : null;
+        $vDescIncond = ($vDescIncond > 0) ? number_format($vDescIncond, 2, '.', '') : null;
+        $vDescCond = ($vDescCond > 0) ? number_format($vDescCond, 2, '.', '') : null;
+        $vISSRet = ($vISSRet > 0) ? number_format($vISSRet, 2, '.', '') : null;
+
         $ISSQNTot = $this->dom->createElement("ISSQNtot");
         $this->dom->addChild(
             $ISSQNTot,
             "vServ",
-            $this->conditionalNumberFormatting($std->vServ),
+            $this->conditionalNumberFormatting($vServ),
             false,
             "Valor total dos Serviços sob não incidência ou não tributados pelo ICMS"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vBC",
-            $this->conditionalNumberFormatting($std->vBC),
+            $this->conditionalNumberFormatting($vBC),
             false,
             "Valor total Base de Cálculo do ISS"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vISS",
-            $this->conditionalNumberFormatting($std->vISS),
+            $this->conditionalNumberFormatting($vISS),
             false,
             "Valor total do ISS"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vPIS",
-            $this->conditionalNumberFormatting($std->vPIS),
+            $this->conditionalNumberFormatting($vPIS),
             false,
             "Valor total do PIS sobre serviços"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vCOFINS",
-            $this->conditionalNumberFormatting($std->vCOFINS),
+            $this->conditionalNumberFormatting($vCOFINS),
             false,
             "Valor total da COFINS sobre serviços"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "dCompet",
-            $std->dCompet,
+            $dCompet,
             true,
             "Data da prestação do serviço"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vDeducao",
-            $this->conditionalNumberFormatting($std->vDeducao),
+            $this->conditionalNumberFormatting($vDeducao),
             false,
             "Valor total dedução para redução da Base de Cálculo"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vOutro",
-            $this->conditionalNumberFormatting($std->vOutro),
+            $this->conditionalNumberFormatting($vOutro),
             false,
             "Valor total outras retenções"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vDescIncond",
-            $this->conditionalNumberFormatting($std->vDescIncond),
+            $this->conditionalNumberFormatting($vDescIncond),
             false,
             "Valor total desconto incondicionado"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vDescCond",
-            $this->conditionalNumberFormatting($std->vDescCond),
+            $this->conditionalNumberFormatting($vDescCond),
             false,
             "Valor total desconto condicionado"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vISSRet",
-            $this->conditionalNumberFormatting($std->vISSRet),
+            $this->conditionalNumberFormatting($vISSRet),
             false,
             "Valor total retenção ISS"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "cRegTrib",
-            $std->cRegTrib,
+            $cRegTrib,
             false,
             "Código do Regime Especial de Tributação"
         );
-        $this->dom->appChild($this->total, $ISSQNTot, '');
+        $this->ISSQNTot = $ISSQNTot;
         return $ISSQNTot;
     }
 
     /**
      * Grupo Retenções de Tributos W23 pai W01
      * tag NFe/infNFe/total/reTrib (opcional)
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagretTrib(stdClass $std)
+    public function tagretTrib(stdClass $std): DOMElement
     {
         $possible = [
             'vRetPIS',
@@ -6036,17 +6075,16 @@ class Make
             false,
             "Valor da Retenção da Previdência Social"
         );
-        $this->dom->appChild($this->total, $retTrib, '');
+        $this->retTrib = $retTrib;
+        //$this->dom->appChild($this->total, $retTrib, '');
         return $retTrib;
     }
 
     /**
      * Grupo Informações do Transporte X01 pai A01
      * tag NFe/infNFe/transp (obrigatório)
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagtransp(stdClass $std)
+    public function tagtransp(stdClass $std): DOMElement
     {
         $this->transp = $this->dom->createElement("transp");
         $this->dom->addChild(
@@ -6062,10 +6100,8 @@ class Make
     /**
      * Grupo Transportador X03 pai X01
      * tag NFe/infNFe/transp/tranporta (opcional)
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagtransporta(stdClass $std)
+    public function tagtransporta(stdClass $std): DOMElement
     {
         $possible = [
             'xNome',
@@ -6139,10 +6175,8 @@ class Make
     /**
      * Grupo Retenção ICMS transporte X11 pai X01
      * tag NFe/infNFe/transp/retTransp (opcional)
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagretTransp(stdClass $std)
+    public function tagretTransp(stdClass $std): DOMElement
     {
         $possible = [
             'vServ',
@@ -6207,10 +6241,9 @@ class Make
     /**
      * Grupo Veículo Transporte X18 pai X17.1
      * tag NFe/infNFe/transp/veicTransp (opcional)
-     * @param stdClass $std
-     * @return DOMElement
+     * Ajustado NT 2020.005 v1.20
      */
-    public function tagveicTransp(stdClass $std)
+    public function tagveicTransp(stdClass $std): DOMElement
     {
         $possible = [
             'placa',
@@ -6221,21 +6254,21 @@ class Make
         $veicTransp = $this->dom->createElement("veicTransp");
         $this->dom->addChild(
             $veicTransp,
-            "placa",
+            "placa", // X19
             $std->placa,
             true,
             "Placa do Veículo"
         );
         $this->dom->addChild(
             $veicTransp,
-            "UF",
+            "UF", // X20
             $std->UF,
-            true,
+            false,
             "Sigla da UF do Veículo"
         );
         $this->dom->addChild(
             $veicTransp,
-            "RNTC",
+            "RNTC", // X21
             $std->RNTC,
             false,
             "Registro Nacional de Transportador de Carga (ANTT) do Veículo"
@@ -6251,10 +6284,9 @@ class Make
     /**
      * Grupo Reboque X22 pai X17.1
      * tag NFe/infNFe/transp/reboque (opcional)
-     * @param stdClass $std
-     * @return DOMElement
+     * Ajustado NT 2020.005 v1.20
      */
-    public function tagreboque(stdClass $std)
+    public function tagreboque(stdClass $std): DOMElement
     {
         $possible = [
             'placa',
@@ -6265,21 +6297,21 @@ class Make
         $reboque = $this->dom->createElement("reboque");
         $this->dom->addChild(
             $reboque,
-            "placa",
+            "placa", // X23
             $std->placa,
             true,
             "Placa do Veículo Reboque"
         );
         $this->dom->addChild(
             $reboque,
-            "UF",
+            "UF", // X24
             $std->UF,
-            true,
+            false,
             "Sigla da UF do Veículo Reboque"
         );
         $this->dom->addChild(
             $reboque,
-            "RNTC",
+            "RNTC", // X25
             $std->RNTC,
             false,
             "Registro Nacional de Transportador de Carga (ANTT) do Veículo Reboque"
@@ -6295,7 +6327,6 @@ class Make
     /**
      * Campo Vagao X25a pai X01
      * tag NFe/infNFe/transp/vagao (opcional)
-     * @param stdClass $std
      */
     public function tagvagao(stdClass $std)
     {
@@ -6315,7 +6346,6 @@ class Make
     /**
      * Campo Balsa X25b pai X01
      * tag NFe/infNFe/transp/balsa (opcional)
-     * @param stdClass $std
      */
     public function tagbalsa(stdClass $std)
     {
@@ -6335,10 +6365,8 @@ class Make
     /**
      * Grupo Volumes X26 pai X01
      * tag NFe/infNFe/transp/vol (opcional)
-     * @param  stdClass $std
-     * @return DOMElement
      */
-    public function tagvol(stdClass $std)
+    public function tagvol(stdClass $std): DOMElement
     {
         $possible = [
             'item',
@@ -6400,10 +6428,8 @@ class Make
     /**
      * Grupo Lacres X33 pai X26
      * tag NFe/infNFe/transp/vol/lacres (opcional)
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function taglacres(stdClass $std)
+    public function taglacres(stdClass $std): DOMElement
     {
         $lacre = $this->dom->createElement("lacres");
         $this->dom->addChild(
@@ -6432,10 +6458,8 @@ class Make
      * NOTA: Ajustado para NT2016_002_v1.30
      * tag NFe/infNFe/pag (obrigatorio na NT2016_002_v1.30)
      * Obrigatório para 55 e 65
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagpag($std)
+    public function tagpag(stdClass $std): DOMElement
     {
         $possible = [
             'vTroco'
@@ -6459,10 +6483,8 @@ class Make
      * NOTA: Ajuste NT_2016_002_v1 51
      * NOTA: Ajuste NT_2020_006
      * tag NFe/infNFe/pag/detPag
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagdetPag($std)
+    public function tagdetPag(stdClass $std): DOMElement
     {
         $possible = [
             'indPag',
@@ -6547,14 +6569,13 @@ class Make
         }
         return $detPag;
     }
-    
+
     /**
      * Dados do intermediador
      *
-     * @param stdClass $std
-     * @return \DomElement
+     *
      */
-    public function tagIntermed(stdClass $std)
+    public function tagIntermed(stdClass $std): \DomElement
     {
         $possible = [
             'CNPJ',
@@ -6568,7 +6589,7 @@ class Make
             $std->CNPJ,
             true,
             "CNPJ do Intermediador da Transação (agenciador, plataforma de "
-            . "delivery, marketplace e similar) de serviços e de negócios"
+                . "delivery, marketplace e similar) de serviços e de negócios"
         );
         $this->dom->addChild(
             $tag,
@@ -6583,10 +6604,8 @@ class Make
     /**
      * Grupo Fatura Y02 pai Y01
      * tag NFe/infNFe/cobr/fat (opcional)
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagfat(stdClass $std)
+    public function tagfat(stdClass $std): DOMElement
     {
         $possible = [
             'nFat',
@@ -6633,10 +6652,8 @@ class Make
      * Grupo Duplicata Y07 pai Y02
      * tag NFe/infNFe/cobr/fat/dup (opcional)
      * É necessário criar a tag fat antes de criar as duplicatas
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagdup(stdClass $std)
+    public function tagdup(stdClass $std): DOMElement
     {
         $possible = [
             'nDup',
@@ -6674,10 +6691,8 @@ class Make
     /**
      * Grupo de Informações Adicionais Z01 pai A01
      * tag NFe/infNFe/infAdic (opcional)
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function taginfAdic(stdClass $std)
+    public function taginfAdic(stdClass $std): DOMElement
     {
         $possible = ['infAdFisco', 'infCpl'];
         $std = $this->equilizeParameters($std, $possible);
@@ -6703,10 +6718,8 @@ class Make
      * Grupo Campo de uso livre do contribuinte Z04 pai Z01
      * tag NFe/infNFe/infAdic/obsCont (opcional)
      * O método taginfAdic deve ter sido carregado antes
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagobsCont(stdClass $std)
+    public function tagobsCont(stdClass $std): DOMElement
     {
         $possible = ['xCampo', 'xTexto'];
         $std = $this->equilizeParameters($std, $possible);
@@ -6728,10 +6741,8 @@ class Make
      * Grupo Campo de uso livre do Fisco Z07 pai Z01
      * tag NFe/infNFe/infAdic/obsFisco (opcional)
      * O método taginfAdic deve ter sido carregado antes
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagobsFisco(stdClass $std)
+    public function tagobsFisco(stdClass $std): DOMElement
     {
         $possible = ['xCampo', 'xTexto'];
         $std = $this->equilizeParameters($std, $possible);
@@ -6753,10 +6764,8 @@ class Make
      * Grupo Processo referenciado Z10 pai Z01 (NT2012.003)
      * tag NFe/infNFe/procRef (opcional)
      * O método taginfAdic deve ter sido carregado antes
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagprocRef($std)
+    public function tagprocRef(stdClass $std): DOMElement
     {
         $possible = ['nProc', 'indProc'];
         $std = $this->equilizeParameters($std, $possible);
@@ -6783,10 +6792,8 @@ class Make
     /**
      * Grupo Exportação ZA01 pai A01
      * tag NFe/infNFe/exporta (opcional)
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagexporta(stdClass $std)
+    public function tagexporta(stdClass $std): DOMElement
     {
         $possible = ['UFSaidaPais', 'xLocExporta', 'xLocDespacho'];
         $std = $this->equilizeParameters($std, $possible);
@@ -6818,10 +6825,8 @@ class Make
     /**
      * Grupo Compra ZB01 pai A01
      * tag NFe/infNFe/compra (opcional)
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagcompra(stdClass $std)
+    public function tagcompra(stdClass $std): DOMElement
     {
         $possible = ['xNEmp', 'xPed', 'xCont'];
         $std = $this->equilizeParameters($std, $possible);
@@ -6853,10 +6858,8 @@ class Make
     /**
      * Grupo Cana ZC01 pai A01
      * tag NFe/infNFe/cana (opcional)
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagcana(stdClass $std)
+    public function tagcana(stdClass $std): DOMElement
     {
         $possible = [
             'safra',
@@ -6932,10 +6935,8 @@ class Make
     /**
      * Grupo Fornecimento diário de cana ZC04 pai ZC01
      * tag NFe/infNFe/cana/forDia
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagforDia(stdClass $std)
+    public function tagforDia(stdClass $std): DOMElement
     {
         $forDia = $this->dom->createElement("forDia");
         $forDia->setAttribute("dia", $std->dia);
@@ -6954,10 +6955,8 @@ class Make
     /**
      * Grupo Deduções – Taxas e Contribuições ZC10 pai ZC01
      * tag NFe/infNFe/cana/deduc (opcional)
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function tagdeduc(stdClass $std)
+    public function tagdeduc(stdClass $std): DOMElement
     {
         $possible = ['xDed', 'vDed'];
         $std = $this->equilizeParameters($std, $possible);
@@ -6983,10 +6982,8 @@ class Make
 
     /**
      * Informações suplementares da Nota Fiscal
-     * @param stdClass $std
-     * @return DOMElement
      */
-    public function taginfNFeSupl(stdClass $std)
+    public function taginfNFeSupl(stdClass $std): DOMElement
     {
         $possible = ['qrcode', 'urlChave'];
         $std = $this->equilizeParameters($std, $possible);
@@ -7010,11 +7007,9 @@ class Make
     /**
      * Informações do Responsável técnico ZD01 pai A01
      * tag NFe/infNFe/infRespTec (opcional)
-     * @param stdClass $std
-     * @return DOMElement
      * @throws RuntimeException
      */
-    public function taginfRespTec(stdClass $std)
+    public function taginfRespTec(stdClass $std): DOMElement
     {
         $possible = [
             'CNPJ',
@@ -7033,7 +7028,7 @@ class Make
             $std->CNPJ,
             true,
             "Informar o CNPJ da pessoa jurídica responsável pelo sistema "
-            . "utilizado na emissão do documento fiscal eletrônico"
+                . "utilizado na emissão do documento fiscal eletrônico"
         );
         $this->dom->addChild(
             $infRespTec,
@@ -7041,7 +7036,7 @@ class Make
             $std->xContato,
             true,
             "Informar o nome da pessoa a ser contatada na empresa desenvolvedora "
-            . "do sistema utilizado na emissão do documento fiscal eletrônico"
+                . "do sistema utilizado na emissão do documento fiscal eletrônico"
         );
         $this->dom->addChild(
             $infRespTec,
@@ -7049,7 +7044,7 @@ class Make
             $std->email,
             true,
             "Informar o e-mail da pessoa a ser contatada na empresa "
-            . "desenvolvedora do sistema."
+                . "desenvolvedora do sistema."
         );
         $this->dom->addChild(
             $infRespTec,
@@ -7057,7 +7052,7 @@ class Make
             $std->fone,
             true,
             "Informar o telefone da pessoa a ser contatada na empresa "
-            . "desenvolvedora do sistema."
+                . "desenvolvedora do sistema."
         );
         if (!empty($std->CSRT) && !empty($std->idCSRT)) {
             $this->csrt = $std->CSRT;
@@ -7085,11 +7080,10 @@ class Make
      * tag NFe DOMNode
      * Função chamada pelo método [ monta ]
      *
-     * @return DOMElement
      */
-    protected function buildNFe()
+    protected function buildNFe(): DOMElement
     {
-        if (empty($this->NFe)) {
+        if (!$this->NFe) {
             $this->NFe = $this->dom->createElement("NFe");
             $this->NFe->setAttribute("xmlns", "http://www.portalfiscal.inf.br/nfe");
         }
@@ -7112,9 +7106,8 @@ class Make
     /**
      * Insere dentro dentro das tags imposto o ICMS IPI II PIS COFINS ISSQN
      * tag NFe/infNFe/det[]/imposto
-     * @return void
      */
-    protected function buildImp()
+    protected function buildImp(): void
     {
         foreach ($this->aImposto as $nItem => $imposto) {
             if (!empty($this->aICMS[$nItem])) {
@@ -7152,10 +7145,8 @@ class Make
      * Grupo COFINS tributado pela alíquota S02 pai S01
      * tag det/imposto/COFINS/COFINSAliq (opcional)
      * Função chamada pelo método [ tagCOFINS ]
-     * @param stdClass $std
-     * @return DOMElement
      */
-    protected function buildCOFINSAliq($std)
+    protected function buildCOFINSAliq(stdClass $std): DOMElement
     {
         $confinsAliq = $this->dom->createElement('COFINSAliq');
         $this->dom->addChild(
@@ -7193,10 +7184,8 @@ class Make
      * Grupo COFINS não tributado S04 pai S01
      * tag NFe/infNFe/det[]/imposto/COFINS/COFINSNT (opcional)
      * Função chamada pelo método [ tagCOFINS ]
-     * @param stdClass $std
-     * @return DOMElement
      */
-    protected function buildCOFINSNT(stdClass $std)
+    protected function buildCOFINSNT(stdClass $std): DOMElement
     {
         $confinsnt = $this->dom->createElement('COFINSNT');
         $this->dom->addChild(
@@ -7213,10 +7202,8 @@ class Make
      * Grupo COFINS Outras Operações S05 pai S01
      * tag NFe/infNFe/det[]/imposto/COFINS/COFINSoutr (opcional)
      * Função chamada pelo método [ tagCOFINS ]
-     * @param stdClass $std
-     * @return DOMElement
      */
-    protected function buildCOFINSoutr(stdClass $std)
+    protected function buildCOFINSoutr(stdClass $std): DOMElement
     {
         $confinsoutr = $this->dom->createElement('COFINSOutr');
         $this->dom->addChild(
@@ -7449,10 +7436,6 @@ class Make
      */
     protected function buildTotal()
     {
-        if (empty($this->total)) {
-            $this->total = $this->dom->createElement("total");
-        }
-        
         //round all values
         $this->stdTot->vBC = round($this->stdTot->vBC, 2);
         $this->stdTot->vICMS = round($this->stdTot->vICMS, 2);
@@ -7477,7 +7460,7 @@ class Make
         $this->stdTot->vOutro = round($this->stdTot->vOutro, 2);
         $this->stdTot->vNF = round($this->stdTot->vNF, 2);
         $this->stdTot->vTotTrib = round($this->stdTot->vTotTrib, 2);
-        
+
         $this->stdTot->vNF = $this->stdTot->vProd
             - $this->stdTot->vDesc
             - $this->stdTot->vICMSDeson
@@ -7489,9 +7472,54 @@ class Make
             + $this->stdTot->vII
             + $this->stdTot->vIPI
             + $this->stdTot->vIPIDevol
-            + $this->stdTot->vServ
+            + $this->stdISSQNTot->vServ
             + $this->stdTot->vPISST
             + $this->stdTot->vCOFINSST;
+    }
+
+    protected function buildISSQNTot()
+    {
+        if ($this->flagISSQNCalc) {
+            return;
+        }
+
+        //totaliza PIS e COFINS dos Itens de Serviço
+        foreach ($this->aItensServ as $item) {
+            if (!empty($this->aPIS[$item])) {
+                $vPIS = (float) $this->getNodeValue($this->aPIS[$item], 'vPIS');
+                $this->stdISSQNTot->vPIS += (float) $vPIS;
+                //remove esse valor do total já contabiizado no stdTot
+                $this->stdTot->vPIS -= $vPIS;
+            }
+            //totalizar COFINS desses itens
+            if (!empty($this->aCOFINS[$item])) {
+                $vCOFINS = (float) $this->getNodeValue($this->aCOFINS[$item], 'vCOFINS');
+                $this->stdISSQNTot->vCOFINS += (float) $vCOFINS;
+                //remove esse valor do total já contabiizado no stdTot
+                $this->stdTot->vCOFINS -= $vCOFINS;
+            }
+        }
+        $this->stdISSQNTot->vServ = $this->conditionalNumberFormatting($this->stdISSQNTot->vServ);
+        $this->stdISSQNTot->vBC = $this->conditionalNumberFormatting($this->stdISSQNTot->vBC);
+        $this->stdISSQNTot->vISS = $this->conditionalNumberFormatting($this->stdISSQNTot->vISS);
+        $this->stdISSQNTot->vPIS = $this->conditionalNumberFormatting($this->stdISSQNTot->vPIS);
+        $this->stdISSQNTot->vCOFINS = $this->conditionalNumberFormatting($this->stdISSQNTot->vCOFINS);
+        $this->stdISSQNTot->vDeducao = $this->conditionalNumberFormatting($this->stdISSQNTot->vDeducao);
+        $this->stdISSQNTot->vOutro = $this->conditionalNumberFormatting($this->stdISSQNTot->vOutro);
+        $this->stdISSQNTot->vDescIncond = $this->conditionalNumberFormatting($this->stdISSQNTot->vDescIncond);
+        $this->stdISSQNTot->vDescCond = $this->conditionalNumberFormatting($this->stdISSQNTot->vDescCond);
+        $this->stdISSQNTot->vISSRet = $this->conditionalNumberFormatting($this->stdISSQNTot->vISSRet);
+
+        $this->flagISSQNCalc = true;
+    }
+
+    private function getNodeValue(DOMElement $node, string $name)
+    {
+        $dom = new Dom('1.0', 'utf-8');
+        $dom->loadXML("<root></root>");
+        $newnode = $dom->importNode($node, true);
+        $dom->documentElement->appendChild($newnode);
+        return $dom->getNodeValue($name);
     }
 
     /**
@@ -7501,7 +7529,7 @@ class Make
      */
     protected function buildCobr()
     {
-        if (empty($this->cobr)) {
+        if (!$this->cobr) {
             $this->cobr = $this->dom->createElement("cobr");
         }
     }
@@ -7511,11 +7539,10 @@ class Make
      * tag NFe/infNFe/infAdic (opcional)
      * Função chamada pelos metodos
      * [taginfAdic] [tagobsCont] [tagobsFisco] [tagprocRef]
-     * @return DOMElement
      */
-    protected function buildInfAdic()
+    protected function buildInfAdic(): DOMElement
     {
-        if (empty($this->infAdic)) {
+        if (!$this->infAdic) {
             $this->infAdic = $this->dom->createElement("infAdic");
         }
         return $this->infAdic;
@@ -7526,10 +7553,8 @@ class Make
      * já contidos na NFE.
      * Isso é útil no caso da chave informada estar errada
      * se a chave estiver errada a mesma é substituida
-     * @param Dom $dom
-     * @return void
      */
-    protected function checkNFeKey(Dom $dom)
+    protected function checkNFeKey(Dom $dom): void
     {
         $infNFe = $dom->getElementsByTagName("infNFe")->item(0);
         $ide = $dom->getElementsByTagName("ide")->item(0);
@@ -7583,9 +7608,8 @@ class Make
 
     /**
      * Retorna os erros detectados
-     * @return array
      */
-    public function getErrors()
+    public function getErrors(): array
     {
         return $this->errors;
     }
@@ -7593,11 +7617,8 @@ class Make
     /**
      * Includes missing or unsupported properties in stdClass
      * Replace all unsuported chars
-     * @param stdClass $std
-     * @param array $possible
-     * @return stdClass
      */
-    protected function equilizeParameters(stdClass $std, $possible)
+    protected function equilizeParameters(stdClass $std, array $possible): stdClass
     {
         return Strings::equilizeParameters(
             $std,
@@ -7608,26 +7629,23 @@ class Make
 
     /**
      * Calcula hash sha1 retornando Base64Binary
-     * @param string $CSRT
-     * @return string
      */
-    protected function hashCSRT($CSRT)
+    protected function hashCSRT(string $CSRT): string
     {
         $comb = $CSRT . $this->chNFe;
         return base64_encode(sha1($comb, true));
     }
-    
+
     /**
      * Formatação numerica condicional
      * @param string|float|int|null $value
-     * @param int $decimal
-     * @return string
      */
-    protected function conditionalNumberFormatting($value = null, $decimal = 2)
+    protected function conditionalNumberFormatting($value = null, int $decimal = 2): ?string
     {
         if (is_numeric($value)) {
             return number_format($value, $decimal, '.', '');
         }
+
         return null;
     }
 }

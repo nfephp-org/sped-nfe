@@ -41,7 +41,7 @@ class ConfigTest extends NFeTestCase
 
     public function testValidadeFailWithArray()
     {
-        $this->expectException(\NFePHP\NFe\Exception\DocumentsException::class);
+        $this->expectException(\TypeError::class);
         $config = [
             "atualizacao" => "2017-02-20 09:11:21",
             "tpAmb" => 2,
@@ -60,7 +60,8 @@ class ConfigTest extends NFeTestCase
                 "proxyPass" => ""
             ]
         ];
-        $resp = Config::validate($config);
+        //@phpstan-ignore-next-line
+        Config::validate($config);
     }
 
     public function testValidadeFailWithoutJsonString()

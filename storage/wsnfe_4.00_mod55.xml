@@ -24,8 +24,8 @@
     <UF>
         <sigla>AN</sigla>
         <homologacao>
-            <RecepcaoEvento method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="1.00">https://hom.nfe.fazenda.gov.br/NFeRecepcaoEvento4/NFeRecepcaoEvento4.asmx</RecepcaoEvento>
-            <NfeDistribuicaoDFe method="nfeDistDFeInteresse" operation="NFeDistribuicaoDFe" version="1.01">https://hom.nfe.fazenda.gov.br/NFeDistribuicaoDFe/NFeDistribuicaoDFe.asmx</NfeDistribuicaoDFe>
+            <RecepcaoEvento method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="1.00">https://hom1.nfe.fazenda.gov.br/NFeRecepcaoEvento4/NFeRecepcaoEvento4.asmx</RecepcaoEvento>
+            <NfeDistribuicaoDFe method="nfeDistDFeInteresse" operation="NFeDistribuicaoDFe" version="1.01">https://hom1.nfe.fazenda.gov.br/NFeDistribuicaoDFe/NFeDistribuicaoDFe.asmx</NfeDistribuicaoDFe>
             <NfeConsultaDest method="nfeConsultaNFDest" operation="NfeConsultaDest" version="1.01">https://hom.nfe.fazenda.gov.br/NFeConsultaDest/NFeConsultaDest.asmx</NfeConsultaDest>
             <NfeDownloadNF method="nfeDownloadNF" operation="NfeDownloadNF" version="4.00">https://hom.nfe.fazenda.gov.br/NfeDownloadNF/NfeDownloadNF.asmx</NfeDownloadNF>
             <RecepcaoEPEC method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="4.00">https://hom.nfe.fazenda.gov.br/RecepcaoEvento/RecepcaoEvento.asmx</RecepcaoEPEC>
@@ -57,27 +57,6 @@
             <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NFeRetAutorizacao4" version="4.00">https://nfe.sefaz.ba.gov.br/webservices/NFeRetAutorizacao4/NFeRetAutorizacao4.asmx</NfeRetAutorizacao>
             <RecepcaoEvento method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="1.00">https://nfe.sefaz.ba.gov.br/webservices/NFeRecepcaoEvento4/NFeRecepcaoEvento4.asmx</RecepcaoEvento>
             <NfeConsultaCadastro method="consultaCadastro" operation="CadConsultaCadastro4" version="2.00">https://nfe.sefaz.ba.gov.br/webservices/CadConsultaCadastro4/CadConsultaCadastro4.asmx</NfeConsultaCadastro>
-        </producao>
-    </UF>
-    <UF>
-        <sigla>CE</sigla>
-        <homologacao>
-            <NfeStatusServico method="nfeStatusServicoNF" operation="NFeStatusServico4" version="4.00">https://nfeh.sefaz.ce.gov.br/nfe4/services/NFeStatusServico4</NfeStatusServico>
-            <NfeAutorizacao method="nfeAutorizacaoLote" operation="NFeAutorizacao4" version="4.00">https://nfeh.sefaz.ce.gov.br/nfe4/services/NFeAutorizacao4</NfeAutorizacao>
-            <NfeConsultaProtocolo method="nfeConsultaNF" operation="NFeConsultaProtocolo4" version="4.00">https://nfeh.sefaz.ce.gov.br/nfe4/services/NFeConsultaProtocolo4</NfeConsultaProtocolo>
-            <NfeInutilizacao method="nfeInutilizacaoNF" operation="NFeInutilizacao4" version="4.00">https://nfeh.sefaz.ce.gov.br/nfe4/services/NFeInutilizacao4</NfeInutilizacao>
-            <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NFeRetAutorizacao4" version="4.00">https://nfeh.sefaz.ce.gov.br/nfe4/services/NFeRetAutorizacao4</NfeRetAutorizacao>
-            <RecepcaoEvento method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="1.00">https://nfeh.sefaz.ce.gov.br/nfe4/services/NFeRecepcaoEvento4</RecepcaoEvento>
-            <NfeConsultaCadastro method="consultaCadastro" operation="CadConsultaCadastro4" version="2.00"></NfeConsultaCadastro>
-        </homologacao>
-        <producao>
-            <NfeStatusServico method="nfeStatusServicoNF" operation="NFeStatusServico4" version="4.00">https://nfe.sefaz.ce.gov.br/nfe4/services/NFeStatusServico4</NfeStatusServico>
-            <NfeAutorizacao method="nfeAutorizacaoLote" operation="NFeAutorizacao4" version="4.00">https://nfe.sefaz.ce.gov.br/nfe4/services/NFeAutorizacao4</NfeAutorizacao>
-            <NfeConsultaProtocolo method="nfeConsultaNF" operation="NFeConsultaProtocolo4" version="4.00">https://nfe.sefaz.ce.gov.br/nfe4/services/NFeConsultaProtocolo4</NfeConsultaProtocolo>
-            <NfeInutilizacao method="nfeInutilizacaoNF" operation="NFeInutilizacao4" version="4.00">https://nfe.sefaz.ce.gov.br/nfe4/services/NFeInutilizacao4</NfeInutilizacao>
-            <NfeRetAutorizacao method="nfeRetAutorizacaoLote" operation="NFeRetAutorizacao4" version="4.00">https://nfe.sefaz.ce.gov.br/nfe4/services/NFeRetAutorizacao4</NfeRetAutorizacao>
-            <RecepcaoEvento method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="1.00">https://nfe.sefaz.ce.gov.br/nfe4/services/NFeRecepcaoEvento4</RecepcaoEvento>
-            <NfeConsultaCadastro method="consultaCadastro" operation="CadConsultaCadastro4" version="2.00">https://nfe.sefaz.ce.gov.br/nfe4/services/CadConsultaCadastro4</NfeConsultaCadastro>
         </producao>
     </UF>
     <UF>

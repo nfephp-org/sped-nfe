@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/nfe" targetNamespace="http://www.portalfiscal.inf.br/nfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v1.01.xsd"/>
+	<xs:include schemaLocation="tiposBasico_v3.10.xsd"/>
+	<xs:element name="retEnvEvento">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="idLote">
+                    <xs:annotation>
+                        <xs:documentation>Identificador de controle do Lote de envio do Evento, conforme informado na mensagem de entrada.</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:whiteSpace value="preserve" />
+                            <xs:pattern value="[0-9]{1,15}" />
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="tpAmb" type="TAmb">
+                    <xs:annotation>
+                        <xs:documentation>Identificação do Ambiente: 1=Produção /2=Homologação</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="verAplic" type="TVerAplic">
+                    <xs:annotation>
+                        <xs:documentation>Versão da aplicação que processou o evento.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="cOrgao" type="TCOrgaoIBGE">
+                    <xs:annotation>
+                        <xs:documentation>Código da UF que registrou o Evento. </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="cStat" type="TStat">
+                    <xs:annotation>
+                        <xs:documentation>Código do status da resposta </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="xMotivo" type="TMotivo">
+                    <xs:annotation>
+                        <xs:documentation>Descrição do status da resposta </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="retEvento" minOccurs="0" maxOccurs="20">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:annotation>
+                                <xs:documentation>TAG de grupo do resultado do processamento do Evento</xs:documentation>
+                            </xs:annotation>
+                            <xs:element name="infEvento">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:annotation>
+                                            <xs:documentation>Grupo de informações do registro do Evento</xs:documentation>
+                                        </xs:annotation>
+                                        <xs:element name="tpAmb" type="TAmb">
+                                            <xs:annotation>
+                                                <xs:documentation>Identificação do Ambiente: 1=Produção /2=Homologação</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                        <xs:element name="verAplic" type="TVerAplic">
+                                            <xs:annotation>
+                                                <xs:documentation>Versão da aplicação que registrou o Evento, utilizar literal que permita a identificação do órgão, como a sigla da UF ou do órgão.</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                        <xs:element name="cOrgao" type="TCOrgaoIBGE">
+                                            <xs:annotation>
+                                                <xs:documentation>Código da UF que registrou o Evento. </xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                        <xs:element name="cStat" type="TStat">
+                                            <xs:annotation>
+                                                <xs:documentation>Código do status da resposta.</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                        <xs:element name="xMotivo" type="TMotivo">
+                                            <xs:annotation>
+                                                <xs:documentation>Descrição do status da resposta.</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                        <xs:element minOccurs="0" name="chNFe" type="TChNFe">
+                                            <xs:annotation>
+                                                <xs:documentation>Chave de Acesso da NFC-e vinculada ao evento.</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                        <xs:element minOccurs="0" name="tpEvento">
+                                            <xs:annotation>
+                                                <xs:documentation>110140  EPEC</xs:documentation>
+                                            </xs:annotation>
+                                            <xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:whiteSpace value="preserve"/>
+													<xs:pattern value="[0-9]{6}"/>
+													<xs:enumeration value="110140"/>
+												</xs:restriction>
+											</xs:simpleType>
+                                        </xs:element>
+                                        <xs:element minOccurs="0" name="xEvento">
+                                            <xs:annotation>
+                                                <xs:documentation>EPEC autorizado</xs:documentation>
+                                            </xs:annotation>
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:minLength value="5" />
+                                                    <xs:maxLength  value="60" />
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element minOccurs="0" name="nSeqEvento">
+                                            <xs:annotation>
+                                                <xs:documentation>Sequencial do evento, conforme a mensagem de entrada.</xs:documentation>
+                                            </xs:annotation>
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:whiteSpace value="preserve" />
+                                                    <xs:pattern value="[0-9]{1,2}" />
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element minOccurs="0" name="cOrgaoAutor" type="TCodUfIBGE">
+                                            <xs:annotation>
+                                                <xs:documentation>Idem a mensagem de entrada.</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                        <xs:element name="dhRegEvento" type="TDateTimeUTC">
+                                            <xs:annotation>
+                                                <xs:documentation>Data e hora de registro do evento no formato AAAA-MM-DDTHH:MM:SSTZD (formato UTC, onde TZD é +HH:MM ou HH:MM). Se o evento for rejeitado informar a data e hora de recebimento do evento.</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                        <xs:element minOccurs="0" name="nProt" type="TProt">
+                                            <xs:annotation>
+                                                <xs:documentation>Número do Protocolo do Evento</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                        <xs:element minOccurs="0" maxOccurs="50" name="chNFePend" type="TChNFe">
+                                            <xs:annotation>
+                                                <xs:documentation>Relação de Chaves de Acesso de EPEC pendentes de</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                    </xs:sequence>
+									<xs:attribute name="Id">
+										<xs:simpleType>
+                                            <xs:annotation>
+                                                <xs:documentation>Identificador da TAG a ser assinada, somente deve ser informado se o órgão de registro assinar a resposta.</xs:documentation>
+                                            </xs:annotation>
+                                            <xs:restriction base="xs:string">
+												<xs:length  value="17" />
+											</xs:restriction>
+                                        </xs:simpleType>
+                                    </xs:attribute>    
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element ref="ds:Signature" minOccurs="0"/>
+                        </xs:sequence>
+						<xs:attribute name="versao" type="TVerEvento" use="required" />
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+			<xs:attribute name="versao" type="TVerEvento" use="required" />
+        </xs:complexType>
+    </xs:element>
+	<xs:simpleType name="TVerEvento">
+		<xs:annotation>
+			<xs:documentation>Tipo Versão do Evento</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="[0-9]{1,2}\.[0-9]{1,2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TCOrgaoIBGE">
+		<xs:annotation>
+			<xs:documentation>Tipo Código de orgão (UF da tabela do IBGE + 91 RFB)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:enumeration value="11"/>
+			<xs:enumeration value="12"/>
+			<xs:enumeration value="13"/>
+			<xs:enumeration value="14"/>
+			<xs:enumeration value="15"/>
+			<xs:enumeration value="16"/>
+			<xs:enumeration value="17"/>
+			<xs:enumeration value="21"/>
+			<xs:enumeration value="22"/>
+			<xs:enumeration value="23"/>
+			<xs:enumeration value="24"/>
+			<xs:enumeration value="25"/>
+			<xs:enumeration value="26"/>
+			<xs:enumeration value="27"/>
+			<xs:enumeration value="28"/>
+			<xs:enumeration value="29"/>
+			<xs:enumeration value="31"/>
+			<xs:enumeration value="32"/>
+			<xs:enumeration value="33"/>
+			<xs:enumeration value="35"/>
+			<xs:enumeration value="41"/>
+			<xs:enumeration value="42"/>
+			<xs:enumeration value="43"/>
+			<xs:enumeration value="50"/>
+			<xs:enumeration value="51"/>
+			<xs:enumeration value="52"/>
+			<xs:enumeration value="53"/>
+			<xs:enumeration value="91"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

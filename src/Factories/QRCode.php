@@ -1,7 +1,5 @@
 <?php
 
-namespace NFePHP\NFe\Factories;
-
 /**
  * Class QRCode create a string to make a QRCode string to NFCe
  * NOTE: this class only works with model 65 NFCe only
@@ -15,6 +13,8 @@ namespace NFePHP\NFe\Factories;
  * @author    Roberto L. Machado <linux.rlm at gmail dot com>
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
+
+namespace NFePHP\NFe\Factories;
 
 use DOMDocument;
 use NFePHP\NFe\Exception\DocumentsException;
@@ -32,17 +32,16 @@ class QRCode
      * @param string $versao version of field
      * @param string $urlqr URL for search by QRCode
      * @param string $urichave URL for search by chave layout 4.00 only
-     * @return string
      * @throws DocumentsException
      */
     public static function putQRTag(
         \DOMDocument $dom,
-        $token,
-        $idToken,
-        $versao,
-        $urlqr,
-        $urichave = ''
-    ) {
+        string $token,
+        string $idToken,
+        string $versao,
+        string $urlqr,
+        string $urichave = ''
+    ): string {
         $token = trim($token);
         $idToken = trim($idToken);
         $versao = trim($versao);
@@ -116,62 +115,47 @@ class QRCode
 
     /**
      * Return a QRCode version 2 string to be used in NFCe layout 4.00
-     * @param  string $chNFe
-     * @param  string $url
-     * @param  string $tpAmb
-     * @param  string $dhEmi
-     * @param  string $vNF
-     * @param  string $vICMS
-     * @param  string $digVal
-     * @param  string $token
-     * @param  string $idToken
-     * @param  string $versao
-     * @param  int    $tpEmis
-     * @param  string $cDest
-     * @return string
      */
     protected static function get200(
-        $chNFe,
-        $url,
-        $tpAmb,
-        $dhEmi,
-        $vNF,
-        $vICMS,
-        $digVal,
-        $token,
-        $idToken,
-        $versao,
-        $tpEmis,
-        $cDest
-    ) {
-        $ver = $versao/100;
+        string $chNFe,
+        string $url,
+        string $tpAmb,
+        string $dhEmi,
+        string $vNF,
+        string $vICMS,
+        string $digVal,
+        string $token,
+        string $idToken,
+        string $versao,
+        int $tpEmis,
+        string $cDest
+    ): string {
+        $ver = $versao / 100;
         $cscId = (int) $idToken;
         $csc = $token;
         if (strpos($url, '?p=') === false) {
-            $url = $url.'?p=';
+            $url = $url . '?p=';
         }
         if ($tpEmis != 9) {
             //emissão on-line
             $seq = "$chNFe|$ver|$tpAmb|$cscId";
-            $hash = strtoupper(sha1($seq.$csc));
+            $hash = strtoupper(sha1($seq . $csc));
             return "$url$seq|$hash";
         }
         //emissão off-line
         $dt = new \DateTime($dhEmi);
         $dia = $dt->format('d');
-        $valor = number_format($vNF, 2, '.', '');
+        $valor = number_format((float)$vNF, 2, '.', '');
         $digHex = self::str2Hex($digVal);
         $seq = "$chNFe|$ver|$tpAmb|$dia|$valor|$digHex|$cscId";
-        $hash = strtoupper(sha1($seq.$csc));
+        $hash = strtoupper(sha1($seq . $csc));
         return "$url$seq|$hash";
     }
 
     /**
      * Convert string to hexadecimal ASCII equivalent
-     * @param  string $str
-     * @return string
      */
-    protected static function str2Hex($str)
+    protected static function str2Hex(string $str): string
     {
         $hex = "";
         $iCount = 0;

@@ -17,18 +17,16 @@ namespace NFePHP\NFe\Common;
 
 class ValidTXT
 {
-    const LOCAL="LOCAL";
-    const LOCAL_V12 = "LOCAL_V12";
-    const SEBRAE="SEBRAE";
+    public const LOCAL = "LOCAL";
+    public const LOCAL_V12 = "LOCAL_V12";
+    public const SEBRAE = "SEBRAE";
 
     /**
      * Loads structure of txt from json file in storage folder
-     * @param float $version
-     * @param string $baselayout
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public static function loadStructure($version = 4.00, $baselayout = self::LOCAL)
+    public static function loadStructure(float $version = 4.00, string $baselayout = self::LOCAL)
     {
         $path = realpath(__DIR__ . "/../../storage");
         $comp = '';
@@ -37,7 +35,7 @@ class ValidTXT
         } elseif (strtoupper($baselayout) === 'LOCAL_V12') {
             $comp = '_v1.2';
         }
-        $file = $path . '/txtstructure' . ($version*100) . $comp . '.json';
+        $file = $path . '/txtstructure' . ($version * 100) . $comp . '.json';
         if (!is_file($file)) {
             throw new \InvalidArgumentException("O arquivo de estrutura para a "
                 . "versão de layout indicada no TXT, não foi encontrado [$file].");
@@ -50,11 +48,8 @@ class ValidTXT
      * Verifies the validity of txt according to the rules of the code
      * If is valid returns empty array
      * Else return array with errors
-     * @param string $txt
-     * @param string $baselayout
-     * @return array
      */
-    public static function isValid($txt, $baselayout = self::LOCAL)
+    public static function isValid(string $txt, string $baselayout = self::LOCAL): array
     {
         $errors = [];
         $txt = str_replace(["\r", "\t"], '', trim($txt));
@@ -63,11 +58,11 @@ class ValidTXT
 
         foreach ($rows as $row) {
             $fields = explode('|', $row);
-            if (empty($fields)) {
+            if (count($fields) == 0) {
                 continue;
             }
             $ref = strtoupper($fields[0]);
-            if (empty($ref)) {
+            if (!$ref) {
                 continue;
             }
             if ($ref === 'NOTAFISCAL') {
@@ -102,12 +97,12 @@ class ValidTXT
                 $errors[] = "ERRO: ($num) Essa referência não está definida. [$row]";
                 continue;
             }
-            $count = count($fields)-1;
-            $default = count(explode('|', $entities[$ref]))-1;
+            $count = count($fields) - 1;
+            $default = count(explode('|', $entities[$ref])) - 1;
             if ($default !== $count) {
                 $errors[] = "ERRO: ($num) O número de parâmetros na linha "
                     . "está errado (esperado #$default) -> (encontrado #$count). [ $row ] Esperado [ "
-                    . $entities[$ref]." ]";
+                    . $entities[$ref] . " ]";
                 continue;
             }
             foreach ($fields as $field) {
@@ -129,15 +124,15 @@ class ValidTXT
                     continue;
                 }
                 $newfield = preg_replace(
-                    '/[\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F]'.
-                    '|[\x00-\x7F][\x80-\xBF]+'.
-                    '|([\xC0\xC1]|[\xF0-\xFF])[\x80-\xBF]*'.
-                    '|[\xC2-\xDF]((?![\x80-\xBF])|[\x80-\xBF]{2,})'.
+                    '/[\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F]' .
+                    '|[\x00-\x7F][\x80-\xBF]+' .
+                    '|([\xC0\xC1]|[\xF0-\xFF])[\x80-\xBF]*' .
+                    '|[\xC2-\xDF]((?![\x80-\xBF])|[\x80-\xBF]{2,})' .
                     '|[\xE0-\xEF](([\x80-\xBF](?![\x80-\xBF]))|(?![\x80-\xBF]{2})|[\x80-\xBF]{3,})/S',
                     '?',
                     $field
                 );
-                 $newfield = preg_replace('/\xE0[\x80-\x9F][\x80-\xBF]'.
+                 $newfield = preg_replace('/\xE0[\x80-\x9F][\x80-\xBF]' .
                     '|\xED[\xA0-\xBF][\x80-\xBF]/S', '?', $newfield);
                 if ($field != $newfield) {
                     $errors[] = "ERRO: ($num) Existem caracteres não UTF-8, não permitidos, "

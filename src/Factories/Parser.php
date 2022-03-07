@@ -1,7 +1,5 @@
 <?php
 
-namespace NFePHP\NFe\Factories;
-
 /**
  * Classe de conversão do TXT para XML
  * NOTA: ajustado para Nota Técnica 2018.005 Versão 1.00 – Dezembro de 2018
@@ -15,15 +13,17 @@ namespace NFePHP\NFe\Factories;
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
 
+namespace NFePHP\NFe\Factories;
+
 use NFePHP\NFe\Make;
 use NFePHP\NFe\Exception\DocumentsException;
 use stdClass;
 
 class Parser
 {
-    const LOCAL = "LOCAL";
-    const LOCAL_V12 = "LOCAL_V12";
-    const SEBRAE = "SEBRAE";
+    public const LOCAL = "LOCAL";
+    public const LOCAL_V12 = "LOCAL_V12";
+    public const SEBRAE = "SEBRAE";
 
     /**
      * @var array
@@ -70,7 +70,7 @@ class Parser
      */
     protected $stdAutXML;
     /**
-     * @var stdClass
+     * @var ?stdClass
      */
     protected $stdComb;
     /**
@@ -108,10 +108,8 @@ class Parser
 
     /**
      * Configure environment to correct NFe layout
-     * @param string $version
-     * @param string $baselayout
      */
-    public function __construct($version = '4.00', $baselayout = self::LOCAL)
+    public function __construct(string $version = '4.00', string $baselayout = self::LOCAL)
     {
         $ver = str_replace('.', '', $version);
         $comp = "";
@@ -121,17 +119,15 @@ class Parser
             $comp = "_v1.2";
         }
         $this->baselayout = $baselayout;
-        $path = realpath(__DIR__."/../../storage/txtstructure$ver" . $comp . ".json");
+        $path = realpath(__DIR__ . "/../../storage/txtstructure$ver" . $comp . ".json");
         $this->structure = json_decode(file_get_contents($path), true);
         $this->make = new Make();
     }
 
     /**
      * Convert txt to XML
-     * @param array $nota
-     * @return string|null
      */
-    public function toXml($nota)
+    public function toXml(array $nota): ?string
     {
         $this->array2xml($nota);
         if ($this->make->monta()) {
@@ -142,45 +138,39 @@ class Parser
 
     /**
      * Retorna erros na criacao do DOM
-     * @return array
      */
-    public function getErrors()
+    public function getErrors(): array
     {
         return $this->make->errors;
     }
 
     /**
      * Converte txt array to xml
-     * @param array $nota
-     * @return void
      */
-    protected function array2xml($nota)
+    protected function array2xml(array $nota): void
     {
         foreach ($nota as $lin) {
             $fields = explode('|', $lin);
-            if (empty($fields)) {
+            if (count($fields) == 0) {
                 continue;
             }
-            $metodo = strtolower(str_replace(' ', '', $fields[0])).'Entity';
-            if (!method_exists(__CLASS__, $metodo)) {
+            $metodo = strtolower(str_replace(' ', '', $fields[0])) . 'Entity';
+            if (!method_exists(self::class, $metodo)) {
                 throw DocumentsException::wrongDocument(16, $lin); //campo não definido
             }
             $struct = $this->structure[strtoupper($fields[0])];
-            $std = $this->fieldsToStd($fields, $struct);
+            $std = static::fieldsToStd($fields, $struct);
             $this->$metodo($std);
         }
     }
 
     /**
      * Creates stdClass for all tag fields
-     * @param array $dfls
-     * @param string $struct
-     * @return stdClass
      */
-    protected static function fieldsToStd($dfls, $struct)
+    protected static function fieldsToStd(array $dfls, string $struct): stdClass
     {
         $sfls = explode('|', $struct);
-        $len = count($sfls)-1;
+        $len = count($sfls) - 1;
         $std = new \stdClass();
         for ($i = 1; $i < $len; $i++) {
             $name = $sfls[$i];
@@ -195,10 +185,8 @@ class Parser
     /**
      * Create tag infNFe [A]
      * A|versao|Id|pk_nItem|
-     * @param stdClass $std
-     * @return void
      */
-    protected function aEntity($std)
+    protected function aEntity(stdClass $std): void
     {
         $this->make->taginfNFe($std);
     }
@@ -207,10 +195,8 @@ class Parser
      * Create tag ide [B]
      * B|cUF|cNF|natOp|mod|serie|nNF|dhEmi|dhSaiEnt|tpNF|idDest|cMunFG|tpImp
      *  |tpEmis|cDV|tpAmb|finNFe|indFinal|indPres|procEmi|verProc|dhCont|xJust|
-     * @param stdClass $std
-     * @return void
      */
-    protected function bEntity($std)
+    protected function bEntity(stdClass $std): void
     {
         $this->make->tagide($std);
     }
@@ -218,10 +204,8 @@ class Parser
     /**
      * Create tag nfref [BA]
      * BA|
-     * @param stdClass $std
-     * @return void
      */
-    protected function baEntity($std)
+    protected function baEntity(stdClass $std): void
     {
         //fake não faz nada
         $field = null;
@@ -230,10 +214,8 @@ class Parser
     /**
      * Create tag refNFe [BA02]
      * BA02|refNFe|
-     * @param stdClass $std
-     * @return void
      */
-    protected function ba02Entity($std)
+    protected function ba02Entity(stdClass $std): void
     {
         $this->make->tagrefNFe($std);
     }
@@ -241,10 +223,8 @@ class Parser
     /**
      * Create tag refNF [BA03]
      * BA03|cUF|AAMM|CNPJ|mod|serie|nNF|
-     * @param stdClass $std
-     * @return void
      */
-    protected function ba03Entity($std)
+    protected function ba03Entity(stdClass $std): void
     {
         $this->make->tagrefNF($std);
     }
@@ -252,10 +232,8 @@ class Parser
     /**
      * Load fields for tag refNFP [BA10]
      * BA10|cUF|AAMM|IE|mod|serie|nNF|
-     * @param stdClass $std
-     * @return void
      */
-    protected function ba10Entity($std)
+    protected function ba10Entity(stdClass $std): void
     {
         $this->stdNFP = $std;
         $this->stdNFP->CNPJ = null;
@@ -265,10 +243,8 @@ class Parser
     /**
      * Create tag refNFP [BA13], with CNPJ belongs to [BA10]
      * BA13|CNPJ|
-     * @param stdClass $std
-     * @return void
      */
-    protected function ba13Entity($std)
+    protected function ba13Entity(stdClass $std): void
     {
         $this->stdNFP->CNPJ = $std->CNPJ;
         $this->buildBA10Entity();
@@ -278,10 +254,8 @@ class Parser
     /**
      * Create tag refNFP [BA14], with CPF belongs to [BA10]
      * BA14|CPF|
-     * @param stdClass $std
-     * @return void
      */
-    protected function ba14Entity($std)
+    protected function ba14Entity(stdClass $std): void
     {
         $this->stdNFP->CPF = $std->CPF;
         $this->buildBA10Entity();
@@ -290,9 +264,8 @@ class Parser
 
     /**
      * Create tag refNFP [BA10]
-     * @return void
      */
-    protected function buildBA10Entity()
+    protected function buildBA10Entity(): void
     {
         $this->make->tagrefNFP($this->stdNFP);
     }
@@ -300,10 +273,8 @@ class Parser
     /**
      * Create tag refCTe [BA19]
      * B19|refCTe|
-     * @param stdClass $std
-     * @return void
      */
-    protected function ba19Entity($std)
+    protected function ba19Entity(stdClass $std): void
     {
         $this->make->tagrefCTe($std);
     }
@@ -311,10 +282,8 @@ class Parser
     /**
      * Create tag refECF [BA20]
      * BA20|mod|nECF|nCOO|
-     * @param stdClass $std
-     * @return void
      */
-    protected function ba20Entity($std)
+    protected function ba20Entity(stdClass $std): void
     {
         $this->make->tagrefECF($std);
     }
@@ -322,10 +291,8 @@ class Parser
     /**
      * Load fields for tag emit [C]
      * C|XNome|XFant|IE|IEST|IM|CNAE|CRT|
-     * @param stdClass $std
-     * @return void
      */
-    protected function cEntity($std)
+    protected function cEntity(stdClass $std): void
     {
         $this->stdEmit = $std;
         $this->stdEmit->CNPJ = null;
@@ -335,10 +302,8 @@ class Parser
     /**
      * Create tag emit [C02], with CNPJ belongs to [C]
      * C02|CNPJ|
-     * @param stdClass $std
-     * @return void
      */
-    protected function c02Entity($std)
+    protected function c02Entity(stdClass $std): void
     {
         $this->stdEmit->CNPJ = $std->CNPJ;
         $this->buildCEntity();
@@ -348,10 +313,8 @@ class Parser
     /**
      * Create tag emit [C02a], with CPF belongs to [C]
      * C02a|CPF|
-     * @param stdClass $std
-     * @return void
      */
-    protected function c02aEntity($std)
+    protected function c02aEntity(stdClass $std): void
     {
         $this->stdEmit->CPF = $std->CPF;
         $this->buildCEntity();
@@ -365,9 +328,8 @@ class Parser
 
     /**
      * Create tag emit [C]
-     * @return void
      */
-    protected function buildCEntity()
+    protected function buildCEntity(): void
     {
         $this->make->tagemit($this->stdEmit);
     }
@@ -375,10 +337,8 @@ class Parser
     /**
      * Create tag enderEmit [C05]
      * C05|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|CEP|cPais|xPais|fone|
-     * @param stdClass $std
-     * @return void
      */
-    protected function c05Entity($std)
+    protected function c05Entity(stdClass $std): void
     {
         $this->make->tagenderEmit($std);
     }
@@ -386,10 +346,8 @@ class Parser
     /**
      * Load fields for tag dest [E]
      * E|xNome|indIEDest|IE|ISUF|IM|email|
-     * @param stdClass $std
-     * @return void
      */
-    protected function eEntity($std)
+    protected function eEntity(stdClass $std): void
     {
         $this->stdDest = $std;
         $this->stdDest->CNPJ = null;
@@ -400,10 +358,8 @@ class Parser
     /**
      * Create tag dest [E02], with CNPJ belongs to [E]
      * E02|CNPJ|
-     * @param stdClass $std
-     * @return void
      */
-    protected function e02Entity($std)
+    protected function e02Entity(stdClass $std): void
     {
         $this->stdDest->CNPJ = $std->CNPJ;
         $this->buildEEntity();
@@ -413,10 +369,8 @@ class Parser
     /**
      * Create tag dest [E03], with CPF belongs to [E]
      * E03|CPF|
-     * @param stdClass $std
-     * @return void
      */
-    protected function e03Entity($std)
+    protected function e03Entity(stdClass $std): void
     {
         $this->stdDest->CPF = $std->CPF;
         $this->buildEEntity();
@@ -426,10 +380,8 @@ class Parser
     /**
      * Create tag dest [E03a], with idEstrangeiro belongs to [E]
      * E03a|idEstrangeiro|
-     * @param stdClass $std
-     * @return void
      */
-    protected function e03aEntity($std)
+    protected function e03aEntity(stdClass $std): void
     {
         $this->stdDest->idEstrangeiro = !empty($std->idEstrangeiro) ? $std->idEstrangeiro : '';
         $this->buildEEntity();
@@ -438,9 +390,8 @@ class Parser
 
     /**
      * Create tag dest [E]
-     * @return void
      */
-    protected function buildEEntity()
+    protected function buildEEntity(): void
     {
         $this->make->tagdest($this->stdDest);
     }
@@ -448,10 +399,8 @@ class Parser
     /**
      * Create tag enderDest [E05]
      * E05|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|CEP|cPais|xPais|fone|
-     * @param stdClass $std
-     * @return void
      */
-    protected function e05Entity($std)
+    protected function e05Entity(stdClass $std): void
     {
         $this->make->tagenderDest($std);
     }
@@ -459,10 +408,8 @@ class Parser
     /**
      * Load fields for tag retirada [F]
      * F|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|CEP|cPais|xPais|fone|email|IE|
-     * @param stdClass $std
-     * @return void
      */
-    protected function fEntity($std)
+    protected function fEntity(stdClass $std): void
     {
         $this->stdRetirada = null;
         $this->stdRetirada = $std;
@@ -474,10 +421,8 @@ class Parser
     /**
      * Create tag retirada [F02], with CNPJ belongs to [F]
      * F02|CNPJ|
-     * @param stdClass $std
-     * @return void
      */
-    protected function f02Entity($std)
+    protected function f02Entity(stdClass $std): void
     {
         $this->stdRetirada->CNPJ = $std->CNPJ;
         $this->buildFEntity();
@@ -486,22 +431,18 @@ class Parser
     /**
      * Create tag retirada [F02a], with CPF belongs to [F]
      * F02a|CPF|
-     * @param stdClass $std
-     * @return void
      */
-    protected function f02aEntity($std)
+    protected function f02aEntity(stdClass $std): void
     {
         $this->stdRetirada->CPF = $std->CPF;
         $this->buildFEntity();
     }
-    
+
     /**
      * Create tag retirada [F02b], with xNome belongs to [F]
      * F02a|xNome|
-     * @param stdClass $std
-     * @return void
      */
-    protected function f02bEntity($std)
+    protected function f02bEntity(stdClass $std): void
     {
         $this->stdRetirada->xNome = $std->xNome;
         $this->buildFEntity();
@@ -509,9 +450,8 @@ class Parser
 
     /**
      * Create tag retirada [F]
-     * @return void
      */
-    protected function buildFEntity()
+    protected function buildFEntity(): void
     {
         $this->make->tagretirada($this->stdRetirada);
     }
@@ -519,10 +459,8 @@ class Parser
     /**
      * Load fields for tag entrega [G]
      * G|xLgr|nro|xCpl|xBairro|cMun|xMun|UF|CEP|cPais|xPais|fone|email|IE|
-     * @param stdClass $std
-     * @return void
      */
-    protected function gEntity($std)
+    protected function gEntity(stdClass $std): void
     {
         $this->stdEntrega = null;
         $this->stdEntrega = $std;
@@ -534,10 +472,8 @@ class Parser
     /**
      * Create tag entrega [G02], with CNPJ belongs to [G]
      * G02|CNPJ|
-     * @param stdClass $std
-     * @return void
      */
-    protected function g02Entity($std)
+    protected function g02Entity(stdClass $std): void
     {
         $this->stdEntrega->CNPJ = $std->CNPJ;
         $this->buildGEntity();
@@ -546,33 +482,28 @@ class Parser
     /**
      * Create tag entrega [G02a], with CPF belongs to [G]
      * G02a|CPF|
-     * @param stdClass $std
-     * @return void
      */
-    protected function g02aEntity($std)
+    protected function g02aEntity(stdClass $std): void
     {
         $this->stdEntrega->CPF = $std->CPF;
         $this->buildGEntity();
     }
-    
+
     /**
      * Create tag entrega [G02b], with xNome belongs to [G]
      * G02b|xNome|
-     * @param stdClass $std
-     * @return void
      */
-    protected function g02bEntity($std)
+    protected function g02bEntity(stdClass $std): void
     {
         $this->stdEntrega->xNome = $std->xNome;
         $this->buildGEntity();
     }
-    
+
 
     /**
      * Create tag entrega [G]
-     * @return void
      */
-    protected function buildGEntity()
+    protected function buildGEntity(): void
     {
         $this->make->tagentrega($this->stdEntrega);
     }
@@ -580,10 +511,8 @@ class Parser
     /**
      * Create tag autXML [GA]
      * GA|
-     * @param stdClass $std
-     * @return void
      */
-    protected function gaEntity($std)
+    protected function gaEntity(stdClass $std): void
     {
         //fake não faz nada
         $std->CNPJ = null;
@@ -594,10 +523,8 @@ class Parser
     /**
      * Create tag autXML with CNPJ [GA02], belongs to [GA]
      * GA02|CNPJ|
-     * @param stdClass $std
-     * @return void
      */
-    protected function ga02Entity($std)
+    protected function ga02Entity(stdClass $std): void
     {
         $this->stdAutXML->CNPJ = $std->CNPJ;
         $this->make->tagautXML($this->stdAutXML);
@@ -607,10 +534,8 @@ class Parser
     /**
      * Create tag autXML with CPF [GA03], belongs to GA
      * GA03|CPF|
-     * @param stdClass $std
-     * @return void
      */
-    protected function ga03Entity($std)
+    protected function ga03Entity(stdClass $std): void
     {
         $this->stdAutXML->CPF = $std->CPF;
         $this->make->tagautXML($this->stdAutXML);
@@ -620,14 +545,13 @@ class Parser
     /**
      * Create tag det/infAdProd [H]
      * H|item|infAdProd|
-     * @param stdClass $std
      */
-    protected function hEntity($std)
+    protected function hEntity(stdClass $std)
     {
         if (!empty($std->infAdProd)) {
             $this->make->taginfAdProd($std);
         }
-        $this->item = (integer) $std->item;
+        $this->item = (int) $std->item;
     }
 
     /**
@@ -636,10 +560,8 @@ class Parser
      * I|cProd|cEAN|xProd|NCM|cBenef|EXTIPI|CFOP|uCom|qCom|vUnCom|vProd|cEANTrib|uTrib|qTrib|vUnTrib|vFrete|vSeg|vDesc|vOutro|indTot|xPed|nItemPed|nFCI|
      * SEBRAE
      * I|cProd|cEAN|xProd|NCM|EXTIPI|CFOP|uCom|qCom|vUnCom|vProd|cEANTrib|uTrib|qTrib|vUnTrib|vFrete|vSeg|vDesc|vOutro|indTot|xPed|nItemPed|nFCI|
-     * @param stdClass $std
-     * @return void
      */
-    protected function iEntity($std)
+    protected function iEntity(stdClass $std): void
     {
         $std->item = $this->item;
         $this->make->tagprod($std);
@@ -648,10 +570,8 @@ class Parser
     /**
      * Create tag NVE [I05A]
      * I05A|NVE|
-     * @param stdClass $std
-     * @return void
      */
-    protected function i05aEntity($std)
+    protected function i05aEntity(stdClass $std): void
     {
         $std->item = $this->item;
         $this->make->tagNVE($std);
@@ -662,10 +582,8 @@ class Parser
      * I05C|CEST|indEscala|CNPJFab|
      * SEBRAE
      * I05C|CEST|indEscala|CNPJFab|cBenef|
-     * @param stdClass $std
-     * @return void
      */
-    protected function i05cEntity($std)
+    protected function i05cEntity(stdClass $std): void
     {
         $std->item = $this->item;
         $this->make->tagCEST($std);
@@ -674,10 +592,8 @@ class Parser
     /**
      * Create tag DI [I18]
      * I18|nDI|dDI|xLocDesemb|UFDesemb|dDesemb|tpViaTransp|vAFRMM|tpIntermedio|CNPJ|UFTerceiro|cExportador|
-     * @param stdClass $std
-     * @return void
      */
-    protected function i18Entity($std)
+    protected function i18Entity(stdClass $std): void
     {
         $std->item = $this->item;
         $this->make->tagDI($std);
@@ -687,10 +603,8 @@ class Parser
     /**
      * Create tag adi [I25], belongs to [I18]
      * I25|nAdicao|nSeqAdicC|cFabricante|vDescDI|nDraw|
-     * @param stdClass $std
-     * @return void
      */
-    protected function i25Entity($std)
+    protected function i25Entity(stdClass $std): void
     {
         $std->item = $this->item;
         $std->nDI = $this->nDI;
@@ -700,10 +614,8 @@ class Parser
     /**
      * Load fields for tag detExport [I50]
      * I50|nDraw|
-     * @param stdClass $std
-     * @return void
      */
-    protected function i50Entity($std)
+    protected function i50Entity(stdClass $std): void
     {
         $std->item = $this->item;
         $this->make->tagdetExport($std);
@@ -712,10 +624,8 @@ class Parser
     /**
      * Create tag detExport/exportInd [I52], belongs to [I50]
      * I52|nRE|chNFe|qExport|
-     * @param stdClass $std
-     * @return void
      */
-    protected function i52Entity($std)
+    protected function i52Entity(stdClass $std): void
     {
         $std->item = $this->item;
         $this->make->tagdetExportInd($std);
@@ -724,10 +634,8 @@ class Parser
     /**
      * Create tag RASTRO [I80]
      * I80|nLote|qLote|dFab|dVal|cAgreg|
-     * @param stdClass $std
-     * @return void
      */
-    protected function i80Entity($std)
+    protected function i80Entity(stdClass $std): void
     {
         $std->item = $this->item;
         $this->make->tagRastro($std);
@@ -736,10 +644,8 @@ class Parser
     /**
      * Create tag veicProd [JA]
      * JA|tpOp|chassi|cCor|xCor|pot|cilin|pesoL|pesoB|nSerie|tpComb|nMotor|CMT|dist|anoMod|anoFab|tpPint|tpVeic|espVeic|VIN|condVeic|cMod|cCorDENATRAN|lota|tpRest|
-     * @param stdClass $std
-     * @return void
      */
-    protected function jaEntity($std)
+    protected function jaEntity(stdClass $std): void
     {
         $std->item = $this->item;
         $this->make->tagveicProd($std);
@@ -748,10 +654,8 @@ class Parser
     /**
      * Create tag med [K]
      * K|cProdANVISA|vPMC|xMotivoIsencao|
-     * @param stdClass $std
-     * @return void
      */
-    protected function kEntity($std)
+    protected function kEntity(stdClass $std): void
     {
         $std->item = $this->item;
         $std->nLote = !empty($std->nLote) ? $std->nLote : null;
@@ -766,10 +670,8 @@ class Parser
     /**
      * Create tag arma [L]
      * L|tpArma|nSerie|nCano|descr|
-     * @param stdClass $std
-     * @return void
      */
-    protected function lEntity($std)
+    protected function lEntity(stdClass $std): void
     {
         $std->item = $this->item;
         $this->make->tagarma($std);
@@ -778,10 +680,8 @@ class Parser
     /**
      * Load fields for tag comb [LA]
      * LA|cProdANP|descANP|pGLP|pGNn|pGNi|vPart|CODIF|qTemp|UFCons|
-     * @param stdClass $std
-     * @return void
      */
-    protected function laEntity($std)
+    protected function laEntity(stdClass $std): void
     {
         $std->item = $this->item;
         $this->stdComb = $std;
@@ -790,10 +690,8 @@ class Parser
     /**
      * Load fields for tag comb [LA07], belongs to [LA]
      * LA07|qBCProd|vAliqProd|vCIDE|
-     * @param stdClass $std
-     * @return void
      */
-    protected function la07Entity($std)
+    protected function la07Entity(stdClass $std): void
     {
         $this->stdComb->qBCProd = $std->qBCProd;
         $this->stdComb->vAliqProd = $std->vAliqProd;
@@ -803,10 +701,8 @@ class Parser
     /**
      * Load fields for tag encerrante [LA11]
      * LA11|nBico|nBomba|nTanque|vEncIni|vEncFin|
-     * @param stdClass $std
-     * @return void
      */
-    protected function la11Entity($std)
+    protected function la11Entity(stdClass $std): void
     {
         $std->item = $this->item;
         $this->make->tagencerrante($std);
@@ -814,11 +710,10 @@ class Parser
 
     /**
      * Create tag comb [LA]
-     * @return void
      */
-    protected function buildLAEntity()
+    protected function buildLAEntity(): void
     {
-        if (!empty($this->stdComb)) {
+        if ($this->stdComb) {
             $this->make->tagcomb($this->stdComb);
         }
     }
@@ -826,10 +721,8 @@ class Parser
     /**
      * Create tag RECOPI [LB]
      * LB|nRECOPI|
-     * @param stdClass $std
-     * @return void
      */
-    protected function lbEntity($std)
+    protected function lbEntity(stdClass $std): void
     {
         $std->item = $this->item;
         $this->make->tagRECOPI($std);
@@ -838,10 +731,8 @@ class Parser
     /**
      * Create tag imposto [M]
      * M|vTotTrib|
-     * @param stdClass $std
-     * @return void
      */
-    protected function mEntity($std)
+    protected function mEntity(stdClass $std): void
     {
         //create tag comb [LA]
         $this->buildLAEntity();
@@ -853,10 +744,8 @@ class Parser
     /**
      * Carrega a tag ICMS [N]
      * N|
-     * @param stdClass $std
-     * @return void
      */
-    protected function nEntity($std)
+    protected function nEntity(stdClass $std): void
     {
         //fake não faz nada
         $field = null;
@@ -865,10 +754,8 @@ class Parser
     /**
      * Load fields for tag ICMS [N02]
      * N02|orig|CST|modBC|vBC|pICMS|vICMS|pFCP|vFCP|
-     * @param stdClass $std
-     * @return void
      */
-    protected function n02Entity($std)
+    protected function n02Entity(stdClass $std): void
     {
         $this->buildNEntity($std);
     }
@@ -876,10 +763,8 @@ class Parser
     /**
      * Load fields for tag ICMS [N03]
      * N03|orig|CST|modBC|vBC|pICMS|vICMS|vBCFCP|pFCP|vFCP|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|
-     * @param stdClass $std
-     * @return void
      */
-    protected function n03Entity($std)
+    protected function n03Entity(stdClass $std): void
     {
         $this->buildNEntity($std);
     }
@@ -887,10 +772,8 @@ class Parser
     /**
      * Load fields for tag ICMS [N04]
      * N04|orig|CST|modBC|pRedBC|vBC|pICMS|vICMS|BCFCP|pFCP|vFCP|vICMSDeson|motDesICMS|
-     * @param stdClass $std
-     * @return void
      */
-    protected function n04Entity($std)
+    protected function n04Entity(stdClass $std): void
     {
         $this->buildNEntity($std);
     }
@@ -898,10 +781,8 @@ class Parser
     /**
      * Load fields for tag ICMS [N05]
      * N05|orig|CST|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|vICMSDeson|motDesICMS|
-     * @param stdClass $std
-     * @return void
      */
-    protected function n05Entity($std)
+    protected function n05Entity(stdClass $std): void
     {
         $this->buildNEntity($std);
     }
@@ -909,10 +790,8 @@ class Parser
     /**
      * Load fields for tag ICMS [N06]
      * N06|orig|CST|vICMSDeson|motDesICMS|
-     * @param stdClass $std
-     * @return void
      */
-    protected function n06Entity($std)
+    protected function n06Entity(stdClass $std): void
     {
         $this->buildNEntity($std);
     }
@@ -920,10 +799,8 @@ class Parser
     /**
      * Load fields for tag ICMS [N07]
      * N07|orig|CST|modBC|pRedBC|vBC|pICMS|vICMSOp|pDif|vICMSDif|vICMS|vBCFCP|pFCP|vFCP|
-     * @param stdClass $std
-     * @return void
      */
-    protected function n07Entity($std)
+    protected function n07Entity(stdClass $std): void
     {
         $this->buildNEntity($std);
     }
@@ -931,10 +808,8 @@ class Parser
     /**
      * Load fields for tag ICMS [N08]
      * N08|orig|CST|vBCSTRet|pST|vICMSSTRet|vBCFCPSTRet|pFCPSTRet|vFCPSTRet|
-     * @param stdClass $std
-     * @return void
      */
-    protected function n08Entity($std)
+    protected function n08Entity(stdClass $std): void
     {
         $this->buildNEntity($std);
     }
@@ -942,10 +817,8 @@ class Parser
     /**
      * Load fields for tag ICMS [N09]
      * N09|orig|CST|modBC|pRedBC|vBC|pICMS|vICMS|vBCFCP|pFCP|vFCP|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|vICMSDeson|motDesICMS|
-     * @param stdClass $std
-     * @return void
      */
-    protected function n09Entity($std)
+    protected function n09Entity(stdClass $std): void
     {
         $this->buildNEntity($std);
     }
@@ -953,10 +826,8 @@ class Parser
     /**
      * Load fields for tag ICMS [N10]
      * N10|orig|CST|modBC|vBC|pRedBC|pICMS|vICMS|vBCFCP|pFCP|vFCP|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|vICMSDeson|motDesICMS|
-     * @param stdClass $std
-     * @return void
      */
-    protected function n10Entity($std)
+    protected function n10Entity(stdClass $std): void
     {
         $this->buildNEntity($std);
     }
@@ -964,10 +835,8 @@ class Parser
     /**
      * Create tag ICMS [N]
      * NOTE: adjusted for NT2016_002_v1.30
-     * @param \stdClass $std
-     * @return void
      */
-    protected function buildNEntity($std)
+    protected function buildNEntity(\stdClass $std): void
     {
         $std->item = $this->item;
         $this->make->tagICMS($std);
@@ -976,10 +845,8 @@ class Parser
     /**
      * Create tag ICMSPart [N10a]
      * N10a|orig|CST|modBC|vBC|pRedBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|pBCOp|UFST|
-     * @param stdClass $std
-     * @return void
      */
-    protected function n10aEntity($std)
+    protected function n10aEntity(stdClass $std): void
     {
         $std->item = $this->item;
         $this->make->tagICMSPart($std);
@@ -988,10 +855,8 @@ class Parser
     /**
      * Create tag ICMSST [N10b]
      * N10b|orig|CST|vBCSTRet|vICMSSTRet|vBCSTDest|vICMSSTDest|vBCFCPSTRet|pFCPSTRet|vFCPSTRet|
-     * @param stdClass $std
-     * @return void
      */
-    protected function n10bEntity($std)
+    protected function n10bEntity(stdClass $std): void
     {
         $std->item = $this->item;
         $this->make->tagICMSST($std);
@@ -1000,10 +865,8 @@ class Parser
     /**
      * Carrega e Create tag ICMSSN [N10c]
      * N10c|orig|CSOSN|pCredSN|vCredICMSSN|
-     * @param stdClass $std
-     * @return void
      */
-    protected function n10cEntity($std)
+    protected function n10cEntity(stdClass $std): void
     {
         $this->buildNSNEntity($std);
     }
@@ -1011,10 +874,8 @@ class Parser
     /**
      * Carrega e Create tag ICMSSN [N10d]
      * N10d|orig|CSOSN|
-     * @param stdClass $std
-     * @return void
      */
-    protected function n10dEntity($std)
+    protected function n10dEntity(stdClass $std): void
     {
         $this->buildNSNEntity($std);
     }
@@ -1023,20 +884,16 @@ class Parser
     /**
      * Carrega e Create tag ICMSSN [N10e]
      * N10e|orig|CSOSN|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|pCredSN|vCredICMSSN|pCredSN|vCredICMSSN|
-     * @param stdClass $std
-     * @return void
      */
-    protected function n10eEntity($std)
+    protected function n10eEntity(stdClass $std): void
     {
         $this->buildNSNEntity($std);
     }
     /**
      * Carrega e Create tag ICMSSN [N10f]
      * N10f|orig|CSOSN|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|
-     * @param stdClass $std
-     * @return void
      */
-    protected function n10fEntity($std)
+    protected function n10fEntity(stdClass $std): void
     {
         $this->buildNSNEntity($std);
     }
@@ -1044,10 +901,8 @@ class Parser
     /**
      * Carrega e Create tag ICMSSN [N10g]
      * N10g|orig|CSOSN|vBCSTRet|pST|vICMSSTRet|vBCFCPSTRet|pFCPSTRet|vFCPSTRet|
-     * @param stdClass $std
-     * @return void
      */
-    protected function n10gEntity($std)
+    protected function n10gEntity(stdClass $std): void
     {
         $this->buildNSNEntity($std);
     }
@@ -1055,10 +910,8 @@ class Parser
     /**
      * Carrega e Create tag ICMSSN [N10h]
      * N10h|orig|CSOSN|modBC|vBC|pRedBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCFCPST|pFCPST|vFCPST|pCredSN|vCredICMSSN|
-     * @param stdClass $std
-     * @return void
      */
-    protected function n10hEntity($std)
+    protected function n10hEntity(stdClass $std): void
     {
         $this->buildNSNEntity($std);
     }
@@ -1066,10 +919,8 @@ class Parser
     /**
      * Create tag ICMSSN [NS]
      * Nsn|orig|CSOSN|modBC|vBC|pRedBC|pICMS|vICMS|pCredSN|vCredICMSSN|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|vBCSTRet|vICMSSTRet|vBCFCPST|pFCPST|vFCPST|
-     * @param stdClass $std
-     * @return void
      */
-    protected function buildNSNEntity($std)
+    protected function buildNSNEntity(stdClass $std): void
     {
         $std->item = $this->item;
         $this->make->tagICMSSN($std);
@@ -1078,20 +929,16 @@ class Parser
     /**
      * Load field fot tag ICMSUFDest [NA]
      * NA|vBCUFDest|pFCPUFDest|pICMSUFDest|pICMSInter|pICMSInterPart|vFCPUFDest|vICMSUFDest|vICMSFRemet|
-     * @param stdClass $std
-     * @return void
      */
-    protected function naEntity($std)
+    protected function naEntity(stdClass $std): void
     {
         $this->buildNAEntity($std);
     }
 
     /**
      * Create tag ICMSUFDest [NA]
-     * @param stdClass $std
-     * @return void
      */
-    protected function buildNAEntity($std)
+    protected function buildNAEntity(stdClass $std): void
     {
         $std->item = $this->item;
         $this->make->tagICMSUFDest($std);
@@ -1100,10 +947,8 @@ class Parser
     /**
      * Load fields for tag IPI [O]
      * O|clEnq|CNPJProd|cSelo|qSelo|cEnq|
-     * @param stdClass $std
-     * @return void
      */
-    protected function oEntity($std)
+    protected function oEntity(stdClass $std): void
     {
         $std->item = $this->item;
         $this->stdIPI = $std;
@@ -1118,10 +963,8 @@ class Parser
     /**
      * Load fields for tag IPI [O07], belongs to [O]
      * O07|CST|vIPI|
-     * @param stdClass $std
-     * @return void
      */
-    protected function o07Entity($std)
+    protected function o07Entity(stdClass $std): void
     {
         $this->stdIPI->CST = $std->CST;
         $this->stdIPI->vIPI = $std->vIPI;
@@ -1130,10 +973,8 @@ class Parser
     /**
      * Load fields for tag IPI [O08], belongs to [O]
      * O08|CST|
-     * @param stdClass $std
-     * @return void
      */
-    protected function o08Entity($std)
+    protected function o08Entity(stdClass $std): void
     {
         $this->stdIPI->CST = $std->CST;
         $this->buildOEntity();
@@ -1142,10 +983,8 @@ class Parser
     /**
      * Load fields for tag IPI [O10], belongs to [O]
      * O10|vBC|pIPI|
-     * @param stdClass $std
-     * @return void
      */
-    protected function o10Entity($std)
+    protected function o10Entity(stdClass $std): void
     {
         $this->stdIPI->vBC = $std->vBC;
         $this->stdIPI->pIPI = $std->pIPI;
@@ -1155,10 +994,8 @@ class Parser
     /**
      * Load fields for tag IPI [O11], belongs to [O]
      * O11|qUnid|vUnid|
-     * @param stdClass $std
-     * @return void
      */
-    protected function o11Entity($std)
+    protected function o11Entity(stdClass $std): void
     {
         $this->stdIPI->qUnid = $std->qUnid;
         $this->stdIPI->vUnid = $std->vUnid;
@@ -1168,9 +1005,8 @@ class Parser
     /**
      * Create tag IPI [O]
      * Oxx|cst|clEnq|cnpjProd|cSelo|qSelo|cEnq|vBC|pIPI|qUnid|vUnid|vIPI|
-     * @return void
      */
-    protected function buildOEntity()
+    protected function buildOEntity(): void
     {
         $this->make->tagIPI($this->stdIPI);
     }
@@ -1178,10 +1014,8 @@ class Parser
     /**
      * Create tag II [P]
      * P|vBC|vDespAdu|vII|vIOF|
-     * @param stdClass $std
-     * @return void
      */
-    protected function pEntity($std)
+    protected function pEntity(stdClass $std): void
     {
         $std->item = $this->item;
         $this->make->tagII($std);
@@ -1190,10 +1024,8 @@ class Parser
     /**
      * Load fields for tag PIS [Q]
      * Q|
-     * @param stdClass $std
-     * @return void
      */
-    protected function qEntity($std)
+    protected function qEntity(stdClass $std): void
     {
         //carrega numero do item
         $std->item = $this->item;
@@ -1208,10 +1040,8 @@ class Parser
     /**
      * Load fields for tag PIS [Q02], belongs to [Q]
      * Q02|CST|vBC|pPIS|vPIS|
-     * @param stdClass $std
-     * @return void
      */
-    protected function q02Entity($std)
+    protected function q02Entity(stdClass $std): void
     {
         $this->stdPIS->CST = $std->CST;
         $this->stdPIS->vBC = $std->vBC;
@@ -1223,10 +1053,8 @@ class Parser
     /**
      * Load fields for tag PIS [Q03], belongs to [Q]
      * Q03|CST|qBCProd|vAliqProd|vPIS|
-     * @param stdClass $std
-     * @return void
      */
-    protected function q03Entity($std)
+    protected function q03Entity(stdClass $std): void
     {
         $this->stdPIS->CST = $std->CST;
         $this->stdPIS->vPIS = $std->vPIS;
@@ -1238,10 +1066,8 @@ class Parser
     /**
      * Load fields for tag PIS [Q04], belongs to [Q]
      * Q04|CST|
-     * @param stdClass $std
-     * @return void
      */
-    protected function q04Entity($std)
+    protected function q04Entity(stdClass $std): void
     {
         $this->stdPIS->CST = $std->CST;
         $this->buildQEntity();
@@ -1250,10 +1076,8 @@ class Parser
     /**
      * Load fields for tag PIS [Q05], belongs to [Q]
      * Q05|CST|vPIS|
-     * @param stdClass $std
-     * @return void
      */
-    protected function q05Entity($std)
+    protected function q05Entity(stdClass $std): void
     {
         $this->stdPIS->CST = $std->CST;
         $this->stdPIS->vPIS = $std->vPIS;
@@ -1263,10 +1087,8 @@ class Parser
     /**
      * Load fields for tag PIS [Q07], belongs to [Q]
      * Q07|vBC|pPIS|
-     * @param stdClass $std
-     * @return void
      */
-    protected function q07Entity($std)
+    protected function q07Entity(stdClass $std): void
     {
         $this->stdPIS->vBC = $std->vBC;
         $this->stdPIS->pPIS = $std->pPIS;
@@ -1276,10 +1098,8 @@ class Parser
     /**
      * Load fields for tag PIS [Q10], belongs to [Q]
      * Q10|qBCProd|vAliqProd|
-     * @param stdClass $std
-     * @return void
      */
-    protected function q10Entity($std)
+    protected function q10Entity(stdClass $std): void
     {
         $this->stdPIS->qBCProd = $std->qBCProd;
         $this->stdPIS->vAliqProd  = $std->vAliqProd;
@@ -1289,9 +1109,8 @@ class Parser
     /**
      * Create tag PIS [Q]
      * Qxx|CST|vBC|pPIS|vPIS|qBCProd|vAliqProd|
-     * @return void
      */
-    protected function buildQEntity()
+    protected function buildQEntity(): void
     {
         $this->make->tagPIS($this->stdPIS);
     }
@@ -1299,10 +1118,8 @@ class Parser
     /**
      * Load fields for tag PISST [R]
      * R|vPIS|
-     * @param stdClass $std
-     * @return void
      */
-    protected function rEntity($std)
+    protected function rEntity(stdClass $std): void
     {
         //carrega numero do item
         $std->item = $this->item;
@@ -1317,10 +1134,8 @@ class Parser
     /**
      * Load fields for tag PISST [R02], belongs to [R]
      * R02|vBC|pPIS|
-     * @param stdClass $std
-     * @return void
      */
-    protected function r02Entity($std)
+    protected function r02Entity(stdClass $std): void
     {
         $this->stdPISST->vBC = $std->vBC;
         $this->stdPISST->pPIS = $std->pPIS;
@@ -1330,10 +1145,8 @@ class Parser
     /**
      * Load fields for tag PISST [R04], belongs to [R]
      * R04|qBCProd|vAliqProd|vPIS|
-     * @param stdClass $std
-     * @return void
      */
-    protected function r04Entity($std)
+    protected function r04Entity(stdClass $std): void
     {
         $this->stdPISST->qBCProd = $std->qBCProd;
         $this->stdPISST->vAliqProd = $std->vAliqProd;
@@ -1344,9 +1157,8 @@ class Parser
     /**
      * Create tag PISST
      * Rxx|vBC|pPIS|qBCProd|vAliqProd|vPIS|
-     * @return void
      */
-    protected function buildREntity()
+    protected function buildREntity(): void
     {
         $this->make->tagPISST($this->stdPISST);
     }
@@ -1354,10 +1166,8 @@ class Parser
     /**
      * Load fields for tag COFINS [S]
      * S|
-     * @param stdClass $std
-     * @return void
      */
-    protected function sEntity($std)
+    protected function sEntity(stdClass $std): void
     {
         //carrega numero do item
         $std->item = $this->item;
@@ -1372,10 +1182,8 @@ class Parser
     /**
      * Load fields for tag COFINS [S02], belongs to [S]
      * S02|CST|vBC|pCOFINS|vCOFINS|
-     * @param stdClass $std
-     * @return void
      */
-    protected function s02Entity($std)
+    protected function s02Entity(stdClass $std): void
     {
         $this->stdCOFINS->CST = $std->CST;
         $this->stdCOFINS->vBC = $std->vBC;
@@ -1387,10 +1195,8 @@ class Parser
     /**
      * Load fields for tag COFINS [S03], belongs to [S]
      * S03|CST|qBCProd|vAliqProd|vCOFINS|
-     * @param stdClass $std
-     * @return void
      */
-    protected function s03Entity($std)
+    protected function s03Entity(stdClass $std): void
     {
         $this->stdCOFINS->CST = $std->CST;
         $this->stdCOFINS->qBCProd = $std->qBCProd;
@@ -1402,10 +1208,8 @@ class Parser
     /**
      * Load fields for tag COFINS [S04], belongs to [S]
      * S04|CST|
-     * @param stdClass $std
-     * @return void
      */
-    protected function s04Entity($std)
+    protected function s04Entity(stdClass $std): void
     {
         $this->stdCOFINS->CST = $std->CST;
         $this->buildSEntity();
@@ -1414,10 +1218,8 @@ class Parser
     /**
      * Load fields for tag COFINS [S05], belongs to [S]
      * S05|CST|vCOFINS|
-     * @param stdClass $std
-     * @return void
      */
-    protected function s05Entity($std)
+    protected function s05Entity(stdClass $std): void
     {
         $this->stdCOFINS->CST = $std->CST;
         $this->stdCOFINS->vCOFINS = $std->vCOFINS;
@@ -1426,10 +1228,8 @@ class Parser
     /**
      * Load fields for tag COFINS [S07], belongs to [S]
      * S07|vBC|pCOFINS|
-     * @param stdClass $std
-     * @return void
      */
-    protected function s07Entity($std)
+    protected function s07Entity(stdClass $std): void
     {
         $this->stdCOFINS->vBC = $std->vBC;
         $this->stdCOFINS->pCOFINS = $std->pCOFINS;
@@ -1439,10 +1239,8 @@ class Parser
     /**
      * Load fields for tag COFINS [S09], belongs to [S]
      * S09|qBCProd|vAliqProd|
-     * @param stdClass $std
-     * @return void
      */
-    protected function s09Entity($std)
+    protected function s09Entity(stdClass $std): void
     {
         $this->stdCOFINS->qBCProd = $std->qBCProd;
         $this->stdCOFINS->vAliqProd = $std->vAliqProd;
@@ -1452,9 +1250,8 @@ class Parser
     /**
      * Create tag COFINS [S]
      * Sxx|CST|vBC|pCOFINS|vCOFINS|qBCProd|vAliqProd|
-     * @return void
      */
-    protected function buildSEntity()
+    protected function buildSEntity(): void
     {
         $this->make->tagCOFINS($this->stdCOFINS);
     }
@@ -1462,10 +1259,8 @@ class Parser
     /**
      * Load fields for tag COFINSST [T]
      * T|vCOFINS|
-     * @param stdClass $std
-     * @return void
      */
-    protected function tEntity($std)
+    protected function tEntity(stdClass $std): void
     {
         //carrega numero do item
         $std->item = $this->item;
@@ -1480,10 +1275,8 @@ class Parser
     /**
      * Load fields for tag COFINSST [T02], belongs to [T]
      * T02|vBC|pCOFINS|
-     * @param stdClass $std
-     * @return void
      */
-    protected function t02Entity($std)
+    protected function t02Entity(stdClass $std): void
     {
         $this->stdCOFINSST->vBC = $std->vBC;
         $this->stdCOFINSST->pCOFINS = $std->pCOFINS;
@@ -1493,10 +1286,8 @@ class Parser
     /**
      * Load fields for tag COFINSST [T04], belongs to [T]
      * T04|qBCProd|vAliqProd|
-     * @param stdClass $std
-     * @return void
      */
-    protected function t04Entity($std)
+    protected function t04Entity(stdClass $std): void
     {
         $this->stdCOFINSST->qBCProd = $std->qBCProd;
         $this->stdCOFINSST->vAliqProd = $std->vAliqProd;
@@ -1506,9 +1297,8 @@ class Parser
     /**
      * Create tag COFINSST [T]
      * Txx|vBC|pCOFINS|qBCProd|vAliqProd|vCOFINS|
-     * @return void
      */
-    protected function buildTEntity()
+    protected function buildTEntity(): void
     {
         $this->stdCOFINSST->item = $this->item;
         $this->make->tagCOFINSST($this->stdCOFINSST);
@@ -1518,10 +1308,8 @@ class Parser
      * Create tag ISSQN [U]
      * U|vBC|vAliq|vISSQN|cMunFG|cListServ|vDeducao|vOutro|vDescIncond
      *  |vDescCond|vISSRet|indISS|cServico|cMun|cPais|nProcesso|indIncentivo|
-     * @param stdClass $std
-     * @return void
      */
-    protected function uEntity($std)
+    protected function uEntity(stdClass $std): void
     {
         $std->item = $this->item;
         $this->make->tagISSQN($std);
@@ -1530,10 +1318,8 @@ class Parser
     /**
      * Create tag tagimpostoDevol [UA]
      * UA|pDevol|vIPIDevol|
-     * @param stdClass $std
-     * @return void
      */
-    protected function uaEntity($std)
+    protected function uaEntity(stdClass $std): void
     {
         $std->item = $this->item;
         $this->make->tagimpostoDevol($std);
@@ -1542,10 +1328,8 @@ class Parser
     /**
      * Linha W [W]
      * W|
-     * @param stdClass $std
-     * @return void
      */
-    protected function wEntity($std)
+    protected function wEntity(stdClass $std): void
     {
         //fake não faz nada
         $field = null;
@@ -1554,10 +1338,8 @@ class Parser
     /**
      * Cria tag ICMSTot [W02], belongs to [W]
      * W02|vBC|vICMS|vICMSDeson|vFCP|vBCST|vST|vFCPST|vFCPSTRet|vProd|vFrete|vSeg|vDesc|vII|vIPI|vIPIDevol|vPIS|vCOFINS|vOutro|vNF|vTotTrib|vFCPUFDest|vICMSUFDest|vICMSUFRemet|
-     * @param stdClass $std
-     * @return void
      */
-    protected function w02Entity($std)
+    protected function w02Entity(stdClass $std): void
     {
         $this->make->tagICMSTot($std);
     }
@@ -1578,10 +1360,8 @@ class Parser
      * Create tag ISSQNTot [W17], belongs to [W]
      * W17|vServ|vBC|vISS|vPIS|vCOFINS|dCompet|vDeducao|vOutro|vDescIncond
      *    |vDescCond|vISSRet|cRegTrib|
-     * @param stdClass $std
-     * @return void
      */
-    protected function w17Entity($std)
+    protected function w17Entity(stdClass $std): void
     {
         $this->make->tagISSQNTot($std);
     }
@@ -1589,10 +1369,8 @@ class Parser
     /**
      * Create tag retTrib [W23], belongs to [W]
      * W23|vRetPIS|vRetCOFINS|vRetCSLL|vBCIRRF|vIRRF|vBCRetPrev|vRetPrev|
-     * @param stdClass $std
-     * @return void
      */
-    protected function w23Entity($std)
+    protected function w23Entity(stdClass $std): void
     {
         $this->make->tagretTrib($std);
     }
@@ -1600,10 +1378,8 @@ class Parser
     /**
      * Create tag transp [X]
      * X|modFrete|
-     * @param stdClass $std
-     * @return void
      */
-    protected function xEntity($std)
+    protected function xEntity(stdClass $std): void
     {
         $this->make->tagtransp($std);
     }
@@ -1611,10 +1387,8 @@ class Parser
     /**
      * Load fields for tag transporta [X03], belongs to [X]
      * X03|xNome|IE|xEnder|xMun|UF|
-     * @param stdClass $std
-     * @return void
      */
-    protected function x03Entity($std)
+    protected function x03Entity(stdClass $std): void
     {
         $this->stdTransporta = $std;
     }
@@ -1622,10 +1396,8 @@ class Parser
     /**
      * Load fields for tag transporta [X04], with CNPJ, belonsgs to [X03]
      * X04|CNPJ|
-     * @param stdClass $std
-     * @return void
      */
-    protected function x04Entity($std)
+    protected function x04Entity(stdClass $std): void
     {
         $this->stdTransporta->CNPJ = $std->CNPJ;
         $this->stdTransporta->CPF = null;
@@ -1636,10 +1408,8 @@ class Parser
     /**
      * Load fields for tag transporta [X05], with CPF, belonsgs to [X03]
      * X05|CPF|
-     * @param stdClass $std
-     * @return void
      */
-    protected function x05Entity($std)
+    protected function x05Entity(stdClass $std): void
     {
         $this->stdTransporta->CPF = $std->CPF;
         $this->stdTransporta->CNPJ = null;
@@ -1650,10 +1420,8 @@ class Parser
     /**
      * Load fields for tag retTransp [X11], belongs to [X]
      * X11|vServ|vBCRet|pICMSRet|vICMSRet|CFOP|cMunFG|
-     * @param stdClass $std
-     * @return void
      */
-    protected function x11Entity($std)
+    protected function x11Entity(stdClass $std): void
     {
         $this->make->tagretTransp($std);
     }
@@ -1661,10 +1429,8 @@ class Parser
     /**
      * Create tag veicTransp [X18], belongs to [X]
      * X18|placa|UF|RNTC|
-     * @param stdClass $std
-     * @return void
      */
-    protected function x18Entity($std)
+    protected function x18Entity(stdClass $std): void
     {
         $this->make->tagveicTransp($std);
     }
@@ -1672,10 +1438,8 @@ class Parser
     /**
      * Create tag reboque [X22], belogns to [X]
      * X22|placa|UF|RNTC|
-     * @param stdClass $std
-     * @return void
      */
-    protected function x22Entity($std)
+    protected function x22Entity(stdClass $std): void
     {
         $this->make->tagreboque($std);
     }
@@ -1683,10 +1447,8 @@ class Parser
     /**
      * Create tag vagao [X25a], belogns to [X01]
      * X25a|vagao|
-     * @param stdClass $std
-     * @return void
      */
-    protected function x25aEntity($std)
+    protected function x25aEntity(stdClass $std): void
     {
         $this->make->tagvagao($std);
     }
@@ -1694,10 +1456,8 @@ class Parser
     /**
      * Create tag balsa [X25b], belogns to [X01]
      * X25b|balsa|
-     * @param stdClass $std
-     * @return void
      */
-    protected function x25bEntity($std)
+    protected function x25bEntity(stdClass $std): void
     {
         $this->make->tagbalsa($std);
     }
@@ -1705,10 +1465,8 @@ class Parser
     /**
      * Create tag vol [X26], belongs to [X]
      * X26|qVol|esp|marca|nVol|pesoL|pesoB|
-     * @param stdClass $std
-     * @return void
      */
-    protected function x26Entity($std)
+    protected function x26Entity(stdClass $std): void
     {
         $this->volId += 1;
         $std->item = $this->volId;
@@ -1718,10 +1476,8 @@ class Parser
     /**
      * Create tag lacre [X33], belongs to [X]
      * X33|nLacre|
-     * @param stdClass $std
-     * @return void
      */
-    protected function x33Entity($std)
+    protected function x33Entity(stdClass $std): void
     {
         $std->item = $this->volId;
         $this->make->taglacres($std);
@@ -1729,10 +1485,8 @@ class Parser
 
     /**
      * Create tag vol
-     * @param stdClass $std
-     * @return void
      */
-    protected function buildVolEntity($std)
+    protected function buildVolEntity(stdClass $std): void
     {
         $this->make->tagvol($std);
     }
@@ -1742,10 +1496,8 @@ class Parser
      *
      * LOCAL
      * Y|vTroco|
-     * @param stdClass $std
-     * @return void
      */
-    protected function yEntity($std)
+    protected function yEntity(stdClass $std): void
     {
         if ($this->baselayout !== 'SEBRAE') {
             $this->make->tagpag($std);
@@ -1755,10 +1507,8 @@ class Parser
     /**
      * Create tag fat [Y02]
      * Y02|nFat|vOrig|vDesc|vLiq|
-     * @param stdClass $std
-     * @return void
      */
-    protected function y02Entity($std)
+    protected function y02Entity(stdClass $std): void
     {
         $this->make->tagfat($std);
     }
@@ -1766,10 +1516,8 @@ class Parser
     /**
      * Create tag dup [Y07]
      * Y07|nDup|dVenc|vDup|
-     * @param stdClass $std
-     * @return void
      */
-    protected function y07Entity($std)
+    protected function y07Entity(stdClass $std): void
     {
         $this->make->tagdup($std);
     }
@@ -1779,10 +1527,10 @@ class Parser
      * YA|tPag|vPag|CNPJ|tBand|cAut|tpIntegra|xPag|
      * SEBRAE
      * YA|troco|
-     * @param stdClass $std
-     * @return void
+     *
+     *
      */
-    protected function yaEntity($std)
+    protected function yaEntity(stdClass $std): void
     {
         if ($this->baselayout === 'SEBRAE') {
             $this->make->tagpag($std);
@@ -1794,20 +1542,20 @@ class Parser
     /**
      * Creates tag detPag and card [YA]
      * SEBRAE
-     * YA01|indPag|tPag|vPag|",
-     * @param stdClass $std
+     * YA01|indPag|tPag|vPag|"
+     *
      */
-    protected function ya01Entity($std)
+    protected function ya01Entity(stdClass $std)
     {
         $this->make->tagdetPag($std);
     }
-    
+
     /**
      * Create tag infIntermed [YB]
      * YB|CNPJ|idCadIntTran
-     * @param type $std
+     *
      */
-    protected function ybEntity($std)
+    protected function ybEntity(stdClass $std)
     {
         $this->make->tagIntermed($std);
     }
@@ -1815,10 +1563,10 @@ class Parser
     /**
      * Create a tag infAdic [Z]
      * Z|infAdFisco|infCpl|
-     * @param stdClass $std
-     * @return void
+     *
+     *
      */
-    protected function zEntity($std)
+    protected function zEntity(stdClass $std): void
     {
         $this->make->taginfAdic($std);
     }
@@ -1826,10 +1574,8 @@ class Parser
     /**
      * Create tag obsCont [Z04]
      * Z04|xCampo|xTexto|
-     * @param stdClass $std
-     * @return void
      */
-    protected function z04Entity($std)
+    protected function z04Entity(stdClass $std): void
     {
         $this->make->tagobsCont($std);
     }
@@ -1837,10 +1583,8 @@ class Parser
     /**
      * Create tag obsFisco [Z07]
      * Z07|xCampo|xTexto|
-     * @param stdClass $std
-     * @return void
      */
-    protected function z07Entity($std)
+    protected function z07Entity(stdClass $std): void
     {
         $this->make->tagobsFisco($std);
     }
@@ -1848,10 +1592,8 @@ class Parser
     /**
      * Create tag procRef [Z10]
      * Z10|nProc|indProc|
-     * @param stdClass $std
-     * @return void
      */
-    protected function z10Entity($std)
+    protected function z10Entity(stdClass $std): void
     {
         $this->make->tagprocRef($std);
     }
@@ -1859,10 +1601,8 @@ class Parser
     /**
      * Create tag exporta [ZA]
      * ZA|UFSaidaPais|xLocExporta|xLocDespacho|
-     * @param stdClass $std
-     * @return void
      */
-    protected function zaEntity($std)
+    protected function zaEntity(stdClass $std): void
     {
         $this->make->tagexporta($std);
     }
@@ -1870,10 +1610,8 @@ class Parser
     /**
      * Create tag compra [ZB]
      * ZB|xNEmp|xPed|xCont|
-     * @param stdClass $std
-     * @return void
      */
-    protected function zbEntity($std)
+    protected function zbEntity(stdClass $std): void
     {
         $this->make->tagcompra($std);
     }
@@ -1881,10 +1619,8 @@ class Parser
     /**
      * Create tag cana [ZC]
      * ZC|safra|ref|qTotMes|qTotAnt|qTotGer|vFor|vTotDed|vLiqFor|
-     * @param stdClass $std
-     * @return void
      */
-    protected function zcEntity($std)
+    protected function zcEntity(stdClass $std): void
     {
         $this->make->tagcana($std);
     }
@@ -1892,10 +1628,8 @@ class Parser
     /**
      * Create tag forDia [ZC04]
      * ZC04|dia|qtde|
-     * @param stdClass $std
-     * @return void
      */
-    protected function zc04Entity($std)
+    protected function zc04Entity(stdClass $std): void
     {
         $this->make->tagforDia($std);
     }
@@ -1903,21 +1637,17 @@ class Parser
     /**
      * Create tag deduc [ZC10]
      * ZC10|xDed|vDed|
-     * @param stdClass $std
-     * @return void
      */
-    protected function zc10Entity($std)
+    protected function zc10Entity(stdClass $std): void
     {
         $this->make->tagdeduc($std);
     }
-    
+
     /**
      * Create tag infRespTec [ZD01]
      * ZD|CNPJ|xContato|email|fone|CSRTidCSRT|
-     * @param stdClass $std
-     * @return void
      */
-    protected function zdEntity($std)
+    protected function zdEntity(stdClass $std): void
     {
         $this->make->taginfRespTec($std);
     }
@@ -1925,10 +1655,8 @@ class Parser
     /**
      * Create tag infNFeSupl com o qrCode para impressão da DANFCE [ZX01]
      * ZX01|qrcode|urlChave|
-     * @param stdClass $std
-     * @return void
      */
-    protected function zx01Entity($std)
+    protected function zx01Entity(stdClass $std): void
     {
         $this->make->taginfNFeSupl($std);
     }

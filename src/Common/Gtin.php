@@ -1,7 +1,5 @@
 <?php
 
-namespace NFePHP\NFe\Common;
-
 /**
  * Class for validation of GTIN
  *
@@ -15,16 +13,17 @@ namespace NFePHP\NFe\Common;
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
  */
 
+namespace NFePHP\NFe\Common;
+
 use NFePHP\Gtin\Gtin as GB;
 
 class Gtin
 {
     /**
      * Verify if GTIN is valid with dv
-     * @param string $gtin
      * @return boolean
      */
-    public static function isValid($gtin)
+    public static function isValid(string $gtin): bool
     {
         if ($gtin === '' || $gtin === 'SEM GTIN') {
             return true;

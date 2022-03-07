@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<ruleset name="CakePHPSniffer">
+    <description>sped-nfe</description>
+
+    <arg name="extensions" value="php"/>
+    <config name="testVersion" value="7.0-8.0"/>
+
+    <config name="installed_paths" value="vendor/phpcompatibility/php-compatibility" />
+
+    <rule ref="PSR12">
+        <exclude name="PSR12.Properties.ConstantVisibility.NotFound"/>
+    </rule>
+
+    <rule ref="PSR1.Methods.CamelCapsMethodName.NotCamelCaps">
+        <exclude-pattern>*/tests/*</exclude-pattern>
+    </rule>
+
+</ruleset>

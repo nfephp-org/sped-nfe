@@ -139,7 +139,7 @@
        <NfeConsultaProtocolo method="nfeConsultaNF" operation="NFeConsultaProtocolo4" version="4.00">https://hnfce.fazenda.mg.gov.br/nfce/services/NFeConsultaProtocolo4</NfeConsultaProtocolo>
        <NfeStatusServico method="nfeStatusServicoNF" operation="NFeStatusServico4" version="4.00">https://hnfce.fazenda.mg.gov.br/nfce/services/NFeStatusServico4</NfeStatusServico>
        <RecepcaoEvento method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="1.00">https://hnfce.fazenda.mg.gov.br/nfce/services/NFeRecepcaoEvento4</RecepcaoEvento>
-       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">https://nfce.fazenda.mg.gov.br/portalnfce/sistema/qrcode.xhtml</NfeConsultaQR>
+       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">https://portalsped.fazenda.mg.gov.br/portalnfce/sistema/qrcode.xhtml</NfeConsultaQR>
     </homologacao>
     <producao>
        <NfeAutorizacao method="nfeAutorizacaoLote" operation="NFeAutorizacao4" version="4.00">https://nfce.fazenda.mg.gov.br/nfce/services/NFeAutorizacao4</NfeAutorizacao>
@@ -148,7 +148,7 @@
        <NfeConsultaProtocolo method="nfeConsultaNF" operation="NFeConsultaProtocolo4" version="4.00">https://nfce.fazenda.mg.gov.br/nfce/services/NFeConsultaProtocolo4</NfeConsultaProtocolo>
        <NfeStatusServico method="nfeStatusServicoNF" operation="NFeStatusServico4" version="4.00">https://nfce.fazenda.mg.gov.br/nfce/services/NFeStatusServico4</NfeStatusServico>
        <RecepcaoEvento method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="1.00">https://nfce.fazenda.mg.gov.br/nfce/services/NFeRecepcaoEvento4</RecepcaoEvento>
-       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">https://nfce.fazenda.mg.gov.br/portalnfce/sistema/qrcode.xhtml</NfeConsultaQR>
+       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">https://portalsped.fazenda.mg.gov.br/portalnfce/sistema/qrcode.xhtml</NfeConsultaQR>
     </producao>
   </UF>
   <UF>
