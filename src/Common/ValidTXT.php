@@ -57,7 +57,7 @@ class ValidTXT
         $num = 0;
 
         foreach ($rows as $row) {
-            if(empty($row)) {
+            if (empty($row)) {
                 continue;
             }
             $fields = explode('|', $row);
