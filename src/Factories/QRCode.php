@@ -126,7 +126,7 @@ class QRCode
         string $digVal,
         string $token,
         string $idToken,
-        string $versao,
+        int $versao,
         int $tpEmis,
         string $cDest
     ): string {
