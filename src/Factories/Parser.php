@@ -150,10 +150,10 @@ class Parser
     protected function array2xml(array $nota): void
     {
         foreach ($nota as $lin) {
-            $fields = explode('|', $lin);
-            if (count($fields) == 0) {
+            if (empty($lin)) {
                 continue;
             }
+            $fields = explode('|', $lin);
             $metodo = strtolower(str_replace(' ', '', $fields[0])) . 'Entity';
             if (!method_exists(self::class, $metodo)) {
                 throw DocumentsException::wrongDocument(16, $lin); //campo não definido
