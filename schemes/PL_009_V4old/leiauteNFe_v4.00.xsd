@@ -3220,23 +3220,6 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 																						<xs:documentation>Valor do ICMS ST</xs:documentation>
 																					</xs:annotation>
 																				</xs:element>
-																				<xs:sequence minOccurs="0">
-																					<xs:element name="vBCFCPST" type="TDec_1302">
-																						<xs:annotation>
-																							<xs:documentation>Valor da Base de cálculo do FCP retido por substituicao tributaria.</xs:documentation>
-																						</xs:annotation>
-																					</xs:element>
-																					<xs:element name="pFCPST" type="TDec_0302a04Opc">
-																						<xs:annotation>
-																							<xs:documentation>Percentual de FCP retido por substituição tributária.</xs:documentation>
-																						</xs:annotation>
-																					</xs:element>
-																					<xs:element name="vFCPST" type="TDec_1302">
-																						<xs:annotation>
-																							<xs:documentation>Valor do FCP retido por substituição tributária.</xs:documentation>
-																						</xs:annotation>
-																					</xs:element>
-																				</xs:sequence>
 																				<xs:element name="pBCOp" type="TDec_0302a04Opc">
 																					<xs:annotation>
 																						<xs:documentation>Percentual para determinação do valor  da Base de Cálculo da operação própria.</xs:documentation>
@@ -4670,65 +4653,6 @@ Substituição Tributaria;</xs:documentation>
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
-									<xs:element name="obsItem" minOccurs="0">
-										<xs:annotation>
-											<xs:documentation>Grupo de observações de uso livre (para o item da NF-e) </xs:documentation>
-										</xs:annotation>
-										<xs:complexType>
-											<xs:sequence>
-												<xs:element name="obsCont" minOccurs="0">
-													<xs:annotation>
-														<xs:documentation>Grupo de observações de uso livre (para o item da NF-e) </xs:documentation>
-													</xs:annotation>
-													<xs:complexType>
-														<xs:sequence>
-															<xs:element name="xTexto">
-																<xs:simpleType>
-																	<xs:restriction base="TString">
-																		<xs:minLength value="1"/>
-																		<xs:maxLength value="60"/>
-																	</xs:restriction>
-																</xs:simpleType>
-															</xs:element>
-														</xs:sequence>
-														<xs:attribute name="xCampo" use="required">
-															<xs:simpleType>
-																<xs:restriction base="TString">
-																	<xs:minLength value="1"/>
-																	<xs:maxLength value="20"/>
-																</xs:restriction>
-															</xs:simpleType>
-														</xs:attribute>
-													</xs:complexType>
-												</xs:element>
-												<xs:element name="obsFisco" minOccurs="0">
-													<xs:annotation>
-														<xs:documentation>Grupo de observações de uso livre (para o item da NF-e) </xs:documentation>
-													</xs:annotation>
-													<xs:complexType>
-														<xs:sequence>
-															<xs:element name="xTexto">
-																<xs:simpleType>
-																	<xs:restriction base="TString">
-																		<xs:minLength value="1"/>
-																		<xs:maxLength value="60"/>
-																	</xs:restriction>
-																</xs:simpleType>
-															</xs:element>
-														</xs:sequence>
-														<xs:attribute name="xCampo" use="required">
-															<xs:simpleType>
-																<xs:restriction base="TString">
-																	<xs:minLength value="1"/>
-																	<xs:maxLength value="20"/>
-																</xs:restriction>
-															</xs:simpleType>
-														</xs:attribute>
-													</xs:complexType>
-												</xs:element>
-											</xs:sequence>
-										</xs:complexType>
-									</xs:element>
 								</xs:sequence>
 								<xs:attribute name="nItem" use="required">
 									<xs:annotation>
@@ -5584,24 +5508,6 @@ concessório</xs:documentation>
 															<xs:enumeration value="2"/>
 															<xs:enumeration value="3"/>
 															<xs:enumeration value="9"/>
-														</xs:restriction>
-													</xs:simpleType>
-												</xs:element>
-												<xs:element name="tpAto">
-													<xs:annotation>
-														<xs:documentation>Tipo do ato concessório
-														Para origem do Processo na SEFAZ (indProc=0), informar o
-tipo de ato concessório:
-08=Termo de Acordo;
-10=Regime Especial;
-12=Autorização específica;</xs:documentation>
-													</xs:annotation>
-													<xs:simpleType>
-														<xs:restriction base="xs:string">
-															<xs:whiteSpace value="preserve"/>
-															<xs:enumeration value="08"/>
-															<xs:enumeration value="10"/>
-															<xs:enumeration value="12"/>
 														</xs:restriction>
 													</xs:simpleType>
 												</xs:element>
@@ -6703,7 +6609,206 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
-			<xs:pattern value="[0-9]{2}.[0-9]{2}"/>
+			<xs:enumeration value="01.01"/>
+			<xs:enumeration value="01.02"/>
+			<xs:enumeration value="01.03"/>
+			<xs:enumeration value="01.04"/>
+			<xs:enumeration value="01.05"/>
+			<xs:enumeration value="01.06"/>
+			<xs:enumeration value="01.07"/>
+			<xs:enumeration value="01.08"/>
+			<xs:enumeration value="01.09"/>
+			<xs:enumeration value="02.01"/>
+			<xs:enumeration value="03.02"/>
+			<xs:enumeration value="03.03"/>
+			<xs:enumeration value="03.04"/>
+			<xs:enumeration value="03.05"/>
+			<xs:enumeration value="04.01"/>
+			<xs:enumeration value="04.02"/>
+			<xs:enumeration value="04.03"/>
+			<xs:enumeration value="04.04"/>
+			<xs:enumeration value="04.05"/>
+			<xs:enumeration value="04.06"/>
+			<xs:enumeration value="04.07"/>
+			<xs:enumeration value="04.08"/>
+			<xs:enumeration value="04.09"/>
+			<xs:enumeration value="04.10"/>
+			<xs:enumeration value="04.11"/>
+			<xs:enumeration value="04.12"/>
+			<xs:enumeration value="04.13"/>
+			<xs:enumeration value="04.14"/>
+			<xs:enumeration value="04.15"/>
+			<xs:enumeration value="04.16"/>
+			<xs:enumeration value="04.17"/>
+			<xs:enumeration value="04.18"/>
+			<xs:enumeration value="04.19"/>
+			<xs:enumeration value="04.20"/>
+			<xs:enumeration value="04.21"/>
+			<xs:enumeration value="04.22"/>
+			<xs:enumeration value="04.23"/>
+			<xs:enumeration value="05.01"/>
+			<xs:enumeration value="05.02"/>
+			<xs:enumeration value="05.03"/>
+			<xs:enumeration value="05.04"/>
+			<xs:enumeration value="05.05"/>
+			<xs:enumeration value="05.06"/>
+			<xs:enumeration value="05.07"/>
+			<xs:enumeration value="05.08"/>
+			<xs:enumeration value="05.09"/>
+			<xs:enumeration value="06.01"/>
+			<xs:enumeration value="06.02"/>
+			<xs:enumeration value="06.03"/>
+			<xs:enumeration value="06.04"/>
+			<xs:enumeration value="06.05"/>
+			<xs:enumeration value="06.06"/>
+			<xs:enumeration value="07.01"/>
+			<xs:enumeration value="07.02"/>
+			<xs:enumeration value="07.03"/>
+			<xs:enumeration value="07.04"/>
+			<xs:enumeration value="07.05"/>
+			<xs:enumeration value="07.06"/>
+			<xs:enumeration value="07.07"/>
+			<xs:enumeration value="07.08"/>
+			<xs:enumeration value="07.09"/>
+			<xs:enumeration value="07.10"/>
+			<xs:enumeration value="07.11"/>
+			<xs:enumeration value="07.12"/>
+			<xs:enumeration value="07.13"/>
+			<xs:enumeration value="07.16"/>
+			<xs:enumeration value="07.17"/>
+			<xs:enumeration value="07.18"/>
+			<xs:enumeration value="07.19"/>
+			<xs:enumeration value="07.20"/>
+			<xs:enumeration value="07.21"/>
+			<xs:enumeration value="07.22"/>
+			<xs:enumeration value="08.01"/>
+			<xs:enumeration value="08.02"/>
+			<xs:enumeration value="09.01"/>
+			<xs:enumeration value="09.02"/>
+			<xs:enumeration value="09.03"/>
+			<xs:enumeration value="10.01"/>
+			<xs:enumeration value="10.02"/>
+			<xs:enumeration value="10.03"/>
+			<xs:enumeration value="10.04"/>
+			<xs:enumeration value="10.05"/>
+			<xs:enumeration value="10.06"/>
+			<xs:enumeration value="10.07"/>
+			<xs:enumeration value="10.08"/>
+			<xs:enumeration value="10.09"/>
+			<xs:enumeration value="10.10"/>
+			<xs:enumeration value="11.01"/>
+			<xs:enumeration value="11.02"/>
+			<xs:enumeration value="11.03"/>
+			<xs:enumeration value="11.04"/>
+			<xs:enumeration value="11.05"/>
+			<xs:enumeration value="12.01"/>
+			<xs:enumeration value="12.02"/>
+			<xs:enumeration value="12.03"/>
+			<xs:enumeration value="12.04"/>
+			<xs:enumeration value="12.05"/>
+			<xs:enumeration value="12.06"/>
+			<xs:enumeration value="12.07"/>
+			<xs:enumeration value="12.08"/>
+			<xs:enumeration value="12.09"/>
+			<xs:enumeration value="12.10"/>
+			<xs:enumeration value="12.11"/>
+			<xs:enumeration value="12.12"/>
+			<xs:enumeration value="12.13"/>
+			<xs:enumeration value="12.14"/>
+			<xs:enumeration value="12.15"/>
+			<xs:enumeration value="12.16"/>
+			<xs:enumeration value="12.17"/>
+			<xs:enumeration value="13.02"/>
+			<xs:enumeration value="13.03"/>
+			<xs:enumeration value="13.04"/>
+			<xs:enumeration value="13.05"/>
+			<xs:enumeration value="14.01"/>
+			<xs:enumeration value="14.02"/>
+			<xs:enumeration value="14.03"/>
+			<xs:enumeration value="14.04"/>
+			<xs:enumeration value="14.05"/>
+			<xs:enumeration value="14.06"/>
+			<xs:enumeration value="14.07"/>
+			<xs:enumeration value="14.08"/>
+			<xs:enumeration value="14.09"/>
+			<xs:enumeration value="14.10"/>
+			<xs:enumeration value="14.11"/>
+			<xs:enumeration value="14.12"/>
+			<xs:enumeration value="14.13"/>
+			<xs:enumeration value="14.14"/>
+			<xs:enumeration value="15.01"/>
+			<xs:enumeration value="15.02"/>
+			<xs:enumeration value="15.03"/>
+			<xs:enumeration value="15.04"/>
+			<xs:enumeration value="15.05"/>
+			<xs:enumeration value="15.06"/>
+			<xs:enumeration value="15.07"/>
+			<xs:enumeration value="15.08"/>
+			<xs:enumeration value="15.09"/>
+			<xs:enumeration value="15.10"/>
+			<xs:enumeration value="15.11"/>
+			<xs:enumeration value="15.12"/>
+			<xs:enumeration value="15.13"/>
+			<xs:enumeration value="15.14"/>
+			<xs:enumeration value="15.15"/>
+			<xs:enumeration value="15.16"/>
+			<xs:enumeration value="15.17"/>
+			<xs:enumeration value="15.18"/>
+			<xs:enumeration value="16.01"/>
+			<xs:enumeration value="16.02"/>
+			<xs:enumeration value="17.01"/>
+			<xs:enumeration value="17.02"/>
+			<xs:enumeration value="17.03"/>
+			<xs:enumeration value="17.04"/>
+			<xs:enumeration value="17.05"/>
+			<xs:enumeration value="17.06"/>
+			<xs:enumeration value="17.08"/>
+			<xs:enumeration value="17.09"/>
+			<xs:enumeration value="17.10"/>
+			<xs:enumeration value="17.11"/>
+			<xs:enumeration value="17.12"/>
+			<xs:enumeration value="17.13"/>
+			<xs:enumeration value="17.14"/>
+			<xs:enumeration value="17.15"/>
+			<xs:enumeration value="17.16"/>
+			<xs:enumeration value="17.17"/>
+			<xs:enumeration value="17.18"/>
+			<xs:enumeration value="17.19"/>
+			<xs:enumeration value="17.20"/>
+			<xs:enumeration value="17.21"/>
+			<xs:enumeration value="17.22"/>
+			<xs:enumeration value="17.23"/>
+			<xs:enumeration value="17.24"/>
+			<xs:enumeration value="17.25"/>
+			<xs:enumeration value="18.01"/>
+			<xs:enumeration value="19.01"/>
+			<xs:enumeration value="20.01"/>
+			<xs:enumeration value="20.02"/>
+			<xs:enumeration value="20.03"/>
+			<xs:enumeration value="21.01"/>
+			<xs:enumeration value="22.01"/>
+			<xs:enumeration value="23.01"/>
+			<xs:enumeration value="24.01"/>
+			<xs:enumeration value="25.01"/>
+			<xs:enumeration value="25.02"/>
+			<xs:enumeration value="25.03"/>
+			<xs:enumeration value="25.04"/>
+			<xs:enumeration value="25.05"/>
+			<xs:enumeration value="26.01"/>
+			<xs:enumeration value="27.01"/>
+			<xs:enumeration value="28.01"/>
+			<xs:enumeration value="29.01"/>
+			<xs:enumeration value="30.01"/>
+			<xs:enumeration value="31.01"/>
+			<xs:enumeration value="32.01"/>
+			<xs:enumeration value="33.01"/>
+			<xs:enumeration value="34.01"/>
+			<xs:enumeration value="35.01"/>
+			<xs:enumeration value="36.01"/>
+			<xs:enumeration value="37.01"/>
+			<xs:enumeration value="38.01"/>
+			<xs:enumeration value="39.01"/>
+			<xs:enumeration value="40.01"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TIdLote">
