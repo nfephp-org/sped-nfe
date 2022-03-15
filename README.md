@@ -7,6 +7,7 @@ Biblioteca para geração e comunicação das NFe com as SEFAZ autorizadoras, e 
 - NT 2020.006 Intermediarios
 - NT 2020.007 Evento Ator Interessado na NFe - Transportador
 - NT 2021_001 Evento de COMPROVANTE DE ENTREGA
+- NT 2021.004 v1.20 Regras de Validação e Novos Campos (válido em produção a partir de 16/05/2022)
 
 > **NOTA: Estas NT afetam principalmente o uso do TXT para conversão em XML, mesmo que os campos ainda não sejam exigidos.**
 
