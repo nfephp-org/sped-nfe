@@ -176,6 +176,10 @@ class Make
     /**
      * @var array of DOMElements
      */
+    protected $obsItem = [];
+    /**
+     * @var array of DOMElements
+     */
     protected $aRastro = [];
     /**
      * @var array of DOMElements
@@ -1965,6 +1969,40 @@ class Make
         );
         $this->aProd[$std->item] = $prod;
         return $prod;
+    }
+
+    /**
+     * Grupo de observações de uso livre (para o item da NF-e)
+     * Grupo de observações de uso livre do Contribuinte
+     */
+    public function tagprodObsCont(stdClass $std): ?DOMElement
+    {
+        $possible = [
+            'item',
+            'xCampo',
+            'xTexto'
+        ];
+        $std = $this->equilizeParameters($std, $possible);
+        $identificador = 'VA01 <obsItem> - ';
+        $obsItem = $this->dom->createElement("obsItem");
+        $obsCont = $this->dom->createElement("obsCont");
+        $this->dom->addChild(
+            $obsCont,
+            "xCampo",
+            substr(trim($std->xCampo), 0, 20),
+            true,
+            $identificador . "[item $std->item] (obsCont/xCampo) Identificação do campo"
+        );
+        $this->dom->addChild(
+            $obsCont,
+            "xTexto",
+            substr(trim($std->xTexto), 0, 60),
+            true,
+            $identificador . "[item $std->item] (obsCont/xTexto) Conteúdo do campo"
+        );
+        $obsItem->appendChild($obsCont);
+        $this->obsItem[$std->item] = $obsItem;
+        return $obsItem;
     }
 
     /**
@@ -6761,13 +6799,13 @@ class Make
     }
 
     /**
-     * Grupo Processo referenciado Z10 pai Z01 (NT2012.003)
+     * Grupo Processo referenciado Z10 pai Z01
      * tag NFe/infNFe/procRef (opcional)
      * O método taginfAdic deve ter sido carregado antes
      */
     public function tagprocRef(stdClass $std): DOMElement
     {
-        $possible = ['nProc', 'indProc'];
+        $possible = ['nProc', 'indProc', 'tpAto'];
         $std = $this->equilizeParameters($std, $possible);
         $this->buildInfAdic();
         $procRef = $this->dom->createElement("procRef");
@@ -6784,6 +6822,13 @@ class Make
             $std->indProc,
             true,
             "Indicador da origem do processo"
+        );
+        $this->dom->addChild(
+            $procRef,
+            "tpAto",
+            $std->tpAto,
+            false,
+            "Tipo do ato concessório"
         );
         $this->dom->appChild($this->infAdic, $procRef, '');
         return $procRef;
@@ -7411,6 +7456,11 @@ class Make
             if (!empty($this->aInfAdProd[$nItem])) {
                 $child = $this->aInfAdProd[$nItem];
                 $this->dom->appChild($det, $child, "Inclusão do node infAdProd");
+            }
+            //insere obsItem
+            if (!empty($this->obsItem[$nItem])) {
+                $child = $this->obsItem[$nItem];
+                $this->dom->appChild($det, $child, "Inclusão do node obsItem");
             }
             $this->aDet[] = $det;
             $det = null;
