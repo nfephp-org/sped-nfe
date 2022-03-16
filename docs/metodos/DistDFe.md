@@ -153,7 +153,7 @@ while ($ultNSU <= $maxNSU) {
     }
     sleep(2);
 }
-//salve o ultNSU pesquizado em sua base pois a proxima consulta deverá iniciar a partir desse numero + 1
+//salve o ultNSU pesquisado em sua base pois a proxima consulta deverá iniciar a partir desse numero + 1
 ```
 
 ## Parametros
