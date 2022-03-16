@@ -93,13 +93,14 @@ $tools->setEnvironment(1);
 //a quantidade de documentos, e para não baixar várias vezes as mesmas coisas.
 $ultNSU = 0;
 $maxNSU = $ultNSU;
-$loopLimit = 50;
+$loopLimit = 12; //mantenha o numero de consultas abaixo de 20, cada consulta retorna até 50 documentos por vez
 $iCount = 0;
 
 //executa a busca de DFe em loop
 while ($ultNSU <= $maxNSU) {
     $iCount++;
     if ($iCount >= $loopLimit) {
+        //o limite de loops foi atingido pare de consultar
         break;
     }
     try {
@@ -107,7 +108,7 @@ while ($ultNSU <= $maxNSU) {
         $resp = $tools->sefazDistDFe($ultNSU);
     } catch (\Exception $e) {
         echo $e->getMessage();
-        //pare de consultar e resolva o erro
+        //pare de consultar e resolva o erro (pode ser que a SEFAZ esteja fora do ar)
         break;
     }
  
@@ -146,7 +147,9 @@ while ($ultNSU <= $maxNSU) {
         //esse processamento depende do seu aplicativo
     }
     if ($ultNSU == $maxNSU) {
-       break; //CUIDADO para não deixar seu loop infinito !!
+       //quando o numero máximo de NSU foi atingido não existem mais dados a buscar
+       //nesse caso a proxima busca deve ser no minimo após mais uma hora
+       break;
     }
     sleep(2);
 }
