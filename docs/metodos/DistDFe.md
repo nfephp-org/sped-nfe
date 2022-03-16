@@ -107,7 +107,8 @@ while ($ultNSU <= $maxNSU) {
         $resp = $tools->sefazDistDFe($ultNSU);
     } catch (\Exception $e) {
         echo $e->getMessage();
-        //tratar o erro
+        //pare de consultar e resolva o erro
+        break;
     }
  
     //extrair e salvar os retornos
@@ -122,6 +123,12 @@ while ($ultNSU <= $maxNSU) {
     $ultNSU = $node->getElementsByTagName('ultNSU')->item(0)->nodeValue;
     $maxNSU = $node->getElementsByTagName('maxNSU')->item(0)->nodeValue;
     $lote = $node->getElementsByTagName('loteDistDFeInt')->item(0);
+    if (in_array($cStat, ['137', '656']) {
+         //137 - Nenhum documento localizado, a SEFAZ está te informando para consultar novamente após uma hora a contar desse momento
+         //656 - Consumo Indevido, a SEFAZ bloqueou o seu acesso por uma hora pois as regras de consultas não foram observadas
+        //nesses dois casos pare as consultas imediatamente e retome apenas daqui a uma hora, pelo menos !!
+        break;
+    }
     if (empty($lote)) {
         //lote vazio
         continue;
@@ -143,6 +150,7 @@ while ($ultNSU <= $maxNSU) {
     }
     sleep(2);
 }
+//salve o ultNSU pesquizado em sua base pois a proxima consulta deverá iniciar a partir desse numero + 1
 ```
 
 ## Parametros
