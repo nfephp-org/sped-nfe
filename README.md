@@ -86,7 +86,7 @@ composer require nfephp-org/sped-nfe:dev-master
 
 Para que este pacote possa funcionar são necessários os seguintes requisitos do PHP e outros pacotes dos quais esse depende.
 
-- PHP 7.x (recomendável PHP 7.2) 
+- PHP 7.x (minimo PHP 7.4 veja sempre nos badges) 
 - ext-curl
 - ext-dom
 - ext-json
