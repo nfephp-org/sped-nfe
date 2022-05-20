@@ -92,7 +92,7 @@
   <UF>
     <sigla>DF</sigla>
     <homologacao>
-      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">http://www.fazenda.df.gov.br/nfce/qrcode</NfeConsultaQR>
+      <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">http://dec.fazenda.df.gov.br/ConsultarNFCe.aspx</NfeConsultaQR>
     </homologacao>
     <producao>
       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">http://www.fazenda.df.gov.br/nfce/qrcode</NfeConsultaQR>
