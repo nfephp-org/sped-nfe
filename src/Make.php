@@ -2714,7 +2714,7 @@ class Make
             $comb,
             "descANP",
             $std->descANP,
-            false,
+            true,
             "$identificador [item $std->item] Utilizar a descrição de produtos do "
                 . "Sistema de Informações de Movimentação de Produtos - "
                 . "SIMP (http://www.anp.gov.br/simp/"
