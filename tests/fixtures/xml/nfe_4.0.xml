@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<nfeProc versao="4.00" xmlns="http://www.portalfiscal.inf.br/nfe">
+    <NFe xmlns="http://www.portalfiscal.inf.br/nfe">
+        <infNFe versao="4.00" Id="NFe32191107670813000825550010059062251133037938">
+            <ide>
+                <cUF>32</cUF>
+                <cNF>13303793</cNF>
+                <natOp>VENDA PARA CONSUMIDOR FINAL</natOp>
+                <mod>55</mod>
+                <serie>1</serie>
+                <nNF>5906225</nNF>
+                <dhEmi>2019-11-20T00:00:00-02:00</dhEmi>
+                <dhSaiEnt>2019-11-20T18:19:28-02:00</dhSaiEnt>
+                <tpNF>1</tpNF>
+                <idDest>2</idDest>
+                <cMunFG>3205101</cMunFG>
+                <tpImp>1</tpImp>
+                <tpEmis>1</tpEmis>
+                <cDV>8</cDV>
+                <tpAmb>1</tpAmb>
+                <finNFe>1</finNFe>
+                <indFinal>1</indFinal>
+                <indPres>2</indPres>
+                <procEmi>0</procEmi>
+                <verProc>MIGRATEGNFe</verProc>
+            </ide>
+            <emit>
+                <CNPJ>07670813000823</CNPJ>
+                <xNome>SEILA COMERCIO ELETRONICO S.A</xNome>
+                <xFant>SEILA</xFant>
+                <enderEmit>
+                    <xLgr>ROD BR-132</xLgr>
+                    <nro>1000</nro>
+                    <xCpl>GALPAO 12 ARMZ 1</xCpl>
+                    <xBairro>VILA AMARO</xBairro>
+                    <cMun>3205101</cMun>
+                    <xMun>VIANA</xMun>
+                    <UF>ES</UF>
+                    <CEP>29143080</CEP>
+                    <cPais>1058</cPais>
+                    <xPais>BRASIL</xPais>
+                    <fone>195552323</fone>
+                </enderEmit>
+                <IE>013581225</IE>
+                <IEST>0914567891113</IEST>
+                <CRT>3</CRT>
+            </emit>
+            <dest>
+                <CPF>014345733812</CPF>
+                <xNome>CICLANO DA SILVA</xNome>
+                <enderDest>
+                    <xLgr>RUA CLOVIS MAGALHAES</xLgr>
+                    <nro>100</nro>
+                    <xBairro>VILA SANTO ESPEDITO</xBairro>
+                    <cMun>3550308</cMun>
+                    <xMun>SAO PAULO</xMun>
+                    <UF>SP</UF>
+                    <CEP>04234120</CEP>
+                    <cPais>1058</cPais>
+                    <xPais>BRASIL</xPais>
+                    <fone>1150734858</fone>
+                </enderDest>
+                <indIEDest>9</indIEDest>
+            </dest>
+            <det nItem="1">
+                <prod>
+                    <cProd>18169</cProd>
+                    <cEAN/>
+                    <xProd>MULTILASER LEITOR DE CARTAO 46 EM 1 AC076 - TOT TRIB. 9.16</xProd>
+                    <NCM>84719019</NCM>
+                    <CEST>2103400</CEST>
+                    <CFOP>6108</CFOP>
+                    <uCom>UN</uCom>
+                    <qCom>1.0000</qCom>
+                    <vUnCom>28.9000000000</vUnCom>
+                    <vProd>28.90</vProd>
+                    <cEANTrib/>
+                    <uTrib>UN</uTrib>
+                    <qTrib>1.0000</qTrib>
+                    <vUnTrib>28.9000000000</vUnTrib>
+                    <vFrete>11.89</vFrete>
+                    <indTot>1</indTot>
+                </prod>
+                <imposto>
+                    <ICMS>
+                        <ICMS00>
+                            <orig>0</orig>
+                            <CST>00</CST>
+                            <modBC>3</modBC>
+                            <vBC>40.79</vBC>
+                            <pICMS>12.0000</pICMS>
+                            <vICMS>4.89</vICMS>
+                        </ICMS00>
+                    </ICMS>
+                    <PIS>
+                        <PISAliq>
+                            <CST>01</CST>
+                            <vBC>33.45</vBC>
+                            <pPIS>1.6500</pPIS>
+                            <vPIS>0.55</vPIS>
+                        </PISAliq>
+                    </PIS>
+                    <COFINS>
+                        <COFINSAliq>
+                            <CST>01</CST>
+                            <vBC>33.45</vBC>
+                            <pCOFINS>7.6000</pCOFINS>
+                            <vCOFINS>2.54</vCOFINS>
+                        </COFINSAliq>
+                    </COFINS>
+                    <ICMSUFDest>
+                        <vBCUFDest>40.79</vBCUFDest>
+                        <vBCFCPUFDest>40.79</vBCFCPUFDest>
+                        <pICMSUFDest>18.0000</pICMSUFDest>
+                        <pICMSInter>12.00</pICMSInter>
+                        <pICMSInterPart>100.0000</pICMSInterPart>
+                        <vICMSUFDest>2.45</vICMSUFDest>
+                        <vICMSUFRemet>0.00</vICMSUFRemet>
+                    </ICMSUFDest>
+                </imposto>
+                <infAdProd>GARANTIA 12 MESES</infAdProd>
+            </det>
+            <total>
+                <ICMSTot>
+                    <vBC>40.79</vBC>
+                    <vICMS>4.89</vICMS>
+                    <vICMSDeson>0.00</vICMSDeson>
+                    <vICMSUFDest>2.45</vICMSUFDest>
+                    <vFCP>0.00</vFCP>
+                    <vBCST>0.00</vBCST>
+                    <vST>0.00</vST>
+                    <vFCPST>0.00</vFCPST>
+                    <vFCPSTRet>0.00</vFCPSTRet>
+                    <vProd>28.90</vProd>
+                    <vFrete>11.89</vFrete>
+                    <vSeg>0.00</vSeg>
+                    <vDesc>0.00</vDesc>
+                    <vII>0.00</vII>
+                    <vIPI>0.00</vIPI>
+                    <vIPIDevol>0.00</vIPIDevol>
+                    <vPIS>0.55</vPIS>
+                    <vCOFINS>2.54</vCOFINS>
+                    <vOutro>0.00</vOutro>
+                    <vNF>40.79</vNF>
+                </ICMSTot>
+            </total>
+            <transp>
+                <modFrete>0</modFrete>
+                <transporta>
+                    <CNPJ>24864778001291</CNPJ>
+                    <xNome>FULANO CARGAS LTDA</xNome>
+                </transporta>
+                <vol>
+                    <qVol>1</qVol>
+                    <nVol>1</nVol>
+                    <pesoL>0.109</pesoL>
+                    <pesoB>0.109</pesoB>
+                </vol>
+            </transp>
+            <pag>
+                <detPag>
+                    <tPag>15</tPag>
+                    <vPag>40.79</vPag>
+                </detPag>
+            </pag>
+            <infAdic>
+                <infCpl>PEDIDO 13303793 - OBSERVACAO DO CLIENTE - NENHUMA VALOR APROXIMADO DOS TRIBUTOS 6.49 REAIS -
+                    22.46 POR CENTO - FONTE IBPT CONFORME E.C. 87/2015 TOTAL DO ICMS PARA A UF DO DESTINATARIO 2.45
+                    REAIS / TOTAL DO ICMS PARA A UF DE ORIGEM 0.00 REAIS / VALOR DO FCP PARA A UF DO DESTINATARIO 0.00
+                    REAIS RESPONSAVEL/LOCAL ENTREGA CORREIOS
+                </infCpl>
+            </infAdic>
+            <compra>
+                <xPed>13303793</xPed>
+            </compra>
+        </infNFe>
+        <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+            <SignedInfo>
+                <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+                <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+                <Reference URI="#NFe32191105570714000825550010059062251133037938">
+                    <Transforms>
+                        <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                        <Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+                    </Transforms>
+                    <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+                    <DigestValue>LB8yNbRKD5qSIeNXsurcG6PAERs=</DigestValue>
+                </Reference>
+            </SignedInfo>
+            <SignatureValue>
+                MKPV480JhXMjqBDQ7mZRpxirHzev6VEgeODEMmsLfLHd/nEmyqVlcMK6RstZG579sgpDhU6THrVbmweATfsbA27VwMc+qjdWIG0cwgW5LKoO478LKG0aAwIpjta1w7E6FelLjYG9HWsDcxLQv9e71oaqAwi4PIywWQz5NLysdywRN1d/Hi4AuaD68SlCD/c348AgN9VFi8oe+Eyw/DsMr0lXcgFxvMwaXzpI2fxOXOty40hl18q2IjqDF30EfX46/vkH8zA94dys2fCPC+we2zBuG/0Pcfg5tXQexyhfa7QmAC8EQu8C9m4nq4D75y7EmKKrvt+hWcnGwA4lBO5FGQ==
+            </SignatureValue>
+            <KeyInfo>
+                <X509Data>
+                    <X509Certificate>
+                        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
+                    </X509Certificate>
+                </X509Data>
+            </KeyInfo>
+        </Signature>
+    </NFe>
+    <protNFe versao="4.00">
+        <infProt>
+            <tpAmb>1</tpAmb>
+            <verAplic>SVRS201908091113</verAplic>
+            <chNFe>32191107670813000825550010059062251133037938</chNFe>
+            <dhRecbto>2019-11-20T18:21:24-03:00</dhRecbto>
+            <nProt>332190059936977</nProt>
+            <digVal>LB8yNbRKD5qSIeNXsurcG6PAERs=</digVal>
+            <cStat>100</cStat>
+            <xMotivo>Autorizado o uso da NF-e</xMotivo>
+        </infProt>
+    </protNFe>
+</nfeProc>
