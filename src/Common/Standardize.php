@@ -115,22 +115,26 @@ class Standardize
      */
     public function toStd(?string $xml = null): stdClass
     {
-        if (!empty($xml)) {
-            $this->key = $this->whichIs($xml);
+        if (empty($xml)) {
+            throw new DocumentsException("O XML está vazio.");
         }
+        $this->key = $this->whichIs($xml);
         $this->sxml = simplexml_load_string($this->node);
         $this->json = str_replace(
             '@attributes',
             'attributes',
             json_encode($this->sxml, JSON_PRETTY_PRINT)
         );
-
         $std = json_decode($this->json);
         if (isset($std->infNFeSupl)) {
             $resp = $this->getQRCode();
             $std->infNFeSupl->qrCode = $resp['qrCode'];
             $std->infNFeSupl->urlChave = $resp['urlChave'];
             $this->json = json_encode($std);
+        }
+        if (!is_object($std)) {
+            //não é um objeto entao algum erro ocorreu
+            throw new DocumentsException("Falhou a converção para stdClass. Documento: $xml");
         }
         return $std;
     }
