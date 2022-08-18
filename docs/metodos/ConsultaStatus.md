@@ -18,11 +18,11 @@ Quando ocorrem os [TimeOuts](../TimeOut.md) é recomendável que seja consultada
 
 ## Dependências
 
-[NFePHP\Common\Certificate::class](Certificate.md)
+[NFePHP\Common\Certificate::class](https://github.com/nfephp-org/sped-common/blob/master/docs/Certificate.md)
 
-[NFePHP\NFe\Tools::class](Tools.md)
+[NFePHP\NFe\Tools::class](../Tools.md)
 
-[NFePHP\NFe\Common\Standardize::class](Standardize.md)
+[NFePHP\NFe\Common\Standardize::class](../Standardize.md)
 
 
 ## Exemplo de Uso
