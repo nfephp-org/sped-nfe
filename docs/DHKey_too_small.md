@@ -31,5 +31,5 @@ system_default = system_default_sect
  
 [system_default_sect]
 MinProtocol = TLSv1
-CipherString = DEFAULT:@SECLEVEL=1
+CipherString = DEFAULT@SECLEVEL=1
 ```
