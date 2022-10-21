@@ -302,10 +302,11 @@ class Tools extends ToolsCommon
             . "$filter"
             . "</infCons>"
             . "</ConsCad>";
+
+        $this->isValid($this->urlVersion, $request, 'consCad');
         if (strtoupper($uf) == 'MT') {
             $request = "<nfeDadosMsg>$request</nfeDadosMsg>" ;
         }
-        $this->isValid($this->urlVersion, $request, 'consCad');
         $this->lastRequest = $request;
         $parameters = ['nfeDadosMsg' => $request];
         if ($this->urlVersion === '2.00') {
