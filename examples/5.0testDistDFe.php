@@ -44,14 +44,25 @@ $contingencia = $tools->contingency->deactivate();
 //e se necessário carregada novamente quando a classe for instanciada
 $tools->contingency->load($contingencia);
 
-//executa a busca por documentos
+//executa a busca por NSU
 $response = $tools->sefazDistDFe(
-    'AN',
-    $arr['cnpj'],
+    0, 
     0,
-    0
+    'AN',
+    ''
 );
 
 echo "<pre>";
 print_r($response);
 echo "</pre>";
+
+//executa a busca por chave
+$response = $tools->sefazDistDFe(
+    0, 
+    0,
+    'AN',
+    '<chave a ser consultada>'
+)
+echo "<pre>";
+print_r($response);
+echo "</pre>";    
