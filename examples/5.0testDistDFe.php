@@ -46,11 +46,10 @@ $tools->contingency->load($contingencia);
 
 //executa a busca por NSU
 $response = $tools->sefazDistDFe(
-    0, 
     0,
+    0, 
     'AN',
-    ''
-);
+    '');
 
 echo "<pre>";
 print_r($response);
@@ -61,8 +60,7 @@ $response = $tools->sefazDistDFe(
     0, 
     0,
     'AN',
-    '<chave a ser consultada>'
-)
+    '<sua chave>');
 echo "<pre>";
 print_r($response);
 echo "</pre>";    
