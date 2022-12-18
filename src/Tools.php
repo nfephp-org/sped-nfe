@@ -361,7 +361,7 @@ class Tools extends ToolsCommon
      * @param integer $numNSU  NSU number you wish to consult
      * @param string $fonte data source 'AN' and for some cases it may be 'RS'
      */
-    public function sefazDistDFe(int $ultNSU = 0, int $numNSU = 0, string $fonte = 'AN'): string
+    public function sefazDistDFe(int $ultNSU = 0, int $numNSU = 0, string $chave = null, string $fonte = 'AN'): string
     {
         //carrega serviço
         $servico = 'NfeDistribuicaoDFe';
@@ -370,10 +370,13 @@ class Tools extends ToolsCommon
         $cUF = UFList::getCodeByUF($this->config->siglaUF);
         $cnpj = $this->config->cnpj;
         $ultNSU = str_pad((string)$ultNSU, 15, '0', STR_PAD_LEFT);
-        $tagNSU = "<distNSU><ultNSU>$ultNSU</ultNSU></distNSU>";
+        $tag = "<distNSU><ultNSU>$ultNSU</ultNSU></distNSU>";
         if ($numNSU != 0) {
             $numNSU = str_pad((string)$numNSU, 15, '0', STR_PAD_LEFT);
-            $tagNSU = "<consNSU><NSU>$numNSU</NSU></consNSU>";
+            $tag = "<consNSU><NSU>$numNSU</NSU></consNSU>";
+        }
+        if (!empty($chave)) {
+            $tag = "<consChNFe><chNFe>$chave</chNFe></consChNFe>";
         }
         //monta a consulta
         $consulta = "<distDFeInt xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
@@ -384,7 +387,7 @@ class Tools extends ToolsCommon
         } else {
             $consulta .= "<CPF>$cnpj</CPF>";
         }
-        $consulta .= "$tagNSU"
+        $consulta .= "$tag"
             . "</distDFeInt>";
         //valida o xml da requisição
         $this->isValid($this->urlVersion, $consulta, 'distDFeInt');
