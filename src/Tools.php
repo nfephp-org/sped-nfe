@@ -666,7 +666,10 @@ class Tools extends ToolsCommon
             $std->verAplic = $this->verAplic;
         }
         $hash = base64_encode(sha1($std->chNFe . $std->imagem, true));
-        $datahash = date('Y-m-d\TH:i:sP');
+        $dt = new \DateTime('now', new \DateTimeZone($this->timezone));
+        $dt->setTimezone(new \DateTimeZone($this->timezone));
+        $datahash = $dt->format('Y-m-d\TH:i:sP');
+        //$datahash = date('Y-m-d\TH:i:sP');
         $cod = UFList::getCodeByUF($this->config->siglaUF);
         $cancelar = !empty($std->cancelar) ? $std->cancelar : false;
         if (!$cancelar) {
@@ -724,6 +727,7 @@ class Tools extends ToolsCommon
             $descEvento = $ev->desc;
             $cnpj = $this->config->cnpj;
             $dt = new \DateTime('now', new \DateTimeZone($this->timezone));
+            $dt->setTimezone(new \DateTimeZone($this->timezone));
             $dhEvento = $dt->format('Y-m-d\TH:i:sP');
             $sSeqEvento = str_pad($evt->nSeqEvento, 2, "0", STR_PAD_LEFT);
             $eventId = "ID" . $evt->tpEvento . $evt->chave . $sSeqEvento;
@@ -760,6 +764,7 @@ class Tools extends ToolsCommon
             $batchRequest .= Strings::clearXmlString($request, true);
         }
         $dt = new \DateTime('now', new \DateTimeZone($this->timezone));
+        $dt->setTimezone(new \DateTimeZone($this->timezone));
         $lote = $dt->format('YmdHis') . random_int(0, 9);
         $request = "<envEvento xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
             . "<idLote>$lote</idLote>"
@@ -902,6 +907,7 @@ class Tools extends ToolsCommon
         $descEvento = $ev->desc;
         $cnpj = $this->config->cnpj ?? '';
         $dt = new \DateTime(date("Y-m-d H:i:sP"), new \DateTimeZone($this->timezone));
+        $dt->setTimezone(new \DateTimeZone($this->timezone));
         $dhEvento = $dt->format('Y-m-d\TH:i:sP');
         $sSeqEvento = str_pad((string)$nSeqEvento, 2, "0", STR_PAD_LEFT);
         $eventId = "ID" . $tpEvento . $chave . $sSeqEvento;
@@ -949,7 +955,6 @@ class Tools extends ToolsCommon
         }
         $this->lastRequest = $request;
         //return $request;
-
         $parameters = ['nfeDadosMsg' => $request];
         $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
         $this->lastResponse = $this->sendRequest($body, $parameters);
