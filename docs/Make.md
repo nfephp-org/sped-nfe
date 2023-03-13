@@ -651,6 +651,7 @@ $std->nBomba;
 $std->nTanque;
 $std->vEncIni;
 $std->vEncFin;
+$std->pBio; //NT 2022.001 v1.10
 
 $nfe->tagencerrante($std);
 ```
