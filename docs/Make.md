@@ -653,11 +653,29 @@ $std->vEncIni;
 $std->vEncFin;
 $std->pBio; //NT 2022.001 v1.10
 
+
 $nfe->tagencerrante($std);
 ```
 
+### function tagorigComb($std):DOMElement
+Parte do grupo encerrante, podem haver de 0 até 30 tags desse tipo  
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+```php
+$std = new stdClass();
+$std->item = 1; //item da NFe
+$std->indImport= 0; //NT 2023.001 v1.00
+$std->cUFOrig = 'SP'; //NT 2023.001 v1.00
+$std->Orig = 100; //NT 2023.001 v1.00
+
+$nfe->tagOrigComb($std);
+```
+
+
 ### function tagimposto($std):DOMElement
-Node inicial dos Tributos incidentes no Produto ou Serviço do item da NFe
+Node inicial dos Tributos incidentes no Produto ou Serviço do item da NFe 
 
 | Parametro | Tipo | Descrição |
 | :--- | :---: | :--- |
@@ -720,6 +738,14 @@ $std->motDesICMSST; //NT 2020.005 v1.20
 $std->pFCPDif; //NT 2020.005 v1.20
 $std->vFCPDif; //NT 2020.005 v1.20
 $std->vFCPEfet; //NT 2020.005 v1.20
+$std->pRedAdRem; //NT 2023.001-v1.10
+$std->qBCMono; //NT 2023.001-v1.10
+$std->adRemiICMS; //NT 2023.001-v1.10
+$std->vICMSMono; //NT 2023.001-v1.10
+$std->adRemICMSReten; //NT 2023.001-v1.10
+$std->vICMSMonoReten; //NT 2023.001-v1.10
+$std->vICMSMonoDif; //NT 2023.001-v1.10
+$std->vICMSMonoRet; //NT 2023.001-v1.10
 
 $nfe->tagICMS($std);
 ```
@@ -1023,26 +1049,36 @@ Node dos totais referentes ao ICMS
 | $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
-$std->vBC = 1000.00;
-$std->vICMS = 1000.00;
-$std->vICMSDeson = 1000.00;
-$std->vFCP = 1000.00; //incluso no layout 4.00
-$std->vBCST = 1000.00;
-$std->vST = 1000.00;
-$std->vFCPST = 1000.00; //incluso no layout 4.00
-$std->vFCPSTRet = 1000.00; //incluso no layout 4.00
-$std->vProd = 1000.00;
-$std->vFrete = 1000.00;
-$std->vSeg = 1000.00;
-$std->vDesc = 1000.00;
-$std->vII = 1000.00;
-$std->vIPI = 1000.00;
-$std->vIPIDevol = 1000.00; //incluso no layout 4.00
-$std->vPIS = 1000.00;
-$std->vCOFINS = 1000.00;
-$std->vOutro = 1000.00;
-$std->vNF = 1000.00;
-$std->vTotTrib = 1000.00;
+$std->vBC;
+$std->vICMS;
+$std->vICMSDeson;
+$std->vBCST;
+$std->vST;
+$std->vProd;
+$std->vFrete;
+$std->vSeg;
+$std->vDesc;
+$std->vII;
+$std->vIPI;
+$std->vPIS;
+$std->vCOFINS;
+$std->vOutro;
+$std->vNF;
+$std->vIPIDevol;
+$std->vTotTrib;
+$std->vFCP;
+$std->vFCPST;
+$std->vFCPSTRet;
+$std->vFCPUFDest;
+$std->vICMSUFDest;
+$std->vICMSUFRemet;
+$std->qBCMono;
+$std->vICMSMono;
+$std->qBCMonoReten;
+$std->vICMSMonoReten;
+$std->qBCMonoRet;
+$std->vICMSMonoRet;
+
 
 $nfe->tagICMSTot($std);
 ```
