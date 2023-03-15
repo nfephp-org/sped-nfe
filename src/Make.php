@@ -1188,7 +1188,7 @@ class Make
         $std = $this->equilizeParameters($std, $possible);
         $identificador = 'E01 <dest> - ';
         $flagNome = true; //marca se xNome é ou não obrigatório
-        $temIE = $std->IE !== '' && $std->IE !== 'ISENTO'; // Tem inscrição municipal
+        $temIE = !empty($std->IE) && $std->IE !== 'ISENTO'; // Tem inscrição municipal
         $this->dest = $this->dom->createElement("dest");
         if (!$temIE && $std->indIEDest == 1) {
             $std->indIEDest = 2;
