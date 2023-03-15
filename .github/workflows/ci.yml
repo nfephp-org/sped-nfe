@@ -4,6 +4,7 @@ on:
     branches:
       - master
       - develop
+      - codecov-support
 
   pull_request:
     branches:
@@ -24,6 +25,7 @@ jobs:
         with:
           php-version: ${{ matrix.php-version }}
           extensions: mbstring, intl, mysql, zlib, dom, openssl, soap, json, simplexml, libxml
+          coverage: pcov
 
       - name: checkout
         uses: actions/checkout@v3
@@ -40,5 +42,15 @@ jobs:
           composer stan
 
       - name: Rodando PHPUnit
+        if: matrix.php-version != '8.2'
         run: |
           composer test
+
+      - name: Rodando PHPUnit
+        if: matrix.php-version == '8.2'
+        run: |
+          composer test-with-coverage
+
+      - name: Submit code coverage
+        if: matrix.php-version == '8.2'
+        uses: codecov/codecov-action@v3
