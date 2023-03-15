@@ -13,6 +13,7 @@
 <!-- PL_009-v4a.4  implementado alterações da NT 2018.005 -->
 <!-- PL_009-v4b  implementado alterações da NT 2020.006 -->
 <!-- PL_009-v5a  implementado alterações da NT  -->
+<!-- PL_009k_NT2023_001_v100 implementado alterações da NT 2023.001  -->
 <xs:schema xmlns="http://www.portalfiscal.inf.br/nfe" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:editix="http://www.portalfiscal.inf.br/nfe" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.portalfiscal.inf.br/nfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v1.01.xsd"/>
 	<xs:include schemaLocation="tiposBasico_v4.00.xsd"/>
@@ -276,7 +277,7 @@ para tpEmis diferente de 1</xs:documentation>
 											</xs:simpleType>
 										</xs:element>
 									</xs:sequence>
-									<xs:element name="NFref" minOccurs="0" maxOccurs="500">
+									<xs:element name="NFref" minOccurs="0" maxOccurs="999">
 										<xs:annotation>
 											<xs:documentation>Grupo de infromações da NF referenciada</xs:documentation>
 										</xs:annotation>
@@ -285,6 +286,11 @@ para tpEmis diferente de 1</xs:documentation>
 												<xs:element name="refNFe" type="TChNFe">
 													<xs:annotation>
 														<xs:documentation>Chave de acesso das NF-e referenciadas. Chave de acesso compostas por Código da UF (tabela do IBGE) + AAMM da emissão + CNPJ do Emitente + modelo, série e número da NF-e Referenciada + Código Numérico + DV.</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="refNFeSig" type="TChNFe">
+													<xs:annotation>
+														<xs:documentation>Referencia uma NF-e (modelo 55) emitida anteriormente pela sua Chave de Acesso com código numérico zerado, permitindo manter o sigilo da NF-e referenciada.</xs:documentation>
 													</xs:annotation>
 												</xs:element>
 												<xs:element name="refNF">
@@ -1926,6 +1932,42 @@ ambiente.</xs:documentation>
 																		</xs:sequence>
 																	</xs:complexType>
 																</xs:element>
+																<xs:element name="pBio" type="TDec_0304Max100Opc" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Percentual do índice de mistura do Biodiesel (B100) no Óleo Diesel B instituído pelo órgão regulamentador</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="origComb" minOccurs="0" maxOccurs="30">
+																	<xs:annotation>
+																		<xs:documentation>Grupo indicador da origem do combustível</xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element name="indImport">
+																				<xs:annotation>
+																					<xs:documentation>Indicador de importação 0=Nacional; 1=Importado;</xs:documentation>
+																				</xs:annotation>
+																				<xs:simpleType>
+																					<xs:restriction base="xs:string">
+																						<xs:whiteSpace value="preserve"/>
+																						<xs:enumeration value="0"/>
+																						<xs:enumeration value="1"/>
+																					</xs:restriction>
+																				</xs:simpleType>
+																			</xs:element>
+																			<xs:element name="cUFOrig" type="TCodUfIBGE">
+																				<xs:annotation>
+																					<xs:documentation>UF de origem do produtor ou do importado</xs:documentation>
+																				</xs:annotation>
+																			</xs:element>
+																			<xs:element name="pOrig" type="TDec_0304Max100Opc">
+																				<xs:annotation>
+																					<xs:documentation>Percentual originário para a UF</xs:documentation>
+																				</xs:annotation>
+																			</xs:element>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
 															</xs:sequence>
 														</xs:complexType>
 													</xs:element>
@@ -2035,6 +2077,47 @@ ambiente.</xs:documentation>
 																						</xs:annotation>
 																					</xs:element>
 																				</xs:sequence>
+																			</xs:sequence>
+																		</xs:complexType>
+																	</xs:element>
+																	<xs:element name="ICMS02">
+																		<xs:annotation>
+																			<xs:documentation>Tributação monofásica própria sobre combustíveis</xs:documentation>
+																		</xs:annotation>
+																		<xs:complexType>
+																			<xs:sequence>
+																				<xs:element name="orig" type="Torig">
+																					<xs:annotation>
+																						<xs:documentation>origem da mercadoria</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
+																				<xs:element name="CST">
+																					<xs:annotation>
+																						<xs:documentation>Tributção pelo ICMS
+02= Tributação monofásica própria sobre combustíveis;</xs:documentation>
+																					</xs:annotation>
+																					<xs:simpleType>
+																						<xs:restriction base="xs:string">
+																							<xs:whiteSpace value="preserve"/>
+																							<xs:enumeration value="02"/>
+																						</xs:restriction>
+																					</xs:simpleType>
+																				</xs:element>
+																				<xs:element name="qBCMono" type="TDec_1104v" minOccurs="0">
+																					<xs:annotation>
+																						<xs:documentation>Quantidade tributada.</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
+																				<xs:element name="adRemICMS" type="TDec_0302a04">
+																					<xs:annotation>
+																						<xs:documentation>Alíquota ad rem do imposto.</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
+																				<xs:element name="vICMSMono" type="TDec_1302">
+																					<xs:annotation>
+																						<xs:documentation>Valor do ICMS própri</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
 																			</xs:sequence>
 																		</xs:complexType>
 																	</xs:element>
@@ -2195,6 +2278,83 @@ ambiente.</xs:documentation>
 																								<xs:enumeration value="3"/>
 																								<xs:enumeration value="9"/>
 																								<xs:enumeration value="12"/>
+																							</xs:restriction>
+																						</xs:simpleType>
+																					</xs:element>
+																				</xs:sequence>
+																			</xs:sequence>
+																		</xs:complexType>
+																	</xs:element>
+																	<xs:element name="ICMS15">
+																		<xs:annotation>
+																			<xs:documentation>Tributação monofásica própria e com responsabilidade pela retenção sobre combustíveis</xs:documentation>
+																		</xs:annotation>
+																		<xs:complexType>
+																			<xs:sequence>
+																				<xs:element name="orig" type="Torig">
+																					<xs:annotation>
+																						<xs:documentation>origem da mercadoria</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
+																				<xs:element name="CST">
+																					<xs:annotation>
+																						<xs:documentation>Tributção pelo ICMS
+15= Tributação monofásica própria e com responsabilidade pela retenção sobre combustíveis;</xs:documentation>
+																					</xs:annotation>
+																					<xs:simpleType>
+																						<xs:restriction base="xs:string">
+																							<xs:whiteSpace value="preserve"/>
+																							<xs:enumeration value="15"/>
+																						</xs:restriction>
+																					</xs:simpleType>
+																				</xs:element>
+																				<xs:element name="qBCMono" type="TDec_1104v" minOccurs="0">
+																					<xs:annotation>
+																						<xs:documentation>Quantidade tributada.</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
+																				<xs:element name="adRemICMS" type="TDec_0302a04">
+																					<xs:annotation>
+																						<xs:documentation>Alíquota ad rem do imposto.</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
+																				<xs:element name="vICMSMono" type="TDec_1302">
+																					<xs:annotation>
+																						<xs:documentation>Valor do ICMS próprio</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
+																				<xs:element name="qBCMonoReten" type="TDec_1104v" minOccurs="0">
+																					<xs:annotation>
+																						<xs:documentation>Quantidade tributada sujeita a retenção.</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
+																				<xs:element name="adRemICMSReten" type="TDec_0302a04">
+																					<xs:annotation>
+																						<xs:documentation>Alíquota ad rem do imposto com retenção.</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
+																				<xs:element name="vICMSMonoReten" type="TDec_1302">
+																					<xs:annotation>
+																						<xs:documentation>Valor do ICMS com retenção</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
+																				<xs:sequence minOccurs="0">
+																					<xs:element name="pRedAdRem" type="TDec_0302Max100">
+																						<xs:annotation>
+																							<xs:documentation>Percentual de redução do valor da alíquota ad rem do ICMS.</xs:documentation>
+																						</xs:annotation>
+																					</xs:element>
+																					<xs:element name="motRedAdRem">
+																						<xs:annotation>
+																							<xs:documentation>Motivo da redução do adrem
+																							1= Transporte coletivo de passageiros; 9=Outros; 
+																						</xs:documentation>
+																						</xs:annotation>
+																						<xs:simpleType>
+																							<xs:restriction base="xs:string">
+																								<xs:whiteSpace value="preserve"/>
+																								<xs:enumeration value="1"/>
+																								<xs:enumeration value="9"/>
 																							</xs:restriction>
 																						</xs:simpleType>
 																					</xs:element>
@@ -2622,6 +2782,47 @@ A exigência do preenchimento das informações do ICMS diferido fica à critér
 																			</xs:sequence>
 																		</xs:complexType>
 																	</xs:element>
+																	<xs:element name="ICMS53">
+																		<xs:annotation>
+																			<xs:documentation>Tributação monofásica sobre combustíveis com recolhimento diferido</xs:documentation>
+																		</xs:annotation>
+																		<xs:complexType>
+																			<xs:sequence>
+																				<xs:element name="orig" type="Torig">
+																					<xs:annotation>
+																						<xs:documentation>origem da mercadoria</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
+																				<xs:element name="CST">
+																					<xs:annotation>
+																						<xs:documentation>Tributção pelo ICMS
+53= Tributação monofásica sobre combustíveis com recolhimento diferido;</xs:documentation>
+																					</xs:annotation>
+																					<xs:simpleType>
+																						<xs:restriction base="xs:string">
+																							<xs:whiteSpace value="preserve"/>
+																							<xs:enumeration value="53"/>
+																						</xs:restriction>
+																					</xs:simpleType>
+																				</xs:element>
+																				<xs:element name="qBCMonoDif" type="TDec_1104v" minOccurs="0">
+																					<xs:annotation>
+																						<xs:documentation>Quantidade tributada diferida.</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
+																				<xs:element name="adRemICMSDif" type="TDec_0302a04" minOccurs="0">
+																					<xs:annotation>
+																						<xs:documentation>Alíquota ad rem do imposto diferido</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
+																				<xs:element name="vICMSMonoDif" type="TDec_1302" minOccurs="0">
+																					<xs:annotation>
+																						<xs:documentation>Valor do ICMS diferido</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
+																			</xs:sequence>
+																		</xs:complexType>
+																	</xs:element>
 																	<xs:element name="ICMS60">
 																		<xs:annotation>
 																			<xs:documentation>Tributação pelo ICMS
@@ -2712,6 +2913,47 @@ A exigência do preenchimento das informações do ICMS diferido fica à critér
 																						</xs:annotation>
 																					</xs:element>
 																				</xs:sequence>
+																			</xs:sequence>
+																		</xs:complexType>
+																	</xs:element>
+																	<xs:element name="ICMS61">
+																		<xs:annotation>
+																			<xs:documentation>Tributação monofásica sobre combustíveis cobrada anteriormente;</xs:documentation>
+																		</xs:annotation>
+																		<xs:complexType>
+																			<xs:sequence>
+																				<xs:element name="orig" type="Torig">
+																					<xs:annotation>
+																						<xs:documentation>origem da mercadoria</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
+																				<xs:element name="CST">
+																					<xs:annotation>
+																						<xs:documentation>Tributção pelo ICMS
+61= Tributação monofásica sobre combustíveis cobrada anteriormente</xs:documentation>
+																					</xs:annotation>
+																					<xs:simpleType>
+																						<xs:restriction base="xs:string">
+																							<xs:whiteSpace value="preserve"/>
+																							<xs:enumeration value="61"/>
+																						</xs:restriction>
+																					</xs:simpleType>
+																				</xs:element>
+																				<xs:element name="qBCMonoRet" type="TDec_1104v" minOccurs="0">
+																					<xs:annotation>
+																						<xs:documentation>Quantidade tributada retida anteriormente</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
+																				<xs:element name="adRemICMSRet" type="TDec_0302a04">
+																					<xs:annotation>
+																						<xs:documentation>Alíquota ad rem do imposto retido anteriormente</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
+																				<xs:element name="vICMSMonoRet" type="TDec_1302">
+																					<xs:annotation>
+																						<xs:documentation>Valor do ICMS retido anteriormente</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
 																			</xs:sequence>
 																		</xs:complexType>
 																	</xs:element>
@@ -4810,6 +5052,36 @@ Substituição Tributaria;</xs:documentation>
 														<xs:documentation>Valor Total do FCP (Fundo de Combate à Pobreza) retido anteriormente por substituição tributária.</xs:documentation>
 													</xs:annotation>
 												</xs:element>
+												<xs:element name="qBCMono" type="TDec_1302" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Valor total da quantidade tributada do ICMS monofásico próprio</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="vICMSMono" type="TDec_1302" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Valor total do ICMS monofásico próprio</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="qBCMonoReten" type="TDec_1302" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Valor total da quantidade tributada do ICMS monofásico sujeito a retenção</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="vICMSMonoReten" type="TDec_1302" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Valor total do ICMS monofásico sujeito a retenção</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="qBCMonoRet" type="TDec_1302" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Valor total da quantidade tributada do ICMS monofásico retido anteriormente</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="vICMSMonoRet" type="TDec_1302" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Valor do ICMS monofásico retido anteriormente</xs:documentation>
+													</xs:annotation>
+												</xs:element>
 												<xs:element name="vProd" type="TDec_1302">
 													<xs:annotation>
 														<xs:documentation>Valor Total dos produtos e serviços</xs:documentation>
@@ -6657,8 +6929,7 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 	</xs:complexType>
 	<xs:simpleType name="Torig">
 		<xs:annotation>
-			<xs:documentation>Tipo Origem da mercadoria CST ICMS  origem da mercadoria: 0-Nacional exceto as indicadas nos códigos 3, 4, 5 e 8;
-1-Estrangeira - Importação direta; 2-Estrangeira - Adquirida no mercado interno; 3-Nacional, conteudo superior 40% e inferior ou igual a 70%; 4-Nacional, processos produtivos básicos; 5-Nacional, conteudo inferior 40%; 6-Estrangeira - Importação direta, com similar nacional, lista CAMEX; 7-Estrangeira - mercado interno, sem simular,lista CAMEX;8-Nacional, Conteúdo de Importação superior a 70%.</xs:documentation>
+			<xs:documentation>Tipo Origem da mercadoria CST ICMS  origem da mercadoria: 0-Nacional exceto as indicadas nos códigos 3, 4, 5 e 8;1-Estrangeira - Importação direta; 2-Estrangeira - Adquirida no mercado interno; 3-Nacional, conteudo superior 40% e inferior ou igual a 70%; 4-Nacional, processos produtivos básicos; 5-Nacional, conteudo inferior 40%; 6-Estrangeira - Importação direta, com similar nacional, lista CAMEX; 7-Estrangeira - mercado interno, sem simular,lista CAMEX;8-Nacional, Conteúdo de Importação superior a 70%.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
