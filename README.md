@@ -19,7 +19,7 @@ Biblioteca para geração e comunicação das NFe com as SEFAZ autorizadoras, e 
 ![PHP Supported Version][ico-php]
 ![Actions](https://github.com/nfephp-org/sped-nfe/actions/workflows/ci.yml/badge.svg)
 [![Chat][ico-gitter]][link-gitter]
-[![codecov](https://codecov.io/gh/gersonfs/sped-nfe/branch/codecov-support/graph/badge.svg?token=U0Z87MS0DA)](https://codecov.io/gh/gersonfs/sped-nfe)
+[![codecov](https://codecov.io/gh/nfephp-org/sped-nfe/branch/master/graph/badge.svg?token=UsZnjTNKKh)](https://codecov.io/gh/nfephp-org/sped-nfe)
 
 [![Latest Stable Version][ico-stable]][link-packagist]
 [![Latest Version on Packagist][ico-version]][link-packagist]
