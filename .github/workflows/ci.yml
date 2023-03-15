@@ -12,11 +12,11 @@ on:
 jobs:
   testsuite:
     name: Testes Automatizados
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
-        php-version: ["7.4", "8.0", "8.1"]
+        php-version: ["7.4", "8.0", "8.1", "8.2"]
 
     steps:
       - name: Setup PHP
@@ -26,7 +26,7 @@ jobs:
           extensions: mbstring, intl, mysql, zlib, dom, openssl, soap, json, simplexml, libxml
 
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Composer Install
         run: |
