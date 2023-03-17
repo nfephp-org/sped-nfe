@@ -2812,7 +2812,7 @@ class Make
      * encerrante que permite o controle sobre as operações de venda de combustíveis
      * LA11 pai LA01
      * tag NFe/infNFe/det[]/prod/comb/encerrante (opcional)
-     * 
+     *
      * NOTA: Ajustado para NT2023_0001_v1.10
      */
     public function tagencerrante(stdClass $std): DOMElement
@@ -2870,9 +2870,9 @@ class Make
             "pBio",
             $this->conditionalNumberFormatting($std->pBio, 4),
             false,
-            "$identificador [item $std->item] Percentual do índice de mistura do Biodiesel (B100) no Óleo Diesel B instituído pelo órgão regulamentador"
+            "$identificador [item $std->item] Percentual do índice de mistura do Biodiesel (B100) no Óleo Diesel B"
         );
-        
+  
         if (!empty($std->indImport)) {
             $origComb = $this->dom->createElement("origComb");
             $this->dom->addChild(
@@ -2929,7 +2929,7 @@ class Make
      * Informações do ICMS da Operação própria e ST N01 pai M01
      * tag NFe/infNFe/det[]/imposto/ICMS
      * NOTA: ajustado NT 2020.005-v1.20
-     * 
+     *
      * NOTA: Ajustado para NT2023_0001_v1.10
      */
     public function tagICMS(stdClass $std): DOMElement
@@ -3240,7 +3240,7 @@ class Make
                     false,
                     "$identificador [item $std->item] Motivo da desoneração do ICMS- ST"
                 );
-                break;                
+                break;
             case '15':
                 $this->stdTot->qBCMono += (float) !empty($std->qBCMono) ? $std->qBCMono : 0;
                 $this->stdTot->vICMSMono += (float) !empty($std->vICMSMono) ? $std->vICMSMono : 0;
@@ -3703,7 +3703,7 @@ class Make
                     $this->conditionalNumberFormatting($std->vICMSMonoDif),
                     false,
                     "$identificador [item $std->item] Valor do ICMS diferido"
-                );               
+                );
                 break;
             case '60':
                 $icms = $this->dom->createElement("ICMS60");
