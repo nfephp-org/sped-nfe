@@ -228,6 +228,10 @@ class Make
     /**
      * @var array of DOMElements
      */
+    protected $aOrigComb = [];
+    /**
+     * @var array of DOMElements
+     */
     protected $aImposto = [];
     /**
      * @var array of DOMElements
@@ -2686,6 +2690,8 @@ class Make
      *
      * NOTA: Ajustado para NT2016_002_v1.30
      * LA|cProdANP|descANP|pGLP|pGNn|pGNi|vPart|CODIF|qTemp|UFCons|
+     *
+     * NOTA: Ajustado para NT2023_0001_v1.10
      */
     public function tagcomb(stdClass $std): DOMElement
     {
@@ -2702,7 +2708,8 @@ class Make
             'UFCons',
             'qBCProd',
             'vAliqProd',
-            'vCIDE'
+            'vCIDE',
+            'pBio'
         ];
         $std = $this->equilizeParameters($std, $possible);
 
@@ -2806,6 +2813,14 @@ class Make
             );
             $this->dom->appChild($comb, $tagCIDE);
         }
+        $this->dom->addChild(
+            $comb,
+            "pBio",
+            $this->conditionalNumberFormatting($std->pBio, 4),
+            false,
+            "$identificador [item $std->item] Percentual do índice de mistura do Biodiesel (B100) no Óleo Diesel B "
+               . "instituído pelo órgão regulamentador"
+        );
         $this->aComb[$std->item] = $comb;
         return $comb;
     }
@@ -2815,8 +2830,6 @@ class Make
      * encerrante que permite o controle sobre as operações de venda de combustíveis
      * LA11 pai LA01
      * tag NFe/infNFe/det[]/prod/comb/encerrante (opcional)
-     *
-     * NOTA: Ajustado para NT2023_0001_v1.10
      */
     public function tagencerrante(stdClass $std): DOMElement
     {
@@ -2826,8 +2839,7 @@ class Make
             'nBomba',
             'nTanque',
             'vEncIni',
-            'vEncFin',
-            'pBio'
+            'vEncFin'
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = 'LA11 <encerrante> - ';
@@ -2867,22 +2879,17 @@ class Make
             true,
             "$identificador [item $std->item] Valor do Encerrante no final do abastecimento"
         );
-        $this->dom->addChild(
-            $encerrante,
-            "pBio",
-            $this->conditionalNumberFormatting($std->pBio, 4),
-            false,
-            "$identificador [item $std->item] Percentual do índice de mistura do Biodiesel (B100) no Óleo Diesel B "
-               . "instituído pelo órgão regulamentador"
-        );
         $this->aEncerrante[$std->item] = $encerrante;
         return $encerrante;
     }
 
     /**
-     * @param stdClass $std
-     * @return DOMElement
-     * @throws \DOMException
+     * Grupo indicador da origem do combustível
+     * encerrante que permite o controle sobre as operações de venda de combustíveis
+     * LA18 pai LA01
+     * tag NFe/infNFe/det[]/prod/comb/origComb[]
+     *
+     * NOTA: Adicionado para NT2023_0001_v1.10
      */
     public function tagorigComb(stdClass $std): DOMElement
     {
@@ -2893,31 +2900,30 @@ class Make
             'pOrig'
         ];
         $std = $this->equilizeParameters($std, $possible);
+        $identificador = 'LA18 <origComb> - ';
         $origComb = $this->dom->createElement("origComb");
         $this->dom->addChild(
             $origComb,
             "indImport",
             $std->indImport,
             true,
-            "Indicador de importação"
+            "$identificador [item $std->item] Indicador de importação"
         );
         $this->dom->addChild(
             $origComb,
             "cUFOrig",
             $std->cUFOrig,
             true,
-            "Código da UF"
+            "$identificador [item $std->item] Código da UF"
         );
         $this->dom->addChild(
             $origComb,
             "pOrig",
             $this->conditionalNumberFormatting($std->pOrig, 4),
             true,
-            "Percentual originário para a UF"
+            "$identificador [item $std->item] Percentual originário para a UF"
         );
-        $encerr = $this->aEncerrante[$std->item];
-        $this->dom->appChild($encerr, $origComb);
-        $this->aEncerrante[$std->item] = $encerr;
+        $this->aOrigComb[$std->item][] = $origComb;
         return $origComb;
     }
 
@@ -7749,6 +7755,14 @@ class Make
                 $encerrante = $this->aEncerrante[$nItem];
                 if (!empty($encerrante)) {
                     $this->dom->appChild($child, $encerrante, "inclusão do node encerrante na tag comb");
+                }
+            }
+            
+            foreach ($this->aOrigComb as $nItem => $origcomb) {
+                foreach ($origcomb as $childOC) {
+                    if (!empty($childOC)) {
+                        $this->dom->appChild($child, $childOC, "inclusão do node origComb na tag comb");
+                    }
                 }
             }
             $this->dom->appChild($prod, $child, "Inclusão do node combustivel");
