@@ -667,7 +667,7 @@ Parte do grupo encerrante, podem haver de 0 até 30 tags desse tipo
 $std = new stdClass();
 $std->item = 1; //item da NFe
 $std->indImport= 0; //NT 2023.001 v1.00
-$std->cUFOrig = 'SP'; //NT 2023.001 v1.00
+$std->cUFOrig = 35; //NT 2023.001 v1.00
 $std->Orig = 100; //NT 2023.001 v1.00
 
 $nfe->tagOrigComb($std);
