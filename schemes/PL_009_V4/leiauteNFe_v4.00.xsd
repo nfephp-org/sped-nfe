@@ -1932,7 +1932,7 @@ ambiente.</xs:documentation>
 																		</xs:sequence>
 																	</xs:complexType>
 																</xs:element>
-																<xs:element name="pBio" type="TDec_0304Max100Opc" minOccurs="0">
+																<xs:element name="pBio" type="TDec_03v00a04Max100Opc" minOccurs="0">
 																	<xs:annotation>
 																		<xs:documentation>Percentual do índice de mistura do Biodiesel (B100) no Óleo Diesel B instituído pelo órgão regulamentador</xs:documentation>
 																	</xs:annotation>
@@ -1960,7 +1960,7 @@ ambiente.</xs:documentation>
 																					<xs:documentation>UF de origem do produtor ou do importado</xs:documentation>
 																				</xs:annotation>
 																			</xs:element>
-																			<xs:element name="pOrig" type="TDec_0304Max100Opc">
+																			<xs:element name="pOrig" type="TDec_03v00a04Max100Opc">
 																				<xs:annotation>
 																					<xs:documentation>Percentual originário para a UF</xs:documentation>
 																				</xs:annotation>
@@ -2805,6 +2805,36 @@ A exigência do preenchimento das informações do ICMS diferido fica à critér
 																						</xs:restriction>
 																					</xs:simpleType>
 																				</xs:element>
+																				<xs:element name="qBCMono" type="TDec_1104v" minOccurs="0">
+																					<xs:annotation>
+																						<xs:documentation>Quantidade tributada.</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
+																				<xs:element name="adRemICMS" type="TDec_0302a04" minOccurs="0">
+																					<xs:annotation>
+																						<xs:documentation>Alíquota ad rem do imposto.</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
+																				<xs:element name="vICMSMonoOp" type="TDec_1302" minOccurs="0">
+																					<xs:annotation>
+																						<xs:documentation>Valor do ICMS da operação</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
+																				<xs:element name="pDif" type="TDec_0302a04Max100" minOccurs="0">
+																					<xs:annotation>
+																						<xs:documentation>Percentual do diferemento</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
+																				<xs:element name="vICMSMonoDif" type="TDec_1302" minOccurs="0">
+																					<xs:annotation>
+																						<xs:documentation>Valor do ICMS diferido</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
+																				<xs:element name="vICMSMono" type="TDec_1302" minOccurs="0">
+																					<xs:annotation>
+																						<xs:documentation>Valor do ICMS próprio devido</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
 																				<xs:element name="qBCMonoDif" type="TDec_1104v" minOccurs="0">
 																					<xs:annotation>
 																						<xs:documentation>Quantidade tributada diferida.</xs:documentation>
@@ -2813,11 +2843,6 @@ A exigência do preenchimento das informações do ICMS diferido fica à critér
 																				<xs:element name="adRemICMSDif" type="TDec_0302a04" minOccurs="0">
 																					<xs:annotation>
 																						<xs:documentation>Alíquota ad rem do imposto diferido</xs:documentation>
-																					</xs:annotation>
-																				</xs:element>
-																				<xs:element name="vICMSMonoDif" type="TDec_1302" minOccurs="0">
-																					<xs:annotation>
-																						<xs:documentation>Valor do ICMS diferido</xs:documentation>
 																					</xs:annotation>
 																				</xs:element>
 																			</xs:sequence>

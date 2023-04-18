@@ -3005,6 +3005,7 @@ class Make
             'qBCMono',
             'adRemiICMS',
             'vICMSMono',
+            'vICMSMonoOp',
             'adRemICMSReten',
             'vICMSMonoReten',
             'vICMSMonoDif',
@@ -3698,6 +3699,11 @@ class Make
                 );
                 break;
             case '53':
+                $this->stdTot->qBCMono += (float) !empty($std->qBCMono) ? $std->qBCMono : 0;
+                $this->stdTot->vICMSMono += (float) !empty($std->vICMSMono) ? $std->vICMSMono : 0;
+                $this->stdTot->qBCMonoReten += (float) !empty($std->qBCMonoReten) ? $std->qBCMonoReten : 0;
+                $this->stdTot->vICMSMonoReten += (float) !empty($std->vICMSMonoReten) ? $std->vICMSMonoReten : 0;
+
                 $icms = $this->dom->createElement("ICMS53");
                 $this->dom->addChild(
                     $icms,
@@ -3715,17 +3721,34 @@ class Make
                 );
                 $this->dom->addChild(
                     $icms,
-                    'qBCMonoDif',
-                    $this->conditionalNumberFormatting($std->qBCMonoDif, 4),
+                    'qBCMono',
+                    $this->conditionalNumberFormatting($std->qBCMono, 4),
                     false,
-                    "$identificador [item $std->item] Quantidade tributada diferida"
+                    "$identificador [item $std->item] BC do ICMS em quantidade conforme unidade de medida "
+                        . "estabelecida na legislação para o produto"
                 );
                 $this->dom->addChild(
                     $icms,
-                    'adRemICMSDif',
-                    $this->conditionalNumberFormatting($std->adRemICMSDif, 4),
+                    'adRemICMS',
+                    $this->conditionalNumberFormatting($std->adRemICMS, 4),
                     false,
-                    "$identificador [item $std->item] Alíquota ad rem do imposto diferido"
+                    "$identificador [item $std->item] Alíquota ad rem do ICMS estabelecida para o produto."
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'vICMSMonoOp',
+                    $this->conditionalNumberFormatting($std->vICMSMonoOp),
+                    false,
+                    "$identificador [item $std->item] valor do ICMS é obtido pela multiplicação da alíquota ad "
+                        . "rem pela quantidade do produto conforme unidade de "
+                        . "medida estabelecida em legislação, como se não houvesseo diferimento."
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'pDif',
+                    $this->conditionalNumberFormatting($std->pDif, 4),
+                    false,
+                    "$identificador [item $std->item] Percentual do diferimento"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -3733,6 +3756,13 @@ class Make
                     $this->conditionalNumberFormatting($std->vICMSMonoDif),
                     false,
                     "$identificador [item $std->item] Valor do ICMS diferido"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'vICMSMono',
+                    $this->conditionalNumberFormatting($std->vICMSMono),
+                    false,
+                    "$identificador [item $std->item] Valor do ICMS próprio devido"
                 );
                 break;
             case '60':
@@ -7754,15 +7784,18 @@ class Make
             if (!empty($this->aEncerrante)) {
                 $encerrante = $this->aEncerrante[$nItem];
                 if (!empty($encerrante)) {
-                    $this->dom->appChild($child, $encerrante, "inclusão do node encerrante na tag comb");
+                    $pbio = $child->getElementsByTagName("pBio")->item(0);
+                    if (!empty($pbio)) {
+                        $child->insertBefore($encerrante, $pbio);
+                    } else {
+                        $this->dom->appChild($child, $encerrante, "inclusão do node encerrante na tag comb");
+                    }
                 }
             }
-            //incluso NT 2023.001-1.10
-            foreach ($this->aOrigComb as $nItem => $origcomb) {
-                foreach ($origcomb as $childOC) {
-                    if (!empty($childOC)) {
-                        $this->dom->appChild($child, $childOC, "inclusão do node origComb na tag comb");
-                    }
+            //incluso NT 2023.001-1.10 /1.20
+            if (!empty($this->aOrigComb[$nItem])) {
+                foreach ($this->aOrigComb[$nItem] as $origcomb) {
+                     $this->dom->appChild($child, $origcomb, "inclusão do node origComb na tag comb");
                 }
             }
             $this->dom->appChild($prod, $child, "Inclusão do node combustivel");
@@ -7855,6 +7888,7 @@ class Make
             - $this->stdTot->vICMSDeson
             + $this->stdTot->vST
             + $this->stdTot->vFCPST
+            + $this->stdTot->vICMSMonoReten
             + $this->stdTot->vFrete
             + $this->stdTot->vSeg
             + $this->stdTot->vOutro
