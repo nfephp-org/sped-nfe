@@ -7784,15 +7784,18 @@ class Make
             if (!empty($this->aEncerrante)) {
                 $encerrante = $this->aEncerrante[$nItem];
                 if (!empty($encerrante)) {
-                    $this->dom->appChild($child, $encerrante, "inclusão do node encerrante na tag comb");
+                    $pbio = $child->getElementsByTagName("pBio")->item(0);
+                    if (!empty($pbio)) {
+                        $child->insertBefore($encerrante, $pbio);
+                    } else {
+                        $this->dom->appChild($child, $encerrante, "inclusão do node encerrante na tag comb");
+                    }
                 }
             }
             //incluso NT 2023.001-1.10 /1.20
-            foreach ($this->aOrigComb[$nItem] as $origcomb) {
-                foreach ($origcomb as $childOC) {
-                    if (!empty($childOC)) {
-                        $this->dom->appChild($child, $childOC, "inclusão do node origComb na tag comb");
-                    }
+            if (!empty($this->aOrigComb[$nItem])) {
+                foreach ($this->aOrigComb[$nItem] as $origcomb) {
+                     $this->dom->appChild($child, $origcomb, "inclusão do node origComb na tag comb");
                 }
             }
             $this->dom->appChild($prod, $child, "Inclusão do node combustivel");
@@ -7885,6 +7888,7 @@ class Make
             - $this->stdTot->vICMSDeson
             + $this->stdTot->vST
             + $this->stdTot->vFCPST
+            + $this->stdTot->vICMSMonoReten
             + $this->stdTot->vFrete
             + $this->stdTot->vSeg
             + $this->stdTot->vOutro
