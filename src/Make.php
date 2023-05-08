@@ -435,7 +435,7 @@ class Make
     /**
      * NFe xml mount method
      * this function returns TRUE on success or FALSE on error
-     * The xml of the NFe must be retrieved by the getXML() function or
+     * The xml of the NFe must be retrieved by the getXML() function or
      * directly by the public property $xml
      *
      * @throws RuntimeException
@@ -3012,16 +3012,12 @@ class Make
             'vICMSMonoRet'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        //totalização generica
-        $this->stdTot->vICMSDeson += (float) !empty($std->vICMSDeson) ? $std->vICMSDeson : 0;
-        $this->stdTot->vFCP += (float) !empty($std->vFCP) ? $std->vFCP : 0;
-        $this->stdTot->vFCPST += (float) !empty($std->vFCPST) ? $std->vFCPST : 0;
-        $this->stdTot->vFCPSTRet += (float) !empty($std->vFCPSTRet) ? $std->vFCPSTRet : 0;
         $identificador = 'N01 <ICMSxx> - ';
         switch ($std->CST) {
             case '00':
                 $this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
                 $this->stdTot->vICMS += (float) !empty($std->vICMS) ? $std->vICMS : 0;
+                $this->stdTot->vFCP += (float) !empty($std->vFCP) ? $std->vFCP : 0;
 
                 $icms = $this->dom->createElement("ICMS00");
                 $this->dom->addChild(
@@ -3129,6 +3125,8 @@ class Make
                 $this->stdTot->vICMS += (float) !empty($std->vICMS) ? $std->vICMS : 0;
                 $this->stdTot->vBCST += (float) !empty($std->vBCST) ? $std->vBCST : 0;
                 $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
+                $this->stdTot->vFCPST += (float) !empty($std->vFCPST) ? $std->vFCPST : 0;
+                $this->stdTot->vFCP += (float) !empty($std->vFCP) ? $std->vFCP : 0;
 
                 $icms = $this->dom->createElement("ICMS10");
                 $this->dom->addChild(
@@ -3355,8 +3353,10 @@ class Make
                 }
                 break;
             case '20':
+                $this->stdTot->vICMSDeson += (float) !empty($std->vICMSDeson) ? $std->vICMSDeson : 0;
                 $this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
                 $this->stdTot->vICMS += (float) !empty($std->vICMS) ? $std->vICMS : 0;
+                $this->stdTot->vFCP += (float) !empty($std->vFCP) ? $std->vFCP : 0;
 
                 $icms = $this->dom->createElement("ICMS20");
                 $this->dom->addChild(
@@ -3446,8 +3446,10 @@ class Make
                 );
                 break;
             case '30':
+                $this->stdTot->vICMSDeson += (float) !empty($std->vICMSDeson) ? $std->vICMSDeson : 0;
                 $this->stdTot->vBCST += (float) !empty($std->vBCST) ? $std->vBCST : 0;
                 $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
+                $this->stdTot->vFCPST += (float) !empty($std->vFCPST) ? $std->vFCPST : 0;
 
                 $icms = $this->dom->createElement("ICMS30");
                 $this->dom->addChild(
@@ -3546,6 +3548,7 @@ class Make
             case '40':
             case '41':
             case '50':
+                $this->stdTot->vICMSDeson += (float) !empty($std->vICMSDeson) ? $std->vICMSDeson : 0;
                 $icms = $this->dom->createElement("ICMS40");
                 $this->dom->addChild(
                     $icms,
@@ -3579,6 +3582,7 @@ class Make
             case '51':
                 $this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
                 $this->stdTot->vICMS += (float) !empty($std->vICMS) ? $std->vICMS : 0;
+                $this->stdTot->vFCP += (float) !empty($std->vFCP) ? $std->vFCP : 0;
 
                 $icms = $this->dom->createElement("ICMS51");
                 $this->dom->addChild(
@@ -3766,6 +3770,7 @@ class Make
                 );
                 break;
             case '60':
+                $this->stdTot->vFCPSTRet += (float) !empty($std->vFCPSTRet) ? $std->vFCPSTRet : 0;
                 $icms = $this->dom->createElement("ICMS60");
                 $this->dom->addChild(
                     $icms,
@@ -3909,6 +3914,9 @@ class Make
                 $this->stdTot->vICMS += (float) !empty($std->vICMS) ? $std->vICMS : 0;
                 $this->stdTot->vBCST += (float) !empty($std->vBCST) ? $std->vBCST : 0;
                 $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
+                $this->stdTot->vICMSDeson += (float) !empty($std->vICMSDeson) ? $std->vICMSDeson : 0;
+                $this->stdTot->vFCPST += (float) !empty($std->vFCPST) ? $std->vFCPST : 0;
+                $this->stdTot->vFCP += (float) !empty($std->vFCP) ? $std->vFCP : 0;
 
                 $icms = $this->dom->createElement("ICMS70");
                 $this->dom->addChild(
@@ -4080,6 +4088,8 @@ class Make
                 $this->stdTot->vICMS += (float) !empty($std->vICMS) ? $std->vICMS : 0;
                 $this->stdTot->vBCST += (float) !empty($std->vBCST) ? $std->vBCST : 0;
                 $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
+                $this->stdTot->vFCPST += (float) !empty($std->vFCPST) ? $std->vFCPST : 0;
+                $this->stdTot->vFCP += (float) !empty($std->vFCP) ? $std->vFCP : 0;
 
                 $icms = $this->dom->createElement("ICMS90");
                 $this->dom->addChild(
