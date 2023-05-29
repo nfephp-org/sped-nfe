@@ -3009,7 +3009,8 @@ class Make
             'adRemICMSReten',
             'vICMSMonoReten',
             'vICMSMonoDif',
-            'vICMSMonoRet'
+            'vICMSMonoRet',
+            'adRemICMSRet'
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = 'N01 <ICMSxx> - ';
