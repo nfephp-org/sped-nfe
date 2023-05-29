@@ -52,19 +52,28 @@ class ContingencyNFe
         $ide->getElementsByTagName('tpEmis')
             ->item(0)
             ->nodeValue = $contingency->tpEmis;
+        $nfref = $ide->getElementsByTagName('NFref')->item(0) ?? null;
         if (!empty($ide->getElementsByTagName('dhCont')->item(0)->nodeValue)) {
             $ide->getElementsByTagName('dhCont')
                 ->item(0)
                 ->nodeValue = $dt->format('Y-m-d\TH:i:sP');
         } else {
             $dhCont = $dom->createElement('dhCont', $dt->format('Y-m-d\TH:i:sP'));
-            $ide->appendChild($dhCont);
+            if (!empty($nfref)) {
+                $ide->insertBefore($dhCont, $nfref);
+            } else {
+                $ide->appendChild($dhCont);
+            }
         }
         if (!empty($ide->getElementsByTagName('xJust')->item(0)->nodeValue)) {
             $ide->getElementsByTagName('xJust')->item(0)->nodeValue = $motivo;
         } else {
             $xJust = $dom->createElement('xJust', $motivo);
-            $ide->appendChild($xJust);
+            if (!empty($nfref)) {
+                $ide->insertBefore($xJust, $nfref);
+            } else {
+                $ide->appendChild($xJust);
+            }
         }
         //corrigir a chave
         $infNFe = $dom->getElementsByTagName('infNFe')->item(0);
