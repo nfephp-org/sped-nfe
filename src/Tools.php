@@ -359,6 +359,7 @@ class Tools extends ToolsCommon
      * electronic tax documents of interest to an actor.
      * @param integer $ultNSU  last NSU number recived
      * @param integer $numNSU  NSU number you wish to consult
+     * @param string $chave key of NFe you wish to consult     
      * @param string $fonte data source 'AN' and for some cases it may be 'RS'
      */
     public function sefazDistDFe(int $ultNSU = 0, int $numNSU = 0, string $chave = null, string $fonte = 'AN'): string
