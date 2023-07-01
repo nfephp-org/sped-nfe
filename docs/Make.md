@@ -742,8 +742,8 @@ $std->pRedAdRem; //NT 2023.001-v1.10
 $std->qBCMono; //NT 2023.001-v1.10
 $std->adRemiICMS; //NT 2023.001-v1.10
 $std->vICMSMono; //NT 2023.001-v1.10
-$std->adRemICMSReten; //NT 2023.001-v1.10
-$std->vICMSMonoReten; //NT 2023.001-v1.10
+$std->adRemICMSRet; //NT 2023.001-v1.10
+$std->vICMSMonoRet; //NT 2023.001-v1.10
 $std->vICMSMonoDif; //NT 2023.001-v1.10
 $std->vICMSMonoRet; //NT 2023.001-v1.10
 
