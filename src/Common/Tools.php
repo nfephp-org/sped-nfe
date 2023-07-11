@@ -189,8 +189,11 @@ class Tools
         $this->certificate = $certificate;
         $this->typePerson = $this->getTypeOfPersonFromCertificate();
         $this->setEnvironment($this->config->tpAmb);
+        
         if (empty($contingency)) {
             $this->contingency = new Contingency();
+        }else{
+            $this->contingency = $contingency;
         }
     }
 
