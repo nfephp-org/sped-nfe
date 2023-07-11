@@ -103,6 +103,7 @@ class Tools extends ToolsCommon
 
     /**
      * Check status of Batch of NFe sent by receipt of this shipment
+     * @param string $recibo
      * @param int $tpAmb
      * @throws InvalidArgumentException
      */
@@ -136,6 +137,7 @@ class Tools extends ToolsCommon
 
     /**
      * Check the NFe status for the 44-digit key and retrieve the protocol
+     * @param string $chave
      * @param int $tpAmb
      * @throws InvalidArgumentException
      */
@@ -170,6 +172,10 @@ class Tools extends ToolsCommon
 
     /**
      * Request to disable one or an NFe sequence of a given series
+     * @param int $nSerie
+     * @param int $nIni
+     * @param int $nFin
+     * @param string $xJust
      * @param int $tpAmb
      * @param string $ano
      * @throws InvalidArgumentException
@@ -304,7 +310,7 @@ class Tools extends ToolsCommon
             . "</ConsCad>";
 
         $this->isValid($this->urlVersion, $request, 'consCad');
-        if (strtoupper($uf) == 'MT') {
+        if (strtoupper($uf) === 'MT') {
             $request = "<nfeDadosMsg>$request</nfeDadosMsg>" ;
         }
         $this->lastRequest = $request;
@@ -327,6 +333,7 @@ class Tools extends ToolsCommon
      * If $uf is NOT empty ignore contingency mode
      * @param string $uf  initials of federation unit
      * @param int $tpAmb
+     * @param bool $ignoreContingency
      * @return string xml soap response
      */
     public function sefazStatus(string $uf = '', int $tpAmb = null, bool $ignoreContingency = true): string
@@ -357,9 +364,11 @@ class Tools extends ToolsCommon
     /**
      * Service for the distribution of summary information and
      * electronic tax documents of interest to an actor.
-     * @param integer $ultNSU  last NSU number recived
-     * @param integer $numNSU  NSU number you wish to consult
+     * @param int $ultNSU  last NSU number recived
+     * @param int $numNSU  NSU number you wish to consult
+     * @param string $chave
      * @param string $fonte data source 'AN' and for some cases it may be 'RS'
+     * @return string
      */
     public function sefazDistDFe(int $ultNSU = 0, int $numNSU = 0, string $chave = null, string $fonte = 'AN'): string
     {
@@ -406,6 +415,10 @@ class Tools extends ToolsCommon
 
     /**
      * Request authorization for Letter of Correction
+     * @param string $chave
+     * @param string $xCorrecao
+     * @param int $nSeqEvento
+     * @return string
      * @throws InvalidArgumentException
      */
     public function sefazCCe(string $chave, string $xCorrecao, int $nSeqEvento = 1): string
@@ -434,6 +447,8 @@ class Tools extends ToolsCommon
     /**
      * Evento do Ator Interessado
      * NOTA: NT2020.007_v1.00a
+     * @param \stdClass $std
+     * @return string
      */
     public function sefazAtorInteressado(\stdClass $std): string
     {
@@ -468,8 +483,12 @@ class Tools extends ToolsCommon
      * Request extension of the term of return of products of an NF-e of
      * consignment for industrialization to order with suspension of ICMS
      * in interstate operations
+     * @param string $chNFe
+     * @param string $nProt
+     * @param array $itens
      * @param integer $tipo 1-primerio prazo, 2-segundo prazo
      * @param integer $nSeqEvento
+     * @return string
      */
     public function sefazEPP(
         string $chNFe,
@@ -506,8 +525,11 @@ class Tools extends ToolsCommon
      * Request the cancellation of the request for an extension of the term
      * of return of products of an NF-e of consignment for industrialization
      * by order with suspension of ICMS in interstate operations
+     * @param string $chave
+     * @param string $nProt
      * @param integer $tipo 1-primerio prazo, 2-segundo prazo
      * @param integer $nSeqEvento
+     * @return string
      * @throws InvalidArgumentException
      */
     public function sefazECPP(string $chave, string $nProt, int $tipo, int $nSeqEvento = 1): string
@@ -537,6 +559,7 @@ class Tools extends ToolsCommon
      * @param  string $chave key of NFe
      * @param  string $xJust justificative 255 characters max
      * @param  string $nProt protocol number
+     * @return string
      * @throws InvalidArgumentException
      */
     public function sefazCancela(string $chave, string $xJust, string $nProt): string
@@ -558,6 +581,7 @@ class Tools extends ToolsCommon
      * @param string $nProt protocol number
      * @param string $chNFeRef key of New NFe
      * @param string $verAplic version of applicative
+     * @return string
      * @throws InvalidArgumentException
      */
     public function sefazCancelaPorSubstituicao(
@@ -601,7 +625,11 @@ class Tools extends ToolsCommon
 
     /**
      * Request the registration of the manifestation of recipient
+     * @param string $chave
+     * @param int $tpEvento
      * @param string $xJust Justification for not carrying out the operation
+     * @param int $nSeqEvento
+     * @return string
      * @throws InvalidArgumentException
      */
     public function sefazManifesta(string $chave, int $tpEvento, string $xJust = '', int $nSeqEvento = 1): string
@@ -619,6 +647,8 @@ class Tools extends ToolsCommon
 
     /**
      * Request the registration of the manifestation of recipient in batch
+     * @param \stdClass $std
+     * @return string
      * @throws InvalidArgumentException
      * @throws RuntimeException
      */
@@ -659,6 +689,8 @@ class Tools extends ToolsCommon
 
     /**
      * Send event for delivery receipt
+     * @param \stdClass $std
+     * @return string
      */
     public function sefazComprovanteEntrega(\stdClass $std): string
     {
@@ -704,6 +736,9 @@ class Tools extends ToolsCommon
 
     /**
      * Send event to SEFAZ in batch
+     * @param string $uf
+     * @param \stdClass $std
+     * @return string
      * @throws RuntimeException
      * @throws InvalidArgumentException
      */
@@ -780,7 +815,9 @@ class Tools extends ToolsCommon
 
     /**
      * Request authorization for issuance in contingency EPEC
+     * @param string $xml
      * @param string $verAplic
+     * @return string
      * @throws InvalidArgumentException
      * @throws RuntimeException
      */
@@ -869,6 +906,13 @@ class Tools extends ToolsCommon
 
     /**
      * Send event to SEFAZ
+     * @param string $uf
+     * @param string $chave
+     * @param int $tpEvento
+     * @param int $nSeqEvento
+     * @param string $tagAdic
+     * @return string
+     * @throws \Exception
      */
     public function sefazEvento(
         string $uf,
@@ -965,6 +1009,8 @@ class Tools extends ToolsCommon
      * Request the NFe download already manifested by its recipient, by the key
      * using new service in NfeDistribuicaoDFe
      * NOTA: NfeDownloadNF is deactivated
+     * @param string $chave
+     * @return string
      * @throws InvalidArgumentException
      */
     public function sefazDownload(string $chave): string
@@ -1054,6 +1100,8 @@ class Tools extends ToolsCommon
 
     /**
      * Checks the validity of an NFe, normally used for received NFe
+     * @param string $nfe
+     * @return bool
      * @throws InvalidArgumentException
      */
     public function sefazValidate(string $nfe): bool
@@ -1104,6 +1152,8 @@ class Tools extends ToolsCommon
 
     /**
      * Returns alias and description event from event code.
+     * @param int $tpEvento
+     * @return \stdClass
      * @throws \RuntimeException
      */
     private function tpEv(int $tpEvento): \stdClass
