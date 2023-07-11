@@ -191,6 +191,8 @@ class Tools
         $this->setEnvironment($this->config->tpAmb);
         if (empty($contingency)) {
             $this->contingency = new Contingency();
+        } else {
+            $this->contingency = $contingency;
         }
     }
 
