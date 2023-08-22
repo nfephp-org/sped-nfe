@@ -72,15 +72,15 @@ class QRCode
         $tpEmis = $ide->getElementsByTagName('tpEmis')->item(0)->nodeValue;
         $cDest = '';
         if (!empty($dest)) {
-            $cDest = !empty($dest->getElementsByTagName('CNPJ')->item(0)->nodeValue)
+            $cDest = (string) !empty($dest->getElementsByTagName('CNPJ')->item(0)->nodeValue)
                 ? $dest->getElementsByTagName('CNPJ')->item(0)->nodeValue
                 : '';
             if (empty($cDest)) {
-                $cDest = !empty($dest->getElementsByTagName('CPF')->item(0)->nodeValue)
+                $cDest = (string) !empty($dest->getElementsByTagName('CPF')->item(0)->nodeValue)
                     ? $dest->getElementsByTagName('CPF')->item(0)->nodeValue
                     : '';
                 if (empty($cDest)) {
-                    $cDest = $dest->getElementsByTagName('idEstrangeiro')->item(0)->nodeValue;
+                    $cDest = (string) $dest->getElementsByTagName('idEstrangeiro')->item(0)->nodeValue;
                 }
             }
         }
