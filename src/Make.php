@@ -1424,20 +1424,24 @@ class Make
         $std = $this->equilizeParameters($std, $possible);
         $identificador = 'F01 <retirada> - ';
         $this->retirada = $this->dom->createElement("retirada");
-        $this->dom->addChild(
-            $this->retirada,
-            "CNPJ",
-            $std->CNPJ,
-            false,
-            $identificador . "CNPJ do Cliente da Retirada"
-        );
-        $this->dom->addChild(
-            $this->retirada,
-            "CPF",
-            $std->CPF,
-            false,
-            $identificador . "CPF do Cliente da Retirada"
-        );
+        if (empty($std->CPF)) {
+            $this->dom->addChild(
+                $this->retirada,
+                "CNPJ",
+                $std->CNPJ ?? '',
+                true,
+                $identificador . "CNPJ do Cliente da Retirada",
+                true
+            );
+        } else {
+            $this->dom->addChild(
+                $this->retirada,
+                "CPF",
+                $std->CPF,
+                false,
+                $identificador . "CPF do Cliente da Retirada"
+            );
+        }
         $this->dom->addChild(
             $this->retirada,
             "xNome",
@@ -1567,20 +1571,24 @@ class Make
         $std = $this->equilizeParameters($std, $possible);
         $identificador = 'G01 <entrega> - ';
         $this->entrega = $this->dom->createElement("entrega");
-        $this->dom->addChild(
-            $this->entrega,
-            "CNPJ",
-            $std->CNPJ,
-            false,
-            $identificador . "CNPJ do Cliente da Entrega"
-        );
-        $this->dom->addChild(
-            $this->entrega,
-            "CPF",
-            $std->CPF,
-            false,
-            $identificador . "CPF do Cliente da Entrega"
-        );
+        if (empty($std->CPF)) {
+            $this->dom->addChild(
+                $this->entrega,
+                "CNPJ",
+                $std->CNPJ ?? '',
+                true,
+                $identificador . "CNPJ do Cliente da Entrega",
+                true
+            );
+        } else {
+            $this->dom->addChild(
+                $this->entrega,
+                "CPF",
+                $std->CPF,
+                false,
+                $identificador . "CPF do Cliente da Entrega"
+            );
+        }
         $this->dom->addChild(
             $this->entrega,
             "xNome",
@@ -7443,10 +7451,11 @@ class Make
         $this->dom->addChild(
             $infRespTec,
             "CNPJ",
-            $std->CNPJ,
+            $std->CNPJ ?? '',
             true,
             "Informar o CNPJ da pessoa jurídica responsável pelo sistema "
-                . "utilizado na emissão do documento fiscal eletrônico"
+                . "utilizado na emissão do documento fiscal eletrônico",
+            true
         );
         $this->dom->addChild(
             $infRespTec,
