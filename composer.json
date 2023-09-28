@@ -2,6 +2,12 @@
     "name": "compufour/sped-nfe",
     "type": "library",
     "description": "API para geração e comunicação da NFe e NFCe com as SEFAZ autorizadoras.",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/compufour/sped-common"
+        }
+    ],
     "keywords": [
         "nfe",
         "nfce",
