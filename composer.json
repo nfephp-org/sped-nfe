@@ -34,7 +34,7 @@
     ],
     "require": {
         "php": ">= 7.4",
-        "nfephp-org/sped-common": "^5.1.0",
+        "compufour/sped-common": "^5.1.0",
         "nfephp-org/sped-gtin": "^1.1.0",
         "justinrainbow/json-schema": "^5.2",
         "ext-zlib": "*",
