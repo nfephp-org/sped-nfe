@@ -40,7 +40,7 @@ try {
     $std->CNPJ = '12345678901234';
     $std->CPF = null;
     
-    $response = $tools->sefazsAtorInteressado($std);
+    $response = $tools->sefazAtorInteressado($std);
 
     //você pode padronizar os dados de retorno atraves da classe abaixo
     //de forma a facilitar a extração dos dados do XML
