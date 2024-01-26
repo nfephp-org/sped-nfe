@@ -40,6 +40,10 @@ class Tools extends ToolsCommon
     public const EVT_PRORROGACAO_2 = 111501;
     public const EVT_CANCELA_PRORROGACAO_1 = 111502;
     public const EVT_CANCELA_PRORROGACAO_2 = 111503;
+    public const EVT_INSUCESSO_ENTREGA = 110192;
+    public const EVT_CANCELA_INSUCESSO_ENTREGA = 110193;
+    public const EVT_CONCILIACAO = 110750;
+    public const EVT_CANCELA_CONCILIACAO = 110751;
 
     /**
      * Request authorization to issue NFe in batch with one or more documents
@@ -701,7 +705,6 @@ class Tools extends ToolsCommon
         $dt = new \DateTime('now', new \DateTimeZone($this->timezone));
         $dt->setTimezone(new \DateTimeZone($this->timezone));
         $datahash = $dt->format('Y-m-d\TH:i:sP');
-        //$datahash = date('Y-m-d\TH:i:sP');
         $cod = UFList::getCodeByUF($this->config->siglaUF);
         $cancelar = !empty($std->cancelar) ? $std->cancelar : false;
         if (!$cancelar) {
@@ -724,6 +727,65 @@ class Tools extends ToolsCommon
                 . "<tpAutor>1</tpAutor>"
                 . "<verAplic>{$std->verAplic}</verAplic>"
                 . "<nProtEvento>{$std->nProcEvento}</nProtEvento>";
+        }
+        return $this->sefazEvento(
+            'AN',
+            $std->chNFe,
+            $tpEvento,
+            $std->nSeqEvento,
+            $tagAdic
+        );
+    }
+
+    /**
+     * Request event of delivery failure or cancellation of registered delivery failure event
+     * @param \stdClass $std
+     * @return string
+     * @throws \Exception
+     */
+    public function sefazInsucessoEntrega(\stdClass $std): string
+    {
+        if (empty($std->verAplic) && !empty($this->verAplic)) {
+            $std->verAplic = $this->verAplic;
+        }
+        $tpEvento = self::EVT_INSUCESSO_ENTREGA;
+        $cod = UFList::getCodeByUF($this->config->siglaUF);
+        $tagAdic = "<cOrgaoAutor>{$cod}</cOrgaoAutor>"
+            . "<verAplic>{$std->verAplic}</verAplic>";
+        if (!$std->cancelar) {
+            $tagAdic .= "<dhTentativaEntrega>{$std->data_tentativa}</dhTentativaEntrega>";
+
+            $n = null;
+            if (!empty($std->tentativas) && is_numeric($std->tentativas)) {
+                $n = (int)$std->tentativas;
+            }
+            if (!empty($n)) {
+                $tagAdic .= "<nTentativa>{$n}</nTentativa>";
+            }
+
+            $tagAdic .= "<tpMotivo>{$std->tipo_motivo}</tpMotivo>";
+            $justificativa = null;
+            if ($std->tipo_motivo == 4) {
+                $justificativa = Strings::replaceUnacceptableCharacters(substr(trim($std->justificativa), 0, 250));
+            }
+            if (!empty($justificativa)) {
+                $tagAdic .= "<xJustMotivo>{$justificativa}</xJustMotivo>";
+            }
+
+            if (!empty($std->latitude) && !empty($std->longitude)) {
+                $tagAdic .= "<latGPS>{$std->latitude}</latGPS>"
+                    . "<longGPS>{$std->longitude}</longGPS>";
+            }
+            $hash = base64_encode(sha1($std->chNFe . $std->imagem, true));
+
+            $dt = new \DateTime('now', new \DateTimeZone($this->timezone));
+            $dt->setTimezone(new \DateTimeZone($this->timezone));
+            $datahash = $dt->format('Y-m-d\TH:i:sP');
+            $tagAdic .= "<hashTentativaEntrega>{$hash}</hashTentativaEntrega>"
+                . "<dhHashTentativaEntrega>{$datahash}</dhHashTentativaEntrega>";
+        } else {
+            $tpEvento = self::EVT_CANCELA_INSUCESSO_ENTREGA;
+            $tagAdic .= "<nProtEvento>{$std->protocolo}</nProtEvento>";
         }
         return $this->sefazEvento(
             'AN',
@@ -937,6 +999,8 @@ class Tools extends ToolsCommon
             self::EVT_CANCELA_PRORROGACAO_1 => ['versao' => '1.00', 'nome' => 'envRemIndus'],
             self::EVT_CANCELA_PRORROGACAO_2 => ['versao' => '1.00', 'nome' => 'envRemIndus'],
             self::EVT_EPEC => ['versao' => '1.00', 'nome' => 'envEPEC'],
+            self::EVT_INSUCESSO_ENTREGA => ['versao' => '1.00', 'nome' => 'envEventoInsucessoNFe'],
+            self::EVT_CANCELA_INSUCESSO_ENTREGA => ['versao' => '1.00', 'nome' => 'envEventoCancInsucessoNFe'],
         ];
         $verEvento = $this->urlVersion;
         if (!empty($eventos[$tpEvento])) {
@@ -970,6 +1034,7 @@ class Tools extends ToolsCommon
             . "<tpEvento>$tpEvento</tpEvento>"
             . "<nSeqEvento>$nSeqEvento</nSeqEvento>"
             . "<verEvento>$verEvento</verEvento>"
+            //em alguns casos haverá um verAplic nesta posição ??? ver xsd conciliação
             . "<detEvento versao=\"$verEvento\">"
             . "<descEvento>$descEvento</descEvento>"
             . "$tagAdic"
@@ -1220,6 +1285,14 @@ class Tools extends ToolsCommon
             case self::EVT_ATORINTERESSADO: //ator interessado
                 $std->alias = 'EvAtorInteressado';
                 $std->desc = 'Ator interessado na NF-e';
+                break;
+            case self::EVT_INSUCESSO_ENTREGA:
+                $std->alias = 'EventoInsucessoNFe';
+                $std->desc = 'Insucesso na Entrega da NF-e';
+                break;
+            case self::EVT_CANCELA_INSUCESSO_ENTREGA:
+                $std->alias = 'EventoCancInsucessoNFe';
+                $std->desc = 'Cancelamento Insucesso na Entrega da NF-e';
                 break;
             default:
                 $msg = "O código do tipo de evento informado não corresponde a "
