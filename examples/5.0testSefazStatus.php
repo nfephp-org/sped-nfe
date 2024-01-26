@@ -38,6 +38,8 @@ $content = file_get_contents('fixtures/expired_certificate.pfx');
 
 $soap = new \NFePHP\NFe\Tests\Common\SoapFake();
 $soap->disableCertValidation(true);
+$soap->protocol(6);
+$soap->httpVersion('1.1');
 
 //intancia a classe tools
 $tools = new Tools($configJson, Certificate::readPfx($content, 'associacao'));
