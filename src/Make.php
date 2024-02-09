@@ -1770,7 +1770,10 @@ class Make
             'indTot',
             'xPed',
             'nItemPed',
-            'nFCI'
+            'nFCI',
+            'cCredPresumido',
+            'pCredPresumido',
+            'vCredPresumido'
         ];
         $std = $this->equilizeParameters($std, $possible);
         //totalizador
@@ -1847,6 +1850,30 @@ class Make
             $std->cBenef,
             false,
             $identificador . "[item $std->item] Código de Benefício Fiscal utilizado pela UF"
+        );
+        //NT 2019.001 v1.60
+        $this->dom->addChild(
+            $prod,
+            "cCredPresumido",
+            $std->cCredPresumido ?? null,
+            false,
+            $identificador . "[item $std->item] Código de Benefício Fiscal de Crédito Presumido na UF aplicado ao item"
+        );
+        //NT 2019.001 v1.60
+        $this->dom->addChild(
+            $prod,
+            "pCredPresumido",
+            $this->conditionalNumberFormatting($std->pCredPresumido, 4),
+            false,
+            $identificador . "[item $std->item] Percentual do Crédito Presumido"
+        );
+        //NT 2019.001 v1.60
+        $this->dom->addChild(
+            $prod,
+            "vCredPresumido",
+            $this->conditionalNumberFormatting($std->vCredPresumido, 2),
+            false,
+            $identificador . "[item $std->item] Valor do Crédito Presumido"
         );
         $this->dom->addChild(
             $prod,
@@ -2112,6 +2139,7 @@ class Make
             'vAFRMM',
             'tpIntermedio',
             'CNPJ',
+            'CPF',
             'UFTerceiro',
             'cExportador'
         ];
@@ -2176,13 +2204,23 @@ class Make
             true,
             $identificador . "[item $std->item] Forma de importação quanto a intermediação"
         );
-        $this->dom->addChild(
-            $tDI,
-            "CNPJ",
-            $std->CNPJ,
-            false,
-            $identificador . "[item $std->item] CNPJ do adquirente ou do encomendante"
-        );
+        if (!empty($std->CNPJ)) {
+            $this->dom->addChild(
+                $tDI,
+                "CNPJ",
+                $std->CNPJ,
+                false,
+                $identificador . "[item $std->item] CNPJ do adquirente ou do encomendante"
+            );
+        } else {
+            $this->dom->addChild(
+                $tDI,
+                "CPF",
+                $std->CPF,
+                false,
+                $identificador . "[item $std->item] CPF do adquirente ou do encomendante"
+            );
+        }
         $this->dom->addChild(
             $tDI,
             "UFTerceiro",
@@ -3019,7 +3057,9 @@ class Make
             'vICMSMonoReten',
             'vICMSMonoDif',
             'vICMSMonoRet',
-            'adRemICMSRet'
+            'adRemICMSRet',
+            'cBenefRBC',
+            'indDeduzDeson'
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = 'N01 <ICMSxx> - ';
@@ -3454,6 +3494,15 @@ class Make
                     false,
                     "$identificador [item $std->item] Motivo da desoneração do ICMS"
                 );
+                //NT 2023.004 v1.00
+                $this->dom->addChild(
+                    $icms,
+                    'indDeduzDeson',
+                    $std->indDeduzDeson,
+                    false,
+                    "$identificador [item $std->item] Indica se o valor do ICMS desonerado (vICMSDeson) "
+                        . "deduz do valor do item (vProd)."
+                );
                 break;
             case '30':
                 $this->stdTot->vICMSDeson += (float) !empty($std->vICMSDeson) ? $std->vICMSDeson : 0;
@@ -3554,6 +3603,15 @@ class Make
                     false,
                     "$identificador [item $std->item] Motivo da desoneração do ICMS"
                 );
+                //NT 2023.004 v1.00
+                $this->dom->addChild(
+                    $icms,
+                    'indDeduzDeson',
+                    $std->indDeduzDeson,
+                    false,
+                    "$identificador [item $std->item] Indica se o valor do ICMS desonerado (vICMSDeson) "
+                    . "deduz do valor do item (vProd)."
+                );
                 break;
             case '40':
             case '41':
@@ -3587,6 +3645,15 @@ class Make
                     $std->motDesICMS,
                     false,
                     "$identificador [item $std->item] Motivo da desoneração do ICMS"
+                );
+                //NT 2023.004 v1.00
+                $this->dom->addChild(
+                    $icms,
+                    'indDeduzDeson',
+                    $std->indDeduzDeson,
+                    false,
+                    "$identificador [item $std->item] Indica se o valor do ICMS desonerado (vICMSDeson) "
+                        . "deduz do valor do item (vProd)."
                 );
                 break;
             case '51':
@@ -3622,6 +3689,14 @@ class Make
                     $this->conditionalNumberFormatting($std->pRedBC, 4),
                     false,
                     "$identificador [item $std->item] Percentual da Redução de BC"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'cBenefRBC',
+                    $std->cBenefRBC,
+                    false,
+                    "$identificador [item $std->item] Código de Benefício Fiscal na UF aplicado ao "
+                        . "item quando houver RBC."
                 );
                 $this->dom->addChild(
                     $icms,
@@ -4078,6 +4153,15 @@ class Make
                     false,
                     "$identificador [item $std->item] Motivo da desoneração do ICMS"
                 );
+                //NT 2023.004 v1.00
+                $this->dom->addChild(
+                    $icms,
+                    'indDeduzDeson',
+                    $std->indDeduzDeson,
+                    false,
+                    "$identificador [item $std->item] Indica se o valor do ICMS desonerado (vICMSDeson) "
+                    . "deduz do valor do item (vProd)."
+                );
                 $this->dom->addChild(
                     $icms,
                     'vICMSSTDeson',
@@ -4250,6 +4334,15 @@ class Make
                     $std->motDesICMS,
                     false,
                     "$identificador [item $std->item] Motivo da desoneração do ICMS"
+                );
+                //NT 2023.004 v1.00
+                $this->dom->addChild(
+                    $icms,
+                    'indDeduzDeson',
+                    $std->indDeduzDeson,
+                    false,
+                    "$identificador [item $std->item] Indica se o valor do ICMS desonerado (vICMSDeson) "
+                    . "deduz do valor do item (vProd)."
                 );
                 $this->dom->addChild(
                     $icms,
@@ -6913,7 +7006,11 @@ class Make
             'CNPJ',
             'tBand',
             'cAut',
-            'tpIntegra'
+            'tpIntegra',
+            'CNPJPag',
+            'UFPag',
+            'CNPJReceb',
+            'idTermPag'
         ];
         $std = $this->equilizeParameters($std, $possible);
         //padrão para layout 4.00
@@ -6946,6 +7043,23 @@ class Make
             true,
             "Valor do Pagamento"
         );
+        //NT 2023.004 v1.00
+        if (!empty($std->CNPJPag) && !empty($std->UFPag)) {
+            $this->dom->addChild(
+                $detPag,
+                "CNPJPag",
+                $std->CNPJPag,
+                false,
+                "CNPJ transacional do pagamento"
+            );
+            $this->dom->addChild(
+                $detPag,
+                "UFPag",
+                $std->UFPag,
+                false,
+                "UF do CNPJ do estabelecimento onde o pagamento foi processado/transacionado/recebido"
+            );
+        }
         if (!empty($std->tpIntegra)) {
             $card = $this->dom->createElement("card");
             $this->dom->addChild(
@@ -6975,6 +7089,22 @@ class Make
                 !empty($std->cAut) ? $std->cAut : null,
                 false,
                 "Número de autorização da operação cartão de crédito e/ou débito"
+            );
+            //NT 2023.004 v1.00
+            $this->dom->addChild(
+                $card,
+                "CNPJReceb",
+                !empty($std->CNPJReceb) ? $std->CNPJReceb : null,
+                false,
+                "CNPJ do beneficiário do pagamento"
+            );
+            //NT 2023.004 v1.00
+            $this->dom->addChild(
+                $card,
+                "idTermPag",
+                !empty($std->idTermPag) ? $std->idTermPag : null,
+                false,
+                "Identificador do terminal de pagamento"
             );
             $this->dom->appChild($detPag, $card, "Inclusão do node Card");
         }

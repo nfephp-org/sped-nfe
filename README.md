@@ -10,7 +10,9 @@ Biblioteca para geração e comunicação das NFe com as SEFAZ autorizadoras, e 
 - NT 2021.004 v1.20 Regras de Validação e Novos Campos (válido em produção a partir de 16/05/2022)
 - NT 2023.001 v1.10 Criação e atualização de regras de validação para atender o regime de tributação monofásica do ICMS nas operações com combustíveis (válido a partir de 30/03/2023)
 - NT 2023.001 v1.20 Tributação Monofásica sobre Combustíveis (Homologação em 20/04/2023 e em produção em 01/05/2023)
- 
+- NT 2019.001 v1.60 Criação e Atualização de Regras de Validação
+- NT 2023.004 v1.00 Evento de Conciliação Financeira
+
 > **NOTA: Estas NT afetam principalmente o uso do TXT para conversão em XML, mesmo que os campos ainda não sejam exigidos.**
 
 ## TODO: A conversão com o PADRÃO SEBRAE ainda está incompleta!!
