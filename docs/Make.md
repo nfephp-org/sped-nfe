@@ -383,6 +383,26 @@ $std->nFCI;
 $nfe->tagprod($std);
 ```
 
+### function tagCreditoPresumidoProd($std): void
+Node opcional com dados de Crédito Presumido, são permitidos até 4 registros por item
+
+| Parâmetro | Tipo | Descrição                                                              |
+| :--- | :---: |:-----------------------------------------------------------------------|
+|item|inteiro| Número do item da NFe                                                 |
+|cCredPresumido|string|Código de Benefício Fiscal de Crédito Presumido na UF aplicado ao item |
+|pCredPresumido|numerico|Percentual do Crédito Presumido                                        |
+|vCredPresumido|numerico|Valor do Crédito Presumido                                             |
+
+```php
+$std = new \stdClass();
+$std->item = 1;
+$std->cCredPresumido = '2222211234';
+$std->pCredPresumido = '4';
+$std->vCredPresumido = '4';
+
+$make->tagCreditoPresumidoProd($std);
+```
+
 ### function taginfAdProd($std):DOMElement
 Node de informações adicionais do produto
 
@@ -460,6 +480,7 @@ $std->tpViaTransp;
 $std->vAFRMM;
 $std->tpIntermedio;
 $std->CNPJ;
+$std->CPF; //NT 2023.004 v1.00
 $std->UFTerceiro;
 $std->cExportador;
 
@@ -746,7 +767,9 @@ $std->adRemICMSRet; //NT 2023.001-v1.10
 $std->vICMSMonoRet; //NT 2023.001-v1.10
 $std->vICMSMonoDif; //NT 2023.001-v1.10
 $std->vICMSMonoRet; //NT 2023.001-v1.10
-
+$std->adRemICMSRet;
+$std->cBenefRBC; //NT 2019.001 v1.61
+$std->indDeduzDeson; //NT 2023.004 v1.00
 $nfe->tagICMS($std);
 ```
 
@@ -1337,13 +1360,17 @@ Node com o detalhamento da forma de pagamento **OBRIGATÓRIO para NFCe e NFe lay
 | $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 ```php
 $std = new stdClass();
+$std->indPag = '0'; //0= Pagamento à Vista 1= Pagamento à Prazo
 $std->tPag = '03';
 $std->vPag = 200.00; //Obs: deve ser informado o valor pago pelo cliente
 $std->CNPJ = '12345678901234';
 $std->tBand = '01';
 $std->cAut = '3333333';
 $std->tpIntegra = 1; //incluso na NT 2015/002
-$std->indPag = '0'; //0= Pagamento à Vista 1= Pagamento à Prazo
+$std->CNPJPag; //NT 2023.004 v1.00
+$std->UFPag; //NT 2023.004 v1.00
+$std->CNPJReceb; //NT 2023.004 v1.00
+$std->idTermPag; //NT 2023.004 v1.00
 
 $nfe->tagdetPag($std);
 ```

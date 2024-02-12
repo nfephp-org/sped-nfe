@@ -174,6 +174,10 @@ class Make
      */
     protected $aProd = [];
     /**
+     * @var array
+     */
+    protected $aProdCreditoPresumido = [];
+    /**
      * @var array of DOMElements
      */
     protected $obsItem = [];
@@ -1737,6 +1741,27 @@ class Make
     }
 
     /**
+     * Detalhamento do crédito presumido do item da NFe
+     * Grupo opcional para informações do Crédito Presumido. Obs.: A exigência do preenchimento das informações
+     * do crédito presumido fica a critério de cada UF
+     * tag NFe/infNFe/det[]/prod/[cCredPresumido, pCredPresumido, vCredPresumido]
+     * NT 2019.001 v1.61
+     * @param stdClass $std
+     * @return void
+     */
+    public function tagCreditoPresumidoProd(stdClass $std)
+    {
+        $possible  = ['item', 'cCredPresumido', 'pCredPresumido', 'vCredPresumido'];
+        $std = $this->equilizeParameters($std, $possible);
+        $this->aProdCreditoPresumido[] = [
+            'item' => $std->item,
+            'cCredPresumido' => $std->cCredPresumido,
+            'pCredPresumido' => $this->conditionalNumberFormatting($std->pCredPresumido, 4),
+            'vCredPresumido' => $this->conditionalNumberFormatting($std->vCredPresumido, 2)
+        ];
+    }
+
+    /**
      * Detalhamento de Produtos e Serviços I01 pai H01
      * tag NFe/infNFe/det[]/prod
      * NOTA: Ajustado para NT2016_002_v1.30
@@ -1770,10 +1795,7 @@ class Make
             'indTot',
             'xPed',
             'nItemPed',
-            'nFCI',
-            'cCredPresumido',
-            'pCredPresumido',
-            'vCredPresumido'
+            'nFCI'
         ];
         $std = $this->equilizeParameters($std, $possible);
         //totalizador
@@ -1850,30 +1872,6 @@ class Make
             $std->cBenef,
             false,
             $identificador . "[item $std->item] Código de Benefício Fiscal utilizado pela UF"
-        );
-        //NT 2019.001 v1.60
-        $this->dom->addChild(
-            $prod,
-            "cCredPresumido",
-            $std->cCredPresumido ?? null,
-            false,
-            $identificador . "[item $std->item] Código de Benefício Fiscal de Crédito Presumido na UF aplicado ao item"
-        );
-        //NT 2019.001 v1.60
-        $this->dom->addChild(
-            $prod,
-            "pCredPresumido",
-            $this->conditionalNumberFormatting($std->pCredPresumido, 4),
-            false,
-            $identificador . "[item $std->item] Percentual do Crédito Presumido"
-        );
-        //NT 2019.001 v1.60
-        $this->dom->addChild(
-            $prod,
-            "vCredPresumido",
-            $this->conditionalNumberFormatting($std->vCredPresumido, 2),
-            false,
-            $identificador . "[item $std->item] Valor do Crédito Presumido"
         );
         $this->dom->addChild(
             $prod,
@@ -7859,6 +7857,32 @@ class Make
                     $this->aProd[$nItem] = $prod;
                 }
             }
+        }
+        //insere credito presumido
+        $it = [];
+        foreach ($this->aProdCreditoPresumido as $cp) {
+            $scp = (object) $cp;
+            $prod = $this->aProd[$scp->item];
+            $cBenef = $prod->getElementsByTagName("cBenef")->item(0);
+            if (empty($cBenef)) {
+                break;
+            }
+            if (!empty($prod->getElementsByTagName("EXTIPI")->item(0))) {
+                $node = $prod->getElementsByTagName("EXTIPI")->item(0);
+            } else {
+                $node = $prod->getElementsByTagName("CFOP")->item(0);
+            }
+            $it[$scp->item]++;
+            if ($it[$scp->item] > 4) {
+                $this->errors[] = "Item {$scp->item} não pode ter mais de 4 registros de Credito Presumido";
+                continue;
+            }
+            $ccp = $this->dom->createElement('cCredPresumido', $scp->cCredPresumido);
+            $pcp = $this->dom->createElement('pCredPresumido', $scp->pCredPresumido);
+            $vcp = $this->dom->createElement('vCredPresumido', $scp->vCredPresumido);
+            $prod->insertBefore($ccp, $node);
+            $prod->insertBefore($pcp, $node);
+            $prod->insertBefore($vcp, $node);
         }
         //insere DI
         foreach ($this->aDI as $nItem => $aDI) {
