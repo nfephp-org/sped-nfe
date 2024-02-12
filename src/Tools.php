@@ -754,7 +754,6 @@ class Tools extends ToolsCommon
             . "<verAplic>{$std->verAplic}</verAplic>";
         if (!$std->cancelar) {
             $tagAdic .= "<dhTentativaEntrega>{$std->data_tentativa}</dhTentativaEntrega>";
-
             $n = null;
             if (!empty($std->tentativas) && is_numeric($std->tentativas)) {
                 $n = (int)$std->tentativas;
@@ -762,7 +761,6 @@ class Tools extends ToolsCommon
             if (!empty($n)) {
                 $tagAdic .= "<nTentativa>{$n}</nTentativa>";
             }
-
             $tagAdic .= "<tpMotivo>{$std->tipo_motivo}</tpMotivo>";
             $justificativa = null;
             if ($std->tipo_motivo == 4) {
