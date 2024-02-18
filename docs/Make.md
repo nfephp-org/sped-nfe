@@ -766,8 +766,6 @@ $std->vICMSMono; //NT 2023.001-v1.10
 $std->adRemICMSRet; //NT 2023.001-v1.10
 $std->vICMSMonoRet; //NT 2023.001-v1.10
 $std->vICMSMonoDif; //NT 2023.001-v1.10
-$std->vICMSMonoRet; //NT 2023.001-v1.10
-$std->adRemICMSRet;
 $std->cBenefRBC; //NT 2019.001 v1.61
 $std->indDeduzDeson; //NT 2023.004 v1.00
 $nfe->tagICMS($std);
