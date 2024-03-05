@@ -530,7 +530,7 @@ class Make
     {
         $possible = ['Id', 'versao', 'pk_nItem'];
         $std = $this->equilizeParameters($std, $possible);
-        $chave = preg_replace('/[^0-9]/', '', $std->Id);
+        $chave = preg_replace('/[^0-9]/', '', (string)$std->Id);
         $this->infNFe = $this->dom->createElement("infNFe");
         $this->infNFe->setAttribute("Id", 'NFe' . $chave);
         $this->infNFe->setAttribute(
@@ -619,7 +619,7 @@ class Make
         $this->dom->addChild(
             $ide,
             "natOp",
-            substr(trim($std->natOp), 0, 60),
+            substr(trim((string)$std->natOp), 0, 60),
             true,
             $identificador . "Descrição da Natureza da Operação"
         );
@@ -1111,7 +1111,7 @@ class Make
         $this->dom->addChild(
             $this->enderEmit,
             "xCpl",
-            substr(trim($std->xCpl), 0, 60),
+            substr(trim((string)$std->xCpl), 0, 60),
             false,
             $identificador . "Complemento do Endereço do emitente"
         );
@@ -2091,7 +2091,7 @@ class Make
         $this->dom->addChild(
             $ctrltST,
             "indEscala",
-            trim($std->indEscala),
+            trim((string)$std->indEscala),
             false,
             "$identificador [item $std->item] Indicador de Produção em escala relevante"
         );
