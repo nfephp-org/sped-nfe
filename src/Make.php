@@ -7859,7 +7859,7 @@ class Make
             }
         }
         //insere credito presumido
-        $it = [];
+        $it = 0;
         foreach ($this->aProdCreditoPresumido as $cp) {
             $scp = (object) $cp;
             $prod = $this->aProd[$scp->item];
@@ -7872,8 +7872,8 @@ class Make
             } else {
                 $node = $prod->getElementsByTagName("CFOP")->item(0);
             }
-            $it[$scp->item]++;
-            if ($it[$scp->item] > 4) {
+            $it++;
+            if ($it > 4) {
                 $this->errors[] = "Item {$scp->item} não pode ter mais de 4 registros de Credito Presumido";
                 continue;
             }
