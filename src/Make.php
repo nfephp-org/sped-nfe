@@ -7001,6 +7001,7 @@ class Make
             'tPag',
             'xPag',
             'vPag',
+            'dPag',
             'CNPJ',
             'tBand',
             'cAut',
@@ -7040,6 +7041,13 @@ class Make
             $this->conditionalNumberFormatting($std->vPag),
             true,
             "Valor do Pagamento"
+        );
+        $this->dom->addChild(
+            $detPag,
+            "dPag",
+            !empty($std->dPag) ? $std->dPag : null,
+            false,
+            "Data do Pagamento"
         );
         //NT 2023.004 v1.00
         if (!empty($std->CNPJPag) && !empty($std->UFPag)) {
