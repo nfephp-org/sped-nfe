@@ -7255,14 +7255,14 @@ class Make
         $this->dom->addChild(
             $this->infAdic,
             "infAdFisco",
-            $std->infAdFisco,
+            Strings::replaceUnacceptableCharacters($std->infAdFisco ?? null),
             false,
             "Informações Adicionais de Interesse do Fisco"
         );
         $this->dom->addChild(
             $this->infAdic,
             "infCpl",
-            $std->infCpl,
+            Strings::replaceUnacceptableCharacters($std->infCpl ?? null),
             false,
             "Informações Complementares de interesse do Contribuinte"
         );
