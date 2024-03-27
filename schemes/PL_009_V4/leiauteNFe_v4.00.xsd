@@ -916,29 +916,36 @@ Formato ”CFOP9999”.</xs:documentation>
 														</xs:restriction>
 													</xs:simpleType>
 												</xs:element>
-												<xs:sequence minOccurs="0" maxOccurs="4">
-													<xs:element name="cCredPresumido">
-														<xs:annotation>
-															<xs:documentation>Código de Benefício Fiscal de Crédito Presumido na UF aplicado ao item</xs:documentation>
-														</xs:annotation>
-														<xs:simpleType>
-															<xs:restriction base="xs:string">
-																<xs:whiteSpace value="preserve"/>
-																<xs:pattern value="[!-ÿ]{8}|[!-ÿ]{10}"/>
-															</xs:restriction>
-														</xs:simpleType>
-													</xs:element>
-													<xs:element name="pCredPresumido" type="TDec_0302a04">
-														<xs:annotation>
-															<xs:documentation>Percentual do Crédito Presumido</xs:documentation>
-														</xs:annotation>
-													</xs:element>
-													<xs:element name="vCredPresumido" type="TDec_1302">
-														<xs:annotation>
-															<xs:documentation>Valor do Crédito Presumido</xs:documentation>
-														</xs:annotation>
-													</xs:element>
-												</xs:sequence>
+												<xs:element name="gCred" minOccurs="0" maxOccurs="4">
+													<xs:annotation>
+														<xs:documentation>Grupo de informações sobre o CréditoPresumido </xs:documentation>
+													</xs:annotation>
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="cCredPresumido">
+																<xs:annotation>
+																	<xs:documentation>Código de Benefício Fiscal de Crédito Presumido na UF aplicado ao item</xs:documentation>
+																</xs:annotation>
+																<xs:simpleType>
+																	<xs:restriction base="xs:string">
+																		<xs:whiteSpace value="preserve"/>
+																		<xs:pattern value="[!-ÿ]{8}|[!-ÿ]{10}"/>
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:element>
+															<xs:element name="pCredPresumido" type="TDec_0302a04">
+																<xs:annotation>
+																	<xs:documentation>Percentual do Crédito Presumido</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+															<xs:element name="vCredPresumido" type="TDec_1302">
+																<xs:annotation>
+																	<xs:documentation>Valor do Crédito Presumido</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
 												<xs:element name="EXTIPI" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Código EX TIPI (3 posições)</xs:documentation>
