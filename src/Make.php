@@ -1745,7 +1745,7 @@ class Make
      * Grupo opcional para informações do Crédito Presumido. Obs.: A exigência do preenchimento das informações
      * do crédito presumido fica a critério de cada UF
      * tag NFe/infNFe/det[]/prod/[cCredPresumido, pCredPresumido, vCredPresumido]
-     * NT 2019.001 v1.61
+     * NT 2019.001 v1.62
      * @param stdClass $std
      * @return void
      */
@@ -1753,12 +1753,34 @@ class Make
     {
         $possible  = ['item', 'cCredPresumido', 'pCredPresumido', 'vCredPresumido'];
         $std = $this->equilizeParameters($std, $possible);
-        $this->aProdCreditoPresumido[] = [
-            'item' => $std->item,
-            'cCredPresumido' => $std->cCredPresumido,
-            'pCredPresumido' => $this->conditionalNumberFormatting($std->pCredPresumido, 4),
-            'vCredPresumido' => $this->conditionalNumberFormatting($std->vCredPresumido, 2)
-        ];
+        $identificador = 'I05g <gCred> - ';
+        $gcred = $this->dom->createElement("gCred");
+        $this->dom->addChild(
+            $gcred,
+            "cCredPresumido",
+            $std->cCredPresumido,
+            true,
+            $identificador . "[item $std->item] cCredPresumido Código de Benefício Fiscal de Crédito "
+            . "Presumido na UF aplicado ao item",
+            true
+        );
+        $this->dom->addChild(
+            $gcred,
+            "pCredPresumido",
+            $this->conditionalNumberFormatting($std->pCredPresumido, 4),
+            true,
+            $identificador . "[item $std->item] pCredPresumido Percentual do Crédito Presumido",
+            true
+        );
+        $this->dom->addChild(
+            $gcred,
+            "vCredPresumido",
+            $this->conditionalNumberFormatting($std->vCredPresumido, 2),
+            true,
+            $identificador . "[item $std->item] vCredPresumido Valor do Crédito Presumido",
+            true
+        );
+        $this->aProdCreditoPresumido[$std->item][] = $gcred;
     }
 
     /**
@@ -7868,9 +7890,8 @@ class Make
         }
         //insere credito presumido
         $it = 0;
-        foreach ($this->aProdCreditoPresumido as $cp) {
-            $scp = (object) $cp;
-            $prod = $this->aProd[$scp->item];
+        foreach ($this->aProdCreditoPresumido as $key => $cps) {
+            $prod = $this->aProd[$key];
             $cBenef = $prod->getElementsByTagName("cBenef")->item(0);
             if (empty($cBenef)) {
                 break;
@@ -7880,17 +7901,9 @@ class Make
             } else {
                 $node = $prod->getElementsByTagName("CFOP")->item(0);
             }
-            $it++;
-            if ($it > 4) {
-                $this->errors[] = "Item {$scp->item} não pode ter mais de 4 registros de Credito Presumido";
-                continue;
+            foreach ($cps as $cp) {
+                $prod->insertBefore($cp, $node);
             }
-            $ccp = $this->dom->createElement('cCredPresumido', $scp->cCredPresumido);
-            $pcp = $this->dom->createElement('pCredPresumido', $scp->pCredPresumido);
-            $vcp = $this->dom->createElement('vCredPresumido', $scp->vCredPresumido);
-            $prod->insertBefore($ccp, $node);
-            $prod->insertBefore($pcp, $node);
-            $prod->insertBefore($vcp, $node);
         }
         //insere DI
         foreach ($this->aDI as $nItem => $aDI) {
