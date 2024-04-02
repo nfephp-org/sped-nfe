@@ -3949,7 +3949,7 @@ class Make
                     $this->conditionalNumberFormatting($std->pRedBCEfet, 4),
                     false,
                     "$identificador [item $std->item] Percentual de redução "
-                        . "para obtenção da base de cálculo efetiva (vBCEfet)"
+                        . "para obtenção da base de cálculo efetiva"
                 );
                 $this->dom->addChild(
                     $icms,
@@ -4410,6 +4410,9 @@ class Make
             'vBCST',
             'pICMSST',
             'vICMSST',
+            'vBCFCPST',
+            'pFCPST',
+            'vFCPST',
             'pBCOp',
             'UFST'
         ];
@@ -4509,6 +4512,28 @@ class Make
             $this->conditionalNumberFormatting($std->vICMSST),
             true,
             "[item $std->item] Valor do ICMS ST"
+        );
+        $this->dom->addChild(
+            $icmsPart,
+            'vBCFCPST',
+            $this->conditionalNumberFormatting($std->vBCFCPST),
+            false,
+            "[item $std->item] Valor da Base de Cálculo do FCP ST"
+        );
+        $this->dom->addChild(
+            $icmsPart,
+            'pFCPST',
+            $this->conditionalNumberFormatting($std->pFCPST, 4),
+            false,
+            "[item $std->item] Percentual do Fundo de "
+            . "Combate à Pobreza (FCP) ST"
+        );
+        $this->dom->addChild(
+            $icmsPart,
+            'vFCPST',
+            $this->conditionalNumberFormatting($std->vFCPST),
+            false,
+            "[item $std->item] Valor do FCP ST"
         );
         $this->dom->addChild(
             $icmsPart,
