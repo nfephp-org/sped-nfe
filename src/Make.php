@@ -762,7 +762,7 @@ class Make
             $this->dom->addChild(
                 $ide,
                 "xJust",
-                substr(trim($std->xJust), 0, 256),
+                substr(trim((string)$std->xJust), 0, 256),
                 true,
                 $identificador . "Justificativa da entrada em contingência"
             );
@@ -1017,14 +1017,14 @@ class Make
         $this->dom->addChild(
             $this->emit,
             "xNome",
-            substr(trim($std->xNome), 0, 60),
+            substr(trim((string)$std->xNome), 0, 60),
             true,
             $identificador . "Razão Social ou Nome do emitente"
         );
         $this->dom->addChild(
             $this->emit,
             "xFant",
-            substr(trim($std->xFant), 0, 60),
+            substr(trim((string)$std->xFant), 0, 60),
             false,
             $identificador . "Nome fantasia do emitente"
         );
@@ -1097,14 +1097,14 @@ class Make
         $this->dom->addChild(
             $this->enderEmit,
             "xLgr",
-            substr(trim($std->xLgr), 0, 60),
+            substr(trim((string)$std->xLgr), 0, 60),
             true,
             $identificador . "Logradouro do Endereço do emitente"
         );
         $this->dom->addChild(
             $this->enderEmit,
             "nro",
-            substr(trim($std->nro), 0, 60),
+            substr(trim((string)$std->nro), 0, 60),
             true,
             $identificador . "Número do Endereço do emitente"
         );
@@ -1118,7 +1118,7 @@ class Make
         $this->dom->addChild(
             $this->enderEmit,
             "xBairro",
-            substr(trim($std->xBairro), 0, 60),
+            substr(trim((string)$std->xBairro), 0, 60),
             true,
             $identificador . "Bairro do Endereço do emitente"
         );
@@ -1132,14 +1132,14 @@ class Make
         $this->dom->addChild(
             $this->enderEmit,
             "xMun",
-            substr(trim($std->xMun), 0, 60),
+            substr(trim((string)$std->xMun), 0, 60),
             true,
             $identificador . "Nome do município do Endereço do emitente"
         );
         $this->dom->addChild(
             $this->enderEmit,
             "UF",
-            strtoupper(trim($std->UF)),
+            strtoupper(trim((string)$std->UF)),
             true,
             $identificador . "Sigla da UF do Endereço do emitente"
         );
@@ -1160,14 +1160,14 @@ class Make
         $this->dom->addChild(
             $this->enderEmit,
             "xPais",
-            substr(trim($std->xPais), 0, 60),
+            substr(trim((string)$std->xPais), 0, 60),
             false,
             $identificador . "Nome do País do Endereço do emitente"
         );
         $this->dom->addChild(
             $this->enderEmit,
             "fone",
-            trim($std->fone),
+            trim((string)$std->fone),
             false,
             $identificador . "Telefone do Endereço do emitente"
         );
@@ -1244,7 +1244,7 @@ class Make
         $this->dom->addChild(
             $this->dest,
             "xNome",
-            substr(trim($xNome), 0, 60),
+            substr(trim((string)$xNome), 0, 60),
             $flagNome, //se mod 55 true ou mod 65 false
             $identificador . "Razão Social ou nome do destinatário"
         );
@@ -1281,7 +1281,7 @@ class Make
         $this->dom->addChild(
             $this->dest,
             "email",
-            substr(trim($std->email), 0, 60),
+            substr(trim((string)$std->email), 0, 60),
             false,
             $identificador . "Email do destinatário"
         );
@@ -1734,7 +1734,7 @@ class Make
         $std = $this->equilizeParameters($std, $possible);
         $infAdProd = $this->dom->createElement(
             "infAdProd",
-            substr(trim($std->infAdProd), 0, 500)
+            substr(trim((string)$std->infAdProd), 0, 500)
         );
         $this->aInfAdProd[$std->item] = $infAdProd;
         return $infAdProd;
@@ -2054,14 +2054,14 @@ class Make
         $this->dom->addChild(
             $obsCont,
             "xCampo",
-            substr(trim($std->xCampo), 0, 20),
+            substr(trim((string)$std->xCampo), 0, 20),
             true,
             $identificador . "[item $std->item] (obsCont/xCampo) Identificação do campo"
         );
         $this->dom->addChild(
             $obsCont,
             "xTexto",
-            substr(trim($std->xTexto), 0, 60),
+            substr(trim((string)$std->xTexto), 0, 60),
             true,
             $identificador . "[item $std->item] (obsCont/xTexto) Conteúdo do campo"
         );
@@ -2413,7 +2413,7 @@ class Make
         $this->dom->addChild(
             $rastro,
             "nLote",
-            substr(trim($std->nLote), 0, 20),
+            substr(trim((string)$std->nLote), 0, 20),
             true,
             $identificador . "[item $std->item] Número do lote"
         );
@@ -2427,14 +2427,14 @@ class Make
         $this->dom->addChild(
             $rastro,
             "dFab",
-            trim($std->dFab),
+            trim((string)$std->dFab),
             true,
             $identificador . "[item $std->item] Data de fabricação"
         );
         $this->dom->addChild(
             $rastro,
             "dVal",
-            trim($std->dVal),
+            trim((string)$std->dVal),
             true,
             $identificador . "[item $std->item] Data da validade"
         );
