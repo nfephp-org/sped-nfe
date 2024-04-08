@@ -3423,7 +3423,9 @@ class Make
                 }
                 break;
             case '20':
-                $this->stdTot->vICMSDeson += (float) !empty($std->vICMSDeson) ? $std->vICMSDeson : 0;
+                if (!empty($std->indDeduzDeson)) {
+                    $this->stdTot->vICMSDeson += (float)!empty($std->vICMSDeson) ? $std->vICMSDeson : 0;
+                }
                 $this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
                 $this->stdTot->vICMS += (float) !empty($std->vICMS) ? $std->vICMS : 0;
                 $this->stdTot->vFCP += (float) !empty($std->vFCP) ? $std->vFCP : 0;
@@ -3525,7 +3527,9 @@ class Make
                 );
                 break;
             case '30':
-                $this->stdTot->vICMSDeson += (float) !empty($std->vICMSDeson) ? $std->vICMSDeson : 0;
+                if (!empty($std->indDeduzDeson)) {
+                    $this->stdTot->vICMSDeson += (float)!empty($std->vICMSDeson) ? $std->vICMSDeson : 0;
+                }
                 $this->stdTot->vBCST += (float) !empty($std->vBCST) ? $std->vBCST : 0;
                 $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
                 $this->stdTot->vFCPST += (float) !empty($std->vFCPST) ? $std->vFCPST : 0;
@@ -3636,7 +3640,9 @@ class Make
             case '40':
             case '41':
             case '50':
-                $this->stdTot->vICMSDeson += (float) !empty($std->vICMSDeson) ? $std->vICMSDeson : 0;
+                if (!empty($std->indDeduzDeson)) {
+                    $this->stdTot->vICMSDeson += (float)!empty($std->vICMSDeson) ? $std->vICMSDeson : 0;
+                }
                 $icms = $this->dom->createElement("ICMS40");
                 $this->dom->addChild(
                     $icms,
@@ -4015,11 +4021,13 @@ class Make
                 );
                 break;
             case '70':
+                if (!empty($std->indDeduzDeson)) {
+                    $this->stdTot->vICMSDeson += (float) !empty($std->vICMSDeson) ? $std->vICMSDeson : 0;
+                }
                 $this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
                 $this->stdTot->vICMS += (float) !empty($std->vICMS) ? $std->vICMS : 0;
                 $this->stdTot->vBCST += (float) !empty($std->vBCST) ? $std->vBCST : 0;
                 $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
-                $this->stdTot->vICMSDeson += (float) !empty($std->vICMSDeson) ? $std->vICMSDeson : 0;
                 $this->stdTot->vFCPST += (float) !empty($std->vFCPST) ? $std->vFCPST : 0;
                 $this->stdTot->vFCP += (float) !empty($std->vFCP) ? $std->vFCP : 0;
 
@@ -4198,6 +4206,9 @@ class Make
                 );
                 break;
             case '90':
+                if (!empty($std->indDeduzDeson)) {
+                    $this->stdTot->vICMSDeson += (float) !empty($std->vICMSDeson) ? $std->vICMSDeson : 0;
+                }
                 $this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
                 $this->stdTot->vICMS += (float) !empty($std->vICMS) ? $std->vICMS : 0;
                 $this->stdTot->vBCST += (float) !empty($std->vBCST) ? $std->vBCST : 0;
