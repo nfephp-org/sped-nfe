@@ -191,6 +191,8 @@ class Tools
         $this->setEnvironment($this->config->tpAmb);
         if (empty($contingency)) {
             $this->contingency = new Contingency();
+        } else {
+            $this->contingency = $contingency;
         }
     }
 
@@ -464,7 +466,11 @@ class Tools
         }
         $stdServ = $webs->get($sigla, $tpAmb, $this->modelo);
         if (empty($stdServ->$service->url)) {
-            throw new \RuntimeException("Servico [$service] indisponivel UF [$uf] ou modelo [$this->modelo]");
+            if ($sigla == 'SVCRS' || $sigla == 'SVCAN') {
+                throw new \RuntimeException("Servico [$service] indisponivel na Contingencia [$sigla]");
+            } else {
+                throw new \RuntimeException("Servico [$service] indisponivel UF [$uf] ou modelo [$this->modelo]");
+            }
         }
         $this->urlcUF = $this->getcUF($uf); //recuperação do cUF
         if ($this->urlcUF > 91) {

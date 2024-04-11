@@ -63,6 +63,7 @@
     },
     "scripts": {
         "test": "vendor/bin/phpunit -c phpunit.xml.dist",
+        "test-with-coverage": "vendor/bin/phpunit -c phpunit.xml.dist --coverage-clover=coverage.xml",
         "phpcbf": "vendor/bin/phpcbf src/",
         "phpcs": "vendor/bin/phpcs src/",
         "stan": "vendor/bin/phpstan analyse src/"

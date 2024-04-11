@@ -57,10 +57,10 @@ class ValidTXT
         $num = 0;
 
         foreach ($rows as $row) {
-            $fields = explode('|', $row);
-            if (count($fields) == 0) {
+            if (empty($row)) {
                 continue;
             }
+            $fields = explode('|', $row);
             $ref = strtoupper($fields[0]);
             if (!$ref) {
                 continue;

@@ -93,13 +93,14 @@ $tools->setEnvironment(1);
 //a quantidade de documentos, e para não baixar várias vezes as mesmas coisas.
 $ultNSU = 0;
 $maxNSU = $ultNSU;
-$loopLimit = 50;
+$loopLimit = 12; //mantenha o numero de consultas abaixo de 20, cada consulta retorna até 50 documentos por vez
 $iCount = 0;
 
 //executa a busca de DFe em loop
 while ($ultNSU <= $maxNSU) {
     $iCount++;
     if ($iCount >= $loopLimit) {
+        //o limite de loops foi atingido pare de consultar
         break;
     }
     try {
@@ -107,7 +108,8 @@ while ($ultNSU <= $maxNSU) {
         $resp = $tools->sefazDistDFe($ultNSU);
     } catch (\Exception $e) {
         echo $e->getMessage();
-        //tratar o erro
+        //pare de consultar e resolva o erro (pode ser que a SEFAZ esteja fora do ar)
+        break;
     }
  
     //extrair e salvar os retornos
@@ -122,6 +124,12 @@ while ($ultNSU <= $maxNSU) {
     $ultNSU = $node->getElementsByTagName('ultNSU')->item(0)->nodeValue;
     $maxNSU = $node->getElementsByTagName('maxNSU')->item(0)->nodeValue;
     $lote = $node->getElementsByTagName('loteDistDFeInt')->item(0);
+    if (in_array($cStat, ['137', '656']) {
+         //137 - Nenhum documento localizado, a SEFAZ está te informando para consultar novamente após uma hora a contar desse momento
+         //656 - Consumo Indevido, a SEFAZ bloqueou o seu acesso por uma hora pois as regras de consultas não foram observadas
+        //nesses dois casos pare as consultas imediatamente e retome apenas daqui a uma hora, pelo menos !!
+        break;
+    }
     if (empty($lote)) {
         //lote vazio
         continue;
@@ -139,10 +147,13 @@ while ($ultNSU <= $maxNSU) {
         //esse processamento depende do seu aplicativo
     }
     if ($ultNSU == $maxNSU) {
-       break; //CUIDADO para não deixar seu loop infinito !!
+       //quando o numero máximo de NSU foi atingido não existem mais dados a buscar
+       //nesse caso a proxima busca deve ser no minimo após mais uma hora
+       break;
     }
     sleep(2);
 }
+//salve o ultNSU pesquisado em sua base pois a proxima consulta deverá iniciar a partir desse numero + 1
 ```
 
 ## Parametros

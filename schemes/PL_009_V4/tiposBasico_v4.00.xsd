@@ -189,6 +189,15 @@
 			<xs:pattern value="0(\.[0-9]{4})?|100(\.00)?|[1-9]{1}[0-9]{0,1}(\.[0-9]{4})?"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:simpleType name="TDec_03v00a04Max100Opc">
+		<xs:annotation>
+			<xs:documentation>Tipo Decimal com 3 inteiros (no máximo 100), com 4 decimais, não aceita valor zero</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="0(\.[1-9][0-9]{0,3})|0(\.[0][1-9][0-9]{0,2})|0(\.[0][0][1-9][0-9]{0,1})|0(\.[0][0][0][1-9])|100(\.[0]{1,4})?|[1-9]{1}[0-9]{0,1}(\.[0-9]{1,4})?"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:simpleType name="TDec_0302a04Max100">
 		<xs:annotation>
 			<xs:documentation>Tipo Decimal com 3 inteiros (no máximo 100), com até 4 decimais</xs:documentation>

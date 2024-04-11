@@ -850,6 +850,7 @@ acrescentado:
 			<xs:enumeration value="90"/>
 			<xs:enumeration value="91"/>
 			<xs:enumeration value="92"/>
+			<xs:enumeration value="94"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TLatitude">

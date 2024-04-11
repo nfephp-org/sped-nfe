@@ -12,11 +12,11 @@ on:
 jobs:
   testsuite:
     name: Testes Automatizados
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
       matrix:
-        php-version: ["7.4", "8.0", "8.1"]
+        php-version: ["7.4", "8.0", "8.1", "8.2", "8.3"]
 
     steps:
       - name: Setup PHP
@@ -24,9 +24,10 @@ jobs:
         with:
           php-version: ${{ matrix.php-version }}
           extensions: mbstring, intl, mysql, zlib, dom, openssl, soap, json, simplexml, libxml
+          coverage: pcov
 
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Composer Install
         run: |
@@ -40,5 +41,15 @@ jobs:
           composer stan
 
       - name: Rodando PHPUnit
+        if: matrix.php-version != '8.2'
         run: |
           composer test
+
+      - name: Rodando PHPUnit
+        if: matrix.php-version == '8.2'
+        run: |
+          composer test-with-coverage
+
+      - name: Submit code coverage
+        if: matrix.php-version == '8.2'
+        uses: codecov/codecov-action@v4
