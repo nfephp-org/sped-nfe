@@ -232,6 +232,91 @@ class MakeTest extends TestCase
         $this->assertEmpty($ide->getElementsByTagName('xJust')->item(0));
     }
 
+    public function test_tagrefNFe(): void
+    {
+        $std = new \stdClass();
+        $std->refNFe = '35150271780456000160550010000253101000253101';
+        $refNFe = $this->make->tagrefNFe($std);
+
+        $this->assertEquals($std->refNFe, $refNFe->nodeValue);
+        $this->assertEquals('refNFe', $refNFe->nodeName);
+    }
+
+    public function test_tagrefNF(): void
+    {
+        $std = new \stdClass();
+        $std->cUF = 35;
+        $std->AAMM = 1412;
+        $std->CNPJ = '52297850000105';
+        $std->mod = '01';
+        $std->serie = 3;
+        $std->nNF = 587878;
+        $refNF = $this->make->tagrefNF($std);
+
+        $this->assertEquals($std->cUF, $refNF->getElementsByTagName('cUF')->item(0)->nodeValue);
+        $this->assertEquals($std->AAMM, $refNF->getElementsByTagName('AAMM')->item(0)->nodeValue);
+        $this->assertEquals($std->CNPJ, $refNF->getElementsByTagName('CNPJ')->item(0)->nodeValue);
+        $this->assertEquals($std->mod, $refNF->getElementsByTagName('mod')->item(0)->nodeValue);
+        $this->assertEquals($std->serie, $refNF->getElementsByTagName('serie')->item(0)->nodeValue);
+        $this->assertEquals($std->nNF, $refNF->getElementsByTagName('nNF')->item(0)->nodeValue);
+
+        $this->assertEquals('refNF', $refNF->nodeName);
+    }
+
+    public function test_tagrefNFP(): void
+    {
+        $std = new \stdClass();
+        $std->cUF = 35;
+        $std->AAMM = 1502;
+        $std->CNPJ = '00940734000150';
+        $std->IE = 'ISENTO';
+        $std->mod = '04';
+        $std->serie = 0;
+        $std->nNF = 5578;
+
+        $refNFP = $this->make->tagrefNFP($std);
+        $this->assertEquals('refNFP', $refNFP->nodeName);
+
+        $this->assertEquals($std->cUF, $refNFP->getElementsByTagName('cUF')->item(0)->nodeValue);
+        $this->assertEquals($std->AAMM, $refNFP->getElementsByTagName('AAMM')->item(0)->nodeValue);
+        $this->assertEquals($std->CNPJ, $refNFP->getElementsByTagName('CNPJ')->item(0)->nodeValue);
+        $this->assertEquals($std->IE, $refNFP->getElementsByTagName('IE')->item(0)->nodeValue);
+        $this->assertEquals($std->mod, $refNFP->getElementsByTagName('mod')->item(0)->nodeValue);
+        $this->assertEquals($std->serie, $refNFP->getElementsByTagName('serie')->item(0)->nodeValue);
+        $this->assertEquals($std->nNF, $refNFP->getElementsByTagName('nNF')->item(0)->nodeValue);
+
+        //Com CPF
+        unset($std->CNPJ);
+        $std->CPF = '08456452009';
+        $refNFP = $this->make->tagrefNFP($std);
+
+        $this->assertEquals($std->CPF, $refNFP->getElementsByTagName('CPF')->item(0)->nodeValue);
+    }
+
+    public function test_tagrefCTe(): void
+    {
+        $std = new \stdClass();
+        $std->refCTe = '35150268252816000146570010000016161002008472';
+
+        $refCTe = $this->make->tagrefCTe($std);
+        $this->assertEquals('refCTe', $refCTe->nodeName);
+        $this->assertEquals($std->refCTe, $refCTe->nodeValue);
+    }
+
+    public function test_tagrefECF(): void
+    {
+        $std = new \stdClass();
+        $std->mod = '2C';
+        $std->nECF = 788;
+        $std->nCOO = 114;
+
+        $refECF = $this->make->tagrefECF($std);
+        $this->assertEquals('refECF', $refECF->nodeName);
+        $this->assertEquals($std->mod, $refECF->getElementsByTagName('mod')->item(0)->nodeValue);
+        $this->assertEquals($std->nECF, $refECF->getElementsByTagName('nECF')->item(0)->nodeValue);
+        $this->assertEquals($std->nCOO, $refECF->getElementsByTagName('nCOO')->item(0)->nodeValue);
+    }
+
     protected function setUp(): void
     {
         $this->make = new Make();
