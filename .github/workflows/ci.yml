@@ -53,3 +53,7 @@ jobs:
       - name: Submit code coverage
         if: matrix.php-version == '8.2'
         uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          verbose: true
+          fail_ci_if_error: true
