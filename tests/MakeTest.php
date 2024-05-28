@@ -461,6 +461,64 @@ class MakeTest extends TestCase
         $this->assertEquals($std->xTexto, $tag->getElementsByTagName('xTexto')->item(0)->nodeValue);
     }
 
+    public function test_tagveicProd(): void
+    {
+        $std = new \stdClass();
+        $std->item = '';
+        $std->tpOp = 1;
+        $std->chassi = '9BGRX4470AG745440';
+        $std->cCor = '121';
+        $std->xCor = 'PRATA';
+        $std->pot = '0078';
+        $std->cilin = '1000';
+        $std->pesoL = '000008900';
+        $std->pesoB = '000008900';
+        $std->nSerie = 'AAA123456';
+        $std->tpComb = '16';
+        $std->nMotor = 'BBB123456';
+        $std->CMT = '460.0000';
+        $std->dist = '2443';
+        $std->anoMod = 2010;
+        $std->anoFab = 2011;
+        $std->tpPint = 'M';
+        $std->tpVeic = '06';
+        $std->espVeic = 1;
+        $std->VIN = 'N';
+        $std->condVeic = 1;
+        $std->cMod = '123456';
+        $std->cCorDENATRAN = '10';
+        $std->lota = 5;
+        $std->tpRest = 0;
+
+        $tag = $this->make->tagveicProd($std);
+
+        $this->assertEquals('veicProd', $tag->nodeName);
+        $this->assertEquals($std->tpOp, $tag->getElementsByTagName('tpOp')->item(0)->nodeValue);
+        $this->assertEquals($std->chassi, $tag->getElementsByTagName('chassi')->item(0)->nodeValue);
+        $this->assertEquals($std->cCor, $tag->getElementsByTagName('cCor')->item(0)->nodeValue);
+        $this->assertEquals($std->xCor, $tag->getElementsByTagName('xCor')->item(0)->nodeValue);
+        $this->assertEquals($std->pot, $tag->getElementsByTagName('pot')->item(0)->nodeValue);
+        $this->assertEquals($std->cilin,  $tag->getElementsByTagName('cilin')->item(0)->nodeValue);
+        $this->assertEquals($std->pesoL,  $tag->getElementsByTagName('pesoL')->item(0)->nodeValue);
+        $this->assertEquals($std->pesoB,  $tag->getElementsByTagName('pesoB')->item(0)->nodeValue);
+        $this->assertEquals($std->nSerie, $tag->getElementsByTagName('nSerie')->item(0)->nodeValue);
+        $this->assertEquals($std->tpComb, $tag->getElementsByTagName('tpComb')->item(0)->nodeValue);
+        $this->assertEquals($std->nMotor, $tag->getElementsByTagName('nMotor')->item(0)->nodeValue);
+        $this->assertEquals($std->CMT, $tag->getElementsByTagName('CMT')->item(0)->nodeValue);
+        $this->assertEquals($std->dist, $tag->getElementsByTagName('dist')->item(0)->nodeValue);
+        $this->assertEquals($std->anoMod, $tag->getElementsByTagName('anoMod')->item(0)->nodeValue);
+        $this->assertEquals($std->anoFab, $tag->getElementsByTagName('anoFab')->item(0)->nodeValue);
+        $this->assertEquals($std->tpPint, $tag->getElementsByTagName('tpPint')->item(0)->nodeValue);
+        $this->assertEquals($std->tpVeic, $tag->getElementsByTagName('tpVeic')->item(0)->nodeValue);
+        $this->assertEquals($std->espVeic, $tag->getElementsByTagName('espVeic')->item(0)->nodeValue);
+        $this->assertEquals($std->VIN, $tag->getElementsByTagName('VIN')->item(0)->nodeValue);
+        $this->assertEquals($std->condVeic, $tag->getElementsByTagName('condVeic')->item(0)->nodeValue);
+        $this->assertEquals($std->cMod, $tag->getElementsByTagName('cMod')->item(0)->nodeValue);
+        $this->assertEquals($std->cCorDENATRAN, $tag->getElementsByTagName('cCorDENATRAN')->item(0)->nodeValue);
+        $this->assertEquals($std->lota, $tag->getElementsByTagName('lota')->item(0)->nodeValue);
+        $this->assertEquals($std->tpRest, $tag->getElementsByTagName('tpRest')->item(0)->nodeValue);
+    }
+
     protected function setUp(): void
     {
         $this->make = new Make();
