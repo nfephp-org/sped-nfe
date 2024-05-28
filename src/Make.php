@@ -1747,7 +1747,7 @@ class Make
      * tag NFe/infNFe/det[]/prod/[cCredPresumido, pCredPresumido, vCredPresumido]
      * NT 2019.001 v1.62
      * @param stdClass $std
-     * @return void
+     * @return DOMElement
      */
     public function tagCreditoPresumidoProd(stdClass $std)
     {
@@ -1781,6 +1781,7 @@ class Make
             true
         );
         $this->aProdCreditoPresumido[$std->item][] = $gcred;
+        return $gcred;
     }
 
     /**

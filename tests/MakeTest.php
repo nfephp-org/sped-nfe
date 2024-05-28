@@ -317,6 +317,150 @@ class MakeTest extends TestCase
         $this->assertEquals($std->nCOO, $refECF->getElementsByTagName('nCOO')->item(0)->nodeValue);
     }
 
+    public function test_tagretirada(): void
+    {
+        $std = new \stdClass();
+        $std->CNPJ = '12345678901234';
+
+        $std->IE = '12345678901';
+        $std->xNome = 'Beltrano e Cia Ltda';
+        $std->xLgr = 'Rua Um';
+        $std->nro = '123';
+        $std->xCpl = 'sobreloja';
+        $std->xBairro = 'centro';
+        $std->cMun = '3550308';
+        $std->xMun = 'Sao Paulo';
+        $std->UF = 'SP';
+        $std->CEP = '01023000';
+        $std->cPais = '1058';
+        $std->xPais = 'BRASIL';
+        $std->fone = '1122225544';
+        $std->email = 'contato@beltrano.com.br';
+
+        $tag = $this->make->tagretirada($std);
+
+        $this->assertEquals('retirada', $tag->nodeName);
+        $this->assertEquals($std->CNPJ, $tag->getElementsByTagName('CNPJ')->item(0)->nodeValue);
+        $this->assertEquals($std->IE, $tag->getElementsByTagName('IE')->item(0)->nodeValue);
+        $this->assertEquals($std->xNome, $tag->getElementsByTagName('xNome')->item(0)->nodeValue);
+        $this->assertEquals($std->xLgr, $tag->getElementsByTagName('xLgr')->item(0)->nodeValue);
+        $this->assertEquals($std->nro, $tag->getElementsByTagName('nro')->item(0)->nodeValue);
+        $this->assertEquals($std->xCpl, $tag->getElementsByTagName('xCpl')->item(0)->nodeValue);
+        $this->assertEquals($std->xBairro, $tag->getElementsByTagName('xBairro')->item(0)->nodeValue);
+        $this->assertEquals($std->cMun, $tag->getElementsByTagName('cMun')->item(0)->nodeValue);
+        $this->assertEquals($std->xMun, $tag->getElementsByTagName('xMun')->item(0)->nodeValue);
+        $this->assertEquals($std->UF, $tag->getElementsByTagName('UF')->item(0)->nodeValue);
+        $this->assertEquals($std->CEP, $tag->getElementsByTagName('CEP')->item(0)->nodeValue);
+        $this->assertEquals($std->cPais, $tag->getElementsByTagName('cPais')->item(0)->nodeValue);
+        $this->assertEquals($std->xPais, $tag->getElementsByTagName('xPais')->item(0)->nodeValue);
+        $this->assertEquals($std->fone, $tag->getElementsByTagName('fone')->item(0)->nodeValue);
+        $this->assertEquals($std->email, $tag->getElementsByTagName('email')->item(0)->nodeValue);
+
+        $std->CPF = '06563904092';
+        $tag = $this->make->tagretirada($std);
+        $this->assertEquals($std->CPF, $tag->getElementsByTagName('CPF')->item(0)->nodeValue);
+    }
+
+    public function test_tagentrega(): void
+    {
+        $std = new \stdClass();
+        $std->CNPJ = '12345678901234';
+
+        $std->IE = '12345678901';
+        $std->xNome = 'Beltrano e Cia Ltda';
+        $std->xLgr = 'Rua Um';
+        $std->nro = '123';
+        $std->xCpl = 'sobreloja';
+        $std->xBairro = 'centro';
+        $std->cMun = '3550308';
+        $std->xMun = 'Sao Paulo';
+        $std->UF = 'SP';
+        $std->CEP = '01023000';
+        $std->cPais = '1058';
+        $std->xPais = 'BRASIL';
+        $std->fone = '1122225544';
+        $std->email = 'contato@beltrano.com.br';
+
+        $tag = $this->make->tagentrega($std);
+
+        $this->assertEquals('entrega', $tag->nodeName);
+        $this->assertEquals($std->CNPJ, $tag->getElementsByTagName('CNPJ')->item(0)->nodeValue);
+        $this->assertEquals($std->IE, $tag->getElementsByTagName('IE')->item(0)->nodeValue);
+        $this->assertEquals($std->xNome, $tag->getElementsByTagName('xNome')->item(0)->nodeValue);
+        $this->assertEquals($std->xLgr, $tag->getElementsByTagName('xLgr')->item(0)->nodeValue);
+        $this->assertEquals($std->nro, $tag->getElementsByTagName('nro')->item(0)->nodeValue);
+        $this->assertEquals($std->xCpl, $tag->getElementsByTagName('xCpl')->item(0)->nodeValue);
+        $this->assertEquals($std->xBairro, $tag->getElementsByTagName('xBairro')->item(0)->nodeValue);
+        $this->assertEquals($std->cMun, $tag->getElementsByTagName('cMun')->item(0)->nodeValue);
+        $this->assertEquals($std->xMun, $tag->getElementsByTagName('xMun')->item(0)->nodeValue);
+        $this->assertEquals($std->UF, $tag->getElementsByTagName('UF')->item(0)->nodeValue);
+        $this->assertEquals($std->CEP, $tag->getElementsByTagName('CEP')->item(0)->nodeValue);
+        $this->assertEquals($std->cPais, $tag->getElementsByTagName('cPais')->item(0)->nodeValue);
+        $this->assertEquals($std->xPais, $tag->getElementsByTagName('xPais')->item(0)->nodeValue);
+        $this->assertEquals($std->fone, $tag->getElementsByTagName('fone')->item(0)->nodeValue);
+        $this->assertEquals($std->email, $tag->getElementsByTagName('email')->item(0)->nodeValue);
+
+        $std->CPF = '06563904092';
+        $tag = $this->make->tagentrega($std);
+        $this->assertEquals($std->CPF, $tag->getElementsByTagName('CPF')->item(0)->nodeValue);
+    }
+
+    public function test_tagautXML(): void
+    {
+        $std = new \stdClass();
+        $std->CNPJ = '12345678901234';
+        $tag = $this->make->tagautXML($std);
+
+        $this->assertEquals('autXML', $tag->nodeName);
+        $this->assertEquals($std->CNPJ, $tag->getElementsByTagName('CNPJ')->item(0)->nodeValue);
+
+        $std = new \stdClass();
+        $std->CPF = '06563904092';
+        $tag = $this->make->tagautXML($std);
+        $this->assertEquals($std->CPF, $tag->getElementsByTagName('CPF')->item(0)->nodeValue);
+    }
+
+    public function test_taginfAdProd(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->infAdProd = 'informacao adicional do item';
+        $tag = $this->make->taginfAdProd($std);
+
+        $this->assertEquals('infAdProd', $tag->nodeName);
+        $this->assertEquals($std->infAdProd, $tag->nodeValue);
+    }
+
+    public function test_tagCreditoPresumidoProd(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->cCredPresumido = '2222211234';
+        $std->pCredPresumido = '4.0000';
+        $std->vCredPresumido = '4.00';
+
+        $tag = $this->make->tagCreditoPresumidoProd($std);
+
+        $this->assertEquals('gCred', $tag->nodeName);
+        $this->assertEquals($std->cCredPresumido, $tag->getElementsByTagName('cCredPresumido')->item(0)->nodeValue);
+        $this->assertEquals($std->pCredPresumido, $tag->getElementsByTagName('pCredPresumido')->item(0)->nodeValue);
+        $this->assertEquals($std->vCredPresumido, $tag->getElementsByTagName('vCredPresumido')->item(0)->nodeValue);
+    }
+
+    public function test_tagprodObsCont(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->xCampo = 'abc';
+        $std->xTexto = '123';
+
+        $tag = $this->make->tagprodObsCont($std);
+
+        $this->assertEquals('obsItem', $tag->nodeName);
+        $this->assertEquals($std->xCampo, $tag->getElementsByTagName('xCampo')->item(0)->nodeValue);
+        $this->assertEquals($std->xTexto, $tag->getElementsByTagName('xTexto')->item(0)->nodeValue);
+    }
+
     protected function setUp(): void
     {
         $this->make = new Make();
