@@ -634,16 +634,37 @@ class MakeTest extends TestCase
         $std->pFCP = '1.0000';
         $std->vFCP = '2.00';
 
-        $tag = $this->make->tagICMS($std);
-        $this->assertEquals('ICMS', $tag->nodeName);
-        $this->assertEquals($std->orig, $tag->getElementsByTagName('orig')->item(0)->nodeValue);
-        $this->assertEquals($std->CST, $tag->getElementsByTagName('CST')->item(0)->nodeValue);
-        $this->assertEquals($std->modBC, $tag->getElementsByTagName('modBC')->item(0)->nodeValue);
-        $this->assertEquals($std->vBC, $tag->getElementsByTagName('vBC')->item(0)->nodeValue);
-        $this->assertEquals($std->pICMS, $tag->getElementsByTagName('pICMS')->item(0)->nodeValue);
-        $this->assertEquals($std->vICMS, $tag->getElementsByTagName('vICMS')->item(0)->nodeValue);
-        $this->assertEquals($std->pFCP, $tag->getElementsByTagName('pFCP')->item(0)->nodeValue);
-        $this->assertEquals($std->vFCP, $tag->getElementsByTagName('vFCP')->item(0)->nodeValue);
+        $this->validarCriacaoTagICMS($std);
+    }
+
+    public function test_tagICMS_CST_02(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->orig = '0';
+        $std->CST = '02';
+        $std->qBCMono = '200.0000';
+        $std->adRemICMS = '25.0000';
+        $std->vICMSMono = '50.00';
+
+        $this->validarCriacaoTagICMS($std);
+    }
+    public function test_tagICMS_CST_15(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->orig = '0';
+        $std->CST = '15';
+        $std->qBCMono = '200.0000';
+        $std->adRemICMS = '25.0000';
+        $std->vICMSMono = '50.00';
+        $std->qBCMonoReten = '100.0000';
+        $std->adRemICMSReten = '20.0000';
+        $std->vICMSMonoReten = '20.00';
+        $std->pRedAdRem = '1.00';
+        $std->motRedAdRem = '1';
+
+        $this->validarCriacaoTagICMS($std);
     }
 
     public function test_tagICMS_CST_20(): void
@@ -663,21 +684,42 @@ class MakeTest extends TestCase
         $std->vICMSDeson = '3.60';
         $std->motDesICMS = 9;
 
-        $tag = $this->make->tagICMS($std);
-        $this->assertEquals('ICMS', $tag->nodeName);
-        $this->assertEquals($std->orig, $tag->getElementsByTagName('orig')->item(0)->nodeValue);
-        $this->assertEquals($std->CST, $tag->getElementsByTagName('CST')->item(0)->nodeValue);
-        $this->assertEquals($std->modBC, $tag->getElementsByTagName('modBC')->item(0)->nodeValue);
-        $this->assertEquals($std->pRedBC, $tag->getElementsByTagName('pRedBC')->item(0)->nodeValue);
-        $this->assertEquals($std->vBC, $tag->getElementsByTagName('vBC')->item(0)->nodeValue);
-        $this->assertEquals($std->pICMS, $tag->getElementsByTagName('pICMS')->item(0)->nodeValue);
-        $this->assertEquals($std->vICMS, $tag->getElementsByTagName('vICMS')->item(0)->nodeValue);
-        $this->assertEquals($std->vBCFCP, $tag->getElementsByTagName('vBCFCP')->item(0)->nodeValue);
-        $this->assertEquals($std->pFCP, $tag->getElementsByTagName('pFCP')->item(0)->nodeValue);
-        $this->assertEquals($std->vFCP, $tag->getElementsByTagName('vFCP')->item(0)->nodeValue);
-        $this->assertEquals($std->vICMSDeson, $tag->getElementsByTagName('vICMSDeson')->item(0)->nodeValue);
-        $this->assertEquals($std->motDesICMS, $tag->getElementsByTagName('motDesICMS')->item(0)->nodeValue);
+        $this->validarCriacaoTagICMS($std);
     }
+
+    public function test_tagICMS_CST_30(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->orig = '0';
+        $std->CST = '30';
+        $std->modBCST = '4';
+        $std->pMVAST = '30.0000';
+        $std->pRedBCST = '1.0000';
+        $std->vBCST = '1.00';
+        $std->pICMSST = '1.0000';
+        $std->vICMSST = '1.00';
+        $std->vBCFCPST = '1.00';
+        $std->pFCPST = '1.0000';
+        $std->vFCPST = '1.00';
+        $std->vICMSDeson = '3.60';
+        $std->motDesICMS = 9;
+        $std->indDeduzDeson = '0';
+
+        $this->validarCriacaoTagICMS($std);
+    }
+
+    private function validarCriacaoTagICMS(\stdClass $icms): void
+    {
+        $attributos = get_object_vars($icms);
+        $tag = $this->make->tagICMS($icms);
+        $this->assertEquals('ICMS', $tag->nodeName);
+        unset($attributos['item']);
+        foreach ($attributos as $attributo => $valor){
+            $this->assertEquals($icms->{$attributo}, $tag->getElementsByTagName($attributo)->item(0)->nodeValue, "Campo {$attributo} possui valor incorreto!");
+        }
+    }
+
 
     protected function setUp(): void
     {
