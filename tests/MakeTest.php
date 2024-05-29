@@ -498,9 +498,9 @@ class MakeTest extends TestCase
         $this->assertEquals($std->cCor, $tag->getElementsByTagName('cCor')->item(0)->nodeValue);
         $this->assertEquals($std->xCor, $tag->getElementsByTagName('xCor')->item(0)->nodeValue);
         $this->assertEquals($std->pot, $tag->getElementsByTagName('pot')->item(0)->nodeValue);
-        $this->assertEquals($std->cilin,  $tag->getElementsByTagName('cilin')->item(0)->nodeValue);
-        $this->assertEquals($std->pesoL,  $tag->getElementsByTagName('pesoL')->item(0)->nodeValue);
-        $this->assertEquals($std->pesoB,  $tag->getElementsByTagName('pesoB')->item(0)->nodeValue);
+        $this->assertEquals($std->cilin, $tag->getElementsByTagName('cilin')->item(0)->nodeValue);
+        $this->assertEquals($std->pesoL, $tag->getElementsByTagName('pesoL')->item(0)->nodeValue);
+        $this->assertEquals($std->pesoB, $tag->getElementsByTagName('pesoB')->item(0)->nodeValue);
         $this->assertEquals($std->nSerie, $tag->getElementsByTagName('nSerie')->item(0)->nodeValue);
         $this->assertEquals($std->tpComb, $tag->getElementsByTagName('tpComb')->item(0)->nodeValue);
         $this->assertEquals($std->nMotor, $tag->getElementsByTagName('nMotor')->item(0)->nodeValue);
@@ -534,7 +534,7 @@ class MakeTest extends TestCase
         $this->assertEquals($std->vPMC, $tag->getElementsByTagName('vPMC')->item(0)->nodeValue);
     }
 
-    public function test_tagarma():void
+    public function test_tagarma(): void
     {
         $std = new \stdClass();
         $std->item = 1;
@@ -586,6 +586,140 @@ class MakeTest extends TestCase
         $this->assertEquals($std->vAliqProd, $CIDE->getElementsByTagName('vAliqProd')->item(0)->nodeValue);
         $this->assertEquals($std->vCIDE, $CIDE->getElementsByTagName('vCIDE')->item(0)->nodeValue);
     }
+
+    public function test_tagencerrante(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->nBico = 1;
+        $std->nBomba = 2;
+        $std->nTanque = 3;
+        $std->vEncIni = '100.000';
+        $std->vEncFin = '200.000';
+
+        $tag = $this->make->tagencerrante($std);
+        $this->assertEquals('encerrante', $tag->nodeName);
+        $this->assertEquals($std->nBico, $tag->getElementsByTagName('nBico')->item(0)->nodeValue);
+        $this->assertEquals($std->nBomba, $tag->getElementsByTagName('nBomba')->item(0)->nodeValue);
+        $this->assertEquals($std->nTanque, $tag->getElementsByTagName('nTanque')->item(0)->nodeValue);
+        $this->assertEquals($std->vEncIni, $tag->getElementsByTagName('vEncIni')->item(0)->nodeValue);
+        $this->assertEquals($std->vEncFin, $tag->getElementsByTagName('vEncFin')->item(0)->nodeValue);
+    }
+
+    public function test_tagorigComb(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->indImport = 1;
+        $std->cUFOrig = '11';
+        $std->pOrig = '200.0000';
+
+        $tag = $this->make->tagorigComb($std);
+        $this->assertEquals('origComb', $tag->nodeName);
+        $this->assertEquals($std->indImport, $tag->getElementsByTagName('indImport')->item(0)->nodeValue);
+        $this->assertEquals($std->cUFOrig, $tag->getElementsByTagName('cUFOrig')->item(0)->nodeValue);
+        $this->assertEquals($std->pOrig, $tag->getElementsByTagName('pOrig')->item(0)->nodeValue);
+    }
+
+    public function test_tagICMS_CST_00(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->orig = '0';
+        $std->CST = '00';
+        $std->modBC = '3';
+        $std->vBC = '200.00';
+        $std->pICMS = '18.0000';
+        $std->vICMS = '36.00';
+        $std->pFCP = '1.0000';
+        $std->vFCP = '2.00';
+
+        $this->validarCriacaoTagICMS($std);
+    }
+
+    public function test_tagICMS_CST_02(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->orig = '0';
+        $std->CST = '02';
+        $std->qBCMono = '200.0000';
+        $std->adRemICMS = '25.0000';
+        $std->vICMSMono = '50.00';
+
+        $this->validarCriacaoTagICMS($std);
+    }
+    public function test_tagICMS_CST_15(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->orig = '0';
+        $std->CST = '15';
+        $std->qBCMono = '200.0000';
+        $std->adRemICMS = '25.0000';
+        $std->vICMSMono = '50.00';
+        $std->qBCMonoReten = '100.0000';
+        $std->adRemICMSReten = '20.0000';
+        $std->vICMSMonoReten = '20.00';
+        $std->pRedAdRem = '1.00';
+        $std->motRedAdRem = '1';
+
+        $this->validarCriacaoTagICMS($std);
+    }
+
+    public function test_tagICMS_CST_20(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->orig = '0';
+        $std->CST = '20';
+        $std->modBC = '3';
+        $std->pRedBC = '5.0000';
+        $std->vBC = '180.00';
+        $std->pICMS = '18.0000';
+        $std->vICMS = '32.40';
+        $std->vBCFCP = '200.00';
+        $std->pFCP = '1.0000';
+        $std->vFCP = '2.00';
+        $std->vICMSDeson = '3.60';
+        $std->motDesICMS = 9;
+
+        $this->validarCriacaoTagICMS($std);
+    }
+
+    public function test_tagICMS_CST_30(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->orig = '0';
+        $std->CST = '30';
+        $std->modBCST = '4';
+        $std->pMVAST = '30.0000';
+        $std->pRedBCST = '1.0000';
+        $std->vBCST = '1.00';
+        $std->pICMSST = '1.0000';
+        $std->vICMSST = '1.00';
+        $std->vBCFCPST = '1.00';
+        $std->pFCPST = '1.0000';
+        $std->vFCPST = '1.00';
+        $std->vICMSDeson = '3.60';
+        $std->motDesICMS = 9;
+        $std->indDeduzDeson = '0';
+
+        $this->validarCriacaoTagICMS($std);
+    }
+
+    private function validarCriacaoTagICMS(\stdClass $icms): void
+    {
+        $attributos = get_object_vars($icms);
+        $tag = $this->make->tagICMS($icms);
+        $this->assertEquals('ICMS', $tag->nodeName);
+        unset($attributos['item']);
+        foreach ($attributos as $attributo => $valor){
+            $this->assertEquals($icms->{$attributo}, $tag->getElementsByTagName($attributo)->item(0)->nodeValue, "Campo {$attributo} possui valor incorreto!");
+        }
+    }
+
 
     protected function setUp(): void
     {
