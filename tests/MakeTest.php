@@ -709,6 +709,174 @@ class MakeTest extends TestCase
         $this->validarCriacaoTagICMS($std);
     }
 
+    public function test_tagICMS_CST_40(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->orig = '0';
+        $std->CST = '40';
+        $std->vICMSDeson = '3.60';
+        $std->motDesICMS = 9;
+        $std->indDeduzDeson = '0';
+
+        $this->validarCriacaoTagICMS($std);
+    }
+
+    public function test_tagICMS_CST_41(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->orig = '0';
+        $std->CST = '41';
+        $std->vICMSDeson = '3.60';
+        $std->motDesICMS = 9;
+        $std->indDeduzDeson = '0';
+
+        $this->validarCriacaoTagICMS($std);
+    }
+
+    public function test_tagICMS_CST_50(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->orig = '0';
+        $std->CST = '50';
+        $std->vICMSDeson = '3.60';
+        $std->motDesICMS = 9;
+        $std->indDeduzDeson = '0';
+
+        $this->validarCriacaoTagICMS($std);
+    }
+
+    public function test_tagICMS_CST_51(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->orig = '0';
+        $std->CST = '51';
+        $std->modBC = 3;
+        $std->pRedBC = 10;
+        $std->vBC = 100;
+        $std->pICMS = 17;
+        $std->vICMSOp = 17;
+        $std->pDif = 1;
+        $std->vICMSDif = 1;
+        $std->vICMS = 17;
+        $std->vBCFCP = 100;
+        $std->pFCP = 2;
+        $std->vFCP = 2;
+
+        $this->validarCriacaoTagICMS($std);
+    }
+
+    public function test_tagICMS_CST_53(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->orig = '0';
+        $std->CST = '53';
+        $std->qBCMono = 200;
+        $std->adRemICMS = 17;
+        $std->vICMSMonoOp = 34;
+        $std->pDif = 1;
+        $std->vICMSMonoDif = 2;
+        $std->vICMSMono = 2;
+
+        $this->validarCriacaoTagICMS($std);
+    }
+
+    public function test_tagICMS_CST_60(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->orig = '0';
+        $std->CST = '60';
+        $std->vBCSTRet = 100;
+        $std->pST = 12;
+        $std->vICMSSubstituto = 12;
+        $std->vICMSSTRet = 40;
+        $std->vBCFCPSTRet = 50;
+        $std->pFCPSTRet = 10;
+        $std->vFCPSTRet = 15;
+        $std->pRedBCEfet = 14;
+        $std->vBCEfet = 100;
+        $std->pICMSEfet = 10;
+        $std->vICMSEfet = 10;
+
+        $this->validarCriacaoTagICMS($std);
+    }
+
+    public function test_tagICMS_CST_61(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->orig = '0';
+        $std->CST = '61';
+        $std->qBCMonoRet = 300;
+        $std->adRemICMSRet = 2;
+        $std->vICMSMonoRet = 6;
+
+        $this->validarCriacaoTagICMS($std);
+    }
+
+    public function test_tagICMS_CST_70(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->orig = '0';
+        $std->CST = '70';
+        $std->modBC = 3;
+        $std->pRedBC = 10;
+        $std->vBC = 200;
+        $std->pICMS = 10;
+        $std->vICMS = 20;
+        $std->vBCFCP = 200;
+        $std->pFCP = 2;
+        $std->vFCP = 4;
+        $std->modBCST = 4;
+        $std->pMVAST = 30;
+        $std->pRedBCST = 0;
+        $std->vBCST = 60;
+        $std->pICMSST = 10;
+        $std->vICMSST = 20;
+        $std->vBCFCPST = 1;
+        $std->pFCPST = 1;
+        $std->vFCPST = 1;
+        $std->vICMSDeson = 10;
+        $std->motDesICMS = 9;
+
+        $this->validarCriacaoTagICMS($std);
+    }
+
+    public function test_tagICMS_CST_90(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->orig = '0';
+        $std->CST = '90';
+        $std->modBC = 3;
+        $std->pRedBC = 10;
+        $std->vBC = 200;
+        $std->pICMS = 10;
+        $std->vICMS = 20;
+        $std->vBCFCP = 200;
+        $std->pFCP = 2;
+        $std->vFCP = 4;
+        $std->modBCST = 4;
+        $std->pMVAST = 30;
+        $std->pRedBCST = 0;
+        $std->vBCST = 60;
+        $std->pICMSST = 10;
+        $std->vICMSST = 20;
+        $std->vBCFCPST = 1;
+        $std->pFCPST = 1;
+        $std->vFCPST = 1;
+        $std->vICMSDeson = 10;
+        $std->motDesICMS = 9;
+
+        $this->validarCriacaoTagICMS($std);
+    }
+
     private function validarCriacaoTagICMS(\stdClass $icms): void
     {
         $attributos = get_object_vars($icms);
@@ -717,6 +885,71 @@ class MakeTest extends TestCase
         unset($attributos['item']);
         foreach ($attributos as $attributo => $valor){
             $this->assertEquals($icms->{$attributo}, $tag->getElementsByTagName($attributo)->item(0)->nodeValue, "Campo {$attributo} possui valor incorreto!");
+        }
+    }
+
+    public function test_tagICMSPart(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->orig = 0;
+        $std->CST = '90';
+        $std->modBC = 1;
+        $std->vBC = 200;
+        $std->pRedBC = 5;
+        $std->pICMS = 10;
+        $std->vICMS = 20;
+        $std->modBCST = 4;
+        $std->pMVAST = 30;
+        $std->pRedBCST = 0;
+        $std->vBCST = 60;
+        $std->pICMSST = 1;
+        $std->vICMSST = 1;
+        $std->vBCFCPST = 1;
+        $std->pFCPST = 1;
+        $std->vFCPST = 1;
+        $std->pBCOp = 1;
+        $std->UFST = 'EX';
+        $tag = $this->make->tagICMSPart($std);
+        $tag2 = $tag->getElementsByTagName('ICMSPart')->item(0);
+        $this->assertEquals('ICMSPart', $tag2->nodeName);
+
+        $this->validarExistenciaCampos($std, $tag2);
+    }
+
+    public function test_tagICMSST(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->orig = 0;
+        $std->CST = '41';
+        $std->vBCSTRet = 200;
+        $std->vICMSSTRet = 20;
+        $std->vBCSTDest = 30;
+        $std->vICMSSTDest = 2;
+        $std->vBCFCPSTRet = 2;
+        $std->pFCPSTRet = 2;
+        $std->vFCPSTRet = 2;
+        $std->pST = 2;
+        $std->vICMSSubstituto = 2;
+        $std->pRedBCEfet = 2;
+        $std->vBCEfet = 2;
+        $std->pICMSEfet = 2;
+        $std->vICMSEfet = 2;
+
+        $tag = $this->make->tagICMSST($std);
+        $tag2 = $tag->getElementsByTagName('ICMSST')->item(0);
+        $this->assertEquals('ICMSST', $tag2->nodeName);
+
+        $this->validarExistenciaCampos($std, $tag2);
+    }
+
+    private function validarExistenciaCampos(\stdClass $std, \DOMElement $tag): void
+    {
+        $attributos = get_object_vars($std);
+        unset($attributos['item']);
+        foreach ($attributos as $attributo => $valor){
+            $this->assertEquals($std->{$attributo}, $tag->getElementsByTagName($attributo)->item(0)->nodeValue, "Campo {$attributo} possui valor incorreto!");
         }
     }
 

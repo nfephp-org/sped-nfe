@@ -32,5 +32,8 @@
         <include>
             <directory suffix=".php">src</directory>
         </include>
+        <exclude>
+            <file>src/Common/FakePretty.php</file>
+        </exclude>
     </coverage>
 </phpunit>
