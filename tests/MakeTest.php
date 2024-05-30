@@ -945,6 +945,123 @@ class MakeTest extends TestCase
         $this->validarCriacaoTag2($std, $element, 'adi', ['item', 'nDI']);
     }
 
+    public function test_tagdetExport(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->nDraw = 123;
+
+        $element = $this->make->tagdetExport($std);
+        $this->validarCriacaoTag2($std, $element, 'detExport');
+    }
+
+    public function test_tagdetExportInd(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->nDraw = 123;
+        $this->make->tagdetExport($std);
+
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->nRE = 123;
+        $std->chNFe = '12345678901234567890123456789012345678901234';
+        $std->qExport = 45.1;
+
+        $element = $this->make->tagdetExportInd($std);
+        $this->validarCriacaoTag2($std, $element, 'exportInd');
+    }
+
+    public function test_tagRastro(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->nLote = 1;
+        $std->qLote = 1;
+        $std->dFab = '2024-01-01';
+        $std->dVal = '2024-01-01';
+        $std->cAgreg = 1234;
+
+        $element = $this->make->tagRastro($std);
+        $this->validarCriacaoTag2($std, $element, 'rastro');
+    }
+
+    public function test_tagICMSUFDest(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->vBCUFDest = 1;
+        $std->vBCFCPUFDest = 1;
+        $std->pFCPUFDest = 1;
+        $std->pICMSUFDest = 1;
+        $std->pICMSInter = 1;
+        $std->pICMSInterPart = 1;
+        $std->vFCPUFDest = 1;
+        $std->vICMSUFDest = 1;
+        $std->vICMSUFRemet = 1;
+
+        $element = $this->make->tagICMSUFDest($std);
+        $this->validarCriacaoTag2($std, $element, 'ICMSUFDest');
+    }
+
+    public function test_tagII(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->vBC = 100;
+        $std->vDespAdu = 1;
+        $std->vII = 1;
+        $std->vIOF = 1;
+
+        $element = $this->make->tagII($std);
+        $this->validarCriacaoTag2($std, $element, 'II');
+    }
+
+    public function test_tagISSQN(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->cProd = '1111';
+        $std->cEAN = "SEM GTIN";
+        $std->xProd = 'CAMISETA REGATA GG';
+        $std->NCM = 61052000;
+        $std->EXTIPI = '';
+        $std->CFOP = 5101;
+        $std->uCom = 'UNID';
+        $std->qCom = 1;
+        $std->vUnCom = 100.00;
+        $std->vProd = 100.00;
+        $std->cEANTrib = "SEM GTIN"; //'6361425485451';
+        $std->uTrib = 'UNID';
+        $std->qTrib = 1;
+        $std->vUnTrib = 100.00;
+        $std->indTot = 1;
+        $this->make->tagprod($std);
+
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->vBC = 1;
+        $std->vAliq = 1;
+        $std->vISSQN = 1;
+        $std->cMunFG = '1234567';
+        $std->cListServ = '10.10';
+        $std->vDeducao = 1;
+        $std->vOutro = 1;
+        $std->vDescIncond = 1;
+        $std->vDescCond = 1;
+        $std->vISSRet = 1;
+        $std->indISS = 1;
+        $std->cServico = 1;
+        $std->cMun = 123456;
+        $std->cPais = 55;
+        $std->nProcesso = '123';
+        $std->indIncentivo = '12';
+
+
+        $element = $this->make->tagISSQN($std);
+        $this->validarCriacaoTag2($std, $element, 'ISSQN');
+    }
+
     private function validarCriacaoTag2(
         \stdClass $std,
         \DOMElement $element,
