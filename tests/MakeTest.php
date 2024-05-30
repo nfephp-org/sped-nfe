@@ -883,8 +883,9 @@ class MakeTest extends TestCase
         $tag = $this->make->tagICMS($icms);
         $this->assertEquals('ICMS', $tag->nodeName);
         unset($attributos['item']);
-        foreach ($attributos as $attributo => $valor){
-            $this->assertEquals($icms->{$attributo}, $tag->getElementsByTagName($attributo)->item(0)->nodeValue, "Campo {$attributo} possui valor incorreto!");
+        foreach ($attributos as $attributo => $valor) {
+            $element = $tag->getElementsByTagName($attributo)->item(0);
+            $this->assertEquals($icms->{$attributo}, $element->nodeValue, "Campo {$attributo} possui valor incorreto!");
         }
     }
 
@@ -944,12 +945,228 @@ class MakeTest extends TestCase
         $this->validarExistenciaCampos($std, $tag2);
     }
 
+    public function test_tagICMSSN_101(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->orig = 0;
+        $std->CSOSN = '101';
+        $std->pCredSN = 3;
+        $std->vCredICMSSN = 4;
+
+        $tag = $this->make->tagICMSSN($std);
+        $tag2 = $tag->getElementsByTagName('ICMSSN101')->item(0);
+        $this->assertEquals('ICMS', $tag->nodeName);
+        $this->assertEquals('ICMSSN101', $tag2->nodeName);
+
+        $this->validarExistenciaCampos($std, $tag2);
+    }
+
+    public function test_tagICMSSN_102(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->orig = 0;
+        $std->CSOSN = '102';
+
+        $tag = $this->make->tagICMSSN($std);
+        $tag2 = $tag->getElementsByTagName('ICMSSN102')->item(0);
+        $this->assertEquals('ICMS', $tag->nodeName);
+        $this->assertEquals('ICMSSN102', $tag2->nodeName);
+
+        $this->validarExistenciaCampos($std, $tag2);
+    }
+
+    public function test_tagICMSSN_103(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->orig = 0;
+        $std->CSOSN = '103';
+
+        $tag = $this->make->tagICMSSN($std);
+        $tag2 = $tag->getElementsByTagName('ICMSSN102')->item(0);
+        $this->assertEquals('ICMS', $tag->nodeName);
+        $this->assertEquals('ICMSSN102', $tag2->nodeName);
+
+        $this->validarExistenciaCampos($std, $tag2);
+    }
+
+    public function test_tagICMSSN_300(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->orig = 0;
+        $std->CSOSN = '300';
+
+        $tag = $this->make->tagICMSSN($std);
+        $tag2 = $tag->getElementsByTagName('ICMSSN102')->item(0);
+        $this->assertEquals('ICMS', $tag->nodeName);
+        $this->assertEquals('ICMSSN102', $tag2->nodeName);
+
+        $this->validarExistenciaCampos($std, $tag2);
+    }
+
+    public function test_tagICMSSN_400(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->orig = 0;
+        $std->CSOSN = '400';
+
+        $tag = $this->make->tagICMSSN($std);
+        $tag2 = $tag->getElementsByTagName('ICMSSN102')->item(0);
+        $this->assertEquals('ICMS', $tag->nodeName);
+        $this->assertEquals('ICMSSN102', $tag2->nodeName);
+
+        $this->validarExistenciaCampos($std, $tag2);
+    }
+
+    public function test_tagICMSSN_201(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->orig = 0;
+        $std->CSOSN = '201';
+        $std->modBCST = 4;
+        $std->pMVAST = 10;
+        $std->pRedBCST = 20;
+        $std->vBCST = 300;
+        $std->pICMSST = 1;
+        $std->vICMSST = 1;
+        $std->vBCFCPST = 1;
+        $std->pFCPST = 1;
+        $std->vFCPST = 1;
+        $std->pCredSN = 1;
+        $std->vCredICMSSN = 1;
+
+
+        $tag = $this->make->tagICMSSN($std);
+        $tag2 = $tag->getElementsByTagName('ICMSSN201')->item(0);
+        $this->assertEquals('ICMS', $tag->nodeName);
+        $this->assertEquals('ICMSSN201', $tag2->nodeName);
+
+        $this->validarExistenciaCampos($std, $tag2);
+    }
+
+    public function test_tagICMSSN_202(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->orig = 0;
+        $std->CSOSN = '202';
+        $std->modBCST = 4;
+        $std->pMVAST = 10;
+        $std->pRedBCST = 20;
+        $std->vBCST = 300;
+        $std->pICMSST = 1;
+        $std->vICMSST = 1;
+        $std->vBCFCPST = 1;
+        $std->pFCPST = 1;
+        $std->vFCPST = 1;
+
+        $tag = $this->make->tagICMSSN($std);
+        $tag2 = $tag->getElementsByTagName('ICMSSN202')->item(0);
+        $this->assertEquals('ICMS', $tag->nodeName);
+        $this->assertEquals('ICMSSN202', $tag2->nodeName);
+
+        $this->validarExistenciaCampos($std, $tag2);
+    }
+
+    public function test_tagICMSSN_203(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->orig = 0;
+        $std->CSOSN = '203';
+        $std->modBCST = 4;
+        $std->pMVAST = 10;
+        $std->pRedBCST = 20;
+        $std->vBCST = 300;
+        $std->pICMSST = 1;
+        $std->vICMSST = 1;
+        $std->vBCFCPST = 1;
+        $std->pFCPST = 1;
+        $std->vFCPST = 1;
+
+        $tag = $this->make->tagICMSSN($std);
+        $tag2 = $tag->getElementsByTagName('ICMSSN202')->item(0);
+        $this->assertEquals('ICMS', $tag->nodeName);
+        $this->assertEquals('ICMSSN202', $tag2->nodeName);
+
+        $this->validarExistenciaCampos($std, $tag2);
+    }
+
+    public function test_tagICMSSN_500(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->orig = 0;
+        $std->CSOSN = '500';
+        $std->vBCSTRet = 1;
+        $std->pST = 1;
+        $std->vICMSSubstituto = 1;
+        $std->vICMSSTRet = 1;
+        $std->vBCFCPSTRet = 1;
+        $std->pFCPSTRet = 1;
+        $std->vFCPSTRet = 1;
+        $std->pRedBCEfet = 1;
+        $std->vBCEfet = 1;
+        $std->pICMSEfet = 1;
+        $std->vICMSEfet = 1;
+
+
+        $tag = $this->make->tagICMSSN($std);
+        $tag2 = $tag->getElementsByTagName('ICMSSN500')->item(0);
+        $this->assertEquals('ICMS', $tag->nodeName);
+        $this->assertEquals('ICMSSN500', $tag2->nodeName);
+
+        $this->validarExistenciaCampos($std, $tag2);
+    }
+
+    public function test_tagICMSSN_900(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->orig = 0;
+        $std->CSOSN = '900';
+        $std->modBC = 3;
+        $std->vBC = 100;
+        $std->pRedBC = 1;
+        $std->pICMS = 1;
+        $std->vICMS = 1;
+        $std->pCredSN = 3;
+        $std->vCredICMSSN = 4;
+        $std->modBCST = 3;
+        $std->pMVAST = 1;
+        $std->pRedBCST = 1;
+        $std->vBCST = 1;
+        $std->pICMSST = 1;
+        $std->vICMSST = 1;
+        $std->vBCFCPST = 1;
+        $std->pFCPST = 1;
+        $std->vFCPST = 1;
+
+
+        $tag = $this->make->tagICMSSN($std);
+        $tag2 = $tag->getElementsByTagName('ICMSSN900')->item(0);
+        $this->assertEquals('ICMS', $tag->nodeName);
+        $this->assertEquals('ICMSSN900', $tag2->nodeName);
+
+        $this->validarExistenciaCampos($std, $tag2);
+    }
+
     private function validarExistenciaCampos(\stdClass $std, \DOMElement $tag): void
     {
         $attributos = get_object_vars($std);
         unset($attributos['item']);
-        foreach ($attributos as $attributo => $valor){
-            $this->assertEquals($std->{$attributo}, $tag->getElementsByTagName($attributo)->item(0)->nodeValue, "Campo {$attributo} possui valor incorreto!");
+        foreach ($attributos as $attributo => $valor) {
+            if ($valor === null) {
+                continue;
+            }
+            $elemento = $tag->getElementsByTagName($attributo)->item(0);
+            $this->assertInstanceOf(\DOMElement::class, $elemento, "Elemento {$attributo} não encontrado");
+            $this->assertEquals($std->{$attributo}, $elemento->nodeValue, "Campo {$attributo} possui valor incorreto!");
         }
     }
 
