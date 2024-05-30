@@ -41,7 +41,6 @@ class StandardizeTest extends NFeTestCase
     {
         $this->expectException(\NFePHP\NFe\Exception\DocumentsException::class);
         $st = new Standardize();
-        //@phpstan-ignore-next-line
         $st->whichIs(null);
     }
 
