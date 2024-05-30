@@ -634,7 +634,7 @@ class MakeTest extends TestCase
         $std->pFCP = '1.0000';
         $std->vFCP = '2.00';
 
-        $this->validarCriacaoTagICMS($std);
+        $this->validarCriacaoTag($std);
     }
 
     public function test_tagICMS_CST_02(): void
@@ -647,7 +647,7 @@ class MakeTest extends TestCase
         $std->adRemICMS = '25.0000';
         $std->vICMSMono = '50.00';
 
-        $this->validarCriacaoTagICMS($std);
+        $this->validarCriacaoTag($std);
     }
     public function test_tagICMS_CST_15(): void
     {
@@ -664,7 +664,7 @@ class MakeTest extends TestCase
         $std->pRedAdRem = '1.00';
         $std->motRedAdRem = '1';
 
-        $this->validarCriacaoTagICMS($std);
+        $this->validarCriacaoTag($std);
     }
 
     public function test_tagICMS_CST_20(): void
@@ -684,7 +684,7 @@ class MakeTest extends TestCase
         $std->vICMSDeson = '3.60';
         $std->motDesICMS = 9;
 
-        $this->validarCriacaoTagICMS($std);
+        $this->validarCriacaoTag($std);
     }
 
     public function test_tagICMS_CST_30(): void
@@ -706,7 +706,7 @@ class MakeTest extends TestCase
         $std->motDesICMS = 9;
         $std->indDeduzDeson = '0';
 
-        $this->validarCriacaoTagICMS($std);
+        $this->validarCriacaoTag($std);
     }
 
     public function test_tagICMS_CST_40(): void
@@ -719,7 +719,7 @@ class MakeTest extends TestCase
         $std->motDesICMS = 9;
         $std->indDeduzDeson = '0';
 
-        $this->validarCriacaoTagICMS($std);
+        $this->validarCriacaoTag($std);
     }
 
     public function test_tagICMS_CST_41(): void
@@ -732,7 +732,7 @@ class MakeTest extends TestCase
         $std->motDesICMS = 9;
         $std->indDeduzDeson = '0';
 
-        $this->validarCriacaoTagICMS($std);
+        $this->validarCriacaoTag($std);
     }
 
     public function test_tagICMS_CST_50(): void
@@ -745,7 +745,7 @@ class MakeTest extends TestCase
         $std->motDesICMS = 9;
         $std->indDeduzDeson = '0';
 
-        $this->validarCriacaoTagICMS($std);
+        $this->validarCriacaoTag($std);
     }
 
     public function test_tagICMS_CST_51(): void
@@ -766,7 +766,7 @@ class MakeTest extends TestCase
         $std->pFCP = 2;
         $std->vFCP = 2;
 
-        $this->validarCriacaoTagICMS($std);
+        $this->validarCriacaoTag($std);
     }
 
     public function test_tagICMS_CST_53(): void
@@ -782,7 +782,7 @@ class MakeTest extends TestCase
         $std->vICMSMonoDif = 2;
         $std->vICMSMono = 2;
 
-        $this->validarCriacaoTagICMS($std);
+        $this->validarCriacaoTag($std);
     }
 
     public function test_tagICMS_CST_60(): void
@@ -803,7 +803,7 @@ class MakeTest extends TestCase
         $std->pICMSEfet = 10;
         $std->vICMSEfet = 10;
 
-        $this->validarCriacaoTagICMS($std);
+        $this->validarCriacaoTag($std);
     }
 
     public function test_tagICMS_CST_61(): void
@@ -816,7 +816,7 @@ class MakeTest extends TestCase
         $std->adRemICMSRet = 2;
         $std->vICMSMonoRet = 6;
 
-        $this->validarCriacaoTagICMS($std);
+        $this->validarCriacaoTag($std);
     }
 
     public function test_tagICMS_CST_70(): void
@@ -845,7 +845,7 @@ class MakeTest extends TestCase
         $std->vICMSDeson = 10;
         $std->motDesICMS = 9;
 
-        $this->validarCriacaoTagICMS($std);
+        $this->validarCriacaoTag($std);
     }
 
     public function test_tagICMS_CST_90(): void
@@ -874,18 +874,96 @@ class MakeTest extends TestCase
         $std->vICMSDeson = 10;
         $std->motDesICMS = 9;
 
-        $this->validarCriacaoTagICMS($std);
+        $this->validarCriacaoTag($std);
     }
 
-    private function validarCriacaoTagICMS(\stdClass $icms): void
+    private function validarCriacaoTag(\stdClass $icms, string $tagName = 'ICMS'): void
     {
         $attributos = get_object_vars($icms);
         $tag = $this->make->tagICMS($icms);
-        $this->assertEquals('ICMS', $tag->nodeName);
+        $this->assertEquals($tagName, $tag->nodeName);
         unset($attributos['item']);
         foreach ($attributos as $attributo => $valor) {
             $element = $tag->getElementsByTagName($attributo)->item(0);
             $this->assertEquals($icms->{$attributo}, $element->nodeValue, "Campo {$attributo} possui valor incorreto!");
+        }
+    }
+
+    public function test_tagDI(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->nDI = 456;
+        $std->dDI = '2024-03-01';
+        $std->xLocDesemb = 'Porto';
+        $std->UFDesemb = 'SP';
+        $std->dDesemb = '2024-03-02';
+        $std->tpViaTransp = 1;
+        $std->vAFRMM = 150.45;
+        $std->tpIntermedio = 1;
+        $std->CNPJ = '08489068000198';
+        //$std->CPF = ;
+        $std->UFTerceiro = 'RS';
+        $std->cExportador = '123';
+
+        $element = $this->make->tagDI($std);
+        $this->validarCriacaoTag2($std, $element, 'DI');
+
+        unset($std->CNPJ);
+        $std->CPF = '10318797062';
+        $element = $this->make->tagDI($std);
+        $this->validarCriacaoTag2($std, $element, 'DI');
+    }
+
+    public function test_tagadi(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->nDI = 1;
+        $std->dDI = '2024-03-01';
+        $std->xLocDesemb = 'Porto';
+        $std->UFDesemb = 'SP';
+        $std->dDesemb = '2024-03-02';
+        $std->tpViaTransp = 1;
+        $std->vAFRMM = 150.45;
+        $std->tpIntermedio = 1;
+        $std->CNPJ = '08489068000198';
+        $std->UFTerceiro = 'RS';
+        $std->cExportador = '123';
+        $this->make->tagDI($std);
+
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->nDI = 1;
+        $std->nAdicao = 1;
+        $std->nSeqAdic = 1;
+        $std->cFabricante = 'abc123';
+        $std->vDescDI = 12.48;
+        $std->nDraw = 11111111111;
+
+        $element = $this->make->tagadi($std);
+        $this->validarCriacaoTag2($std, $element, 'adi', ['item', 'nDI']);
+    }
+
+    private function validarCriacaoTag2(
+        \stdClass $std,
+        \DOMElement $element,
+        string $tagName,
+        array $camposIgnore = ['item']
+    ): void {
+        $attributos = get_object_vars($std);
+        $this->assertEquals($tagName, $element->nodeName);
+        foreach ($camposIgnore as $campo) {
+            unset($attributos[$campo]);
+        }
+
+        foreach ($attributos as $attributo => $valor) {
+            if ($valor === null) {
+                continue;
+            }
+            $element2 = $element->getElementsByTagName($attributo)->item(0);
+            $this->assertNotNull($element2, "Atributo {$attributo} não encontrado!");
+            $this->assertEquals($std->{$attributo}, $element2->nodeValue, "Campo {$attributo} possui valor incorreto!");
         }
     }
 
