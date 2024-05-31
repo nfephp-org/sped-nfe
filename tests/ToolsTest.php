@@ -237,6 +237,24 @@ class ToolsTest extends NFeTestCase
         $this->assertSame($esperado, $request);
     }
 
+    public function test_sefazAtorInteressado(): void
+    {
+        $std = new \stdClass();
+        $std->tpAutor = 1;
+        $std->verAplic = 2;
+        $std->CNPJ = '88880563000162';
+        $std->tpAutorizacao = 0;
+        $std->chNFe = '35220605730928000145550010000048661583302923';
+        $std->nSeqEvento = 1;
+        $dhEvento = new \DateTime('2024-05-31T13:45:41-03:00');
+        $lote = '202405311345419';
+        $retorno = $this->tools->sefazAtorInteressado($std, $dhEvento, $lote);
+        //@todo Testar o $retorno
+        $request = $this->tools->getRequest();
+        $esperado = $this->getCleanXml(__DIR__ . '/fixtures/xml/exemplo_xml_request_sefazAtorInteressado.xml');
+        $this->assertSame($esperado, $request);
+    }
+
     /**
      * @param string $xml
      * @param int|string $idLote
