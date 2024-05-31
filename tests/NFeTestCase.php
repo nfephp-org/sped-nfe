@@ -6,10 +6,10 @@ use PHPUnit\Framework\TestCase;
 
 class NFeTestCase extends TestCase
 {
-    public $fixturesPath = '';
-    public $configJson = '';
-    public $contentpfx = '';
-    public $passwordpfx = '';
+    public string $fixturesPath = '';
+    public string $configJson = '';
+    public string $contentpfx = '';
+    public string $passwordpfx = '';
 
     public function __construct($name = null, array $data = array(), $dataName = '')
     {
@@ -20,7 +20,7 @@ class NFeTestCase extends TestCase
             "tpAmb" => 2,
             "razaosocial" => "SUA RAZAO SOCIAL LTDA",
             "siglaUF" => "SP",
-            "cnpj" => "99999999999999",
+            "cnpj" => "93623057000128",
             "schemes" => "PL_009_V4",
             "versao" => "4.00",
             "tokenIBPT" => "AAAAAAA",

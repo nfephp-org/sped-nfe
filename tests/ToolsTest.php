@@ -14,10 +14,7 @@ class ToolsTest extends NFeTestCase
 {
     use URIConsultaNfce;
 
-    /**
-     * @var \NFePHP\NFe\Tests\Common\ToolsFake
-     */
-    protected $tools;
+    protected ToolsFake $tools;
 
     protected function setUp(): void
     {
@@ -178,10 +175,7 @@ class ToolsTest extends NFeTestCase
         $this->assertEquals($request, $tools->getRequest());
     }
 
-    /**
-     * @return void
-     */
-    public function test_sefaz_inutiliza()
+    public function test_sefaz_inutiliza(): void
     {
         $this->tools->sefazInutiliza(1, 1, 10, 'Testando Inutilização', 1, '22');
         $request = $this->tools->getRequest();
@@ -189,10 +183,7 @@ class ToolsTest extends NFeTestCase
         $this->assertSame($esperado, $request);
     }
 
-    /**
-     * @return void
-     */
-    public function test_sefaz_cadastro_cnpj()
+    public function test_sefaz_cadastro_cnpj(): void
     {
         $this->tools->sefazCadastro('RS', '20532295000154');
         $request = $this->tools->getRequest();
@@ -200,10 +191,7 @@ class ToolsTest extends NFeTestCase
         $this->assertSame($esperado, $request);
     }
 
-    /**
-     * @return void
-     */
-    public function test_sefaz_cadastro_ie()
+    public function test_sefaz_cadastro_ie(): void
     {
         $this->tools->sefazCadastro('RS', '', '1234567');
         $request = $this->tools->getRequest();
@@ -211,10 +199,7 @@ class ToolsTest extends NFeTestCase
         $this->assertSame($esperado, $request);
     }
 
-    /**
-     * @return void
-     */
-    public function test_sefaz_cadastro_cpf()
+    public function test_sefaz_cadastro_cpf(): void
     {
         $this->tools->sefazCadastro('RS', '', '', '60140174028');
         $request = $this->tools->getRequest();
@@ -222,10 +207,7 @@ class ToolsTest extends NFeTestCase
         $this->assertSame($esperado, $request);
     }
 
-    /**
-     * @return void
-     */
-    public function test_sefaz_status()
+    public function test_sefaz_status(): void
     {
         $this->tools->sefazStatus('RS');
         $request = $this->tools->getRequest();
@@ -233,14 +215,20 @@ class ToolsTest extends NFeTestCase
         $this->assertSame($esperado, $request);
     }
 
-    /**
-     * @return void
-     */
-    public function test_sefaz_dist_dfe()
+    public function test_sefaz_dist_dfe(): void
     {
         $this->tools->sefazDistDFe(100, 200);
         $request = $this->tools->getRequest();
         $esperado = $this->getCleanXml(__DIR__ . '/fixtures/xml/exemplo_xml_dist_dfe.xml');
+        $this->assertSame($esperado, $request);
+    }
+
+    public function test_sefazCCe(): void
+    {
+        $retorno = $this->tools->sefazCCe('35220605730928000145550010000048661583302923', 'Descrição da correção');
+        //@todo Testar o $retorno
+        $request = $this->tools->getRequest();
+        $esperado = $this->getCleanXml(__DIR__ . '/fixtures/xml/exemplo_xml_request_cce_cnpj.xml');
         $this->assertSame($esperado, $request);
     }
 
@@ -292,7 +280,7 @@ class ToolsTest extends NFeTestCase
         return $dom->ownerDocument->saveXML($dom->ownerDocument->documentElement);
     }
 
-    public function ufProvider()
+    public function ufProvider(): array
     {
         return [
             ["AC"],

@@ -1,11 +1,11 @@
 <nfeDadosMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NFeInutilizacao4">
     <inutNFe xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00">
-        <infInut Id="ID35229999999999999955001000000001000000010">
+        <infInut Id="ID35229362305700012855001000000001000000010">
             <tpAmb>1</tpAmb>
             <xServ>INUTILIZAR</xServ>
             <cUF>35</cUF>
             <ano>22</ano>
-            <CNPJ>99999999999999</CNPJ>
+            <CNPJ>93623057000128</CNPJ>
             <mod>55</mod>
             <serie>1</serie>
             <nNFIni>1</nNFIni>
@@ -16,16 +16,16 @@
             <SignedInfo>
                 <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
                 <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
-                <Reference URI="#ID35229999999999999955001000000001000000010">
+                <Reference URI="#ID35229362305700012855001000000001000000010">
                     <Transforms>
                         <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
                         <Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
                     </Transforms>
                     <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
-                    <DigestValue>+s1tY9obNY/Emh2JF8n96gah9TI=</DigestValue>
+                    <DigestValue>aDoDrwNJalOdH93K2A/F8CMqlE8=</DigestValue>
                 </Reference>
             </SignedInfo>
-            <SignatureValue>h9MRYnWWuUrWx4wjnSiRp95v+10XRL2TpceWW/M8Tc+uiESrAG6oQW9USj0YQyUnqsf5LtczCalQsrnfqce0amIv0/ZTaE6eLl5g1leY51rLtq/7OptxE83JtTWy5E+7wavzd0HT0+Ilrcl9sQsP242Wi2W7sGA/hClDbMgfFOOfghK1FyInWt1+X51pp/3u3wzjI/80/+bFhTWBSt3FpbYr2OK51KYWfGLASJIij5MIeI3gzlK6ioWt8rxdcsXDe400NSQPCN0NZPltBaDOCLllZLEz083R6jWRfZeGgXjZDEAHidHT9wGDzSoeLV2AjxWczyYXfm6nqAozUsdxxyxA8ukSbC8JMfY5ZHb6GAH9t5oEY6JvMhlIcXnIvw6WUBb36JcaS1K6HsIHQ9giS+4iMd/sUi1BNjzmTz4DP+pL81/kYJAUSKoby0N3nNcsjzh3Ol/31kSmmXQdSo847BOl1oOaiKHwyV6tyNBIlE7V7n4sdanUBP/k9oGPhoQSCYn+D5dnTybbim6Is/4aLWMNcvcvU/SK2qX1ea3gDNIussj+zSFKfbmZfnU5SV/KIPPZi2r1pXq+J0Hk8UfXRlL/eKie4O7ON6ATqmfVKkFO7WaEKlxPlL1Q9K4yzh3SV6GrYrJsI2n83A43x5Azqu/4fKzy9McbyQlNRvDx0tY=</SignatureValue>
+            <SignatureValue>dDq6+alZf6OGzuZ5siPx9tM59Uv05nOhsbQ6RSCT2SLjooKhiAAMSIS9/0sZsrQ0yZjys9N2ly1y3fauNzPRhc+/KA77YU8PoVmzZQZyFPUcI0T78hbfRw5Yoz3pszMWAxzWN9vo5Ng7aPrb5DSzlxPpMbTeSLg5K+AlNeAqLSOM5PcG84Oefzb/Yey/FfIbrfHhOz5+jgUMEcXgQ6PctXRPQXRA72pc5Vq28iht15hrrh7o2Jl0aVXPVQajUS4XTqC0pUjtzw3k1BbFOsBDA7AUYhFAqhxm3uklAAi9Swd0ms6H0x8Kz5fEh1jTt7mgaQ3haUpOfZd/C92QZIIMusMpNbDLaYtW+YNgmLHs7BpbhRyuRGR28O2wVw8dT5zpycu1K/puMeHnuEg98Kzl3RK0VasCUy2/Wa4kAtteHLfASZWSpOvrzGu/R/SN09n0oJi8g370vNTRc7o+1VV30RF57m7x4acJWBUleNLDfNUcsDTHZQCcmP2zIHWgiiYC7vePMZzclFI4Xvs9YAKR10pj39ZqCB0iTVha2kdFoywwK3oMcOYn88K3o0bx24aL9SM+67RGBCPX+awAVQ9uZtC2EoPECFppCMeNjEU5ik2D77Tmg9jD+R4Sav2BgYt7uP6ynI+5qNUkm66/n0g/skUNb0ocISZRN6Fq2Llxh18=</SignatureValue>
             <KeyInfo>
                 <X509Data>
                     <X509Certificate>MIIFkDCCA3gCCQD1479OxEO9njANBgkqhkiG9w0BAQsFADCBiTELMAkGA1UEBhMCQlIxGjAYBgNVBAgMEVJpbyBHcmFuZGUgZG8gU3VsMRUwEwYDVQQHDAxQb3J0byBBbGVncmUxEzARBgNVBAoMCm5mZXBocC1vcmcxEzARBgNVBAsMCm5mZXBocC1vcmcxHTAbBgNVBAMMFFNQRUQgUHJvamVjdHMgaW4gUEhQMB4XDTE4MDgwOTAyNDE1NVoXDTI4MDgwNjAyNDE1NVowgYkxCzAJBgNVBAYTAkJSMRowGAYDVQQIDBFSaW8gR3JhbmRlIGRvIFN1bDEVMBMGA1UEBwwMUG9ydG8gQWxlZ3JlMRMwEQYDVQQKDApuZmVwaHAtb3JnMRMwEQYDVQQLDApuZmVwaHAtb3JnMR0wGwYDVQQDDBRTUEVEIFByb2plY3RzIGluIFBIUDCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBAK5QfErm/1RodP7DuZWap4BqFL9PlT5omTvEJK0sp9sPNApkPsdna8f037UylEssZSCQiwaE0Df6QvuR6IjasWsn4WWbtWbza60pxUQGb8TNH5hR3tgla5zfsEE0SaJib35WJ/pVQvUub4O9AUkgCBlTz8E/LjaBRykjtrEAeis+/5xRmy/Ph6FTFijnLauH5auQLz1LQDDQF0mAAdDYNIwGixJnpNyPgw7PvssAN7apURd3VjklvKUl/lzKN1t1pkxcz/lmC6gmYJyYUzXtyXzbEGZhfG9R+mCEhJZPDHKI83oCBJ53gUrJuQIeArKZm0CLMSZVpVAozZ+vE/Ksb3d7hl7LtfpFDsdZHYtRYJ4he1ZvrpghQGYxr0xAJpc4CN81k9LuWQsINQ3fLCUbCUXYPCI7Fui1ggSZzwtWNTD/Gpnh/tYEQRJetTAaEmVpx1SpNto9PB3lTat6ojoGrBPgsS3sKI3uFzlxMkcztOTFGeWliuBDP21mXZDLPEAVMzDQrcKlYJZ83aUXJTIH+43bAHWzYXUqvCxjlvQYB11ilB4nke3XJJvMpGJX/sLCSMAuNSjLGhUY7taGoZvhB/cUxTx942RG8vgUdB9eFEk37Q3qIUQbF8u/e5Xbge9XZtaAaQSIBoRUdaP6K9kJ3vcg7f8LM10r5QY5UYbuDw09AgMBAAEwDQYJKoZIhvcNAQELBQADggIBAJc8NjrRbht/URz+19b/bHr4xQUGm925X6Px8NfMu45rL8WGYgXIysZR6WtRLoXFIag+P/DiP+TJCrfDOTQv1tmyj6uMQxfvPXgRSA4zAnmWBW00qEY6+WL2i3+gd52KUYuOhDBksi4aHaSSBVv+HyqbliDGeKDKiGtEcWr3QP1efLVV2HyqwrlL3Vy1LhhAwDjVladkr7HVchFJ7CQg53q7yZI8Rwcaf/ab9pqAwI90/EUx6dwpDjT8YbFr2xorOfKzCKUIIjzHX8WrpT7N6LEGNN17SKrQB2xULQ0aAvnuk8snnJNav/fQr21DUm0T17zgsBUKMB4JtRx3ux+S8VhKd8gwXme3wuDI+5aE1jAg5w5viFDo8nHbW/rDLHoRkt7NoE+tgbJN6Dq/+DbJV/eyA6sNYmpA/bp+mCnTsjLjfS5Vj3UZP8s+OcLirjW1QYjND4gIvOtv2W4aTcjxHdH63F6FlpgzU8vJvYIUQ2y5SqjIywoDTIxn8GDzyyhbgRYkhAk3PvHlgixiq8Ip/hGs27wbO19j/y2IRxu6m1Ag/8v1KB/5WHdvVdyEhQfeYfMH/aiq41lsFGERbBwpugFfOy0it97sUDbZ8z5elrJ+bLE3V7/1kBAfSLPn8lBuPrSQpucS+DgghYlN4JzCytRAJs+qAmF5gwtvIJNRvGpY</X509Certificate>

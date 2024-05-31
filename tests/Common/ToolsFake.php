@@ -16,6 +16,8 @@ class ToolsFake extends Tools
     {
         parent::__construct($configJson, $certificate, $contingency);
         $this->soap = new SoapFake();
+        //@todo Gerar um certificado de testes usando CNPJ
+        $this->typePerson = 'J';
     }
 
     public function getSoap(): SoapFake
