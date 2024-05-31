@@ -225,7 +225,13 @@ class ToolsTest extends NFeTestCase
 
     public function test_sefazCCe(): void
     {
-        $retorno = $this->tools->sefazCCe('35220605730928000145550010000048661583302923', 'Descrição da correção');
+        $retorno = $this->tools->sefazCCe(
+            '35220605730928000145550010000048661583302923',
+            'Descrição da correção',
+        1,
+        new \DateTime('2024-05-31T11:59:12-03:00'),
+            '12345'
+        );
         //@todo Testar o $retorno
         $request = $this->tools->getRequest();
         $esperado = $this->getCleanXml(__DIR__ . '/fixtures/xml/exemplo_xml_request_cce_cnpj.xml');
