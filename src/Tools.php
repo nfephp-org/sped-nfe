@@ -430,7 +430,7 @@ class Tools extends ToolsCommon
         string $xCorrecao,
         int $nSeqEvento = 1,
         ?\DateTimeInterface $dhEvento = null,
-        ?int $lote = null
+        ?string $lote = null
     ): string {
         if (empty($chave) || empty($xCorrecao)) {
             throw new InvalidArgumentException('CC-e: chave ou motivo da correcao vazio!');
@@ -986,7 +986,7 @@ class Tools extends ToolsCommon
         int $nSeqEvento = 1,
         string $tagAdic = '',
         ?\DateTimeInterface $dhEvento = null,
-        ?int $lote = null
+        ?string $lote = null
     ): string {
         $eventos = [
             self::EVT_CCE => ['versao' => '1.00', 'nome' => 'envCCe'],
@@ -1021,8 +1021,9 @@ class Tools extends ToolsCommon
         $cnpj = $this->config->cnpj ?? '';
         $dt = new \DateTime(date("Y-m-d H:i:sP"), new \DateTimeZone($this->timezone));
         $dt->setTimezone(new \DateTimeZone($this->timezone));
-        if ($dhEvento == null) {
-            $dhEvento = $dt->format('Y-m-d\TH:i:sP');
+        $dhEventoString = $dt->format('Y-m-d\TH:i:sP');
+        if ($dhEvento != null) {
+            $dhEventoString = $dhEvento->format('Y-m-d\TH:i:sP');
         }
         $sSeqEvento = str_pad((string)$nSeqEvento, 2, "0", STR_PAD_LEFT);
         $eventId = "ID" . $tpEvento . $chave . $sSeqEvento;
@@ -1037,7 +1038,7 @@ class Tools extends ToolsCommon
             $request .= "<CPF>$cnpj</CPF>";
         }
         $request .= "<chNFe>$chave</chNFe>"
-            . "<dhEvento>$dhEvento</dhEvento>"
+            . "<dhEvento>$dhEventoString</dhEvento>"
             . "<tpEvento>$tpEvento</tpEvento>"
             . "<nSeqEvento>$nSeqEvento</nSeqEvento>"
             . "<verEvento>$verEvento</verEvento>"
