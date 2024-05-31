@@ -425,8 +425,13 @@ class Tools extends ToolsCommon
      * @return string
      * @throws InvalidArgumentException
      */
-    public function sefazCCe(string $chave, string $xCorrecao, int $nSeqEvento = 1): string
-    {
+    public function sefazCCe(
+        string $chave,
+        string $xCorrecao,
+        int $nSeqEvento = 1,
+        ?\DateTimeInterface $dhEvento = null,
+        ?string $lote = null
+    ): string {
         if (empty($chave) || empty($xCorrecao)) {
             throw new InvalidArgumentException('CC-e: chave ou motivo da correcao vazio!');
         }
@@ -445,7 +450,7 @@ class Tools extends ToolsCommon
         $tagAdic = "<xCorrecao>"
             . $xCorrecao
             . "</xCorrecao><xCondUso>$xCondUso</xCondUso>";
-        return $this->sefazEvento($uf, $chave, self::EVT_CCE, $nSeqEvento, $tagAdic);
+        return $this->sefazEvento($uf, $chave, self::EVT_CCE, $nSeqEvento, $tagAdic, $dhEvento, $lote);
     }
 
     /**
@@ -979,7 +984,9 @@ class Tools extends ToolsCommon
         string $chave,
         int $tpEvento,
         int $nSeqEvento = 1,
-        string $tagAdic = ''
+        string $tagAdic = '',
+        ?\DateTimeInterface $dhEvento = null,
+        ?string $lote = null
     ): string {
         $eventos = [
             self::EVT_CCE => ['versao' => '1.00', 'nome' => 'envCCe'],
@@ -1014,7 +1021,10 @@ class Tools extends ToolsCommon
         $cnpj = $this->config->cnpj ?? '';
         $dt = new \DateTime(date("Y-m-d H:i:sP"), new \DateTimeZone($this->timezone));
         $dt->setTimezone(new \DateTimeZone($this->timezone));
-        $dhEvento = $dt->format('Y-m-d\TH:i:sP');
+        $dhEventoString = $dt->format('Y-m-d\TH:i:sP');
+        if ($dhEvento != null) {
+            $dhEventoString = $dhEvento->format('Y-m-d\TH:i:sP');
+        }
         $sSeqEvento = str_pad((string)$nSeqEvento, 2, "0", STR_PAD_LEFT);
         $eventId = "ID" . $tpEvento . $chave . $sSeqEvento;
         $cOrgao = UFList::getCodeByUF($uf);
@@ -1028,7 +1038,7 @@ class Tools extends ToolsCommon
             $request .= "<CPF>$cnpj</CPF>";
         }
         $request .= "<chNFe>$chave</chNFe>"
-            . "<dhEvento>$dhEvento</dhEvento>"
+            . "<dhEvento>$dhEventoString</dhEvento>"
             . "<tpEvento>$tpEvento</tpEvento>"
             . "<nSeqEvento>$nSeqEvento</nSeqEvento>"
             . "<verEvento>$verEvento</verEvento>"
@@ -1049,7 +1059,9 @@ class Tools extends ToolsCommon
             $this->canonical
         );
         $request = Strings::clearXmlString($request, true);
-        $lote = $dt->format('YmdHis') . random_int(0, 9);
+        if ($lote == null) {
+            $lote = $dt->format('YmdHis') . random_int(0, 9);
+        }
         $request = "<envEvento xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
             . "<idLote>$lote</idLote>"
             . $request
