@@ -255,6 +255,71 @@ class ToolsTest extends NFeTestCase
         $this->assertSame($esperado, $request);
     }
 
+    /*public function test_sefazEPP(): void
+    {
+        $retorno = $this->tools->sefazEPP();
+    }
+
+    public function test_sefazECPP(): void
+    {
+        $retorno = $this->tools->sefazECPP();
+    }
+
+    public function test_sefazCancela(): void
+    {
+        $retorno = $this->tools->sefazCancela();
+    }
+
+    public function test_sefazCancelaPorSubstituicao(): void
+    {
+        $retorno = $this->tools->sefazCancelaPorSubstituicao();
+    }
+
+    public function test_sefazManifesta(): void
+    {
+        $retorno = $this->tools->sefazManifesta();
+    }
+
+    public function test_sefazManifestaLote(): void
+    {
+        $retorno = $this->tools->sefazManifestaLote();
+    }
+
+    public function test_sefazComprovanteEntrega(): void
+    {
+        $retorno = $this->tools->sefazComprovanteEntrega();
+    }
+
+    public function test_sefazInsucessoEntrega(): void
+    {
+        $retorno = $this->tools->sefazInsucessoEntrega();
+    }
+
+    public function test_sefazEventoLote(): void
+    {
+        $retorno = $this->tools->sefazEventoLote();
+    }
+
+    public function test_sefazEPEC(): void
+    {
+        $retorno = $this->tools->sefazEPEC();
+    }
+
+    public function test_sefazDownload(): void
+    {
+        $retorno = $this->tools->sefazDownload();
+    }
+
+    public function test_sefazCsc(): void
+    {
+        $retorno = $this->tools->sefazCsc();
+    }
+
+    public function test_sefazValidate(): void
+    {
+        $retorno = $this->tools->sefazValidate();
+    }*/
+
     /**
      * @param string $xml
      * @param int|string $idLote
