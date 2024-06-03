@@ -264,7 +264,7 @@ class ToolsTest extends NFeTestCase
             [2, 222],
             [3, 333]
         ];
-        $dhEvento = new \DateTime('2024-02-01 14:07:05');
+        $dhEvento = new \DateTime('2024-02-01 14:07:05 -03:00');
         $retorno = $this->tools->sefazEPP($chNFe, $nProt, $itens, 1, 1, $dhEvento, '123');
         //@todo fazer mock do retorno
         $request = $this->tools->getRequest();
@@ -276,7 +276,7 @@ class ToolsTest extends NFeTestCase
     {
         $chNFe = '35150300822602000124550010009923461099234656';
         $nProt = '135150001686732';
-        $dhEvento = new \DateTime('2024-02-01 14:07:05');
+        $dhEvento = new \DateTime('2024-02-01 14:07:05 -03:00');
         $retorno = $this->tools->sefazECPP($chNFe, $nProt, 1, 1, $dhEvento, '123');
         //@todo fazer mock do retorno
         $request = $this->tools->getRequest();
@@ -288,7 +288,7 @@ class ToolsTest extends NFeTestCase
     {
         $chNFe = '35150300822602000124550010009923461099234656';
         $xJust = 'Preenchimento incorreto dos dados';
-        $dhEvento = new \DateTime('2024-02-01 14:07:05');
+        $dhEvento = new \DateTime('2024-02-01 14:07:05 -03:00');
         $nProt = '123456789101234';
         $retorno = $this->tools->sefazCancela($chNFe, $xJust, $nProt, $dhEvento, '123');
         //@todo fazer mock do retorno
@@ -304,7 +304,7 @@ class ToolsTest extends NFeTestCase
         $chNFe = '35150300822602000124550010009923461099234656';
         $chReferenciada = '35170705248891000181550010000011831339972127';
         $xJust = 'Preenchimento incorreto dos dados';
-        $dhEvento = new \DateTime('2024-02-01 14:07:05');
+        $dhEvento = new \DateTime('2024-02-01 14:07:05 -03:00');
         $nProt = '123456789101234';
         $this->tools->sefazCancelaPorSubstituicao($chNFe, $xJust, $nProt, $chReferenciada, "1", $dhEvento, '123');
     }
@@ -314,7 +314,7 @@ class ToolsTest extends NFeTestCase
         $chNFe = '35240305730928000145650010000001421071400478';
         $chReferenciada = '35240305730928000145650010000001421071400478';
         $xJust = 'Preenchimento incorreto dos dados';
-        $dhEvento = new \DateTime('2024-02-01 14:07:05');
+        $dhEvento = new \DateTime('2024-02-01 14:07:05 -03:00');
         $nProt = '123456789101234';
         $this->tools->model(65);
         $retorno = $this->tools->sefazCancelaPorSubstituicao(
