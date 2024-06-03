@@ -332,17 +332,47 @@ class ToolsTest extends NFeTestCase
         $this->assertSame($esperado, $request);
     }
 
-    /*public function test_sefazManifesta(): void
+    public function test_sefazManifesta(): void
     {
-        $retorno = $this->tools->sefazManifesta();
+        $chNFe = '35240305730928000145650010000001421071400478';
+        $xJust = 'Preenchimento incorreto dos dados';
+        $dhEvento = new \DateTime('2024-02-01 14:07:05 -03:00');
+        $tpEvento = 210210; //ciencia da operação
+        $retorno = $this->tools->sefazManifesta(
+            $chNFe,
+            $tpEvento,
+            $xJust,
+            1,
+            $dhEvento,
+            '123'
+        );
+        //@todo fazer mock do retorno
+        $request = $this->tools->getRequest();
+        $esperado = $this->getCleanXml(__DIR__ . '/fixtures/xml/exemplo_xml_request_sefazManifesta.xml');
+        $this->assertSame($esperado, $request);
     }
 
-    public function test_sefazManifestaLote(): void
+    /*public function test_sefazManifestaLote(): void
     {
-        $retorno = $this->tools->sefazManifestaLote();
+        $chNFe = '35240305730928000145650010000001421071400478';
+        $xJust = 'Preenchimento incorreto dos dados';
+        $dhEvento = new \DateTime('2024-02-01 14:07:05 -03:00');
+        $tpEvento = 210210; //ciencia da operação
+        $retorno = $this->tools->sefazManifestaLote(
+            $chNFe,
+            $tpEvento,
+            $xJust,
+            1,
+            $dhEvento,
+            '123'
+        );
+        //@todo fazer mock do retorno
+        $request = $this->tools->getRequest();
+        $esperado = $this->getCleanXml(__DIR__ . '/fixtures/xml/exemplo_xml_request_sefazManifesta.xml');
+        $this->assertSame($esperado, $request);
     }
 
-    public function test_sefazComprovanteEntrega(): void
+    /*public function test_sefazComprovanteEntrega(): void
     {
         $retorno = $this->tools->sefazComprovanteEntrega();
     }
