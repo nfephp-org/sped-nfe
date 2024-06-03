@@ -1062,6 +1062,20 @@ class MakeTest extends TestCase
         $this->validarCriacaoTag2($std, $element, 'ISSQN');
     }
 
+    public function test_taginfRespTec(): void
+    {
+        $std = new \stdClass();
+        $std->CNPJ = '76038276000120';
+        $std->xContato = 'Fulano de Tal';
+        $std->email = 'fulano@email.com';
+        $std->fone = '51999999999';
+        $std->CSRT = '456';
+        $std->idCSRT = '123';
+
+        $element = $this->make->taginfRespTec($std);
+        $this->validarCriacaoTag2($std, $element, 'infRespTec', ['CSRT']);
+    }
+
     private function validarCriacaoTag2(
         \stdClass $std,
         \DOMElement $element,
