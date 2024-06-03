@@ -459,8 +459,11 @@ class Tools extends ToolsCommon
      * @param \stdClass $std
      * @return string
      */
-    public function sefazAtorInteressado(\stdClass $std): string
-    {
+    public function sefazAtorInteressado(
+        \stdClass $std,
+        ?\DateTimeInterface $dhEvento = null,
+        ?string $lote = null
+    ): string {
         $xCondUso = 'O emitente ou destinatário da NF-e, declara que permite o '
             . 'transportador declarado no campo CNPJ/CPF deste evento a '
             . 'autorizar os transportadores subcontratados ou redespachados a '
@@ -484,7 +487,9 @@ class Tools extends ToolsCommon
             $std->chNFe,
             self::EVT_ATORINTERESSADO,
             $std->nSeqEvento,
-            $tagAdic
+            $tagAdic,
+            $dhEvento,
+            $lote
         );
     }
 
