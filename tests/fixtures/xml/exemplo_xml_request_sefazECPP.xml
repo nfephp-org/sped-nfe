@@ -1,0 +1,42 @@
+<nfeDadosMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NFeRecepcaoEvento4">
+    <envEvento xmlns="http://www.portalfiscal.inf.br/nfe" versao="1.00">
+        <idLote>123</idLote>
+        <evento xmlns="http://www.portalfiscal.inf.br/nfe" versao="1.00">
+            <infEvento Id="ID1115023515030082260200012455001000992346109923465601">
+                <cOrgao>35</cOrgao>
+                <tpAmb>2</tpAmb>
+                <CNPJ>93623057000128</CNPJ>
+                <chNFe>35150300822602000124550010009923461099234656</chNFe>
+                <dhEvento>2024-02-01T14:07:05-03:00</dhEvento>
+                <tpEvento>111502</tpEvento>
+                <nSeqEvento>1</nSeqEvento>
+                <verEvento>1.00</verEvento>
+                <detEvento versao="1.00">
+                    <descEvento>Cancelamento de Pedido de Prorrogacao</descEvento>
+                    <idPedidoCancelado>ID1115003515030082260200012455001000992346109923465601</idPedidoCancelado>
+                    <nProt>135150001686732</nProt>
+                </detEvento>
+            </infEvento>
+            <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+                <SignedInfo>
+                    <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+                    <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+                    <Reference URI="#ID1115023515030082260200012455001000992346109923465601">
+                        <Transforms>
+                            <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                            <Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+                        </Transforms>
+                        <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+                        <DigestValue>an04mEZF5ABXvJ6+LE1xS5iD6cg=</DigestValue>
+                    </Reference>
+                </SignedInfo>
+                <SignatureValue>o9eIbgYxDc8j0g9D3+jvDJszT0r0qfDAE5m3sHxIomq2lw8HVMxy3Qe1xg8+6u1+2/EmOWdWbcNtbuO6QWDG3iSD/mmUYBWTm5kDCYbZ9+4gV6gGH2ZCy3J6vt/JCEvKlXvWYSJs7IwzqCXUcxdb5Z3VrXFd7IMX727VtGojGRxR9H2hQxVUNO6xgLpoZM96QSsna9x2IxiR2V5oy57mkDHNUvJtU5e0Y0/9a7W5EHZzsQZW6SU9aXs5mv2pxiSkFPX/ttSqEAZ3ORm5oyCf9Mpt5cQFbIu6d4ameWob/fE/JE3m8ml/LPWPq0VT2m3PPQR2GV7ioORR3UC+onV3isAAbATeq2Rbv94D+4/H1mwj6Oq4zOnw+JxofjnaVwPdJnFBs3Ce0/iZCpdFvLVaxHLWpY8X+DwmLMxM3loqIRSFYx+u18OkpdefOtAVbVwlBvGbU55FWym3xNtoJSo6W5p2KOUL/qegNIKYIg24jqZvQZIPRMrS+5kbfQMEbBwglmjfqejspzoOKbEUn74d8rFev/xlY4+iO+JAlI5M3heK38/pQhKCzmv9bHVyHi71fzy25Qyft96vB19TooD+hD8DtLQU79Z+la2ypLIbhdh36KRAhmJH6w6wn+9sLTGADbupDWmCe/CAlJZWLhfuu0kQ5wQpYtSZmdGxp4lLCwg=</SignatureValue>
+                <KeyInfo>
+                    <X509Data>
+                        <X509Certificate>MIIFkDCCA3gCCQD1479OxEO9njANBgkqhkiG9w0BAQsFADCBiTELMAkGA1UEBhMCQlIxGjAYBgNVBAgMEVJpbyBHcmFuZGUgZG8gU3VsMRUwEwYDVQQHDAxQb3J0byBBbGVncmUxEzARBgNVBAoMCm5mZXBocC1vcmcxEzARBgNVBAsMCm5mZXBocC1vcmcxHTAbBgNVBAMMFFNQRUQgUHJvamVjdHMgaW4gUEhQMB4XDTE4MDgwOTAyNDE1NVoXDTI4MDgwNjAyNDE1NVowgYkxCzAJBgNVBAYTAkJSMRowGAYDVQQIDBFSaW8gR3JhbmRlIGRvIFN1bDEVMBMGA1UEBwwMUG9ydG8gQWxlZ3JlMRMwEQYDVQQKDApuZmVwaHAtb3JnMRMwEQYDVQQLDApuZmVwaHAtb3JnMR0wGwYDVQQDDBRTUEVEIFByb2plY3RzIGluIFBIUDCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBAK5QfErm/1RodP7DuZWap4BqFL9PlT5omTvEJK0sp9sPNApkPsdna8f037UylEssZSCQiwaE0Df6QvuR6IjasWsn4WWbtWbza60pxUQGb8TNH5hR3tgla5zfsEE0SaJib35WJ/pVQvUub4O9AUkgCBlTz8E/LjaBRykjtrEAeis+/5xRmy/Ph6FTFijnLauH5auQLz1LQDDQF0mAAdDYNIwGixJnpNyPgw7PvssAN7apURd3VjklvKUl/lzKN1t1pkxcz/lmC6gmYJyYUzXtyXzbEGZhfG9R+mCEhJZPDHKI83oCBJ53gUrJuQIeArKZm0CLMSZVpVAozZ+vE/Ksb3d7hl7LtfpFDsdZHYtRYJ4he1ZvrpghQGYxr0xAJpc4CN81k9LuWQsINQ3fLCUbCUXYPCI7Fui1ggSZzwtWNTD/Gpnh/tYEQRJetTAaEmVpx1SpNto9PB3lTat6ojoGrBPgsS3sKI3uFzlxMkcztOTFGeWliuBDP21mXZDLPEAVMzDQrcKlYJZ83aUXJTIH+43bAHWzYXUqvCxjlvQYB11ilB4nke3XJJvMpGJX/sLCSMAuNSjLGhUY7taGoZvhB/cUxTx942RG8vgUdB9eFEk37Q3qIUQbF8u/e5Xbge9XZtaAaQSIBoRUdaP6K9kJ3vcg7f8LM10r5QY5UYbuDw09AgMBAAEwDQYJKoZIhvcNAQELBQADggIBAJc8NjrRbht/URz+19b/bHr4xQUGm925X6Px8NfMu45rL8WGYgXIysZR6WtRLoXFIag+P/DiP+TJCrfDOTQv1tmyj6uMQxfvPXgRSA4zAnmWBW00qEY6+WL2i3+gd52KUYuOhDBksi4aHaSSBVv+HyqbliDGeKDKiGtEcWr3QP1efLVV2HyqwrlL3Vy1LhhAwDjVladkr7HVchFJ7CQg53q7yZI8Rwcaf/ab9pqAwI90/EUx6dwpDjT8YbFr2xorOfKzCKUIIjzHX8WrpT7N6LEGNN17SKrQB2xULQ0aAvnuk8snnJNav/fQr21DUm0T17zgsBUKMB4JtRx3ux+S8VhKd8gwXme3wuDI+5aE1jAg5w5viFDo8nHbW/rDLHoRkt7NoE+tgbJN6Dq/+DbJV/eyA6sNYmpA/bp+mCnTsjLjfS5Vj3UZP8s+OcLirjW1QYjND4gIvOtv2W4aTcjxHdH63F6FlpgzU8vJvYIUQ2y5SqjIywoDTIxn8GDzyyhbgRYkhAk3PvHlgixiq8Ip/hGs27wbO19j/y2IRxu6m1Ag/8v1KB/5WHdvVdyEhQfeYfMH/aiq41lsFGERbBwpugFfOy0it97sUDbZ8z5elrJ+bLE3V7/1kBAfSLPn8lBuPrSQpucS+DgghYlN4JzCytRAJs+qAmF5gwtvIJNRvGpY</X509Certificate>
+                    </X509Data>
+                </KeyInfo>
+            </Signature>
+        </evento>
+    </envEvento>
+</nfeDadosMsg>

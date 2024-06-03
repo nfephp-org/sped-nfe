@@ -255,6 +255,158 @@ class ToolsTest extends NFeTestCase
         $this->assertSame($esperado, $request);
     }
 
+    public function test_sefazEPP(): void
+    {
+        $chNFe = '35150300822602000124550010009923461099234656';
+        $nProt = '135150001686732';
+        $itens = [
+            [1, 111],
+            [2, 222],
+            [3, 333]
+        ];
+        $dhEvento = new \DateTime('2024-02-01 14:07:05 -03:00');
+        $retorno = $this->tools->sefazEPP($chNFe, $nProt, $itens, 1, 1, $dhEvento, '123');
+        //@todo fazer mock do retorno
+        $request = $this->tools->getRequest();
+        $esperado = $this->getCleanXml(__DIR__ . '/fixtures/xml/exemplo_xml_request_sefazEPP.xml');
+        $this->assertSame($esperado, $request);
+    }
+
+    public function test_sefazECPP(): void
+    {
+        $chNFe = '35150300822602000124550010009923461099234656';
+        $nProt = '135150001686732';
+        $dhEvento = new \DateTime('2024-02-01 14:07:05 -03:00');
+        $retorno = $this->tools->sefazECPP($chNFe, $nProt, 1, 1, $dhEvento, '123');
+        //@todo fazer mock do retorno
+        $request = $this->tools->getRequest();
+        $esperado = $this->getCleanXml(__DIR__ . '/fixtures/xml/exemplo_xml_request_sefazECPP.xml');
+        $this->assertSame($esperado, $request);
+    }
+
+    public function test_sefazCancela(): void
+    {
+        $chNFe = '35150300822602000124550010009923461099234656';
+        $xJust = 'Preenchimento incorreto dos dados';
+        $dhEvento = new \DateTime('2024-02-01 14:07:05 -03:00');
+        $nProt = '123456789101234';
+        $retorno = $this->tools->sefazCancela($chNFe, $xJust, $nProt, $dhEvento, '123');
+        //@todo fazer mock do retorno
+        $request = $this->tools->getRequest();
+        $esperado = $this->getCleanXml(__DIR__ . '/fixtures/xml/exemplo_xml_sefazCancela.xml');
+        $this->assertSame($esperado, $request);
+    }
+
+    public function test_sefazCancelaPorSubstituicaoErroChave(): void
+    {
+        $msg = 'Cancelamento pro Substituição deve ser usado apenas para operações com modelo 65 NFCe';
+        $this->expectExceptionMessage($msg);
+        $chNFe = '35150300822602000124550010009923461099234656';
+        $chReferenciada = '35170705248891000181550010000011831339972127';
+        $xJust = 'Preenchimento incorreto dos dados';
+        $dhEvento = new \DateTime('2024-02-01 14:07:05 -03:00');
+        $nProt = '123456789101234';
+        $this->tools->sefazCancelaPorSubstituicao($chNFe, $xJust, $nProt, $chReferenciada, "1", $dhEvento, '123');
+    }
+
+    public function test_sefazCancelaPorSubstituicao(): void
+    {
+        $chNFe = '35240305730928000145650010000001421071400478';
+        $chReferenciada = '35240305730928000145650010000001421071400478';
+        $xJust = 'Preenchimento incorreto dos dados';
+        $dhEvento = new \DateTime('2024-02-01 14:07:05 -03:00');
+        $nProt = '123456789101234';
+        $this->tools->model(65);
+        $retorno = $this->tools->sefazCancelaPorSubstituicao(
+            $chNFe,
+            $xJust,
+            $nProt,
+            $chReferenciada,
+            "1",
+            $dhEvento,
+            '123'
+        );
+        //@todo fazer mock do retorno
+        $request = $this->tools->getRequest();
+        $esperado = $this->getCleanXml(__DIR__ . '/fixtures/xml/exemplo_xml_request_sefazCancelaPorSubstituicao.xml');
+        $this->assertSame($esperado, $request);
+    }
+
+    public function test_sefazManifesta(): void
+    {
+        $chNFe = '35240305730928000145650010000001421071400478';
+        $xJust = 'Preenchimento incorreto dos dados';
+        $dhEvento = new \DateTime('2024-02-01 14:07:05 -03:00');
+        $tpEvento = 210210; //ciencia da operação
+        $retorno = $this->tools->sefazManifesta(
+            $chNFe,
+            $tpEvento,
+            $xJust,
+            1,
+            $dhEvento,
+            '123'
+        );
+        //@todo fazer mock do retorno
+        $request = $this->tools->getRequest();
+        $esperado = $this->getCleanXml(__DIR__ . '/fixtures/xml/exemplo_xml_request_sefazManifesta.xml');
+        $this->assertSame($esperado, $request);
+    }
+
+    /*public function test_sefazManifestaLote(): void
+    {
+        $chNFe = '35240305730928000145650010000001421071400478';
+        $xJust = 'Preenchimento incorreto dos dados';
+        $dhEvento = new \DateTime('2024-02-01 14:07:05 -03:00');
+        $tpEvento = 210210; //ciencia da operação
+        $retorno = $this->tools->sefazManifestaLote(
+            $chNFe,
+            $tpEvento,
+            $xJust,
+            1,
+            $dhEvento,
+            '123'
+        );
+        //@todo fazer mock do retorno
+        $request = $this->tools->getRequest();
+        $esperado = $this->getCleanXml(__DIR__ . '/fixtures/xml/exemplo_xml_request_sefazManifesta.xml');
+        $this->assertSame($esperado, $request);
+    }
+
+    /*public function test_sefazComprovanteEntrega(): void
+    {
+        $retorno = $this->tools->sefazComprovanteEntrega();
+    }
+
+    public function test_sefazInsucessoEntrega(): void
+    {
+        $retorno = $this->tools->sefazInsucessoEntrega();
+    }
+
+    public function test_sefazEventoLote(): void
+    {
+        $retorno = $this->tools->sefazEventoLote();
+    }
+
+    public function test_sefazEPEC(): void
+    {
+        $retorno = $this->tools->sefazEPEC();
+    }
+
+    public function test_sefazDownload(): void
+    {
+        $retorno = $this->tools->sefazDownload();
+    }
+
+    public function test_sefazCsc(): void
+    {
+        $retorno = $this->tools->sefazCsc();
+    }
+
+    public function test_sefazValidate(): void
+    {
+        $retorno = $this->tools->sefazValidate();
+    }*/
+
     /**
      * @param string $xml
      * @param int|string $idLote
