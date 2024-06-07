@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace NFePHP\NFe\Tests;
 
-use NFePHP\Common\Certificate;
-use NFePHP\Common\Strings;
-use NFePHP\NFe\Common\Standardize;
 use NFePHP\NFe\Tests\Common\ToolsFake;
+use NFePHP\NFe\Tests\Factories\ToolsBuilder;
 use NFePHP\NFe\Tools;
 
 class ToolsTest extends NFeTestCase
@@ -18,10 +16,7 @@ class ToolsTest extends NFeTestCase
 
     protected function setUp(): void
     {
-        $this->tools = new ToolsFake(
-            $this->configJson,
-            Certificate::readPfx($this->contentpfx, $this->passwordpfx)
-        );
+        $this->tools = ToolsBuilder::buildDefault();
     }
 
     /**

@@ -3,13 +3,14 @@
 namespace NFePHP\NFe\Tests\Common;
 
 use NFePHP\NFe\Common\Config;
+use NFePHP\NFe\Tests\Factories\ToolsBuilder;
 use NFePHP\NFe\Tests\NFeTestCase;
 
 class ConfigTest extends NFeTestCase
 {
     public function testValidate()
     {
-        $resp = Config::validate($this->configJson);
+        $resp = Config::validate(ToolsBuilder::buildConfig());
         $b = is_object($resp);
         $this->assertTrue($b);
     }

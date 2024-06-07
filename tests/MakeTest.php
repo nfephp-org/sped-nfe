@@ -5,14 +5,13 @@ declare(strict_types=1);
 namespace NFePHP\NFe\Tests;
 
 use NFePHP\NFe\Make;
+use NFePHP\NFe\Tests\Factories\NfeBuilder;
+use NFePHP\NFe\Tests\Factories\ToolsBuilder;
 use PHPUnit\Framework\TestCase;
 
 class MakeTest extends TestCase
 {
-    /**
-     * @var Make
-     */
-    protected $make;
+    protected Make $make;
 
     public function testTaginfNFe()
     {
@@ -1623,6 +1622,159 @@ class MakeTest extends TestCase
             $this->assertInstanceOf(\DOMElement::class, $elemento, "Elemento {$attributo} não encontrado");
             $this->assertEquals($std->{$attributo}, $elemento->nodeValue, "Campo {$attributo} possui valor incorreto!");
         }
+    }
+
+    public function test_monta_nfe_cnpj(): void
+    {
+        $std = new \stdClass();
+        $std->versao = '4.00';
+        $this->make->taginfNFe($std);
+        $this->make->tagide(NfeBuilder::tagIde());
+        $this->make->tagemit(NfeBuilder::tagEmitente());
+        $this->make->tagdest(NfeBuilder::tagDest());
+
+        $std = new \stdClass();
+        $std->xLgr = 'Rua São Sebastião';
+        $std->nro = '100';
+        $std->xCpl = 'Casa';
+        $std->xBairro = 'Centro';
+        $std->cMun = '3550308';
+        $std->xMun = 'São Paulo';
+        $std->UF = 'SP';
+        $std->CEP = '05999999';
+        $std->cPais = '1058';
+        $std->xPais = 'Brasil';
+        $std->fon = '11999999999';
+        $this->make->tagenderEmit($std);
+
+
+        $std->xLgr = 'Rua Sebastião';
+        $std->nro = '110';
+        $std->xCpl = 'Casa';
+        $std->xBairro = 'Centro';
+        $std->cMun = '3550308';
+        $std->xMun = 'São Paulo';
+        $std->UF = 'SP';
+        $std->CEP = '05999999';
+        $std->cPais = '1058';
+        $std->xPais = 'Brasil';
+        $std->fon = '11999999999';
+        $this->make->tagenderDest($std);
+
+        $std->xLgr = 'Rua São Sebastião';
+        $std->nro = '300';
+        $std->xCpl = 'Casa';
+        $std->xBairro = 'Centro';
+        $std->cMun = '3550308';
+        $std->xMun = 'São Paulo';
+        $std->UF = 'SP';
+        $std->CEP = '05999999';
+        $std->cPais = '105';
+        $std->xPais = 'Brasil';
+        $std->fon = '11999999999';
+        $this->make->tagentrega($std);
+
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->cProd = 'ref-1';
+        $std->cEAN = '7891108080000';
+        //$std->cBarra = '';
+        $std->xProd = 'Produto 1';
+        $std->NCM = '01013000';
+        //$std->cBenef = '';
+        //$std->EXTIPI = '';
+        $std->CFOP = '5102';
+        $std->uCom = 'UN';
+        $std->qCom = 1;
+        $std->vUnCom = 600;
+        $std->vProd = 600;
+        $std->cEANTrib = '7891108080000';
+        //$std->cBarraTrib = '';
+        $std->uTrib = 'UN';
+        $std->qTrib = 1;
+        $std->vUnTrib = 600;
+        $std->vFrete = 1;
+        $std->vSeg = 1;
+        $std->vDesc = 1;
+        $std->vOutro = 1;
+        $std->indTot = 1;
+        $std->xPed = 'Item 1';
+        $std->nItemPed = 1;
+        $this->make->tagprod($std);
+
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->vTotTrib = 1000;
+        $this->make->tagimposto($std);
+
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->orig = 0;
+        $std->CST = '00';
+        $std->modBC = 3;
+        $std->vBC = 1000;
+        $std->pICMS = 17;
+        $std->vICMS = 170;
+        $std->pFCP = 1;
+        $std->vFCP = 10;
+        $this->make->tagICMS($std);
+
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->CST = '01';
+        $std->vBC = 1000;
+        $std->pPIS = 1.65;
+        $std->vPIS = 16.5;
+        $this->make->tagPIS($std);
+
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->CST = '01';
+        $std->vBC = 1000;
+        $std->pCOFINS = 7.6;
+        $std->vCOFINS = 70;
+        $this->make->tagCOFINS($std);
+
+        $this->make->tagicmstot(new \stdClass());
+
+        $std = new \stdClass();
+        $std->modFrete = 0;
+        $this->make->tagtransp($std);
+
+        $std = new \stdClass();
+        $std->vTroco = 0;
+        $this->make->tagpag($std);
+
+        //detPag OBRIGATÓRIA
+        $std = new \stdClass();
+        $std->indPag = 1;
+        $std->tPag = '01';
+        $std->vPag = 100.00;
+        $this->make->tagdetpag($std);
+
+
+        /*$std = new \stdClass();
+        $this->make->tagtransporta($std);
+
+        $std = new \stdClass();
+        $this->make->tagtransp($std);
+
+        $std = new \stdClass();
+        $this->make->tagdup($std);
+
+        $std = new \stdClass();
+        $this->make->tagfat($std);
+
+        $std = new \stdClass();
+        $this->make->tagvol($std);
+
+        $std = new \stdClass();
+        $this->make->tagpag($std);*/
+
+        $xml = $this->make->monta();
+        ToolsBuilder::buildDefault()->signNFe($xml);
+
+        $this->assertIsString($xml);
     }
 
 
