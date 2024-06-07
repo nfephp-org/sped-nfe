@@ -1019,6 +1019,9 @@ class MakeTest extends TestCase
 
     public function test_tagISSQN(): void
     {
+        $this->make->tagide(new \stdClass());
+        $this->make->tagemit(new \stdClass());
+
         $std = new \stdClass();
         $std->item = 1;
         $std->cProd = '1111';
@@ -1156,6 +1159,9 @@ class MakeTest extends TestCase
 
     public function test_tagICMSSN_101(): void
     {
+        $this->make->tagide(new \stdClass());
+        $this->make->tagemit(new \stdClass());
+
         $std = new \stdClass();
         $std->item = 1;
         $std->orig = 0;
@@ -1173,6 +1179,9 @@ class MakeTest extends TestCase
 
     public function test_tagICMSSN_102(): void
     {
+        $this->make->tagide(new \stdClass());
+        $this->make->tagemit(new \stdClass());
+
         $std = new \stdClass();
         $std->item = 1;
         $std->orig = 0;
@@ -1188,6 +1197,9 @@ class MakeTest extends TestCase
 
     public function test_tagICMSSN_103(): void
     {
+        $this->make->tagide(new \stdClass());
+        $this->make->tagemit(new \stdClass());
+
         $std = new \stdClass();
         $std->item = 1;
         $std->orig = 0;
@@ -1203,6 +1215,9 @@ class MakeTest extends TestCase
 
     public function test_tagICMSSN_300(): void
     {
+        $this->make->tagide(new \stdClass());
+        $this->make->tagemit(new \stdClass());
+
         $std = new \stdClass();
         $std->item = 1;
         $std->orig = 0;
@@ -1218,6 +1233,9 @@ class MakeTest extends TestCase
 
     public function test_tagICMSSN_400(): void
     {
+        $this->make->tagide(new \stdClass());
+        $this->make->tagemit(new \stdClass());
+
         $std = new \stdClass();
         $std->item = 1;
         $std->orig = 0;
@@ -1233,6 +1251,9 @@ class MakeTest extends TestCase
 
     public function test_tagICMSSN_201(): void
     {
+        $this->make->tagide(new \stdClass());
+        $this->make->tagemit(new \stdClass());
+
         $std = new \stdClass();
         $std->item = 1;
         $std->orig = 0;
@@ -1260,6 +1281,9 @@ class MakeTest extends TestCase
 
     public function test_tagICMSSN_202(): void
     {
+        $this->make->tagide(new \stdClass());
+        $this->make->tagemit(new \stdClass());
+
         $std = new \stdClass();
         $std->item = 1;
         $std->orig = 0;
@@ -1284,6 +1308,9 @@ class MakeTest extends TestCase
 
     public function test_tagICMSSN_203(): void
     {
+        $this->make->tagide(new \stdClass());
+        $this->make->tagemit(new \stdClass());
+
         $std = new \stdClass();
         $std->item = 1;
         $std->orig = 0;
@@ -1308,6 +1335,9 @@ class MakeTest extends TestCase
 
     public function test_tagICMSSN_500(): void
     {
+        $this->make->tagide(new \stdClass());
+        $this->make->tagemit(new \stdClass());
+
         $std = new \stdClass();
         $std->item = 1;
         $std->orig = 0;
@@ -1335,6 +1365,9 @@ class MakeTest extends TestCase
 
     public function test_tagICMSSN_900(): void
     {
+        $this->make->tagide(new \stdClass());
+        $this->make->tagemit(new \stdClass());
+
         $std = new \stdClass();
         $std->item = 1;
         $std->orig = 0;
@@ -1363,6 +1396,219 @@ class MakeTest extends TestCase
         $this->assertEquals('ICMSSN900', $tag2->nodeName);
 
         $this->validarExistenciaCampos($std, $tag2);
+    }
+
+    public function test_tagICMSSNShouldAcceptEmptyOrig_whenCrtIs4AndCsosnInAllowedList(): void
+    {
+        $std = new \stdClass();
+        $std->CRT = 4;
+        $this->make->tagemit($std);
+
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->orig = null;
+        $std->CSOSN = '900';
+        $std->modBC = 3;
+        $std->vBC = 100;
+        $std->pRedBC = 1;
+        $std->pICMS = 1;
+        $std->vICMS = 1;
+        $std->pCredSN = 3;
+        $std->vCredICMSSN = 4;
+        $std->modBCST = 3;
+        $std->pMVAST = 1;
+        $std->pRedBCST = 1;
+        $std->vBCST = 1;
+        $std->pICMSST = 1;
+        $std->vICMSST = 1;
+        $std->vBCFCPST = 1;
+        $std->pFCPST = 1;
+        $std->vFCPST = 1;
+
+        $icmssn = $this->make->tagICMSSN($std);
+        $result = $icmssn->getElementsByTagName('ICMSSN900')->item(0);
+
+        $this->assertEquals('ICMS', $icmssn->nodeName);
+        $this->assertEquals('ICMSSN900', $result->nodeName);
+        $this->assertNull($result->getElementsByTagName('orig')->item(0));
+
+        $this->validarExistenciaCampos($std, $result);
+    }
+
+    public function test_tagICMSSNShouldNotAcceptEmptyOrig_whenCrtIs1(): void
+    {
+        $std = new \stdClass();
+        $std->CRT = 1;
+        $this->make->tagemit($std);
+
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->orig = null;
+        $std->CSOSN = '900';
+        $std->modBC = 3;
+        $std->vBC = 100;
+        $std->pRedBC = 1;
+        $std->pICMS = 1;
+        $std->vICMS = 1;
+        $std->pCredSN = 3;
+        $std->vCredICMSSN = 4;
+        $std->modBCST = 3;
+        $std->pMVAST = 1;
+        $std->pRedBCST = 1;
+        $std->vBCST = 1;
+        $std->pICMSST = 1;
+        $std->vICMSST = 1;
+        $std->vBCFCPST = 1;
+        $std->pFCPST = 1;
+        $std->vFCPST = 1;
+
+        $icmssn = $this->make->tagICMSSN($std);
+        $result = $icmssn->getElementsByTagName('ICMSSN900')->item(0);
+
+        $this->assertEquals('ICMS', $icmssn->nodeName);
+        $this->assertEquals('ICMSSN900', $result->nodeName);
+        $this->assertContains(
+            'Preenchimento Obrigatório! [orig] [item 1] Origem da mercadoria',
+            $this->make->getErrors()
+        );
+        $this->validarExistenciaCampos($std, $result);
+    }
+
+    public function test_tagICMSSNShouldNotAcceptEmptyOrig_whenCrtIs4AndCsosnIsNotInAllowedList(): void
+    {
+        $std = new \stdClass();
+        $std->CRT = 1;
+        $this->make->tagemit($std);
+
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->orig = null;
+        $std->CSOSN = '500';
+        $std->modBC = 3;
+        $std->vBC = 100;
+        $std->pRedBC = 1;
+        $std->pICMS = 1;
+        $std->vICMS = 1;
+        $std->pCredSN = 3;
+        $std->vCredICMSSN = 4;
+        $std->modBCST = 3;
+        $std->pMVAST = 1;
+        $std->pRedBCST = 1;
+        $std->vBCST = 1;
+        $std->pICMSST = 1;
+        $std->vICMSST = 1;
+        $std->vBCFCPST = 1;
+        $std->pFCPST = 1;
+        $std->vFCPST = 1;
+
+        $icmssn = $this->make->tagICMSSN($std);
+        $result = $icmssn->getElementsByTagName('ICMSSN500')->item(0);
+
+        $this->assertEquals('ICMS', $icmssn->nodeName);
+        $this->assertEquals('ICMSSN500', $result->nodeName);
+        $this->assertContains(
+            'Preenchimento Obrigatório! [orig] [item 1] Origem da mercadoria',
+            $this->make->getErrors()
+        );
+    }
+
+    public function test_tagNCMShouldAcceptEmptyValue_andChangeToDefaultValue_whenCrtIs4AndIdDestIs1(): void
+    {
+        $std = new \stdClass();
+        $std->idDest = 1;
+        $this->make->tagide($std);
+
+        $std = new \stdClass();
+        $std->CRT = 4;
+        $this->make->tagemit($std);
+
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->cProd = '1111';
+        $std->cEAN = "SEM GTIN";
+        $std->xProd = 'CAMISETA REGATA GG';
+        $std->NCM = null;
+        $std->CFOP = 5101;
+        $std->uCom = 'UN';
+        $std->qCom = 1;
+        $std->vUnCom = 100.00;
+        $std->vProd = 100.00;
+        $std->cEANTrib = "SEM GTIN";
+        $std->uTrib = 'UN';
+        $std->qTrib = 1;
+        $std->vUnTrib = 100.00;
+        $std->indTot = 1;
+        $prod = $this->make->tagprod($std);
+
+        $this->assertEquals('00000000', $prod->getElementsByTagName('NCM')->item(0)->nodeValue);
+    }
+
+    public function test_tagNCMShouldNotAcceptEmptyValue_whenCrtIs1(): void
+    {
+        $std = new \stdClass();
+        $std->idDest = 1;
+        $this->make->tagide($std);
+
+        $std = new \stdClass();
+        $std->CRT = 1;
+        $this->make->tagemit($std);
+
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->cProd = '1111';
+        $std->cEAN = "SEM GTIN";
+        $std->xProd = 'CAMISETA REGATA GG';
+        $std->NCM = null;
+        $std->CFOP = 5101;
+        $std->uCom = 'UN';
+        $std->qCom = 1;
+        $std->vUnCom = 100.00;
+        $std->vProd = 100.00;
+        $std->cEANTrib = "SEM GTIN";
+        $std->uTrib = 'UN';
+        $std->qTrib = 1;
+        $std->vUnTrib = 100.00;
+        $std->indTot = 1;
+        $this->make->tagprod($std);
+
+        $this->assertContains(
+            'Preenchimento Obrigatório! [NCM] I01 <prod> - [item 1] Código NCM com 8 dígitos ou 2 dígitos (gênero)',
+            $this->make->getErrors()
+        );
+    }
+
+    public function test_tagNCMShouldNotAcceptEmptyValue_whenCrtIs4AndIdDestIsNot1(): void
+    {
+        $std = new \stdClass();
+        $std->idDest = 2;
+        $this->make->tagide($std);
+
+        $std = new \stdClass();
+        $std->CRT = 4;
+        $this->make->tagemit($std);
+
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->cProd = '1111';
+        $std->cEAN = "SEM GTIN";
+        $std->xProd = 'CAMISETA REGATA GG';
+        $std->NCM = null;
+        $std->CFOP = 5101;
+        $std->uCom = 'UN';
+        $std->qCom = 1;
+        $std->vUnCom = 100.00;
+        $std->vProd = 100.00;
+        $std->cEANTrib = "SEM GTIN";
+        $std->uTrib = 'UN';
+        $std->qTrib = 1;
+        $std->vUnTrib = 100.00;
+        $std->indTot = 1;
+        $this->make->tagprod($std);
+
+        $this->assertContains(
+            'Preenchimento Obrigatório! [NCM] I01 <prod> - [item 1] Código NCM com 8 dígitos ou 2 dígitos (gênero)',
+            $this->make->getErrors()
+        );
     }
 
     private function validarExistenciaCampos(\stdClass $std, \DOMElement $tag): void

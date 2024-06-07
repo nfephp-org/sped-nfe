@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2008 (http://www.altova.com) by sas-softwares@procergs.rs.gov.br (PROCERGS) -->
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by sas-software@procergs.rs.gov.br (PROCERGS) -->
 <!-- PL_009  alterações de esquema decorrentes da - NT2016.002 v1.20 - 31/05/2017 13:14hs-->
 <!-- PL_008g  alterações de esquema decorrentes da - NT2015.002  - 15/07/2015 -->
 <!-- PL_008h  alterações de esquema decorrentes da - NT2015.003 - 17/09/2015 -->
@@ -556,7 +556,8 @@ Preencher com &quot;2B&quot;, quando se tratar de Cupom Fiscal emitido por máqu
 Este campo será obrigatoriamente preenchido com:
 1 – Simples Nacional;
 2 – Simples Nacional – excesso de sublimite de receita bruta;
-3 – Regime Normal.</xs:documentation>
+3 – Regime Normal.
+4 - Simples Nacional - Microempreendedor individual - MEI</xs:documentation>
 										</xs:annotation>
 										<xs:simpleType>
 											<xs:restriction base="xs:string">
@@ -564,6 +565,7 @@ Este campo será obrigatoriamente preenchido com:
 												<xs:enumeration value="1"/>
 												<xs:enumeration value="2"/>
 												<xs:enumeration value="3"/>
+												<xs:enumeration value="4"/>
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
@@ -2756,14 +2758,13 @@ Informar o motivo da desoneração:
 																				<xs:element name="orig" type="Torig">
 																					<xs:annotation>
 																						<xs:documentation>origem da mercadoria: 0 - Nacional 
-1 - Estrangeira - Importação direta 
-2 - Estrangeira - Adquirida no mercado interno</xs:documentation>
+																						1 - Estrangeira - Importação direta 
+																						2 - Estrangeira - Adquirida no mercado interno</xs:documentation>
 																					</xs:annotation>
 																				</xs:element>
 																				<xs:element name="CST">
 																					<xs:annotation>
-																						<xs:documentation>Tributção pelo ICMS
-20 - Com redução de base de cálculo</xs:documentation>
+																						<xs:documentation>Tributação pelo ICMS 51 - Tributação com Diferimento</xs:documentation>
 																					</xs:annotation>
 																					<xs:simpleType>
 																						<xs:restriction base="xs:string">
@@ -2775,10 +2776,10 @@ Informar o motivo da desoneração:
 																				<xs:element name="modBC" minOccurs="0">
 																					<xs:annotation>
 																						<xs:documentation>Modalidade de determinação da BC do ICMS:
-0 - Margem Valor Agregado (%);
-1 - Pauta (valor);
-2 - Preço Tabelado Máximo (valor);
-3 - Valor da Operação.</xs:documentation>
+																						0 - Margem Valor Agregado (%);
+																						1 - Pauta (valor);
+																						2 - Preço Tabelado Máximo (valor);
+																						3 - Valor da Operação.</xs:documentation>
 																					</xs:annotation>
 																					<xs:simpleType>
 																						<xs:restriction base="xs:string">
@@ -3779,7 +3780,7 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 																		</xs:annotation>
 																		<xs:complexType>
 																			<xs:sequence>
-																				<xs:element name="orig" type="Torig">
+																				<xs:element name="orig" type="Torig" minOccurs="0">
 																					<xs:annotation>
 																						<xs:documentation>origem da mercadoria: 0 - Nacional 
 1 - Estrangeira - Importação direta 
@@ -4098,11 +4099,11 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 																	</xs:element>
 																	<xs:element name="ICMSSN900">
 																		<xs:annotation>
-																			<xs:documentation>Tributação do ICMS pelo SIMPLES NACIONAL, CRT=1 – Simples Nacional e CSOSN=900 (v2.0)</xs:documentation>
+																			<xs:documentation>Tributação do ICMS pelo SIMPLES NACIONAL, CRT=1 – Simples Nacional, CRT=4 - MEI e CSOSN=900 (v2.0)</xs:documentation>
 																		</xs:annotation>
 																		<xs:complexType>
 																			<xs:sequence>
-																				<xs:element name="orig" type="Torig">
+																				<xs:element name="orig" type="Torig" minOccurs="0">
 																					<xs:annotation>
 																						<xs:documentation>origem da mercadoria: 0 - Nacional 
 1 - Estrangeira - Importação direta 
