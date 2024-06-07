@@ -446,11 +446,6 @@ class Make
      */
     public function monta(): string
     {
-        if (!empty($this->errors)) {
-            $this->errors = array_merge($this->errors, $this->dom->errors);
-        } else {
-            $this->errors = $this->dom->errors;
-        }
         //cria a tag raiz da Nfe
         $this->buildNFe();
         //processa nfeRef e coloca as tags na tag ide
@@ -516,9 +511,11 @@ class Make
         // testa da chave
         $this->checkNFeKey($this->dom);
         $this->xml = $this->dom->saveXML();
-        if (count($this->errors) > 0) {
+
+        if (count($this->getErrors()) > 0) {
             throw new RuntimeException('Existem erros nas tags. Obtenha os erros com getErrors().');
         }
+
         return $this->xml;
     }
 
@@ -1761,7 +1758,7 @@ class Make
             $std->cCredPresumido,
             true,
             $identificador . "[item $std->item] cCredPresumido Código de Benefício Fiscal de Crédito "
-            . "Presumido na UF aplicado ao item",
+                . "Presumido na UF aplicado ao item",
             true
         );
         $this->dom->addChild(
@@ -1844,6 +1841,12 @@ class Make
         } catch (\InvalidArgumentException $e) {
             $this->errors[] = "cEANTrib {$ceantrib} " . $e->getMessage();
         }
+
+        $CRT = $this->emit->getElementsByTagName("CRT")->item(0)->nodeValue ?? null;
+        $idDest = $this->ide->getElementsByTagName("idDest")->item(0)->nodeValue ?? null;
+        $allowEmptyNcm = $CRT == 4 && $idDest == 1;
+
+        if ($allowEmptyNcm && empty($std->NCM)) $std->NCM = '00000000';
 
         $identificador = 'I01 <prod> - ';
         $prod = $this->dom->createElement("prod");
@@ -2886,7 +2889,7 @@ class Make
             $this->conditionalNumberFormatting($std->pBio, 4),
             false,
             "$identificador [item $std->item] Percentual do índice de mistura do Biodiesel (B100) no Óleo Diesel B "
-               . "instituído pelo órgão regulamentador"
+                . "instituído pelo órgão regulamentador"
         );
         $this->aComb[$std->item] = $comb;
         return $comb;
@@ -3631,7 +3634,7 @@ class Make
                     $std->indDeduzDeson,
                     false,
                     "$identificador [item $std->item] Indica se o valor do ICMS desonerado (vICMSDeson) "
-                    . "deduz do valor do item (vProd)."
+                        . "deduz do valor do item (vProd)."
                 );
                 break;
             case '40':
@@ -4181,7 +4184,7 @@ class Make
                     $std->indDeduzDeson,
                     false,
                     "$identificador [item $std->item] Indica se o valor do ICMS desonerado (vICMSDeson) "
-                    . "deduz do valor do item (vProd)."
+                        . "deduz do valor do item (vProd)."
                 );
                 $this->dom->addChild(
                     $icms,
@@ -4364,7 +4367,7 @@ class Make
                     $std->indDeduzDeson,
                     false,
                     "$identificador [item $std->item] Indica se o valor do ICMS desonerado (vICMSDeson) "
-                    . "deduz do valor do item (vProd)."
+                        . "deduz do valor do item (vProd)."
                 );
                 $this->dom->addChild(
                     $icms,
@@ -4528,7 +4531,7 @@ class Make
             $this->conditionalNumberFormatting($std->pFCPST, 4),
             false,
             "[item $std->item] Percentual do Fundo de "
-            . "Combate à Pobreza (FCP) ST"
+                . "Combate à Pobreza (FCP) ST"
         );
         $this->dom->addChild(
             $icmsPart,
@@ -4749,6 +4752,12 @@ class Make
         //totalizador generico
         $this->stdTot->vFCPST += (float) !empty($std->vFCPST) ? $std->vFCPST : 0;
         $this->stdTot->vFCPSTRet += (float) !empty($std->vFCPSTRet) ? $std->vFCPSTRet : 0;
+
+        $CRT = $this->emit->getElementsByTagName("CRT")->item(0)->nodeValue ?? null;
+        $allowEmptyOrig = $CRT == 4 && in_array($std->CSOSN, [
+            '102', '103', '300', '400', '900',
+        ]);
+
         switch ($std->CSOSN) {
             case '101':
                 $icmsSN = $this->dom->createElement("ICMSSN101");
@@ -4791,8 +4800,9 @@ class Make
                     $icmsSN,
                     'orig',
                     $std->orig,
-                    true,
-                    "[item $std->item] Origem da mercadoria"
+                    !$allowEmptyOrig,
+                    "[item $std->item] Origem da mercadoria",
+                    $allowEmptyOrig,
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -5096,8 +5106,9 @@ class Make
                     $icmsSN,
                     'orig',
                     $std->orig,
-                    true,
-                    "[item $std->item] Origem da mercadoria"
+                    !$allowEmptyOrig,
+                    "[item $std->item] Origem da mercadoria",
+                    $allowEmptyOrig,
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -8018,7 +8029,7 @@ class Make
             //incluso NT 2023.001-1.10 /1.20
             if (!empty($this->aOrigComb[$nItem])) {
                 foreach ($this->aOrigComb[$nItem] as $origcomb) {
-                     $this->dom->appChild($child, $origcomb, "inclusão do node origComb na tag comb");
+                    $this->dom->appChild($child, $origcomb, "inclusão do node origComb na tag comb");
                 }
             }
             $this->dom->appChild($prod, $child, "Inclusão do node combustivel");
@@ -8257,7 +8268,7 @@ class Make
      */
     public function getErrors(): array
     {
-        return $this->errors;
+        return array_merge($this->errors, $this->dom->errors);
     }
 
     /**
