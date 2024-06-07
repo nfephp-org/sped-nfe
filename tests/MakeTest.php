@@ -1019,6 +1019,9 @@ class MakeTest extends TestCase
 
     public function test_tagISSQN(): void
     {
+        $this->make->tagide(new \stdClass());
+        $this->make->tagemit(new \stdClass());
+
         $std = new \stdClass();
         $std->item = 1;
         $std->cProd = '1111';
@@ -1156,6 +1159,9 @@ class MakeTest extends TestCase
 
     public function test_tagICMSSN_101(): void
     {
+        $this->make->tagide(new \stdClass());
+        $this->make->tagemit(new \stdClass());
+
         $std = new \stdClass();
         $std->item = 1;
         $std->orig = 0;
@@ -1173,6 +1179,9 @@ class MakeTest extends TestCase
 
     public function test_tagICMSSN_102(): void
     {
+        $this->make->tagide(new \stdClass());
+        $this->make->tagemit(new \stdClass());
+
         $std = new \stdClass();
         $std->item = 1;
         $std->orig = 0;
@@ -1188,6 +1197,9 @@ class MakeTest extends TestCase
 
     public function test_tagICMSSN_103(): void
     {
+        $this->make->tagide(new \stdClass());
+        $this->make->tagemit(new \stdClass());
+
         $std = new \stdClass();
         $std->item = 1;
         $std->orig = 0;
@@ -1203,6 +1215,9 @@ class MakeTest extends TestCase
 
     public function test_tagICMSSN_300(): void
     {
+        $this->make->tagide(new \stdClass());
+        $this->make->tagemit(new \stdClass());
+
         $std = new \stdClass();
         $std->item = 1;
         $std->orig = 0;
@@ -1218,6 +1233,9 @@ class MakeTest extends TestCase
 
     public function test_tagICMSSN_400(): void
     {
+        $this->make->tagide(new \stdClass());
+        $this->make->tagemit(new \stdClass());
+
         $std = new \stdClass();
         $std->item = 1;
         $std->orig = 0;
@@ -1233,6 +1251,9 @@ class MakeTest extends TestCase
 
     public function test_tagICMSSN_201(): void
     {
+        $this->make->tagide(new \stdClass());
+        $this->make->tagemit(new \stdClass());
+
         $std = new \stdClass();
         $std->item = 1;
         $std->orig = 0;
@@ -1260,6 +1281,9 @@ class MakeTest extends TestCase
 
     public function test_tagICMSSN_202(): void
     {
+        $this->make->tagide(new \stdClass());
+        $this->make->tagemit(new \stdClass());
+
         $std = new \stdClass();
         $std->item = 1;
         $std->orig = 0;
@@ -1284,6 +1308,9 @@ class MakeTest extends TestCase
 
     public function test_tagICMSSN_203(): void
     {
+        $this->make->tagide(new \stdClass());
+        $this->make->tagemit(new \stdClass());
+
         $std = new \stdClass();
         $std->item = 1;
         $std->orig = 0;
@@ -1308,6 +1335,9 @@ class MakeTest extends TestCase
 
     public function test_tagICMSSN_500(): void
     {
+        $this->make->tagide(new \stdClass());
+        $this->make->tagemit(new \stdClass());
+
         $std = new \stdClass();
         $std->item = 1;
         $std->orig = 0;
@@ -1335,6 +1365,9 @@ class MakeTest extends TestCase
 
     public function test_tagICMSSN_900(): void
     {
+        $this->make->tagide(new \stdClass());
+        $this->make->tagemit(new \stdClass());
+
         $std = new \stdClass();
         $std->item = 1;
         $std->orig = 0;
