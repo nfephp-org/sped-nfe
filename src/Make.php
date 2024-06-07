@@ -1842,8 +1842,8 @@ class Make
             $this->errors[] = "cEANTrib {$ceantrib} " . $e->getMessage();
         }
 
-        $CRT = $this->emit->getElementsByTagName("CRT")->item(0)->nodeValue ?? null;
-        $idDest = $this->ide->getElementsByTagName("idDest")->item(0)->nodeValue ?? null;
+        $CRT = !empty($this->emit) ? $this->emit->getElementsByTagName("CRT")->item(0)->nodeValue ?? null : null;
+        $idDest = !empty($this->ide) ? $this->ide->getElementsByTagName("idDest")->item(0)->nodeValue ?? null : null;
         $allowEmptyNcm = $CRT == 4 && $idDest == 1;
 
         if ($allowEmptyNcm && empty($std->NCM)) {
@@ -4755,7 +4755,7 @@ class Make
         $this->stdTot->vFCPST += (float) !empty($std->vFCPST) ? $std->vFCPST : 0;
         $this->stdTot->vFCPSTRet += (float) !empty($std->vFCPSTRet) ? $std->vFCPSTRet : 0;
 
-        $CRT = $this->emit->getElementsByTagName("CRT")->item(0)->nodeValue ?? null;
+        $CRT = !empty($this->emit) ? $this->emit->getElementsByTagName("CRT")->item(0)->nodeValue ?? null : null;
         $allowEmptyOrig = $CRT == 4 && in_array($std->CSOSN, [
             '102', '103', '300', '400', '900',
         ]);
