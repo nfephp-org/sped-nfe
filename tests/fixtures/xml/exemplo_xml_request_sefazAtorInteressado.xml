@@ -1,0 +1,48 @@
+<nfeDadosMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NFeRecepcaoEvento4">
+    <envEvento xmlns="http://www.portalfiscal.inf.br/nfe" versao="1.00">
+        <idLote>202405311345419</idLote>
+        <evento xmlns="http://www.portalfiscal.inf.br/nfe" versao="1.00">
+            <infEvento Id="ID1101503522060573092800014555001000004866158330292301">
+                <cOrgao>91</cOrgao>
+                <tpAmb>2</tpAmb>
+                <CNPJ>93623057000128</CNPJ>
+                <chNFe>35220605730928000145550010000048661583302923</chNFe>
+                <dhEvento>2024-05-31T13:45:41-03:00</dhEvento>
+                <tpEvento>110150</tpEvento>
+                <nSeqEvento>1</nSeqEvento>
+                <verEvento>1.00</verEvento>
+                <detEvento versao="1.00">
+                    <descEvento>Ator interessado na NF-e</descEvento>
+                    <cOrgaoAutor>35</cOrgaoAutor>
+                    <tpAutor>1</tpAutor>
+                    <verAplic>2</verAplic>
+                    <autXML>
+                        <CNPJ>88880563000162</CNPJ>
+                    </autXML>
+                    <tpAutorizacao>0</tpAutorizacao>
+                    <xCondUso>O emitente ou destinatário da NF-e, declara que permite o transportador declarado no campo CNPJ/CPF deste evento a autorizar os transportadores subcontratados ou redespachados a terem acesso ao download da NF-e</xCondUso>
+                </detEvento>
+            </infEvento>
+            <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+                <SignedInfo>
+                    <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+                    <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+                    <Reference URI="#ID1101503522060573092800014555001000004866158330292301">
+                        <Transforms>
+                            <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                            <Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+                        </Transforms>
+                        <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+                        <DigestValue>dqrwELBmSrvYmmbjv5FoKEKzTr8=</DigestValue>
+                    </Reference>
+                </SignedInfo>
+                <SignatureValue>pbLJSJcFB3vmPDSLsqQHXjUb1fzfNfwH2Kpax/kVKlKCI9IZtoD2TYHl3UlrIA+uXP2naJ4LK0tX01e7nm8SCHiq9LKlmeMsOe6qDwnLCvLOSOPSqun/6wWGMfZeRD+aY6uaXByRh+7RG+3m8DXs0hXnTa5zYVt0croO1x8uOkVR96frIZgu9VMoClxpIJVpS01JLW7fIlJwWn4p5+aQSeiYzlYrDzCm51jsaFN1zgnR4VeeCk17iOHEHk8EgcPX0mqVY6bKraLOaJ+wD7kzG3HMKYJ/WvxNTqDu6N84yPdUImqiigfGIiPVtJ5Kvn5nSGIKiGE13L8usuGPw+rKfuU1BTb1q9k4I8ln6YZA6jTlCzF9FxWdDRFpY7Rrq9gAUx7a/xzrQ1MlDmZSYy5ara14etVa29vZQwEbMWVRRUZ9K16gfQcbY34//OpmQn/pjtDlpApSa0/V98lZiPSq4gNJIQZTUy0mIFP9gXSdu/wscgsKekAAtlIn9eXGopdCLdoADryTFHd2/DxGuA1KRDdaNO35zjM0LnH7JnCd2ZYA3peMWcIlXzud4jzoMM47ErrEPXdXNK2rmvZnf/mckL2RDVxmUHFJvUOU+YE3Q8s0kX53KuGZ5aAhMah8C+D6lJoIycdFc7AtR/s52oEEL73bmnrS+Y6Bq8F111dj+1Y=</SignatureValue>
+                <KeyInfo>
+                    <X509Data>
+                        <X509Certificate>MIIFkDCCA3gCCQD1479OxEO9njANBgkqhkiG9w0BAQsFADCBiTELMAkGA1UEBhMCQlIxGjAYBgNVBAgMEVJpbyBHcmFuZGUgZG8gU3VsMRUwEwYDVQQHDAxQb3J0byBBbGVncmUxEzARBgNVBAoMCm5mZXBocC1vcmcxEzARBgNVBAsMCm5mZXBocC1vcmcxHTAbBgNVBAMMFFNQRUQgUHJvamVjdHMgaW4gUEhQMB4XDTE4MDgwOTAyNDE1NVoXDTI4MDgwNjAyNDE1NVowgYkxCzAJBgNVBAYTAkJSMRowGAYDVQQIDBFSaW8gR3JhbmRlIGRvIFN1bDEVMBMGA1UEBwwMUG9ydG8gQWxlZ3JlMRMwEQYDVQQKDApuZmVwaHAtb3JnMRMwEQYDVQQLDApuZmVwaHAtb3JnMR0wGwYDVQQDDBRTUEVEIFByb2plY3RzIGluIFBIUDCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBAK5QfErm/1RodP7DuZWap4BqFL9PlT5omTvEJK0sp9sPNApkPsdna8f037UylEssZSCQiwaE0Df6QvuR6IjasWsn4WWbtWbza60pxUQGb8TNH5hR3tgla5zfsEE0SaJib35WJ/pVQvUub4O9AUkgCBlTz8E/LjaBRykjtrEAeis+/5xRmy/Ph6FTFijnLauH5auQLz1LQDDQF0mAAdDYNIwGixJnpNyPgw7PvssAN7apURd3VjklvKUl/lzKN1t1pkxcz/lmC6gmYJyYUzXtyXzbEGZhfG9R+mCEhJZPDHKI83oCBJ53gUrJuQIeArKZm0CLMSZVpVAozZ+vE/Ksb3d7hl7LtfpFDsdZHYtRYJ4he1ZvrpghQGYxr0xAJpc4CN81k9LuWQsINQ3fLCUbCUXYPCI7Fui1ggSZzwtWNTD/Gpnh/tYEQRJetTAaEmVpx1SpNto9PB3lTat6ojoGrBPgsS3sKI3uFzlxMkcztOTFGeWliuBDP21mXZDLPEAVMzDQrcKlYJZ83aUXJTIH+43bAHWzYXUqvCxjlvQYB11ilB4nke3XJJvMpGJX/sLCSMAuNSjLGhUY7taGoZvhB/cUxTx942RG8vgUdB9eFEk37Q3qIUQbF8u/e5Xbge9XZtaAaQSIBoRUdaP6K9kJ3vcg7f8LM10r5QY5UYbuDw09AgMBAAEwDQYJKoZIhvcNAQELBQADggIBAJc8NjrRbht/URz+19b/bHr4xQUGm925X6Px8NfMu45rL8WGYgXIysZR6WtRLoXFIag+P/DiP+TJCrfDOTQv1tmyj6uMQxfvPXgRSA4zAnmWBW00qEY6+WL2i3+gd52KUYuOhDBksi4aHaSSBVv+HyqbliDGeKDKiGtEcWr3QP1efLVV2HyqwrlL3Vy1LhhAwDjVladkr7HVchFJ7CQg53q7yZI8Rwcaf/ab9pqAwI90/EUx6dwpDjT8YbFr2xorOfKzCKUIIjzHX8WrpT7N6LEGNN17SKrQB2xULQ0aAvnuk8snnJNav/fQr21DUm0T17zgsBUKMB4JtRx3ux+S8VhKd8gwXme3wuDI+5aE1jAg5w5viFDo8nHbW/rDLHoRkt7NoE+tgbJN6Dq/+DbJV/eyA6sNYmpA/bp+mCnTsjLjfS5Vj3UZP8s+OcLirjW1QYjND4gIvOtv2W4aTcjxHdH63F6FlpgzU8vJvYIUQ2y5SqjIywoDTIxn8GDzyyhbgRYkhAk3PvHlgixiq8Ip/hGs27wbO19j/y2IRxu6m1Ag/8v1KB/5WHdvVdyEhQfeYfMH/aiq41lsFGERbBwpugFfOy0it97sUDbZ8z5elrJ+bLE3V7/1kBAfSLPn8lBuPrSQpucS+DgghYlN4JzCytRAJs+qAmF5gwtvIJNRvGpY</X509Certificate>
+                    </X509Data>
+                </KeyInfo>
+            </Signature>
+        </evento>
+    </envEvento>
+</nfeDadosMsg>
