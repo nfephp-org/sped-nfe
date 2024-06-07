@@ -1846,7 +1846,9 @@ class Make
         $idDest = $this->ide->getElementsByTagName("idDest")->item(0)->nodeValue ?? null;
         $allowEmptyNcm = $CRT == 4 && $idDest == 1;
 
-        if ($allowEmptyNcm && empty($std->NCM)) $std->NCM = '00000000';
+        if ($allowEmptyNcm && empty($std->NCM)) {
+            $std->NCM = '00000000';
+        }
 
         $identificador = 'I01 <prod> - ';
         $prod = $this->dom->createElement("prod");
