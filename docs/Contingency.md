@@ -14,8 +14,6 @@ Este modo de contingência permite que a NFe seja emitida sem que haja a prévia
 
 **Uso: Sem acesso a internet ou com a SEFAZ offline.**
 
-Este modo de contingência permite que a NFe seja emitida sem que haja a prévia autorização pela SEFAZ autorizadora através da impressão do DANFE em formulário de segurança.
-
 **E ao retornar o serviço da SEFAZ autorizadora estes documentos deverão ser enviados dentro do prazo limite de 24 horas**.
 
 Nesse caso o xml da NFe deve indicar na propriedade &lt;tpEmis&gt; o valor 5
