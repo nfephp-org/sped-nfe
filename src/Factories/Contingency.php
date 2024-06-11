@@ -21,11 +21,6 @@ class Contingency
 {
     public const SVCAN = 'SVCAN';
     public const SVCRS = 'SVCRS';
-    public const OFFLINE = 'OFFLINE';
-    public const EPEC = 'EPEC';
-    public const FSDA = 'FS-DA';
-    public const TPEMIS_FSDA = 5;
-    public const TPEMIS_OFFLINE = 9;
 
     /**
      * @var \stdClass
@@ -73,13 +68,15 @@ class Contingency
 
     /**
      * Create a object with contingency data
-     * @param string $acronym Sigla do estado
-     * @param string $type Opcional parameter only used if FS-DA, EPEC or OFFLINE
+     * @param string $acronym sigla dos estados
+     * @param string $motive motivo de entrada em contingência
+     * @param string $type tipo de contingência SVCAN ou SVCRS
+     * @return string
+     * @throws \Exception
      */
     public function activate(string $acronym, string $motive, string $type = ''): string
     {
-        $dt = new \DateTime('now');
-        $list = array(
+        $list = [
             'AC' => 'SVCAN',
             'AL' => 'SVCAN',
             'AM' => 'SVCRS',
@@ -107,13 +104,31 @@ class Contingency
             'SE' => 'SVCAN',
             'SP' => 'SVCAN',
             'TO' => 'SVCAN'
-        );
-        $type = strtoupper(str_replace('-', '', $type));
+        ];
+        if (!empty($type)) {
+            $type = strtoupper(str_replace('-', '', $type));
+            if (!in_array($type, ['SVCAN', 'SVCRS'])) {
+                throw new \RuntimeException(
+                    "O tipo indicado de contingência não é aceito nesta operação. Usar apenas SVCAN ou SVCRS"
+                );
+            }
+            $this->type = $type;
 
-        if (empty($type)) {
-            $type = $list[$acronym];
         }
-        $this->config = $this->configBuild($dt->getTimestamp(), $motive, $type);
+        //gerar o timestamp para Greenwich (GMT).
+        $dt = new \DateTime(gmdate('Y-m-d H:i:s')); //data hora GMT
+        $this->motive = trim($motive);
+        $len = mb_strlen($this->motive);
+        if ($len < 15 || $len > 255) {
+            throw new \RuntimeException(
+                "A justificativa para entrada em contingência deve ter entre 15 e 256 caracteres UTF-8."
+            );
+        }
+        $this->timestamp = $dt->getTimestamp();
+        if (empty($type)) {
+            $this->type = $list[$acronym];
+        }
+        $this->config = $this->configBuild();
         return $this->__toString();
     }
 
@@ -122,11 +137,11 @@ class Contingency
      */
     public function deactivate(): string
     {
-        $this->config = $this->configBuild(0, '', '');
         $this->timestamp = 0;
         $this->motive = '';
         $this->type = '';
         $this->tpEmis = 1;
+        $this->config = $this->configBuild();
         return $this->__toString();
     }
 
@@ -141,16 +156,10 @@ class Contingency
     /**
      * Build parameter config as stdClass
      */
-    private function configBuild(int $timestamp, string $motive, string $type): \stdClass
+    private function configBuild(): \stdClass
     {
-        switch ($type) {
-            case 'EPEC':
-                $tpEmis = 4;
-                break;
-            case 'FS-DA':
-            case 'FSDA':
-                $tpEmis = 5;
-                break;
+        $tpEmis = 1;
+        switch ($this->type) {
             case 'SVC-AN':
             case 'SVCAN':
                 $tpEmis = 6;
@@ -159,25 +168,19 @@ class Contingency
             case 'SVCRS':
                 $tpEmis = 7;
                 break;
-            case 'OFFLINE': //this is only to model 65 NFCe
-                $tpEmis = 9;
-                break;
             default:
-                if ($type == '') {
+                if ($this->type === '') {
                     $tpEmis = 1;
-                    $timestamp = 0;
-                    $motive = '';
+                    $this->timestamp = 0;
+                    $this->motive = '';
                     break;
                 }
-                throw new \InvalidArgumentException(
-                    "Tipo de contingência "
-                    . "[$type] não está disponível;"
-                );
         }
+        $this->tpEmis = $tpEmis;
         $config = new \stdClass();
-        $config->motive = Strings::replaceUnacceptableCharacters(substr(trim($motive), 0, 256));
-        $config->timestamp = $timestamp;
-        $config->type = $type;
+        $config->motive = Strings::replaceUnacceptableCharacters(substr(trim($this->motive), 0, 256));
+        $config->timestamp = $this->timestamp;
+        $config->type = $this->type;
         $config->tpEmis = $tpEmis;
         $this->load(json_encode($config));
         return $config;
