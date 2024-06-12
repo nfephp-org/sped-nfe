@@ -227,41 +227,5 @@
 			<xs:whiteSpace value="preserve"/>
 			<xs:pattern value="[0-9]{1,2}\.[0-9]{1,2}"/>
 		</xs:restriction>
-	</xs:simpleType> 
-    <xs:simpleType name="TCOrgaoIBGE">
-		<xs:annotation>
-			<xs:documentation>Tipo Código de orgão (UF da tabela do IBGE + 91 RFB)</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:string">
-			<xs:whiteSpace value="preserve"/>
-			<xs:enumeration value="11"/>
-			<xs:enumeration value="12"/>
-			<xs:enumeration value="13"/>
-			<xs:enumeration value="14"/>
-			<xs:enumeration value="15"/>
-			<xs:enumeration value="16"/>
-			<xs:enumeration value="17"/>
-			<xs:enumeration value="21"/>
-			<xs:enumeration value="22"/>
-			<xs:enumeration value="23"/>
-			<xs:enumeration value="24"/>
-			<xs:enumeration value="25"/>
-			<xs:enumeration value="26"/>
-			<xs:enumeration value="27"/>
-			<xs:enumeration value="28"/>
-			<xs:enumeration value="29"/>
-			<xs:enumeration value="31"/>
-			<xs:enumeration value="32"/>
-			<xs:enumeration value="33"/>
-			<xs:enumeration value="35"/>
-			<xs:enumeration value="41"/>
-			<xs:enumeration value="42"/>
-			<xs:enumeration value="43"/>
-			<xs:enumeration value="50"/>
-			<xs:enumeration value="51"/>
-			<xs:enumeration value="52"/>
-			<xs:enumeration value="53"/>
-			<xs:enumeration value="91"/>
-		</xs:restriction>
 	</xs:simpleType>
 </xs:schema>

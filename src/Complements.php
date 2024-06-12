@@ -26,7 +26,7 @@ class Complements
         }
         $st = new Standardize();
         $key = ucfirst($st->whichIs($request));
-        if ($key != 'NFe' && $key != 'EnvEvento' && $key != 'InutNFe') {
+        if ($key !== 'NFe' && $key !== 'EnvEvento' && $key !== 'InutNFe') {
             //wrong document, this document is not able to recieve a protocol
             throw DocumentsException::wrongDocument(0, $key);
         }

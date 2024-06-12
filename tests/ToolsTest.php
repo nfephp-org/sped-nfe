@@ -449,7 +449,7 @@ class ToolsTest extends NFeTestCase
      */
     protected function getCleanXml($filePath)
     {
-        $xml = simplexml_load_file($filePath, 'SimpleXMLElement', LIBXML_NOBLANKS);
+        $xml = simplexml_load_string(file_get_contents($filePath), 'SimpleXMLElement', LIBXML_NOBLANKS);
         $customXML = new \SimpleXMLElement($xml->asXML());
         $dom = dom_import_simplexml($customXML);
         return $dom->ownerDocument->saveXML($dom->ownerDocument->documentElement);

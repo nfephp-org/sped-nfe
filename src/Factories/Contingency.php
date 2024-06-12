@@ -113,7 +113,6 @@ class Contingency
                 );
             }
             $this->type = $type;
-
         }
         //gerar o timestamp para Greenwich (GMT).
         $dt = new \DateTime(gmdate('Y-m-d H:i:s')); //data hora GMT

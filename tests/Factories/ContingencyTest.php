@@ -23,6 +23,51 @@ class ContingencyTest extends NFeTestCase
         $this->assertEquals($std->tpEmis, 6);
     }
 
+    public function testActivateExceptionFailForcedType()
+    {
+        $this->expectException(\RuntimeException::class);
+        $contingency = new Contingency();
+        $result = $contingency->activate('SP', 'Testes Unitarios', 'SVAN');
+    }
+
+    public function testActivateExceptionFailIncorrectSmallerMotive()
+    {
+        $this->expectException(\RuntimeException::class);
+        $contingency = new Contingency();
+        $result = $contingency->activate('SP', 'Testes');
+    }
+
+    public function testActivateExceptionFailIncorrectGreaterMotive()
+    {
+        $this->expectException(\RuntimeException::class);
+        $contingency = new Contingency();
+        $motive = "Eu fui emitir uma NFe e a SEFAZ autorizadora estava fora do ar, "
+            . "entrei em contato com o técnico de informática que me mandou acionar o modo de contingência, "
+            . "indicando o motivo. Nosso diretor está exigindo a emissão da NFe agora, e sei não sei mais o que fazer."
+            ." Então fiz essa tentativa agora.";
+        $result = $contingency->activate('SP', $motive);
+    }
+
+    public function testActivateForcedTypeSVCAN()
+    {
+        $contingency = new Contingency();
+        $result = $contingency->activate('AM', 'Testes Unitarios', 'SVCAN');
+        $std = json_decode($result);
+        $this->assertEquals($std->motive, 'Testes Unitarios');
+        $this->assertEquals($std->type, 'SVCAN');
+        $this->assertEquals($std->tpEmis, 6);
+    }
+
+    public function testActivateForcedTypeSVCRS()
+    {
+        $contingency = new Contingency();
+        $result = $contingency->activate('SP', 'Testes Unitarios', 'SVCRS');
+        $std = json_decode($result);
+        $this->assertEquals($std->motive, 'Testes Unitarios');
+        $this->assertEquals($std->type, 'SVCRS');
+        $this->assertEquals($std->tpEmis, 7);
+    }
+
     public function testLoad()
     {
         $cont = [
