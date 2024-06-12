@@ -30,8 +30,4 @@ parameters:
 			count: 1
 			path: src/Exception/DocumentsException.php
 
-		-
-			message: "#^Variable \\$tpEmis might not be defined\\.$#"
-			count: 1
-			path: src/Factories/Contingency.php
 

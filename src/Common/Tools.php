@@ -60,9 +60,9 @@ class Tools
     public $tpAmb = 2;
     /**
      * contingency class
-     * @var Contingency
+     * @var Contingency|null
      */
-    public $contingency;
+    public $contingency = null;
     /**
      * soap class
      * @var ?SoapInterface
@@ -395,7 +395,7 @@ class Tools
      */
     protected function checkContingencyForWebServices(string $service)
     {
-        $type = $this->contingency->type ?? null;
+        $type = !empty($this->contingency) ? $this->contingency->type : '';
         $mod = $this->modelo;
         if (!empty($type)) {
             if ($this->modelo == 65) {

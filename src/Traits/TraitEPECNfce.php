@@ -70,7 +70,7 @@ trait TraitEPECNfce
         $dom->loadXML($xml);
         $infNFe = $dom->getElementsByTagName('infNFe')->item(0);
         $ide  = $dom->getElementsByTagName('ide')->item(0);
-        $tpEmis = (int) $ide->getElementsByTagName('tpEmis')->item(0)->nodeValue ?? 0;
+        $tpEmis = (int) $ide->getElementsByTagName('tpEmis')->item(0)->nodeValue;
         $dhCont = $ide->getElementsByTagName('dhCont')->item(0)->nodeValue ?? '';
         $xJust = $ide->getElementsByTagName('xJust')->item(0)->nodeValue ?? '';
         if ($tpEmis !== 4 || empty($dhCont) || empty($xJust)) {
