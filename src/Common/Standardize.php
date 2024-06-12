@@ -83,7 +83,7 @@ class Standardize
         }
         if (!Validator::isXML($this->xml)) {
             //invalid document is not a XML
-            throw DocumentsException::wrongDocument(6);
+            throw new DocumentsException('Documento inválido');
         }
         $dom = new \DOMDocument('1.0', 'UTF-8');
         $dom->preserveWhiteSpace = false;

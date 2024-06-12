@@ -20,11 +20,14 @@ use NFePHP\Common\Strings;
 use NFePHP\Common\Signer;
 use NFePHP\Common\UFList;
 use NFePHP\NFe\Common\Tools as ToolsCommon;
+use NFePHP\NFe\Traits\TraitEPECNfce;
 use RuntimeException;
 use InvalidArgumentException;
 
 class Tools extends ToolsCommon
 {
+    use TraitEPECNfce;
+
     public const EVT_CONFIRMACAO = 210200; //only one per nfe seq=n
     public const EVT_CIENCIA = 210210; //only one per nfe seq=1
     public const EVT_DESCONHECIMENTO = 210220; //only one per nfe seq=n

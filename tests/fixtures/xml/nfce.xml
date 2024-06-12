@@ -1,0 +1,325 @@
+<NFe xmlns="http://www.portalfiscal.inf.br/nfe">
+<infNFe Id="NFe41200323285089000185650010000013051817822496" versao="4.00">
+<ide>
+<cUF>41</cUF>
+<cNF>81782249</cNF>
+<natOp>Venda de mercadoria</natOp>
+<mod>65</mod>
+<serie>1</serie>
+<nNF>1305</nNF>
+<dhEmi>2020-03-11T15:32:17-03:00</dhEmi>
+<tpNF>1</tpNF>
+<idDest>1</idDest>
+<cMunFG>4108809</cMunFG>
+<tpImp>4</tpImp>
+<tpEmis>7</tpEmis>
+<cDV>6</cDV>
+<tpAmb>1</tpAmb>
+<finNFe>1</finNFe>
+<indFinal>1</indFinal>
+<indPres>1</indPres>
+<procEmi>0</procEmi>
+<verProc>1.0.0</verProc>
+<dhCont>2020-03-11T12:32:17-03:00</dhCont>
+<xJust>Teste de contingência</xJust>
+</ide>
+<emit>
+<CNPJ>23285089000185</CNPJ>
+<xNome>ANA F. ZCHROTKE MARTIN SORVETERIA</xNome>
+<xFant>TUTTINUTTI GELADOS COMESTIVEIS</xFant>
+<enderEmit>
+<xLgr>AV CEL OTAVIO TOSTA</xLgr>
+<nro>177</nro>
+<xCpl>SALA</xCpl>
+<xBairro>Centro</xBairro>
+<cMun>4108809</cMun>
+<xMun>GUAIRA</xMun>
+<UF>PR</UF>
+<CEP>85980000</CEP>
+<cPais>1058</cPais>
+<xPais>Brasil</xPais>
+<fone>4499764041</fone>
+</enderEmit>
+<IE>9077361720</IE>
+<CRT>1</CRT>
+</emit>
+<dest>
+                <CNPJ>10422724000187</CNPJ>
+                <xNome>Lumer Informática Serviços Digitais LTDA</xNome>
+                <xFant>Compusoft</xFant>
+                <enderDest>
+                    <xLgr>Av. Rio de Janeiro</xLgr>
+                    <nro>1060</nro>
+                    <xCpl>Comercial</xCpl>
+                    <xBairro>Centro</xBairro>
+                    <cMun>4101903</cMun>
+                    <xMun>Santa Gertrudes do Assaí de Baixo</xMun>
+                    <UF>PR</UF>
+                    <CEP>86220000</CEP>
+                    <cPais>1058</cPais>
+                    <xPais>Brasil</xPais>
+                    <fone>4332624001</fone>
+                </enderDest>
+                <IE>9045932653</IE>
+                <IM>14058</IM>
+                <CNAE>4751201</CNAE>
+                <CRT>1</CRT>
+            </dest>
+<det nItem="1">
+<prod>
+<cProd>3</cProd>
+<cEAN>SEM GTIN</cEAN>
+<xProd>NOTA FISCAL EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL</xProd>
+<NCM>21050010</NCM>
+<CEST>2300100</CEST>
+<CFOP>5405</CFOP>
+<uCom>UN</uCom>
+<qCom>1.0000</qCom>
+<vUnCom>12.0000000000</vUnCom>
+<vProd>12.00</vProd>
+<cEANTrib>SEM GTIN</cEANTrib>
+<uTrib>UN</uTrib>
+<qTrib>1.0000</qTrib>
+<vUnTrib>12.0000000000</vUnTrib>
+<indTot>1</indTot>
+</prod>
+<imposto>
+<vTotTrib>0.00</vTotTrib>
+<ICMS>
+<ICMSSN500>
+<orig>0</orig>
+<CSOSN>500</CSOSN>
+<vBCSTRet>0.00</vBCSTRet>
+<pST>0.0000</pST>
+<vICMSSubstituto>0.00</vICMSSubstituto>
+<vICMSSTRet>0.00</vICMSSTRet>
+</ICMSSN500>
+</ICMS>
+<PIS>
+<PISOutr>
+<CST>49</CST>
+<vBC>0.00</vBC>
+<pPIS>0.0000</pPIS>
+<vPIS>0.00</vPIS>
+</PISOutr>
+</PIS>
+<COFINS>
+<COFINSOutr>
+<CST>49</CST>
+<vBC>0.00</vBC>
+<pCOFINS>0.0000</pCOFINS>
+<vCOFINS>0.00</vCOFINS>
+</COFINSOutr>
+</COFINS>
+</imposto>
+</det>
+<det nItem="2">
+<prod>
+<cProd>3</cProd>
+<cEAN>SEM GTIN</cEAN>
+<xProd>Gelato Grande</xProd>
+<NCM>21050010</NCM>
+<CEST>2300100</CEST>
+<CFOP>5405</CFOP>
+<uCom>UN</uCom>
+<qCom>1.0000</qCom>
+<vUnCom>12.0000000000</vUnCom>
+<vProd>12.00</vProd>
+<cEANTrib>SEM GTIN</cEANTrib>
+<uTrib>UN</uTrib>
+<qTrib>1.0000</qTrib>
+<vUnTrib>12.0000000000</vUnTrib>
+<indTot>1</indTot>
+</prod>
+<imposto>
+<vTotTrib>0.00</vTotTrib>
+<ICMS>
+<ICMSSN500>
+<orig>0</orig>
+<CSOSN>500</CSOSN>
+<vBCSTRet>0.00</vBCSTRet>
+<pST>0.0000</pST>
+<vICMSSubstituto>0.00</vICMSSubstituto>
+<vICMSSTRet>0.00</vICMSSTRet>
+</ICMSSN500>
+</ICMS>
+<PIS>
+<PISOutr>
+<CST>49</CST>
+<vBC>0.00</vBC>
+<pPIS>0.0000</pPIS>
+<vPIS>0.00</vPIS>
+</PISOutr>
+</PIS>
+<COFINS>
+<COFINSOutr>
+<CST>49</CST>
+<vBC>0.00</vBC>
+<pCOFINS>0.0000</pCOFINS>
+<vCOFINS>0.00</vCOFINS>
+</COFINSOutr>
+</COFINS>
+</imposto>
+</det>
+<det nItem="3">
+<prod>
+<cProd>8</cProd>
+<cEAN>SEM GTIN</cEAN>
+<xProd>Agua Mineral 510 ml</xProd>
+<NCM>22011000</NCM>
+<CEST>0300600</CEST>
+<CFOP>5405</CFOP>
+<uCom>UN</uCom>
+<qCom>1.0000</qCom>
+<vUnCom>3.0000000000</vUnCom>
+<vProd>3.00</vProd>
+<cEANTrib>SEM GTIN</cEANTrib>
+<uTrib>UN</uTrib>
+<qTrib>1.0000</qTrib>
+<vUnTrib>3.0000000000</vUnTrib>
+<indTot>1</indTot>
+</prod>
+<imposto>
+<vTotTrib>0.00</vTotTrib>
+<ICMS>
+<ICMSSN500>
+<orig>0</orig>
+<CSOSN>500</CSOSN>
+<vBCSTRet>0.00</vBCSTRet>
+<pST>0.0000</pST>
+<vICMSSubstituto>0.00</vICMSSubstituto>
+<vICMSSTRet>0.00</vICMSSTRet>
+</ICMSSN500>
+</ICMS>
+<PIS>
+<PISOutr>
+<CST>49</CST>
+<vBC>0.00</vBC>
+<pPIS>0.0000</pPIS>
+<vPIS>0.00</vPIS>
+</PISOutr>
+</PIS>
+<COFINS>
+<COFINSOutr>
+<CST>49</CST>
+<vBC>0.00</vBC>
+<pCOFINS>0.0000</pCOFINS>
+<vCOFINS>0.00</vCOFINS>
+</COFINSOutr>
+</COFINS>
+</imposto>
+</det>
+<det nItem="4">
+<prod>
+<cProd>8</cProd>
+<cEAN>SEM GTIN</cEAN>
+<xProd>Agua Mineral 510 ml</xProd>
+<NCM>22011000</NCM>
+<CEST>0300600</CEST>
+<CFOP>5405</CFOP>
+<uCom>UN</uCom>
+<qCom>1.0000</qCom>
+<vUnCom>3.0000000000</vUnCom>
+<vProd>3.00</vProd>
+<cEANTrib>SEM GTIN</cEANTrib>
+<uTrib>UN</uTrib>
+<qTrib>1.0000</qTrib>
+<vUnTrib>3.0000000000</vUnTrib>
+<indTot>1</indTot>
+</prod>
+<imposto>
+<vTotTrib>0.00</vTotTrib>
+<ICMS>
+<ICMSSN500>
+<orig>0</orig>
+<CSOSN>500</CSOSN>
+<vBCSTRet>0.00</vBCSTRet>
+<pST>0.0000</pST>
+<vICMSSubstituto>0.00</vICMSSubstituto>
+<vICMSSTRet>0.00</vICMSSTRet>
+</ICMSSN500>
+</ICMS>
+<PIS>
+<PISOutr>
+<CST>49</CST>
+<vBC>0.00</vBC>
+<pPIS>0.0000</pPIS>
+<vPIS>0.00</vPIS>
+</PISOutr>
+</PIS>
+<COFINS>
+<COFINSOutr>
+<CST>49</CST>
+<vBC>0.00</vBC>
+<pCOFINS>0.0000</pCOFINS>
+<vCOFINS>0.00</vCOFINS>
+</COFINSOutr>
+</COFINS>
+</imposto>
+</det>
+<total>
+<ICMSTot>
+<vBC>0.00</vBC>
+<vICMS>0.00</vICMS>
+<vICMSDeson>0.00</vICMSDeson>
+<vFCP>0.00</vFCP>
+<vBCST>0.00</vBCST>
+<vST>0.00</vST>
+<vFCPST>0.00</vFCPST>
+<vFCPSTRet>0.00</vFCPSTRet>
+<vProd>30.00</vProd>
+<vFrete>0.00</vFrete>
+<vSeg>0.00</vSeg>
+<vDesc>0.00</vDesc>
+<vII>0.00</vII>
+<vIPI>0.00</vIPI>
+<vIPIDevol>0.00</vIPIDevol>
+<vPIS>0.00</vPIS>
+<vCOFINS>0.00</vCOFINS>
+<vOutro>0.00</vOutro>
+<vNF>30.00</vNF>
+</ICMSTot>
+</total>
+<transp>
+<modFrete>9</modFrete>
+</transp>
+<pag>
+<detPag>
+<indPag>0</indPag>
+<tPag>04</tPag>
+<vPag>30.00</vPag>
+</detPag>
+</pag>
+<infAdic/>
+<infRespTec>
+<CNPJ>25447784000121</CNPJ>
+<xContato>MARKE SISTEMAS LTDA</xContato>
+<email>contato@markesistemas.com.br</email>
+<fone>4436426822</fone>
+</infRespTec>
+</infNFe>
+<infNFeSupl>
+<qrCode>http://www.fazenda.pr.gov.br/nfce/qrcode?p=41200323285089000185650010000013051817822496|2|2|1|9D6AB4765658166993902F7F7C26FCD0965E328F</qrCode>
+<urlChave>http://www.fazenda.pr.gov.br/nfce/consulta</urlChave>
+</infNFeSupl>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+<SignedInfo>
+<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+<Reference URI="#NFe41200323285089000185650010000013051817822496">
+<Transforms>
+<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+</Transforms>
+<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+<DigestValue>OZImXzkhvK2D0ABoXkChyiO2KxQ=</DigestValue>
+</Reference>
+</SignedInfo>
+<SignatureValue>ULhj6YOKvCCpVdRVIId/C1AxCXONExMKL8+cGCCtC2ttGOYScSQUD9t5XYyjTS5i2Vc8S9rrXp7YP09z1oB7rypEpRMpuzlEC5S8xEnfOYdDqnPKj2/t0ft9Ii7q22M+qO7ao0HDkWGBzfHaKuezVkK63nznDQAzh8oC2OmxBuGUVP8ssZENpupG2B58sHzBLrhGJbYe7s39UFO0SrEHcjKx/vAMQ5SsVtJhyWyz2P2nFeLWK/NvFpJSB7b5oc1+t2MMIBTlnYNez4TQL9h2qUlNMLqmBbxPxR16yR399jvX0js31HST3qel2z5GuHwabN6YmljcD709xoAIPhIQ3g==</SignatureValue>
+<KeyInfo>
+<X509Data>
+<X509Certificate>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</X509Certificate>
+</X509Data>
+</KeyInfo>
+</Signature>
+</NFe>

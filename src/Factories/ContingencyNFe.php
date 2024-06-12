@@ -17,25 +17,36 @@ class ContingencyNFe
      */
     public static function adjust(string $xml, Contingency $contingency): string
     {
-        if ($contingency->type == '') {
+        if ($contingency->type === '') {
             return $xml;
         }
         $xml = Signer::removeSignature($xml);
-
         $dom = new \DOMDocument('1.0', 'UTF-8');
         $dom->preserveWhiteSpace = false;
         $dom->formatOutput = false;
         $dom->loadXML($xml);
-
         $ide = $dom->getElementsByTagName('ide')->item(0);
         $cUF = $ide->getElementsByTagName('cUF')->item(0)->nodeValue;
         $cNF = $ide->getElementsByTagName('cNF')->item(0)->nodeValue;
         $nNF = $ide->getElementsByTagName('nNF')->item(0)->nodeValue;
         $serie = $ide->getElementsByTagName('serie')->item(0)->nodeValue;
         $mod = $ide->getElementsByTagName('mod')->item(0)->nodeValue;
+        $tpEmis = $ide->getElementsByTagName('tpEmis')->item(0)->nodeValue;
+        $dhCont = $ide->getElementsByTagName('dhCont')->item(0)->nodeValue ?? null;
+        $xJust = $ide->getElementsByTagName('xJust')->item(0)->nodeValue ?? null;
+        if ($mod == 65) {
+            throw new \RuntimeException(
+                'O xml pertence a um documento modelo 65 NFCe, incorreto para contingência SVCAN ou SVCRS.'
+            );
+        }
+        if ($tpEmis != 1) {
+            //xml já foi emitido em contingência, não há a necessidade de ajuste dos dados do xml
+            return $xml;
+        }
         $dtEmi = new DateTime($ide->getElementsByTagName('dhEmi')->item(0)->nodeValue);
         $ano = $dtEmi->format('y');
         $mes = $dtEmi->format('m');
+        //altera o tpEmis de 1 para o modo SVCRS[7] ou SVCAN[6]
         $tpEmis = (string) $contingency->tpEmis;
         $emit = $dom->getElementsByTagName('emit')->item(0);
         if (!empty($emit->getElementsByTagName('CNPJ')->item(0)->nodeValue)) {
@@ -44,21 +55,28 @@ class ContingencyNFe
             $doc = $emit->getElementsByTagName('CPF')->item(0)->nodeValue;
         }
         $motivo = trim(Strings::replaceUnacceptableCharacters($contingency->motive));
-
-        $tz = TimeZoneByUF::get(UFList::getUFByCode((int)$cUF));
-        $dt = new \DateTime(date("Y-m-d H:i:sP"), new \DateTimeZone($tz));
-
-        $dt->setTimestamp($contingency->timestamp);
+        //verifica o timezone no estado emitente
+        $tztext = TimeZoneByUF::get(UFList::getUFByCode((int)$cUF));
+        $tz = new \DateTimeZone($tztext);
+        //cria um DateTime::class com o timestamp (GMT)
+        $dt = new \DateTime(gmdate("Y-m-d H:i:s", $contingency->timestamp));
+        //seta o timezone no DateTime::class para o estado emissor
+        $dt->setTimezone($tz);
+        //gera a data de entrada em contingência no timezone do emitente baseado no <ide><cUF> do XML
+        $dthCont = $dt->format('Y-m-d\TH:i:sP');
+        //modifica a tag <tpEmis>
         $ide->getElementsByTagName('tpEmis')
             ->item(0)
             ->nodeValue = $contingency->tpEmis;
+        //verifica se existem documentos referenciados no xml
         $nfref = $ide->getElementsByTagName('NFref')->item(0) ?? null;
         if (!empty($ide->getElementsByTagName('dhCont')->item(0)->nodeValue)) {
+            //caso não tenha a tag <dhCont>, inserir na tag <ide>
             $ide->getElementsByTagName('dhCont')
                 ->item(0)
-                ->nodeValue = $dt->format('Y-m-d\TH:i:sP');
+                ->nodeValue = $dthCont;
         } else {
-            $dhCont = $dom->createElement('dhCont', $dt->format('Y-m-d\TH:i:sP'));
+            $dhCont = $dom->createElement('dhCont', $dthCont);
             if (!empty($nfref)) {
                 $ide->insertBefore($dhCont, $nfref);
             } else {
