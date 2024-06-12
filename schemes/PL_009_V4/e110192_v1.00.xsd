@@ -40,9 +40,9 @@
 				<xs:element name="tpMotivo">
 					<xs:simpleType>
 						<xs:annotation>
-							<xs:documentation>Motivo do insucesso - 1 – Recebedor não encontrado
-													2 – Recusa do recebedor
-													3 – Endereço inexistente
+							<xs:documentation>Motivo do insucesso - 1 – Recebedor não encontrado 
+													2 – Recusa do recebedor 
+													3 – Endereço inexistente 
 													4 – Outros (exige informar justificativa) </xs:documentation>
 						</xs:annotation>
 						<xs:restriction base="xs:string">
@@ -77,8 +77,7 @@
 				</xs:element>
 				<xs:element name="hashTentativaEntrega">
 					<xs:annotation>
-						<xs:documentation>Hash (SHA1) no formato Base64 resultante da concatenação: Chave de acesso da NFe + Base64 da imagem capturada da entrega (Exemplo: imagem capturada da assinatura eletrônica, digital do recebedor, foto, etc)</xs:documentation>
-						<xs:documentation>O hashCSRT é o resultado das funções SHA-1 e base64 do token CSRT fornecido pelo fisco + chave de acesso do DF-e. (Implementação em futura NT)
+						<xs:documentation>Hash (SHA1) no formato Base64 resultante da concatenação: Chave de acesso da NFe + Base64 da imagem capturada da entrega (Exemplo: imagem capturada da assinatura eletrônica, digital do recebedor, foto, etc)
 Observação: 28 caracteres são representados no schema como 20 bytes do tipo base64Binary</xs:documentation>
 					</xs:annotation>
 					<xs:simpleType>
@@ -89,7 +88,7 @@ Observação: 28 caracteres são representados no schema como 20 bytes do tipo b
 				</xs:element>
 				<xs:element name="dhHashTentativaEntrega" type="TDateTimeUTC" minOccurs="0">
 					<xs:annotation>
-						<xs:documentation>Data e hora da geração do hash da tentativa de entrega. Formato AAAA-MMDDThh:mm:ssTZD.
+						<xs:documentation>Data e hora da geração do hash da tentativa de entrega. Formato AAAA-MMDDThh:mm:ssTZD. 
 				</xs:documentation>
 					</xs:annotation>
 				</xs:element>

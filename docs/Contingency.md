@@ -225,7 +225,7 @@ $status irá conter dados padrões em condições normais.
 Essa string deverá ser arquivada, em disco ou em base de dados para uso posterior, ou apenas ignorada, e o arquivo ou registro da base de dados removida.
 
 
-## Properties
+## Propriedades
 
 public $type;
 

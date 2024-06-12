@@ -395,35 +395,19 @@ class Tools
      */
     protected function checkContingencyForWebServices(string $service)
     {
-        $permit = [
-            55 => ['SVCAN', 'SVCRS', 'EPEC', 'FSDA'],
-            65 => ['FSDA', 'EPEC', 'OFFLINE']
-        ];
-
-        $type = $this->contingency->type;
+        $type = $this->contingency->type ?? null;
         $mod = $this->modelo;
         if (!empty($type)) {
-            if (array_search($type, $permit[$mod]) === false) {
+            if ($this->modelo == 65) {
                 throw new RuntimeException(
-                    "Esse modo de contingência [$type] não é aceito "
-                    . "para o modelo [$mod]"
+                    "Não existe serviço para contingência SVCRS ou SVCAN para NFCe (modelo 65)."
                 );
             }
-        }
-
-        //se a contingencia é OFFLINE ou FSDA nenhum servidor está disponivel
-        //se a contigencia EPEC está ativa apenas o envio de Lote está ativo,
-        //então gerar um RunTimeException
-        if (
-            $type == 'FSDA'
-            || $type == 'OFFLINE'
-            || ($type == 'EPEC' && $service != 'RecepcaoEvento')
-        ) {
-            throw new RuntimeException(
-                "Quando operando em modo de contingência ["
-                . $this->contingency->type
-                . "], este serviço [$service] não está disponível."
-            );
+            if ($type !== 'SVCRS' && $type !== 'SVCAN') {
+                throw new RuntimeException(
+                    "Esse modo de contingência [$type] não possue webservice próprio, portanto não haverão envios."
+                );
+            }
         }
     }
 
@@ -460,13 +444,13 @@ class Tools
         $sigla = $uf;
         if (!$ignoreContingency) {
             $contType = $this->contingency->type;
-            if (!empty($contType) && ($contType == 'SVCRS' || $contType == 'SVCAN')) {
+            if (!empty($contType) && ($contType === 'SVCRS' || $contType === 'SVCAN')) {
                 $sigla = $contType;
             }
         }
         $stdServ = $webs->get($sigla, $tpAmb, $this->modelo);
         if (empty($stdServ->$service->url)) {
-            if ($sigla == 'SVCRS' || $sigla == 'SVCAN') {
+            if ($sigla === 'SVCRS' || $sigla === 'SVCAN') {
                 throw new \RuntimeException("Servico [$service] indisponivel na Contingencia [$sigla]");
             } else {
                 throw new \RuntimeException("Servico [$service] indisponivel UF [$uf] ou modelo [$this->modelo]");
@@ -492,9 +476,6 @@ class Tools
      */
     protected function sendRequest(string $request, array $parameters = []): string
     {
-        if (in_array($this->contingency->tpEmis, [Contingency::TPEMIS_FSDA, Contingency::TPEMIS_OFFLINE])) {
-            throw new \RuntimeException('Em contingencia FSDA ou OFFLINE não é possivel acessar os webservices.');
-        }
         $this->checkSoap();
         $response = (string) $this->soap->send(
             $this->urlService,
@@ -510,7 +491,7 @@ class Tools
     }
 
     /**
-     * Recover path to xml data base with list of soap services
+     * Recover path to xml database with list of soap services
      */
     protected function getXmlUrlPath(): string
     {
