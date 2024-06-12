@@ -334,6 +334,8 @@
        <NfeConsultaProtocolo method="nfeConsultaNF" operation="NFeConsultaProtocolo4" version="4.00">https://homologacao.nfce.fazenda.sp.gov.br/ws/NFeConsultaProtocolo4.asmx</NfeConsultaProtocolo>
        <NfeStatusServico method="nfeStatusServicoNF" operation="NFeStatusServico4" version="4.00">https://homologacao.nfce.fazenda.sp.gov.br/ws/NFeStatusServico4.asmx</NfeStatusServico>
        <RecepcaoEvento  method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="1.00">https://homologacao.nfce.fazenda.sp.gov.br/ws/NFeRecepcaoEvento4.asmx</RecepcaoEvento>
+       <RecepcaoEPEC  method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="4.00">https://homologacao.nfce.epec.fazenda.sp.gov.br/EPECws/RecepcaoEPEC.asmx</RecepcaoEPEC>
+       <EPECStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="4.00">https://homologacao.nfce.epec.fazenda.sp.gov.br/EPECws/EPECStatusServico.asmx</EPECStatusServico>
        <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">https://www.homologacao.nfce.fazenda.sp.gov.br/qrcode</NfeConsultaQR>
     </homologacao>
     <producao>
@@ -343,6 +345,8 @@
        <NfeConsultaProtocolo method="nfeConsultaNF" operation="NFeConsultaProtocolo4" version="4.00">https://nfce.fazenda.sp.gov.br/ws/NFeConsultaProtocolo4.asmx</NfeConsultaProtocolo>
        <NfeStatusServico method="nfeStatusServicoNF" operation="NFeStatusServico4" version="4.00">https://nfce.fazenda.sp.gov.br/ws/NFeStatusServico4.asmx</NfeStatusServico>
        <RecepcaoEvento  method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento4" version="1.00">https://nfce.fazenda.sp.gov.br/ws/NFeRecepcaoEvento4.asmx</RecepcaoEvento>
+       <RecepcaoEPEC  method="nfeRecepcaoEvento" operation="RecepcaoEvento" version="1.00">https://nfce.epec.fazenda.sp.gov.br/EPECws/RecepcaoEPEC.asmx</RecepcaoEPEC>
+       <EPECStatusServico method="nfeStatusServicoNF2" operation="NfeStatusServico2" version="4.00">https://nfce.epec.fazenda.sp.gov.br/EPECws/EPECStatusServico.asmx</EPECStatusServico>
        <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">https://www.nfce.fazenda.sp.gov.br/qrcode</NfeConsultaQR>
     </producao>
   </UF>
