@@ -74,7 +74,7 @@ class Convert
             $parser = new Parser($version, $this->baselayout);
             try {
                 $this->xmls[] = $parser->toXml($nota);
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 if ($errors = $parser->getErrors()) {
                     throw new ParserException(implode(', ', $errors));
                 } else {
