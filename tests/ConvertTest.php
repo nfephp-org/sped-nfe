@@ -3,6 +3,7 @@
 namespace NFePHP\NFe\Tests;
 
 use NFePHP\NFe\Convert;
+use NFePHP\NFe\Exception\ParserException;
 use PHPUnit\Framework\TestCase;
 
 class ConvertTest extends TestCase
@@ -28,6 +29,15 @@ class ConvertTest extends TestCase
         $this->assertCobranca($nfe);
         $this->assertPagamento($nfe);
         $this->assertInfoAdicional($nfe);
+    }
+
+    public function test_convert_errors()
+    {
+        $this->expectException(ParserException::class);
+        $this->expectExceptionMessageMatches('/A chave informada está incorreta/');
+        $txt = file_get_contents(__DIR__ . '/fixtures/txt/nfe_4.00_local_error.txt');
+        $conv = new Convert($txt);
+        $conv->toXml();
     }
 
     /**
