@@ -62,7 +62,7 @@ Não deixe de se cadastrar no [grupo de discussão do NFePHP](http://groups.goog
 
 *E deve ser instalado com:*
 ```bash
-composer require nfephp-org/sped-nfe
+composer require ads-system/sped-nfe
 ```
 Ou ainda alterando o composer.json do seu aplicativo inserindo:
 ```json
@@ -73,7 +73,7 @@ Ou ainda alterando o composer.json do seu aplicativo inserindo:
 
 *Para utilizar o pacote em desenvolvimento (branch master) deve ser instalado com:*
 ```bash
-composer require nfephp-org/sped-nfe:dev-master
+composer require ads-system/sped-nfe:dev-master
 ```
 
 *Ou ainda alterando o composer.json do seu aplicativo inserindo:*
