@@ -1,5 +1,5 @@
 {
-    "name": "nfephp-org/sped-nfe",
+    "name": "ads-system/sped-nfe",
     "type": "library",
     "description": "API para geração e comunicação da NFe e NFCe com as SEFAZ autorizadoras.",
     "keywords": [
@@ -8,7 +8,7 @@
         "sped",
         "nfephp"
     ],
-    "homepage": "https://github.com/nfephp-org/sped-nfe",
+    "homepage": "https://github.com/ferreira1987/sped-nfe",
     "license": [
         "LGPL-3.0-or-later",
         "GPL-3.0-or-later",
@@ -29,13 +29,13 @@
         },
         {
             "name": "Comunidade NFePHP",
-            "homepage": "https://github.com/nfephp-org/sped-nfe/graphs/contributors"
+            "homepage": "https://github.com/ferreira1987/sped-nfe/graphs/contributors"
         }
     ],
     "require": {
         "php": ">= 7.4",
-        "nfephp-org/sped-common": "^5.1.0",
-        "nfephp-org/sped-gtin": "^1.1.0",
+        "ads-system/sped-common": "^5.1.0",
+        "ads-system/sped-gtin": "^1.1.0",
         "justinrainbow/json-schema": "^5.2",
         "ext-zlib": "*",
         "ext-dom": "*",
