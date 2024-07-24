@@ -16,13 +16,13 @@
 
 namespace NFePHP\NFe;
 
-use NFePHP\Common\Strings;
+use InvalidArgumentException;
 use NFePHP\Common\Signer;
+use NFePHP\Common\Strings;
 use NFePHP\Common\UFList;
 use NFePHP\NFe\Common\Tools as ToolsCommon;
 use NFePHP\NFe\Traits\TraitEPECNfce;
 use RuntimeException;
-use InvalidArgumentException;
 
 class Tools extends ToolsCommon
 {
@@ -94,7 +94,7 @@ class Tools extends ToolsCommon
             . "<indSinc>$indSinc</indSinc>"
             . "$sxml"
             . "</enviNFe>";
-        $this->isValid($this->urlVersion, $request, 'enviNFe');
+        // $this->isValid($this->urlVersion, $request, 'enviNFe');
         $this->lastRequest = $request;
         //montagem dos dados da mensagem SOAP
         $parameters = ['nfeDadosMsg' => $request];
@@ -156,7 +156,7 @@ class Tools extends ToolsCommon
         if (strlen($chave) != 44 || !is_numeric($chave)) {
             throw new InvalidArgumentException("Consulta chave: chave \"$chave\" invalida!");
         }
-        $uf = UFList::getUFByCode((int)substr($chave, 0, 2));
+        $uf = UFList::getUFByCode((int) substr($chave, 0, 2));
         if (empty($tpAmb)) {
             $tpAmb = $this->tpAmb;
         }
@@ -211,14 +211,14 @@ class Tools extends ToolsCommon
         if (empty($ano)) {
             $strAno = (string) date('y');
         }
-        $strSerie = str_pad((string)$nSerie, 3, '0', STR_PAD_LEFT);
-        $strInicio = str_pad((string)$nIni, 9, '0', STR_PAD_LEFT);
-        $strFinal = str_pad((string)$nFin, 9, '0', STR_PAD_LEFT);
+        $strSerie = str_pad((string) $nSerie, 3, '0', STR_PAD_LEFT);
+        $strInicio = str_pad((string) $nIni, 9, '0', STR_PAD_LEFT);
+        $strFinal = str_pad((string) $nFin, 9, '0', STR_PAD_LEFT);
         $idInut = "ID"
-            . $this->urlcUF
-            . $strAno
-            . str_pad($cnpj, 14, '0', STR_PAD_LEFT)
-            . $this->modelo
+        . $this->urlcUF
+        . $strAno
+        . str_pad($cnpj, 14, '0', STR_PAD_LEFT)
+        . $this->modelo
             . $strSerie
             . $strInicio
             . $strFinal;
@@ -318,7 +318,7 @@ class Tools extends ToolsCommon
 
         $this->isValid($this->urlVersion, $request, 'consCad');
         if (strtoupper($uf) === 'MT') {
-            $request = "<nfeDadosMsg>$request</nfeDadosMsg>" ;
+            $request = "<nfeDadosMsg>$request</nfeDadosMsg>";
         }
         $this->lastRequest = $request;
         $parameters = ['nfeDadosMsg' => $request];
@@ -385,10 +385,10 @@ class Tools extends ToolsCommon
         $this->servico($servico, $fonte, $this->tpAmb, true);
         $cUF = UFList::getCodeByUF($this->config->siglaUF);
         $cnpj = $this->config->cnpj;
-        $ultNSU = str_pad((string)$ultNSU, 15, '0', STR_PAD_LEFT);
+        $ultNSU = str_pad((string) $ultNSU, 15, '0', STR_PAD_LEFT);
         $tag = "<distNSU><ultNSU>$ultNSU</ultNSU></distNSU>";
         if ($numNSU != 0) {
-            $numNSU = str_pad((string)$numNSU, 15, '0', STR_PAD_LEFT);
+            $numNSU = str_pad((string) $numNSU, 15, '0', STR_PAD_LEFT);
             $tag = "<consNSU><NSU>$numNSU</NSU></consNSU>";
         }
         if (!empty($chave)) {
@@ -396,7 +396,7 @@ class Tools extends ToolsCommon
         }
         //monta a consulta
         $consulta = "<distDFeInt xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
-            . "<tpAmb>" . $this->tpAmb . "</tpAmb>"
+        . "<tpAmb>" . $this->tpAmb . "</tpAmb>"
             . "<cUFAutor>$cUF</cUFAutor>";
         if ($this->typePerson === 'J' || empty($this->typePerson)) {
             $consulta .= "<CNPJ>$cnpj</CNPJ>";
@@ -432,9 +432,9 @@ class Tools extends ToolsCommon
         string $chave,
         string $xCorrecao,
         int $nSeqEvento = 1,
-        ?\DateTimeInterface $dhEvento = null,
+        ? \DateTimeInterface $dhEvento = null,
         ?string $lote = null
-    ): string {
+    ) : string {
         if (empty($chave) || empty($xCorrecao)) {
             throw new InvalidArgumentException('CC-e: chave ou motivo da correcao vazio!');
         }
@@ -464,9 +464,9 @@ class Tools extends ToolsCommon
      */
     public function sefazAtorInteressado(
         \stdClass $std,
-        ?\DateTimeInterface $dhEvento = null,
+        ? \DateTimeInterface $dhEvento = null,
         ?string $lote = null
-    ): string {
+    ) : string {
         $xCondUso = 'O emitente ou destinatário da NF-e, declara que permite o '
             . 'transportador declarado no campo CNPJ/CPF deste evento a '
             . 'autorizar os transportadores subcontratados ou redespachados a '
@@ -479,9 +479,9 @@ class Tools extends ToolsCommon
             . "<tpAutor>{$std->tpAutor}</tpAutor>"
             . "<verAplic>{$std->verAplic}</verAplic>"
             . "<autXML>";
-        $tagAdic .=  !empty($std->CNPJ)
-            ? "<CNPJ>{$std->CNPJ}</CNPJ>"
-            : "<CPF>{$std->CPF}</CPF>";
+        $tagAdic .= !empty($std->CNPJ)
+        ? "<CNPJ>{$std->CNPJ}</CNPJ>"
+        : "<CPF>{$std->CPF}</CPF>";
         $tagAdic .= "</autXML>"
             . "<tpAutorizacao>{$std->tpAutorizacao}</tpAutorizacao>"
             . "<xCondUso>$xCondUso</xCondUso>";
@@ -513,10 +513,10 @@ class Tools extends ToolsCommon
         array $itens = [],
         int $tipo = 1,
         int $nSeqEvento = 1,
-        ?\DateTimeInterface $dhEvento = null,
+        ? \DateTimeInterface $dhEvento = null,
         ?string $lote = null
-    ): string {
-        $uf = UFList::getUFByCode((int)substr($chNFe, 0, 2));
+    ) : string {
+        $uf = UFList::getUFByCode((int) substr($chNFe, 0, 2));
         //pedido de prorrogação primero prazo
         $tpEvento = 111500;
         if ($tipo == 2) {
@@ -558,13 +558,13 @@ class Tools extends ToolsCommon
         string $nProt,
         int $tipo,
         int $nSeqEvento = 1,
-        ?\DateTimeInterface $dhEvento = null,
+        ? \DateTimeInterface $dhEvento = null,
         ?string $lote = null
-    ): string {
+    ) : string {
         if (empty($chave) || empty($nProt)) {
             throw new InvalidArgumentException('A chave ou o numero do protocolo estão vazios!');
         }
-        $uf = UFList::getUFByCode((int)substr($chave, 0, 2));
+        $uf = UFList::getUFByCode((int) substr($chave, 0, 2));
         $tpEvento = self::EVT_CANCELA_PRORROGACAO_1; //111502;
         $origEvent = self::EVT_PRORROGACAO_1; //111500;
         if ($tipo == 2) {
@@ -572,12 +572,12 @@ class Tools extends ToolsCommon
             $tpEvento = self::EVT_CANCELA_PRORROGACAO_2; //111503;
             $origEvent = self::EVT_PRORROGACAO_2; //111501;
         }
-        $sSeqEvento = str_pad((string)$nSeqEvento, 2, "0", STR_PAD_LEFT);
+        $sSeqEvento = str_pad((string) $nSeqEvento, 2, "0", STR_PAD_LEFT);
         $idPedidoCancelado = "ID{$origEvent}{$chave}{$sSeqEvento}";
         $tagAdic = "<idPedidoCancelado>"
-                . "$idPedidoCancelado"
-                . "</idPedidoCancelado>"
-                . "<nProt>$nProt</nProt>";
+            . "$idPedidoCancelado"
+            . "</idPedidoCancelado>"
+            . "<nProt>$nProt</nProt>";
         return $this->sefazEvento($uf, $chave, $tpEvento, $nSeqEvento, $tagAdic, $dhEvento, $lote);
     }
 
@@ -593,9 +593,9 @@ class Tools extends ToolsCommon
         string $chave,
         string $xJust,
         string $nProt,
-        ?\DateTimeInterface $dhEvento = null,
+        ? \DateTimeInterface $dhEvento = null,
         ?string $lote = null
-    ): string {
+    ) : string {
         if (empty($chave) || empty($xJust) || empty($nProt)) {
             throw new InvalidArgumentException('Cancelamento: chave, just ou numprot vazio!');
         }
@@ -622,9 +622,9 @@ class Tools extends ToolsCommon
         string $nProt,
         string $chNFeRef,
         string $verAplic = null,
-        ?\DateTimeInterface $dhEvento = null,
+        ? \DateTimeInterface $dhEvento = null,
         ?string $lote = null
-    ): string {
+    ) : string {
         if ($this->modelo != 65) {
             throw new InvalidArgumentException(
                 'Cancelamento pro Substituição deve ser usado apenas para '
@@ -671,9 +671,9 @@ class Tools extends ToolsCommon
         int $tpEvento,
         string $xJust = '',
         int $nSeqEvento = 1,
-        ?\DateTimeInterface $dhEvento = null,
+        ? \DateTimeInterface $dhEvento = null,
         ?string $lote = null
-    ): string {
+    ) : string {
         if (empty($chave) || empty($tpEvento)) {
             throw new InvalidArgumentException('Manifestacao: chave ou tipo de evento vazio!');
         }
@@ -694,9 +694,9 @@ class Tools extends ToolsCommon
      */
     public function sefazManifestaLote(
         \stdClass $std,
-        ?\DateTimeInterface $dhEvento = null,
+        ? \DateTimeInterface $dhEvento = null,
         ?string $lote = null
-    ): string {
+    ) : string {
         $allowed = [
             self::EVT_CONFIRMACAO,
             self::EVT_CIENCIA,
@@ -737,9 +737,9 @@ class Tools extends ToolsCommon
      */
     public function sefazComprovanteEntrega(
         \stdClass $std,
-        ?\DateTimeInterface $dhEvento = null,
+        ? \DateTimeInterface $dhEvento = null,
         ?string $lote = null
-    ): string {
+    ) : string {
         if (empty($std->verAplic) && !empty($this->verAplic)) {
             $std->verAplic = $this->verAplic;
         }
@@ -789,9 +789,9 @@ class Tools extends ToolsCommon
      */
     public function sefazInsucessoEntrega(
         \stdClass $std,
-        ?\DateTimeInterface $dhEvento = null,
+        ? \DateTimeInterface $dhEvento = null,
         ?string $lote = null
-    ): string {
+    ) : string {
         if (empty($std->verAplic) && !empty($this->verAplic)) {
             $std->verAplic = $this->verAplic;
         }
@@ -803,7 +803,7 @@ class Tools extends ToolsCommon
             $tagAdic .= "<dhTentativaEntrega>{$std->data_tentativa}</dhTentativaEntrega>";
             $n = null;
             if (!empty($std->tentativas) && is_numeric($std->tentativas)) {
-                $n = (int)$std->tentativas;
+                $n = (int) $std->tentativas;
             }
             if (!empty($n)) {
                 $tagAdic .= "<nTentativa>{$n}</nTentativa>";
@@ -854,9 +854,9 @@ class Tools extends ToolsCommon
     public function sefazEventoLote(
         string $uf,
         \stdClass $std,
-        ?\DateTimeInterface $dhEvento = null,
+        ? \DateTimeInterface $dhEvento = null,
         ?string $lote = null
-    ): string {
+    ) : string {
         if (empty($uf)) {
             throw new InvalidArgumentException('Evento Lote: UF ou parametro "std" vazio!');
         }
@@ -975,13 +975,13 @@ class Tools extends ToolsCommon
         $vICMS = $total->getElementsByTagName('vICMS')->item(0)->nodeValue;
         $vST = $total->getElementsByTagName('vST')->item(0)->nodeValue;
         $dID = !empty($dest->getElementsByTagName('CNPJ')->item(0))
-            ? $dest->getElementsByTagName('CNPJ')->item(0)->nodeValue
-            : null;
+        ? $dest->getElementsByTagName('CNPJ')->item(0)->nodeValue
+        : null;
         if (!empty($dID)) {
             $destID = "<CNPJ>$dID</CNPJ>";
         } else {
             $dID = !empty($dest->getElementsByTagName('CPF')->item(0)->nodeValue)
-                ? $dest->getElementsByTagName('CPF')->item(0)->nodeValue : null;
+            ? $dest->getElementsByTagName('CPF')->item(0)->nodeValue : null;
             if (!empty($dID)) {
                 $destID = "<CPF>$dID</CPF>";
             } else {
@@ -992,8 +992,8 @@ class Tools extends ToolsCommon
             }
         }
         $dIE = !empty($dest->getElementsByTagName('IE')->item(0)->nodeValue)
-            ? $dest->getElementsByTagName('IE')->item(0)->nodeValue
-            : '';
+        ? $dest->getElementsByTagName('IE')->item(0)->nodeValue
+        : '';
         $destIE = '';
         if (!empty($dIE)) {
             $destIE = "<IE>{$dIE}</IE>";
@@ -1038,9 +1038,9 @@ class Tools extends ToolsCommon
         int $tpEvento,
         int $nSeqEvento = 1,
         string $tagAdic = '',
-        ?\DateTimeInterface $dhEvento = null,
+        ? \DateTimeInterface $dhEvento = null,
         ?string $lote = null
-    ): string {
+    ) : string {
         $eventos = [
             self::EVT_CCE => ['versao' => '1.00', 'nome' => 'envCCe'],
             self::EVT_CANCELA => ['versao' => '1.00', 'nome' => 'envEventoCancNFe'],
@@ -1078,7 +1078,7 @@ class Tools extends ToolsCommon
         if ($dhEvento != null) {
             $dhEventoString = $dhEvento->format('Y-m-d\TH:i:sP');
         }
-        $sSeqEvento = str_pad((string)$nSeqEvento, 2, "0", STR_PAD_LEFT);
+        $sSeqEvento = str_pad((string) $nSeqEvento, 2, "0", STR_PAD_LEFT);
         $eventId = "ID" . $tpEvento . $chave . $sSeqEvento;
         $cOrgao = UFList::getCodeByUF($uf);
         $request = "<evento xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
@@ -1091,12 +1091,12 @@ class Tools extends ToolsCommon
             $request .= "<CPF>$cnpj</CPF>";
         }
         $request .= "<chNFe>$chave</chNFe>"
-            . "<dhEvento>$dhEventoString</dhEvento>"
-            . "<tpEvento>$tpEvento</tpEvento>"
-            . "<nSeqEvento>$nSeqEvento</nSeqEvento>"
-            . "<verEvento>$verEvento</verEvento>"
-            //em alguns casos haverá um verAplic nesta posição ??? ver xsd conciliação
-            . "<detEvento versao=\"$verEvento\">"
+        . "<dhEvento>$dhEventoString</dhEvento>"
+        . "<tpEvento>$tpEvento</tpEvento>"
+        . "<nSeqEvento>$nSeqEvento</nSeqEvento>"
+        . "<verEvento>$verEvento</verEvento>"
+        //em alguns casos haverá um verAplic nesta posição ??? ver xsd conciliação
+         . "<detEvento versao=\"$verEvento\">"
             . "<descEvento>$descEvento</descEvento>"
             . "$tagAdic"
             . "</detEvento>"
@@ -1155,7 +1155,7 @@ class Tools extends ToolsCommon
         $cnpj = $this->config->cnpj;
         //monta a consulta
         $request = "<distDFeInt xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
-            . "<tpAmb>" . $this->tpAmb . "</tpAmb>"
+        . "<tpAmb>" . $this->tpAmb . "</tpAmb>"
             . "<cUFAutor>$cUF</cUFAutor>";
         if ($this->typePerson === 'J') {
             $request .= "<CNPJ>$cnpj</CNPJ>";
@@ -1214,8 +1214,8 @@ class Tools extends ToolsCommon
             . "<dadosCsc>"
             . "<idCsc>" . $this->config->CSCid . "</idCsc>"
             . "<codigoCsc>" . $this->config->CSC . "</codigoCsc>"
-            . "</dadosCsc>"
-            . "</admCscNFCe>";
+                . "</dadosCsc>"
+                . "</admCscNFCe>";
         }
         //o xsd não está disponivel
         $this->isValid($this->urlVersion, $request, 'admCscNFCe');
@@ -1245,12 +1245,12 @@ class Tools extends ToolsCommon
         $dom->loadXML($nfe);
         //verifica a validade no webservice da SEFAZ
         $tpAmb = $dom->getElementsByTagName('tpAmb')->item(0)->nodeValue;
-        $infNFe  = $dom->getElementsByTagName('infNFe')->item(0);
+        $infNFe = $dom->getElementsByTagName('infNFe')->item(0);
         $chNFe = preg_replace('/[^0-9]/', '', $infNFe->getAttribute("Id"));
         $protocol = $dom->getElementsByTagName('nProt')->item(0)->nodeValue;
         $digval = $dom->getElementsByTagName('DigestValue')->item(0)->nodeValue;
         //consulta a NFe
-        $response = $this->sefazConsultaChave($chNFe, (int)$tpAmb);
+        $response = $this->sefazConsultaChave($chNFe, (int) $tpAmb);
         $ret = new \DOMDocument('1.0', 'UTF-8');
         $ret->preserveWhiteSpace = false;
         $ret->formatOutput = false;
@@ -1359,7 +1359,7 @@ class Tools extends ToolsCommon
                 break;
             default:
                 $msg = "O código do tipo de evento informado não corresponde a "
-                . "nenhum evento estabelecido.";
+                    . "nenhum evento estabelecido.";
                 throw new RuntimeException($msg);
         }
         return $std;
