@@ -16,6 +16,7 @@
 
 namespace NFePHP\NFe;
 
+use NFePHP\Common\DOMImproved;
 use NFePHP\Common\Strings;
 use NFePHP\Common\Signer;
 use NFePHP\Common\UFList;
@@ -844,6 +845,47 @@ class Tools extends ToolsCommon
     }
 
     /**
+     * Request event of financial reconciliation
+     * @param \stdClass $std
+     * @param \DateTimeInterface|null $dhEvento
+     * @param string|null $lote
+     * @return string
+     * @throws \DOMException
+     */
+    public function sefazConciliacao(
+        \stdClass $std,
+        ?\DateTimeInterface $dhEvento = null,
+        ?string $lote = null
+    ): string {
+        if (empty($std->verAplic) && !empty($this->verAplic)) {
+            $std->verAplic = $this->verAplic;
+        }
+        $tpEvento = self::EVT_CONCILIACAO;
+        $cod = UFList::getCodeByUF($this->config->siglaUF);
+        $tagAdic = "<verAplic>{$std->verAplic}</verAplic>";
+        if (!empty($std->detPag) && is_array($std->detPag)) {
+            foreach ($std->detPag as $pag) {
+                $tagAdic .= $this->tagdetPag($pag);
+            }
+        }
+        //cancela um evento anterior de conciliação financeira
+        if ($std->cancela) {
+            $tpEvento = self::EVT_CANCELA_CONCILIACAO;
+            $tagAdic = "<verAplic>{$std->verAplic}</verAplic>"
+            . "<nProtEvento>{$std->protocolo}</nProtEvento>";
+        }
+        return $this->sefazEvento(
+            'AN',
+            $std->chNFe,
+            $tpEvento,
+            $std->nSeqEvento,
+            $tagAdic,
+            $dhEvento,
+            $lote
+        );
+    }
+
+    /**
      * Send event to SEFAZ in batch
      * @param string $uf
      * @param \stdClass $std
@@ -1059,6 +1101,8 @@ class Tools extends ToolsCommon
             self::EVT_EPEC => ['versao' => '1.00', 'nome' => 'envEPEC'],
             self::EVT_INSUCESSO_ENTREGA => ['versao' => '1.00', 'nome' => 'envEventoInsucessoNFe'],
             self::EVT_CANCELA_INSUCESSO_ENTREGA => ['versao' => '1.00', 'nome' => 'envEventoCancInsucessoNFe'],
+            self::EVT_CONCILIACAO => ['versao' => '1.00', 'nome' => 'envEventoEConf'],
+            self::EVT_CANCELA_CONCILIACAO => ['versao' => '1.00', 'nome' => 'envEventoCancEConf'],
         ];
         $verEvento = $this->urlVersion;
         if (!empty($eventos[$tpEvento])) {
@@ -1357,11 +1401,110 @@ class Tools extends ToolsCommon
                 $std->alias = 'EventoCancInsucessoNFe';
                 $std->desc = 'Cancelamento Insucesso na Entrega da NF-e';
                 break;
+            case self::EVT_CONCILIACAO:
+                $std->alias = 'EventoEConf';
+                $std->desc = 'ECONF';
+                break;
+            case self::EVT_CANCELA_CONCILIACAO:
+                $std->alias = 'EventoCancEConf';
+                $std->desc = 'Cancelamento Conciliação Financeira';
+                break;
             default:
                 $msg = "O código do tipo de evento informado não corresponde a "
                 . "nenhum evento estabelecido.";
                 throw new RuntimeException($msg);
         }
         return $std;
+    }
+
+    /**
+     * Cria detPag para Consciliação financeira
+     * @param \stdClass $pag
+     * @return false|string
+     * @throws \DOMException
+     */
+    private function tagdetPag(\stdClass $pag)
+    {
+        $dom = new DOMImproved('1.0', 'UTF-8');
+        $dom->preserveWhiteSpace = false;
+        $dom->formatOutput = false;
+        $node = $dom->createElement('detPag');
+        $dom->addChild(
+            $node,
+            "indPag",
+            $pag->indPag ?? null,
+            false
+        );
+        $dom->addChild(
+            $node,
+            "tPag",
+            $pag->tPag ?? '',
+            true
+        );
+        $dom->addChild(
+            $node,
+            "xPag",
+            !empty($pag->xPag) ? Strings::replaceUnacceptableCharacters($pag->xPag) : null,
+            false
+        );
+        $dom->addChild(
+            $node,
+            "vPag",
+            number_format($pag->vPag, 2, '.', ''),
+            true
+        );
+        $dom->addChild(
+            $node,
+            "dPag",
+            $pag->dPag ?? '',
+            true
+        );
+        if (!empty($pag->CNPJPag) && !empty($pag->UFPag)) {
+            $dom->addChild(
+                $node,
+                "CNPJPag",
+                $pag->CNPJPag,
+                true
+            );
+            $dom->addChild(
+                $node,
+                "UFPag",
+                $pag->UFPag,
+                true
+            );
+            $dom->addChild(
+                $node,
+                "CNPJIF",
+                $pag->CNPJIF ?? null,
+                false
+            );
+        }
+        $dom->addChild(
+            $node,
+            "tBand",
+            $pag->tBand ?? null,
+            false
+        );
+        $dom->addChild(
+            $node,
+            "cAut",
+            $pag->cAut ?? null,
+            false
+        );
+        if (!empty($pag->CNPJReceb) && !empty($pag->UFReceb)) {
+            $dom->addChild(
+                $node,
+                "CNPJReceb",
+                $pag->CNPJReceb,
+                true
+            );
+            $dom->addChild(
+                $node,
+                "UFReceb",
+                $pag->UFReceb,
+                true
+            );
+        }
+        return $dom->saveXML($node);
     }
 }
