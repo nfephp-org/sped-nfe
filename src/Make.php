@@ -333,6 +333,10 @@ class Make
      * @var bool
      */
     protected $flagISSQNCalc = false;
+    /**
+     * @var bool
+     */
+    protected $checkgtin = false;
 
     /**
      * Função construtora cria um objeto DOMDocument
@@ -399,6 +403,16 @@ class Make
     public function setOnlyAscii(bool $option = false)
     {
         $this->replaceAccentedChars = $option;
+    }
+
+    /**
+     * Set if GTIN is or not validate
+     * @param bool $option
+     * @return void
+     */
+    public function setCheckGtin(bool $option = true)
+    {
+        $this->checkgtin = $option;
     }
 
     /**
@@ -1830,18 +1844,19 @@ class Make
         $cean = !empty($std->cEAN) ? trim(strtoupper($std->cEAN)) : '';
         $ceantrib = !empty($std->cEANTrib) ? trim(strtoupper($std->cEANTrib)) : '';
         //throw exception if not is Valid
-        try {
-            Gtin::isValid($cean);
-        } catch (\InvalidArgumentException $e) {
-            $this->errors[] = "cEANT {$cean} " . $e->getMessage();
-        }
+        if ($this->checkgtin) {
+            try {
+                Gtin::isValid($cean);
+            } catch (\InvalidArgumentException $e) {
+                $this->errors[] = "cEANT {$cean} " . $e->getMessage();
+            }
 
-        try {
-            Gtin::isValid($ceantrib);
-        } catch (\InvalidArgumentException $e) {
-            $this->errors[] = "cEANTrib {$ceantrib} " . $e->getMessage();
+            try {
+                Gtin::isValid($ceantrib);
+            } catch (\InvalidArgumentException $e) {
+                $this->errors[] = "cEANTrib {$ceantrib} " . $e->getMessage();
+            }
         }
-
         $CRT = $this->emit->getElementsByTagName("CRT")->item(0)->nodeValue ?? null;
         $idDest = $this->ide->getElementsByTagName("idDest")->item(0)->nodeValue ?? null;
         $allowEmptyNcm = $CRT == 4 && $idDest == 1;
