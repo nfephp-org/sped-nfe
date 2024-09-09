@@ -4770,7 +4770,7 @@ class Make
         $this->stdTot->vFCPST += (float) !empty($std->vFCPST) ? $std->vFCPST : 0;
         $this->stdTot->vFCPSTRet += (float) !empty($std->vFCPSTRet) ? $std->vFCPSTRet : 0;
 
-        $CRT = $this->emit->getElementsByTagName("CRT")->item(0)->nodeValue ?? null;
+        $CRT = (isset($this->emit) && $this->emit->getElementsByTagName("CRT")->item(0)->nodeValue) ?? null;
         $allowEmptyOrig = $CRT == 4 && in_array($std->CSOSN, [
             '102', '103', '300', '400', '900',
         ]);
