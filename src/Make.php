@@ -1857,17 +1857,17 @@ class Make
                 $this->errors[] = "cEANTrib {$ceantrib} " . $e->getMessage();
             }
         }
-        
+
         $CRT = null;
         if (!empty($this->emit->getElementsByTagName("CRT")->item(0))) {
              $CRT = (int) $this->emit->getElementsByTagName("CRT")->item(0)->nodeValue;
         }
-        
+
         $idDest = null;
         if (!empty($this->ide->getElementsByTagName("idDest")->item(0))) {
             $idDest = (int) $this->ide->getElementsByTagName("idDest")->item(0)->nodeValue;
         }
-        
+
         $allowEmptyNcm = $CRT == 4 && $idDest == 1;
 
         if ($allowEmptyNcm && empty($std->NCM)) {
@@ -4783,7 +4783,7 @@ class Make
         if (!empty($this->emit->getElementsByTagName("CRT")->item(0))) {
             $CRT = (int) $this->emit->getElementsByTagName("CRT")->item(0)->nodeValue;
         }
-        
+
         $allowEmptyOrig = $CRT == 4 && in_array($std->CSOSN, [
             '102', '103', '300', '400', '900',
         ]);
