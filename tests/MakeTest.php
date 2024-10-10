@@ -1079,6 +1079,34 @@ class MakeTest extends TestCase
         $this->validarCriacaoTag2($std, $element, 'infRespTec', ['CSRT']);
     }
 
+    public function test_tagagropecuario_defencivo(): void
+    {
+        $std = new \stdClass();
+        $std->nReceituario = '1234567890ABCDEFGHIJ'; //Obrigatório se houver defencivo 1-20 caracteres, opcional caso contrario
+        $std->CPFRespTec = '12345678901'; //Obrigatório se houver defencivo 11 digitos, opcional caso contrario
+        //$std->tpGuia = '1'; //Obrigatório se houver guia 1-GTA, 2-TTA, 3-DTA, 4-ATV, 5-PTV, 6-GVT, 7-GF, opcional caso contrario
+        //$std->UFGuia = 'MG'; //opcional
+        //$std->serieGuia = 'A12345678'; //opcional 9 caracteres
+        //$std->nGuia = '123456789'; //Obrigatório se houver guia 9 digitos, opcional caso contrario
+
+        $element = $this->make->tagagropecuario($std);
+        $this->validarCriacaoTag2($std, $element, 'agropecuario', ['nReceituario', 'CPFRespTec']);
+    }
+
+    public function test_tagagropecuario_guia(): void
+    {
+        $std = new \stdClass();
+        //$std->nReceituario = '1234567890ABCDEFGHIJ'; //Obrigatório se houver defencivo 1-20 caracteres, opcional caso contrario
+        //$std->CPFRespTec = '12345678901'; //Obrigatório se houver defencivo 11 digitos, opcional caso contrario
+        $std->tpGuia = '1'; //Obrigatório se houver guia 1-GTA, 2-TTA, 3-DTA, 4-ATV, 5-PTV, 6-GVT, 7-GF, opcional caso contrario
+        $std->UFGuia = 'MG'; //opcional
+        $std->serieGuia = 'A12345678'; //opcional 9 caracteres
+        $std->nGuia = '123456789'; //Obrigatório se houver guia 9 digitos, opcional caso contrario
+
+        $element = $this->make->tagagropecuario($std);
+        $this->validarCriacaoTag2($std, $element, 'agropecuario', ['tpGuia']);
+    }
+
     private function validarCriacaoTag2(
         \stdClass $std,
         \DOMElement $element,
