@@ -2316,8 +2316,8 @@ class Make
         $this->dom->addChild(
             $adi,
             "nAdicao",
-            $std->nAdicao,
-            true,
+            $std->nAdicao ?? null,
+            false,
             $identificador . "[item $std->item] Número da Adição"
         );
         $this->dom->addChild(
