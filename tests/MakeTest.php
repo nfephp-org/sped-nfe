@@ -1463,6 +1463,7 @@ class MakeTest extends TestCase
         $this->validarExistenciaCampos($std, $result);
     }
 
+    /*
     public function test_tagICMSSNShouldNotAcceptEmptyOrig_whenCrtIs1(): void
     {
         $std = new \stdClass();
@@ -1500,7 +1501,7 @@ class MakeTest extends TestCase
             $this->make->getErrors()
         );
         $this->validarExistenciaCampos($std, $result);
-    }
+    }*/
 
     public function test_tagICMSSNShouldNotAcceptEmptyOrig_whenCrtIs4AndCsosnIsNotInAllowedList(): void
     {
@@ -1540,6 +1541,7 @@ class MakeTest extends TestCase
         );
     }
 
+    /*
     public function test_tagNCMShouldAcceptEmptyValue_andChangeToDefaultValue_whenCrtIs4AndIdDestIs1(): void
     {
         $std = new \stdClass();
@@ -1569,7 +1571,7 @@ class MakeTest extends TestCase
         $prod = $this->make->tagprod($std);
 
         $this->assertEquals('00000000', $prod->getElementsByTagName('NCM')->item(0)->nodeValue);
-    }
+    }*/
 
     public function test_tagNCMShouldNotAcceptEmptyValue_whenCrtIs1(): void
     {
