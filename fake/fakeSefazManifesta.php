@@ -38,14 +38,14 @@ try {
     $tools->model('55');
     $tools->setVerAplic('5.1.34');
     $tools->loadSoapClass($soap);
-    
+
     $chave = "35345678901234567890123456789012345678901234";
-    $justificativa = null;
+    $justificativa = '';
     $tipo = $tools::EVT_CIENCIA;
     $response = $tools->sefazManifesta($chave, $tipo, $justificativa);
 
     echo FakePretty::prettyPrint($response);
-    
+
 } catch (\Exception $e) {
     echo $e->getMessage();
 }

@@ -21,6 +21,7 @@ use NFePHP\Common\Strings;
 use NFePHP\Common\Signer;
 use NFePHP\Common\UFList;
 use NFePHP\NFe\Common\Tools as ToolsCommon;
+use NFePHP\NFe\Common\Webservices;
 use NFePHP\NFe\Traits\TraitEPECNfce;
 use RuntimeException;
 use InvalidArgumentException;
@@ -869,13 +870,24 @@ class Tools extends ToolsCommon
             }
         }
         //cancela um evento anterior de conciliação financeira
-        if ($std->cancela) {
+        if ($std->cancelar) {
             $tpEvento = self::EVT_CANCELA_CONCILIACAO;
             $tagAdic = "<verAplic>{$std->verAplic}</verAplic>"
             . "<nProtEvento>{$std->protocolo}</nProtEvento>";
         }
+        /*
+            NT 2024.002 1.00 Maio/2024, comentário P08 elemento cOrgao
+            Se for referente a uma NFe (mod 55) usar a SVRS
+            Se for referente a uma BFCe (mod 65) usar a URL normal
+         */
+        $uf = $this->config->siglaUF;
+        if ((int)$this->modelo === 55) {
+            $uf = 'SVRS';
+        } else {
+            $uf = Webservices::getAuth($uf, $this->modelo);
+        }
         return $this->sefazEvento(
-            'AN',
+            $uf,
             $std->chNFe,
             $tpEvento,
             $std->nSeqEvento,
@@ -1124,7 +1136,12 @@ class Tools extends ToolsCommon
         }
         $sSeqEvento = str_pad((string)$nSeqEvento, 2, "0", STR_PAD_LEFT);
         $eventId = "ID" . $tpEvento . $chave . $sSeqEvento;
-        $cOrgao = UFList::getCodeByUF($uf);
+        //NT 2024.002 versão 1.00 - Maio 2024, comentário P08 elemento cOrgao
+        if ($tpEvento === self::EVT_CONCILIACAO && $uf === 'SVRS') {
+            $cOrgao = 92;
+        } else {
+            $cOrgao = UFList::getCodeByUF($uf);
+        }
         $request = "<evento xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
             . "<infEvento Id=\"$eventId\">"
             . "<cOrgao>$cOrgao</cOrgao>"
@@ -1139,7 +1156,6 @@ class Tools extends ToolsCommon
             . "<tpEvento>$tpEvento</tpEvento>"
             . "<nSeqEvento>$nSeqEvento</nSeqEvento>"
             . "<verEvento>$verEvento</verEvento>"
-            //em alguns casos haverá um verAplic nesta posição ??? ver xsd conciliação
             . "<detEvento versao=\"$verEvento\">"
             . "<descEvento>$descEvento</descEvento>"
             . "$tagAdic"
@@ -1170,7 +1186,6 @@ class Tools extends ToolsCommon
             $this->isValid($this->urlVersion, $request, 'envEvento');
         }
         $this->lastRequest = $request;
-        //return $request;
         $parameters = ['nfeDadosMsg' => $request];
         $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
         $this->lastResponse = $this->sendRequest($body, $parameters);

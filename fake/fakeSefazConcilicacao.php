@@ -15,7 +15,7 @@ try {
         "tpAmb"       => 2,
         "razaosocial" => "SUA RAZAO SOCIAL LTDA",
         "cnpj"        => "99999999999999",
-        "siglaUF"     => "SP",
+        "siglaUF"     => "MG",
         "schemes"     => "PL_009_V4",
         "versao"      => '4.00',
         "tokenIBPT"   => "AAAAAAA",
@@ -70,13 +70,17 @@ try {
     $std->detPag[0]->dPag = '2024-07-30'; //Obrigatório data do pagamento
 
     //grupo OPCIONAL de informações sobre envolvidos no pagamento
+
     $std->detPag[0]->CNPJPag = '12345678901234'; //opcional, caso seja informado a UFPag também deverá ser informada
     // CNPJ transacional do pagamento - Preencher informando o CNPJ do estabelecimento onde o pagamento foi
     // processado/transacionado/recebido quando a emissão do documento fiscal ocorrer em estabelecimento distinto
+
     $std->detPag[0]->UFPag = 'SP'; //opcional, caso seja informado a CNPJPag também deverá ser informada
     // UF do CNPJ do estabelecimento onde o pagamento foi processado/transacionado/recebido
+
     $std->detPag[0]->CNPJIF = '11111111111111'; //opcinal
     //CNPJ da instituição financeira, de pagamento, adquirente ou subadquirente.
+
     $std->detPag[0]->tBand = '20'; //opcional Bandeira da operadora de cartão
     //01    Visa
     //02    Mastercard

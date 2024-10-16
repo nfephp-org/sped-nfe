@@ -40,12 +40,7 @@ class Webservices
      */
     public function get(string $sigla, $amb, int $modelo): \stdClass
     {
-        $autfile = realpath(__DIR__ . '/../../storage/autorizadores.json');
-        $autorizadores = json_decode(file_get_contents($autfile), true);
-        if (!key_exists($sigla, $autorizadores[$modelo])) {
-            throw new \RuntimeException("Nao existe autorizador [$sigla] para os webservices do modelo [$modelo]");
-        }
-        $auto = $autorizadores[$modelo][$sigla];
+        $auto = self::getAuth($sigla, $modelo);
         if (empty($auto) || empty($this->std)) {
             throw new \RuntimeException('Falhou autorizador, parece vazio');
         }
@@ -70,6 +65,22 @@ class Webservices
             }
         }
         return $svw;
+    }
+
+    /**
+     * Obtem a sigla do autorizador para um estado origem e modelo de documento fiscal
+     * @param string $sigla
+     * @param int $modelo
+     * @return string
+     */
+    public static function getAuth(string $sigla, int $modelo): string
+    {
+        $autfile = realpath(__DIR__ . '/../../storage/autorizadores.json');
+        $autorizadores = json_decode(file_get_contents($autfile), true);
+        if (!key_exists($sigla, $autorizadores[$modelo])) {
+            throw new \RuntimeException("Nao existe autorizador [$sigla] para os webservices do modelo [$modelo]");
+        }
+        return $autorizadores[$modelo][$sigla];
     }
 
     /**
