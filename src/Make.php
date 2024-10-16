@@ -791,15 +791,25 @@ class Make
     /**
      * Chave de acesso da NF-e referenciada BA02 pai BA01
      * tag NFe/infNFe/ide/NFref/refNFe
+     * @param stdClass $std
+     * @return DOMElement
+     * @throws \DOMException
      */
     public function tagrefNFe(stdClass $std): DOMElement
     {
-        $possible = ['refNFe'];
+        $possible = ['refNFe', 'refNFeSig'];
         $std = $this->equilizeParameters($std, $possible);
-
+        if (empty($std->refNFe) && empty($std->refNFe)) {
+            return $this->dom->createElement("refNFe", '');
+        }
         $num = $this->buildNFref();
-        $refNFe = $this->dom->createElement("refNFe", $std->refNFe);
-        $this->dom->appChild($this->aNFref[$num - 1], $refNFe);
+        if (!empty($std->refNFe)) {
+            $refNFe = $this->dom->createElement("refNFe", $std->refNFe);
+            $this->dom->appChild($this->aNFref[$num - 1], $refNFe);
+        } else {
+            $refNFe = $this->dom->createElement("refNFeSig", $std->refNFeSig);
+            $this->dom->appChild($this->aNFref[$num - 1], $refNFe);
+        }
         return $refNFe;
     }
 
@@ -1864,6 +1874,7 @@ class Make
             }
         }
 
+        /*
         $CRT = null;
         if (!empty($this->emit->getElementsByTagName("CRT")->item(0))) {
              $CRT = (int) $this->emit->getElementsByTagName("CRT")->item(0)->nodeValue;
@@ -1879,7 +1890,7 @@ class Make
         if ($allowEmptyNcm && empty($std->NCM)) {
             $std->NCM = '00000000';
         }
-
+        */
         $identificador = 'I01 <prod> - ';
         $prod = $this->dom->createElement("prod");
         $this->dom->addChild(
@@ -4785,6 +4796,7 @@ class Make
         $this->stdTot->vFCPST += (float) !empty($std->vFCPST) ? $std->vFCPST : 0;
         $this->stdTot->vFCPSTRet += (float) !empty($std->vFCPSTRet) ? $std->vFCPSTRet : 0;
 
+        /*
         $CRT = null;
         if (!empty($this->emit->getElementsByTagName("CRT")->item(0))) {
             $CRT = (int) $this->emit->getElementsByTagName("CRT")->item(0)->nodeValue;
@@ -4793,7 +4805,7 @@ class Make
         $allowEmptyOrig = $CRT == 4 && in_array($std->CSOSN, [
             '102', '103', '300', '400', '900',
         ]);
-
+        */
         switch ($std->CSOSN) {
             case '101':
                 $icmsSN = $this->dom->createElement("ICMSSN101");
@@ -4835,10 +4847,9 @@ class Make
                 $this->dom->addChild(
                     $icmsSN,
                     'orig',
-                    $std->orig,
-                    !$allowEmptyOrig,
-                    "[item $std->item] Origem da mercadoria",
-                    $allowEmptyOrig,
+                    $std->orig ?? null, //poderá ser null caso CRT=4 e 102
+                    false,
+                    "[item $std->item] Origem da mercadoria"
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -5141,10 +5152,9 @@ class Make
                 $this->dom->addChild(
                     $icmsSN,
                     'orig',
-                    $std->orig,
-                    !$allowEmptyOrig,
+                    $std->orig ?? null, //poderá ser null caso CRT=4 e 900
+                    false,
                     "[item $std->item] Origem da mercadoria",
-                    $allowEmptyOrig,
                 );
                 $this->dom->addChild(
                     $icmsSN,
