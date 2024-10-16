@@ -456,9 +456,14 @@ class Tools
                 throw new \RuntimeException("Servico [$service] indisponivel UF [$uf] ou modelo [$this->modelo]");
             }
         }
-        $this->urlcUF = $this->getcUF($uf); //recuperação do cUF
-        if ($this->urlcUF > 91) {
-            $this->urlcUF = $this->getcUF($this->config->siglaUF); //foi solicitado dado de SVCRS ou SVCAN
+        //NT 2024.002 1.00 Maio/2024, comentário P08 elemento cOrgao
+        if ($uf === 'SVRS') {
+            $this->urlcUF = 92;
+        } else {
+            $this->urlcUF = $this->getcUF($uf); //recuperação do cUF
+            if ($this->urlcUF > 91) {
+                $this->urlcUF = $this->getcUF($this->config->siglaUF); //foi solicitado dado de SVCRS ou SVCAN
+            }
         }
         $this->urlVersion = $stdServ->$service->version; //recuperação da versão
         $this->urlService = $stdServ->$service->url; //recuperação da url do serviço

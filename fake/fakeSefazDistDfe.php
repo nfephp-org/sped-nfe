@@ -40,12 +40,12 @@ try {
     $tools->loadSoapClass($soap);
 
     $ultNSU = 0;
-    $numNSU = null;
+    $numNSU = 0;
 
     $response = $tools->sefazDistDFe($ultNSU, $numNSU);
 
     echo FakePretty::prettyPrint($response);
-    
+
 } catch (\Exception $e) {
     echo $e->getMessage();
 }
