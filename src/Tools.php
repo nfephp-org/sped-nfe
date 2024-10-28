@@ -1137,7 +1137,7 @@ class Tools extends ToolsCommon
         $sSeqEvento = str_pad((string)$nSeqEvento, 2, "0", STR_PAD_LEFT);
         $eventId = "ID" . $tpEvento . $chave . $sSeqEvento;
         //NT 2024.002 versão 1.00 - Maio 2024, comentário P08 elemento cOrgao
-        if ($tpEvento === self::EVT_CONCILIACAO && $uf === 'SVRS') {
+        if (in_array($tpEvento, [self::EVT_CONCILIACAO, self::EVT_CANCELA_CONCILIACAO]) && $uf === 'SVRS') {
             $cOrgao = 92;
         } else {
             $cOrgao = UFList::getCodeByUF($uf);
