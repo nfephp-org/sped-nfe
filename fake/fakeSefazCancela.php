@@ -16,7 +16,7 @@ try {
         "tpAmb"       => 2,
         "razaosocial" => "SUA RAZAO SOCIAL LTDA",
         "cnpj"        => "99999999999999",
-        "siglaUF"     => "SP",
+        "siglaUF"     => "AM",
         "schemes"     => "PL_009_V4",
         "versao"      => '4.00',
         "tokenIBPT"   => "AAAAAAA",
@@ -35,17 +35,17 @@ try {
 
     $content = file_get_contents('expired_certificate.pfx');
     $tools = new Tools($configJson, Certificate::readPfx($content, 'associacao'));
-    $tools->model('55');
+    $tools->model('65');
     $tools->setVerAplic('5.1.34');
     $tools->loadSoapClass($soap);
 
-    $chave = '35345678901234567890123456789012345678901234';
+    $chave = '13345678901234567890123456789012345678901234';
     $justificativa = 'nfe com erros de digitação';
     $nProt = '123456789012345';
     $response = $tools->sefazCancela($chave, $justificativa, $nProt);
-    
+
     echo FakePretty::prettyPrint($response);
-    
+
 } catch (\Exception $e) {
     echo $e->getMessage();
 }

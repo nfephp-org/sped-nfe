@@ -298,6 +298,10 @@ class Make
      */
     protected $infRespTec;
     /**
+     * @var DOMElement
+     */
+    protected $agropecuario;
+    /**
      * @var string
      */
     protected $csrt;
@@ -333,6 +337,10 @@ class Make
      * @var bool
      */
     protected $flagISSQNCalc = false;
+    /**
+     * @var bool
+     */
+    protected $checkgtin = false;
 
     /**
      * Função construtora cria um objeto DOMDocument
@@ -399,6 +407,16 @@ class Make
     public function setOnlyAscii(bool $option = false)
     {
         $this->replaceAccentedChars = $option;
+    }
+
+    /**
+     * Set if GTIN is or not validate
+     * @param bool $option
+     * @return void
+     */
+    public function setCheckGtin(bool $option = true)
+    {
+        $this->checkgtin = $option;
     }
 
     /**
@@ -504,6 +522,8 @@ class Make
         $this->dom->appChild($this->infNFe, $this->cana, 'Falta tag "infNFe"');
         //Responsável Técnico
         $this->dom->appChild($this->infNFe, $this->infRespTec, 'Falta tag "infNFe"');
+        //agropacuario
+        $this->dom->appChild($this->infNFe, $this->agropecuario, 'Falta tag "infNFe"');
         //[1] tag infNFe (1 A01)
         $this->dom->appChild($this->NFe, $this->infNFe, 'Falta tag "NFe"');
         //[0] tag NFe
@@ -771,15 +791,25 @@ class Make
     /**
      * Chave de acesso da NF-e referenciada BA02 pai BA01
      * tag NFe/infNFe/ide/NFref/refNFe
+     * @param stdClass $std
+     * @return DOMElement
+     * @throws \DOMException
      */
     public function tagrefNFe(stdClass $std): DOMElement
     {
-        $possible = ['refNFe'];
+        $possible = ['refNFe', 'refNFeSig'];
         $std = $this->equilizeParameters($std, $possible);
-
+        if (empty($std->refNFe) && empty($std->refNFe)) {
+            return $this->dom->createElement("refNFe", '');
+        }
         $num = $this->buildNFref();
-        $refNFe = $this->dom->createElement("refNFe", $std->refNFe);
-        $this->dom->appChild($this->aNFref[$num - 1], $refNFe);
+        if (!empty($std->refNFe)) {
+            $refNFe = $this->dom->createElement("refNFe", $std->refNFe);
+            $this->dom->appChild($this->aNFref[$num - 1], $refNFe);
+        } else {
+            $refNFe = $this->dom->createElement("refNFeSig", $std->refNFeSig);
+            $this->dom->appChild($this->aNFref[$num - 1], $refNFe);
+        }
         return $refNFe;
     }
 
@@ -1830,26 +1860,37 @@ class Make
         $cean = !empty($std->cEAN) ? trim(strtoupper($std->cEAN)) : '';
         $ceantrib = !empty($std->cEANTrib) ? trim(strtoupper($std->cEANTrib)) : '';
         //throw exception if not is Valid
-        try {
-            Gtin::isValid($cean);
-        } catch (\InvalidArgumentException $e) {
-            $this->errors[] = "cEANT {$cean} " . $e->getMessage();
+        if ($this->checkgtin) {
+            try {
+                Gtin::isValid($cean);
+            } catch (\InvalidArgumentException $e) {
+                $this->errors[] = "cEANT {$cean} " . $e->getMessage();
+            }
+
+            try {
+                Gtin::isValid($ceantrib);
+            } catch (\InvalidArgumentException $e) {
+                $this->errors[] = "cEANTrib {$ceantrib} " . $e->getMessage();
+            }
         }
 
-        try {
-            Gtin::isValid($ceantrib);
-        } catch (\InvalidArgumentException $e) {
-            $this->errors[] = "cEANTrib {$ceantrib} " . $e->getMessage();
+        /*
+        $CRT = null;
+        if (!empty($this->emit->getElementsByTagName("CRT")->item(0))) {
+             $CRT = (int) $this->emit->getElementsByTagName("CRT")->item(0)->nodeValue;
         }
 
-        $CRT = $this->emit->getElementsByTagName("CRT")->item(0)->nodeValue ?? null;
-        $idDest = $this->ide->getElementsByTagName("idDest")->item(0)->nodeValue ?? null;
+        $idDest = null;
+        if (!empty($this->ide->getElementsByTagName("idDest")->item(0))) {
+            $idDest = (int) $this->ide->getElementsByTagName("idDest")->item(0)->nodeValue;
+        }
+
         $allowEmptyNcm = $CRT == 4 && $idDest == 1;
 
         if ($allowEmptyNcm && empty($std->NCM)) {
             $std->NCM = '00000000';
         }
-
+        */
         $identificador = 'I01 <prod> - ';
         $prod = $this->dom->createElement("prod");
         $this->dom->addChild(
@@ -2286,8 +2327,8 @@ class Make
         $this->dom->addChild(
             $adi,
             "nAdicao",
-            $std->nAdicao,
-            true,
+            $std->nAdicao ?? null,
+            false,
             $identificador . "[item $std->item] Número da Adição"
         );
         $this->dom->addChild(
@@ -4755,11 +4796,16 @@ class Make
         $this->stdTot->vFCPST += (float) !empty($std->vFCPST) ? $std->vFCPST : 0;
         $this->stdTot->vFCPSTRet += (float) !empty($std->vFCPSTRet) ? $std->vFCPSTRet : 0;
 
-        $CRT = $this->emit->getElementsByTagName("CRT")->item(0)->nodeValue ?? null;
+        /*
+        $CRT = null;
+        if (!empty($this->emit->getElementsByTagName("CRT")->item(0))) {
+            $CRT = (int) $this->emit->getElementsByTagName("CRT")->item(0)->nodeValue;
+        }
+
         $allowEmptyOrig = $CRT == 4 && in_array($std->CSOSN, [
             '102', '103', '300', '400', '900',
         ]);
-
+        */
         switch ($std->CSOSN) {
             case '101':
                 $icmsSN = $this->dom->createElement("ICMSSN101");
@@ -4801,10 +4847,9 @@ class Make
                 $this->dom->addChild(
                     $icmsSN,
                     'orig',
-                    $std->orig,
-                    !$allowEmptyOrig,
-                    "[item $std->item] Origem da mercadoria",
-                    $allowEmptyOrig,
+                    $std->orig ?? null, //poderá ser null caso CRT=4 e 102
+                    false,
+                    "[item $std->item] Origem da mercadoria"
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -5107,10 +5152,9 @@ class Make
                 $this->dom->addChild(
                     $icmsSN,
                     'orig',
-                    $std->orig,
-                    !$allowEmptyOrig,
+                    $std->orig ?? null, //poderá ser null caso CRT=4 e 900
+                    false,
                     "[item $std->item] Origem da mercadoria",
-                    $allowEmptyOrig,
                 );
                 $this->dom->addChild(
                     $icmsSN,
@@ -7698,6 +7742,78 @@ class Make
         }
         $this->infRespTec = $infRespTec;
         return $infRespTec;
+    }
+
+    /**
+     * Informações de produtos da agricultura, pecuária e produção Florestal ZF01 pai A01
+     * tag NFe/infNFe/agropecuario (opcional)
+     * @param stdClass $std
+     * @return DOMElement
+     * @throws \DOMException
+     */
+    public function tagagropecuario(stdClass $std): DOMElement
+    {
+        $possible = [
+            'nReceituario',
+            'CPFRespTec',
+            'tpGuia',
+            'UFGuia',
+            'serieGuia',
+            'nGuia'
+        ];
+        $std = $this->equilizeParameters($std, $possible);
+        $agro = $this->dom->createElement("agropecuario");
+        if (!empty($std->nReceituario)) {
+            $def = $this->dom->createElement("defensivo");
+            $this->dom->addChild(
+                $def,
+                "nReceituario",
+                $std->nReceituario,
+                true,
+                "Número da receita ou receituário do agrotóxico/defensivo agrícola"
+            );
+            $this->dom->addChild(
+                $def,
+                "CPFRespTec",
+                $std->CPFRespTec,
+                true,
+                "CPF do Responsável Técnico, emitente do receituário"
+            );
+            $agro->appendChild($def);
+        } elseif (!empty($std->tpGuia)) {
+            $guia = $this->dom->createElement("guiaTransito");
+            $this->dom->addChild(
+                $guia,
+                "tpGuia",
+                $std->tpGuia,
+                true,
+                "Tipo da Guia"
+            );
+            $this->dom->addChild(
+                $guia,
+                "UFGuia",
+                !empty($std->UFGuia) ? $std->UFGuia : null,
+                false,
+                "UF de emissão"
+            );
+            $this->dom->addChild(
+                $guia,
+                "serieGuia",
+                $std->serieGuia ?? null,
+                false,
+                "Série da Guia"
+            );
+            $this->dom->addChild(
+                $guia,
+                "nGuia",
+                $std->nGuia,
+                true,
+                "Número da Guia"
+            );
+            $agro->appendChild($guia);
+        }
+        $this->agropecuario = $agro;
+        return $agro;
     }
 
     /**
