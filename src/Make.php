@@ -8048,10 +8048,6 @@ class Make
         $it = 0;
         foreach ($this->aProdCreditoPresumido as $key => $cps) {
             $prod = $this->aProd[$key];
-            $cBenef = $prod->getElementsByTagName("cBenef")->item(0);
-            if (empty($cBenef)) {
-                break;
-            }
             if (!empty($prod->getElementsByTagName("EXTIPI")->item(0))) {
                 $node = $prod->getElementsByTagName("EXTIPI")->item(0);
             } else {
