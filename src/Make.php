@@ -2822,7 +2822,8 @@ class Make
             'qBCProd',
             'vAliqProd',
             'vCIDE',
-            'pBio'
+            'pBio',
+            'origComb'
         ];
         $std = $this->equilizeParameters($std, $possible);
 
@@ -2901,6 +2902,12 @@ class Make
             true,
             "[item $std->item] Sigla da UF de consumo"
         );
+
+        if (!empty($std->origComb)) {
+            $tagOrigmComb = $this->tagorigComb($std->origComb);
+            $this->dom->appChild($comb, $tagOrigmComb);
+        }
+
         if ($std->qBCProd != "") {
             $tagCIDE = $this->dom->createElement("CIDE");
             $this->dom->addChild(
@@ -2992,6 +2999,7 @@ class Make
             true,
             "$identificador [item $std->item] Valor do Encerrante no final do abastecimento"
         );
+
         $this->aEncerrante[$std->item] = $encerrante;
         return $encerrante;
     }
