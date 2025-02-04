@@ -35,6 +35,7 @@
     "I":"I|cProd|cEAN|xProd|NCM|cBenef|EXTIPI|CFOP|uCom|qCom|vUnCom|vProd|cEANTrib|uTrib|qTrib|vUnTrib|vFrete|vSeg|vDesc|vOutro|indTot|xPed|nItemPed|nFCI|",
     "I05A":"I05A|NVE|",
     "I05C":"I05C|CEST|indEscala|CNPJFab|",
+    "I05G":"I05C|cCredPresumido|pCredPresumido|vCredPresumido|",
     "I18":"I18|nDI|dDI|xLocDesemb|UFDesemb|dDesemb|tpViaTransp|vAFRMM|tpIntermedio|CNPJ|UFTerceiro|cExportador|",
     "I25":"I25|nAdicao|nSeqAdic|cFabricante|vDescDI|nDraw|",
     "I50":"I50|nDraw|",

@@ -578,6 +578,16 @@ class Parser
     }
 
     /**
+     * Create tag gCred [I05G]
+     * I05C|cCredPresumido|pCredPresumido|vCredPresumido|
+     */
+    protected function i05gEntity(stdClass $std): void
+    {
+        $std->item = $this->item;
+        $this->make->tagCreditoPresumidoProd($std);
+    }
+
+    /**
      * Create tag CEST [I05C]
      * I05C|CEST|indEscala|CNPJFab|
      * SEBRAE

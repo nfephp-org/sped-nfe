@@ -138,6 +138,10 @@ class ConvertTest extends TestCase
         $this->assertSame('1', (string)$produto1->prod->indTot);
         $this->assertSame('0', (string)$produto1->prod->nItemPed);
 
+        $this->assertSame('1', (string)$produto1->prod->gCred->cCredPresumido);
+        $this->assertSame('10.0000', (string)$produto1->prod->gCred->pCredPresumido);
+        $this->assertSame('100.00', (string)$produto1->prod->gCred->vCredPresumido);
+
         //imposto
         $this->assertSame('0.00', (string)$produto1->imposto->vTotTrib);
 
