@@ -1229,7 +1229,7 @@ class Make
             $std->indIEDest = 2;
         }
         if ($this->mod == '65') {
-            $std->indIEDest = 9;
+            $std->indIEDest = '9';
             if (empty($std->xNome)) {
                 $flagNome = false; //marca se xNome é ou não obrigatório
             }
