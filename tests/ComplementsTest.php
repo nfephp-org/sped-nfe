@@ -24,7 +24,7 @@ class ComplementsTest extends NFeTestCase
         Complements::toAuthorize($request, $response);
     }
 
-    public function test_to_suthorize_inut_cpf(): void
+    public function test_to_authorize_inut_cpf(): void
     {
         $request = file_get_contents(__DIR__ . '/fixtures/xml/request_inut_cpf.xml');
         $response = file_get_contents(__DIR__ . '/fixtures/xml/response_inut_cpf.xml');
@@ -36,7 +36,7 @@ class ComplementsTest extends NFeTestCase
         $this->assertEquals('151250011427132', $numeroProtocolo);
     }
 
-    public function test_to_suthorize_inut_cnpj(): void
+    public function test_to_authorize_inut_cnpj(): void
     {
         $request = file_get_contents(__DIR__ . '/fixtures/xml/request_inut_cnpj.xml');
         $response = file_get_contents(__DIR__ . '/fixtures/xml/response_inut_cnpj.xml');
