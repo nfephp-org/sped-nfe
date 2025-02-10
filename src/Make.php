@@ -6181,7 +6181,7 @@ class Make
      * Grupo Totais referentes ao ICMS W02 pai W01
      * tag NFe/infNFe/total/ICMSTot
      */
-    public function tagICMSTot(stdClass $std = null): DOMElement
+    public function tagICMSTot(?stdClass $std = null): DOMElement
     {
         $this->buildTotal();
         $possible = [
@@ -6485,7 +6485,7 @@ class Make
      * tag NFe/infNFe/total/ISSQNTot (opcional)
      * @return DOMElement|void
      */
-    public function tagISSQNTot(stdClass $std = null)
+    public function tagISSQNTot(?stdClass $std = null)
     {
         if (empty($this->aItensServ)) {
             //não existem itens com ISSQN

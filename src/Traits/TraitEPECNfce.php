@@ -15,7 +15,7 @@ trait TraitEPECNfce
      * @param bool $ignoreContingency
      * @return string
      */
-    public function sefazStatusEpecNfce(string $uf = '', int $tpAmb = null, bool $ignoreContingency = true): string
+    public function sefazStatusEpecNfce(string $uf = '', ?int $tpAmb = null, bool $ignoreContingency = true): string
     {
         if (empty($tpAmb)) {
             $tpAmb = $this->tpAmb;
@@ -56,7 +56,7 @@ trait TraitEPECNfce
      * @param string|null $verAplic
      * @return string
      */
-    public function sefazEpecNfce(string &$xml, string $verAplic = null): string
+    public function sefazEpecNfce(string &$xml, ?string $verAplic = null): string
     {
         $uf = $this->config->siglaUF;
         $eventos = [

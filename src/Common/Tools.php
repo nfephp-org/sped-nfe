@@ -179,7 +179,7 @@ class Tools
      * Loads configurations and Digital Certificate, map all paths, set timezone and instanciate Contingency::class
      * @param string $configJson content of config in json format
      */
-    public function __construct(string $configJson, Certificate $certificate, Contingency $contingency = null)
+    public function __construct(string $configJson, Certificate $certificate, ?Contingency $contingency = null)
     {
         $this->pathwsfiles = realpath(__DIR__ . '/../../storage') . '/';
         //valid config json string
@@ -260,7 +260,7 @@ class Tools
      * @param int $model
      * @return int modelo class parameter
      */
-    public function model(int $model = null): int
+    public function model(?int $model = null): int
     {
         if ($model == 55 || $model == 65) {
             $this->modelo = $model;
@@ -273,7 +273,7 @@ class Tools
      * @param string $version
      * @throws InvalidArgumentException
      */
-    public function version(string $version = null): string
+    public function version(?string $version = null): string
     {
         if (null === $version) {
             return $this->versao;
