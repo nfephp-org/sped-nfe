@@ -160,7 +160,7 @@ class Complements
         // Checks if exists CNPJ tag in the XML of event, otherwise, uses the CPF tag
         $cpfOrCnpjTag = $infInut->getElementsByTagName('CNPJ')->item(0) ? 'CNPJ' : 'CPF';
 
-        $$cpfOrCnpjTag = $infInut->getElementsByTagName($cpfOrCnpjTag)->item(0)->nodeValue;
+        $cpfOrCnpjTagValue = $infInut->getElementsByTagName($cpfOrCnpjTag)->item(0)->nodeValue;
         $mod = $infInut->getElementsByTagName('mod')->item(0)->nodeValue;
         $serie = $infInut->getElementsByTagName('serie')->item(0)->nodeValue;
         $nNFIni = $infInut->getElementsByTagName('nNFIni')->item(0)->nodeValue;
@@ -195,7 +195,7 @@ class Complements
             $tpAmb != $rettpAmb ||
             $cUF != $retcUF ||
             $ano != $retano ||
-            $$cpfOrCnpjTag != $retcpfCnpj ||
+            $cpfOrCnpjTagValue != $retcpfCnpj ||
             $mod != $retmod ||
             $serie != $retserie ||
             $nNFIni != $retnNFIni ||
