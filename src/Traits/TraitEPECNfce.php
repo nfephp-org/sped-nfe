@@ -92,7 +92,7 @@ trait TraitEPECNfce
         $tpNF = $dom->getElementsByTagName('tpNF')->item(0)->nodeValue;
         $emitIE = $emit->getElementsByTagName('IE')->item(0)->nodeValue;
         $destUF = $uf;
-        if (!empty($dest)) {
+        if (!empty($dest) && isset($dest->getElementsByTagName('UF')->item(0)->nodeValue)) {
             $destUF = $dest->getElementsByTagName('UF')->item(0)->nodeValue;
         }
         $total = $dom->getElementsByTagName('total')->item(0);
