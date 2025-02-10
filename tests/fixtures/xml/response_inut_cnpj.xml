@@ -1,0 +1,25 @@
+<env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+    <env:Header/>
+    <env:Body>
+        <nfeResultMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NFeInutilizacao4">
+            <retInutNFe versao="4.00" xmlns="http://www.portalfiscal.inf.br/nfe"
+                        xmlns:ns0="http://www.w3.org/2000/09/xmldsig#">
+                <infInut>
+                    <tpAmb>2</tpAmb>
+                    <verAplic>GO4.0</verAplic>
+                    <cStat>102</cStat>
+                    <xMotivo>Inutilização de número homologado</xMotivo>
+                    <cUF>52</cUF>
+                    <ano>25</ano>
+                    <CNPJ>00000000000000</CNPJ>
+                    <mod>55</mod>
+                    <serie>3</serie>
+                    <nNFIni>53</nNFIni>
+                    <nNFFin>53</nNFFin>
+                    <dhRecbto>2025-02-10T14:31:01-03:00</dhRecbto>
+                    <nProt>152250025831513</nProt>
+                </infInut>
+            </retInutNFe>
+        </nfeResultMsg>
+    </env:Body>
+</env:Envelope>
