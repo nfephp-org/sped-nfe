@@ -29,7 +29,6 @@ use DateTime;
 
 class Make
 {
-    //Lucas Potter
     /**
      * @var array
      */
