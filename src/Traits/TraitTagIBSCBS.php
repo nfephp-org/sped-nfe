@@ -129,7 +129,8 @@ trait TraitTagIBSCBS
                 (string)"pAliqEfet",
                 $this->conditionalNumberFormatting($std->pAliqEfet, 4),
                 true,
-                "[item $std->item] Alíquota Efetiva do IBS de competência das UF que será aplicada a Base de Cálculo (pAliqEfet)"
+                "[item $std->item] Alíquota Efetiva do IBS de competência das UF "
+                    . "que será aplicada a Base de Cálculo (pAliqEfet)"
             );
             $gIBSUF->appendChild($gRed);
         }
