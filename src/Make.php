@@ -1229,7 +1229,7 @@ class Make
             $std->indIEDest = 2;
         }
         if ($this->mod == '65') {
-            $std->indIEDest = 9;
+            $std->indIEDest = '9';
             if (empty($std->xNome)) {
                 $flagNome = false; //marca se xNome é ou não obrigatório
             }
@@ -6181,7 +6181,7 @@ class Make
      * Grupo Totais referentes ao ICMS W02 pai W01
      * tag NFe/infNFe/total/ICMSTot
      */
-    public function tagICMSTot(stdClass $std = null): DOMElement
+    public function tagICMSTot(?stdClass $std = null): DOMElement
     {
         $this->buildTotal();
         $possible = [
@@ -6485,7 +6485,7 @@ class Make
      * tag NFe/infNFe/total/ISSQNTot (opcional)
      * @return DOMElement|void
      */
-    public function tagISSQNTot(stdClass $std = null)
+    public function tagISSQNTot(?stdClass $std = null)
     {
         if (empty($this->aItensServ)) {
             //não existem itens com ISSQN
@@ -8048,10 +8048,6 @@ class Make
         $it = 0;
         foreach ($this->aProdCreditoPresumido as $key => $cps) {
             $prod = $this->aProd[$key];
-            $cBenef = $prod->getElementsByTagName("cBenef")->item(0);
-            if (empty($cBenef)) {
-                break;
-            }
             if (!empty($prod->getElementsByTagName("EXTIPI")->item(0))) {
                 $node = $prod->getElementsByTagName("EXTIPI")->item(0);
             } else {

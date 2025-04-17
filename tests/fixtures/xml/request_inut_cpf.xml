@@ -1,0 +1,34 @@
+<inutNFe xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00">
+        <infInut Id="ID52250780680800010055003000000049000000049">
+            <tpAmb>1</tpAmb>
+            <xServ>INUTILIZAR</xServ>
+            <cUF>51</cUF>
+            <ano>25</ano>
+            <CPF>00000000000</CPF>
+            <mod>55</mod>
+            <serie>920</serie>
+            <nNFIni>429</nNFIni>
+            <nNFFin>429</nNFFin>
+            <xJust>Teste inutilização nfe produtor rural</xJust>
+        </infInut>
+        <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+            <SignedInfo>
+                <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+                <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+                <Reference URI="#ID52250780680800010055003000000049000000049">
+                    <Transforms>
+                        <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                        <Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+                    </Transforms>
+                    <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+                    <DigestValue>1c1Vzj0yS6LlTW55pr64DdcG47c=</DigestValue>
+                </Reference>
+            </SignedInfo>
+            <SignatureValue>jinDK5EmwQhBf4+g3XOpOpd/+Ph7vUcTy79ayJ9b2yvnMl9Wu9scZdjL4jKOtf3tLRcthfy2Y/a70O3A33RsKSqXuLZ+DeG/mKh4nUbooieGYI7c56Mr5yfTEgetuJchWkhZSslBvOe0v998yjLNktZ0Iz8/6tvZxBt/hXz5/ClGHPGaF4EYb+vXA0ewt84+Xc/mbk3GmmbzJJzMGj+AdomZQQL7yUw5vsrDyoCpwYnRG4qnxlAL6OYGc0IKsu5P/bJ+Q3tw7NibVCRGV7h7oGRU4dQLb+uU93shKQGZfLABUxJ09b+PbC1MZ35HTCTPiruNCFsQnS6nbTmZeqbxNA==</SignatureValue>
+            <KeyInfo>
+                <X509Data>
+                    <X509Certificate>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</X509Certificate>
+                </X509Data>
+            </KeyInfo>
+        </Signature>
+    </inutNFe>
