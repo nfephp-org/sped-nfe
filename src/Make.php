@@ -799,7 +799,7 @@ class Make
     {
         $possible = ['refNFe', 'refNFeSig'];
         $std = $this->equilizeParameters($std, $possible);
-        if (empty($std->refNFe) && empty($std->refNFe)) {
+        if (empty($std->refNFe) && empty($std->refNFeSig)) {
             return $this->dom->createElement("refNFe", '');
         }
         $num = $this->buildNFref();
