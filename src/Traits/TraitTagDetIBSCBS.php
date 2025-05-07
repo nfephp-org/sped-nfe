@@ -16,7 +16,7 @@ use DOMElement;
  * @property array $aIBSCredPres
  * @property stdClass $stdTot
  */
-trait TraitTagIBSCBS
+trait TraitTagDetIBSCBS
 {
     /**
      * Informações do Imposto de Bens e Serviços - IBS e da Contribuição de Bens e Serviços - CBS

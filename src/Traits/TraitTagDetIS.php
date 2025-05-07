@@ -13,7 +13,7 @@ use DOMElement;
  * @property array $aIS
  * @property stdClass $stdTot
  */
-trait TraitTagIS
+trait TraitTagDetIS
 {
     /**
      * Grupo IS (Imposto selectivo) UB01 pai H01
@@ -35,6 +35,7 @@ trait TraitTagIS
             'vIS'
         ];
         $std = $this->equilizeParameters($std, $possible);
+        $identificador = "UB01 <IS> Item: $std->item -";
         $this->stdTot->vIS += (float) $std->vIS;
         $is = $this->dom->createElement("IS");
         $this->dom->addChild(
@@ -42,57 +43,56 @@ trait TraitTagIS
             (string) "CSTIS",
             $std->CSTIS,
             true,
-            "[item $std->item] Código de Situação Tributária do Imposto Seletivo"
+            "$identificador Código de Situação Tributária do Imposto Seletivo"
         );
         $this->dom->addChild(
             $is,
             "cClassTribIS",
             (string) $std->cClassTribIS,
             true,
-            "[item $std->item] Código de Classificação Tributária do Imposto Seletivo"
+            "$identificador Código de Classificação Tributária do Imposto Seletivo"
         );
-        $obriga = false;
-        if (!empty($std->vBCIS) || !empty($std->pIS) || !empty($std->pISEspec)) {
-            $obriga = true;
-        }
         $this->dom->addChild(
             $is,
             "vBCIS",
             $this->conditionalNumberFormatting($std->vBCIS),
-            $obriga,
-            "[item $std->item] Valor da Base de Cálculo do Imposto Seletivo"
+            true,
+            "$identificador Valor da Base de Cálculo do Imposto Seletivo"
         );
         $this->dom->addChild(
             $is,
             "pIS",
-            $this->conditionalNumberFormatting($std->pIS),
-            $obriga,
-            "[item $std->item] Alíquota do Imposto Seletivo"
+            $this->conditionalNumberFormatting($std->pIS, 4),
+            true,
+            "$identificador Alíquota do Imposto Seletivo"
         );
         $this->dom->addChild(
             $is,
             "pISEspec",
-            $this->conditionalNumberFormatting($std->pISEspec),
+            $this->conditionalNumberFormatting($std->pISEspec, 4),
             false,
-            "[item $std->item] Alíquota específica por unidade de medida apropriada"
+            "$identificador Alíquota específica por unidade de medida apropriada"
         );
-        $obriga = false;
-        if (!empty($std->uTrib) || !empty($std->qTrib) || !empty($std->vIS)) {
-            $obriga = true;
-        }
         $this->dom->addChild(
             $is,
             "uTrib",
             $std->uTrib,
-            $obriga,
-            "[item $std->item] Unidade de Medida Tributável"
+            true,
+            "$identificador Unidade de Medida Tributável"
         );
         $this->dom->addChild(
             $is,
             "qTrib",
-            $this->conditionalNumberFormatting($std->qTrib),
-            $obriga,
-            "[item $std->item] Unidade de Medida Tributável"
+            $this->conditionalNumberFormatting($std->qTrib, 4),
+            true,
+            "$identificador Quantidade com base no campo uTrib informado"
+        );
+        $this->dom->addChild(
+            $is,
+            "vIS",
+            $this->conditionalNumberFormatting($std->vIS),
+            true,
+            "$identificador Valor do Imposto Seletivo calculado"
         );
         $this->aIS[$std->item] = $is;
         return $is;
