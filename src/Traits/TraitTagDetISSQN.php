@@ -16,7 +16,6 @@ use DOMException;
  */
 trait TraitTagDetISSQN
 {
-
     /**
      * Grupo ISSQN U01 pai M01
      * tag NFe/infNFe/det[]/imposto/ISSQN (opcional)

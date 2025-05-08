@@ -95,14 +95,16 @@ trait TraitTagIde
             $tmss = DateTime::createFromFormat('Y-m-d\TH:i:sP', $std->dhSaiEnt);
             $tmss->setTimezone(new DateTimeZone('UTC'));
             if ($tmss->getTimestamp() < $tmse->getTimestamp()) {
-                $this->errors[] = "$identificador A data de saída (dhSaiEnt) não pode ser menor que a data de emissão (dhEmi).";
+                $this->errors[] = "$identificador A data de saída (dhSaiEnt) não pode ser menor "
+                    . "que a data de emissão (dhEmi).";
             }
         }
         //validação conforme NT 2019.001
         if (!empty($std->cNF)) {
             $std->cNF = str_pad($std->cNF, 8, '0', STR_PAD_LEFT);
             if (intval($std->cNF) == intval($std->nNF)) {
-                $this->errors[] = "$identificador O valor $std->cNF não é aceitável para cNF, não pode ser igual ao de nNF.";
+                $this->errors[] = "$identificador O valor $std->cNF não é aceitável para cNF, não pode "
+                    . "ser igual ao de nNF.";
             }
             if (method_exists(Keys::class, 'cNFIsValid')) {
                 if (!Keys::cNFIsValid($std->cNF)) {

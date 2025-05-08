@@ -311,7 +311,10 @@ trait TraitTagDet
         //Valor total do Item, correspondente à sua participação no total da nota.
         //A soma dos itens deverá corresponder ao total da nota.
         if (!empty($std->vItem) && is_numeric($std->vItem)) {
-            $this->aVItem[$std->item] = $this->dom->createElement("vItem", $this->conditionalNumberFormatting($std->vItem, 2));
+            $this->aVItem[$std->item] = $this->dom->createElement(
+                "vItem",
+                $this->conditionalNumberFormatting($std->vItem, 2)
+            );
             return $this->aVItem[$std->item];
         }
         return $prod;
@@ -741,7 +744,10 @@ trait TraitTagDet
         $std = $this->equilizeParameters($std, $possible);
         $identificador = "I50 <detExport> Item: $std->item -";
         if (!empty($std->vItem) && is_numeric($std->vItem)) {
-            $this->aVItem[$std->item] = $this->dom->createElement("vItem", $this->conditionalNumberFormatting($std->vItem, 2));
+            $this->aVItem[$std->item] = $this->dom->createElement(
+                "vItem",
+                $this->conditionalNumberFormatting($std->vItem, 2)
+            );
             return $this->aVItem[$std->item];
         }
         return null;
