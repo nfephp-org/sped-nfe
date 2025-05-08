@@ -2,33 +2,42 @@
 
 namespace NFePHP\NFe\Traits;
 
+use NFePHP\Common\DOMImproved as Dom;
+use NFePHP\Common\Strings;
+use NFePHP\NFe\Common\Gtin;
 use stdClass;
 use DOMElement;
-use NFePHP\NFe\Common\Gtin;
+use DOMException;
+use InvalidArgumentException;
 
+/**
+ * @property Dom $dom
+ * @property array $aProd
+ * @property array $aInfAdProd
+ * @property array $aCest
+ * @property array $aGCred
+ * @property array $aDI
+ * @property array $aAdi
+ * @property array $aDetExport
+ * @property int $tpAmb
+ * @property int $mod
+ * @property stdClass $stdTot
+ * @property bool $checkgtin
+ * @property array $errors
+ * @method equilizeParameters($std, $possible)
+ * @method conditionalNumberFormatting($value, $decimal)
+ */
 trait TraitTagDet
 {
-    /**
-     * Informações adicionais do produto V01 pai H01
-     * tag NFe/infNFe/det[]/infAdProd
-     */
-    public function taginfAdProd(stdClass $std): DOMElement
-    {
-        $possible = ['item', 'infAdProd'];
-        $std = $this->equilizeParameters($std, $possible);
-        $infAdProd = $this->dom->createElement(
-            "infAdProd",
-            substr(trim($std->infAdProd), 0, 500)
-        );
-        $this->aInfAdProd[$std->item] = $infAdProd;
-        return $infAdProd;
-    }
-
     /**
      * Detalhamento de Produtos e Serviços I01 pai H01
      * tag NFe/infNFe/det[]/prod
      * NOTA: Ajustado para NT2016_002_v1.30
      * NOTA: Ajustado para NT2020_005_v1.20
+     * NOTA: Ajustado para NT2025_002_v1.01
+     * @param stdClass $std
+     * @return DOMElement
+     * @throws DOMException
      */
     public function tagprod(stdClass $std): DOMElement
     {
@@ -58,9 +67,14 @@ trait TraitTagDet
             'indTot',
             'xPed',
             'nItemPed',
-            'nFCI'
+            'nFCI',
+            'CEST',
+            'indEscala',
+            'CNPJFab',
+            'vItem'
         ];
         $std = $this->equilizeParameters($std, $possible);
+        $identificador = "I01 <prod> - Item: $std->item";
         //totalizador
         if ($std->indTot == 1) {
             $this->stdTot->vProd += (float) $this->conditionalNumberFormatting($std->vProd);
@@ -72,43 +86,41 @@ trait TraitTagDet
 
         $cean = !empty($std->cEAN) ? trim(strtoupper($std->cEAN)) : '';
         $ceantrib = !empty($std->cEANTrib) ? trim(strtoupper($std->cEANTrib)) : '';
-        //throw exception if not is Valid
-        try {
-            Gtin::isValid($cean);
-        } catch (\InvalidArgumentException $e) {
-            $this->errors[] = "cEANT {$cean} " . $e->getMessage();
+        if ($this->checkgtin) {
+            try {
+                Gtin::isValid($cean);
+            } catch (InvalidArgumentException $e) {
+                $this->errors[] = "Item: $std->item cEAN $cean " . $e->getMessage();
+            }
+            try {
+                Gtin::isValid($ceantrib);
+            } catch (InvalidArgumentException $e) {
+                $this->errors[] = "Item: $std->item cEANTrib $ceantrib " . $e->getMessage();
+            }
         }
-
-        try {
-            Gtin::isValid($ceantrib);
-        } catch (\InvalidArgumentException $e) {
-            $this->errors[] = "cEANTrib {$ceantrib} " . $e->getMessage();
-        }
-
-        $identificador = 'I01 <prod> - ';
         $prod = $this->dom->createElement("prod");
         $this->dom->addChild(
             $prod,
             "cProd",
             $std->cProd,
             true,
-            $identificador . "[item $std->item] Código do produto ou serviço"
+            "$identificador Código do produto ou serviço"
         );
         $this->dom->addChild(
             $prod,
             "cEAN",
             $cean,
             true,
-            $identificador . "[item $std->item] GTIN (Global Trade Item Number) do produto, antigo "
+            "$identificador GTIN (Global Trade Item Number) do produto, antigo "
             . "código EAN ou código de barras",
             true
         );
         $this->dom->addChild(
             $prod,
             "cBarra",
-            $std->cBarra ?? null,
+            $std->cBarra,
             false,
-            $identificador . "[item $std->item] cBarra Código de barras diferente do padrão GTIN"
+            "$identificador cBarra Código de barras diferente do padrão GTIN"
         );
         $xProd = $std->xProd;
         if ($this->tpAmb == '2' && $this->mod == '65' && $std->item === 1) {
@@ -119,80 +131,102 @@ trait TraitTagDet
             "xProd",
             $xProd,
             true,
-            $identificador . "[item $std->item] Descrição do produto ou serviço"
+            "$identificador Descrição do produto ou serviço"
         );
         $this->dom->addChild(
             $prod,
             "NCM",
             $std->NCM,
             true,
-            $identificador . "[item $std->item] Código NCM com 8 dígitos ou 2 dígitos (gênero)"
+            "$identificador Código NCM com 8 dígitos ou 2 dígitos (gênero)"
         );
-        //incluido no layout 4.00
+        $this->dom->addChild(
+            $prod,
+            "CEST",
+            $std->CEST,
+            false,
+            "$identificador Codigo especificador da Substuicao Tributaria (CEST)"
+        );
+        if (!empty($std->CEST)) {
+            $this->dom->addChild(
+                $prod,
+                "indEscala",
+                $std->indEscala,
+                false,
+                "$identificador Indicador de escala de produção (indEscala)"
+            );
+            $this->dom->addChild(
+                $prod,
+                "CNPJFab",
+                $std->CNPJFab,
+                false,
+                "$identificador CNPJ do Fabricante da Mercadoria, obrigatório para produto em escala NÃO relevante"
+            );
+        }
         $this->dom->addChild(
             $prod,
             "cBenef",
             $std->cBenef,
             false,
-            $identificador . "[item $std->item] Código de Benefício Fiscal utilizado pela UF"
+            "$identificador Código de Benefício Fiscal utilizado pela UF"
         );
         $this->dom->addChild(
             $prod,
             "EXTIPI",
             $std->EXTIPI,
             false,
-            $identificador . "[item $std->item] Preencher de acordo com o código EX da TIPI"
+            "$identificador Preencher de acordo com o código EX da TIPI"
         );
         $this->dom->addChild(
             $prod,
             "CFOP",
             $std->CFOP,
             true,
-            $identificador . "[item $std->item] Código Fiscal de Operações e Prestações"
+            "$identificador Código Fiscal de Operações e Prestações"
         );
         $this->dom->addChild(
             $prod,
             "uCom",
             $std->uCom,
             true,
-            $identificador . "[item $std->item] Unidade Comercial do produto"
+            "$identificador Unidade Comercial do produto"
         );
         $this->dom->addChild(
             $prod,
             "qCom",
             $this->conditionalNumberFormatting($std->qCom, 4),
             true,
-            $identificador . "[item $std->item] Quantidade Comercial do produto"
+            "$identificador Quantidade Comercial do produto"
         );
         $this->dom->addChild(
             $prod,
             "vUnCom",
             $this->conditionalNumberFormatting($std->vUnCom, 10),
             true,
-            $identificador . "[item $std->item] Valor Unitário de Comercialização do produto"
+            "$identificador Valor Unitário de Comercialização do produto"
         );
         $this->dom->addChild(
             $prod,
             "vProd",
             $this->conditionalNumberFormatting($std->vProd),
             true,
-            $identificador . "[item $std->item] Valor Total Bruto dos Produtos ou Serviços"
+            "$identificador Valor Total Bruto dos Produtos ou Serviços"
         );
         $this->dom->addChild(
             $prod,
             "cEANTrib",
             $ceantrib,
             true,
-            $identificador . "[item $std->item] GTIN (Global Trade Item Number) da unidade tributável, antigo "
+            "$identificador GTIN (Global Trade Item Number) da unidade tributável, antigo "
             . "código EAN ou código de barras",
             true
         );
         $this->dom->addChild(
             $prod,
             "cBarraTrib",
-            $std->cBarraTrib ?? null,
+            $std->cBarraTrib,
             false,
-            $identificador . "[item $std->item] cBarraTrib Código de Barras da "
+            "$identificador cBarraTrib Código de Barras da "
             . "unidade tributável que seja diferente do padrão GTIN"
         );
         $this->dom->addChild(
@@ -200,80 +234,522 @@ trait TraitTagDet
             "uTrib",
             $std->uTrib,
             true,
-            $identificador . "[item $std->item] Unidade Tributável do produto"
+            "$identificador Unidade Tributável do produto"
         );
         $this->dom->addChild(
             $prod,
             "qTrib",
             $this->conditionalNumberFormatting($std->qTrib, 4),
             true,
-            $identificador . "[item $std->item] Quantidade Tributável do produto"
+            "$identificador Quantidade Tributável do produto"
         );
         $this->dom->addChild(
             $prod,
             "vUnTrib",
             $this->conditionalNumberFormatting($std->vUnTrib, 10),
             true,
-            $identificador . "[item $std->item] Valor Unitário de tributação do produto"
+            "$identificador Valor Unitário de tributação do produto"
         );
         $this->dom->addChild(
             $prod,
             "vFrete",
             $this->conditionalNumberFormatting($std->vFrete),
             false,
-            $identificador . "[item $std->item] Valor Total do Frete"
+            "$identificador Valor Total do Frete"
         );
         $this->dom->addChild(
             $prod,
             "vSeg",
             $this->conditionalNumberFormatting($std->vSeg),
             false,
-            $identificador . "[item $std->item] Valor Total do Seguro"
+            "$identificador Valor Total do Seguro"
         );
         $this->dom->addChild(
             $prod,
             "vDesc",
             $this->conditionalNumberFormatting($std->vDesc),
             false,
-            $identificador . "[item $std->item] Valor do Desconto"
+            "$identificador Valor do Desconto"
         );
         $this->dom->addChild(
             $prod,
             "vOutro",
             $this->conditionalNumberFormatting($std->vOutro),
             false,
-            $identificador . "[item $std->item] Outras despesas acessórias"
+            "$identificador Outras despesas acessórias"
         );
         $this->dom->addChild(
             $prod,
             "indTot",
             $std->indTot,
             true,
-            $identificador . "[item $std->item] Indica se valor do Item (vProd) entra no valor total da NF-e (vProd)"
+            "$identificador Indica se valor do Item (vProd) entra no valor total da NF-e (vProd)"
         );
         $this->dom->addChild(
             $prod,
             "xPed",
             $std->xPed,
             false,
-            $identificador . "[item $std->item] Número do Pedido de Compra"
+            "$identificador Número do Pedido de Compra"
         );
         $this->dom->addChild(
             $prod,
             "nItemPed",
             $std->nItemPed,
             false,
-            $identificador . "[item $std->item] Item do Pedido de Compra"
+            "$identificador Item do Pedido de Compra"
         );
         $this->dom->addChild(
             $prod,
             "nFCI",
             $std->nFCI,
             false,
-            $identificador . "[item $std->item] Número de controle da FCI "
+            "$identificador Número de controle da FCI "
             . "Ficha de Conteúdo de Importação"
         );
         $this->aProd[$std->item] = $prod;
+        //Valor total do Item, correspondente à sua participação no total da nota.
+        //A soma dos itens deverá corresponder ao total da nota.
+        if (!empty($std->vItem) && is_numeric($std->vItem)) {
+            $this->aVItem[$std->item] = $this->dom->createElement(
+                "vItem",
+                $this->conditionalNumberFormatting($std->vItem, 2)
+            );
+            return $this->aVItem[$std->item];
+        }
         return $prod;
+    }
+
+    /**
+     * Informações adicionais do produto V01 pai H01
+     * tag NFe/infNFe/det[]/infAdProd
+     * @param stdClass $std
+     * @return DOMElement
+     * @throws DOMException
+     */
+    public function taginfAdProd(stdClass $std): DOMElement
+    {
+        $possible = ['item', 'infAdProd'];
+        $std = $this->equilizeParameters($std, $possible);
+        $infAdProd = $this->dom->createElement(
+            "infAdProd",
+            $std->infAdProd
+        );
+        $this->aInfAdProd[$std->item] = $infAdProd;
+        return $infAdProd;
+    }
+
+    /**
+     * Grupo de observações de uso livre (para o item da NF-e)
+     * Grupo de observações de uso livre do Contribuinte
+     * @param stdClass $std
+     * @return DOMElement|null
+     * @throws DOMException
+     */
+    public function tagObsItem(stdClass $std): ?DOMElement
+    {
+        $possible = [
+            'item',
+            'obsCont_xCampo',
+            'obsCont_xTexto',
+            'obsFisco_xCampo',
+            'obsFisco_xTexto'
+        ];
+        $std = $this->equilizeParameters($std, $possible);
+        $identificador = "VA01 <obsItem> Item: $std->item -";
+        $obsItem = $this->dom->createElement("obsItem");
+        if (!empty($std->obsCont_xCampo) && !empty($std->obsCont_xTexto)) {
+            $obsCont = $this->dom->createElement("obsCont");
+            $this->dom->addChild(
+                $obsCont,
+                "xCampo",
+                $std->obsCont_xCampo,
+                true,
+                $identificador . "$identificador (obsCont/xCampo) Identificação do campo"
+            );
+            $this->dom->addChild(
+                $obsCont,
+                "xTexto",
+                $std->obsCont_xTexto,
+                true,
+                $identificador . "$identificador (obsCont/xTexto) Conteúdo do campo"
+            );
+            $obsItem->appendChild($obsCont);
+        }
+        if (!empty($std->obsFisco_xCampo) && !empty($std->obsFisco_xTexto)) {
+            $obsFisco = $this->dom->createElement("obsFisco");
+            $this->dom->addChild(
+                $obsFisco,
+                "xCampo",
+                $std->obsFisco_xCampo,
+                true,
+                $identificador . "$identificador (obsCont/xCampo) Identificação do campo"
+            );
+            $this->dom->addChild(
+                $obsFisco,
+                "xTexto",
+                $std->obsFisco_xTexto,
+                true,
+                $identificador . "$identificador (obsCont/xTexto) Conteúdo do campo"
+            );
+            $obsItem->appendChild($obsFisco);
+        }
+        $this->aObsItem[$std->item] = $obsItem;
+        return $obsItem;
+    }
+
+    /**
+     * Grupo de observações de uso livre (para o item da NF-e)
+     * Grupo de observações de uso livre do Fisco
+     * @param stdClass $std
+     * @return DOMElement|null
+     * @throws DOMException
+     */
+    public function tagprodObsFisco(stdClass $std): ?DOMElement
+    {
+        $possible = [
+            'item',
+            'xCampo',
+            'xTexto'
+        ];
+        $std = $this->equilizeParameters($std, $possible);
+        $identificador = " <obsFisco> Item: $std->item -";
+        $obsItem = $this->dom->createElement("obsItem");
+        $obsCont = $this->dom->createElement("obsCont");
+        $this->dom->addChild(
+            $obsCont,
+            "xCampo",
+            $std->xCampo,
+            true,
+            $identificador . "$identificador (obsCont/xCampo) Identificação do campo"
+        );
+        $this->dom->addChild(
+            $obsCont,
+            "xTexto",
+            $std->xTexto,
+            true,
+            $identificador . "$identificador (obsCont/xTexto) Conteúdo do campo"
+        );
+        $obsItem->appendChild($obsCont);
+        $this->obsItem[$std->item] = $obsItem;
+        return $obsItem;
+    }
+
+    /**
+     * NVE NOMENCLATURA DE VALOR ADUANEIRO E ESTATÍSTICA
+     * Podem ser até 8 NVE's por item
+     * @param stdClass $std
+     * @return DOMElement|null
+     * @throws DOMException
+     */
+    public function tagNVE(stdClass $std): ?DOMElement
+    {
+        $possible = ['item', 'NVE'];
+        $std = $this->equilizeParameters($std, $possible);
+
+        if ($std->NVE == '') {
+            return null;
+        }
+        $nve = $this->dom->createElement("NVE", $std->NVE);
+        $this->aNVE[$std->item][] = $nve;
+        return $nve;
+    }
+
+    /**
+     * Grupo de informações sobre o CréditoPresumido no Item
+     * tag NFe/infNFe/det[item]/gCred (opcional)
+     * @param stdClass $std
+     * @return DOMElement
+     * @throws DOMException
+     */
+    public function taggCred(stdClass $std): DOMElement
+    {
+        $possible = ['item', 'cCredPresumido', 'pCredPresumido', 'vCredPresumido'];
+        $std = $this->equilizeParameters($std, $possible);
+        $identificador = ' <gCred> - ';
+        $gCred = $this->dom->createElement("gCred");
+        $this->dom->addChild(
+            $gCred,
+            "cCredPresumido",
+            $std->cCredPresumido,
+            true,
+            "$identificador Código de Benefício Fiscal de Crédito Presumido na UF aplicado ao item."
+        );
+        $this->dom->addChild(
+            $gCred,
+            "cCredPresumido",
+            $this->conditionalNumberFormatting($std->pCredPresumido, 4),
+            true,
+            "$identificador Percentual do Crédito Presumido."
+        );
+        $this->dom->addChild(
+            $gCred,
+            "vCredPresumido",
+            $this->conditionalNumberFormatting($std->vCredPresumido),
+            false,
+            "$identificador Valor do Crédito Presumido."
+        );
+        $this->aGCred[$std->item][] = $gCred;
+        return $gCred;
+    }
+
+    /**
+     * Declaração de Importação I8 pai I01
+     * tag NFe/infNFe/det[]/prod/DI
+     * @param stdClass $std
+     * @return DOMElement
+     * @throws DOMException
+     */
+    public function tagDI(stdClass $std): DOMElement
+    {
+        $possible = [
+            'item',
+            'nDI',
+            'dDI',
+            'xLocDesemb',
+            'UFDesemb',
+            'dDesemb',
+            'tpViaTransp',
+            'vAFRMM',
+            'tpIntermedio',
+            'CNPJ',
+            'CPF',
+            'UFTerceiro',
+            'cExportador'
+        ];
+        $std = $this->equilizeParameters($std, $possible);
+        $identificador = "I8 <DI> Item: $std->item -";
+        $tDI = $this->dom->createElement("DI");
+        $this->dom->addChild(
+            $tDI,
+            "nDI",
+            $std->nDI,
+            true,
+            "$identificador Número do Documento de Importação (DI, DSI, DIRE, ...)"
+        );
+        $this->dom->addChild(
+            $tDI,
+            "dDI",
+            $std->dDI,
+            true,
+            "$identificador Data de Registro do documento"
+        );
+        $this->dom->addChild(
+            $tDI,
+            "xLocDesemb",
+            $std->xLocDesemb,
+            true,
+            "$identificador Local de desembaraço"
+        );
+        $this->dom->addChild(
+            $tDI,
+            "UFDesemb",
+            $std->UFDesemb,
+            true,
+            "$identificador Sigla da UF onde ocorreu o Desembaraço Aduaneiro"
+        );
+        $this->dom->addChild(
+            $tDI,
+            "dDesemb",
+            $std->dDesemb,
+            true,
+            "$identificador Data do Desembaraço Aduaneiro"
+        );
+        $this->dom->addChild(
+            $tDI,
+            "tpViaTransp",
+            $std->tpViaTransp,
+            true,
+            "$identificador Via de transporte internacional "
+            . "informada na Declaração de Importação (DI)"
+        );
+        $this->dom->addChild(
+            $tDI,
+            "vAFRMM",
+            $this->conditionalNumberFormatting($std->vAFRMM),
+            false,
+            "$identificador Valor da AFRMM "
+            . "- Adicional ao Frete para Renovação da Marinha Mercante"
+        );
+        $this->dom->addChild(
+            $tDI,
+            "tpIntermedio",
+            $std->tpIntermedio,
+            true,
+            "$identificador Forma de importação quanto a intermediação"
+        );
+        if (!empty($std->CNPJ)) {
+            $this->dom->addChild(
+                $tDI,
+                "CNPJ",
+                $std->CNPJ,
+                false,
+                "$identificador CNPJ do adquirente ou do encomendante"
+            );
+        } else {
+            $this->dom->addChild(
+                $tDI,
+                "CPF",
+                $std->CPF,
+                false,
+                "$identificador CPF do adquirente ou do encomendante"
+            );
+        }
+        $this->dom->addChild(
+            $tDI,
+            "UFTerceiro",
+            $std->UFTerceiro,
+            false,
+            "$identificador Sigla da UF do adquirente ou do encomendante"
+        );
+        $this->dom->addChild(
+            $tDI,
+            "cExportador",
+            $std->cExportador,
+            true,
+            "$identificador Código do Exportador"
+        );
+        $this->aDI[$std->item][] = $tDI;
+        return $tDI;
+    }
+
+    /**
+     * Adições I25 pai I18
+     * tag NFe/infNFe/det[]/prod/DI/adi
+     * @param stdClass $std
+     * @return DOMElement
+     * @throws DOMException
+     */
+    public function tagadi(stdClass $std): DOMElement
+    {
+        $possible = [
+            'item',
+            'nDI',
+            'nAdicao',
+            'nSeqAdic',
+            'cFabricante',
+            'vDescDI',
+            'nDraw'
+        ];
+        $std = $this->equilizeParameters($std, $possible);
+        $identificador = "I25 <adi> Item: $std->item -";
+        $adi = $this->dom->createElement("adi");
+        $this->dom->addChild(
+            $adi,
+            "nAdicao",
+            $std->nAdicao ?? null,
+            false,
+            "$identificador Número da Adição"
+        );
+        $this->dom->addChild(
+            $adi,
+            "nSeqAdic",
+            $std->nSeqAdic,
+            true,
+            "$identificador Número sequencial do item dentro da Adição"
+        );
+        $this->dom->addChild(
+            $adi,
+            "cFabricante",
+            $std->cFabricante,
+            true,
+            "$identificador Código do fabricante estrangeiro"
+        );
+        $this->dom->addChild(
+            $adi,
+            "vDescDI",
+            $this->conditionalNumberFormatting($std->vDescDI),
+            false,
+            "$identificador Valor do desconto do item da DI Adição"
+        );
+        $this->dom->addChild(
+            $adi,
+            "nDraw",
+            $std->nDraw,
+            false,
+            "$identificador Número do ato concessório de Drawback"
+        );
+        $this->aAdi[$std->item][$std->nDI][] = $adi;
+        return $adi;
+    }
+
+    /**
+     * Grupo de informações de exportação para o item I50 pai I01
+     * tag NFe/infNFe/det[]/prod/detExport
+     * @param stdClass $std
+     * @return DOMElement
+     * @throws DOMException
+     */
+    public function tagdetExport(stdClass $std): DOMElement
+    {
+        $possible = [
+            'item',
+            'nDraw',
+            'nRE',
+            'chNFe',
+            'qExport'
+        ];
+        $std = $this->equilizeParameters($std, $possible);
+        $identificador = "I50 <detExport> Item: $std->item -";
+        $detExport = $this->dom->createElement("detExport");
+        $this->dom->addChild(
+            $detExport,
+            "nDraw",
+            Strings::onlyNumbers($std->nDraw),
+            false,
+            "$identificador Número do ato concessório de Drawback"
+        );
+        if (!empty($std->nRE) || !empty($std->chNFe) || !empty($std->qExport)) {
+            $exportInd = $this->dom->createElement("exportInd");
+            $this->dom->addChild(
+                $exportInd,
+                "nRE",
+                Strings::onlyNumbers($std->nRE),
+                true,
+                "$identificador Número do Registro de Exportação"
+            );
+            $this->dom->addChild(
+                $exportInd,
+                "chNFe",
+                $std->chNFe,
+                true,
+                "$identificador Chave de Acesso da NF-e recebida para exportação"
+            );
+            $this->dom->addChild(
+                $exportInd,
+                "qExport",
+                $this->conditionalNumberFormatting($std->qExport, 4),
+                true,
+                "$identificador Quantidade do item realmente exportado"
+            );
+            $this->dom->appChild($detExport, $exportInd);
+        }
+        $this->aDetExport[$std->item][] = $detExport;
+        return $detExport;
+    }
+
+    /**
+     * Valor total do Item, correspondente à sua participação no total da nota.
+     * A soma dos itens deverá corresponder ao total da nota.
+     * @param stdClass $std
+     * @return DOMElement|null
+     * @throws DOMException
+     */
+    public function tagvItem(stdClass $std): ?DOMElement
+    {
+        $possible = [
+            'item',
+            'vItem',
+        ];
+        $std = $this->equilizeParameters($std, $possible);
+        $identificador = "I50 <detExport> Item: $std->item -";
+        if (!empty($std->vItem) && is_numeric($std->vItem)) {
+            $this->aVItem[$std->item] = $this->dom->createElement(
+                "vItem",
+                $this->conditionalNumberFormatting($std->vItem, 2)
+            );
+            return $this->aVItem[$std->item];
+        }
+        return null;
     }
 }

@@ -42,17 +42,17 @@
           </xs:annotation>
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="dhEmbarque" type="TDateTimeUTC" >
+              <xs:element name="dhEmbarque" type="TDateTimeUTC">
                 <xs:annotation>
                   <xs:documentation>Data do Embarque no formato AAAA-MM-DDThh:mm:ssTZD</xs:documentation>
                 </xs:annotation>
               </xs:element>
-              <xs:element name="dhAverbacao" type="TDateTimeUTC" >
+              <xs:element name="dhAverbacao" type="TDateTimeUTC">
                 <xs:annotation>
                   <xs:documentation>Data da averbação no formato AAAA-MM-DDThh:mm:ssTZD</xs:documentation>
                 </xs:annotation>
               </xs:element>
-              <xs:element name="nDue" >
+              <xs:element name="nDue">
                 <xs:annotation>
                   <xs:documentation>Número Identificador da Declaração Única do Comércio Exterior associada</xs:documentation>
                 </xs:annotation>
@@ -63,7 +63,7 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="nItem" >
+              <xs:element name="nItem">
                 <xs:annotation>
                   <xs:documentation>Número do item da NF-e averbada</xs:documentation>
                 </xs:annotation>
@@ -74,7 +74,7 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="nItemDue" >
+              <xs:element name="nItemDue">
                 <xs:annotation>
                   <xs:documentation>Informação do número do item na Declaração de Exportação associada a averbação.</xs:documentation>
                 </xs:annotation>
@@ -102,11 +102,31 @@
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:whiteSpace value="preserve"/>
-                    <xs:enumeration value="1" />
-                    <xs:enumeration value="2" />
-                    <xs:enumeration value="3" />
+                    <xs:enumeration value="1"/>
+                    <xs:enumeration value="2"/>
+                    <xs:enumeration value="3"/>
                   </xs:restriction>
                 </xs:simpleType>
+              </xs:element>
+              <xs:element name="enquad" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Grupo de informações do enquadramento do item</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="cEnq" minOccurs="1" maxOccurs="4">
+                      <xs:annotation>
+                        <xs:documentation>Código do enquadramento</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:whiteSpace value="preserve"/>
+                          <xs:pattern value="[0-9]{5}"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
               </xs:element>
             </xs:sequence>
           </xs:complexType>
@@ -123,3 +143,6 @@
     </xs:complexType>
   </xs:element>
 </xs:schema>
+
+
+

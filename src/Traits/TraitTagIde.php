@@ -2,11 +2,24 @@
 
 namespace NFePHP\NFe\Traits;
 
+use NFePHP\Common\DOMImproved;
 use NFePHP\Common\Keys;
+use NFePHP\Common\Strings;
+use NFePHP\Common\TimeZoneByUF;
 use stdClass;
 use DOMElement;
-use NFePHP\NFe\Exception\InvalidArgumentException;
+use DateTime;
+use DateTimeZone;
 
+/**
+ * @property DOMImproved $dom
+ * @property array $errors
+ * @property int $schema
+ * @property string $tpAmb
+ * @property string $mod
+ * @property DOMElement $ide
+ * @method equilizeParameters($std, $possible)
+ */
 trait TraitTagIde
 {
     /**
@@ -29,8 +42,11 @@ trait TraitTagIde
             'tpNF',
             'idDest',
             'cMunFG',
+            'cMunFGIBS',
             'tpImp',
             'tpEmis',
+            'tpNFDebito',
+            'tpNFCredito',
             'cDV',
             'tpAmb',
             'finNFe',
@@ -43,28 +59,62 @@ trait TraitTagIde
             'xJust'
         ];
         $std = $this->equilizeParameters($std, $possible);
-
+        $identificador = 'B01 <ide> - ';
+        //proteção em função do modelo de schema, nullificar campos não pertencentes ao schema.
+        if ($this->schema < 10) {
+            $std->cMunFGIBS = null;
+            $std->tpNFDebito = null;
+            $std->tpNFCredito = null;
+        }
         if (empty($std->cNF)) {
             $std->cNF = Keys::random($std->nNF);
+        } else {
+            $cnf = substr(Strings::onlyNumbers($std->cNF), 0, 8);
+            $std->cNF = str_pad($cnf, 8, '0', STR_PAD_LEFT);
         }
         if (empty($std->cDV)) {
             $std->cDV = 0;
         }
-        //validação conforme NT 2019.001
-        $std->cNF = str_pad($std->cNF, 8, '0', STR_PAD_LEFT);
-        if (intval($std->cNF) == intval($std->nNF)) {
-            throw new InvalidArgumentException("O valor [{$std->cNF}] não é "
-                . "aceitável para cNF, não pode ser igual ao de nNF, vide NT2019.001");
+        if (empty($std->dhEmi)) {
+            try {
+                $tz = TimeZoneByUF::get($std->cUF);
+                $std->dhEmi = (new DateTime('now', new DateTimeZone($tz)))->format('Y-m-d\TH:i:sP');
+            } catch (\Exception $e) {
+                $this->errors[] = "$identificador Campo cUF incorreto !";
+            }
         }
-        if (method_exists(Keys::class, 'cNFIsValid')) {
-            if (!Keys::cNFIsValid($std->cNF)) {
-                throw new InvalidArgumentException("O valor [{$std->cNF}] para cNF "
-                    . "é invalido, deve respeitar a NT2019.001");
+        if (!empty($std->dhSaiEnt)) {
+            $tze = substr($std->dhEmi, -5);
+            $tzs = substr($std->dhSaiEnt, -5);
+            if ($tze !== $tzs) {
+                $this->errors[] = 'A data de saída (dhSaiEnt) não pode estar em um TIMEZONE '
+                    . 'diferente da data de emissão (dhEmi).';
+            }
+            $tmse = DateTime::createFromFormat('Y-m-d\TH:i:sP', $std->dhEmi);
+            $tmse->setTimezone(new DateTimeZone('UTC'));
+            $tmss = DateTime::createFromFormat('Y-m-d\TH:i:sP', $std->dhSaiEnt);
+            $tmss->setTimezone(new DateTimeZone('UTC'));
+            if ($tmss->getTimestamp() < $tmse->getTimestamp()) {
+                $this->errors[] = "$identificador A data de saída (dhSaiEnt) não pode ser menor "
+                    . "que a data de emissão (dhEmi).";
+            }
+        }
+        //validação conforme NT 2019.001
+        if (!empty($std->cNF)) {
+            $std->cNF = str_pad($std->cNF, 8, '0', STR_PAD_LEFT);
+            if (intval($std->cNF) == intval($std->nNF)) {
+                $this->errors[] = "$identificador O valor $std->cNF não é aceitável para cNF, não pode "
+                    . "ser igual ao de nNF.";
+            }
+            if (method_exists(Keys::class, 'cNFIsValid')) {
+                if (!Keys::cNFIsValid($std->cNF)) {
+                    $this->errors[] = "$identificador O valor $std->cNF para cNF é invalido.";
+                }
             }
         }
         $this->tpAmb = $std->tpAmb;
         $this->mod = $std->mod;
-        $identificador = 'B01 <ide> - ';
+
         $ide = $this->dom->createElement("ide");
         $this->dom->addChild(
             $ide,
@@ -83,7 +133,7 @@ trait TraitTagIde
         $this->dom->addChild(
             $ide,
             "natOp",
-            substr(trim($std->natOp), 0, 60),
+            $std->natOp,
             true,
             $identificador . "Descrição da Natureza da Operação"
         );
@@ -145,6 +195,16 @@ trait TraitTagIde
             true,
             $identificador . "Código do Município de Ocorrência do Fato Gerador"
         );
+        //PL_010 NT_2025.002v1.01
+        if ($this->schema > 9) {
+            $this->dom->addChild(
+                $ide,
+                "cMunFGIBS",
+                $std->cMunFGIBS,
+                false,
+                $identificador . "Código do Município de Ocorrência do Fato Gerador do IBS/CSB"
+            );
+        }
         $this->dom->addChild(
             $ide,
             "tpImp",
@@ -180,6 +240,23 @@ trait TraitTagIde
             true,
             $identificador . "Finalidade de emissão da NF-e"
         );
+        //PL_010 NT_2025.002v1.01
+        if ($this->schema > 9) {
+            $this->dom->addChild(
+                $ide,
+                "tpNFDebito",
+                $std->tpNFDebito,
+                false,
+                $identificador . "Tipo de Nota de Débito"
+            );
+            $this->dom->addChild(
+                $ide,
+                "tpNFCredito",
+                $std->tpNFCredito,
+                false,
+                $identificador . "Tipo de Nota de Crédito"
+            );
+        }
         $this->dom->addChild(
             $ide,
             "indFinal",
@@ -197,7 +274,7 @@ trait TraitTagIde
         $this->dom->addChild(
             $ide,
             "indIntermed",
-            $std->indIntermed ?? null,
+            $std->indIntermed,
             false,
             $identificador . "Indicador de intermediador/marketplace"
         );
@@ -226,7 +303,7 @@ trait TraitTagIde
             $this->dom->addChild(
                 $ide,
                 "xJust",
-                substr(trim($std->xJust), 0, 256),
+                $std->xJust,
                 true,
                 $identificador . "Justificativa da entrada em contingência"
             );
