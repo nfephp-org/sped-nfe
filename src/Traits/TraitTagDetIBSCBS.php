@@ -47,16 +47,19 @@ trait TraitTagDetIBSCBS
             'gIBSUF_pAliqEfet', //opcional Alíquota Efetiva do IBS de competência das UF que será aplicada a BC 3v2-4
             'gIBSUF_vIBSUF', //OBRIGATÓRIO Valor do IBS de competência da UF 13v2
             //dados IBS Municipal
-            'gIBSMun_pIBSMun', //opcional Alíquota do IBS de competência do município 3v2-4,OBRIGATÓRIO se vBC for informado
+            'gIBSMun_pIBSMun', //opcional Alíquota do IBS de competência do município 3v2-4
+                //OBRIGATÓRIO se vBC for informado
             'gIBSMun_vTribOp', //opcional Valor bruto do tributo na operação 13v2
             'gIBSMun_pDif', //opcional Percentual do diferimento 3v2-4
             'gIBSMun_vDif', //opcional Valor do Diferimento 13v2
             'gIBSMun_vDevTrib', //opcional Valor do tributo devolvido 13v2
             'gIBSMun_pRedAliq', //opcional Percentual da redução de alíquota 3v2-4
-            'gIBSMun_pAliqEfet', //opcional Alíquota Efetiva do IBS de competência do Município que será aplicada a BC 3v2-4
+            'gIBSMun_pAliqEfet', //opcional Alíquota Efetiva do IBS de competência do Município
+                // que será aplicada a BC 3v2-4
             'gIBSMun_vIBSMun', //opcional Valor do IBS de competência do Município 13v2
             // dados CBS (imposto federal)
-            'gCBS_pCBS', //opcional Alíquota da CBS 3v2-4, OBRIGATÓRIO se vBC for informado
+            'gCBS_pCBS', //opcional Alíquota da CBS 3v2-4
+                // OBRIGATÓRIO se vBC for informado
             'gCBS_pDif', //opcional Percentual do diferimento 3v2-4
             'gCBS_vCBSOp', //opcional Valor da CBS Bruto na operação 13v2
             'gCBS_vDif', //opcional Valor do Diferimento 13v2

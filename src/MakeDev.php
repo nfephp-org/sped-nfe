@@ -752,7 +752,8 @@ final class MakeDev
             $flagChoice = false;
             //veicProd => prod
             if (!empty($this->aVeicProd[$item]) && $flagChoice === false) {
-                $this->addTag($prod, $this->aVeicProd[$item], 'Falta tag prod!');;
+                $this->addTag($prod, $this->aVeicProd[$item], 'Falta tag prod!');
+                ;
                 $flagChoice = true;
             }
             //med => prod
@@ -882,21 +883,23 @@ final class MakeDev
                     //CHICE gIBSCBS ou gIBSCBSMono
                     //existe o grupo gIBSCBS no node IBSCBS ?
                     $gIBSCBS = $ibscbs->getElementsByTagName("gIBSCBS")->item(0);
-                    if(!empty($gIBSCBS)) {
+                    if (!empty($gIBSCBS)) {
                         //add gIBSCBS ao node imposto
                         $this->addTag($ibscbs, $gIBSCBS, 'Falta a tag IBSCBS!');
                     } elseif (!empty($this->aGIBSCBSMono[$item])) {
                         //não existe gIBSCBS, então add gIBSCBSMono
                         $this->addTag($ibscbs, $this->aGIBSCBSMono[$item], 'Falta a tag IBSCBS!');
                     }
-                    $this->addTag($imposto, $ibscbs, 'Falta a tag det/imposto!');;
+                    $this->addTag($imposto, $ibscbs, 'Falta a tag det/imposto!');
+                    ;
                 }
             }
             //adioiona imposto ao node det
             $this->addTag($det, $imposto);
             //impostoDevol => det
             if (!empty($this->aImpostoDevol[$item])) {
-                $this->addTag($det, $this->aImpostoDevol[$item], 'Falta a tag det!');;
+                $this->addTag($det, $this->aImpostoDevol[$item], 'Falta a tag det!');
+                ;
             }
             //infAdProd => det
             if (!empty($this->aInfAdProd[$item])) {
@@ -915,10 +918,12 @@ final class MakeDev
                 $this->addTag($det, $this->aVItem[$item]);
                 //DFEReferenciado => det PL_010
                 if (!empty($this->aDFeReferenciado[$item])) {
-                    $this->addTag($det, $this->aDFeReferenciado[$item], 'Falta a tag det!');;
+                    $this->addTag($det, $this->aDFeReferenciado[$item], 'Falta a tag det!');
+                    ;
                 }
             }
-            $this->addTag($this->infNFe, $det, 'Fala a tag infNFe!');;
+            $this->addTag($this->infNFe, $det, 'Fala a tag infNFe!');
+            ;
         }
     }
 
