@@ -945,19 +945,16 @@ final class MakeDev
         if (!empty($veicProd)) {
             $tpOP = (int) $veicProd->getElementsByTagName("tpOp")->item(0)->nodeValue ?? 0;
         }
-
         //Valor do imposto de importação
         $vII = 0;
         if (!empty($ii)) {
             $vII = (float) $ii->getElementsByTagName("vII")->item(0)->nodeValue ?? 0;
         }
-
         $vProd = (float) $det->getElementsByTagName("vProd")->item(0)->nodeValue ?? 0;
         $vDesc = (float) $det->getElementsByTagName("vDesc")->item(0)->nodeValue ?? 0;
         $vFrete = (float) $det->getElementsByTagName("vFrete")->item(0)->nodeValue ?? 0;
         $vSeg = (float) $det->getElementsByTagName("vSeg")->item(0)->nodeValue ?? 0;
         $vOutro = (float) $det->getElementsByTagName("vOutro")->item(0)->nodeValue ?? 0;
-
         $icmsdeson = 0;
         $vICMSST = 0;
         $vICMSMonoReten = 0;
@@ -967,9 +964,7 @@ final class MakeDev
             $indDeduzDeson = (int) $icms->getElementsByTagName("indDeduzDeson")
                 ->item(0)->nodeValue ?? 0;
             $vICMSDeson = (float) $icms->getElementsByTagName("vICMSDeson")->item(0)->nodeValue ?? 0;
-
             $icmsdeson = $vICMSDeson * $indDeduzDeson;
-
             $vICMSST = (float) $icms->getElementsByTagName("vICMSST")->item(0)->nodeValue ?? 0;
             $vICMSMonoReten = (float) $icms->getElementsByTagName("vICMSMonoReten")
                 ->item(0)->nodeValue ?? 0;
@@ -988,7 +983,6 @@ final class MakeDev
         }
         //Serviços
         $vServ = 0; //esse campo não existe no item mas é igual a vProd !! ignorar
-
         //PISST
         $vPIS = 0;
         if (!empty($pisst)) {
