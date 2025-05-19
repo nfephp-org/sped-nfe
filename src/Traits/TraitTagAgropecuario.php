@@ -68,19 +68,19 @@ trait TraitTagAgropecuario
 
     /**
      * Bloco defencivo de 0 a 20 ocorrencias
-     * tag NFe/infNFe/agropecuario/defencivo (opcional)
+     * tag NFe/infNFe/agropecuario/defensivo (opcional)
      * @param stdClass $std
      * @return DOMElement
      * @throws \DOMException
      */
-    public function tagAgropecuarioDefencivo(stdClass $std): DOMElement
+    public function tagAgropecuarioDefensivo(stdClass $std): DOMElement
     {
         $possible = [
             'nReceituario',
             'CPFRespTec'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $def = $this->dom->createElement("defencivo");
+        $def = $this->dom->createElement("defensivo");
         $this->dom->addChild(
             $def,
             "nReceituario",
@@ -95,7 +95,7 @@ trait TraitTagAgropecuario
             true,
             "CPF do Responsável Técnico, emitente do receituário"
         );
-        $this->aAgropecuarioDefencivo[] = $def;
+        $this->aAgropecuarioDefensivo[] = $def;
         return $def;
     }
 }

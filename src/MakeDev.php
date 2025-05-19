@@ -35,12 +35,13 @@ use NFePHP\NFe\Traits\TraitTagPag;
 use NFePHP\NFe\Traits\TraitTagRefs;
 use NFePHP\NFe\Traits\TraitTagDest;
 use NFePHP\NFe\Traits\TraitTagRetirada;
+use NFePHP\NFe\Traits\TraitTagTotal;
 use NFePHP\NFe\Traits\TraitTagTransp;
 use stdClass;
 use DOMElement;
 use DateTime;
 
-class MakeDev
+final class MakeDev
 {
     use TraitTagIde;
     use TraitTagInfNfe;
@@ -73,12 +74,9 @@ class MakeDev
     use TraitTagExporta;
     use TraitTagCompra;
     use TraitTagCana;
-    use TraitTagAgropecuario;
+    use TraitTagAgropecuario; //Não Existe na PL_010
+    use TraitTagTotal;
 
-    /**
-     * @var mixed
-     */
-    protected $config;
     /**
      * @var int
      */
@@ -86,7 +84,7 @@ class MakeDev
     /**
      * @var int
      */
-    protected $tpAmb;
+    protected $tpAmb = 2;
     /**
      * @var array
      */
@@ -194,10 +192,6 @@ class MakeDev
     /**
      * @var DOMElement
      */
-    protected $intermed;
-    /**
-     * @var DOMElement
-     */
     protected $transp;
     /**
      * @var DOMElement
@@ -230,7 +224,23 @@ class MakeDev
     /**
      * @var DOMElement
      */
-    protected $total;
+    protected $ICSMSTot;
+    /**
+     * @var DOMElement
+     */
+    protected $ISSQNTot;
+    /**
+     * @var DOMElement
+     */
+    protected $ISTot;
+    /**
+     * @var DOMElement
+     */
+    protected $IBSCBSTot;
+    /**
+     * @var DOMElement
+     */
+    protected $retTrib;
     /**
      * @var DOMElement
      */
@@ -263,6 +273,10 @@ class MakeDev
      * @var array
      */
     protected $aProd;
+    /**
+     * @var array
+     */
+    protected $aGCred;
     /**
      * @var array
      */
@@ -342,6 +356,26 @@ class MakeDev
     /**
      * @var array
      */
+    protected $aIBSCBS;
+    /**
+     * @var array
+     */
+    protected $aGTribRegular;
+    /**
+     * @var array
+     */
+    protected $aIBSCredPres;
+    /**
+     * @var array
+     */
+    protected $aCBSCredPres;
+    /**
+     * @var array
+     */
+    protected $aGIBSCBSMono;
+    /**
+     * @var array
+     */
     protected $aObsItem;
     /**
      * @var array
@@ -386,7 +420,7 @@ class MakeDev
     /**
      * @var array
      */
-    protected $aAgropecuarioDefencivo;
+    protected $aAgropecuarioDefensivo;
 
     /**
      * Função construtora cria um objeto DOMDocument
@@ -398,13 +432,12 @@ class MakeDev
         if (!empty($schema)) {
             $this->schema = (int) preg_replace("/[^0-9]/", "", substr($schema, 0, 6));
         }
-        $this->tpAmb = (int) $this->config->tpAmb ?? 2;
         $this->dom = new Dom('1.0', 'UTF-8');
         $this->dom->preserveWhiteSpace = false;
         $this->dom->formatOutput = false;
 
         //elemento totalizador
-        $this->stdTot = new \stdClass();
+        $this->stdTot = new stdClass();
         $this->stdTot->vBC = 0;
         $this->stdTot->vICMS = 0;
         $this->stdTot->vICMSDeson = 0;
@@ -436,54 +469,53 @@ class MakeDev
         $this->stdTot->vOutro = 0;
         $this->stdTot->vNF = 0;
         $this->stdTot->vTotTrib = 0;
+        $this->stdTot->vNFTot = 0;
 
-        $this->stdISSQNTot = new \stdClass();
-        $this->stdISSQNTot->vServ = null;
-        $this->stdISSQNTot->vBC = null;
-        $this->stdISSQNTot->vISS = null;
-        $this->stdISSQNTot->vPIS = null;
-        $this->stdISSQNTot->vCOFINS = null;
+        $this->stdISSQNTot = new stdClass();
+        $this->stdISSQNTot->vServ = 0;
+        $this->stdISSQNTot->vBC = 0;
+        $this->stdISSQNTot->vISS = 0;
+        $this->stdISSQNTot->vPIS = 0;
+        $this->stdISSQNTot->vCOFINS = 0;
         $this->stdISSQNTot->dCompet = null;
-        $this->stdISSQNTot->vDeducao = null;
-        $this->stdISSQNTot->vOutro = null;
-        $this->stdISSQNTot->vDescIncond = null;
-        $this->stdISSQNTot->vDescCond = null;
-        $this->stdISSQNTot->vISSRet = null;
-        $this->stdISSQNTot->cRegTrib = null;
+        $this->stdISSQNTot->vDeducao = 0;
+        $this->stdISSQNTot->vOutro = 0;
+        $this->stdISSQNTot->vDescIncond = 0;
+        $this->stdISSQNTot->vDescCond = 0;
+        $this->stdISSQNTot->vISSRet = 0;
+        $this->stdISSQNTot->cRegTrib = 0;
 
-        $this->stdIStot  = new \stdClass();
-        $this->stdIStot->vIS = null;
+        $this->stdIStot  = new stdClass();
+        $this->stdIStot->vIS = 0;
 
-        $this->stdIBSCBSTot = new \stdClass();
-        $this->stdIBSCBSTot->vBCIBSCBS = null;
-        $this->stdIBSCBSTot->vIBS = null;
-        $this->stdIBSCBSTot->vCredPres = null;
-        $this->stdIBSCBSTot->vCredPresCondSus = null;
+        $this->stdIBSCBSTot = new stdClass();
+        $this->stdIBSCBSTot->vBCIBSCBS = 0;
+        $this->stdIBSCBSTot->vIBS = 0;
+        $this->stdIBSCBSTot->vCBS = 0;
+        $this->stdIBSCBSTot->vCredPres = 0;
+        $this->stdIBSCBSTot->vCredPresCondSus = 0;
 
-        $this->stdIBSCBSTot->gIBSUF = new \stdClass();
-        $this->stdIBSCBSTot->gIBSUF->vDif = null;
-        $this->stdIBSCBSTot->gIBSUF->vDevTrib = null;
-        $this->stdIBSCBSTot->gIBSUF->vIBSUF = null;
+        $this->stdIBSCBSTot->gIBSUF = new stdClass();
+        $this->stdIBSCBSTot->gIBSUF->vDif = 0;
+        $this->stdIBSCBSTot->gIBSUF->vDevTrib = 0;
+        $this->stdIBSCBSTot->gIBSUF->vIBSUF = 0;
 
-        $this->stdIBSCBSTot->gIBSMun = new \stdClass();
-        $this->stdIBSCBSTot->gIBSMun->vDif = null;
-        $this->stdIBSCBSTot->gIBSMun->vDevTrib = null;
-        $this->stdIBSCBSTot->gIBSMun->vIBSMun = null;
+        $this->stdIBSCBSTot->gIBSMun = new stdClass();
+        $this->stdIBSCBSTot->gIBSMun->vDif = 0;
+        $this->stdIBSCBSTot->gIBSMun->vDevTrib = 0;
+        $this->stdIBSCBSTot->gIBSMun->vIBSMun = 0;
 
-        $this->stdIBSCBSTot->gCBS = new \stdClass();
-        $this->stdIBSCBSTot->gCBS->vDif = null;
-        $this->stdIBSCBSTot->gCBS->vDevTrib = null;
-        $this->stdIBSCBSTot->gCBS->vCBS = null;
-        $this->stdIBSCBSTot->gCBS->vCredPres = null;
-        $this->stdIBSCBSTot->gCBS->vCredPresCondSus = null;
+        $this->stdIBSCBSTot->gCBS = new stdClass();
+        $this->stdIBSCBSTot->gCBS->vDif = 0;
+        $this->stdIBSCBSTot->gCBS->vDevTrib = 0;
 
-        $this->stdIBSCBSTot->gMono = new \stdClass();
-        $this->stdIBSCBSTot->gMono->vIBSMono = null;
-        $this->stdIBSCBSTot->gMono->vCBSMono = null;
-        $this->stdIBSCBSTot->gMono->vIBSMonoReten = null;
-        $this->stdIBSCBSTot->gMono->vCBSMonoReten = null;
-        $this->stdIBSCBSTot->gMono->vIBSMonoRet = null;
-        $this->stdIBSCBSTot->gMono->vCBSMonoRet = null;
+        $this->stdIBSCBSTot->gMono = new stdClass();
+        $this->stdIBSCBSTot->gMono->vIBSMono = 0;
+        $this->stdIBSCBSTot->gMono->vCBSMono = 0;
+        $this->stdIBSCBSTot->gMono->vIBSMonoReten = 0;
+        $this->stdIBSCBSTot->gMono->vCBSMonoReten = 0;
+        $this->stdIBSCBSTot->gMono->vIBSMonoRet = 0;
+        $this->stdIBSCBSTot->gMono->vCBSMonoRet = 0;
     }
 
     /**
@@ -680,7 +712,7 @@ class MakeDev
                         $adis = array_slice($adis, 0, 999, true);
                     }
                     foreach ($adis as $adi) {
-                        $this->addTag($di, $adi);
+                        $this->addTag($di, $adi, 'Falta parente DI!');
                     }
                     $this->dom->insertAfter($di, $indTot);
                 }
@@ -713,19 +745,19 @@ class MakeDev
                     $ras = array_slice($ras, 0, 500, true);
                 }
                 foreach ($ras as $ra) {
-                    $this->addTag($prod, $ra);
+                    $this->addTag($prod, $ra, 'Falta tag prod!');
                 }
             }
             //CHOICE
             $flagChoice = false;
             //veicProd => prod
             if (!empty($this->aVeicProd[$item]) && $flagChoice === false) {
-                $this->addTag($prod, $this->aVeicProd[$item]);
+                $this->addTag($prod, $this->aVeicProd[$item], 'Falta tag prod!');;
                 $flagChoice = true;
             }
             //med => prod
             if (!empty($this->aMed[$item]) && $flagChoice === false) {
-                $this->addTag($prod, $this->aMed[$item]);
+                $this->addTag($prod, $this->aMed[$item], 'Falta tag prod!');
                 $flagChoice = true;
             }
             //arma => prod
@@ -737,7 +769,7 @@ class MakeDev
                     $ras = array_slice($arms, 0, 500, true);
                 }
                 foreach ($arms as $arm) {
-                    $this->addTag($prod, $arm);
+                    $this->addTag($prod, $arm, 'Falta tag prod!');
                 }
                 $flagChoice = true;
             }
@@ -751,14 +783,14 @@ class MakeDev
                         if (!empty($pbio)) {
                             $comb->insertBefore($encerrante, $pbio);
                         } else {
-                            $this->addTag($comb, $encerrante);
+                            $this->addTag($comb, $encerrante, 'Falta tag comb!');
                         }
                     }
                 }
                 //incluso NT 2023.001-1.10 /1.20
                 if (!empty($this->aOrigComb[$item])) {
                     foreach ($this->aOrigComb[$item] as $origcomb) {
-                        $this->addTag($comb, $origcomb);
+                        $this->addTag($comb, $origcomb, 'Falta a tag comb!');
                     }
                 }
                 $this->addTag($prod, $this->aComb[$item]);
@@ -768,7 +800,7 @@ class MakeDev
             if (!empty($this->aRECOPI[$item]) && $flagChoice === false) {
                 $prod->appendChild($this->aRECOPI[$item]);
             }
-            $this->addTag($det, $prod);
+            $this->addTag($det, $prod, 'Falta a tag det!');
 
             //imposto => det
             $imposto = $this->dom->createElement("imposto");
@@ -776,72 +808,275 @@ class MakeDev
                 $imposto = $this->aImposto[$item];
             }
             //ICMS => imposto
+            $flagICMS = false;
             if (!empty($this->aICMS[$item])) {
-                $this->addTag($imposto, $this->aICMS[$item]);
+                $flagICMS = true;
+                $icms = $this->dom->createElement("ICMS");
+                $this->addTag($icms, $this->aICMS[$item]);
+                $this->addTag($imposto, $icms, 'Falta a tag det/imposto!');
             }
             //IPI => imposto
             if (!empty($this->aIPI[$item])) {
-                $this->addTag($imposto, $this->aIPI[$item]);
+                $this->addTag($imposto, $this->aIPI[$item], 'Falta a tag det/imposto!');
             }
             //II => imposto
             if (!empty($this->aII[$item])) {
-                $this->addTag($imposto, $this->aII[$item]);
+                $this->addTag($imposto, $this->aII[$item], 'Falta a tag det/imposto!');
             }
             //ISSQN => imposto
-            if (!empty($this->aISSQN[$item])) {
-                $this->addTag($imposto, $this->aISSQN[$item]);
+            if (!empty($this->aISSQN[$item]) && !$flagICMS) {
+                //ou temos ISSQN ou temos ICMS não podemos ter os dois no mesmo item
+                $this->addTag($imposto, $this->aISSQN[$item], 'Falta a tag det/imposto!');
             }
             //PIS => imposto
             if (!empty($this->aPIS[$item])) {
-                $this->addTag($imposto, $this->aPIS[$item]);
+                $this->addTag($imposto, $this->aPIS[$item], 'Falta a tag det/imposto!');
             }
             //PISST => imposto
-            if (!empty($this->aPISST[$item])) {
-                $this->addTag($imposto, $this->aPISST[$item]);
+            if (!empty($this->aPISST[$item]) && empty($this->aPIS[$item])) {
+                //ou o PIS normal ou PISST não pode haver os dois no mesmo item
+                $this->addTag($imposto, $this->aPISST[$item], 'Falta a tag det/imposto!');
             }
             //COFINS => imposto
             if (!empty($this->aCOFINS[$item])) {
-                $this->addTag($imposto, $this->aCOFINS[$item]);
+                $this->addTag($imposto, $this->aCOFINS[$item], 'Falta a tag det/imposto!');
             }
             //COFINSST => imposto
-            if (!empty($this->aCOFINSST[$item])) {
-                $this->addTag($imposto, $this->aCOFINSST[$item]);
+            if (!empty($this->aCOFINSST[$item]) && empty($this->aCOFINS[$item])) {
+                //ou o COFINS normal ou CONFINSST não pode haver os dois no mesmo item
+                $this->addTag($imposto, $this->aCOFINSST[$item], 'Falta a tag det/imposto!');
             }
             //ICMSUFDest => imposto
             if (!empty($this->aICMSUFDest[$item])) {
-                $this->addTag($imposto, $this->aICMSUFDest[$item]);
+                $this->addTag($imposto, $this->aICMSUFDest[$item], 'Falta a tag det/imposto!');
             }
-            //IS => imposto - somente para PL_010 em diante
-            if (!empty($this->aIS[$item]) && $this->schema > 9) {
-                $this->addTag($imposto, $this->aIS[$item]);
+            if ($this->schema > 9) {
+                //IS => imposto - somente para PL_010 em diante
+                if (!empty($this->aIS[$item])) {
+                    $this->addTag($imposto, $this->aIS[$item], 'Falta a tag det/imposto!');
+                }
+                //IBSCBS => imposto - somente para PL_010 em diante
+                if (!empty($this->aIBSCBS[$item])) {
+                    $ibscbs = $this->aIBSCBS[$item];
+                    //existe o grupo gIBSCBS no node IBSCBS ?
+                    $gIBSCBS = $ibscbs->getElementsByTagName("gIBSCBS")->item(0);
+
+                    if (!empty($this->aGTribRegular[$item]) && !empty($gIBSCBS)) {
+                        //add gTribRegular
+                        $gIBSCBS->appendChild($this->aGTribRegular[$item]);
+                    }
+                    if (!empty($this->aIBSCBSCredPres[$item])  && !empty($gIBSCBS)) {
+                        $tribreg = $this->aIBSCBSCredPres[$item];
+                        $gIBSCredPres = $tribreg->getElementsByTagName("gIBSCredPres")->item(0);
+                        if (!empty($gIBSCredPres)) {
+                            //add gIBSCredPres
+                            $gIBSCBS->appendChild($gIBSCredPres);
+                        }
+                       //add gCBSCredPres
+                        $gCBSCredPres = $tribreg->getElementsByTagName("gIBSCredPres")->item(0);
+                        if (!empty($gCBSCredPres)) {
+                            //add gCBSCredPres
+                            $ibscbs->appendChild($gCBSCredPres);
+                        }
+                    }
+                    //CHICE gIBSCBS ou gIBSCBSMono
+                    //existe o grupo gIBSCBS no node IBSCBS ?
+                    $gIBSCBS = $ibscbs->getElementsByTagName("gIBSCBS")->item(0);
+                    if(!empty($gIBSCBS)) {
+                        //add gIBSCBS ao node imposto
+                        $this->addTag($ibscbs, $gIBSCBS, 'Falta a tag IBSCBS!');
+                    } elseif (!empty($this->aGIBSCBSMono[$item])) {
+                        //não existe gIBSCBS, então add gIBSCBSMono
+                        $this->addTag($ibscbs, $this->aGIBSCBSMono[$item], 'Falta a tag IBSCBS!');
+                    }
+                    $this->addTag($imposto, $ibscbs, 'Falta a tag det/imposto!');;
+                }
             }
-            //IBSCBS => imposto - somente para PL_010 em diante
-            if (!empty($this->aIBSCBS[$item])  && $this->schema > 9) {
-                $this->addTag($imposto, $this->aIBSCBS[$item]);
-            }
+            //adioiona imposto ao node det
             $this->addTag($det, $imposto);
             //impostoDevol => det
             if (!empty($this->aImpostoDevol[$item])) {
-                $this->addTag($imposto, $this->aImpostoDevol[$item]);
+                $this->addTag($det, $this->aImpostoDevol[$item], 'Falta a tag det!');;
             }
             //infAdProd => det
             if (!empty($this->aInfAdProd[$item])) {
-                $this->addTag($det, $this->aInfAdProd[$item]);
+                $this->addTag($det, $this->aInfAdProd[$item], 'Falta a tag det!');
             }
             //obsItem => det
             if (!empty($this->aObsItem[$item])) {
-                $this->addTag($det, $this->aObsItem[$item]);
+                $this->addTag($det, $this->aObsItem[$item], 'Falta a tag det!');
             }
-            //vItem => det  ...  incluso no método tagProd() PL_010
-            if (!empty($this->aVItem[$item]) && $this->schema > 9) {
+            if ($this->schema > 9) {
+                //vItem => det  ...  incluso tagProd() PL_010
+                if (empty($this->aVItem[$item])) {
+                    //não foi passado o vItem totalizando os valores a serem processados
+                    $this->aVItem[$item] = $this->calculateItemValue($det);
+                }
                 $this->addTag($det, $this->aVItem[$item]);
+                //DFEReferenciado => det PL_010
+                if (!empty($this->aDFeReferenciado[$item])) {
+                    $this->addTag($det, $this->aDFeReferenciado[$item], 'Falta a tag det!');;
+                }
             }
-            //DFEReferenciado => det PL_010
-            if (!empty($this->aDFeReferenciado[$item]) && $this->schema > 9) {
-                $this->addTag($det, $this->aDFeReferenciado[$item]);
-            }
-            $this->addTag($this->infNFe, $det);
+            $this->addTag($this->infNFe, $det, 'Fala a tag infNFe!');;
         }
+    }
+
+    /**
+     * Calcula o vItem compo introduzido com o PL_010 que se refere ao total do item com o IBS/CBS/IS
+     * @param DOMElement $det
+     * @return DOMElement
+     * @throws \DOMException
+     */
+    protected function calculateItemValue(DOMElement $det): DOMElement
+    {
+        $veicProd = $det->getElementsByTagName("veicProd")->item(0) ?? null;
+        $imposto = $det->getElementsByTagName("imposto")->item(0);
+        $impostoDevol = $det->getElementsByTagName("imposto")->item(0) ?? null;
+        $icms = $imposto->getElementsByTagName("ICMS")->item(0) ?? null;
+        $ipi = $imposto->getElementsByTagName("IPI")->item(0) ?? null;
+        $ii = $imposto->getElementsByTagName("II")->item(0) ?? null;
+        $pisst = $imposto->getElementsByTagName("PISST")->item(0) ?? null;
+        $cofinsst = $imposto->getElementsByTagName("COFINSST")->item(0) ?? null;
+        $is = $imposto->getElementsByTagName("IS")->item(0) ?? null;
+        $cbs = $imposto->getElementsByTagName("IBSCBS")->item(0) ?? null;
+
+        $tpOP = 0;
+        if (!empty($veicProd)) {
+            $tpOP = (int) $veicProd->getElementsByTagName("tpOp")->item(0)->nodeValue ?? 0;
+        }
+
+        //Valor do imposto de importação
+        $vII = 0;
+        if (!empty($ii)) {
+            $vII = (float) $ii->getElementsByTagName("vII")->item(0)->nodeValue ?? 0;
+        }
+
+        $vProd = (float) $det->getElementsByTagName("vProd")->item(0)->nodeValue ?? 0;
+        $vDesc = (float) $det->getElementsByTagName("vDesc")->item(0)->nodeValue ?? 0;
+        $vFrete = (float) $det->getElementsByTagName("vFrete")->item(0)->nodeValue ?? 0;
+        $vSeg = (float) $det->getElementsByTagName("vSeg")->item(0)->nodeValue ?? 0;
+        $vOutro = (float) $det->getElementsByTagName("vOutro")->item(0)->nodeValue ?? 0;
+
+        $icmsdeson = 0;
+        $vICMSST = 0;
+        $vICMSMonoReten = 0;
+        $vFCPST = 0;
+        if (!empty($icms)) {
+            //aplica desoneração caso indDeduzDeson = 1
+            $indDeduzDeson = (int) $icms->getElementsByTagName("indDeduzDeson")
+                ->item(0)->nodeValue ?? 0;
+            $vICMSDeson = (float) $icms->getElementsByTagName("vICMSDeson")->item(0)->nodeValue ?? 0;
+
+            $icmsdeson = $vICMSDeson * $indDeduzDeson;
+
+            $vICMSST = (float) $icms->getElementsByTagName("vICMSST")->item(0)->nodeValue ?? 0;
+            $vICMSMonoReten = (float) $icms->getElementsByTagName("vICMSMonoReten")
+                ->item(0)->nodeValue ?? 0;
+            $vFCPST = (float) $icms->getElementsByTagName("vFCPST")->item(0)->nodeValue ?? 0;
+        }
+        //IPI
+        $vIPI = 0;
+        if (!empty($ipi)) {
+            $vIPI = (float) $ipi->getElementsByTagName("vIPI")->item(0)->nodeValue ?? 0;
+        }
+        //IPIDevol
+        $vIPIDevol = 0;
+        if (!empty($impostoDevol)) {
+            $vIPIDevol = (float) $impostoDevol->getElementsByTagName("vIPIDevol")
+                ->item(0)->nodeValue ?? 0;
+        }
+        //Serviços
+        $vServ = 0; //esse campo não existe no item mas é igual a vProd !! ignorar
+
+        //PISST
+        $vPIS = 0;
+        if (!empty($pisst)) {
+            $indSomaPISST = (int) $pisst->getElementsByTagName("indSomaPISST")
+                ->item(0)->nodeValue ?? 0;
+            $vPIS = (float) $pisst->getElementsByTagName("vPIS")->item(0)->nodeValue ?? 0;
+            $vPIS = $vPIS * $indSomaPISST;
+        }
+        //COFINSST
+        $vCOFINS = 0;
+        if (!empty($cofinsst)) {
+            $indSomaCOFINSST = (int) $cofinsst->getElementsByTagName("indSomaCOFINSST")
+                ->item(0)->nodeValue ?? 0;
+            $vCOFINS = (float) $cofinsst->getElementsByTagName("vCOFINS")->item(0)->nodeValue ?? 0;
+            $vCOFINS = $vCOFINS * $indSomaCOFINSST;
+        }
+        //IBSCBS
+        $vIBSUF = 0;
+        $vIBSMun = 0;
+        $vCBS = 0;
+        $vTotIBSMonoItem = 0;
+        $vTotCBSMonoItem = 0;
+        if (!empty($cbs)) {
+            $vIBSUF = (float) $cbs->getElementsByTagName("vIBSUF")->item(0)->nodeValue ?? 0;
+            $vIBSMun = (float) $cbs->getElementsByTagName("vIBSMun")->item(0)->nodeValue ?? 0;
+            $vCBS = (float) $cbs->getElementsByTagName("vCBS")->item(0)->nodeValue ?? 0;
+            $vTotIBSMonoItem = (float) $cbs->getElementsByTagName("vTotIBSMonoItem")
+                ->item(0)->nodeValue ?? 0;
+            $vTotCBSMonoItem = (float) $cbs->getElementsByTagName("vTotCBSMonoItem")
+                ->item(0)->nodeValue ?? 0;
+        }
+        //IS
+        $vIS = 0;
+        if (!empty($is)) {
+            $vIS = (float) $is->getElementsByTagName("vIS")->item(0)->nodeValue ?? 0;
+        }
+        //Somatório
+        if ($tpOP != 2) {
+            //todas as operações exceto venda de veiculos novas
+            $vitem = round(
+                $vProd
+                - $vDesc
+                - $icmsdeson
+                + $vICMSST
+                + $vICMSMonoReten
+                + $vFCPST
+                + $vFrete
+                + $vSeg
+                + $vOutro
+                + $vII
+                + $vIPI
+                + $vIPIDevol
+                + $vServ
+                + $vPIS
+                + $vCOFINS
+                + $vIBSUF  //2026 remover esse campo da soma
+                + $vIBSMun //2026 remover esse campo da soma
+                + $vCBS    //2026 remover esse campo da soma
+                + $vIS     //2026 remover esse campo da soma
+                + $vTotIBSMonoItem  //2026 remover esse campo da soma
+                + $vTotCBSMonoItem,
+                2
+            ); //2026 remover esse campo da soma
+        } else {
+            //venda de veiculos novos
+            $vitem = round(
+                $vProd
+                - $vDesc
+                - $icmsdeson
+                + $vFrete
+                + $vSeg
+                + $vOutro
+                + $vII
+                + $vIPI
+                + $vServ
+                + $vPIS
+                + $vCOFINS
+                + $vIBSUF  //2026 remover esse campo da soma
+                + $vIBSMun //2026 remover esse campo da soma
+                + $vCBS    //2026 remover esse campo da soma
+                + $vIS,
+                2
+            );     //2026 remover esse campo da soma
+        }
+        return $this->dom->createElement(
+            "vItem",
+            $this->conditionalNumberFormatting($vitem, 2)
+        );
     }
 
     /**
@@ -1053,28 +1288,29 @@ class MakeDev
     }
 
     /**
-     * Adiciona a tag agropacuario
+     * Adiciona a tag agropacuario. Esta tag foi removida no PL_010
      * @return void
      * @throws \DOMException
      */
     protected function addTagAgropecuario()
     {
-        //o schema estabelece qual PL está sendo usado para a montegem da NFe/NFCe
+        //o schema estabelece qual PL está sendo usado para a montagem da NFe/NFCe
         if ($this->schema > 9) {
+            //Esta tag foi removida no PL_010
             return;
         }
         if (!empty($this->agropecuarioGuia)) {
             $agrop = $this->dom->createElement('agropecuario');
             $this->addTag($agrop, $this->agropecuarioGuia);
             $this->addTag($this->infNFe, $agrop);
-        } elseif (!empty($this->aAgropecuarioDefencivo)) {
+        } elseif (!empty($this->aAgropecuarioDefensivo)) {
             $agrop = $this->dom->createElement('agropecuario');
-            if (count($this->aAgropecuarioDefencivo) > 20) {
-                $this->errors[] = 'Podem existir no máximo 20 tag agropecuario/defencivo.';
-                $this->aAgropecuarioDefencivo = array_slice($this->aAgropecuarioDefencivo, 0, 20);
+            if (count($this->aAgropecuarioDefensivo) > 20) {
+                $this->errors[] = 'Podem existir no máximo 20 tag agropecuario/defensivo.';
+                $this->aAgropecuarioDefensivo = array_slice($this->aAgropecuarioDefensivo, 0, 20);
             }
-            foreach ($this->aAgropecuarioDefencivo as $agropecuarioDefencivo) {
-                $this->addTag($agrop, $agropecuarioDefencivo);
+            foreach ($this->aAgropecuarioDefensivo as $agropecuarioDefensivo) {
+                $this->addTag($agrop, $agropecuarioDefensivo);
             }
             $this->addTag($this->infNFe, $agrop);
         }
@@ -1090,19 +1326,114 @@ class MakeDev
         $vNFTot = null;
         $identificador = 'W01 <total> -';
         $total = $this->dom->createElement('total');
-
-        $icmstot = $this->dom->createElement('ICMSTot');
-        $issqntot = $this->dom->createElement('ISSQNtot');
-        $rettrib = $this->dom->createElement('retTrib');
-        $istot = $this->dom->createElement('ISTot');
-        $ibscbdtot = $this->dom->createElement('IBSCBSTot');
-        $this->dom->addChild(
-            $total,
-            "vNFTot",
-            $this->conditionalNumberFormatting($vNFTot, 2),
-            false,
-            "$identificador Valor total da NF-e com IBS / CBS / IS"
-        );
+        //Grupo Totais referentes ao ICMS
+        if (empty($this->ICMSTot)) {
+            $icms = [
+                'vBC' => null,
+                'vICMS' => null,
+                'vICMSDeson' => null,
+                'vBCST' => null,
+                'vST' => null,
+                'vProd' => null,
+                'vFrete' => null,
+                'vSeg' => null,
+                'vDesc' => null,
+                'vII' => null,
+                'vIPI' => null,
+                'vPIS' => null,
+                'vCOFINS' => null,
+                'vOutro' => null,
+                'vNF' => null,
+                'vIPIDevol' => null,
+                'vTotTrib' => null,
+                'vFCP' => null,
+                'vFCPST' => null,
+                'vFCPSTRet' => null,
+                'vFCPUFDest' => null,
+                'vICMSUFDest' => null,
+                'vICMSUFRemet' => null,
+                'qBCMono' => null,
+                'vICMSMono' => null,
+                'qBCMonoReten' => null,
+                'vICMSMonoReten' => null,
+                'qBCMonoRet' => null,
+                'vICMSMonoRet' => null,
+            ];
+            $this->tagICMSTot((object) $icms);
+        }
+        //Até 2036 esta tag deverá existir segundo a documentação atual da SEFAZ
+        $this->addTag($total, $this->ICMSTot);
+        //Grupo Totais referentes ao ISSQN
+        if (empty($this->ISSQNTot) && $this->stdISSQNTot->vServ > 0) {
+            $iss = [
+                'vServ' => null,
+                'vBC' => null,
+                'vISS' => null,
+                'vPIS' => null,
+                'vCOFINS' => null,
+                'dCompet' => null,
+                'vDeducao' => null,
+                'vOutro' => null,
+                'vDescIncond' => null,
+                'vDescCond' => null,
+                'vISSRet' => null,
+                'cRegTrib' => null
+            ];
+            $this->tagISSQNTot((object) $iss);
+        }
+        $this->addTag($total, $this->ISSQNTot);
+        //Grupo Retenções de Tributos
+        if (!empty($this->retTrib)) {
+            $this->addTag($total, $this->retTrib);
+        }
+        if ($this->schema > 9) {
+            //Totalizador do IS
+            if (empty($this->ISTot)) {
+                //não foi informado o total do IS, obter do calculado
+                $tis = [
+                    'vIS' => null
+                ];
+                $this->tagISTot((object) $tis);
+            }
+            $this->addTag($total, $this->ISTot);
+            //Totalizador do IBSCBS
+            if (empty($this->IBSCBSTot)) {
+                //não foi informado o total do IBSCBS, obter do calculado
+                $ib = [
+                    'vBCIBSCBS',
+                    'gIBS_vIBS',
+                    'gIBS_vCredPres',
+                    'gIBS_vCredPresCondSus',
+                    'gIBSUF_vDif',
+                    'gIBSUF_vDevTrib',
+                    'gIBSUF_vIBSUF',
+                    'gIBSMun_vDif',
+                    'gIBSMun_vDevTrib',
+                    'gIBSMun_vIBSMun',
+                    'gCBS_vDif',
+                    'gCBS_vDevTrib',
+                    'gCBS_vCBS',
+                    'gCBS_vCredPres',
+                    'gCBS_vCredPresCondSus',
+                    'gMono_vIBSMono',
+                    'gMono_vCBSMono',
+                    'gMono_vIBSMonoReten',
+                    'gMono_vCBSMonoReten',
+                    'gMono_vIBSMonoRet',
+                    'gMono_vCBSMonoRet',
+                ];
+                $this->tagIBSCBSTot((object) $ib);
+            }
+            $this->addTag($total, $this->IBSCBSTot);
+            //campo vNFTot PL_010
+            $this->dom->addChild(
+                $total,
+                "vNFTot",
+                $this->conditionalNumberFormatting($this->stdTot->vNFTot, 2),
+                false,
+                "$identificador Valor total da NF-e com IBS / CBS / IS"
+            );
+        }
         $this->addTag($this->infNFe, $total);
     }
 
@@ -1119,6 +1450,9 @@ class MakeDev
             return;
         }
         if (empty($parent)) {
+            if (empty($msg)) {
+                $msg = "ERRO parent null no método addTag()";
+            }
             $this->errors[] = $msg;
             return;
         }

@@ -71,7 +71,7 @@ trait TraitTagDet
             'CEST',
             'indEscala',
             'CNPJFab',
-            'vItem'
+            'vItem' //PL_010
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = "I01 <prod> - Item: $std->item";
@@ -360,13 +360,7 @@ trait TraitTagDet
         $obsItem = $this->dom->createElement("obsItem");
         if (!empty($std->obsCont_xCampo) && !empty($std->obsCont_xTexto)) {
             $obsCont = $this->dom->createElement("obsCont");
-            $this->dom->addChild(
-                $obsCont,
-                "xCampo",
-                $std->obsCont_xCampo,
-                true,
-                $identificador . "$identificador (obsCont/xCampo) Identificação do campo"
-            );
+            $obsCont->setAttribute("xCampo", $std->obsCont_xCampo ?? '');
             $this->dom->addChild(
                 $obsCont,
                 "xTexto",
@@ -378,13 +372,7 @@ trait TraitTagDet
         }
         if (!empty($std->obsFisco_xCampo) && !empty($std->obsFisco_xTexto)) {
             $obsFisco = $this->dom->createElement("obsFisco");
-            $this->dom->addChild(
-                $obsFisco,
-                "xCampo",
-                $std->obsFisco_xCampo,
-                true,
-                $identificador . "$identificador (obsCont/xCampo) Identificação do campo"
-            );
+            $obsFisco->setAttribute("xCampo", $std->obsCont_xCampo ?? '');
             $this->dom->addChild(
                 $obsFisco,
                 "xTexto",
@@ -477,7 +465,7 @@ trait TraitTagDet
         );
         $this->dom->addChild(
             $gCred,
-            "cCredPresumido",
+            "pCredPresumido",
             $this->conditionalNumberFormatting($std->pCredPresumido, 4),
             true,
             "$identificador Percentual do Crédito Presumido."
@@ -726,30 +714,5 @@ trait TraitTagDet
         }
         $this->aDetExport[$std->item][] = $detExport;
         return $detExport;
-    }
-
-    /**
-     * Valor total do Item, correspondente à sua participação no total da nota.
-     * A soma dos itens deverá corresponder ao total da nota.
-     * @param stdClass $std
-     * @return DOMElement|null
-     * @throws DOMException
-     */
-    public function tagvItem(stdClass $std): ?DOMElement
-    {
-        $possible = [
-            'item',
-            'vItem',
-        ];
-        $std = $this->equilizeParameters($std, $possible);
-        $identificador = "I50 <detExport> Item: $std->item -";
-        if (!empty($std->vItem) && is_numeric($std->vItem)) {
-            $this->aVItem[$std->item] = $this->dom->createElement(
-                "vItem",
-                $this->conditionalNumberFormatting($std->vItem, 2)
-            );
-            return $this->aVItem[$std->item];
-        }
-        return null;
     }
 }

@@ -8,14 +8,16 @@ use NFePHP\Common\Strings;
 use NFePHP\Common\TimeZoneByUF;
 use stdClass;
 use DOMElement;
+use DOMException;
 use DateTime;
 use DateTimeZone;
+use Exception;
 
 /**
  * @property DOMImproved $dom
  * @property array $errors
  * @property int $schema
- * @property string $tpAmb
+ * @property int $tpAmb
  * @property string $mod
  * @property DOMElement $ide
  * @method equilizeParameters($std, $possible)
@@ -26,6 +28,9 @@ trait TraitTagIde
      * Informações de identificação da NF-e B01 pai A01
      * NOTA: Ajustado para NT2020_006_v1.00
      * tag NFe/infNFe/ide
+     * @param stdClass $std
+     * @return DOMElement
+     * @throws DOMException
      */
     public function tagide(stdClass $std): DOMElement
     {
@@ -79,7 +84,7 @@ trait TraitTagIde
             try {
                 $tz = TimeZoneByUF::get($std->cUF);
                 $std->dhEmi = (new DateTime('now', new DateTimeZone($tz)))->format('Y-m-d\TH:i:sP');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->errors[] = "$identificador Campo cUF incorreto !";
             }
         }
