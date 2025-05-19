@@ -753,7 +753,6 @@ final class MakeDev
             //veicProd => prod
             if (!empty($this->aVeicProd[$item]) && $flagChoice === false) {
                 $this->addTag($prod, $this->aVeicProd[$item], 'Falta tag prod!');
-                ;
                 $flagChoice = true;
             }
             //med => prod
@@ -891,7 +890,6 @@ final class MakeDev
                         $this->addTag($ibscbs, $this->aGIBSCBSMono[$item], 'Falta a tag IBSCBS!');
                     }
                     $this->addTag($imposto, $ibscbs, 'Falta a tag det/imposto!');
-                    ;
                 }
             }
             //adioiona imposto ao node det
@@ -899,7 +897,6 @@ final class MakeDev
             //impostoDevol => det
             if (!empty($this->aImpostoDevol[$item])) {
                 $this->addTag($det, $this->aImpostoDevol[$item], 'Falta a tag det!');
-                ;
             }
             //infAdProd => det
             if (!empty($this->aInfAdProd[$item])) {
@@ -919,11 +916,9 @@ final class MakeDev
                 //DFEReferenciado => det PL_010
                 if (!empty($this->aDFeReferenciado[$item])) {
                     $this->addTag($det, $this->aDFeReferenciado[$item], 'Falta a tag det!');
-                    ;
                 }
             }
             $this->addTag($this->infNFe, $det, 'Fala a tag infNFe!');
-            ;
         }
     }
 
