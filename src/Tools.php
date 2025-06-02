@@ -1305,7 +1305,7 @@ class Tools extends ToolsCommon
         //verifica a validade no webservice da SEFAZ
         $tpAmb = $dom->getElementsByTagName('tpAmb')->item(0)->nodeValue;
         $infNFe  = $dom->getElementsByTagName('infNFe')->item(0);
-        $chNFe = preg_replace('/[^0-9]/', '', $infNFe->getAttribute("Id"));
+        $chNFe = substr($infNFe->getAttribute("Id"), 3, 44);
         $protocol = $dom->getElementsByTagName('nProt')->item(0)->nodeValue;
         $digval = $dom->getElementsByTagName('DigestValue')->item(0)->nodeValue;
         //consulta a NFe
