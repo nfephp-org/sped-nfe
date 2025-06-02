@@ -220,7 +220,8 @@ class QRCode
         |
         1 idDest 1-Interna;2-Interestadual;3-Exterior destino da operação
         |
-        12345678901234 cDest documento do destinatario de 3 a 14 digitos ?? e se for um CNPJAlfa ?? Estou supondo pois não está claro
+        12345678901234 cDest documento do destinatario de 3 a 14 digitos ?? e se for um CNPJAlfa ??
+        Estou supondo pois não está claro
         |
         Assinatura ?? a assinatura do xml ??
         */
