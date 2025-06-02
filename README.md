@@ -4,15 +4,13 @@ Biblioteca para geração e comunicação das NFe com as SEFAZ autorizadoras, e 
 
 ## Atualizado 
 
-- NT 2020.006 Intermediarios
-- NT 2020.007 Evento Ator Interessado na NFe - Transportador
-- NT 2021_001 Evento de COMPROVANTE DE ENTREGA
-- NT 2021.004 v1.20 Regras de Validação e Novos Campos (válido em produção a partir de 16/05/2022)
-- NT 2023.001 v1.10 Criação e atualização de regras de validação para atender o regime de tributação monofásica do ICMS nas operações com combustíveis (válido a partir de 30/03/2023)
-- NT 2023.001 v1.20 Tributação Monofásica sobre Combustíveis (Homologação em 20/04/2023 e em produção em 01/05/2023)
-- NT 2019.001 v1.60 Criação e Atualização de Regras de Validação
-- NT 2023.004 v1.00 Evento de Conciliação Financeira (faltam eventos de Consciliação Financeira !!!)
-- NT 2023.005 v1.00 Evento de Insucesso na Entrega 
+- Nota Técnica 2021.002 v.1.12 Divulga atualização da NF-e para adequação à NFF
+- Nota Técnica 2021.003 v.1.40 Divulga alteração nas regras de validação do GTIN
+- Nota Técnica 2018.005 v.1.51 Alteração de leiaute da NF-e/NFC-e
+- Nota Técnica 2025.001 v.1.00 Divulga Simplificação Operacional: NFC-e: Leiaute do QR-Code versão 3 NF-e
+- Nota Técnica 2025.002 v.1.01 Nota técnica de adequação dos leiautes da NF-e e da NFC-e Reforma Tributária do Consumo - RTC.
+- Nota Técnica Conjunta 2025.001 Divulga orientações sobre implementação do CNPJ alfanumérico nos documentos fiscais eletrônicos
+- Nota Técnica 2024.003 v.1.04 Alteração nas regras de validação 
 
 > **NOTA: Estas NT afetam principalmente o uso do TXT para conversão em XML, mesmo que os campos ainda não sejam exigidos.**
 
