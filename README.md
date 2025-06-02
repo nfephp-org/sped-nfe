@@ -12,8 +12,6 @@ Biblioteca para geração e comunicação das NFe com as SEFAZ autorizadoras, e 
 - Nota Técnica Conjunta 2025.001 Divulga orientações sobre implementação do CNPJ alfanumérico nos documentos fiscais eletrônicos
 - Nota Técnica 2024.003 v.1.04 Alteração nas regras de validação 
 
-> **NOTA: Estas NT afetam principalmente o uso do TXT para conversão em XML, mesmo que os campos ainda não sejam exigidos.**
-
 ## TODO: A conversão com o PADRÃO SEBRAE ainda está incompleta!!
 
 *Utilize o chat do Gitter para iniciar discussões específicas sobre o desenvolvimento deste pacote.*
