@@ -197,7 +197,7 @@ $end = [
 
 # Bloco de Documentos Referenciados na NFe
 
-> Podem ocorrer até 999 referencias por NFe, entre NFe, NF, CTe e ECF.
+> NOTA MULTIPLAS ENTRADAS - Podem ocorrer até 999 referencias por NFe, entre NFe, NF, CTe e ECF.
 
 ## function tagrefNFe(object $ref):DOMElement   (SEM ALTERAÇÃO)
 Node NFref/refNFe - NFe referenciada - OPCIONAL
@@ -364,3 +364,597 @@ $end = [
 ];
 $mk->tagenderdest((object)$end);
 ```
+
+## function tagretirada(object $ret): DOMElement   (SEM ALTERAÇÃO)
+Node retirada - Identificação do Local de Retirada (informar apenas quando for diferente do endereço do remetente) - OPCIONAL
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$ret = [
+    'xNome' => 'Eu Ltda', //OBRIGATÓRIO 2 a 60 caracteres
+    'CNPJ' => '01234123456789', //opcional se informar o CPF NOTA: a partir de 2026 ALFA [A-Z0-9]{12}[0-9]{2}
+    'CPF' => '12345678901', //opcional se informar o CNPJ
+    'IE' => '11111111111',
+    'xLgr' => 'Rua D', //OBRIGATÓRIO 2 a 60 caracteres
+    'nro' => 'sem numero', //OBRIGATÓRIO 1 a 60 caracteres
+    'xCpl' => 'fundos', //opcional 1 a 60 caracteres
+    'xBairro' => 'Fim do mundo', //OBRIGATÓRIO 2 a 60 caracteres
+    'cMun' => 3512345, //OBRIGATÓRIO 7 digitos
+    'xMun' => 'São Vito', //OBRIGATÓRIO 2 a 60 caracteres
+    'UF' => 'SP', //OBRIGATÓRIO 2 caracteres
+    'CEP' => '00000000', //opcional 8 digitos
+    'cPais' => 1058, //opcional 1 à 4 digitos
+    'xPais' => 'Brasil', //opcional 2 a 60 caracteres
+    'fone' => '1111111111', //opcional de 6 a 14 digitos
+    'email' => 'eu@mail.com' //opcional 1 a 60 caracteres
+];
+$mk->tagretirada((object)$ret);
+```
+
+## function tagentrega(object $ent): DOMElement    (SEM ALTERAÇÂO)
+Node entrega - Identificação do Local de Entrega (informar apenas quando for diferente do endereço do destinatário) - OPCIONAL
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$ent = [
+    'xNome' => 'Ele Ltda', //OBRIGATÓRIO 2 a 60 caracteres
+    //'CNPJ' => '01234123456789', //opcional se informar o CPF NOTA: a partir de 2026 ALFA [A-Z0-9]{12}[0-9]{2}
+    'CPF' => '12345678901', //opcional se informar o CNPJ
+    'IE' => '11111111111',
+    'xLgr' => 'Rua A', //OBRIGATÓRIO 2 a 60 caracteres
+    'nro' => '1', //OBRIGATÓRIO 1 a 60 caracteres
+    'xCpl' => 'frente', //opcional 1 a 60 caracteres
+    'xBairro' => 'Fim do mundo', //OBRIGATÓRIO 2 a 60 caracteres
+    'cMun' => 3512345, //OBRIGATÓRIO 7 digitos
+    'xMun' => 'São Vito', //OBRIGATÓRIO 2 a 60 caracteres
+    'UF' => 'SP', //OBRIGATÓRIO 2 caracteres
+    'CEP' => '00000000', //opcional 8 digitos
+    'cPais' => 1058, //opcional 1 à 4 digitos
+    'xPais' => 'Brasil', //opcional 2 a 60 caracteres
+    'fone' => '222222', //opcional de 6 a 14 digitos
+    'email' => 'ele@mail.com' //opcional 1 a 60 caracteres
+];
+$mk->tagentrega((object)$ent);
+```
+
+## function tagautxml(object $aut): DOMElement   (SEM ALTERAÇÃO)
+Node autXML - Pessoas autorizadas para o download do XML da NF-e - OPCIONAL
+
+> NOTA MULTIPLAS ENTRADAS - Podem haver até 10 registros de pessoas autorizadas. Então podem repetidos até 10 vezes essa tag.
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$aut = [
+    'CNPJ' => '01234123456789', //este é o campo prioritário caso sejam informados os dois apenas o CNPJ será considerado
+    'CPF' => null
+];
+$mk->tagautxml((object)$aut);
+```
+
+## funtion tagprod(object $prod): DOMElement    (ALTERAÇÂO nos PARÂMETROS)
+Node det/prod - Produtos - OBRIGATÓRIO
+
+>  NOTA MULTIPLAS ENTRADAS - a tag dev/prod pode ocorrer até 990 vezes 
+
+> Nota: campo novo relativo a Reforma Tributária
+> - vItem - Valor total do Item, correspondente à sua participação no total da nota. A soma dos itens deverá corresponder ao total da nota.
+ 
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$std = new stdClass();
+$std->item = 1; //OBRIGATÓRIO referencia ao item da NFe 1 a 990
+$std->cProd = '23qq'; //OBRIGATÓRIO de 1 à 60 caracteres
+$std->cEAN = "SEM GTIN";//OBRIGATÓRIO SEM GTIN|[0-9]{0}|[0-9]{8}|[0-9]{12,14}
+$std->cBarra = "123";//opcional de 3 à 30 caracteres
+$std->xProd = 'SERVICO'; //OBRIGATÓRIO 1 a 120 caracteres
+$std->NCM = 99; //OBRIGATÓRIO [0-9]{2}|[0-9]{8}
+$std->CEST = '1234567'; //opcional usado apenas para produtos com ST 7 digitos
+$std->indEscala = 'S'; //opcional usado junto com CEST, S-escala relevante N-escala NÃO relevante
+$std->CNPJFab = '12345678901234'; //opcional usado junto com CEST e qunado indEscala = N
+$std->cBenef = 'ab222222'; //opcional codigo beneficio fiscal ([!-ÿ]{8}|[!-ÿ]{10}|SEM CBENEF)?
+$std->EXTIPI = '01';
+$std->CFOP = 5933;
+$std->uCom = 'UN';
+$std->qCom = 10;
+$std->vUnCom = 100.00;
+$std->vProd = 1000.00;
+$std->cEANTrib = "SEM GTIN";//'6361425485451';
+$std->uTrib = 'UN';
+$std->qTrib = 10;
+$std->vUnTrib = 100.00;
+$std->vFrete = 1000.00;
+$std->vSeg = 20.00;
+$std->vDesc = 10.00;
+$std->vOutro = 15.00;
+$std->indTot = 1;
+$std->xPed = '12345';
+$std->nItemPed = 1;
+$std->nFCI = '12345678-1234-1234-1234-123456789012';
+$std->vItem = null; //opcional Valor total do Item, correspondente à sua participação no total da nota.
+    // A soma dos itens deverá corresponder ao total da nota. com duas decimais
+$mk->tagprod($std);
+```
+
+## funtion taginfAdProd(object $inf): DOMElement     (SEM ALTERAÇÃO)
+Node dev/prod/infAdProd - Informações adicionais do produto (norma referenciada, informações complementares, etc) - OPCIONAL
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$inf = [
+    'item' => 1, //OBRIGATÓRIO referencia ao item da NFe 1 a 990
+    'infAdProd' => 'Informação especifica sobre o item do produto' //OBRIGATÓRIO de 1 a 500 caracteres
+];
+$mk->taginfAdProd((object) $inf);
+```
+
+## function tagObsItem(object $obs): DOMElement   (NOVO MÉTODO)
+Node prod/infAdProd/obsItem - Grupo de observações de uso livre (para o item da NF-e) - OPCIONAL
+
+> NOTA este método substitui o anterior tagprodObsCont()
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$obs = [
+    'item' => 1, //OBRIGATÓRIO referencia ao item da NFe 1 a 990
+    'obsCont_xCampo' => 'nome', //opcional nome do campo de 1 a 20 caracteres
+    'obsCont_xTexto' => 'informação', //opcional informação do campo de 1 a 60 caracteres
+    'obsFisco_xCampo' => 'nome', //opcional nome do campo de 1 a 20 caracteres
+    'obsFisco_xTexto' => 'informação', //opcional informação do campo de 1 a 60 caracteres
+];
+$mk->tagObsItem((object) $obs);
+```
+
+## function tagDFeReferenciado(object $ref): DOMElement   (NOVO MÉTODO Reforma Tributária)
+Node det/DFeReferenciado - Referenciamento de item de outros DFe - OPCIONAL
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$ref = [
+    'item' => 1, //OBRIGATÓRIO referencia ao item da NFe 1 a 990
+    'chaveAcesso' => '12345678901234567890123456789012345678901234', //OBRIGATÓRIO Chave de acesso do DF-e referenciado
+    'nIem' => 2, //opcional Número do item do documento referenciado.
+];
+$mk->tagDFeReferenciado((object) $ref);
+```
+
+## function taggCred(object $gc): DOMElement    (NOVO MÉTODO Reforma Tributária)
+Node prod/gCred - Grupo de informações sobre o CréditoPresumido - OPCIONAL
+
+> NOTA MULTIPLAS ENTRADAS - podem ocorrer até 4 registros desse grupo por item da NFe
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$gc = [
+    'item' => 1, //OBRIGATÓRIO
+    'cCredPresumido' => '12AFCJE7', //OBRIGATÓRIO com 8 ou 10 caracteres
+    'pCredPresumido' => 1.00, //OBRIGATÓRIO percentual com 2 ou 4 decimais
+    'vCredPresumido' => 1.00 //OBRIGATÓRIO valor com 2 decimais
+];
+$mk->taggCred((object)$gc);
+```
+
+## function tagnve(object $std): DOMElement      (SEM ALTERAÇÃO)
+Node prod/NVE - Nomenclatura de Valor aduaneiro e Estatístico - OPCIONAL
+
+> NOTA MULTIPLAS ENTRADAS - podem ocorrer até 8 registros desse grupo por item da NFe
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$std = [
+    'item' => 1, //OBRIGATÓRIO referencia ao item da NFe
+    'NVE' => 'AZ3456' //OBRIGATÓRIO [A-Z]{2}[0-9]{4}
+];
+$mk->tagnve((object)$std);
+```
+
+## function tagDI(object $std): DOMElement   (SEM ALTERAÇÃO)
+Node prod/DI - Delcaração de Importação - OPCIONAL
+
+> NOTA MULTIPLAS ENTRADAS - podem ocorrer até 100 registros desse grupo por item da NFe
+> Obrigatório em NFe de Importação 
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$std = new stdClass();
+$std->item = 1; //OBRIGATÓRIO referencia ao item da NFe
+$std->nDI = '123049'; //OBRIGATÓRIO  Número do Documento de Importação (DI, DSI, DIRE, DUImp) de 1 à 15 caracteres
+$std->dDI = '2018-04-22'; //OBRIGATÓRIO Data de registro da DI/DSI/DA (AAAA-MM-DD)
+$std->xLocDesemb = 'SANTOS'; //OBRIGATÓRIO Local do desembaraço aduaneiro de 1 à 60 caracteres
+$std->UFDesemb = 'SP'; //OBRIGATÓRIO UF onde ocorreu o desembaraço aduaneiro duas letras
+$std->dDesemb = '2018-04-22'; //OBRIGATÓRIO Data do desembaraço aduaneiro (AAAA-MM-DD)
+$std->tpViaTransp = 1; //OBRIGATÓRIO Via de transporte internacional informada na DI ou na Declaração Única de Importação (DUImp)
+    //1-Maritima;
+    //2-Fluvial;
+    //3-Lacustre;
+    //4-Aerea;
+    //5-Postal;
+    //6-Ferroviaria;
+    //7-Rodoviaria;
+    //8-Conduto;
+    //9-Meios Proprios;
+    //10-Entrada/Saida Ficta;
+    //11-Courier;
+    //12-Em maos;
+    //13-Por reboque
+$std->vAFRMM = 200.00; //opcional Valor Adicional ao frete para renovação de marinha mercante até 2 decimais
+$std->tpIntermedio = 3; //OBRIGATÓRIO Forma de Importação quanto a intermediação
+    //1-por conta propria;
+    //2-por conta e ordem;
+    //3-encomenda
+$std->CNPJ = '12345678901234'; //opcional CNPJ do adquirente ou do encomendante
+$std->CPF = '12345678901'; //opcional CPF do adquirente ou do encomendante
+$std->UFTerceiro = 'MG'; //opcional Sigla da UF do adquirente ou do encomendante
+$std->cExportador = 'exportador China1'; //OBRIGATÓRIO Código do exportador (usado nos sistemas internos
+    // de informação do emitente da NF-e) de 1 à 60 caracteres
+$mk->tagDI($std);
+```
+
+## function tagadi(object $std): DOMElement    (SEM ALTERAÇÃO)
+Node prod/DI/adi - Adições da DI OBRIGATÓRIA se existir a DI - OPCIONAL
+
+> NOTA MULTIPLAS ENTRADAS - podem ocorrer até 999 registros para cada DI declarada por item da NFe
+> Obrigatório em NFe de Importação
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$std = new \stdClass();
+$std->item = 1; //OBRIGATÓRIO referencia ao item da NFe
+$std->nDI = '123049'; //OBRIGATÓRIO referencia à DI
+$std->nAdicao = 1; //opcional Número da Adição [1-9]{1}[0-9]{0,2}
+$std->nSeqAdic = 1; //OBRIGATÓRIO Número seqüencial do item [1-9]{1}[0-9]{0,4}
+$std->cFabricante = 'ZZZZZZ'; //OBRIGATÓRIO Código do fabricante estrangeiro de 1 à 60 caracteres
+$std->vDescDI = 10.00; //opcional Valor do desconto do item até duas decimais
+$std->nDraw = null; //opcional Número do ato concessório de Drawback de 1 à 20 caracteres
+$mk->tagadi($std);
+```
+
+## function tagdetExport(objetc $std): DOMElement     (SEM ALTERAÇÃO)
+Node prod/detExport - etalhe da exportação - OPCIONAL
+
+> NOTA MULTIPLAS ENTRADAS - podem ocorrer até 500 registros por item 
+> Usado em NFe de Exportação apenas
+ 
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$std = new \stdClass();
+$std->item = 1; //OBRIGATÓRIO referencia ao item da NFe
+$std->nDraw = '029309'; //opcional Número do ato concessório de Drawback de 1 à 20 caracteres
+$std->nRE = '123456789012'; //opcional Registro de exportação [0-9]{0,12}
+$std->chNFe = '12345678901234567890123456789012345678901234'; //opcional Chave de acesso da NF-e recebida
+    // para exportação campo OBRIGATÓRIO se nRE for informado
+$std->qExport = 12455.9000; //opcional Quantidade do item efetivamente exportado até 4 decimais
+$mk->tagdetExport($std);
+```
+
+## function tagrastro(object $std): DOMElement   (SEM ALTERAÇÃO)
+Node prod/rastro - Rastreabilidade - OPCIONAL
+> NOTA MULTIPLAS ENTRADAS - Dados de rastreabilidade uso em medicamentos, podem ocorrer até 500 repetições por item da NFe
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual | 
+ 
+```php
+$std = new \stdClass();
+$std->item = 1;
+$std->nLote = 'ACBDE17272'; //OBRIGATÓRIO Número do lote do produto de 1 à 20 caracteres
+$std->qLote = 20; //OBRIGATÓRIO Quantidade de produto no lote.
+$std->dFab = '2025-01-23'; //OBRIGATÓRIO data da fabricação AAAA-MM-DD
+$std->dVal = '2026-01-23'; //OBRIGATÓRIO data de fim da validade AAAA-MM-DD
+                           //Informar o último dia do mês caso a validade não especifique o dia
+$std->cAgreg = '12345678901234'; //opcional Código de Agregação de 1 à 20 caracteres
+$mk->tagrastro($std);
+```
+
+# Informações específicas de produtos e serviços
+
+> **Haverá um "choice" (escolha) entre os registros desse grupo portanto apenas um será inserido no item da NFe**
+> **E essa escolha será feita ne sequencia de inserção no XML, portanto tenha atenção a isso !!** 
+
+## function tagveicProd(object $veic): DOMElement  (SEM ALTERAÇÃO)
+Node prod/veicProd - Veículos novos - OPCIONAL
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$veic = [
+    'item' => 1, //OBRIGATÓRIO referencia ao item da NFe
+    'tpOp' => 1, //OBRIGATÓRIO Tipo da operação
+        //0 Outros
+        // 1 Venda concessionária,
+        // 2 Faturamento direto para consumidor final
+        // 3 Venda direta para grandes consumidores (frotista, governo, ...
+    'chassi' => 'AAA2kdkjskjkjjdjkjskjd', //OBRIGATÓRIO Chassi do veículo - VIN (código-identificação-veículo) [A-Z0-9]+
+    'cCor' => 'Z123', //OBRIGATÓRIO Cor do veículo (código de cada montadora) de 1 a 4 caracteres
+    'xCor' => 'Azul calcinha', //OBRIGATÓRIO descrição da cor de 1 a 40 caracteres
+    'pot' => '450', //OBRIGATÓRIO Potência máxima do motor do veículo em cavalo vapor (CV). (potência-veículo) de 1 a 4 caracteres
+    'cilin' => '2000', //OBRIGATÓRIO Capacidade voluntária do motor expressa em centímetros cúbicos (CC). (cilindradas) de 1 a 4 caracteres
+    'pesoL' => '1800', //OBRIGATÓRIO Peso líquido de 1 a 9 caracteres
+    'pesoB' => '2500', //OBRIGATÓRIO Peso bruto de 1 a 9 caracteres
+    'nSerie' => '123456789', //OBRIGATÓRIO Serial (série) de 1 a 9 caracteres
+    'tpComb' => '18', //OBRIGATÓRIO Tipo de combustível-Tabela RENAVAM:
+        //01 - Álcool
+        //02 - Gasolina
+        //03 - Diesel
+        //04 - Gasogênio
+        //05 - Gás Metano
+        //06 - Elétrico/Fonte Interna
+        //07 - Elétrico/Fonte Externa
+        //08 - Gasolina/Gás Natural Combustível
+        //09 - Álcool/Gás Natural Combustível
+        //10 - Diesel/Gás Natural Combustível
+        //11 - Vide/Campo/Observação
+        //12 - Álcool/Gás Natural Veicular
+        //13 - Gasolina/Gás Natural Veicular
+        //14 - Diesel/Gás Natural Veicular
+        //15 - Gás Natural Veicular
+        //16 - Álcool/Gasolina
+        //17 - Gasolina/Álcool/Gás Natural Veicular
+        //18 - Gasolina/elétrico
+    'nMotor' => '123456789012345678901', //OBRIGATÓRIO Número do motor de 1 a 21 caracteres
+    'CMT' => '21.0000', //OBRIGATÓRIO CMT-Capacidade Máxima de Tração - em Toneladas 4 casas decimais de 1 a 9 caracteres
+    'dist' => '1.89', //OBRIGATÓRIO Distância entre eixos de 1 a 4 caracteres
+    'anoMod' => '2025', //OBRIGATÓRIO Ano Modelo de Fabricação [0-9]{4}
+    'anoFab' => '2025', //OBRIGATÓRIO Ano de Fabricação [0-9]{4}
+    'tpPint' => 'B', //OBRIGATÓRIO Tipo de pintura 1 caracter ???
+    'tpVeic' => '11', //OBRIGATÓRIO Tipo de veículo (utilizar tabela RENAVAM) [0-9]{1,2}
+    'espVeic' => '1', //OBRIGATÓRIO Espécie de veículo (utilizar tabela RENAVAM)  [0-9]{1}
+    'VIN' => 'N', //OBRIGATÓRIO Informa-se o veículo tem VIN (chassi) remarcado R-remarcado ou N-não remarcado
+    'condVeic' => '1', //OBRIGATÓRIO Condição do veículo
+        // 1 - acabado;
+        // 2 - inacabado;
+        // 3 - semi-acabado
+    'cMod' => '001234', //OBRIGATÓRIO Código Marca Modelo (utilizar tabela RENAVAM) [0-9]{1,6}
+    'cCorDENATRAN' => '02', //OBRIGATÓRIO Código da Cor Segundo as regras de pré-cadastro do DENATRAN: [0-9]{1,2}
+        //01-AMARELO;
+        //02-AZUL;
+        //03-BEGE;
+        //04-BRANCA;
+        //05-CINZA;
+        //06-DOURADA;
+        //07-GRENA
+        //08-LARANJA;
+        //09-MARROM;
+        //10-PRATA;
+        //11-PRETA;
+        //12-ROSA;
+        //13-ROXA;
+        //14-VERDE;
+        //15-VERMELHA;
+        //16-FANTASIA
+    'lota' => '4', //OBRIGATÓRIO Capacidade máxima de lotação Quantidade máxima de permitida de passageiros sentados, inclusive motorista [0-9]{1,3}
+    'tpRest' => '0' //OBRIGATÓRIO Restrição
+        //0 Não há;
+        //1 Alienação Fiduciária;
+        //2 Arrendamento Mercantil;
+        //3 Reserva de Domínio;
+        //4 Penhor de Veículos;
+        //9 Outras.
+];
+$mk->tagveicProd((object)$veic);
+```
+
+## function tagmed(object $std): DOMElement   (SEM ALTERAÇÃO)
+Node prod/med - Detalhamento de Medicamentos e de matérias-primas farmacêuticas - OPCIONAL
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$std = new stdClass();
+$std->item = 1; //OBRIGATÓRIO referencia ao item da NFe
+$std->cProdANVISA = 'AAB0492321110'; //OBRIGATÓRIO Utilizar o número do registro ANVISA
+                                     // ou preencher com o literal “ISENTO”
+$std->xMotivoIsencao = ''; //opcional de 1 à 255 caracteres
+    // Obs.: Para medicamento isento de registro na ANVISA, informar o número da decisão que o isenta,
+    // como por exemplo o número da Resolução da Diretoria Colegiada da ANVISA (RDC).
+$std->vPMC = 200.00; //OBRIGATÓRIO Preço máximo consumidor com até duas decimais
+$mk->tagmed($std);
+```
+
+## function tagarma(object $arma): DOMElement   (SEM ALTERAÇÃO)
+Node prod/arma - Detalhamento de Armamento - OPCIONAL
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$arma = [
+    'item' => 1, //OBRIGATÓRIO referencia ao item da NFe
+    'tpArma' => 1, //OBRIGATÓRIO Indicador do tipo de arma de fogo (0 - Uso permitido; 1 - Uso restrito)
+    'nSerie' => 'abc-2039', //OBRIGATÓRIO Número de série da arma de 1 à 15 caracteres
+    'nCano' => 'abc-z1111', //OBRIGATÓRIO Número de série do cano de 1 à 15 caracteres
+    'descr' => 'fuzilli de trigo sarraceno'//OBRIGATÓRIO Descrição completa da arma, compreendendo: calibre, marca, capacidade,
+        // tipo de funcionamento, comprimento e demais elementos que permitam a sua
+        // perfeita identificação de 1 à 256 caracteres
+];
+$mk->tagarma((object)$arma);
+```
+
+## functicon tagcomb(object $comb)   (SEM ALTERAÇÃO)
+Node prod/comb - Informar apenas para operações com combustíveis líquidos - OPCIONAL
+
+> Gás liquefeito é liquido, só para lembrar.
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$comb = [
+    'item' => 1, //OBRIGATÓRIO referencia ao item da NFe
+    'cProdANP' => 123456789, //OBRIGATÓRIO Código de produto da ANP. codificação de produtos do SIMP
+        // vide (http://www.anp.gov.br) [0-9]{9}
+    'descANP' => 'jskjlskjljlksjlksjlksjlkjlkjsk', //OBRIGATÓRIO Descrição do Produto conforme ANP.
+        // Utilizar a descrição de produtos do Sistema de Informações de Movimentação de Produtos
+        // SIMP (http://www.anp.gov.br/simp/).
+    'pGLP' => 23, //opcional Percentual do GLP derivado do petróleo no produto GLP (cProdANP=210203001).
+        // Informar em número decimal o percentual do GLP derivado de petróleo no produto GLP. Valores 0 a 100.
+    'pGNn' => 57, //opcional Percentual de gás natural nacional - GLGNn para o produto GLP (cProdANP=210203001).
+        // Informar em número decimal o percentual do Gás Natural Nacional - GLGNn para o produto GLP. Valores de 0 a 100.
+    'pGNi' => 20, //opcional Percentual de gás natural importado GLGNi para o produto GLP (cProdANP=210203001).
+        // Informar em número decimal o percentual do Gás Natural Importado - GLGNi para o produto GLP. Valores de 0 a 100.
+    'vPart' => 14.85, //opcional Valor de partida (cProdANP=210203001).
+        // Deve ser informado neste campo o valor por quilograma sem ICMS. com duas casas decimais
+    'CODIF' => 123, //opcional Código de autorização / registro do CODIF.
+        // Informar apenas quando a UF utilizar o CODIF (Sistema de Controle do Diferimento do Imposto nas Operações
+        // com AEAC - Álcool Etílico Anidro Combustível) [0-9]{1,21}
+    'qTemp' => 27.3, //opcional Quantidade de combustível faturada à temperatura ambiente.
+        // Informar quando a quantidade faturada informada no campo qCom (I10) tiver sido ajustada para
+        // uma temperatura diferente da ambiente.
+    'UFCons' => 'SP', //OBRIGATÓRIO Sigla da UF de Consumo
+    'pBio' => 5, //opcional Percentual do índice de mistura do Biodiesel (B100) no Óleo Diesel B
+        // instituído pelo órgão regulamentador
+        //======== dados para CIDE opcional ===============
+    'qBCProd' => 1000.33, //opcional BC do CIDE (Quantidade comercializada) até 4 decimais
+    'vAliqProd' => 9.56, //opcional Alíquota do CIDE  (em reais) até 4 decimais
+    'vCIDE' => 92.34, //opcional Valor do CIDE 2 decimais
+];
+$mk->tagcomb((object) $comb);
+```
+
+## function tagencerrante(object $enc): DOMElement    (SEM ALTERAÇÂO)
+Node prod/comb/encerrante - Informações do grupo de encerrante - OPCIONAL
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$enc = [
+    'item' => 1, //OBRIGATÓRIO referencia ao item da NFe
+    'nBico' => 12, //OBRIGATÓRIO Numero de identificação do Bico utilizado no abastecimento [0-9]{1,3}
+    'nBomba' => 2, //opcional Numero de identificação da bomba ao qual o bico está interligado [0-9]{1,3}
+    'nTanque' => 4, //OBRIGATÓRIO  Numero de identificação do tanque ao qual o bico está interligado [0-9]{1,3}
+    'vEncIni' => '12123456', //OBRIGATÓRIO Valor do Encerrante no ínicio do abastecimento 0|0\.[0-9]{3}|[1-9]{1}[0-9]{0,11}(\.[0-9]{3})?
+    'vEncFin' => '12345678', //OBRIGATÓRIO Valor do Encerrante no final do abastecimento  0|0\.[0-9]{3}|[1-9]{1}[0-9]{0,11}(\.[0-9]{3})?
+];
+$mk->tagencerrante((object) $enc);
+```
+
+## function tagorigComb(object $orig): DOMElement    (SEM ALTERAÇÂO)
+Node prod/comb/origComb - Grupo indicador da origem do combustível - OPCIONAL
+
+> NOTA MULTIPLAS ENTRADAS - podem ocorrer até 30 registros por item da NFe
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$orig = [
+    'item' => 1,  //OBRIGATÓRIO referencia ao item da NFe
+    'indImport' => 0, //OBRIGATÓRIO Indicador de importação
+            // 0 Nacional;
+            // 1 Importado;
+    'cUFOrig' => '35', //OBRIGATÓRIO UF de origem do produtor ou do importado
+    'pOrig' => 100, //OBRIGATÓRIO Percentual originário para a UF
+];
+$mk->tagorigComb((object) $orig);
+```
+
+## function tagRECOPI(object $rc): DOMElement    (SEM ALTERAÇÂO)
+Node prod/nRECOPI - Reconhecimento e Controle de Papel Imune - OPCIONAL
+
+> Sistema de Registro e Controle das Operações com Papel Imune provê o prévio reconhecimento da não incidência do imposto e o registro das operações realizadas com o papel destinado à impressão de livro, jornal ou periódico (papel imune)
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$rc = [
+    'item' => 1, //OBRIGATÓRIO referencia ao item da NFe
+    'nRECOPI' => '01234567890123456789' //OBRIGATÓRIO Número do RECOPI [0-9]{20}
+];
+$mk->tagRECOPI((object) $rc);
+```
+
+# FIM das Informações específicas de produtos e serviços
+
+
+## function tagimposto(object $std): DOMElement    (SEM ALTERAÇÂO)
+Node det/imposto - Grupo de Impostos - OBRIGATÓRIO
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$std = new stdClass();
+$std->item = 1; //OBRIGATÓRIO referencia ao item da NFe
+$std->vTotTrib = 0; //opcional Valor estimado total de impostos federais, estaduais e municipais 2 decimais
+$mk->tagimposto($std);
+```
+
+
+
+```php
+```
+
+
+
+```php
+```
+
+
+```php
+```
+
+
+```php
+```
+
+
+```php
+```
+
+
+```php
+```
+
+
+```php
+```
+
+
