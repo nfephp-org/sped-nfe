@@ -13,7 +13,7 @@ use DOMException;
  * @property array $aDetPag
  * @property DOMElement $card
  * @method equilizeParameters($std, $possible)
- * @method conditionalNumberFormatting($value, $decimal)
+ * @method conditionalNumberFormatting($value, $decimal = 2)
  */
 trait TraitTagPag
 {

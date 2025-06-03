@@ -11,7 +11,7 @@ use DOMException;
  * @property  Dom $dom
  * @property DOMElement $cobr
  * @method equilizeParameters($std, $possible)
- * @method conditionalNumberFormatting($value, $decimal)
+ * @method conditionalNumberFormatting($value, $decimal = 2)
  */
 trait TraitTagCobr
 {

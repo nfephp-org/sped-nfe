@@ -11,6 +11,7 @@ use DOMException;
 /**
  * @property  Dom $dom
  * @property DOMElement $infRespTec
+ * @property string $csrt
  * @method equilizeParameters($std, $possible)
  */
 trait TraitTagInfRespTec
@@ -67,6 +68,7 @@ trait TraitTagInfRespTec
             . "desenvolvedora do sistema."
         );
         if (!empty($std->CSRT) && !empty($std->idCSRT)) {
+            $this->csrt = $std->idCSRT;
             $this->dom->addChild(
                 $infRespTec,
                 "idCSRT",

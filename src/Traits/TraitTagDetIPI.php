@@ -12,7 +12,7 @@ use DOMException;
  * @property stdClass $stdTot
  * @property array $aIPI
  * @method equilizeParameters($std, $possible)
- * @method conditionalNumberFormatting($value, $decimal)
+ * @method conditionalNumberFormatting($value, $decimal = 2)
  */
 trait TraitTagDetIPI
 {
@@ -92,7 +92,7 @@ trait TraitTagDetIPI
                 $this->dom->addChild(
                     $ipiTrib,
                     "pIPI",
-                    $this->conditionalNumberFormatting($std->pIPI, 4),
+                    $this->conditionalNumberFormatting($std->pIPI ?? null, 4),
                     false,
                     "$identificador Alíquota do IPI (pIPI)"
                 );

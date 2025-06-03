@@ -13,7 +13,7 @@ use DOMException;
  * @property array $aImposto
  * @property array $aImpostoDevol
  * @method equilizeParameters($std, $possible)
- * @method conditionalNumberFormatting($value, $decimal)
+ * @method conditionalNumberFormatting($value, $decimal = 2)
  */
 trait TraitTagDetImposto
 {

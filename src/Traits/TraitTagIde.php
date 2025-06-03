@@ -88,7 +88,7 @@ trait TraitTagIde
                 $this->errors[] = "$identificador Campo cUF incorreto !";
             }
         }
-        if (!empty($std->dhSaiEnt)) {
+        if (!empty($std->dhSaiEnt) && !empty($std->dhEmi)) {
             $tze = substr($std->dhEmi, -5);
             $tzs = substr($std->dhSaiEnt, -5);
             if ($tze !== $tzs) {
@@ -105,7 +105,7 @@ trait TraitTagIde
             }
         }
         //validação conforme NT 2019.001
-        if (!empty($std->cNF)) {
+        if (!empty($std->cNF) && !empty($std->nNF)) {
             $std->cNF = str_pad($std->cNF, 8, '0', STR_PAD_LEFT);
             if (intval($std->cNF) == intval($std->nNF)) {
                 $this->errors[] = "$identificador O valor $std->cNF não é aceitável para cNF, não pode "

@@ -70,7 +70,7 @@ class QRCode
         $chNFe = substr($infNFe->getAttribute("Id"), 3, 44);
         $tpAmb = $ide->getElementsByTagName('tpAmb')->item(0)->nodeValue;
         $dhEmi = $ide->getElementsByTagName('dhEmi')->item(0)->nodeValue;
-        $tpEmis = $ide->getElementsByTagName('tpEmis')->item(0)->nodeValue;
+        $tpEmis = (int) $ide->getElementsByTagName('tpEmis')->item(0)->nodeValue;
         $cDest = '';
         if (!empty($dest)) {
             $cDest = (string) !empty($dest->getElementsByTagName('CNPJ')->item(0)->nodeValue)
@@ -175,7 +175,7 @@ class QRCode
      * @param string $tpAmb
      * @param string $dhEmi
      * @param string $vNF
-     * @param string $tpEmis
+     * @param int $tpEmis
      * @param int $idDest
      * @param string $cDest
      * @param string $assinatura

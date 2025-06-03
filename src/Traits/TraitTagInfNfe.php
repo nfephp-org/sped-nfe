@@ -26,7 +26,7 @@ trait TraitTagInfNfe
         $possible = ['Id', 'versao', 'pk_nItem'];
         $std = $this->equilizeParameters($std, $possible);
         $chave = null;
-        $this->version = $std->versao;
+        $this->version = (string) $std->versao;
         if (!empty($std->Id)) {
             $chave = substr($std->Id, 2, 44);
         }

@@ -18,7 +18,7 @@ use DOMException;
  * @property stdclass $stdISSQNTot Totalizador
  * @property stdclass $stdIBSCBSTot Totalizador
  * @method equilizeParameters($std, $possible)
- * @method conditionalNumberFormatting($value, $decimal)
+ * @method conditionalNumberFormatting($value, $decimal = 2)
  */
 trait TraitTagTotal
 {
@@ -64,7 +64,6 @@ trait TraitTagTotal
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = "W01 <ICMSTot> -";
-        $this->stdICMSTot = $std;
 
         $vBC = $std->vBC ?? $this->stdTot->vBC;
         $vICMS = $std->vICMS ?? $this->stdTot->vICMS;

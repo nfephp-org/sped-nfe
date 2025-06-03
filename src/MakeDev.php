@@ -106,6 +106,10 @@ final class MakeDev
      */
     protected int $mod = 55;
     /**
+     * @var string
+     */
+    protected string $csrt;
+    /**
      * @var bool
      */
     protected bool $checkgtin = false;
@@ -224,7 +228,7 @@ final class MakeDev
     /**
      * @var DOMElement
      */
-    protected $ICSMSTot;
+    protected $ICMSTot;
     /**
      * @var DOMElement
      */
@@ -249,6 +253,10 @@ final class MakeDev
      * @var DOMElement
      */
     protected $agropecuarioGuia; //Não Existe na PL_010
+    /**
+     * @var DOMElement
+     */
+    protected $cana;
     /**
      * @var array
      */
@@ -296,6 +304,10 @@ final class MakeDev
     /**
      * @var array
      */
+    protected $aDFeReferenciado;
+    /**
+     * @var array
+     */
     protected $aVeicProd;
     /**
      * @var array
@@ -322,6 +334,14 @@ final class MakeDev
      */
     protected $aImposto;
     /**
+     * var array
+     */
+    protected $aImpostoDevol;
+    /**
+     * @var array
+     */
+    protected $aISSQN;
+    /**
      * @var array
      */
     protected $aICMS;
@@ -344,11 +364,23 @@ final class MakeDev
     /**
      * @var array
      */
+    protected $aIPI;
+    /**
+     * @var array
+     */
     protected $aPIS;
     /**
      * @var array
      */
+    protected $aPISST;
+    /**
+     * @var array
+     */
     protected $aCOFINS;
+    /**
+     * @var array
+     */
+    protected $aCOFINSST;
     /**
      * @var array
      */
@@ -357,6 +389,18 @@ final class MakeDev
      * @var array
      */
     protected $aIBSCBS;
+    /**
+     * @var array
+     */
+    protected $aIBSCBSCredPres;
+    /**
+     * @var array
+     */
+    protected $aIS;
+    /**
+     * @var array
+     */
+    protected $aII;
     /**
      * @var array
      */
@@ -574,12 +618,16 @@ final class MakeDev
 
     /**
      * Call method of xml assembly. For compatibility only.
+     * @return string
      */
     public function montaNFe(): string
     {
         return $this->render();
     }
 
+    /**
+     * @return string
+     */
     public function render(): string
     {
         try {
@@ -943,60 +991,80 @@ final class MakeDev
 
         $tpOP = 0;
         if (!empty($veicProd)) {
-            $tpOP = (int) $veicProd->getElementsByTagName("tpOp")->item(0)->nodeValue ?? 0;
+            $value = $veicProd->getElementsByTagName("tpOp")->item(0)->nodeValue ?? null;
+            $tpOP = (int) isset($value) ? $value : 0;
         }
         //Valor do imposto de importação
         $vII = 0;
         if (!empty($ii)) {
-            $vII = (float) $ii->getElementsByTagName("vII")->item(0)->nodeValue ?? 0;
+            $value = $ii->getElementsByTagName("vII")->item(0)->nodeValue ?? null;
+            $vII = (float) !empty($value) ? $value : 0;
         }
-        $vProd = (float) $det->getElementsByTagName("vProd")->item(0)->nodeValue ?? 0;
-        $vDesc = (float) $det->getElementsByTagName("vDesc")->item(0)->nodeValue ?? 0;
-        $vFrete = (float) $det->getElementsByTagName("vFrete")->item(0)->nodeValue ?? 0;
-        $vSeg = (float) $det->getElementsByTagName("vSeg")->item(0)->nodeValue ?? 0;
-        $vOutro = (float) $det->getElementsByTagName("vOutro")->item(0)->nodeValue ?? 0;
+        $vProd = (float) !empty($det->getElementsByTagName("vProd")->item(0)->nodeValue) ?
+            $det->getElementsByTagName("vProd")->item(0)->nodeValue : 0;
+        $vDesc = (float) !empty($det->getElementsByTagName("vDesc")->item(0)->nodeValue) ?
+            $det->getElementsByTagName("vDesc")->item(0)->nodeValue : 0;
+        $vFrete = (float) !empty($det->getElementsByTagName("vFrete")->item(0)->nodeValue) ?
+            $det->getElementsByTagName("vFrete")->item(0)->nodeValue : 0;
+        $vSeg = (float) !empty($det->getElementsByTagName("vSeg")->item(0)->nodeValue) ?
+            $det->getElementsByTagName("vSeg")->item(0)->nodeValue : 0;
+        $vOutro = (float) !empty($det->getElementsByTagName("vOutro")->item(0)->nodeValue) ?
+            $det->getElementsByTagName("vOutro")->item(0)->nodeValue : 0;
         $icmsdeson = 0;
         $vICMSST = 0;
         $vICMSMonoReten = 0;
         $vFCPST = 0;
         if (!empty($icms)) {
             //aplica desoneração caso indDeduzDeson = 1
-            $indDeduzDeson = (int) $icms->getElementsByTagName("indDeduzDeson")
-                ->item(0)->nodeValue ?? 0;
-            $vICMSDeson = (float) $icms->getElementsByTagName("vICMSDeson")->item(0)->nodeValue ?? 0;
+            $indDeduzDeson = (int) !empty($icms->getElementsByTagName("indDeduzDeson")
+                ->item(0)->nodeValue) ?
+                $icms->getElementsByTagName("indDeduzDeson")->item(0)->nodeValue :
+                0;
+            $vICMSDeson = (float) !empty($icms->getElementsByTagName("vICMSDeson")
+                ->item(0)->nodeValue) ?
+                $icms->getElementsByTagName("vICMSDeson")->item(0)->nodeValue : 0;
             $icmsdeson = $vICMSDeson * $indDeduzDeson;
-            $vICMSST = (float) $icms->getElementsByTagName("vICMSST")->item(0)->nodeValue ?? 0;
-            $vICMSMonoReten = (float) $icms->getElementsByTagName("vICMSMonoReten")
-                ->item(0)->nodeValue ?? 0;
-            $vFCPST = (float) $icms->getElementsByTagName("vFCPST")->item(0)->nodeValue ?? 0;
+            $vICMSST = (float) !empty($icms->getElementsByTagName("vICMSST")->item(0)->nodeValue) ?
+                $icms->getElementsByTagName("vICMSST")->item(0)->nodeValue : 0;
+            $vICMSMonoReten = (float) !empty($icms->getElementsByTagName("vICMSMonoReten")
+                ->item(0)->nodeValue) ?
+                $icms->getElementsByTagName("vICMSMonoReten")->item(0)->nodeValue : 0;
+            $vFCPST = (float) !empty($icms->getElementsByTagName("vFCPST")->item(0)->nodeValue) ?
+                $icms->getElementsByTagName("vFCPST")->item(0)->nodeValue : 0;
         }
         //IPI
         $vIPI = 0;
         if (!empty($ipi)) {
-            $vIPI = (float) $ipi->getElementsByTagName("vIPI")->item(0)->nodeValue ?? 0;
+            $vIPI = (float) !empty($ipi->getElementsByTagName("vIPI")->item(0)->nodeValue) ?
+                $ipi->getElementsByTagName("vIPI")->item(0)->nodeValue : 0;
         }
         //IPIDevol
         $vIPIDevol = 0;
         if (!empty($impostoDevol)) {
-            $vIPIDevol = (float) $impostoDevol->getElementsByTagName("vIPIDevol")
-                ->item(0)->nodeValue ?? 0;
+            $vIPIDevol = (float) !empty($impostoDevol->getElementsByTagName("vIPIDevol")
+                ->item(0)->nodeValue) ?
+                $impostoDevol->getElementsByTagName("vIPIDevol")->item(0)->nodeValue : 0;
         }
         //Serviços
         $vServ = 0; //esse campo não existe no item mas é igual a vProd !! ignorar
         //PISST
         $vPIS = 0;
         if (!empty($pisst)) {
-            $indSomaPISST = (int) $pisst->getElementsByTagName("indSomaPISST")
-                ->item(0)->nodeValue ?? 0;
-            $vPIS = (float) $pisst->getElementsByTagName("vPIS")->item(0)->nodeValue ?? 0;
+            $indSomaPISST = (int) !empty($pisst->getElementsByTagName("indSomaPISST")
+                ->item(0)->nodeValue) ?
+                $pisst->getElementsByTagName("indSomaPISST")->item(0)->nodeValue : 0;
+            $vPIS = (float) !empty($pisst->getElementsByTagName("vPIS")->item(0)->nodeValue) ?
+                $pisst->getElementsByTagName("vPIS")->item(0)->nodeValue : 0;
             $vPIS = $vPIS * $indSomaPISST;
         }
         //COFINSST
         $vCOFINS = 0;
         if (!empty($cofinsst)) {
-            $indSomaCOFINSST = (int) $cofinsst->getElementsByTagName("indSomaCOFINSST")
-                ->item(0)->nodeValue ?? 0;
-            $vCOFINS = (float) $cofinsst->getElementsByTagName("vCOFINS")->item(0)->nodeValue ?? 0;
+            $indSomaCOFINSST = (int) !empty($cofinsst->getElementsByTagName("indSomaCOFINSST")
+                ->item(0)->nodeValue) ?
+                $cofinsst->getElementsByTagName("indSomaCOFINSST")->item(0)->nodeValue : 0;
+            $vCOFINS = (float) !empty($cofinsst->getElementsByTagName("vCOFINS")->item(0)->nodeValue)
+                ? $cofinsst->getElementsByTagName("vCOFINS")->item(0)->nodeValue : 0;
             $vCOFINS = $vCOFINS * $indSomaCOFINSST;
         }
         //IBSCBS
@@ -1006,18 +1074,24 @@ final class MakeDev
         $vTotIBSMonoItem = 0;
         $vTotCBSMonoItem = 0;
         if (!empty($cbs)) {
-            $vIBSUF = (float) $cbs->getElementsByTagName("vIBSUF")->item(0)->nodeValue ?? 0;
-            $vIBSMun = (float) $cbs->getElementsByTagName("vIBSMun")->item(0)->nodeValue ?? 0;
-            $vCBS = (float) $cbs->getElementsByTagName("vCBS")->item(0)->nodeValue ?? 0;
-            $vTotIBSMonoItem = (float) $cbs->getElementsByTagName("vTotIBSMonoItem")
-                ->item(0)->nodeValue ?? 0;
-            $vTotCBSMonoItem = (float) $cbs->getElementsByTagName("vTotCBSMonoItem")
-                ->item(0)->nodeValue ?? 0;
+            $vIBSUF = (float) !empty($cbs->getElementsByTagName("vIBSUF")->item(0)->nodeValue) ?
+                $cbs->getElementsByTagName("vIBSUF")->item(0)->nodeValue : 0;
+            $vIBSMun = (float) !empty($cbs->getElementsByTagName("vIBSMun")->item(0)->nodeValue) ?
+                $cbs->getElementsByTagName("vIBSMun")->item(0)->nodeValue : 0;
+            $vCBS = (float) !empty($cbs->getElementsByTagName("vCBS")->item(0)->nodeValue) ?
+                $cbs->getElementsByTagName("vCBS")->item(0)->nodeValue :0;
+            $vTotIBSMonoItem = (float) !empty($cbs->getElementsByTagName("vTotIBSMonoItem")
+                ->item(0)->nodeValue) ?
+                $cbs->getElementsByTagName("vTotIBSMonoItem")->item(0)->nodeValue : 0;
+            $vTotCBSMonoItem = (float) !empty($cbs->getElementsByTagName("vTotCBSMonoItem")
+                ->item(0)->nodeValue) ?
+                $cbs->getElementsByTagName("vTotCBSMonoItem")->item(0)->nodeValue : 0;
         }
         //IS
         $vIS = 0;
         if (!empty($is)) {
-            $vIS = (float) $is->getElementsByTagName("vIS")->item(0)->nodeValue ?? 0;
+            $vIS = (float) !empty($is->getElementsByTagName("vIS")->item(0)->nodeValue) ?
+                $is->getElementsByTagName("vIS")->item(0)->nodeValue : 0;
         }
         //Somatório
         if ($tpOP != 2) {
@@ -1128,7 +1202,7 @@ final class MakeDev
      */
     protected function addTagDest()
     {
-        if (empty($this->enderDest) && empty($this->dest)) {
+        if (is_null($this->enderDest) && is_null($this->dest)) {
             return;
         }
         if (empty($this->infNFe)) {
@@ -1136,8 +1210,8 @@ final class MakeDev
             return;
         }
         //verifica se o endereço do destinatário já existe na tag dest
-        $enddest = $this->dest->getElementsByTagName('enderDest')->item(0);
-        if (empty($enddest) && !empty($this->enderDest)) {
+        $enddest = $this->dest->getElementsByTagName('enderDest')->item(0) ?? null;
+        if (is_null($enddest) && is_null($this->enderDest)) {
             $node = $this->dest->getElementsByTagName("indIEDest")->item(0);
             if (!isset($node)) {
                 $node = $this->dest->getElementsByTagName("IE")->item(0);
@@ -1153,7 +1227,7 @@ final class MakeDev
      */
     protected function addTagAutXML()
     {
-        if (empty($this->aAutXMl)) {
+        if (count($this->aAutXML) == 0) {
             return;
         }
         if (empty($this->infNFe)) {
@@ -1377,7 +1451,7 @@ final class MakeDev
         }
         $this->addTag($total, $this->ISSQNTot);
         //Grupo Retenções de Tributos
-        if (!empty($this->retTrib)) {
+        if (!is_null($this->retTrib)) {
             $this->addTag($total, $this->retTrib);
         }
         if ($this->schema > 9) {
@@ -1588,7 +1662,8 @@ final class MakeDev
     protected static function propertiesToBack(stdClass $data, array $possible): stdClass
     {
         $new = new stdClass();
-        foreach ($data as $key => $value) {
+        $properties = get_object_vars($data);
+        foreach ($properties as $key => $value) {
             foreach ($possible as $p) {
                 if (strtolower($p) === $key) {
                     $new->$p = $value;
@@ -1603,7 +1678,7 @@ final class MakeDev
      * Adjust the text size to the maximum acceptable size
      * @param string|null $string
      * @param int $max
-     * @return false|string|null
+     * @return string|null
      */
     protected function adjustingStrings(string $string = null, int $max = 0): ?string
     {

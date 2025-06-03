@@ -13,7 +13,7 @@ use DOMException;
  * @property array $aCOFINS
  * @property array $aCOFINSST
  * @method equilizeParameters($std, $possible)
- * @method conditionalNumberFormatting($value, $decimal)
+ * @method conditionalNumberFormatting($value, $decimal = 2)
  */
 trait TraitTagDetCOFINS
 {
@@ -63,7 +63,7 @@ trait TraitTagDetCOFINS
                 $this->dom->addChild(
                     $confinsItem,
                     'vAliqProd',
-                    $this->conditionalNumberFormatting($std->vAliqProd, 4),
+                    $this->conditionalNumberFormatting($std->vAliqProd ?? null, 4),
                     true,
                     "$identificador  Alíquota do COFINS (em reais) (vAliqProd)"
                 );
@@ -172,7 +172,7 @@ trait TraitTagDetCOFINS
             $this->dom->addChild(
                 $cofinsst,
                 "vAliqProd",
-                $this->conditionalNumberFormatting($std->vAliqProd, 4),
+                $this->conditionalNumberFormatting($std->vAliqProd ?? null, 4),
                 true,
                 "$identificador Alíquota da COFINS (em reais) (vAliqProd)"
             );
@@ -305,7 +305,7 @@ trait TraitTagDetCOFINS
             $this->dom->addChild(
                 $confinsoutr,
                 "vAliqProd",
-                $this->conditionalNumberFormatting($std->vAliqProd, 4),
+                $this->conditionalNumberFormatting($std->vAliqProd ?? null, 4),
                 false,
                 "$identificador Alíquota da COFINS (em reais) (vAliqProd)"
             );

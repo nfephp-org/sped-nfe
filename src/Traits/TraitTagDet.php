@@ -14,6 +14,8 @@ use InvalidArgumentException;
  * @property Dom $dom
  * @property array $aProd
  * @property array $aInfAdProd
+ * @property array $aObsItem
+ * @property array $aVItem
  * @property array $aCest
  * @property array $aGCred
  * @property array $aDI
@@ -25,7 +27,7 @@ use InvalidArgumentException;
  * @property bool $checkgtin
  * @property array $errors
  * @method equilizeParameters($std, $possible)
- * @method conditionalNumberFormatting($value, $decimal)
+ * @method conditionalNumberFormatting($value, $decimal = 2)
  */
 trait TraitTagDet
 {
@@ -154,14 +156,14 @@ trait TraitTagDet
             $this->dom->addChild(
                 $prod,
                 "indEscala",
-                $std->indEscala,
+                $std->indEscala ?? null,
                 false,
                 "$identificador Indicador de escala de produção (indEscala)"
             );
             $this->dom->addChild(
                 $prod,
                 "CNPJFab",
-                $std->CNPJFab,
+                $std->CNPJFab ?? null,
                 false,
                 "$identificador CNPJ do Fabricante da Mercadoria, obrigatório para produto em escala NÃO relevante"
             );
@@ -313,12 +315,12 @@ trait TraitTagDet
         $this->aProd[$std->item] = $prod;
         //Valor total do Item, correspondente à sua participação no total da nota.
         //A soma dos itens deverá corresponder ao total da nota.
-        if (!empty($std->vItem) && is_numeric($std->vItem)) {
-            $this->aVItem[$std->item] = $this->dom->createElement(
+        if (!empty($std->vItem) && is_numeric($std->vItem) && $std->item > 0) {
+            $vItem = $this->dom->createElement(
                 "vItem",
                 $this->conditionalNumberFormatting($std->vItem, 2)
             );
-            return $this->aVItem[$std->item];
+            $this->aVItem[$std->item] = $vItem;
         }
         return $prod;
     }
@@ -386,43 +388,6 @@ trait TraitTagDet
             $obsItem->appendChild($obsFisco);
         }
         $this->aObsItem[$std->item] = $obsItem;
-        return $obsItem;
-    }
-
-    /**
-     * Grupo de observações de uso livre (para o item da NF-e)
-     * Grupo de observações de uso livre do Fisco
-     * @param stdClass $std
-     * @return DOMElement|null
-     * @throws DOMException
-     */
-    public function tagprodObsFisco(stdClass $std): ?DOMElement
-    {
-        $possible = [
-            'item',
-            'xCampo',
-            'xTexto'
-        ];
-        $std = $this->equilizeParameters($std, $possible);
-        $identificador = " <obsFisco> Item: $std->item -";
-        $obsItem = $this->dom->createElement("obsItem");
-        $obsCont = $this->dom->createElement("obsCont");
-        $this->dom->addChild(
-            $obsCont,
-            "xCampo",
-            $std->xCampo,
-            true,
-            $identificador . "$identificador (obsCont/xCampo) Identificação do campo"
-        );
-        $this->dom->addChild(
-            $obsCont,
-            "xTexto",
-            $std->xTexto,
-            true,
-            $identificador . "$identificador (obsCont/xTexto) Conteúdo do campo"
-        );
-        $obsItem->appendChild($obsCont);
-        $this->obsItem[$std->item] = $obsItem;
         return $obsItem;
     }
 
