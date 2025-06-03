@@ -1079,7 +1079,7 @@ final class MakeDev
             $vIBSMun = (float) !empty($cbs->getElementsByTagName("vIBSMun")->item(0)->nodeValue) ?
                 $cbs->getElementsByTagName("vIBSMun")->item(0)->nodeValue : 0;
             $vCBS = (float) !empty($cbs->getElementsByTagName("vCBS")->item(0)->nodeValue) ?
-                $cbs->getElementsByTagName("vCBS")->item(0)->nodeValue :0;
+                $cbs->getElementsByTagName("vCBS")->item(0)->nodeValue : 0;
             $vTotIBSMonoItem = (float) !empty($cbs->getElementsByTagName("vTotIBSMonoItem")
                 ->item(0)->nodeValue) ?
                 $cbs->getElementsByTagName("vTotIBSMonoItem")->item(0)->nodeValue : 0;
