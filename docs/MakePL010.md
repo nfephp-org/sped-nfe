@@ -59,6 +59,7 @@ $mk->taginfNFe($std);
 Node ide - identificação da NFe - OBRIGATÓRIO
 
 > Nota: os campos novos relativos a Reforma Tributária listados abaixo, serão ignorados se usar o schema PL_009_V4.
+> - cMunFGIBS
 > - tpNFDebito
 > - tpNFCredito
 
@@ -230,7 +231,7 @@ $nf = [
     'serie' => 0, //OBRIGATÓRIO série da NF 0|[1-9]{1}[0-9]{0,2}
     'nNF' => 123456789 //OBRIGATÓRIO número da NF [1-9]{1}[0-9]{0,8}
 ];
-$refNF = $mk->tagrefNF((object)$nf);
+$mk->tagrefNF((object)$nf);
 ```
 
 ## function tagrefNFP(object $nfp):DOMElement    (SEM ALTERAÇÃO)
@@ -348,18 +349,18 @@ Node enderdest - Endereço do Destinatário - OPCIONAL
 
 ```php
 $end = [
-        'xLgr' => 'Estrada do Canguçu', //OBRIGATÓRIO de 2 a 60 caracteres
-        'nro' => 'km 12', //OBRIGATÓRIO de 1 a 60 caracteres
-        'xCpl' => null, //opcional de 2 a 60 caracteres
-        'xBairro' => 'Vila Escondida', //OBRIGATÓRIO de 2 a 60 caracteres
-        'cMun' => '9999999', //OBRIGATÓRIO codigo do IBGE ou 9999999 para estrangeiro
-        'xMun' => 'Apratos', //OBRIGATÓRIO  de 2 a 60 caracteres
-        'UF' => 'EX', //OBRIGATÓRIO Sigla da UF ou EX para estrangeiro
-        'CEP' => '00999999', //opcional 8 digitos
-        'cPais' => 1600, //opcional codigo BACEN 1 a 4 digitos
-        'xPais' => 'China', //opcional  de 2 a 60 caracteres
-        'fone' => '1111111111' //opcional de 6 a 14 digitos DDD + número do telefone ou 
-            //nas operações com exterior é permtido informar o código do país + código da localidade + número do telefone
-    ];
-    $ret = $mk->tagenderdest((object)$end);
+    'xLgr' => 'Estrada do Canguçu', //OBRIGATÓRIO de 2 a 60 caracteres
+    'nro' => 'km 12', //OBRIGATÓRIO de 1 a 60 caracteres
+    'xCpl' => null, //opcional de 2 a 60 caracteres
+    'xBairro' => 'Vila Escondida', //OBRIGATÓRIO de 2 a 60 caracteres
+    'cMun' => '9999999', //OBRIGATÓRIO codigo do IBGE ou 9999999 para estrangeiro
+    'xMun' => 'Apratos', //OBRIGATÓRIO  de 2 a 60 caracteres
+    'UF' => 'EX', //OBRIGATÓRIO Sigla da UF ou EX para estrangeiro
+    'CEP' => '00999999', //opcional 8 digitos
+    'cPais' => 1600, //opcional codigo BACEN 1 a 4 digitos
+    'xPais' => 'China', //opcional  de 2 a 60 caracteres
+    'fone' => '1111111111' //opcional de 6 a 14 digitos DDD + número do telefone ou 
+     //nas operações com exterior é permtido informar o código do país + código da localidade + número do telefone
+];
+$mk->tagenderdest((object)$end);
 ```
