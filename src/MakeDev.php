@@ -1680,7 +1680,7 @@ final class MakeDev
      * @param int $max
      * @return string|null
      */
-    protected function adjustingStrings(string $string = null, int $max = 0): ?string
+    protected function adjustingStrings($string, $max = 0): ?string
     {
         if (is_null($string)) {
             return null;
