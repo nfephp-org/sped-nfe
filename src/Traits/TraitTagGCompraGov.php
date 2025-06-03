@@ -12,7 +12,7 @@ use DOMException;
  * @property  Dom $dom
  * @property DOMElement $gCompraGov
  * @method equilizeParameters($std, $possible)
- * @method conditionalNumberFormatting($value, $decimal)
+ * @method conditionalNumberFormatting($value, $decimal = 2)
  */
 trait TraitTagGCompraGov
 {

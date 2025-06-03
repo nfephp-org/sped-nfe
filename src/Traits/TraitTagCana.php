@@ -8,12 +8,12 @@ use DOMElement;
 use DOMException;
 
 /**
- * @property  Dom $dom
+ * @property Dom $dom
  * @property DOMElement $cana
  * @property array $aForDia
  * @property array $aDeduc
  * @method equilizeParameters($std, $possible)
- * @method conditionalNumberFormatting($value, $decimal)
+ * @method conditionalNumberFormatting($value, $decimal = 2)
  */
 trait TraitTagCana
 {

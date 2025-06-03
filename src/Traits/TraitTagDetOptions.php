@@ -18,7 +18,7 @@ use DOMException;
  * @property array $aDFeReferenciado
  * @property array $errors
  * @method equilizeParameters($std, $possible)
- * @method conditionalNumberFormatting($value, $decimal)
+ * @method conditionalNumberFormatting($value, $decimal = 2)
  */
 trait TraitTagDetOptions
 {
@@ -30,9 +30,12 @@ trait TraitTagDetOptions
      */
     public function tagRECOPI(stdClass $std): ?DOMElement
     {
-        $possible = ['item', 'nRECOPI'];
+        $possible = [
+            'item',
+            'nRECOPI'
+        ];
         $std = $this->equilizeParameters($std, $possible);
-        if (empty($std->nRECOPI) || !is_numeric($std->nRECOPI)) {
+        if (empty($std->nRECOPI) || !is_numeric($std->nRECOPI) || empty($std->item)) {
             $this->errors[] = "LB01 <nRECOPI> Item: $std->item - Erro ao montar o campo nRECOPI";
             return null;
         }

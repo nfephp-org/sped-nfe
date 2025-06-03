@@ -686,7 +686,7 @@
 								<xs:documentation>Aliquota do IBS Municipal</xs:documentation>
 							</xs:annotation>
 						</xs:element>
-						<xs:element name="gDif" type="TDifCBS" minOccurs="0">
+						<xs:element name="gDif" type="TDifIBS" minOccurs="0">
 							<xs:annotation>
 								<xs:documentation>Grupo de campos do Diferimento</xs:documentation>
 							</xs:annotation>

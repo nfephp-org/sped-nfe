@@ -63,13 +63,14 @@ class QRCode
         $infNFe = $dom->getElementsByTagName('infNFe')->item(0);
         $layoutver = $infNFe->getAttribute('versao');
         $ide = $dom->getElementsByTagName('ide')->item(0);
+        $idDest = $ide->getElementsByTagName('idDest')->item(0)->nodeValue ?? 1;
         $dest = $dom->getElementsByTagName('dest')->item(0);
         $icmsTot = $dom->getElementsByTagName('ICMSTot')->item(0);
         $signedInfo = $dom->getElementsByTagName('SignedInfo')->item(0);
-        $chNFe = preg_replace('/[^0-9]/', '', $infNFe->getAttribute("Id"));
+        $chNFe = substr($infNFe->getAttribute("Id"), 3, 44);
         $tpAmb = $ide->getElementsByTagName('tpAmb')->item(0)->nodeValue;
         $dhEmi = $ide->getElementsByTagName('dhEmi')->item(0)->nodeValue;
-        $tpEmis = $ide->getElementsByTagName('tpEmis')->item(0)->nodeValue;
+        $tpEmis = (int) $ide->getElementsByTagName('tpEmis')->item(0)->nodeValue;
         $cDest = '';
         if (!empty($dest)) {
             $cDest = (string) !empty($dest->getElementsByTagName('CNPJ')->item(0)->nodeValue)
@@ -88,20 +89,35 @@ class QRCode
         $vICMS = $icmsTot->getElementsByTagName('vICMS')->item(0)->nodeValue;
         $digVal = $signedInfo->getElementsByTagName('DigestValue')->item(0)->nodeValue;
         $qrMethod = "get$versao";
-        $qrcode = self::$qrMethod(
-            $chNFe,
-            $urlqr,
-            $tpAmb,
-            $dhEmi,
-            $vNF,
-            $vICMS,
-            $digVal,
-            $token,
-            $idToken,
-            $versao,
-            $tpEmis,
-            $cDest
-        );
+        if ($versao == 200 || $versao == 100) {
+            $qrcode = self::$qrMethod(
+                $chNFe,
+                $urlqr,
+                $tpAmb,
+                $dhEmi,
+                $vNF,
+                $vICMS,
+                $digVal,
+                $token,
+                $idToken,
+                $versao,
+                $tpEmis,
+                $cDest
+            );
+        } else {
+            $assinatura = $dom->getElementsByTagName('SignatureValue')->item(0)->nodeValue;
+            $qrcode = self::get300(
+                $chNFe,
+                $urlqr,
+                $tpAmb,
+                $dhEmi,
+                $vNF,
+                $tpEmis,
+                $idDest,
+                $cDest,
+                $assinatura
+            );
+        }
         $infNFeSupl = $dom->createElement("infNFeSupl");
         $infNFeSupl->appendChild($dom->createElement('qrCode', $qrcode));
         //$nodeqr = $infNFeSupl->appendChild($dom->createElement('qrCode'));
@@ -150,6 +166,77 @@ class QRCode
         $seq = "$chNFe|$ver|$tpAmb|$dia|$valor|$digHex|$cscId";
         $hash = strtoupper(sha1($seq . $csc));
         return "$url$seq|$hash";
+    }
+
+    /**
+     * Gerar QRCode versão 3
+     * @param string $chNFe
+     * @param string $url
+     * @param string $tpAmb
+     * @param string $dhEmi
+     * @param string $vNF
+     * @param int $tpEmis
+     * @param int $idDest
+     * @param string $cDest
+     * @param string $assinatura
+     * @return string
+     * @throws \Exception
+     */
+    protected static function get300(
+        string $chNFe,
+        string $url,
+        string $tpAmb,
+        string $dhEmi,
+        string $vNF,
+        int $tpEmis,
+        int $idDest,
+        string $cDest,
+        string $assinatura
+    ): string {
+        /*
+        QRCode versão 3 NT 2025.001v1.00 março de 2025
+        Para NFC-e emitida “on-line”:
+                       https://endereco-consulta-QRCode?p=<chave_acesso>|<versao_qrcode>|<tpAmb>
+        Para NFC-e emitida em contingência “off-line”:
+                       https://endereco-consultaQRCode?p=
+        <chave_acesso>|
+        <versao_qrcode>|
+        <tpAmb>|
+        <dia_data_emissao>|
+        <vNF>|
+        <tp_idDest>|
+        <idDest>|
+        <assinatura>
+        url?p=
+        12345678901234567890123456789012349123456789  chave em contingencia OFFLINE 44 digitos com tpEmis == 9
+        |
+        3 versão do qrCode
+        |
+        1 tipo de embiente 1 ou 2 ide/tpAmb
+        |
+        10 dia da emissão de 01 até 31 dhEmi
+        |
+        200.12 valor da NF vNF
+        |
+        1 idDest 1-Interna;2-Interestadual;3-Exterior destino da operação
+        |
+        12345678901234 cDest documento do destinatario de 3 a 14 digitos ?? e se for um CNPJAlfa ??
+        Estou supondo pois não está claro
+        |
+        Assinatura ?? a assinatura do xml ??
+        */
+        if (strpos($url, '?p=') === false) {
+            $url = $url . '?p=';
+        }
+        if ($tpEmis != 9) {
+            //emissão on-line
+            return $url . "$chNFe|3|$tpAmb";
+        }
+        //emissão off-line
+        $dt = new \DateTime($dhEmi);
+        $dia = $dt->format('d');
+        $valor = number_format((float)$vNF, 2, '.', '');
+        return $url . "$chNFe|3|$tpAmb|$dia|$valor|$idDest|$cDest|$assinatura";
     }
 
     /**

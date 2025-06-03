@@ -127,7 +127,7 @@ trait TraitTagInfAdic
     protected function buildInfoTags()
     {
         $exists = !empty($this->infAdic);
-        if (!$exists && (!empty($this->aObsCont) || !empty($this->aObsFisco) || !empty($this->procRef))) {
+        if (!$exists && (!empty($this->aObsCont) || !empty($this->aObsFisco) || !empty($this->aProcRef))) {
             $this->infAdic = $this->dom->createElement("infAdic");
         }
         if (!empty($this->aObsCont)) {
@@ -153,8 +153,8 @@ trait TraitTagInfAdic
                 $this->errors[] = "As tags procRef são limitadas a 100 registros.";
                 $this->aProcRef = array_slice($this->aProcRef, 0, 100);
             }
-            foreach ($this->aProcRef as $procRef) {
-                $this->infAdic->appendChild($procRef);
+            foreach ($this->aProcRef as $proc) {
+                $this->infAdic->appendChild($proc);
             }
         }
     }

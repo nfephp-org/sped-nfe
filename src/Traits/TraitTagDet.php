@@ -14,6 +14,8 @@ use InvalidArgumentException;
  * @property Dom $dom
  * @property array $aProd
  * @property array $aInfAdProd
+ * @property array $aObsItem
+ * @property array $aVItem
  * @property array $aCest
  * @property array $aGCred
  * @property array $aDI
@@ -25,7 +27,7 @@ use InvalidArgumentException;
  * @property bool $checkgtin
  * @property array $errors
  * @method equilizeParameters($std, $possible)
- * @method conditionalNumberFormatting($value, $decimal)
+ * @method conditionalNumberFormatting($value, $decimal = 2)
  */
 trait TraitTagDet
 {
@@ -71,7 +73,7 @@ trait TraitTagDet
             'CEST',
             'indEscala',
             'CNPJFab',
-            'vItem'
+            'vItem' //PL_010
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = "I01 <prod> - Item: $std->item";
@@ -133,6 +135,9 @@ trait TraitTagDet
             true,
             "$identificador Descrição do produto ou serviço"
         );
+        if (!in_array(strlen($std->NCM), [2,8])) {
+            $this->errors[] = "Item: $std->item NCM $std->NCM deve ter 2 ou 8 dígitos";
+        }
         $this->dom->addChild(
             $prod,
             "NCM",
@@ -151,14 +156,14 @@ trait TraitTagDet
             $this->dom->addChild(
                 $prod,
                 "indEscala",
-                $std->indEscala,
+                $std->indEscala ?? null,
                 false,
                 "$identificador Indicador de escala de produção (indEscala)"
             );
             $this->dom->addChild(
                 $prod,
                 "CNPJFab",
-                $std->CNPJFab,
+                $std->CNPJFab ?? null,
                 false,
                 "$identificador CNPJ do Fabricante da Mercadoria, obrigatório para produto em escala NÃO relevante"
             );
@@ -310,12 +315,12 @@ trait TraitTagDet
         $this->aProd[$std->item] = $prod;
         //Valor total do Item, correspondente à sua participação no total da nota.
         //A soma dos itens deverá corresponder ao total da nota.
-        if (!empty($std->vItem) && is_numeric($std->vItem)) {
-            $this->aVItem[$std->item] = $this->dom->createElement(
+        if (!empty($std->vItem) && is_numeric($std->vItem) && $std->item > 0) {
+            $vItem = $this->dom->createElement(
                 "vItem",
                 $this->conditionalNumberFormatting($std->vItem, 2)
             );
-            return $this->aVItem[$std->item];
+            $this->aVItem[$std->item] = $vItem;
         }
         return $prod;
     }
@@ -360,13 +365,7 @@ trait TraitTagDet
         $obsItem = $this->dom->createElement("obsItem");
         if (!empty($std->obsCont_xCampo) && !empty($std->obsCont_xTexto)) {
             $obsCont = $this->dom->createElement("obsCont");
-            $this->dom->addChild(
-                $obsCont,
-                "xCampo",
-                $std->obsCont_xCampo,
-                true,
-                $identificador . "$identificador (obsCont/xCampo) Identificação do campo"
-            );
+            $obsCont->setAttribute("xCampo", $std->obsCont_xCampo ?? '');
             $this->dom->addChild(
                 $obsCont,
                 "xTexto",
@@ -378,13 +377,7 @@ trait TraitTagDet
         }
         if (!empty($std->obsFisco_xCampo) && !empty($std->obsFisco_xTexto)) {
             $obsFisco = $this->dom->createElement("obsFisco");
-            $this->dom->addChild(
-                $obsFisco,
-                "xCampo",
-                $std->obsFisco_xCampo,
-                true,
-                $identificador . "$identificador (obsCont/xCampo) Identificação do campo"
-            );
+            $obsFisco->setAttribute("xCampo", $std->obsCont_xCampo ?? '');
             $this->dom->addChild(
                 $obsFisco,
                 "xTexto",
@@ -395,43 +388,6 @@ trait TraitTagDet
             $obsItem->appendChild($obsFisco);
         }
         $this->aObsItem[$std->item] = $obsItem;
-        return $obsItem;
-    }
-
-    /**
-     * Grupo de observações de uso livre (para o item da NF-e)
-     * Grupo de observações de uso livre do Fisco
-     * @param stdClass $std
-     * @return DOMElement|null
-     * @throws DOMException
-     */
-    public function tagprodObsFisco(stdClass $std): ?DOMElement
-    {
-        $possible = [
-            'item',
-            'xCampo',
-            'xTexto'
-        ];
-        $std = $this->equilizeParameters($std, $possible);
-        $identificador = " <obsFisco> Item: $std->item -";
-        $obsItem = $this->dom->createElement("obsItem");
-        $obsCont = $this->dom->createElement("obsCont");
-        $this->dom->addChild(
-            $obsCont,
-            "xCampo",
-            $std->xCampo,
-            true,
-            $identificador . "$identificador (obsCont/xCampo) Identificação do campo"
-        );
-        $this->dom->addChild(
-            $obsCont,
-            "xTexto",
-            $std->xTexto,
-            true,
-            $identificador . "$identificador (obsCont/xTexto) Conteúdo do campo"
-        );
-        $obsItem->appendChild($obsCont);
-        $this->obsItem[$std->item] = $obsItem;
         return $obsItem;
     }
 
@@ -477,7 +433,7 @@ trait TraitTagDet
         );
         $this->dom->addChild(
             $gCred,
-            "cCredPresumido",
+            "pCredPresumido",
             $this->conditionalNumberFormatting($std->pCredPresumido, 4),
             true,
             "$identificador Percentual do Crédito Presumido."
@@ -726,30 +682,5 @@ trait TraitTagDet
         }
         $this->aDetExport[$std->item][] = $detExport;
         return $detExport;
-    }
-
-    /**
-     * Valor total do Item, correspondente à sua participação no total da nota.
-     * A soma dos itens deverá corresponder ao total da nota.
-     * @param stdClass $std
-     * @return DOMElement|null
-     * @throws DOMException
-     */
-    public function tagvItem(stdClass $std): ?DOMElement
-    {
-        $possible = [
-            'item',
-            'vItem',
-        ];
-        $std = $this->equilizeParameters($std, $possible);
-        $identificador = "I50 <detExport> Item: $std->item -";
-        if (!empty($std->vItem) && is_numeric($std->vItem)) {
-            $this->aVItem[$std->item] = $this->dom->createElement(
-                "vItem",
-                $this->conditionalNumberFormatting($std->vItem, 2)
-            );
-            return $this->aVItem[$std->item];
-        }
-        return null;
     }
 }

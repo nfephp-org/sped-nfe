@@ -13,7 +13,7 @@ use DOMException;
  * @property array $aPIS
  * @property array $aPISST
  * @method equilizeParameters($std, $possible)
- * @method conditionalNumberFormatting($value, $decimal)
+ * @method conditionalNumberFormatting($value, $decimal = 2)
  */
 trait TraitTagDetPIS
 {
@@ -178,7 +178,7 @@ trait TraitTagDetPIS
                     $this->dom->addChild(
                         $pisItem,
                         'vAliqProd',
-                        $this->conditionalNumberFormatting($std->vAliqProd, 4),
+                        $this->conditionalNumberFormatting($std->vAliqProd ?? null, 4),
                         false,
                         " $identificador Alíquota do PIS (em reais) (vAliqProd)"
                     );
@@ -252,7 +252,7 @@ trait TraitTagDetPIS
             $this->dom->addChild(
                 $pisst,
                 'vAliqProd',
-                $this->conditionalNumberFormatting($std->vAliqProd, 4),
+                $this->conditionalNumberFormatting($std->vAliqProd ?? null, 4),
                 true,
                 "$identificador  Alíquota do PIS (em reais) (vAliqProd)"
             );

@@ -12,7 +12,7 @@ use DOMException;
  * @property stdClass $stdTot
  * @property array $aIPI
  * @method equilizeParameters($std, $possible)
- * @method conditionalNumberFormatting($value, $decimal)
+ * @method conditionalNumberFormatting($value, $decimal = 2)
  */
 trait TraitTagDetIPI
 {
@@ -81,35 +81,38 @@ trait TraitTagDetIPI
                 true,
                 "$identificador Código da situação tributária do IPI (CST)"
             );
-            $this->dom->addChild(
-                $ipiTrib,
-                "vBC",
-                $this->conditionalNumberFormatting($std->vBC),
-                false,
-                "$identificador Valor da BC do IPI (vBC)"
-            );
-            $this->dom->addChild(
-                $ipiTrib,
-                "pIPI",
-                $this->conditionalNumberFormatting($std->pIPI, 4),
-                false,
-                "$identificador Alíquota do IPI (pIPI)"
-            );
-            $this->dom->addChild(
-                $ipiTrib,
-                "qUnid",
-                $this->conditionalNumberFormatting($std->qUnid, 4),
-                false,
-                "$identificador Quantidade total na unidade padrão para tributação (somente para os "
-                . "produtos tributados por unidade) (qUnid)"
-            );
-            $this->dom->addChild(
-                $ipiTrib,
-                "vUnid",
-                $this->conditionalNumberFormatting($std->vUnid, 4),
-                false,
-                "$identificador Valor por Unidade Tributável (vUnid)"
-            );
+            if (!empty($std->vBC) && !empty($std->pIIPI)) {
+                $this->dom->addChild(
+                    $ipiTrib,
+                    "vBC",
+                    $this->conditionalNumberFormatting($std->vBC),
+                    false,
+                    "$identificador Valor da BC do IPI (vBC)"
+                );
+                $this->dom->addChild(
+                    $ipiTrib,
+                    "pIPI",
+                    $this->conditionalNumberFormatting($std->pIPI ?? null, 4),
+                    false,
+                    "$identificador Alíquota do IPI (pIPI)"
+                );
+            } else {
+                $this->dom->addChild(
+                    $ipiTrib,
+                    "qUnid",
+                    $this->conditionalNumberFormatting($std->qUnid, 4),
+                    false,
+                    "$identificador Quantidade total na unidade padrão para tributação (somente para os "
+                    . "produtos tributados por unidade) (qUnid)"
+                );
+                $this->dom->addChild(
+                    $ipiTrib,
+                    "vUnid",
+                    $this->conditionalNumberFormatting($std->vUnid, 4),
+                    false,
+                    "$identificador Valor por Unidade Tributável (vUnid)"
+                );
+            }
             $this->dom->addChild(
                 $ipiTrib,
                 "vIPI",

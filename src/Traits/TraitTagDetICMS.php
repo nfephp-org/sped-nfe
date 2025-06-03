@@ -15,7 +15,7 @@ use DOMException;
  * @property array $aICMSST
  * @property array $aICMSUFDest
  * @method equilizeParameters($std, $possible)
- * @method conditionalNumberFormatting($value, $decimal)
+ * @method conditionalNumberFormatting($value, $decimal = 2)
  */
 trait TraitTagDetICMS
 {
@@ -88,6 +88,7 @@ trait TraitTagDetICMS
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = "N01 <ICMSxx> Item: $std->item -";
+        $icms = null;
         switch ($std->CST) {
             case '00':
                 $this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
@@ -417,7 +418,7 @@ trait TraitTagDetICMS
                     $this->dom->addChild(
                         $icms,
                         "motRedAdRem",
-                        $std->motRedAdRem,
+                        $std->motRedAdRem ?? null,
                         true,
                         "Motivo da redução do adrem"
                     );
@@ -1733,6 +1734,7 @@ trait TraitTagDetICMS
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = "N10c <ICMSSN> Item: $std->item -";
+        $icmsSN = null;
         //totalizador generico
         $this->stdTot->vFCPST += (float) !empty($std->vFCPST) ? $std->vFCPST : 0;
         $this->stdTot->vFCPSTRet += (float) !empty($std->vFCPSTRet) ? $std->vFCPSTRet : 0;

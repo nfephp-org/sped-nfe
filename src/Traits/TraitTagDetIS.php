@@ -8,10 +8,10 @@ use DOMElement;
 
 /**
  * @method equilizeParameters($std, $possible)
- * @method conditionalNumberFormatting($value, $decimal)
+ * @method conditionalNumberFormatting($value, $decimal = 2)
  * @property DOMImproved $dom
  * @property array $aIS
- * @property stdClass $stdTot
+ * @property stdClass $stdIStot
  */
 trait TraitTagDetIS
 {
@@ -36,7 +36,8 @@ trait TraitTagDetIS
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = "UB01 <IS> Item: $std->item -";
-        $this->stdTot->vIS += (float) $std->vIS;
+        //totalizador
+        $this->stdIStot->vIS += (float) $std->vIS;
         $is = $this->dom->createElement("IS");
         $this->dom->addChild(
             $is,

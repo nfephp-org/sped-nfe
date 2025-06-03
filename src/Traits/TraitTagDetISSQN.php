@@ -12,7 +12,7 @@ use DOMException;
  * @property stdClass $stdTot
  * @property array $aISSQN
  * @method equilizeParameters($std, $possible)
- * @method conditionalNumberFormatting($value, $decimal)
+ * @method conditionalNumberFormatting($value, $decimal = 2)
  */
 trait TraitTagDetISSQN
 {

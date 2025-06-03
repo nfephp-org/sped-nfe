@@ -13,8 +13,12 @@ use DOMException;
  * @property DOMElement $ISSQNTot
  * @property DOMElement $ISTot
  * @property DOMElement $IBSCBSTot
+ * @property stdclass $stdIStot Totalizador
+ * @property stdclass $stdTot Totalizador
+ * @property stdclass $stdISSQNTot Totalizador
+ * @property stdclass $stdIBSCBSTot Totalizador
  * @method equilizeParameters($std, $possible)
- * @method conditionalNumberFormatting($value, $decimal)
+ * @method conditionalNumberFormatting($value, $decimal = 2)
  */
 trait TraitTagTotal
 {
@@ -23,6 +27,7 @@ trait TraitTagTotal
      * tag NFe/infNFe/total/ICMSTot
      * @param stdClass $std
      * @return DOMElement
+     * @throws DOMException
      */
     public function tagICMSTot(stdClass $std): DOMElement
     {
@@ -58,7 +63,7 @@ trait TraitTagTotal
             'vICMSMonoRet',
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $this->stdICMSTot = $std;
+        $identificador = "W01 <ICMSTot> -";
 
         $vBC = $std->vBC ?? $this->stdTot->vBC;
         $vICMS = $std->vICMS ?? $this->stdTot->vICMS;
@@ -109,28 +114,28 @@ trait TraitTagTotal
             "vBC",
             $this->conditionalNumberFormatting($vBC),
             true,
-            "Base de Cálculo do ICMS"
+            "$identificador Base de Cálculo do ICMS"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vICMS",
             $this->conditionalNumberFormatting($vICMS),
             true,
-            "Valor Total do ICMS"
+            "$identificador Valor Total do ICMS"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vICMSDeson",
             $this->conditionalNumberFormatting($vICMSDeson),
             true,
-            "Valor Total do ICMS desonerado"
+            "$identificador Valor Total do ICMS desonerado"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vFCPUFDest",
             $this->conditionalNumberFormatting($vFCPUFDest),
             false,
-            "Valor total do ICMS relativo ao Fundo de Combate à Pobreza(FCP) "
+            "$identificador Valor total do ICMS relativo ao Fundo de Combate à Pobreza(FCP) "
             . "para a UF de destino"
         );
         $this->dom->addChild(
@@ -138,14 +143,14 @@ trait TraitTagTotal
             "vICMSUFDest",
             $this->conditionalNumberFormatting($vICMSUFDest),
             false,
-            "Valor total do ICMS de partilha para a UF do destinatário"
+            "$identificador Valor total do ICMS de partilha para a UF do destinatário"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vICMSUFRemet",
             $this->conditionalNumberFormatting($vICMSUFRemet),
             false,
-            "Valor total do ICMS de partilha para a UF do remetente"
+            "$identificador Valor total do ICMS de partilha para a UF do remetente"
         );
         //incluso no layout 4.00
         $this->dom->addChild(
@@ -153,7 +158,7 @@ trait TraitTagTotal
             "vFCP",
             $this->conditionalNumberFormatting($vFCP),
             false,
-            "Valor total do ICMS relativo ao Fundo de Combate à Pobreza(FCP) "
+            "$identificador Valor total do ICMS relativo ao Fundo de Combate à Pobreza(FCP) "
             . "para a UF de destino"
         );
         $this->dom->addChild(
@@ -161,14 +166,14 @@ trait TraitTagTotal
             "vBCST",
             $this->conditionalNumberFormatting($vBCST),
             true,
-            "Base de Cálculo do ICMS ST"
+            "$identificador Base de Cálculo do ICMS ST"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vST",
             $this->conditionalNumberFormatting($vST),
             true,
-            "Valor Total do ICMS ST"
+            "$identificador Valor Total do ICMS ST"
         );
         //incluso na 4.00
         $this->dom->addChild(
@@ -176,7 +181,7 @@ trait TraitTagTotal
             "vFCPST",
             $this->conditionalNumberFormatting($vFCPST),
             false, //true para 4.00
-            "Valor Total do FCP (Fundo de Combate à Pobreza) "
+            "$identificador Valor Total do FCP (Fundo de Combate à Pobreza) "
             . "retido por substituição tributária"
         );
         //incluso na 4.00
@@ -185,7 +190,7 @@ trait TraitTagTotal
             "vFCPSTRet",
             $this->conditionalNumberFormatting($vFCPSTRet),
             false, //true para 4.00
-            "Valor Total do FCP retido anteriormente por "
+            "$identificador Valor Total do FCP retido anteriormente por "
             . "Substituição Tributária"
         );
         //incluso NT 2023.001-1.10
@@ -194,84 +199,84 @@ trait TraitTagTotal
             "qBCMono",
             $this->conditionalNumberFormatting(!empty($qBCMono) ? $qBCMono : null),
             false,
-            "Valor total da quantidade tributada do ICMS monofásico próprio"
+            "$identificador Valor total da quantidade tributada do ICMS monofásico próprio"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vICMSMono",
             $this->conditionalNumberFormatting(!empty($vICMSMono) ? $vICMSMono : null),
             false,
-            "Valor total do ICMS monofásico próprio"
+            "$identificador Valor total do ICMS monofásico próprio"
         );
         $this->dom->addChild(
             $ICMSTot,
             "qBCMonoReten",
             $this->conditionalNumberFormatting(!empty($qBCMonoReten) ? $qBCMonoReten : null),
             false,
-            "Valor total da quantidade tributada do ICMS monofásico sujeito a retenção"
+            "$identificador Valor total da quantidade tributada do ICMS monofásico sujeito a retenção"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vICMSMonoReten",
             $this->conditionalNumberFormatting(!empty($vICMSMonoReten) ? $vICMSMonoReten : null),
             false,
-            "Valor total do ICMS monofásico sujeito a retenção"
+            "$identificador Valor total do ICMS monofásico sujeito a retenção"
         );
         $this->dom->addChild(
             $ICMSTot,
             "qBCMonoRet",
             $this->conditionalNumberFormatting(!empty($qBCMonoRet) ? $qBCMonoRet : null),
             false,
-            "Valor total da quantidade tributada do ICMS monofásico retido anteriormente"
+            "$identificador Valor total da quantidade tributada do ICMS monofásico retido anteriormente"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vICMSMonoRet",
             $this->conditionalNumberFormatting(!empty($vICMSMonoRet) ? $vICMSMonoRet : null),
             false,
-            "Valor total do ICMS monofásico retido anteriormente"
+            "$identificador Valor total do ICMS monofásico retido anteriormente"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vProd",
             $this->conditionalNumberFormatting($vProd),
             true,
-            "Valor Total dos produtos e serviços"
+            "$identificador Valor Total dos produtos e serviços"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vFrete",
             $this->conditionalNumberFormatting($vFrete),
             true,
-            "Valor Total do Frete"
+            "$identificador Valor Total do Frete"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vSeg",
             $this->conditionalNumberFormatting($vSeg),
             true,
-            "Valor Total do Seguro"
+            "$identificador Valor Total do Seguro"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vDesc",
             $this->conditionalNumberFormatting($vDesc),
             true,
-            "Valor Total do Desconto"
+            "$identificador Valor Total do Desconto"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vII",
             $this->conditionalNumberFormatting($vII),
             true,
-            "Valor Total do II"
+            "$identificador Valor Total do II"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vIPI",
             $this->conditionalNumberFormatting($vIPI),
             true,
-            "Valor Total do IPI"
+            "$identificador Valor Total do IPI"
         );
         //incluso 4.00
         $this->dom->addChild(
@@ -279,42 +284,42 @@ trait TraitTagTotal
             "vIPIDevol",
             $this->conditionalNumberFormatting($vIPIDevol),
             false,
-            "Valor Total do IPI"
+            "$identificador Valor Total do IPI"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vPIS",
             $this->conditionalNumberFormatting($vPIS),
             true,
-            "Valor do PIS"
+            "$identificador Valor do PIS"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vCOFINS",
             $this->conditionalNumberFormatting($vCOFINS),
             true,
-            "Valor da COFINS"
+            "$identificador Valor da COFINS"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vOutro",
             $this->conditionalNumberFormatting($vOutro),
             true,
-            "Outras Despesas acessórias"
+            "$identificador Outras Despesas acessórias"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vNF",
             $this->conditionalNumberFormatting($vNF),
             true,
-            "Valor Total da NF-e"
+            "$identificador Valor Total da NF-e"
         );
         $this->dom->addChild(
             $ICMSTot,
             "vTotTrib",
             $this->conditionalNumberFormatting($vTotTrib),
             false,
-            "Valor aproximado total de tributos federais, estaduais e municipais."
+            "$identificador Valor aproximado total de tributos federais, estaduais e municipais."
         );
         $this->ICMSTot = $ICMSTot;
         return $ICMSTot;
@@ -323,7 +328,9 @@ trait TraitTagTotal
     /**
      * Grupo Totais referentes ao ISSQN W17 pai W01
      * tag NFe/infNFe/total/ISSQNTot (opcional)
-     * @return DOMElement|void
+     * @param stdClass|null $std
+     * @return DOMElement|false
+     * @throws DOMException
      */
     public function tagISSQNTot(?stdClass $std = null)
     {
@@ -341,11 +348,8 @@ trait TraitTagTotal
             'vISSRet',
             'cRegTrib'
         ];
-        if (isset($std)) {
-            $std = $this->equilizeParameters($std, $possible);
-        }
-        $this->stdISSQN = $std;
-
+        $std = $this->equilizeParameters($std, $possible);
+        $identificador = "W17 <ISSQNTot> -";
         $vServ = $std->vServ ?? $this->stdISSQNTot->vServ;
         $vBC = $std->vBC ?? $this->stdISSQNTot->vBC;
         $vISS = $std->vISS ?? $this->stdISSQNTot->vISS;
@@ -375,86 +379,86 @@ trait TraitTagTotal
         $this->dom->addChild(
             $ISSQNTot,
             "vServ",
-            $this->conditionalNumberFormatting($vServ),
+            $this->conditionalNumberFormatting($vServ, 2),
             false,
-            "Valor total dos Serviços sob não incidência ou não tributados pelo ICMS"
+            "$identificador Valor total dos Serviços sob não incidência ou não tributados pelo ICMS"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vBC",
-            $this->conditionalNumberFormatting($vBC),
+            $this->conditionalNumberFormatting($vBC, 2),
             false,
-            "Valor total Base de Cálculo do ISS"
+            "$identificador Valor total Base de Cálculo do ISS"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vISS",
-            $this->conditionalNumberFormatting($vISS),
+            $this->conditionalNumberFormatting($vISS, 2),
             false,
-            "Valor total do ISS"
+            "$identificador Valor total do ISS"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vPIS",
-            $this->conditionalNumberFormatting($vPIS),
+            $this->conditionalNumberFormatting($vPIS, 2),
             false,
-            "Valor total do PIS sobre serviços"
+            "$identificador Valor total do PIS sobre serviços"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vCOFINS",
-            $this->conditionalNumberFormatting($vCOFINS),
+            $this->conditionalNumberFormatting($vCOFINS, 2),
             false,
-            "Valor total da COFINS sobre serviços"
+            "$identificador Valor total da COFINS sobre serviços"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "dCompet",
             $dCompet,
             true,
-            "Data da prestação do serviço"
+            "$identificador Data da prestação do serviço"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vDeducao",
-            $this->conditionalNumberFormatting($vDeducao),
+            $this->conditionalNumberFormatting($vDeducao, 2),
             false,
-            "Valor total dedução para redução da Base de Cálculo"
+            "$identificador Valor total dedução para redução da Base de Cálculo"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vOutro",
-            $this->conditionalNumberFormatting($vOutro),
+            $this->conditionalNumberFormatting($vOutro, 2),
             false,
-            "Valor total outras retenções"
+            "$identificador Valor total outras retenções"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vDescIncond",
-            $this->conditionalNumberFormatting($vDescIncond),
+            $this->conditionalNumberFormatting($vDescIncond, 2),
             false,
-            "Valor total desconto incondicionado"
+            "$identificador Valor total desconto incondicionado"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vDescCond",
-            $this->conditionalNumberFormatting($vDescCond),
+            $this->conditionalNumberFormatting($vDescCond, 2),
             false,
-            "Valor total desconto condicionado"
+            "$identificador Valor total desconto condicionado"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "vISSRet",
-            $this->conditionalNumberFormatting($vISSRet),
+            $this->conditionalNumberFormatting($vISSRet, 2),
             false,
-            "Valor total retenção ISS"
+            "$identificador Valor total retenção ISS"
         );
         $this->dom->addChild(
             $ISSQNTot,
             "cRegTrib",
             $cRegTrib,
             false,
-            "Código do Regime Especial de Tributação"
+            "$identificador Código do Regime Especial de Tributação"
         );
         $this->ISSQNTot = $ISSQNTot;
         return $ISSQNTot;
@@ -470,18 +474,18 @@ trait TraitTagTotal
         $possible = ['vIS'];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = "<ISTot> -";
+        $vIS = $std->vIS ?? ($this->stdIStot->vIS ?? 0);
         $istot = $this->dom->createElement('ISTot');
         $this->dom->addChild(
             $istot,
             "vIS",
-            $this->conditionalNumberFormatting($std->vIS),
+            $this->conditionalNumberFormatting($vIS, 2),
             true,
             "$identificador Valor Total do IS"
         );
         $this->ISTot = $istot;
         return $istot;
     }
-
 
     /**
      *
@@ -516,13 +520,36 @@ trait TraitTagTotal
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = "<IBSCBSTot> -";
+
+        $vBCIBSCBS = $std->vBCIBSCBS ?? $this->stdIBSCBSTot->vBCIBSCBS;
+        $gIBS_vIBS = $std->gIBS_vIBS ?? $this->stdIBSCBSTot->vIBS;
+        $gIBS_vCredPres = $std->gIBS_vCredPres ?? $this->stdIBSCBSTot->vCredPres;
+        $gIBS_vCredPresCondSus = $std->gIBS_vCredPresCondSus ?? $this->stdIBSCBSTot->vCredPresCondSus;
+        $gIBSUF_vDif = $std->gIBSUF_vDif ?? $this->stdIBSCBSTot->gIBSUF->vDif;
+        $gIBSUF_vDevTrib = $std->gIBSUF_vDevTrib ?? $this->stdIBSCBSTot->gIBSUF->vDevTrib;
+        $gIBSUF_vIBSUF = $std->gIBSUF_vIBSUF ?? $this->stdIBSCBSTot->gIBSUF->vIBSUF;
+        $gIBSMun_vDif = $std->gIBSMun_vDif ?? $this->stdIBSCBSTot->gIBSMun->vDif;
+        $gIBSMun_vDevTrib = $std->gIBSMun_vDevTrib ?? $this->stdIBSCBSTot->gIBSMun->vDevTrib;
+        $gIBSMun_vIBSMun = $std->gIBSMun_vIBSMun ?? $this->stdIBSCBSTot->gIBSMun->vIBSMun;
+        $gCBS_vDif = $std->gCBS_vDif ?? $this->stdIBSCBSTot->gCBS->vDif;
+        $gCBS_vDevTrib = $std->gCBS_vDevTrib ?? $this->stdIBSCBSTot->gCBS->vDevTrib;
+        $gCBS_vCBS = $std->gCBS_vCBS ?? $this->stdIBSCBSTot->gCBS->vCBS;
+        $gCBS_vCredPres = $std->gCBS_vCredPres ?? $this->stdIBSCBSTot->gCBS->vCredPres;
+        $gCBS_vCredPresCondSus = $std->gCBS_vCredPresCondSus ?? $this->stdIBSCBSTot->gCBS->vCredPresCondSus;
+        $gMono_vIBSMono = $std->gMono_vIBSMono ?? $this->stdIBSCBSTot->gMono->vIBSMono;
+        $gMono_vCBSMono = $std->gMono_vCBSMono ?? $this->stdIBSCBSTot->gMono->vCBSMono;
+        $gMono_vIBSMonoReten = $std->gMono_vIBSMonoReten ?? $this->stdIBSCBSTot->gMono->vIBSMonoReten;
+        $gMono_vCBSMonoReten = $std->gMono_vCBSMonoReten ?? $this->stdIBSCBSTot->gMono->vCBSMonoReten;
+        $gMono_vIBSMonoRet = $std->gMono_vIBSMonoRet ?? $this->stdIBSCBSTot->gMono->vIBSMonoRet;
+        $gMono_vCBSMonoRet = $std->gMono_vCBSMonoRet ?? $this->stdIBSCBSTot->gMono->vCBSMonoRet;
+
         $ibstot = $this->dom->createElement('IBSCBSTot');
         $this->dom->addChild(
             $ibstot,
             "vBCIBSCBS",
-            $this->conditionalNumberFormatting($std->vBCIBSCBS),
+            $this->conditionalNumberFormatting($vBCIBSCBS),
             true,
-            "$identificador "
+            "$identificador Valor total da BC do IBS e da CBS"
         );
         if (!empty($std->gIBS_vIBS)) {
             $gIBS = $this->dom->createElement('gIBS');
@@ -530,157 +557,231 @@ trait TraitTagTotal
             $this->dom->addChild(
                 $gIBSUF,
                 "vDif",
-                $this->conditionalNumberFormatting($std->gIBSUF_vDif),
+                $this->conditionalNumberFormatting($gIBSUF_vDif),
                 true,
-                "$identificador "
+                "$identificador Valor total do diferimento (gIBSUF/vDif)"
             );
             $this->dom->addChild(
                 $gIBSUF,
                 "vDevTrib",
-                $this->conditionalNumberFormatting($std->gIBSUF_vDevTrib),
+                $this->conditionalNumberFormatting($gIBSUF_vDevTrib),
                 true,
-                "$identificador "
+                "$identificador Valor total de devolução de tributos (gIBSUF/vDevTrib)"
             );
             $this->dom->addChild(
                 $gIBSUF,
                 "vIBSUF",
-                $this->conditionalNumberFormatting($std->gIBSUF_vIBSUF),
+                $this->conditionalNumberFormatting($gIBSUF_vIBSUF),
                 true,
-                "$identificador "
+                "$identificador Valor total do IBS da UF (gIBSUF/vIBSUF)"
             );
             $this->dom->appChild($gIBS, $gIBSUF);
             $gIBSMun = $this->dom->createElement('gIBSMun');
             $this->dom->addChild(
                 $gIBSMun,
                 "vDif",
-                $this->conditionalNumberFormatting($std->gIBSMun_vDif),
+                $this->conditionalNumberFormatting($gIBSMun_vDif),
                 true,
-                "$identificador "
+                "$identificador Valor total do diferimento (gIBSMun/vDif)"
             );
             $this->dom->addChild(
                 $gIBSMun,
                 "vDevTrib",
-                $this->conditionalNumberFormatting($std->gIBSMun_vDevTrib),
+                $this->conditionalNumberFormatting($gIBSMun_vDevTrib),
                 true,
-                "$identificador "
+                "$identificador Valor total de devolução de tributos (gIBSMun/vDevTrib)"
             );
             $this->dom->addChild(
                 $gIBSMun,
                 "vIBSMun",
-                $this->conditionalNumberFormatting($std->gIBSMun_vIBSMun),
+                $this->conditionalNumberFormatting($gIBSMun_vIBSMun),
                 true,
-                "$identificador "
+                "$identificador Valor total do IBS do Município (gIBSMun/vIBSMun)"
             );
             $this->dom->appChild($gIBS, $gIBSMun);
             $this->dom->addChild(
                 $gIBS,
                 "vIBS",
-                $this->conditionalNumberFormatting($std->gIBS_vIBS),
+                $this->conditionalNumberFormatting($gIBS_vIBS),
                 true,
-                "$identificador "
+                "$identificador Valor total do IBS"
             );
             $this->dom->addChild(
                 $gIBS,
                 "vCredPres",
-                $this->conditionalNumberFormatting($std->gIBS_vCredPres),
+                $this->conditionalNumberFormatting($gIBS_vCredPres),
                 true,
-                "$identificador "
+                "$identificador Valor total do crédito presumido"
             );
             $this->dom->addChild(
                 $gIBS,
                 "vCredPresCondSus",
-                $this->conditionalNumberFormatting($std->gIBS_vCredPresCondSus),
+                $this->conditionalNumberFormatting($gIBS_vCredPresCondSus),
                 true,
-                "$identificador "
+                "$identificador Valor total do crédito presumido em condição suspensiva."
             );
             $this->dom->appChild($ibstot, $gIBS);
         }
-        if (!empty($std->gCBS_vDif)) {
+        if (!empty($std->gCBS_vCBS)) {
             $gCBS = $this->dom->createElement('gCBS');
             $this->dom->addChild(
                 $gCBS,
                 "vDif",
-                $this->conditionalNumberFormatting($std->gCBS_vDif),
+                $this->conditionalNumberFormatting($gCBS_vDif),
                 true,
-                "$identificador "
+                "$identificador Valor total do crédito presumido (gCBS/vDif)"
             );
             $this->dom->addChild(
                 $gCBS,
                 "vDevTrib",
-                $this->conditionalNumberFormatting($std->gCBS_vDevTrib),
+                $this->conditionalNumberFormatting($gCBS_vDevTrib),
                 true,
-                "$identificador "
+                "$identificador Valor total de devolução de tributos (gCBS/vDevTrib)"
             );
             $this->dom->addChild(
                 $gCBS,
                 "vCBS",
-                $this->conditionalNumberFormatting($std->gCBS_vCBS),
+                $this->conditionalNumberFormatting($gCBS_vCBS),
                 true,
-                "$identificador "
+                "$identificador Valor total da CBS (gCBS/vCBS)"
             );
             $this->dom->addChild(
                 $gCBS,
                 "vCredPres",
-                $this->conditionalNumberFormatting($std->gCBS_vCredPres),
+                $this->conditionalNumberFormatting($gCBS_vCredPres),
                 true,
-                "$identificador "
+                "$identificador Valor total do crédito presumido (gCBS/vCrePres)"
             );
             $this->dom->addChild(
                 $gCBS,
                 "vCredPresCondSus",
-                $this->conditionalNumberFormatting($std->gCBS_vCredPresCondSus),
+                $this->conditionalNumberFormatting($gCBS_vCredPresCondSus),
                 true,
-                "$identificador "
+                "$identificador Valor total do crédito presumido em condição suspensiva. (gCBS/vCrePresCondSus)"
             );
             $this->dom->appChild($ibstot, $gCBS);
         }
-        if (!empty($std->gMono_vIBSMono)) {
+        if (!empty($std->gMono_vIBSMono) || !empty($std->gMono_vCBSMono)) {
             $gMono = $this->dom->createElement('gMono');
             $this->dom->addChild(
                 $gMono,
                 "vIBSMono",
-                $this->conditionalNumberFormatting($std->gMono_vIBSMono),
+                $this->conditionalNumberFormatting($gMono_vIBSMono),
                 true,
-                "$identificador "
+                "$identificador Total do IBS monofásico"
             );
             $this->dom->addChild(
                 $gMono,
                 "vCBSMono",
-                $this->conditionalNumberFormatting($std->gMono_vCBSMono),
+                $this->conditionalNumberFormatting($gMono_vCBSMono),
                 true,
-                "$identificador "
+                "$identificador Total da CBS monofásica"
             );
             $this->dom->addChild(
                 $gMono,
                 "vIBSMonoReten",
-                $this->conditionalNumberFormatting($std->gMono_vIBSMonoReten),
+                $this->conditionalNumberFormatting($gMono_vIBSMonoReten),
                 true,
-                "$identificador "
+                "$identificador Total do IBS monofásico sujeito a retenção"
             );
             $this->dom->addChild(
                 $gMono,
                 "vCBSMonoReten",
-                $this->conditionalNumberFormatting($std->gMono_vCBSMonoReten),
+                $this->conditionalNumberFormatting($gMono_vCBSMonoReten),
                 true,
-                "$identificador "
+                "$identificador Total da CBS monofásica sujeita a retenção"
             );
             $this->dom->addChild(
                 $gMono,
                 "vIBSMonoRet",
-                $this->conditionalNumberFormatting($std->gMono_vIBSMonoRet),
+                $this->conditionalNumberFormatting($gMono_vIBSMonoRet),
                 true,
-                "$identificador "
+                "$identificador Total do IBS monofásico retido anteriormente"
             );
             $this->dom->addChild(
                 $gMono,
                 "vCBSMonoRet",
-                $this->conditionalNumberFormatting($std->gMono_vCBSMonoRet),
+                $this->conditionalNumberFormatting($gMono_vCBSMonoRet),
                 true,
-                "$identificador "
+                "$identificador Total da CBS monofásica retida anteriormente"
             );
             $this->dom->appChild($ibstot, $gMono);
         }
         $this->IBSCBSTot = $ibstot;
         return $ibstot;
+    }
+
+    /**
+     * Grupo Retenções de Tributos W23 pai W01
+     * tag NFe/infNFe/total/reTrib (opcional)
+     * @param stdClass $std
+     * @return DOMElement
+     * @throws DOMException
+     */
+    public function tagretTrib(stdClass $std): DOMElement
+    {
+        $possible = [
+            'vRetPIS',
+            'vRetCOFINS',
+            'vRetCSLL',
+            'vBCIRRF',
+            'vIRRF',
+            'vBCRetPrev',
+            'vRetPrev'
+        ];
+        $std = $this->equilizeParameters($std, $possible);
+        $identificador = "W23 <retTrib> -";
+        $retTrib = $this->dom->createElement("retTrib");
+        $this->dom->addChild(
+            $retTrib,
+            "vRetPIS",
+            $this->conditionalNumberFormatting($std->vRetPIS),
+            false,
+            "$identificador Valor Retido de PIS"
+        );
+        $this->dom->addChild(
+            $retTrib,
+            "vRetCOFINS",
+            $this->conditionalNumberFormatting($std->vRetCOFINS),
+            false,
+            "$identificador Valor Retido de COFINS"
+        );
+        $this->dom->addChild(
+            $retTrib,
+            "vRetCSLL",
+            $this->conditionalNumberFormatting($std->vRetCSLL),
+            false,
+            "$identificador Valor Retido de CSLL"
+        );
+        $this->dom->addChild(
+            $retTrib,
+            "vBCIRRF",
+            $this->conditionalNumberFormatting($std->vBCIRRF),
+            false,
+            "Base de Cálculo do IRRF"
+        );
+        $this->dom->addChild(
+            $retTrib,
+            "vIRRF",
+            $this->conditionalNumberFormatting($std->vIRRF),
+            false,
+            "$identificador Valor Retido do IRRF"
+        );
+        $this->dom->addChild(
+            $retTrib,
+            "vBCRetPrev",
+            $this->conditionalNumberFormatting($std->vBCRetPrev),
+            false,
+            "$identificador Base de Cálculo da Retenção da Previdência Social"
+        );
+        $this->dom->addChild(
+            $retTrib,
+            "vRetPrev",
+            $this->conditionalNumberFormatting($std->vRetPrev),
+            false,
+            "$identificador Valor da Retenção da Previdência Social"
+        );
+        $this->retTrib = $retTrib;
+        return $retTrib;
     }
 }
