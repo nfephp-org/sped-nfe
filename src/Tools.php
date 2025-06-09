@@ -862,7 +862,7 @@ class Tools extends ToolsCommon
             $std->verAplic = $this->verAplic;
         }
         $tpEvento = self::EVT_CONCILIACAO;
-        $cod = UFList::getCodeByUF($this->config->siglaUF);
+
         $tagAdic = "<verAplic>{$std->verAplic}</verAplic>";
         if (!empty($std->detPag) && is_array($std->detPag)) {
             foreach ($std->detPag as $pag) {
