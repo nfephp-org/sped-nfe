@@ -33,35 +33,35 @@ trait TraitTagAgropecuario
         ];
         $std = $this->equilizeParameters($std, $possible);
 
-            $guia = $this->dom->createElement("guiaTransito");
-            $this->dom->addChild(
-                $guia,
-                "tpGuia",
-                $std->tpGuia,
-                true,
-                "Tipo da Guia"
-            );
-            $this->dom->addChild(
-                $guia,
-                "UFGuia",
-                !empty($std->UFGuia) ? $std->UFGuia : null,
-                false,
-                "UF de emissão"
-            );
-            $this->dom->addChild(
-                $guia,
-                "serieGuia",
-                $std->serieGuia ?? null,
-                false,
-                "Série da Guia"
-            );
-            $this->dom->addChild(
-                $guia,
-                "nGuia",
-                $std->nGuia,
-                true,
-                "Número da Guia"
-            );
+        $guia = $this->dom->createElement("guiaTransito");
+        $this->dom->addChild(
+            $guia,
+            "tpGuia",
+            $std->tpGuia,
+            true,
+            "Tipo da Guia"
+        );
+        $this->dom->addChild(
+            $guia,
+            "UFGuia",
+            !empty($std->UFGuia) ? $std->UFGuia : null,
+            false,
+            "UF de emissão"
+        );
+        $this->dom->addChild(
+            $guia,
+            "serieGuia",
+            $std->serieGuia ?? null,
+            false,
+            "Série da Guia"
+        );
+        $this->dom->addChild(
+            $guia,
+            "nGuia",
+            $std->nGuia,
+            true,
+            "Número da Guia"
+        );
         $this->agropecuarioGuia = $guia;
         return $guia;
     }
