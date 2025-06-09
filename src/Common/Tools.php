@@ -396,7 +396,7 @@ class Tools
     protected function checkContingencyForWebServices(string $service)
     {
         $type = !empty($this->contingency) ? $this->contingency->type : '';
-        $mod = $this->modelo;
+
         if (!empty($type)) {
             if ($this->modelo == 65) {
                 throw new RuntimeException(

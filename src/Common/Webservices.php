@@ -75,12 +75,14 @@ class Webservices
      */
     public static function getAuth(string $sigla, int $modelo): string
     {
-        $autfile = realpath(__DIR__ . '/../../storage/autorizadores.json');
-        $autorizadores = json_decode(file_get_contents($autfile), true);
-        if (!key_exists($sigla, $autorizadores[$modelo])) {
-            throw new \RuntimeException("Nao existe autorizador [$sigla] para os webservices do modelo [$modelo]");
-        }
-        return $autorizadores[$modelo][$sigla];
+        $authorizer = config(sprintf('authorizers.%s.%s', $modelo, $sigla));
+
+        throwIf(
+            $authorizer === null,
+            sprintf('Nao existe autorizador [%s] para os webservices do modelo [%s]', $sigla, $modelo)
+        );
+
+        return $authorizer;
     }
 
     /**
