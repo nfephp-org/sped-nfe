@@ -17,7 +17,7 @@ if (!function_exists('config')) {
         static $config = [];
 
         if (empty($config)) {
-            $configPath = __DIR__ . '/config';
+            $configPath = __DIR__ . '/../Config';
             foreach (glob($configPath . '/*.php') as $file) {
                 $config[basename($file, '.php')] = require $file;
             }
