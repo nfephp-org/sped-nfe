@@ -75,7 +75,7 @@ class Webservices
      */
     public static function getAuth(string $sigla, int $modelo): string
     {
-        $authorizer = config(sprintf('autorizadores.%s.%s', $modelo, $sigla));
+        $authorizer = config(sprintf('authorizers.%s.%s', $modelo, $sigla));
 
         throwIf(
             $authorizer === null,
