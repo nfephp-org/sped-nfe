@@ -50,10 +50,12 @@ if (!function_exists('throwIf')) {
      * @param string $message
      * @return void
      */
-    function throwIf(bool $condition, string $message): void
+    function throwIf(bool $condition, string $message, ?string $exception = null): void
     {
+        $exception = $exception ?: \RuntimeException::class;
+
         if ($condition) {
-            throw new \RuntimeException($message);
+            throw new $exception($message);
         }
     }
 }
