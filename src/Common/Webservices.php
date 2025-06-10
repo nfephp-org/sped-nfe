@@ -41,12 +41,17 @@ class Webservices
     public function get(string $sigla, $amb, int $modelo): \stdClass
     {
         $auto = self::getAuth($sigla, $modelo);
-        if (empty($auto) || empty($this->std)) {
-            throw new \RuntimeException('Falhou autorizador, parece vazio');
-        }
-        if (empty($this->std->$auto)) {
-            throw new \RuntimeException("Nao existem webservices cadastrados para [$sigla] no modelo [$modelo]");
-        }
+
+        throwIf(
+            empty($auto) || empty($this->std),
+            'Falhou autorizador, parece vazio'
+        );
+
+        throwIf(
+            empty($this->std->$auto),
+            sprintf('Nao existe autorizador [%s] para os webservices do modelo [%s]', $sigla, $modelo)
+        );
+
         $ambiente = $amb == 1 ? 'producao' : 'homologacao';
         $svw = $this->std->$auto->$ambiente;
         if ($auto == 'SVRS' || $auto == 'SVAN') {

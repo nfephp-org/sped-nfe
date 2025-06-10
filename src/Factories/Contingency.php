@@ -107,22 +107,24 @@ class Contingency
         ];
         if (!empty($type)) {
             $type = strtoupper(str_replace('-', '', $type));
-            if (!in_array($type, ['SVCAN', 'SVCRS'])) {
-                throw new \RuntimeException(
-                    "O tipo indicado de contingência não é aceito nesta operação. Usar apenas SVCAN ou SVCRS"
-                );
-            }
+
+            throwIf(
+                !in_array($type, ['SVCAN', 'SVCRS']),
+                "O tipo indicado de contingência não é aceito nesta operação. Usar apenas SVCAN ou SVCRS"
+            );
+
             $this->type = $type;
         }
         //gerar o timestamp para Greenwich (GMT).
         $dt = new \DateTime(gmdate('Y-m-d H:i:s')); //data hora GMT
         $this->motive = trim($motive);
         $len = mb_strlen($this->motive);
-        if ($len < 15 || $len > 255) {
-            throw new \RuntimeException(
-                "A justificativa para entrada em contingência deve ter entre 15 e 256 caracteres UTF-8."
-            );
-        }
+
+        throwIf(
+            $len < 15 || $len > 255,
+            "A justificativa para entrada em contingência deve ter entre 15 e 256 caracteres UTF-8."
+        );
+
         $this->timestamp = $dt->getTimestamp();
         if (empty($type)) {
             $this->type = $list[$acronym];

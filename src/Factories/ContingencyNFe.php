@@ -34,11 +34,12 @@ class ContingencyNFe
         $tpEmis = $ide->getElementsByTagName('tpEmis')->item(0)->nodeValue;
         $dhCont = $ide->getElementsByTagName('dhCont')->item(0)->nodeValue ?? null;
         $xJust = $ide->getElementsByTagName('xJust')->item(0)->nodeValue ?? null;
-        if ($mod == 65) {
-            throw new \RuntimeException(
-                'O xml pertence a um documento modelo 65 NFCe, incorreto para contingência SVCAN ou SVCRS.'
-            );
-        }
+
+        throwIf(
+            $mod == 65,
+            "O xml pertence a um documento modelo 65 NFCe, incorreto para contingência SVCAN ou SVCRS."
+        );
+
         if ($tpEmis != 1) {
             //xml já foi emitido em contingência, não há a necessidade de ajuste dos dados do xml
             return $xml;

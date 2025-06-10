@@ -449,13 +449,17 @@ class Tools
             }
         }
         $stdServ = $webs->get($sigla, $tpAmb, $this->modelo);
-        if (empty($stdServ->$service->url)) {
-            if ($sigla === 'SVCRS' || $sigla === 'SVCAN') {
-                throw new \RuntimeException("Servico [$service] indisponivel na Contingencia [$sigla]");
-            } else {
-                throw new \RuntimeException("Servico [$service] indisponivel UF [$uf] ou modelo [$this->modelo]");
-            }
-        }
+
+        throwIf(
+            empty($stdServ->$service->url) && in_array($sigla, ['SVCRS', 'SVCAN']),
+            sprintf('Servico [%s] indisponivel na Contingencia [%s]', $service, $sigla)
+        );
+
+        throwIf(
+            empty($stdServ->$service->url) && !in_array($sigla, ['SVCRS', 'SVCAN']),
+            sprintf('Servico [%s] indisponivel UF [%s] ou modelo [%s]', $service, $uf, $this->modelo)
+        );
+
         //NT 2024.002 1.00 Maio/2024, comentário P08 elemento cOrgao
         if ($uf === 'SVRS') {
             $this->urlcUF = 92;
@@ -517,9 +521,11 @@ class Tools
      */
     protected function addQRCode(DOMDocument $dom): string
     {
-        if (empty($this->config->CSC) || empty($this->config->CSCid)) {
-            throw new \RuntimeException("O QRCode não pode ser criado pois faltam dados CSC e/ou CSCId");
-        }
+        throwIf(
+            empty($this->config->CSC) || empty($this->config->CSCid),
+            "O QRCode não pode ser criado pois faltam dados CSC e/ou CSCId"
+        );
+
         $memmod = $this->modelo;
         $this->modelo = 65;
         $cUF = $dom->getElementsByTagName('cUF')->item(0)->nodeValue;
