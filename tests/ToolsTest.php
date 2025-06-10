@@ -80,8 +80,12 @@ class ToolsTest extends NFeTestCase
      * @dataProvider \NFePHP\NFe\Tests\ToolsTest::ufProvider
      * @param string $uf
      * @throws \ReflectionException
+     *
+     * @deprecated Com a depreciação do método getURIConsultaNFCe, este teste não deve mais ser utilizado.
+     * @since 2025-06-09
+     * @see testReturnURIConsultaNFCeInHomologation
      */
-    public function testReturnURIConsultaNFCeInHomologation(string $uf)
+    public function testReturnURIConsultaNFCeInHomologationDeprecated(string $uf)
     {
         $class = new \ReflectionClass(Tools::class);
         $object = $class->newInstanceWithoutConstructor();
@@ -97,8 +101,12 @@ class ToolsTest extends NFeTestCase
      * @dataProvider \NFePHP\NFe\Tests\ToolsTest::ufProvider
      * @param string $uf
      * @throws \ReflectionException
+     *
+     * @deprecated Com a depreciação do método getURIConsultaNFCe, este teste não deve mais ser utilizado.
+     * @since 2025-06-09
+     * @see testReturnURIConsultaNFCeInProduction
      */
-    public function testReturnURIConsultaNFCeInProduction(string $uf)
+    public function testReturnURIConsultaNFCeInProductionDeprecated(string $uf)
     {
         $class = new \ReflectionClass(Tools::class);
         $object = $class->newInstanceWithoutConstructor();
@@ -110,6 +118,26 @@ class ToolsTest extends NFeTestCase
         $method->setAccessible(true);
         $result = $method->invokeArgs($object, [$uf, '1']);
         $this->assertEquals(self::getUri('1', $uf), $result);
+    }
+
+        /**
+     * @dataProvider \NFePHP\NFe\Tests\ToolsTest::ufProvider
+     * @param string $uf
+     * @throws \ReflectionException
+     */
+    public function testReturnURIConsultaNFCeInHomologation(string $uf, int $tpAmb = 2)
+    {
+        $this->assertNotNull(config(sprintf('services.nfce.%s.%s', $tpAmb, $uf)));
+    }
+
+    /**
+     * @dataProvider \NFePHP\NFe\Tests\ToolsTest::ufProvider
+     * @param string $uf
+     * @throws \ReflectionException
+     */
+    public function testReturnURIConsultaNFCeInProduction(string $uf, int $tpAmb = 1)
+    {
+        $this->assertNotNull(config(sprintf('services.nfce.%s.%s', $tpAmb, $uf)));
     }
 
     /**

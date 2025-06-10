@@ -9,6 +9,11 @@
 
 namespace NFePHP\NFe\Tests;
 
+/**
+ * @deprecated Using config/services.php This function is no longer necessary
+ * @since 2025-06-09
+ * @see config('services.nfce.{tpAmb}.{uf}')
+ */
 trait URIConsultaNfce
 {
     public static function getUri($tpAmb, $uf)
