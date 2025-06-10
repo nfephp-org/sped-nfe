@@ -84,7 +84,10 @@ class Webservices
 
         throwIf(
             $authorizer === null,
-            sprintf('Nao existe autorizador [%s] para os webservices do modelo [%s]', $sigla, $modelo)
+            __('webservices.authorizer_not_found', [
+                'sigla'  => $sigla,
+                'modelo' => $modelo
+            ]),
         );
 
         return $authorizer;
