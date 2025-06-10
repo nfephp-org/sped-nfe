@@ -1,6 +1,17 @@
 <?php
 
 return [
+    /*
+    |--------------------------------------------------------------------------
+    | URLs for NFC-e
+    |--------------------------------------------------------------------------
+    |
+    | Here you define the URLs for NFC-e consultation in each state.
+    | The keys are the state acronyms, and the values are the URLs.
+    | The first level of the array is for production URLs, and the second level
+    | is for homologation URLs.
+    |
+    */
     'nfce' => [
         '1' => [
             'AC' => 'www.sefaznet.ac.gov.br/nfce/consulta',
