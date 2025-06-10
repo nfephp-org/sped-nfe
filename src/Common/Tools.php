@@ -532,7 +532,7 @@ class Tools
             $this->config->CSCid,
             $this->urlVersion,
             $this->urlService,
-            $this->getURIConsultaNFCe($uf, $tpAmb)
+            config(sprintf('services.nfce.%s.%s', $tpAmb, $uf)),
         );
         $this->modelo = $memmod;
         return Strings::clearXmlString($signed);
@@ -540,8 +540,13 @@ class Tools
 
     /**
      * Get URI for search NFCe by key (chave)
+     *
      * @param string $uf Abbreviation of the UF
      * @param string $tpAmb SEFAZ environment, 1-Production or 2-Homologation
+     *
+     * @deprecated Using config/services.php This function is no longer necessary
+     * @since 2025-06-09
+     * @see config('services.nfce.{tpAmb}.{uf}')
      */
     protected function getURIConsultaNFCe(string $uf, string $tpAmb): string
     {
