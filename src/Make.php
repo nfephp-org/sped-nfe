@@ -532,9 +532,12 @@ class Make
         $this->checkNFeKey($this->dom);
         $this->xml = $this->dom->saveXML();
 
-        if (count($this->getErrors()) > 0) {
-            throw new RuntimeException('Existem erros nas tags. Obtenha os erros com getErrors().');
-        }
+        throwIf(
+            count($this->getErrors()) > 0,
+            sprintf(
+                "Existem erros nas tags. Obtenha os erros com getErrors().",
+            )
+        );
 
         return $this->xml;
     }
@@ -605,16 +608,25 @@ class Make
         }
         //validação conforme NT 2019.001
         $std->cNF = str_pad($std->cNF, 8, '0', STR_PAD_LEFT);
-        if (intval($std->cNF) == intval($std->nNF)) {
-            throw new InvalidArgumentException("O valor [{$std->cNF}] não é "
-                . "aceitável para cNF, não pode ser igual ao de nNF, vide NT2019.001");
-        }
-        if (method_exists(Keys::class, 'cNFIsValid')) {
-            if (!Keys::cNFIsValid($std->cNF)) {
-                throw new InvalidArgumentException("O valor [{$std->cNF}] para cNF "
-                    . "é invalido, deve respeitar a NT2019.001");
-            }
-        }
+
+        throwIf(
+            intval($std->cNF) == intval($std->nNF),
+            sprintf(
+                "O valor [%s] não é aceitável para cNF, não pode ser igual ao de nNF, vide NT2019.001",
+                $std->cNF,
+                InvalidArgumentException::class
+            )
+        );
+
+        throwIf(
+            method_exists(Keys::class, 'cNFIsValid') && !Keys::cNFIsValid($std->cNF),
+            sprintf(
+                "O valor [%s] para cNF é invalido, deve respeitar a NT2019.001",
+                $std->cNF,
+                InvalidArgumentException::class
+            )
+        );
+
         $this->tpAmb = $std->tpAmb;
         $this->mod = $std->mod;
         $identificador = 'B01 <ide> - ';
@@ -1338,9 +1350,14 @@ class Make
         $std = $this->equilizeParameters($std, $possible);
 
         $identificador = 'E05 <enderDest> - ';
-        if (!$this->dest) {
-            throw new RuntimeException('A TAG dest deve ser criada antes do endereço do mesmo.');
-        }
+
+        throwIf(
+            !$this->dest,
+            sprintf(
+                "A TAG dest deve ser criada antes do endereço do mesmo.",
+            )
+        );
+
         $this->enderDest = $this->dom->createElement("enderDest");
         $this->dom->addChild(
             $this->enderDest,
@@ -2429,9 +2446,14 @@ class Make
         );
         //obtem o ultimo detExport
         $nDE = (is_countable($this->aDetExport[$std->item]) ? count($this->aDetExport[$std->item]) : 0) - 1;
-        if ($nDE < 0) {
-            throw new RuntimeException('A TAG detExportInd deve ser criada depois da detExport, pois pertence a ela.');
-        }
+
+        throwIf(
+            $nDE < 0,
+            sprintf(
+                "A TAG detExportInd deve ser criada depois da detExport, pois pertence a ela.",
+            )
+        );
+
         //colocar a exportInd em seu DetExport respectivo
         $nodeDetExport = $this->aDetExport[$std->item][$nDE];
         $this->dom->appChild($nodeDetExport, $exportInd);

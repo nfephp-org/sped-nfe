@@ -67,10 +67,13 @@ class Tools extends ToolsCommon
         bool $compactar = false,
         array &$xmls = []
     ): string {
-        if ($indSinc == 1 && count($aXml) > 1) {
-            throw new InvalidArgumentException('Envio sincrono deve ser usado para enviar '
-                . 'uma UNICA nota por vez. Você está tentando enviar varias.');
-        }
+        throwIf(
+            $indSinc == 1 && count($aXml) > 1,
+            'Envio sincrono deve ser usado para enviar uma UNICA nota por vez. '
+            . 'Você está tentando enviar varias.',
+            InvalidArgumentException::class
+        );
+
         $servico = 'NfeAutorizacao';
         $this->checkContingencyForWebServices($servico);
         if ($this->contingency->type != '') {
@@ -118,9 +121,12 @@ class Tools extends ToolsCommon
      */
     public function sefazConsultaRecibo(string $recibo, ?int $tpAmb = null): string
     {
-        if (empty($recibo)) {
-            throw new InvalidArgumentException('Consulta Recibo: numero do recibo vazio!');
-        }
+        throwIf(
+            empty($recibo),
+            'Consulta Recibo: numero do recibo vazio!',
+            InvalidArgumentException::class
+        );
+
         if (empty($tpAmb)) {
             $tpAmb = $this->tpAmb;
         }
@@ -128,10 +134,15 @@ class Tools extends ToolsCommon
         $servico = 'NfeRetAutorizacao';
         $this->checkContingencyForWebServices($servico);
         $this->servico($servico, $this->config->siglaUF, $tpAmb);
-        if ($this->urlService == '') {
-            $msg = "A consulta de NFe nao esta disponivel na SEFAZ {$this->config->siglaUF}!";
-            throw new RuntimeException($msg);
-        }
+
+        throwIf(
+            $this->urlService == '',
+            sprintf(
+                'A consulta de NFe nao esta disponivel na SEFAZ %s!',
+                $this->config->siglaUF
+            ),
+        );
+
         $request = "<consReciNFe xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
             . "<tpAmb>$tpAmb</tpAmb>"
             . "<nRec>$recibo</nRec>"
@@ -152,12 +163,21 @@ class Tools extends ToolsCommon
      */
     public function sefazConsultaChave(string $chave, ?int $tpAmb = null): string
     {
-        if (empty($chave)) {
-            throw new InvalidArgumentException('Consulta chave: a chave esta vazia!');
-        }
-        if (strlen($chave) != 44 || !is_numeric($chave)) {
-            throw new InvalidArgumentException("Consulta chave: chave \"$chave\" invalida!");
-        }
+        throwIf(
+            empty($chave),
+            'Consulta chave: a chave esta vazia!',
+            InvalidArgumentException::class
+        );
+
+        throwIf(
+            strlen($chave) != 44 || !is_numeric($chave),
+            sprintf(
+                'Consulta chave: chave "%s" invalida!',
+                $chave
+            ),
+            InvalidArgumentException::class
+        );
+
         $uf = UFList::getUFByCode((int)substr($chave, 0, 2));
         if (empty($tpAmb)) {
             $tpAmb = $this->tpAmb;
@@ -197,9 +217,12 @@ class Tools extends ToolsCommon
         ?int $tpAmb = null,
         ?string $ano = null
     ): string {
-        if (empty($nIni) || empty($nFin) || empty($xJust)) {
-            throw new InvalidArgumentException('Inutilizacao: parametros incompletos!');
-        }
+        throwIf(
+            empty($nIni) || empty($nFin) || empty($xJust),
+            'Inutilizacao: parametros incompletos!',
+            InvalidArgumentException::class
+        );
+
         if (empty($tpAmb)) {
             $tpAmb = $this->tpAmb;
         }
@@ -303,9 +326,13 @@ class Tools extends ToolsCommon
         } elseif (!empty($cpf)) {
             $filter = "<CPF>$cpf</CPF>";
         }
-        if (empty($uf) || empty($filter)) {
-            throw new InvalidArgumentException('Sigla UF esta vazia ou CNPJ+IE+CPF vazios!');
-        }
+
+        throwIf(
+            empty($uf) || empty($filter),
+            'Sigla UF esta vazia ou CNPJ+IE+CPF vazios!',
+            InvalidArgumentException::class
+        );
+
         //carrega serviço
         $servico = 'NfeConsultaCadastro';
         $this->checkContingencyForWebServices($servico);
@@ -437,9 +464,12 @@ class Tools extends ToolsCommon
         ?\DateTimeInterface $dhEvento = null,
         ?string $lote = null
     ): string {
-        if (empty($chave) || empty($xCorrecao)) {
-            throw new InvalidArgumentException('CC-e: chave ou motivo da correcao vazio!');
-        }
+        throwIf(
+            empty($chave) || empty($xCorrecao),
+            'CC-e: chave ou motivo da correcao vazio!',
+            InvalidArgumentException::class
+        );
+
         $uf = $this->validKeyByUF($chave);
         $xCorrecao = Strings::replaceUnacceptableCharacters(substr(trim($xCorrecao), 0, 1000));
         $xCondUso = 'A Carta de Correcao e disciplinada pelo paragrafo '
@@ -563,9 +593,12 @@ class Tools extends ToolsCommon
         ?\DateTimeInterface $dhEvento = null,
         ?string $lote = null
     ): string {
-        if (empty($chave) || empty($nProt)) {
-            throw new InvalidArgumentException('A chave ou o numero do protocolo estão vazios!');
-        }
+        throwIf(
+            empty($chave) || empty($nProt),
+            'A chave ou o numero do protocolo estão vazios!',
+            InvalidArgumentException::class
+        );
+
         $uf = UFList::getUFByCode((int)substr($chave, 0, 2));
         $tpEvento = self::EVT_CANCELA_PRORROGACAO_1; //111502;
         $origEvent = self::EVT_PRORROGACAO_1; //111500;
@@ -598,9 +631,12 @@ class Tools extends ToolsCommon
         ?\DateTimeInterface $dhEvento = null,
         ?string $lote = null
     ): string {
-        if (empty($chave) || empty($xJust) || empty($nProt)) {
-            throw new InvalidArgumentException('Cancelamento: chave, just ou numprot vazio!');
-        }
+        throwIf(
+            empty($chave) || empty($xJust) || empty($nProt),
+            'Cancelamento: chave, just ou numprot vazio!',
+            InvalidArgumentException::class
+        );
+
         $uf = $this->validKeyByUF($chave);
         $xJust = Strings::replaceUnacceptableCharacters(substr(trim($xJust), 0, 255));
         $nSeqEvento = 1;
@@ -627,25 +663,29 @@ class Tools extends ToolsCommon
         ?\DateTimeInterface $dhEvento = null,
         ?string $lote = null
     ): string {
-        if ($this->modelo != 65) {
-            throw new InvalidArgumentException(
-                'Cancelamento pro Substituição deve ser usado apenas para '
-                . 'operações com modelo 65 NFCe'
-            );
-        }
+        throwIf(
+            $this->modelo != 65,
+            'Cancelamento pro Substituição deve ser usado apenas para '
+                . 'operações com modelo 65 NFCe',
+            InvalidArgumentException::class
+        );
+
         if (empty($verAplic) && !empty($this->verAplic)) {
             $verAplic = $this->verAplic;
         }
-        if (
-            empty($chave) || empty($xJust) || empty($nProt)
-            || empty($chNFeRef) || empty($verAplic)
-        ) {
-            throw new InvalidArgumentException(
-                'CancelamentoPorSubs: chave da NFCe cancelada, justificativa, '
+
+        throwIf(
+            empty($chave)
+            || empty($xJust)
+            || empty($nProt)
+            || empty($chNFeRef)
+            || empty($verAplic),
+            'CancelamentoPorSubs: chave da NFCe cancelada, justificativa, '
                 . 'protocolo, chave da NFCe substituta, ou versão do aplicativo '
-                . 'emissor não podem ser vazios!'
-            );
-        }
+                . 'emissor não podem ser vazios!',
+            InvalidArgumentException::class
+        );
+
         $uf = $this->validKeyByUF($chave);
         $xJust = Strings::replaceUnacceptableCharacters(substr(trim($xJust), 0, 255));
         $nSeqEvento = 1;
@@ -676,9 +716,12 @@ class Tools extends ToolsCommon
         ?\DateTimeInterface $dhEvento = null,
         ?string $lote = null
     ): string {
-        if (empty($chave) || empty($tpEvento)) {
-            throw new InvalidArgumentException('Manifestacao: chave ou tipo de evento vazio!');
-        }
+        throwIf(
+            empty($chave) || empty($tpEvento),
+            'Manifestacao: chave ou tipo de evento vazio!',
+            InvalidArgumentException::class
+        );
+
         $tagAdic = '';
         if ($tpEvento == self::EVT_NAO_REALIZADA) {
             $xJust = Strings::replaceUnacceptableCharacters(substr(trim($xJust), 0, 255));
@@ -705,12 +748,19 @@ class Tools extends ToolsCommon
             self::EVT_DESCONHECIMENTO,
             self::EVT_NAO_REALIZADA,
         ];
-        if (empty($std->evento)) {
-            throw new InvalidArgumentException('Manifestacao: parametro "std" ou evento estao vazios!');
-        }
-        if ((is_countable($std->evento) ? count($std->evento) : 0) > 20) {
-            throw new RuntimeException('Manifestacao: o lote de eventos esta limitado a 20!');
-        }
+
+        throwIf(
+            empty($std->evento),
+            'Manifestacao: parametro "std" ou evento estao vazios!',
+            InvalidArgumentException::class
+        );
+
+        throwIf(
+            (is_countable($std->evento) ? count($std->evento) : 0) > 20,
+            'Manifestacao: o lote de eventos esta limitado a 20!',
+            InvalidArgumentException::class
+        );
+
         $evt = new \stdClass();
         $i = 0;
         foreach ($std->evento as $s) {
@@ -911,12 +961,18 @@ class Tools extends ToolsCommon
         ?\DateTimeInterface $dhEvento = null,
         ?string $lote = null
     ): string {
-        if (empty($uf)) {
-            throw new InvalidArgumentException('Evento Lote: UF ou parametro "std" vazio!');
-        }
-        if ((is_countable($std->evento) ? count($std->evento) : 0) > 20) {
-            throw new RuntimeException('Evento Lote: o lote de eventos esta limitado a 20!');
-        }
+
+        throwIf(
+            empty($uf),
+            'Evento Lote: UF ou parametro "std" vazio!',
+            InvalidArgumentException::class
+        );
+
+        throwIf(
+            (is_countable($std->evento) ? count($std->evento) : 0) > 20,
+            'Evento Lote: o lote de eventos esta limitado a 20!',
+        );
+
         $servico = 'RecepcaoEvento';
         $this->checkContingencyForWebServices($servico);
         $this->servico($servico, $uf, $this->tpAmb, false);
@@ -995,13 +1051,19 @@ class Tools extends ToolsCommon
      */
     public function sefazEPEC(string &$xml, ?string $verAplic = null): string
     {
-        if (empty($xml)) {
-            throw new InvalidArgumentException('EPEC: parâmetro xml esta vazio!');
-        }
+        throwIf(
+            empty($xml),
+            'EPEC: parâmetro xml vazio!',
+            InvalidArgumentException::class
+        );
+
         $nSeqEvento = 1;
-        if ($this->contingency->type !== 'EPEC') {
-            throw new RuntimeException('A contingencia EPEC deve estar ativada!');
-        }
+
+        throwIf(
+            $this->contingency->type !== 'EPEC',
+            'A contingencia EPEC deve estar ativada!',
+        );
+
         //ajusta a NFe para a contingência definida e assina novamente
         $xml = $this->correctNFeForContingencyMode($xml);
         //extrai os dados da NFe
@@ -1015,9 +1077,16 @@ class Tools extends ToolsCommon
         $cOrgaoAutor = UFList::getCodeByUF($this->config->siglaUF);
         $chNFe = substr($infNFe->getAttribute('Id'), 3, 44);
         $ufchave = substr($chNFe, 0, 2);
-        if ($cOrgaoAutor != $ufchave) {
-            throw new RuntimeException("O autor [{$cOrgaoAutor}] não é da mesma UF que a NFe [{$ufchave}]");
-        }
+
+        throwIf(
+            $cOrgaoAutor != $ufchave,
+            sprintf(
+                "O orgão autor [%s] não é da mesma UF que a NFe [%s]",
+                $cOrgaoAutor,
+                $ufchave
+            ),
+        );
+
         // EPEC
         $verProc = $dom->getElementsByTagName('verProc')->item(0)->nodeValue;
         $dhEmi = $dom->getElementsByTagName('dhEmi')->item(0)->nodeValue;
@@ -1202,9 +1271,12 @@ class Tools extends ToolsCommon
      */
     public function sefazDownload(string $chave): string
     {
-        if (empty($chave)) {
-            throw new InvalidArgumentException('Download: chave esta vazia!');
-        }
+        throwIf(
+            empty($chave),
+            'Download: chave esta vazia!',
+            InvalidArgumentException::class
+        );
+
         //carrega serviço
         $servico = 'NfeDistribuicaoDFe';
         $this->checkContingencyForWebServices($servico);
@@ -1249,12 +1321,17 @@ class Tools extends ToolsCommon
      */
     public function sefazCsc(int $indOp): string
     {
-        if (empty($indOp) || $indOp < 1 || $indOp > 3) {
-            throw new InvalidArgumentException('CSC: identificador operacao invalido!');
-        }
-        if ($this->modelo != 65) {
-            throw new RuntimeException('CSC: modelo diferente de 65!');
-        }
+        throwIf(
+            empty($indOp) || $indOp < 1 || $indOp > 3,
+            'CSC: identificador operacao invalido!',
+            InvalidArgumentException::class
+        );
+
+        throwIf(
+            $this->modelo != 65,
+            'CSC: modelo diferente de 65!',
+        );
+
         $raizCNPJ = substr($this->config->cnpj, 0, -6);
         //carrega serviço
         $servico = 'CscNFCe';
@@ -1293,9 +1370,12 @@ class Tools extends ToolsCommon
      */
     public function sefazValidate(string $nfe): bool
     {
-        if (empty($nfe)) {
-            throw new InvalidArgumentException('Validacao NF-e: a string da NF-e esta vazia!');
-        }
+        throwIf(
+            empty($nfe),
+            'Validacao NF-e: a string da NF-e esta vazia!',
+            InvalidArgumentException::class
+        );
+
         //verifica a assinatura da NFe, exception caso de falha
         Signer::isSigned($nfe);
         $dom = new \DOMDocument('1.0', 'utf-8');
@@ -1317,11 +1397,21 @@ class Tools extends ToolsCommon
         $retProt = $ret->getElementsByTagName('protNFe')->item(0);
         if (!isset($retProt)) {
             $xMotivo = $ret->getElementsByTagName('xMotivo')->item(0);
-            if (isset($xMotivo)) {
-                throw new InvalidArgumentException('Validacao NF-e: ' . $xMotivo->nodeValue);
-            } else {
-                throw new InvalidArgumentException('O documento de resposta nao contem o node "protNFe".');
-            }
+
+            throwIf(
+                !isset($xMotivo),
+                'Validacao NF-e: O documento de resposta nao contem o node "protNFe" ou "xMotivo"!',
+                InvalidArgumentException::class
+            );
+
+            throwIf(
+                isset($xMotivo),
+                sprintf(
+                    'Validacao NF-e: %s',
+                    $xMotivo->nodeValue
+                ),
+                InvalidArgumentException::class
+            );
         }
         $infProt = $ret->getElementsByTagName('infProt')->item(0);
         $dig = $infProt->getElementsByTagName("digVal")->item(0);

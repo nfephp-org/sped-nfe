@@ -212,20 +212,7 @@ class Tools
      */
     public function getTypeOfPersonFromCertificate(): string
     {
-        $cnpj = $this->certificate->getCnpj();
-        $type = 'J';
-        if (empty($cnpj)) {
-            //não é CNPJ, então verificar se é CPF
-            $cpf = $this->certificate->getCpf();
-            if (!empty($cpf)) {
-                $type = 'F';
-            } else {
-                //não foi localizado nem CNPJ e nem CPF esse certificado não é usável
-                //throw new RuntimeException('Faltam elementos CNPJ/CPF no certificado digital.');
-                $type = '';
-            }
-        }
-        return $type;
+        return $this->certificate->getCnpj() ? 'J' : ($this->certificate->getCpf() ? 'F' : '');
     }
 
     /**
@@ -262,10 +249,7 @@ class Tools
      */
     public function model(?int $model = null): int
     {
-        if ($model == 55 || $model == 65) {
-            $this->modelo = $model;
-        }
-        return $this->modelo;
+        return $model == 55 || $model == 65 ? $this->modelo = $model : $this->modelo;
     }
 
     /**
@@ -279,9 +263,12 @@ class Tools
             return $this->versao;
         }
         //Verify version template is defined
-        if (false === isset($this->availableVersions[$version])) {
-            throw new \InvalidArgumentException('Essa versão de layout não está disponível');
-        }
+
+        throwIf(
+            false === isset($this->availableVersions[$version]),
+            'Essa versão de layout não está disponível',
+            InvalidArgumentException::class
+        );
 
         $this->versao = $version;
         if (empty($this->config->schemes)) {
@@ -320,11 +307,17 @@ class Tools
     public function validKeyByUF(string $chave): string
     {
         $uf = $this->config->siglaUF;
-        if ($uf != UFList::getUFByCode((int)substr($chave, 0, 2))) {
-            throw new \InvalidArgumentException(
-                "A chave da NFe indicada [$chave] não pertence a [$uf]."
-            );
-        }
+
+        throwIf(
+            $uf != UFList::getUFByCode((int)substr($chave, 0, 2)),
+            sprintf(
+                "A chave da NFe indicada [%s] não pertence a [%s].",
+                $chave,
+                $uf
+            ),
+            InvalidArgumentException::class
+        );
+
         return $uf;
     }
 
@@ -336,9 +329,12 @@ class Tools
      */
     public function signNFe(string $xml): string
     {
-        if (empty($xml)) {
-            throw new InvalidArgumentException('O argumento xml passado para ser assinado está vazio.');
-        }
+        throwIf(
+            empty($xml),
+            'O argumento xml passado para ser assinado está vazio.',
+            InvalidArgumentException::class
+        );
+
         //remove all invalid strings
         $xml = Strings::clearXmlString($xml);
         if ($this->contingency->type !== '') {
@@ -397,18 +393,19 @@ class Tools
     {
         $type = !empty($this->contingency) ? $this->contingency->type : '';
 
-        if (!empty($type)) {
-            if ($this->modelo == 65) {
-                throw new RuntimeException(
-                    "Não existe serviço para contingência SVCRS ou SVCAN para NFCe (modelo 65)."
-                );
-            }
-            if ($type !== 'SVCRS' && $type !== 'SVCAN') {
-                throw new RuntimeException(
-                    "Esse modo de contingência [$type] não possue webservice próprio, portanto não haverão envios."
-                );
-            }
-        }
+        throwIf(
+            !empty($type) && $this->modelo == 65,
+            'O serviço não pode ser vazio.',
+            InvalidArgumentException::class
+        );
+
+        throwIf(
+            !empty($type) && !in_array($type, ['SVCRS', 'SVCAN']),
+            sprintf(
+                'O tipo de contingência [%s] não é válido, deve ser SVCRS ou SVCAN.',
+                $type
+            ),
+        );
     }
 
     /**
@@ -576,10 +573,15 @@ class Tools
         $model = $dom->getElementsByTagName('mod')->item(0)->nodeValue;
         $check = $model == $this->modelo;
         $correct = $this->modelo == 55 ? 65 : 55;
-        if (!$check) {
-            throw new InvalidArgumentException('Você passou um XML de modelo incorreto. '
-                . "Use o método \$tools->model({$correct}), para selecionar o "
-                . 'modelo correto a ser usado');
-        }
+
+        throwIf(
+            !$check && $this->modelo == 65,
+            sprintf(
+                'O XML informado é de modelo 55, mas a classe está configurada para modelo 65. '
+                . 'Use o método $tools->model(%d) para selecionar o modelo correto.',
+                $correct
+            ),
+            InvalidArgumentException::class
+        );
     }
 }

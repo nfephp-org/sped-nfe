@@ -75,16 +75,22 @@ class Standardize
      */
     public function whichIs(?string $xml = null): string
     {
-        if (empty($xml) && empty($this->xml)) {
-            throw new DocumentsException("O XML está vazio.");
-        }
+        throwIf(
+            empty($xml) && empty($this->xml),
+            "O XML está vazio.",
+            DocumentsException::class
+        );
+
         if (!empty($xml)) {
             $this->xml = $xml;
         }
-        if (!Validator::isXML($this->xml)) {
-            //invalid document is not a XML
-            throw new DocumentsException('Documento inválido');
-        }
+
+        throwIf(
+            !Validator::isXML($this->xml),
+            'Documento inválido',
+            DocumentsException::class
+        );
+
         $dom = new \DOMDocument('1.0', 'UTF-8');
         $dom->preserveWhiteSpace = false;
         $dom->formatOutput = false;
@@ -99,13 +105,14 @@ class Standardize
             }
         }
         $result = $dom->getElementsByTagName('nfeResultMsg')->item(0);
-        if (!empty($result)) {
-            $cont = $result->textContent;
-            if (empty($cont)) {
-                throw new DocumentsException('O retorno da SEFAZ veio em BRANCO, '
-                    . 'ou seja devido a um erro ou instabilidade na própria SEFAZ.');
-            }
-        }
+
+        throwIf(
+            !empty($result) && empty($result->textContent),
+            'O retorno da SEFAZ veio em BRANCO, '
+            . 'ou seja devido a um erro ou instabilidade na própria SEFAZ.',
+            DocumentsException::class
+        );
+
         //documento does not belong to the SPED-NFe project
         throw DocumentsException::wrongDocument(7);
     }
@@ -126,9 +133,12 @@ class Standardize
      */
     public function toStd(?string $xml = null): stdClass
     {
-        if (empty($xml) && empty($this->xml)) {
-            throw new DocumentsException("O XML está vazio.");
-        }
+        throwIf(
+            empty($xml) && empty($this->xml),
+            "O XML está vazio.",
+            DocumentsException::class
+        );
+
         if (!empty($xml)) {
             $this->xml = $xml;
         }
@@ -146,10 +156,16 @@ class Standardize
             $std->infNFeSupl->urlChave = $resp['urlChave'];
             $this->json = json_encode($std);
         }
-        if (!is_object($std)) {
-            //não é um objeto entao algum erro ocorreu
-            throw new DocumentsException("Falhou a converção para stdClass. Documento: $xml");
-        }
+
+        throwIf(
+            !is_object($std),
+            sprintf(
+                "Falhou a conversão do XML para stdClass. Documento: %s",
+                $xml
+            ),
+            DocumentsException::class
+        );
+
         return $std;
     }
 
@@ -196,9 +212,12 @@ class Standardize
      */
     private function getQRCode(): array
     {
-        if (empty($this->node)) {
-            throw new DocumentsException("O XML está vazio.");
-        }
+        throwIf(
+            empty($this->node),
+            "O XML está vazio.",
+            DocumentsException::class
+        );
+
         $resp = [
             'qrCode' => '',
             'urlChave' => ''
@@ -225,9 +244,12 @@ class Standardize
      */
     private function checkXml(?string $xml = null)
     {
-        if (empty($xml) && empty($this->xml)) {
-            throw new DocumentsException("O XML está vazio.");
-        }
+        throwIf(
+            empty($xml) && empty($this->xml),
+            "O XML está vazio.",
+            DocumentsException::class
+        );
+
         if (!empty($xml)) {
             $this->xml = $xml;
         }

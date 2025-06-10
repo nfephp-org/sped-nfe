@@ -2,9 +2,11 @@
 
 namespace NFePHP\NFe\Traits;
 
+use Exception;
 use NFePHP\Common\Signer;
-use NFePHP\Common\Strings;
 use NFePHP\Common\UFList;
+use NFePHP\Common\Strings;
+use InvalidArgumentException;
 
 trait TraitEPECNfce
 {
@@ -23,17 +25,20 @@ trait TraitEPECNfce
         if (empty($uf)) {
             $uf = $this->config->siglaUF;
         }
-        if ($this->modelo != 65) {
-            throw new \InvalidArgumentException(
-                'A consulta de status do serviço EPEC existe apenas para NFCe (mod. 65).'
-            );
-        }
-        if ($uf !== 'SP') {
-            throw new \InvalidArgumentException(
-                'A consulta de status do serviço EPEC NFCe (mod. 65) existe apenas em SP,'
-                . ' os demais estados não implementaram o serviço EPEC para NFCe.'
-            );
-        }
+
+        throwIf(
+            $this->modelo != 65,
+            'A consulta de status do serviço EPEC existe apenas para NFCe (mod. 65).',
+            InvalidArgumentException::class
+        );
+
+        throwIf(
+            $uf !== 'SP',
+            'A consulta de status do serviço EPEC NFCe (mod. 65) existe apenas em SP,'
+            . ' os demais estados não implementaram o serviço EPEC para NFCe.',
+            InvalidArgumentException::class
+        );
+
         $servico = 'EPECStatusServico';
         $this->checkContingencyForWebServices($servico);
         $this->servico($servico, $uf, $tpAmb, $ignoreContingency);
@@ -73,19 +78,28 @@ trait TraitEPECNfce
         $tpEmis = (int) $ide->getElementsByTagName('tpEmis')->item(0)->nodeValue;
         $dhCont = $ide->getElementsByTagName('dhCont')->item(0)->nodeValue ?? '';
         $xJust = $ide->getElementsByTagName('xJust')->item(0)->nodeValue ?? '';
-        if ($tpEmis !== 4 || empty($dhCont) || empty($xJust)) {
-            throw new \Exception(
-                "A NFCe deve ser gerada em contingência EPEC para poder ser processada em contingência EPEC"
-            );
-        }
+
+        throwIf(
+            $tpEmis !== 4 || empty($dhCont) || empty($xJust),
+            "A NFCe deve ser gerada em contingência EPEC para poder ser processada em contingência EPEC",
+            Exception::class
+        );
+
         $emit = $dom->getElementsByTagName('emit')->item(0);
         $dest = $dom->getElementsByTagName('dest')->item(0);
         $cOrgaoAutor = UFList::getCodeByUF($this->config->siglaUF);
         $chNFe = substr($infNFe->getAttribute('Id'), 3, 44);
         $ufchave = substr($chNFe, 0, 2);
-        if ($cOrgaoAutor != $ufchave) {
-            throw new \Exception("O autor [{$cOrgaoAutor}] não é da mesma UF que a NFe [{$ufchave}]");
-        }
+
+        throwIf(
+            $cOrgaoAutor != $ufchave,
+            sprintf(
+                "O autor [%s] não é da mesma UF que a NFe [%s]",
+                $cOrgaoAutor,
+                $ufchave
+            ),
+        );
+
         // EPEC
         $verProc = $dom->getElementsByTagName('verProc')->item(0)->nodeValue;
         $dhEmi = $dom->getElementsByTagName('dhEmi')->item(0)->nodeValue;

@@ -16,16 +16,21 @@ class Complements
      */
     public static function toAuthorize(string $request, string $response): string
     {
-        if (empty($request)) {
-            throw new DocumentsException('Erro ao protocolar !! o xml '
-                . 'a protocolar está vazio.');
-        }
-        if (empty($response)) {
-            throw new DocumentsException('Erro ao protocolar !!'
-                . ' O retorno da sefaz está vazio.');
-        }
+        throwIf(
+            empty($request),
+            "Erro ao protocolar !! o xml a protocolar está vazio.",
+            DocumentsException::class
+        );
+
+        throwIf(
+            empty($response),
+            "Erro ao protocolar !! O retorno da sefaz está vazio.",
+            DocumentsException::class
+        );
+
         $st = new Standardize();
         $key = ucfirst($st->whichIs($request));
+
         if ($key !== 'NFe' && $key !== 'EnvEvento' && $key !== 'InutNFe') {
             //wrong document, this document is not able to recieve a protocol
             throw DocumentsException::wrongDocument(0, $key);

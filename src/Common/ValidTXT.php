@@ -2,6 +2,8 @@
 
 namespace NFePHP\NFe\Common;
 
+use InvalidArgumentException;
+
 /**
  * Validation for TXT representation of NFe
  *
@@ -36,10 +38,16 @@ class ValidTXT
             $comp = '_v1.2';
         }
         $file = $path . '/txtstructure' . ($version * 100) . $comp . '.json';
-        if (!is_file($file)) {
-            throw new \InvalidArgumentException("O arquivo de estrutura para a "
-                . "versão de layout indicada no TXT, não foi encontrado [$file].");
-        }
+
+        throwIf(
+            !is_file($file),
+            sprintf(
+                'O arquivo de estrutura para a versão de layout indicada no TXT, não foi encontrado [%s].',
+                $file
+            ),
+            InvalidArgumentException::class
+        );
+
         $json = file_get_contents($file);
         return json_decode($json, true);
     }

@@ -152,9 +152,12 @@ trait TraitTagDest
         $std = $this->equilizeParameters($std, $possible);
 
         $identificador = 'E05 <enderDest> - ';
-        if (!$this->dest) {
-            throw new RuntimeException('A TAG dest deve ser criada antes do endereço do mesmo.');
-        }
+
+        throwIf(
+            !$this->dest,
+            'A TAG <dest> deve ser criada antes do endereço do mesmo.',
+        );
+
         $this->enderDest = $this->dom->createElement("enderDest");
         $this->dom->addChild(
             $this->enderDest,
