@@ -4,15 +4,15 @@ Biblioteca para geração e comunicação das NFe com as SEFAZ autorizadoras, e 
 
 ## Atualizado 
 
-- Nota Técnica 2021.002 v.1.12 Divulga atualização da NF-e para adequação à NFF
-- Nota Técnica 2021.003 v.1.40 Divulga alteração nas regras de validação do GTIN
-- Nota Técnica 2018.005 v.1.51 Alteração de leiaute da NF-e/NFC-e
 - Nota Técnica 2025.001 v.1.00 Divulga Simplificação Operacional: NFC-e: Leiaute do QR-Code versão 3 NF-e
 - Nota Técnica 2025.002 v.1.01 Nota técnica de adequação dos leiautes da NF-e e da NFC-e Reforma Tributária do Consumo - RTC.
 - Nota Técnica Conjunta 2025.001 Divulga orientações sobre implementação do CNPJ alfanumérico nos documentos fiscais eletrônicos
 - Nota Técnica 2024.003 v.1.04 Alteração nas regras de validação 
-
-## TODO: A conversão com o PADRÃO SEBRAE ainda está incompleta!!
+- Nota Técnica 2021.003 v.1.40 Validação GTIN
+- Nota Técnica 2024.003 v.1.05 Informações de Produtos da Agricultura, Pecuária e Produção Florestal e Alteração de regra de validação
+- Nota Técnica 2023.001 v.1.60 Tributação Monofásica sobre Combustíveis
+- Nota Técnica 2025.002-RTC v.1.10 Reforma Tributária do Consumo – Adequações NF-e / NFC-e
+- Schema PL_010v1.10b de 09/06/2025  
 
 *Utilize o chat do Gitter para iniciar discussões específicas sobre o desenvolvimento deste pacote.*
 

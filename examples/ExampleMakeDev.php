@@ -74,8 +74,11 @@ try {
         //03=Débitos de notas fiscais não processadas na apuração;
         //04=Multa e juros;
         //05=Transferência de crédito de sucessão.
+        //06=Pagamento antecipado
+        //07=Perda em estoque
         'tpNFCredito' => '01', //opcional apenas PL_010 em diante
-        //01 - a definir ?????????????????????????????????????????????
+        //01 = Multa e juros
+        //02 = Apropriação de crédito presumido de IBS sobre o saldo devedor na ZFM (art. 450, § 1º, LC 214/25)
         'indFinal' => 0, //OBRIGATÒRIO 0 Normal; 1 Consumidor final;
         'indPres' => 9, //OBRIGATÒRIO
         //1 Operação presencial;
@@ -204,9 +207,24 @@ try {
         //2 Estados
         //3 Distrito Federal
         //4 Municípios
-        'pRedutor' => 10.0000 //OBRIGATÓRIO Percentual de redução de alíquota em compra governamental
+        'pRedutor' => 10.0000, //OBRIGATÓRIO Percentual de redução de alíquota em compra governamental
+        'tpOperGov' => 1
+        //1 Fornecimento
+        //2 Recebimento do pagamento, conforme fato gerador do IBS/CBS definido no Art. 10 § 2º
     ];
     $gcgov = $mk->taggCompraGov((object)$gcg);
+
+    //############################## TAG <gPagAntecipado> opcional Grupo de notas de antecipação de pagamento #########
+    $ref = [
+        'refNfe' => [
+            '12345678901234567890123456789012345678901234',
+            '12345678901234567890123456789012345678901234',
+            '12345678901234567890123456789012345678901234',
+            '12345678901234567890123456789012345678901234',
+            '12345678901234567890123456789012345678901234',
+        ]
+    ];
+    $gpagant = $mk->taggPagAntecipado((object) $ref);
 
     //############################## TAG <dest> opcional #######################
     $dest = [
@@ -327,6 +345,9 @@ try {
     $std->vDesc = 10.00;
     $std->vOutro = 15.00;
     $std->indTot = 1;
+    $std->indBemMovelUsado = null; //opcional
+        // Somente para fornecimentos de bem móvel usado adquirido de pessoa física que não seja contribuinte
+        // ou que seja inscrita como MEI. 1 - Bem Móvel Usado ou null
     $std->xPed = '12345';
     $std->nItemPed = 1;
     $std->nFCI = '12345678-1234-1234-1234-123456789012';
@@ -1037,7 +1058,7 @@ try {
     $reg = [
         'item' => 1, //OBRIGATÓRIO referencia ao item da NFe
         'CSTReg' => '123', //OBRIGATÓRIO Código de Situação Tributária do IBS e CBS 3 digitos
-        'cClassTribReg' => '111111', //OBRIGATÓRIO Código de Classificação Tributária do IBS e CBS 6 digitos
+        'cClassTribReg' => '111111', //OBRIGATÓRIO Código de Classificação Tributária do IBS e CBS 6
         'pAliqEfetRegIBSUF' => 10.1234, //OBRIGATÓRIO Valor da alíquota do IBS da UF 3v2-4
         'vTribRegIBSUF' => 100, //OBRIGATÓRIO Valor do Tributo do IBS da UF 13v2
         'pAliqEfetRegIBSMun' => 5.1234, //OBRIGATÓRIO Valor da alíquota do IBS do Município 3v2-4
@@ -1068,8 +1089,7 @@ try {
     $mk->tagCBSCredPres((object) $cred);
 
     //############################## TAG <det/imposto/IBSCBS/gIBSCBSMono> opcional ####################################
-
-
+    //Grupo de Informações do IBS e CBS em operações com imposto monofásico
     $mono = [
         'item', //OBRIGATÓRIO referencia ao item da NFe
         'qBCMono', //OBRIGATÓRIO
@@ -1097,6 +1117,33 @@ try {
         'vTotCBSMonoItem' //opcional Total da CBS Monofásica 13v2
     ];
 
+    //############################## TAG <det/imposto/gTransfCred> opcional ##########################################
+    //Transferências de Crédito
+    $transf = [
+        'item' => 1, //OBRIGATÓRIO
+        'vIBS' => 200.00, //OBRIGATÓRIO Valor do IBS a ser transferido 13v2
+        'vCBS' => 35.23, //OBRIGATÓRIO Valor do CBS a ser transferido 13v2
+    ];
+    $mk->taggTranfCred((object) $transf);
+
+    //############################## TAG <det/imposto/gCredPresIBSZFM> opcional ##########################################
+    //Informações do crédito presumido de IBS para fornecimentos a partir da ZFM
+    $zfm = [
+        'item' => 1, //OBRIGATÓRIO
+        'tpCredPresIBSZFM' => 0, //OBRIGATÓRIO Tipo de classificação de acordo com o art. 450, § 1º, da LC 214/25 para o
+                            // cálculo do crédito presumido na ZFM
+            //0 - Sem Crédito Presumido
+            //1 - Bens de consumo final (55%)
+            //2 - Bens de capital (75%)
+            //3 - Bens intermediários (90,25%)
+            //4 - Bens de informática e outros definidos em legislação (100%)
+        'vCredPresIBSZFM' => 0 //OBRIGATÓRIO Valor do crédito presumido calculado sobre o saldo devedor apurado 13v2
+            //É obrigatório para nota de crédito com tpNFCredito = 02 - Apropriação de crédito presumido de IBS sobre
+            // o saldo devedor na ZFM (art. 450, § 1º, LC 214/25)
+            //Vedado para documentos que não sejam nota de crédito com tpNFCredito = 02 - Apropriação de crédito
+            // presumido de IBS sobre o saldo devedor na ZFM (art. 450, § 1º, LC 214/25)
+    ];
+    $mk->taggCredPresIBSZFM((object) $zfm);
 
     //############################## TAG <det/imposto/impostoDevol> opcional ##########################################
     //Informação do Imposto devolvido

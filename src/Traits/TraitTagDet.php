@@ -67,6 +67,7 @@ trait TraitTagDet
             'vDesc',
             'vOutro',
             'indTot',
+            'indBemMovelUsado',
             'xPed',
             'nItemPed',
             'nFCI',
@@ -260,35 +261,42 @@ trait TraitTagDet
             "vFrete",
             $this->conditionalNumberFormatting($std->vFrete),
             false,
-            "$identificador Valor Total do Frete"
+            "$identificador Valor Total do Frete (vFrete)"
         );
         $this->dom->addChild(
             $prod,
             "vSeg",
             $this->conditionalNumberFormatting($std->vSeg),
             false,
-            "$identificador Valor Total do Seguro"
+            "$identificador Valor Total do Seguro (vSeg)"
         );
         $this->dom->addChild(
             $prod,
             "vDesc",
             $this->conditionalNumberFormatting($std->vDesc),
             false,
-            "$identificador Valor do Desconto"
+            "$identificador Valor do Desconto (vDesc)"
         );
         $this->dom->addChild(
             $prod,
             "vOutro",
             $this->conditionalNumberFormatting($std->vOutro),
             false,
-            "$identificador Outras despesas acessórias"
+            "$identificador Outras despesas acessórias (vOutro)"
         );
         $this->dom->addChild(
             $prod,
             "indTot",
             $std->indTot,
             true,
-            "$identificador Indica se valor do Item (vProd) entra no valor total da NF-e (vProd)"
+            "$identificador Indica se valor do Item (vProd) entra no valor total da NF-e (indTot)"
+        );
+        $this->dom->addChild(
+            $prod,
+            "indBemMovelUsado",
+            $std->indBemMovelUsado,
+            false,
+            "$identificador Indicador de fornecimento de bem móvel usado (indBemMovelUsado)"
         );
         $this->dom->addChild(
             $prod,
