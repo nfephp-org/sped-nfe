@@ -21,6 +21,7 @@ use NFePHP\NFe\Traits\TraitTagDetPIS;
 use NFePHP\NFe\Traits\TraitTagExporta;
 use NFePHP\NFe\Traits\TraitTagGCompraGov;
 use NFePHP\NFe\Traits\TraitTagDetIBSCBS;
+use NFePHP\NFe\Traits\TraitTagGPagAntecipado;
 use NFePHP\NFe\Traits\TraitTagInfAdic;
 use NFePHP\NFe\Traits\TraitTagAutXml;
 use NFePHP\NFe\Traits\TraitTagCobr;
@@ -43,11 +44,12 @@ use DateTime;
 
 final class MakeDev
 {
-    use TraitTagIde;
     use TraitTagInfNfe;
+    use TraitTagIde;
+    use TraitTagGCompraGov;
+    use TraitTagGPagAntecipado;
     use TraitTagEmit;
     use TraitTagRefs;
-    use TraitTagGCompraGov;
     use TraitTagDest;
     use TraitTagRetirada;
     use TraitTagEntrega;
@@ -152,15 +154,19 @@ final class MakeDev
     /**
      * @var DOMElement
      */
+    protected $gCompraGov;
+    /**
+     * @var DOMElement
+     */
+    protected $gPagAntecipado;
+    /**
+     * @var DOMElement
+     */
     protected $emit;
     /**
      * @var DOMElement
      */
     protected $enderEmit;
-    /**
-     * @var DOMElement
-     */
-    protected $gCompraGov;
     /**
      * @var DOMElement
      */
@@ -416,7 +422,19 @@ final class MakeDev
     /**
      * @var array
      */
+    protected $aGTribCompraGov;
+    /**
+     * @var array
+     */
     protected $aGIBSCBSMono;
+    /**
+     * @var array
+     */
+    protected $aGTransfCred;
+    /**
+     * @var array
+     */
+    protected $aGCredPresIBSZFM;
     /**
      * @var array
      */
@@ -638,6 +656,7 @@ final class MakeDev
             //tag gCompraGov => tag ide Existe apenas a partir da PL_010
             if ($this->schema > 9) {
                 $this->addTag($this->ide, $this->gCompraGov, 'Falta a tag "ide"');
+                $this->addTag($this->ide, $this->gPagAntecipado, 'Falta a tag "ide"');
             }
             //tag ide => tag infNfe
             $this->addTag($this->infNFe, $this->ide, 'Falta a tag "infNFe"');
@@ -740,7 +759,10 @@ final class MakeDev
             }
             //DI => prod
             if (!empty($this->aDI[$item])) {
-                $indTot = $prod->getElementsByTagName("indTot")->item(0);
+                $ind = $prod->getElementsByTagName("indBemMovelUsado")->item(0) ?? null;
+                if (empty($ind)) {
+                    $ind = $prod->getElementsByTagName("indTot")->item(0);
+                }
                 $dis = $this->aDI[$item];
                 if (count($dis) > 100) {
                     $this->errors[] = "I18 <DI> Item: $item - As tags DI estão limitadas a 100 registros "
@@ -762,7 +784,7 @@ final class MakeDev
                     foreach ($adis as $adi) {
                         $this->addTag($di, $adi, 'Falta parente DI!');
                     }
-                    $this->dom->insertAfter($di, $indTot);
+                    $this->dom->insertAfter($di, $ind);
                 }
             }
             //detExport => prod
@@ -936,6 +958,14 @@ final class MakeDev
                     } elseif (!empty($this->aGIBSCBSMono[$item])) {
                         //não existe gIBSCBS, então add gIBSCBSMono
                         $this->addTag($ibscbs, $this->aGIBSCBSMono[$item], 'Falta a tag IBSCBS!');
+                    }
+                    //gTranfCred
+                    if (!empty($this->aGTransfCred[$item])) {
+                        $this->addTag($ibscbs, $this->aGTransfCred[$item], 'Falta a tag IBSCBS!');
+                    }
+                    //gCredPresIBSZFM
+                    if (!empty($this->aGCredPresIBSZFM[$item])) {
+                        $this->addTag($ibscbs, $this->aGCredPresIBSZFM[$item], 'Falta a tag IBSCBS!');
                     }
                     $this->addTag($imposto, $ibscbs, 'Falta a tag det/imposto!');
                 }
