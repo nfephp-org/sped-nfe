@@ -1,0 +1,26 @@
+<env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+    <env:Header/>
+    <env:Body>
+        <nfeResultMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NFeInutilizacao4">
+            <retInutNFe versao="4.00"
+                xmlns="http://www.portalfiscal.inf.br/nfe"
+                xmlns:ns0="http://www.w3.org/2000/09/xmldsig#">
+                <infInut>
+                    <tpAmb>1</tpAmb>
+                    <verAplic>MT_A2RL-4.00</verAplic>
+                    <cStat>102</cStat>
+                    <xMotivo>Teste inutilização nfe produtor rural</xMotivo>
+                    <cUF>51</cUF>
+                    <ano>25</ano>
+                    <CPF>00000000000</CPF>
+                    <mod>55</mod>
+                    <serie>920</serie>
+                    <nNFIni>429</nNFIni>
+                    <nNFFin>429</nNFFin>
+                    <dhRecbto>2025-02-10T08:59:46-04:00</dhRecbto>
+                    <nProt>151250011427132</nProt>
+                    </infInut>
+                </retInutNFe>
+            </nfeResultMsg>
+        </env:Body>
+    </env:Envelope>

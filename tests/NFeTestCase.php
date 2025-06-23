@@ -33,7 +33,7 @@ class NFeTestCase extends TestCase
                 "proxyPass" => ""
             ]
         ];
-        $this->contentpfx = file_get_contents($this->fixturesPath . "certs/test_certificate.pfx");
+        $this->contentpfx = file_get_contents($this->fixturesPath . "certs/novo_test_certificate.pfx");
         $this->passwordpfx = 'nfephp';
         $this->configJson = json_encode($config);
     }

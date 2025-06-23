@@ -24,8 +24,28 @@ class ComplementsTest extends NFeTestCase
         Complements::toAuthorize($request, $response);
     }
 
-    public function testToAuthorizeInut()
+    public function test_to_authorize_inut_cpf(): void
     {
+        $request = file_get_contents(__DIR__ . '/fixtures/xml/request_inut_cpf.xml');
+        $response = file_get_contents(__DIR__ . '/fixtures/xml/response_inut_cpf.xml');
+        $output = Complements::toAuthorize($request, $response);
+        $dom = new \DOMDocument();
+        $dom->loadXML($output);
+        $tag = $dom->getElementsByTagName('ProcInutNFe')->item(0);
+        $numeroProtocolo = $tag->getElementsByTagName('nProt')->item(0)->nodeValue;
+        $this->assertEquals('151250011427132', $numeroProtocolo);
+    }
+
+    public function test_to_authorize_inut_cnpj(): void
+    {
+        $request = file_get_contents(__DIR__ . '/fixtures/xml/request_inut_cnpj.xml');
+        $response = file_get_contents(__DIR__ . '/fixtures/xml/response_inut_cnpj.xml');
+        $output = Complements::toAuthorize($request, $response);
+        $dom = new \DOMDocument();
+        $dom->loadXML($output);
+        $tag = $dom->getElementsByTagName('ProcInutNFe')->item(0);
+        $numeroProtocolo = $tag->getElementsByTagName('nProt')->item(0)->nodeValue;
+        $this->assertEquals('152250025831513', $numeroProtocolo);
     }
 
     public function testToAuthorizeEvent()
@@ -64,3 +84,4 @@ class ComplementsTest extends NFeTestCase
     {
     }
 }
+

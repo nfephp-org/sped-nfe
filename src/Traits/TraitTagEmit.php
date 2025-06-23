@@ -2,9 +2,17 @@
 
 namespace NFePHP\NFe\Traits;
 
+use NFePHP\Common\DOMImproved as Dom;
 use stdClass;
 use DOMElement;
 use NFePHP\Common\Strings;
+
+/**
+ * @property Dom $dom
+ * @property DOMElement $emit
+ * @property DOMElement $enderEmit
+ * @method equilizeParameters($std, $possible)
+ */
 
 trait TraitTagEmit
 {
@@ -12,7 +20,7 @@ trait TraitTagEmit
      * Identificação do emitente da NF-e C01 pai A01
      * tag NFe/infNFe/emit
      */
-    public function tagemit(stdClass $std): DOMElement
+    public function tagEmit(stdClass $std): DOMElement
     {
         $possible = [
             'xNome',
@@ -32,7 +40,7 @@ trait TraitTagEmit
             $this->dom->addChild(
                 $this->emit,
                 "CNPJ",
-                Strings::onlyNumbers($std->CNPJ),
+                $std->CNPJ,
                 false,
                 $identificador . "CNPJ do emitente"
             );
@@ -48,14 +56,14 @@ trait TraitTagEmit
         $this->dom->addChild(
             $this->emit,
             "xNome",
-            substr(trim($std->xNome), 0, 60),
+            $std->xNome,
             true,
             $identificador . "Razão Social ou Nome do emitente"
         );
         $this->dom->addChild(
             $this->emit,
             "xFant",
-            substr(trim($std->xFant), 0, 60),
+            $std->xFant,
             false,
             $identificador . "Nome fantasia do emitente"
         );
@@ -128,28 +136,28 @@ trait TraitTagEmit
         $this->dom->addChild(
             $this->enderEmit,
             "xLgr",
-            substr(trim($std->xLgr), 0, 60),
+            $std->xLgr,
             true,
             $identificador . "Logradouro do Endereço do emitente"
         );
         $this->dom->addChild(
             $this->enderEmit,
             "nro",
-            substr(trim($std->nro), 0, 60),
+            $std->nro,
             true,
             $identificador . "Número do Endereço do emitente"
         );
         $this->dom->addChild(
             $this->enderEmit,
             "xCpl",
-            substr(trim($std->xCpl), 0, 60),
+            $std->xCpl,
             false,
             $identificador . "Complemento do Endereço do emitente"
         );
         $this->dom->addChild(
             $this->enderEmit,
             "xBairro",
-            substr(trim($std->xBairro), 0, 60),
+            $std->xBairro,
             true,
             $identificador . "Bairro do Endereço do emitente"
         );
@@ -163,7 +171,7 @@ trait TraitTagEmit
         $this->dom->addChild(
             $this->enderEmit,
             "xMun",
-            substr(trim($std->xMun), 0, 60),
+            $std->xMun,
             true,
             $identificador . "Nome do município do Endereço do emitente"
         );
@@ -191,7 +199,7 @@ trait TraitTagEmit
         $this->dom->addChild(
             $this->enderEmit,
             "xPais",
-            substr(trim($std->xPais), 0, 60),
+            $std->xPais,
             false,
             $identificador . "Nome do País do Endereço do emitente"
         );
@@ -202,8 +210,10 @@ trait TraitTagEmit
             false,
             $identificador . "Telefone do Endereço do emitente"
         );
-        $node = $this->emit->getElementsByTagName("IE")->item(0);
-        $this->emit->insertBefore($this->enderEmit, $node);
+        if (!empty($this->emit)) {
+            $node = $this->emit->getElementsByTagName("IE")->item(0);
+            $this->emit->insertBefore($this->enderEmit, $node);
+        }
         return $this->enderEmit;
     }
 }

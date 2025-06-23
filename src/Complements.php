@@ -36,9 +36,9 @@ class Complements
 
     /**
      * Add tags B2B, as example ANFAVEA
-     * @param  string $nfe xml nfe string content
-     * @param  string $b2b xml b2b string content
-     * @param  string $tagB2B name B2B tag default 'NFeB2BFin' from ANFAVEA
+     * @param string $nfe xml nfe string content
+     * @param string $b2b xml b2b string content
+     * @param string $tagB2B name B2B tag default 'NFeB2BFin' from ANFAVEA
      * @throws \InvalidArgumentException
      */
     public static function b2bTag(string $nfe, string $b2b, string $tagB2B = 'NFeB2BFin'): string
@@ -76,8 +76,8 @@ class Complements
         $node2 = $procb2b->importNode($nodeb2b, true);
         $nfeProcB2B->appendChild($node2);
         $nfeb2bXML = $procb2b->saveXML();
-        $nfeb2bXMLString = str_replace(array("\n","\r","\s"), '', $nfeb2bXML);
-        return (string) $nfeb2bXMLString;
+        $nfeb2bXMLString = str_replace(array("\n", "\r", "\s"), '', $nfeb2bXML);
+        return (string)$nfeb2bXMLString;
     }
 
     /**
@@ -87,8 +87,8 @@ class Complements
      * NOTE: This action is not necessary, I use only for my needs to
      *       leave the NFe marked as Canceled in order to avoid mistakes
      *       after its cancellation.
-     * @param  string $nfe content of autorized NFe XML
-     * @param  string $cancelamento content of SEFAZ response
+     * @param string $nfe content of autorized NFe XML
+     * @param string $cancelamento content of SEFAZ response
      * @throws \InvalidArgumentException
      */
     public static function cancelRegister(string $nfe, string $cancelamento): string
@@ -126,7 +126,8 @@ class Complements
                 ->nodeValue;
             if (
                 in_array($cStat, ['135', '136', '155'])
-                && ($tpEvento == Tools::EVT_CANCELA
+                && (
+                    $tpEvento == Tools::EVT_CANCELA
                     || $tpEvento == Tools::EVT_CANCELASUBSTITUICAO
                 )
                 && $chaveEvento == $chaveNFe
@@ -156,7 +157,11 @@ class Complements
         $cUF = !empty($infInut->getElementsByTagName('cUF')->item(0)->nodeValue)
             ? $infInut->getElementsByTagName('cUF')->item(0)->nodeValue : '';
         $ano = $infInut->getElementsByTagName('ano')->item(0)->nodeValue;
-        $cnpj = $infInut->getElementsByTagName('CNPJ')->item(0)->nodeValue;
+
+        // Checks if exists CNPJ tag in the XML of event, otherwise, uses the CPF tag
+        $cpfOrCnpjTag = $infInut->getElementsByTagName('CNPJ')->item(0) ? 'CNPJ' : 'CPF';
+
+        $cpfOrCnpjTagValue = $infInut->getElementsByTagName($cpfOrCnpjTag)->item(0)->nodeValue;
         $mod = $infInut->getElementsByTagName('mod')->item(0)->nodeValue;
         $serie = $infInut->getElementsByTagName('serie')->item(0)->nodeValue;
         $nNFIni = $infInut->getElementsByTagName('nNFIni')->item(0)->nodeValue;
@@ -181,7 +186,7 @@ class Complements
         $retcUF = !empty($retInfInut->getElementsByTagName('cUF')->item(0)->nodeValue)
             ? $retInfInut->getElementsByTagName('cUF')->item(0)->nodeValue : $cUF;
         $retano = $retInfInut->getElementsByTagName('ano')->item(0)->nodeValue;
-        $retcnpj = $retInfInut->getElementsByTagName('CNPJ')->item(0)->nodeValue;
+        $retcpfCnpj = $retInfInut->getElementsByTagName($cpfOrCnpjTag)->item(0)->nodeValue;
         $retmod = $retInfInut->getElementsByTagName('mod')->item(0)->nodeValue;
         $retserie = $retInfInut->getElementsByTagName('serie')->item(0)->nodeValue;
         $retnNFIni = $retInfInut->getElementsByTagName('nNFIni')->item(0)->nodeValue;
@@ -191,7 +196,7 @@ class Complements
             $tpAmb != $rettpAmb ||
             $cUF != $retcUF ||
             $ano != $retano ||
-            $cnpj != $retcnpj ||
+            $cpfOrCnpjTagValue != $retcpfCnpj ||
             $mod != $retmod ||
             $serie != $retserie ||
             $nNFIni != $retnNFIni ||
@@ -213,26 +218,56 @@ class Complements
      */
     protected static function addNFeProtocol(string $request, string $response): string
     {
+        //nfe
         $req = new DOMDocument('1.0', 'UTF-8');
         $req->preserveWhiteSpace = false;
         $req->formatOutput = false;
         $req->loadXML($request);
-
         $nfe = $req->getElementsByTagName('NFe')->item(0);
         $infNFe = $req->getElementsByTagName('infNFe')->item(0);
         $versao = $infNFe->getAttribute("versao");
-        $chave = preg_replace('/[^0-9]/', '', $infNFe->getAttribute("Id"));
+        $chave = substr($infNFe->getAttribute("Id"), 3, 44);
         $digNFe = $req->getElementsByTagName('DigestValue')
             ->item(0)
             ->nodeValue;
-
+        //retorno
         $ret = new DOMDocument('1.0', 'UTF-8');
         $ret->preserveWhiteSpace = false;
         $ret->formatOutput = false;
         $ret->loadXML($response);
+        $prottpAmb = $ret->getElementsByTagName('tpAmb')->item(0)->nodeValue;
+        $verAplic = $ret->getElementsByTagName('verAplic')->item(0)->nodeValue;
+        $chNFe = $ret->getElementsByTagName('chNFe')->item(0)->nodeValue;
+        $dhRecbto = $ret->getElementsByTagName('dhRecbto')->item(0)->nodeValue;
+        $cStat = $ret->getElementsByTagName('cStat')->item(0)->nodeValue;
+        $xMotivo = $ret->getElementsByTagName('xMotivo')->item(0)->nodeValue;
+        if ($chNFe !== $chave) {
+            throw DocumentsException::wrongDocument(5, 'A chave da NFe não é igual a chave do protocolo');
+        }
+        //retorno pode vir sem o protNFe
         $retProt = $ret->getElementsByTagName('protNFe')->length > 0 ? $ret->getElementsByTagName('protNFe') : null;
-        if ($retProt === null) {
-            throw DocumentsException::wrongDocument(3, "&lt;protNFe&gt;");
+        if ($retProt === null && in_array($cStat, ['100', '150', '110', '205', '301', '302', '303'])) {
+            //fabricar um retProt na estrutura esperada
+            $prot = $ret->createElement('protNFe');
+            $prot->setAttribute('versao', '4.00');
+            $infProt = $ret->createElement('infProt');
+            $tp = $ret->createElement('tpAmb', $prottpAmb);
+            $infProt->appendChild($tp);
+            $ver = $ret->createElement('verAplic', $verAplic);
+            $infProt->appendChild($ver);
+            $cha = $ret->createElement('chNFe', $chNFe);
+            $infProt->appendChild($cha);
+            $dh = $ret->createElement('dhRecbto', $dhRecbto);
+            $infProt->appendChild($dh);
+            $digVal = $ret->createElement('digVal', $digNFe);
+            $infProt->appendChild($digVal);
+            $cs = $ret->createElement('cStat', $cStat);
+            $infProt->appendChild($cs);
+            $xm = $ret->createElement('xMotivo', $xMotivo);
+            $infProt->appendChild($xm);
+            $prot->appendChild($infProt);
+            $ret->appendChild($prot);
+            $retProt = $ret->getElementsByTagName('protNFe')->length > 0 ? $ret->getElementsByTagName('protNFe') : null;
         }
         $digProt = null;
         foreach ($retProt as $rp) {
@@ -300,7 +335,7 @@ class Complements
         $resLote = $ret->getElementsByTagName('idLote')->item(0)->nodeValue;
         //extrai a rag retEvento da resposta (retorno da SEFAZ)
         $retEv = $ret->getElementsByTagName('retEvento')->item(0);
-        $cStat  = $retEv->getElementsByTagName('cStat')->item(0)->nodeValue;
+        $cStat = $retEv->getElementsByTagName('cStat')->item(0)->nodeValue;
         $xMotivo = $retEv->getElementsByTagName('xMotivo')->item(0)->nodeValue;
         $tpEvento = $retEv->getElementsByTagName('tpEvento')->item(0)->nodeValue;
         $cStatValids = ['135', '136'];
@@ -330,8 +365,8 @@ class Complements
     protected static function join(string $first, string $second, string $nodename, string $versao): string
     {
         $xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
-                . "<$nodename versao=\"$versao\" "
-                . "xmlns=\"" . self::$urlPortal . "\">";
+            . "<$nodename versao=\"$versao\" "
+            . "xmlns=\"" . self::$urlPortal . "\">";
         $xml .= $first;
         $xml .= $second;
         $xml .= "</$nodename>";
