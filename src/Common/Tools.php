@@ -465,7 +465,7 @@ class Tools
                 $this->urlcUF = $this->getcUF($this->config->siglaUF); //foi solicitado dado de SVCRS ou SVCAN
             }
         }
-        $this->urlVersion = $this->config->urlVersion ?? $stdServ->$service->version; //recuperação da versão
+        $this->urlVersion = $stdServ->$service->version; //recuperação da versão
         $this->urlService = $stdServ->$service->url; //recuperação da url do serviço
         $this->urlMethod = $stdServ->$service->method; //recuperação do método
         $this->urlOperation = $stdServ->$service->operation; //recuperação da operação
@@ -525,12 +525,13 @@ class Tools
         $cUF = $dom->getElementsByTagName('cUF')->item(0)->nodeValue;
         $tpAmb = $dom->getElementsByTagName('tpAmb')->item(0)->nodeValue;
         $uf = UFList::getUFByCode((int)$cUF);
+        $qrCodeVersion = !empty($this->config->qrCodeVersion) ? (string) $this->config->qrCodeVersion : $this->urlVersion;
         $this->servico('NfeConsultaQR', $uf, $tpAmb);
         $signed = QRCode::putQRTag(
             $dom,
             $this->config->CSC,
             $this->config->CSCid,
-            $this->urlVersion,
+            $qrCodeVersion,
             $this->urlService,
             $this->getURIConsultaNFCe($uf, $tpAmb)
         );
