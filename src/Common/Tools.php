@@ -465,7 +465,7 @@ class Tools
                 $this->urlcUF = $this->getcUF($this->config->siglaUF); //foi solicitado dado de SVCRS ou SVCAN
             }
         }
-        $this->urlVersion = $stdServ->$service->version; //recuperação da versão
+        $this->urlVersion = $this->config->urlVersion ?? $stdServ->$service->version; //recuperação da versão
         $this->urlService = $stdServ->$service->url; //recuperação da url do serviço
         $this->urlMethod = $stdServ->$service->method; //recuperação do método
         $this->urlOperation = $stdServ->$service->operation; //recuperação da operação
