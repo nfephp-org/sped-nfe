@@ -266,223 +266,223 @@ final class MakeDev
     /**
      * @var array
      */
-    protected $aReboque;
+    protected $aReboque = [];
     /**
      * @var array
      */
-    protected $aVol;
+    protected $aVol = [];
     /**
      * @var array
      */
-    protected $aLacre;
+    protected $aLacre = [];
     /**
      * @var array
      */
-    protected $aNFref;
+    protected $aNFref = [];
     /**
      * @var array
      */
-    protected $aAutXML;
+    protected $aAutXML = [];
     /**
      * @var array
      */
-    protected $aProd;
+    protected $aProd = [];
     /**
      * @var array
      */
-    protected $aGCred;
+    protected $aGCred = [];
     /**
      * @var array
      */
-    protected $aCest;
+    protected $aCest = [];
     /**
      * @var array
      */
-    protected $aNVE;
+    protected $aNVE = [];
     /**
      * @var array
      */
-    protected $aRECOPI;
+    protected $aRECOPI = [];
     /**
      * @var array
      */
-    protected $aRastro;
+    protected $aRastro = [];
     /**
      * @var array
      */
-    protected $aDFeReferenciado;
+    protected $aDFeReferenciado = [];
     /**
      * @var array
      */
-    protected $aVeicProd;
+    protected $aVeicProd = [];
     /**
      * @var array
      */
-    protected $aMed;
+    protected $aMed = [];
     /**
      * @var array
      */
-    protected $aArma;
+    protected $aArma = [];
     /**
      * @var array
      */
-    protected $aDI;
+    protected $aDI = [];
     /**
      * @var array
      */
-    protected $aAdi;
+    protected $aAdi = [];
     /**
      * @var array
      */
-    protected $aDetExport;
+    protected $aDetExport = [];
     /**
      * @var array
      */
-    protected $aImposto;
+    protected $aImposto = [];
     /**
      * var array
      */
-    protected $aImpostoDevol;
+    protected $aImpostoDevol = [];
     /**
      * @var array
      */
-    protected $aISSQN;
+    protected $aISSQN = [];
     /**
      * @var array
      */
-    protected $aICMS;
+    protected $aICMS = [];
     /**
      * @var array
      */
-    protected $aICMSPart;
+    protected $aICMSPart = [];
     /**
      * @var array
      */
-    protected $aICMSUFDest;
+    protected $aICMSUFDest = [];
     /**
      * @var array
      */
-    protected $aICMSSN;
+    protected $aICMSSN = [];
     /**
      * @var array
      */
-    protected $aICMSST;
+    protected $aICMSST = [];
     /**
      * @var array
      */
-    protected $aIPI;
+    protected $aIPI = [];
     /**
      * @var array
      */
-    protected $aPIS;
+    protected $aPIS = [];
     /**
      * @var array
      */
-    protected $aPISST;
+    protected $aPISST = [];
     /**
      * @var array
      */
-    protected $aCOFINS;
+    protected $aCOFINS = [];
     /**
      * @var array
      */
-    protected $aCOFINSST;
+    protected $aCOFINSST = [];
     /**
      * @var array
      */
-    protected $aInfAdProd;
+    protected $aInfAdProd = [];
     /**
      * @var array
      */
-    protected $aIBSCBS;
+    protected $aIBSCBS = [];
     /**
      * @var array
      */
-    protected $aIBSCBSCredPres;
+    protected $aIBSCBSCredPres = [];
     /**
      * @var array
      */
-    protected $aIS;
+    protected $aIS = [];
     /**
      * @var array
      */
-    protected $aII;
+    protected $aII = [];
     /**
      * @var array
      */
-    protected $aGTribRegular;
+    protected $aGTribRegular = [];
     /**
      * @var array
      */
-    protected $aIBSCredPres;
+    protected $aIBSCredPres = [];
     /**
      * @var array
      */
-    protected $aCBSCredPres;
+    protected $aCBSCredPres = [];
     /**
      * @var array
      */
-    protected $aGTribCompraGov;
+    protected $aGTribCompraGov = [];
     /**
      * @var array
      */
-    protected $aGIBSCBSMono;
+    protected $aGIBSCBSMono = [];
     /**
      * @var array
      */
-    protected $aGTransfCred;
+    protected $aGTransfCred = [];
     /**
      * @var array
      */
-    protected $aGCredPresIBSZFM;
+    protected $aGCredPresIBSZFM = [];
     /**
      * @var array
      */
-    protected $aObsItem;
+    protected $aObsItem = [];
     /**
      * @var array
      */
-    protected $aVItem;
+    protected $aVItem = [];
     /**
      * @var array
      */
-    protected $aDetPag;
+    protected $aDetPag = [];
     /**
      * @var array
      */
-    protected $aObsCont;
+    protected $aObsCont = [];
     /**
      * @var array
      */
-    protected $aObsFisco;
+    protected $aObsFisco = [];
     /**
      * @var array
      */
-    protected $aProcRef;
+    protected $aProcRef = [];
     /**
      * @var array
      */
-    protected $aForDia;
+    protected $aForDia = [];
     /**
      * @var array
      */
-    protected $aDeduc;
+    protected $aDeduc = [];
     /**
      * @var array
      */
-    protected $aComb;
+    protected $aComb = [];
     /**
      * @var array
      */
-    protected $aEncerrante;
+    protected $aEncerrante = [];
     /**
      * @var array
      */
-    protected $aOrigComb;
+    protected $aOrigComb = [];
     /**
      * @var array
      */
-    protected $aAgropecuarioDefensivo;
+    protected $aAgropecuarioDefensivo = [];
 
     /**
      * Função construtora cria um objeto DOMDocument
@@ -884,6 +884,12 @@ final class MakeDev
                 $icms = $this->dom->createElement("ICMS");
                 $this->addTag($icms, $this->aICMS[$item]);
                 $this->addTag($imposto, $icms, 'Falta a tag det/imposto!');
+            }
+            if (!empty($this->aICMSSN[$item])) {
+                $flagICMS = true;
+                $icmssn = $this->dom->createElement("ICMS");
+                $this->addTag($icmssn, $this->aICMSSN[$item]);
+                $this->addTag($imposto, $icmssn, 'Falta a tag det/imposto!');
             }
             //IPI => imposto
             if (!empty($this->aIPI[$item])) {
