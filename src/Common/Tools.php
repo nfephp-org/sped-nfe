@@ -97,7 +97,7 @@ class Tools
      * Canonical conversion options
      * @var array
      */
-    protected $canonical = [true,false,null,null];
+    protected $canonical = [true, false, null, null];
     /**
      * Model of NFe 55 or 65
      * @var int
@@ -525,7 +525,10 @@ class Tools
         $cUF = $dom->getElementsByTagName('cUF')->item(0)->nodeValue;
         $tpAmb = $dom->getElementsByTagName('tpAmb')->item(0)->nodeValue;
         $uf = UFList::getUFByCode((int)$cUF);
-        $qrCodeVersion = !empty($this->config->qrCodeVersion) ? (string) $this->config->qrCodeVersion : $this->urlVersion;
+        $qrCodeVersion = $this->urlVersion;
+        if (!empty($this->config->qrCodeVersion)) {
+            $qrCodeVersion = (string) $this->config->qrCodeVersion;
+        }
         $this->servico('NfeConsultaQR', $uf, $tpAmb);
         $signed = QRCode::putQRTag(
             $dom,
