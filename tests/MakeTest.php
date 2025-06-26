@@ -568,7 +568,14 @@ class MakeTest extends TestCase
         $std->qBCProd = '12.5000';
         $std->vAliqProd = '1.0000';
         $std->vCIDE = '0.13';
-        $std->origComb = '1';
+
+        $origComb = new \stdClass();
+        $origComb->item = 1;
+        $origComb->indImport = '0'; // 0 = Nacional
+        $origComb->cUFOrig = '43'; // RS
+        $origComb->pOrig = '100.0000';
+
+        $std->origComb = $origComb;
 
         $tag = $this->make->tagcomb($std);
         $this->assertEquals('comb', $tag->nodeName);
@@ -581,12 +588,29 @@ class MakeTest extends TestCase
         $this->assertEquals($std->CODIF, $tag->getElementsByTagName('CODIF')->item(0)->nodeValue);
         $this->assertEquals($std->qTemp, $tag->getElementsByTagName('qTemp')->item(0)->nodeValue);
         $this->assertEquals($std->UFCons, $tag->getElementsByTagName('UFCons')->item(0)->nodeValue);
-        $this->assertEquals($std->origComb, $tag->getElementsByTagName('origComb')->item(0)->nodeValue);
         $CIDE = $tag->getElementsByTagName('CIDE')->item(0);
 
         $this->assertEquals($std->qBCProd, $CIDE->getElementsByTagName('qBCProd')->item(0)->nodeValue);
         $this->assertEquals($std->vAliqProd, $CIDE->getElementsByTagName('vAliqProd')->item(0)->nodeValue);
         $this->assertEquals($std->vCIDE, $CIDE->getElementsByTagName('vCIDE')->item(0)->nodeValue);
+
+        $origNode = $tag->getElementsByTagName('origComb')->item(0);
+        $this->assertNotNull($origNode);
+
+        $this->assertEquals(
+            $origComb->indImport,
+            $origNode->getElementsByTagName('indImport')->item(0)->nodeValue
+        );
+
+        $this->assertEquals(
+            $origComb->cUFOrig,
+            $origNode->getElementsByTagName('cUFOrig')->item(0)->nodeValue
+        );
+
+        $this->assertEquals(
+            $origComb->pOrig,
+            $origNode->getElementsByTagName('pOrig')->item(0)->nodeValue
+        );
     }
 
     public function test_tagencerrante(): void
