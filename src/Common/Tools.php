@@ -109,6 +109,10 @@ class Tools
      */
     protected $versao = '4.00';
     /**
+     * @var string|null
+     */
+    protected $qrcode_version = null;
+    /**
      * urlPortal
      * Instância do WebService
      *
@@ -203,6 +207,18 @@ class Tools
     public function setEnvironmentTimeZone(string $acronym): void
     {
         $this->timezone = TimeZoneByUF::get($acronym);
+    }
+
+    /**
+     * Force use this version for QRCode format in NFCe
+     * @param string $version
+     * @return void
+     */
+    public function forceQRCodeVersion(string $version): void
+    {
+        if ($version == '200' || $version == '300') {
+            $this->qrcode_version = $version;
+        }
     }
 
     /**
@@ -517,20 +533,27 @@ class Tools
      */
     protected function addQRCode(DOMDocument $dom): string
     {
-        if (empty($this->config->CSC) || empty($this->config->CSCid)) {
-            throw new \RuntimeException("O QRCode não pode ser criado pois faltam dados CSC e/ou CSCId");
-        }
         $memmod = $this->modelo;
         $this->modelo = 65;
         $cUF = $dom->getElementsByTagName('cUF')->item(0)->nodeValue;
         $tpAmb = $dom->getElementsByTagName('tpAmb')->item(0)->nodeValue;
         $uf = UFList::getUFByCode((int)$cUF);
         $this->servico('NfeConsultaQR', $uf, $tpAmb);
+        $qrversion = $this->urlVersion;
+        if (!empty($this->qrcode_version)) {
+            $qrversion = $this->qrcode_version;
+        }
+        if ($qrversion !== '300') {
+            if (empty($this->config->CSC) || empty($this->config->CSCid)) {
+                throw new \RuntimeException("O QRCode não pode ser criado pois faltam dados CSC e/ou CSCId");
+            }
+        }
+        //qrcode versão 3 não requer CSD nem CSCid
         $signed = QRCode::putQRTag(
             $dom,
-            $this->config->CSC,
-            $this->config->CSCid,
-            $this->urlVersion,
+            $this->config->CSC ?? '',
+            $this->config->CSCid ?? '',
+            $qrversion,
             $this->urlService,
             $this->getURIConsultaNFCe($uf, $tpAmb)
         );
