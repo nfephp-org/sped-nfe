@@ -568,6 +568,7 @@ class MakeTest extends TestCase
         $std->qBCProd = '12.5000';
         $std->vAliqProd = '1.0000';
         $std->vCIDE = '0.13';
+        $std->origComb = '1';
 
         $tag = $this->make->tagcomb($std);
         $this->assertEquals('comb', $tag->nodeName);
@@ -580,6 +581,7 @@ class MakeTest extends TestCase
         $this->assertEquals($std->CODIF, $tag->getElementsByTagName('CODIF')->item(0)->nodeValue);
         $this->assertEquals($std->qTemp, $tag->getElementsByTagName('qTemp')->item(0)->nodeValue);
         $this->assertEquals($std->UFCons, $tag->getElementsByTagName('UFCons')->item(0)->nodeValue);
+        $this->assertEquals($std->origComb, $tag->getElementsByTagName('origComb')->item(0)->nodeValue);
         $CIDE = $tag->getElementsByTagName('CIDE')->item(0);
 
         $this->assertEquals($std->qBCProd, $CIDE->getElementsByTagName('qBCProd')->item(0)->nodeValue);
