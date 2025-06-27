@@ -533,9 +533,9 @@ trait TraitTagTotal
         $gIBSMun_vIBSMun = $std->gIBSMun_vIBSMun ?? $this->stdIBSCBSTot->gIBSMun->vIBSMun;
         $gCBS_vDif = $std->gCBS_vDif ?? $this->stdIBSCBSTot->gCBS->vDif;
         $gCBS_vDevTrib = $std->gCBS_vDevTrib ?? $this->stdIBSCBSTot->gCBS->vDevTrib;
-        $gCBS_vCBS = $std->gCBS_vCBS ?? $this->stdIBSCBSTot->gCBS->vCBS;
-        $gCBS_vCredPres = $std->gCBS_vCredPres ?? $this->stdIBSCBSTot->gCBS->vCredPres;
-        $gCBS_vCredPresCondSus = $std->gCBS_vCredPresCondSus ?? $this->stdIBSCBSTot->gCBS->vCredPresCondSus;
+        $gCBS_vCBS = $std->gCBS_vCBS ?? $this->stdIBSCBSTot->vCBS;
+        $gCBS_vCredPres = $std->gCBS_vCredPres ?? $this->stdIBSCBSTot->vCredPres;
+        $gCBS_vCredPresCondSus = $std->gCBS_vCredPresCondSus ?? $this->stdIBSCBSTot->vCredPresCondSus;
         $gMono_vIBSMono = $std->gMono_vIBSMono ?? $this->stdIBSCBSTot->gMono->vIBSMono;
         $gMono_vCBSMono = $std->gMono_vCBSMono ?? $this->stdIBSCBSTot->gMono->vCBSMono;
         $gMono_vIBSMonoReten = $std->gMono_vIBSMonoReten ?? $this->stdIBSCBSTot->gMono->vIBSMonoReten;
