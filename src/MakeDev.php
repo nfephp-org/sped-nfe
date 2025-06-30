@@ -76,7 +76,7 @@ final class MakeDev
     use TraitTagExporta;
     use TraitTagCompra;
     use TraitTagCana;
-    use TraitTagAgropecuario; //Não Existe na PL_010
+    use TraitTagAgropecuario;
     use TraitTagTotal;
 
     /**
@@ -1399,8 +1399,8 @@ final class MakeDev
     protected function addTagAgropecuario()
     {
         //o schema estabelece qual PL está sendo usado para a montagem da NFe/NFCe
-        if ($this->schema > 9) {
-            //Esta tag foi removida no PL_010
+        if ($this->schema < 10) {
+            //Esta tag não existe na PL_009
             return;
         }
         if (!empty($this->agropecuarioGuia)) {

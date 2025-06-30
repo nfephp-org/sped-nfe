@@ -71,17 +71,17 @@ trait TraitTagDetIBSCBS
         $identificador = "UB12 <IBSCBS> -";
         //totalizador do IBS e CBS
         $this->stdIBSCBSTot->vBCIBSCBS += $std->vBC ?? 0;
-        $this->stdIBSCBSTot->gIBSUF->vDIF += $std->gIBSUF_pDif ?? 0;
+        $this->stdIBSCBSTot->gIBSUF->vDif += $std->gIBSUF_pDif ?? 0;
         $this->stdIBSCBSTot->gIBSUF->vDevTrib += $std->gIBSUF_vDevTrib ?? 0;
         $this->stdIBSCBSTot->gIBSUF->vIBSUF += $std->gIBSUF_vIBSUF ?? 0;
         $this->stdIBSCBSTot->vIBS += $std->gIBSUF_vIBSUF ?? 0;
 
-        $this->stdIBSCBSTot->gIBSMun->vDIF += $std->gIBSMun_vDif ?? 0;
+        $this->stdIBSCBSTot->gIBSMun->vDif += $std->gIBSMun_vDif ?? 0;
         $this->stdIBSCBSTot->gIBSMun->vDevTrib += $std->gIBSMun_vDevTrib ?? 0;
         $this->stdIBSCBSTot->gIBSMun->vIBSMun += $std->gIBSMun_vIBSMun ?? 0;
         $this->stdIBSCBSTot->vIBS += $std->gIBSMun_vIBSMun ?? 0;
 
-        $this->stdIBSCBSTot->gCBS->vDIF += $std->gCBS_vDif ?? 0;
+        $this->stdIBSCBSTot->gCBS->vDif += $std->gCBS_vDif ?? 0;
         $this->stdIBSCBSTot->gCBS->vDevTrib += $std->gCBS_vDevTrib ?? 0;
         $this->stdIBSCBSTot->vCBS += $std->gCBS_vCBS ?? 0;
 
@@ -603,7 +603,7 @@ trait TraitTagDetIBSCBS
             'vIBSMonoReten',
             'adRemCBSReten',
             'vCBSMonoReten',
-            'qBCMonoReten',
+            'qBCMonoRet',
             'adRemIBSRet',
             'vIBSMonoRet',
             'adRemCBSRet',
