@@ -63,31 +63,16 @@ class QRCode
         $infNFe = $dom->getElementsByTagName('infNFe')->item(0);
         $layoutver = $infNFe->getAttribute('versao');
         $ide = $dom->getElementsByTagName('ide')->item(0);
-        $idDest = $ide->getElementsByTagName('idDest')->item(0)->nodeValue ?? 1;
-        $dest = $dom->getElementsByTagName('dest')->item(0);
         $icmsTot = $dom->getElementsByTagName('ICMSTot')->item(0);
         $signedInfo = $dom->getElementsByTagName('SignedInfo')->item(0);
         $chNFe = substr($infNFe->getAttribute("Id"), 3, 44);
         $tpAmb = $ide->getElementsByTagName('tpAmb')->item(0)->nodeValue;
         $dhEmi = $ide->getElementsByTagName('dhEmi')->item(0)->nodeValue;
         $tpEmis = (int) $ide->getElementsByTagName('tpEmis')->item(0)->nodeValue;
-        $cDest = '';
-        if (!empty($dest)) {
-            $cDest = (string) !empty($dest->getElementsByTagName('CNPJ')->item(0)->nodeValue)
-                ? $dest->getElementsByTagName('CNPJ')->item(0)->nodeValue
-                : '';
-            if (empty($cDest)) {
-                $cDest = (string) !empty($dest->getElementsByTagName('CPF')->item(0)->nodeValue)
-                    ? $dest->getElementsByTagName('CPF')->item(0)->nodeValue
-                    : '';
-                if (empty($cDest)) {
-                    $cDest = (string) $dest->getElementsByTagName('idEstrangeiro')->item(0)->nodeValue;
-                }
-            }
-        }
         $vNF = $icmsTot->getElementsByTagName('vNF')->item(0)->nodeValue;
         $vICMS = $icmsTot->getElementsByTagName('vICMS')->item(0)->nodeValue;
         $digVal = $signedInfo->getElementsByTagName('DigestValue')->item(0)->nodeValue;
+        [$cDest, $tpDest] = self::getDestInfo($dom);
         $qrMethod = "get$versao";
         if ($versao == 200 || $versao == 100) {
             $qrcode = self::$qrMethod(
@@ -113,7 +98,7 @@ class QRCode
                 $dhEmi,
                 $vNF,
                 $tpEmis,
-                $idDest,
+                $tpDest,
                 $cDest,
                 $assinatura
             );
@@ -127,6 +112,41 @@ class QRCode
         $nfe->insertBefore($infNFeSupl, $signature);
         $dom->formatOutput = false;
         return $dom->saveXML();
+    }
+
+    /**
+     * Extrai informações do tipo e documento do destinatário de um XML de NF-e.
+     *
+     * @param \DOMDocument $dom Documento DOM XML da NF-e
+     * @return array<string, string> Um array com dois elementos, sendo o primeito o tipo do destinatario (1, 2, 3)
+     * e o segundo o valor do documento (CPF, CNPJ, IdEstrangeiro). Caso não seja possível identificar, 
+     * é retornado vazio nos dois valores
+     */
+    private static function getDestInfo(\DOMDocument $dom): array
+    {
+        $dest = $dom->getElementsByTagName('dest')->item(0);
+        
+        if (empty($dest)) {
+            return ['', '']; // Caso não tenha informação do destinatario, retorna vazio
+        }
+
+        $documentNode = $dest->getElementsByTagName('CNPJ')->item(0);
+        if ($documentNode !== null && !empty($documentNode->nodeValue)) {
+            return ['1', (string) $documentNode->nodeValue];
+        }
+
+        $documentNode = $dest->getElementsByTagName('CPF')->item(0);
+        if ($documentNode !== null && !empty($documentNode->nodeValue)) {
+            return ['2', (string) $documentNode->nodeValue];
+        }
+
+        $documentNode = $dest->getElementsByTagName('idEstrangeiro')->item(0);
+        if ($documentNode !== null && !empty($documentNode->nodeValue)) {
+            return ['3', (string) $documentNode->nodeValue];
+        }
+
+        // Como default, retorna vazio também
+        return ['', ''];
     }
 
     /**
@@ -169,14 +189,15 @@ class QRCode
     }
 
     /**
-     * Gerar QRCode versão 3
+     * Return a QRCode version 3 string to be used in NFCe NT 2025.001
+     * 
      * @param string $chNFe
      * @param string $url
      * @param string $tpAmb
      * @param string $dhEmi
      * @param string $vNF
      * @param int $tpEmis
-     * @param int $idDest
+     * @param int $tpDest
      * @param string $cDest
      * @param string $assinatura
      * @return string
@@ -189,41 +210,23 @@ class QRCode
         string $dhEmi,
         string $vNF,
         int $tpEmis,
-        int $idDest,
+        int $tpDest,
         string $cDest,
         string $assinatura
     ): string {
         /*
-        QRCode versão 3 NT 2025.001v1.00 março de 2025
         Para NFC-e emitida “on-line”:
-                       https://endereco-consulta-QRCode?p=<chave_acesso>|<versao_qrcode>|<tpAmb>
+            https://endereco-consulta-QRCode?p=<chave_acesso>|<versao_qrcode>|<tpAmb>
         Para NFC-e emitida em contingência “off-line”:
-                       https://endereco-consultaQRCode?p=
-        <chave_acesso>|
-        <versao_qrcode>|
-        <tpAmb>|
-        <dia_data_emissao>|
-        <vNF>|
-        <tp_idDest>|
-        <idDest>|
-        <assinatura>
-        url?p=
-        12345678901234567890123456789012349123456789  chave em contingencia OFFLINE 44 digitos com tpEmis == 9
-        |
-        3 versão do qrCode
-        |
-        1 tipo de embiente 1 ou 2 ide/tpAmb
-        |
-        10 dia da emissão de 01 até 31 dhEmi
-        |
-        200.12 valor da NF vNF
-        |
-        1 idDest 1-Interna;2-Interestadual;3-Exterior destino da operação
-        |
-        12345678901234 cDest documento do destinatario de 3 a 14 digitos ?? e se for um CNPJAlfa ??
-        Estou supondo pois não está claro
-        |
-        Assinatura ?? a assinatura do xml ??
+            https://endereco-consultaQRCode?p=
+                <chave_acesso>|
+                <versao_qrcode>|
+                <tpAmb>|
+                <dia_data_emissao>|
+                <vNF>|
+                <tpDest>|
+                <cDest>|
+                <assinatura>
         */
         if (strpos($url, '?p=') === false) {
             $url = $url . '?p=';
@@ -236,7 +239,7 @@ class QRCode
         $dt = new \DateTime($dhEmi);
         $dia = $dt->format('d');
         $valor = number_format((float)$vNF, 2, '.', '');
-        return $url . "$chNFe|3|$tpAmb|$dia|$valor|$idDest|$cDest|$assinatura";
+        return $url . "$chNFe|3|$tpAmb|$dia|$valor|$tpDest|$cDest|$assinatura";
     }
 
     /**
