@@ -1252,7 +1252,9 @@ final class MakeDev
             if (!isset($node)) {
                 $node = $this->dest->getElementsByTagName("IE")->item(0);
             }
-            $this->dest->insertBefore($this->enderDest, $node);
+            if (!is_null($this->enderDest)) {
+                $this->dest->insertBefore($this->enderDest, $node);
+            }
         }
         $this->dom->appChild($this->infNFe, $this->dest);
     }
