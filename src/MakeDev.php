@@ -971,7 +971,7 @@ final class MakeDev
                     } elseif (!empty($this->aGIBSCBSMono[$item])) {
                         //não existe gIBSCBS, então add gIBSCBSMono
                         $this->addTag($ibscbs, $this->aGIBSCBSMono[$item], 'Falta a tag IBSCBS!');
-                    } elseif (!empty($this->aGTranfCred[$item])) {
+                    } elseif (!empty($this->aGTransfCred[$item])) {
                         //gTranfCred
                         $this->addTag($ibscbs, $this->aGTransfCred[$item], 'Falta a tag IBSCBS!');
                     }
