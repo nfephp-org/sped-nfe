@@ -33,7 +33,7 @@ class QRCode
      * @param string $versao version of field
      * @param string $urlqr URL for search by QRCode
      * @param string $urichave URL for search by chave layout 4.00 only
-     * @param Certificate $certificate
+     * @param Certificate|null $certificate
      * @throws DocumentsException
      */
     public static function putQRTag(
@@ -43,7 +43,7 @@ class QRCode
         string $versao,
         string $urlqr,
         string $urichave,
-        Certificate $certificate
+        ?Certificate $certificate = null
     ): string {
         $token = trim($token);
         $idToken = trim($idToken);
