@@ -531,6 +531,10 @@ final class MakeDev
         $this->stdTot->vOutro = 0;
         $this->stdTot->vNF = 0;
         $this->stdTot->vTotTrib = 0;
+        //PL_010
+        $this->stdTot->vIBS = 0;
+        $this->stdTot->vCBS = 0;
+        $this->stdTot->vIS = 0;
         $this->stdTot->vNFTot = 0;
 
         $this->stdISSQNTot = new stdClass();
@@ -649,6 +653,8 @@ final class MakeDev
     public function render(): string
     {
         try {
+            //calcula total vNF
+            $this->buildTotal();
             //cria a tag NFe
             $this->buildNFe();
             //tag NFref => tag ide
@@ -674,6 +680,7 @@ final class MakeDev
             $this->addTagDet();
             //tag total => tag infNfe
             $this->addTagTotal();
+
             //tag transp => tag infNfe
             $this->addTagTransp();
             //tag cobr => tag infNFe
@@ -955,7 +962,7 @@ final class MakeDev
                             $ibscbs->appendChild($gCBSCredPres);
                         }
                     }
-                    //CHICE gIBSCBS ou gIBSCBSMono
+                    //CHICE gIBSCBS, gIBSCBSMono, gTranfCred
                     //existe o grupo gIBSCBS no node IBSCBS ?
                     $gIBSCBS = $ibscbs->getElementsByTagName("gIBSCBS")->item(0);
                     if (!empty($gIBSCBS)) {
@@ -964,9 +971,8 @@ final class MakeDev
                     } elseif (!empty($this->aGIBSCBSMono[$item])) {
                         //não existe gIBSCBS, então add gIBSCBSMono
                         $this->addTag($ibscbs, $this->aGIBSCBSMono[$item], 'Falta a tag IBSCBS!');
-                    }
-                    //gTranfCred
-                    if (!empty($this->aGTransfCred[$item])) {
+                    } elseif (!empty($this->aGTranfCred[$item])) {
+                        //gTranfCred
                         $this->addTag($ibscbs, $this->aGTransfCred[$item], 'Falta a tag IBSCBS!');
                     }
                     //gCredPresIBSZFM
@@ -1004,6 +1010,54 @@ final class MakeDev
             }
             $this->addTag($this->infNFe, $det, 'Fala a tag infNFe!');
         }
+    }
+
+    /**
+     * Grupo Totais da NF-e W01 pai A01
+     * tag NFe/infNFe/total
+     */
+    protected function buildTotal()
+    {
+        //round all values
+        $this->stdTot->vBC = round($this->stdTot->vBC, 2);
+        $this->stdTot->vICMS = round($this->stdTot->vICMS, 2);
+        $this->stdTot->vICMSDeson = round($this->stdTot->vICMSDeson, 2);
+        $this->stdTot->vFCP = round($this->stdTot->vFCP, 2);
+        $this->stdTot->vFCPUFDest = round($this->stdTot->vFCPUFDest, 2);
+        $this->stdTot->vICMSUFDest = round($this->stdTot->vICMSUFDest, 2);
+        $this->stdTot->vICMSUFRemet = round($this->stdTot->vICMSUFRemet, 2);
+        $this->stdTot->vBCST = round($this->stdTot->vBCST, 2);
+        $this->stdTot->vST = round($this->stdTot->vST, 2);
+        $this->stdTot->vFCPST = round($this->stdTot->vFCPST, 2);
+        $this->stdTot->vFCPSTRet = round($this->stdTot->vFCPSTRet, 2);
+        $this->stdTot->vProd = round($this->stdTot->vProd, 2);
+        $this->stdTot->vFrete = round($this->stdTot->vFrete, 2);
+        $this->stdTot->vSeg = round($this->stdTot->vSeg, 2);
+        $this->stdTot->vDesc = round($this->stdTot->vDesc, 2);
+        $this->stdTot->vII = round($this->stdTot->vII, 2);
+        $this->stdTot->vIPI = round($this->stdTot->vIPI, 2);
+        $this->stdTot->vIPIDevol = round($this->stdTot->vIPIDevol, 2);
+        $this->stdTot->vPIS = round($this->stdTot->vPIS, 2);
+        $this->stdTot->vCOFINS = round($this->stdTot->vCOFINS, 2);
+        $this->stdTot->vOutro = round($this->stdTot->vOutro, 2);
+        $this->stdTot->vNF = round($this->stdTot->vNF, 2);
+        $this->stdTot->vTotTrib = round($this->stdTot->vTotTrib, 2);
+
+        $this->stdTot->vNF = $this->stdTot->vProd
+            - $this->stdTot->vDesc
+            - $this->stdTot->vICMSDeson
+            + $this->stdTot->vST
+            + $this->stdTot->vFCPST
+            + $this->stdTot->vICMSMonoReten
+            + $this->stdTot->vFrete
+            + $this->stdTot->vSeg
+            + $this->stdTot->vOutro
+            + $this->stdTot->vII
+            + $this->stdTot->vIPI
+            + $this->stdTot->vIPIDevol
+            + $this->stdISSQNTot->vServ
+            + $this->stdTot->vPISST
+            + $this->stdTot->vCOFINSST;
     }
 
     /**
@@ -1530,10 +1584,11 @@ final class MakeDev
             }
             $this->addTag($total, $this->IBSCBSTot);
             //campo vNFTot PL_010
+            $vNFTot = $this->stdTot->vNF + $this->stdTot->vIBS + $this->stdTot->vCBS + $this->stdTot->vIS;
             $this->dom->addChild(
                 $total,
                 "vNFTot",
-                $this->conditionalNumberFormatting($this->stdTot->vNFTot, 2),
+                $this->conditionalNumberFormatting($vNFTot, 2),
                 false,
                 "$identificador Valor total da NF-e com IBS / CBS / IS"
             );

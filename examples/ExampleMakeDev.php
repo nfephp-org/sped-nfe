@@ -682,7 +682,7 @@ try {
     //############################## TAG <det/imposto> OBRIGATÓRIA #####################################################
     $std = new stdClass();
     $std->item = 1; //OBRIGATÓRIO referencia ao item da NFe
-    $std->vTotTrib = 0; //opcional Valor estimado total de impostos federais, estaduais e municipais 2 decimais
+    $std->vTotTrib = 100; //opcional Valor estimado total de impostos federais, estaduais e municipais 2 decimais
     $mk->tagimposto($std);
 
     //############################## TAG <det/imposto/ICMS> opcional ###################################################
@@ -1137,7 +1137,7 @@ try {
             //2 - Bens de capital (75%)
             //3 - Bens intermediários (90,25%)
             //4 - Bens de informática e outros definidos em legislação (100%)
-        'vCredPresIBSZFM' => 0 //OBRIGATÓRIO Valor do crédito presumido calculado sobre o saldo devedor apurado 13v2
+        'vCredPresIBSZFM' => 0 //opcional Valor do crédito presumido calculado sobre o saldo devedor apurado 13v2
             //É obrigatório para nota de crédito com tpNFCredito = 02 - Apropriação de crédito presumido de IBS sobre
             // o saldo devedor na ZFM (art. 450, § 1º, LC 214/25)
             //Vedado para documentos que não sejam nota de crédito com tpNFCredito = 02 - Apropriação de crédito
@@ -1154,9 +1154,6 @@ try {
         'vIPIDevol' => 0.00 ////OBRIGATRÓRIO Valor do IPI devolvido 2 decimais
     ];
     $mk->tagimpostoDevol((object) $idev);
-
-
-
 
     //############################## TAG <transp> OBRIGATÓRIA #####################################################
     //transp OBRIGATÓRIA
