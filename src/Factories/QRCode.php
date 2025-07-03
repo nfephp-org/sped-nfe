@@ -42,7 +42,7 @@ class QRCode
         string $versao,
         string $urlqr,
         string $urichave = ''
-        ?Certificate $certificate
+        Certificate $certificate
     ): string {
         $token = trim($token);
         $idToken = trim($idToken);
