@@ -194,38 +194,6 @@ class QRCode
         string $cDest,
         Certificate $certificate
     ): string {
-        /*
-        QRCode versão 3 NT 2025.001v1.00 março de 2025
-        Para NFC-e emitida “on-line”:
-                       https://endereco-consulta-QRCode?p=<chave_acesso>|<versao_qrcode>|<tpAmb>
-        Para NFC-e emitida em contingência “off-line”:
-                       https://endereco-consultaQRCode?p=
-        <chave_acesso>|
-        <versao_qrcode>|
-        <tpAmb>|
-        <dia_data_emissao>|
-        <vNF>|
-        <tp_idDest>|
-        <idDest>|
-        <assinatura>
-        url?p=
-        12345678901234567890123456789012349123456789  chave em contingencia OFFLINE 44 digitos com tpEmis == 9
-        |
-        3 versão do qrCode
-        |
-        1 tipo de embiente 1 ou 2 ide/tpAmb
-        |
-        10 dia da emissão de 01 até 31 dhEmi
-        |
-        200.12 valor da NF vNF
-        |
-        1 idDest 1-Interna;2-Interestadual;3-Exterior destino da operação
-        |
-        12345678901234 cDest documento do destinatario de 3 a 14 digitos ?? e se for um CNPJAlfa ??
-        Estou supondo pois não está claro
-        |
-        Assinatura ?? a assinatura do xml ??
-        */
         if (strpos($url, '?p=') === false) {
             $url = $url . '?p=';
         }
@@ -237,13 +205,23 @@ class QRCode
         $dt = new \DateTime($dhEmi);
         $dia = $dt->format('d');
         $valor = number_format((float)$vNF, 2, '.', '');
-
-        if (empty($cDest)) {
-            $idDest = null;
+        
+        $tpDest = null;
+        
+        if (strlen($cDest) == 14) {
+            $tpDest = 1;
         }
 
-        $assinatura = base64_encode($certificate->sign("$chNFe|3|$tpAmb|$dia|$valor|$idDest|$cDest"));
-        return $url . "$chNFe|3|$tpAmb|$dia|$valor|$idDest|$cDest|$assinatura";
+        if (strlen($cDest) == 11) {
+            $tpDest = 2;
+        }
+        
+        if ($idDest == 3) {
+            $tpDest = 3;
+        }
+
+        $assinatura = base64_encode($certificate->sign("$chNFe|3|$tpAmb|$dia|$valor|$tpDest|$cDest"));
+        return $url . "$chNFe|3|$tpAmb|$dia|$valor|$tpDest|$cDest|$assinatura";
     }
 
     /**
