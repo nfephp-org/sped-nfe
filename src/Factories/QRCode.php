@@ -180,7 +180,7 @@ class QRCode
      * @param int $tpEmis
      * @param int $idDest
      * @param string $cDest
-     * @param string $assinatura
+     * @param Certificate $certificate
      * @return string
      * @throws \Exception
      */
