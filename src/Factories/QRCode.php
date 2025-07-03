@@ -18,6 +18,7 @@ namespace NFePHP\NFe\Factories;
 
 use DOMDocument;
 use NFePHP\NFe\Exception\DocumentsException;
+use NFePHP\Common\Certificate;
 
 class QRCode
 {
@@ -41,6 +42,7 @@ class QRCode
         string $versao,
         string $urlqr,
         string $urichave = ''
+        ?Certificate $certificate
     ): string {
         $token = trim($token);
         $idToken = trim($idToken);
@@ -105,7 +107,6 @@ class QRCode
                 $cDest
             );
         } else {
-            $assinatura = $dom->getElementsByTagName('SignatureValue')->item(0)->nodeValue;
             $qrcode = self::get300(
                 $chNFe,
                 $urlqr,
@@ -115,7 +116,7 @@ class QRCode
                 $tpEmis,
                 $idDest,
                 $cDest,
-                $assinatura
+                $certificate
             );
         }
         $infNFeSupl = $dom->createElement("infNFeSupl");
@@ -191,7 +192,7 @@ class QRCode
         int $tpEmis,
         int $idDest,
         string $cDest,
-        string $assinatura
+        Certificate $certificate
     ): string {
         /*
         QRCode versão 3 NT 2025.001v1.00 março de 2025
@@ -236,6 +237,12 @@ class QRCode
         $dt = new \DateTime($dhEmi);
         $dia = $dt->format('d');
         $valor = number_format((float)$vNF, 2, '.', '');
+
+        if (empty($cDest)) {
+            $idDest = null;
+        }
+
+        $assinatura = base64_encode($certificate->sign("$chNFe|3|$tpAmb|$dia|$valor|$idDest|$cDest"));
         return $url . "$chNFe|3|$tpAmb|$dia|$valor|$idDest|$cDest|$assinatura";
     }
 
