@@ -41,7 +41,7 @@ class QRCode
         string $idToken,
         string $versao,
         string $urlqr,
-        string $urichave = ''
+        string $urichave = '',
         Certificate $certificate
     ): string {
         $token = trim($token);
@@ -205,21 +205,16 @@ class QRCode
         $dt = new \DateTime($dhEmi);
         $dia = $dt->format('d');
         $valor = number_format((float)$vNF, 2, '.', '');
-        
         $tpDest = null;
-        
         if (strlen($cDest) == 14) {
             $tpDest = 1;
         }
-
         if (strlen($cDest) == 11) {
             $tpDest = 2;
         }
-        
         if ($idDest == 3) {
             $tpDest = 3;
         }
-
         $assinatura = base64_encode($certificate->sign("$chNFe|3|$tpAmb|$dia|$valor|$tpDest|$cDest"));
         return $url . "$chNFe|3|$tpAmb|$dia|$valor|$tpDest|$cDest|$assinatura";
     }
