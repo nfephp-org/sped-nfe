@@ -17,6 +17,7 @@
 namespace NFePHP\NFe\Factories;
 
 use DOMDocument;
+use NFePHP\Common\Certificate;
 use NFePHP\NFe\Exception\DocumentsException;
 
 class QRCode
@@ -40,7 +41,8 @@ class QRCode
         string $idToken,
         string $versao,
         string $urlqr,
-        string $urichave = ''
+        string $urichave = '',
+        Certificate $certificate = null
     ): string {
         $token = trim($token);
         $idToken = trim($idToken);
@@ -70,20 +72,26 @@ class QRCode
         $chNFe = substr($infNFe->getAttribute("Id"), 3, 44);
         $tpAmb = $ide->getElementsByTagName('tpAmb')->item(0)->nodeValue;
         $dhEmi = $ide->getElementsByTagName('dhEmi')->item(0)->nodeValue;
-        $tpEmis = (int) $ide->getElementsByTagName('tpEmis')->item(0)->nodeValue;
-        $cDest = '';
-        if (!empty($dest)) {
-            $cDest = (string) !empty($dest->getElementsByTagName('CNPJ')->item(0)->nodeValue)
-                ? $dest->getElementsByTagName('CNPJ')->item(0)->nodeValue
+        $tpEmis = (int)$ide->getElementsByTagName('tpEmis')->item(0)->nodeValue;
+        //documentação não deixa claro o que é esse tp_idDest ???????????
+        $tp_idDest = '';
+        $cDest = (string)!empty($dest->getElementsByTagName('CNPJ')->item(0)->nodeValue)
+            ? $dest->getElementsByTagName('CNPJ')->item(0)->nodeValue
+            : '';
+        if (!empty($cDest)) {
+            $tp_idDest = '1'; //CNPJ
+        }
+        if (empty($cDest)) {
+            $cDest = (string)!empty($dest->getElementsByTagName('CPF')->item(0)->nodeValue)
+                ? $dest->getElementsByTagName('CPF')->item(0)->nodeValue
                 : '';
-            if (empty($cDest)) {
-                $cDest = (string) !empty($dest->getElementsByTagName('CPF')->item(0)->nodeValue)
-                    ? $dest->getElementsByTagName('CPF')->item(0)->nodeValue
-                    : '';
-                if (empty($cDest)) {
-                    $cDest = (string) $dest->getElementsByTagName('idEstrangeiro')->item(0)->nodeValue;
-                }
+            if (!empty($cDest)) {
+                $tp_idDest = '2'; //CPF
             }
+        }
+        if (empty($cDest)) {
+            $cDest = (string)$dest->getElementsByTagName('idEstrangeiro')->item(0)->nodeValue;
+            $tp_idDest = '3'; //Estrangeiro
         }
         $vNF = $icmsTot->getElementsByTagName('vNF')->item(0)->nodeValue;
         $vICMS = $icmsTot->getElementsByTagName('vICMS')->item(0)->nodeValue;
@@ -105,7 +113,7 @@ class QRCode
                 $cDest
             );
         } else {
-            $assinatura = $dom->getElementsByTagName('SignatureValue')->item(0)->nodeValue;
+            //$assinatura = $dom->getElementsByTagName('SignatureValue')->item(0)->nodeValue;
             $qrcode = self::get300(
                 $chNFe,
                 $urlqr,
@@ -113,9 +121,9 @@ class QRCode
                 $dhEmi,
                 $vNF,
                 $tpEmis,
-                $idDest,
+                (int) $tp_idDest,
                 $cDest,
-                $assinatura
+                $certificate
             );
         }
         $infNFeSupl = $dom->createElement("infNFeSupl");
@@ -147,7 +155,7 @@ class QRCode
         string $cDest
     ): string {
         $ver = $versao / 100;
-        $cscId = (int) $idToken;
+        $cscId = (int)$idToken;
         $csc = $token;
         if (strpos($url, '?p=') === false) {
             $url = $url . '?p=';
@@ -176,9 +184,9 @@ class QRCode
      * @param string $dhEmi
      * @param string $vNF
      * @param int $tpEmis
-     * @param int $idDest
+     * @param int $tp_idDest
      * @param string $cDest
-     * @param string $assinatura
+     * @param Certificate $certificate
      * @return string
      * @throws \Exception
      */
@@ -189,9 +197,9 @@ class QRCode
         string $dhEmi,
         string $vNF,
         int $tpEmis,
-        int $idDest,
+        int $tp_idDest,
         string $cDest,
-        string $assinatura
+        Certificate $certificate
     ): string {
         /*
         QRCode versão 3 NT 2025.001v1.00 março de 2025
@@ -205,7 +213,7 @@ class QRCode
         <dia_data_emissao>|
         <vNF>|
         <tp_idDest>|
-        <idDest>|
+        <cDest>|
         <assinatura>
         url?p=
         12345678901234567890123456789012349123456789  chave em contingencia OFFLINE 44 digitos com tpEmis == 9
@@ -218,7 +226,7 @@ class QRCode
         |
         200.12 valor da NF vNF
         |
-        1 idDest 1-Interna;2-Interestadual;3-Exterior destino da operação
+        1 tp_idDest 1-cnpj; 2-cpf; 3-idEstrangeiro
         |
         12345678901234 cDest documento do destinatario de 3 a 14 digitos ?? e se for um CNPJAlfa ??
         Estou supondo pois não está claro
@@ -236,7 +244,8 @@ class QRCode
         $dt = new \DateTime($dhEmi);
         $dia = $dt->format('d');
         $valor = number_format((float)$vNF, 2, '.', '');
-        return $url . "$chNFe|3|$tpAmb|$dia|$valor|$idDest|$cDest|$assinatura";
+        $assinatura = base64_encode($certificate->sign("$chNFe|3|$tpAmb|$dia|$valor|$tp_idDest|$cDest"));
+        return $url . "$chNFe|3|$tpAmb|$dia|$valor|$tp_idDest|$cDest|$assinatura";
     }
 
     /**
