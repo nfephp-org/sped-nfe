@@ -1301,7 +1301,7 @@ final class MakeDev
         }
         //verifica se o endereço do destinatário já existe na tag dest
         $enddest = $this->dest->getElementsByTagName('enderDest')->item(0) ?? null;
-        if (is_null($enddest) && !empty($this->enderDest)) {
+        if (is_null($enddest) && !is_null($this->enderDest)) {
             $node = $this->dest->getElementsByTagName("indIEDest")->item(0);
             if (!isset($node)) {
                 $node = $this->dest->getElementsByTagName("IE")->item(0);
