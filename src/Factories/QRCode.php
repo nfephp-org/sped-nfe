@@ -32,6 +32,7 @@ class QRCode
      * @param string $idToken CSC identification
      * @param string $versao version of field
      * @param string $urlqr URL for search by QRCode
+     * @param Certificate $certificate certificate to sign QRCode 3.0
      * @param string $urichave URL for search by chave layout 4.00 only
      * @throws DocumentsException
      */
