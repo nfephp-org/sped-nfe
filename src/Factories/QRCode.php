@@ -74,23 +74,15 @@ class QRCode
         $tpAmb = $ide->getElementsByTagName('tpAmb')->item(0)->nodeValue;
         $dhEmi = $ide->getElementsByTagName('dhEmi')->item(0)->nodeValue;
         $tpEmis = (int)$ide->getElementsByTagName('tpEmis')->item(0)->nodeValue;
-        //documentação não deixa claro o que é esse tp_idDest ???????????
-        $tp_idDest = '';
-        $cDest = (string)!empty($dest->getElementsByTagName('CNPJ')->item(0)->nodeValue)
+        $tp_idDest = ''; //1 - CNPJ, 2 - CPF, 3 - idEstrangeiro e vazio quando não existe dest
+        $cDest = '';
+        if (!empty($dest) && $idDest != 3) {
+            $cDest = (string)!empty($dest->getElementsByTagName('CNPJ')->item(0)->nodeValue)
             ? $dest->getElementsByTagName('CNPJ')->item(0)->nodeValue
-            : '';
-        if (!empty($cDest)) {
-            $tp_idDest = '1'; //CNPJ
+            : $dest->getElementsByTagName('CPF')->item(0)->nodeValue;
+            $tp_idDest = strlen($cDest) == 14 ? '1' : '2'; //CNPJ ou CPF
         }
-        if (empty($cDest)) {
-            $cDest = (string)!empty($dest->getElementsByTagName('CPF')->item(0)->nodeValue)
-                ? $dest->getElementsByTagName('CPF')->item(0)->nodeValue
-                : '';
-            if (!empty($cDest)) {
-                $tp_idDest = '2'; //CPF
-            }
-        }
-        if (empty($cDest)) {
+        if ($idDest == 3) {
             $cDest = (string)$dest->getElementsByTagName('idEstrangeiro')->item(0)->nodeValue;
             $tp_idDest = '3'; //Estrangeiro
         }
