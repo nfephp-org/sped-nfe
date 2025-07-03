@@ -555,7 +555,8 @@ class Tools
             $this->config->CSCid ?? '',
             $qrversion,
             $this->urlService,
-            $this->getURIConsultaNFCe($uf, $tpAmb)
+            $this->getURIConsultaNFCe($uf, $tpAmb),
+            $this->certificate
         );
         $this->modelo = $memmod;
         return Strings::clearXmlString($signed);
