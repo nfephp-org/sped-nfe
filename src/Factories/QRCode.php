@@ -65,17 +65,17 @@ class QRCode
         $nfe = $dom->getElementsByTagName('NFe')->item(0);
         $infNFe = $dom->getElementsByTagName('infNFe')->item(0);
         $layoutver = $infNFe->getAttribute('versao');
-        $ide        = $dom->getElementsByTagName('ide')->item(0);
-        $idDest     = $ide->getElementsByTagName('idDest')->item(0)->nodeValue ?? 1;
-        $dest       = $dom->getElementsByTagName('dest')->item(0);
-        $icmsTot    = $dom->getElementsByTagName('ICMSTot')->item(0);
+        $ide = $dom->getElementsByTagName('ide')->item(0);
+        $idDest = $ide->getElementsByTagName('idDest')->item(0)->nodeValue ?? 1;
+        $dest = $dom->getElementsByTagName('dest')->item(0);
+        $icmsTot = $dom->getElementsByTagName('ICMSTot')->item(0);
         $signedInfo = $dom->getElementsByTagName('SignedInfo')->item(0);
-        $chNFe      = substr($infNFe->getAttribute("Id"), 3, 44);
-        $tpAmb      = $ide->getElementsByTagName('tpAmb')->item(0)->nodeValue;
-        $dhEmi      = $ide->getElementsByTagName('dhEmi')->item(0)->nodeValue;
-        $tpEmis     = (int)$ide->getElementsByTagName('tpEmis')->item(0)->nodeValue;
-        $tp_idDest  = ''; //1 - CNPJ, 2 - CPF, 3 - idEstrangeiro e vazio quando não existe dest
-        $cDest      = '';
+        $chNFe = substr($infNFe->getAttribute("Id"), 3, 44);
+        $tpAmb = $ide->getElementsByTagName('tpAmb')->item(0)->nodeValue;
+        $dhEmi = $ide->getElementsByTagName('dhEmi')->item(0)->nodeValue;
+        $tpEmis = (int)$ide->getElementsByTagName('tpEmis')->item(0)->nodeValue;
+        $tp_idDest = ''; //1 - CNPJ, 2 - CPF, 3 - idEstrangeiro e vazio quando não existe dest
+        $cDest = '';
         if (!empty($dest) && $idDest != 3) {
             $cDest = (string)!empty($dest->getElementsByTagName('CNPJ')->item(0)->nodeValue)
             ? $dest->getElementsByTagName('CNPJ')->item(0)->nodeValue
@@ -83,7 +83,7 @@ class QRCode
             $tp_idDest = strlen($cDest) == 14 ? '1' : '2'; //CNPJ ou CPF
         }
         if ($idDest == 3) {
-            $cDest     = (string)$dest->getElementsByTagName('idEstrangeiro')->item(0)->nodeValue;
+            $cDest = (string)$dest->getElementsByTagName('idEstrangeiro')->item(0)->nodeValue;
             $tp_idDest = '3'; //Estrangeiro
         }
         $vNF = $icmsTot->getElementsByTagName('vNF')->item(0)->nodeValue;
