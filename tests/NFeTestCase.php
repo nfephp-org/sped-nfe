@@ -2,6 +2,7 @@
 
 namespace NFePHP\NFe\Tests;
 
+use NFePHP\Common\Certificate;
 use PHPUnit\Framework\TestCase;
 
 class NFeTestCase extends TestCase
@@ -10,6 +11,7 @@ class NFeTestCase extends TestCase
     public string $configJson = '';
     public string $contentpfx = '';
     public string $passwordpfx = '';
+    public Certificate $certificate;
 
     public function __construct($name = null, array $data = array(), $dataName = '')
     {
@@ -36,5 +38,6 @@ class NFeTestCase extends TestCase
         $this->contentpfx = file_get_contents($this->fixturesPath . "certs/novo_test_certificate.pfx");
         $this->passwordpfx = 'nfephp';
         $this->configJson = json_encode($config);
+        $this->certificate = Certificate::readPfx($this->contentpfx, $this->passwordpfx);
     }
 }

@@ -33,6 +33,7 @@ class QRCode
      * @param string $versao version of field
      * @param string $urlqr URL for search by QRCode
      * @param string $urichave URL for search by chave layout 4.00 only
+     * @param Certificate|null $certificate
      * @throws DocumentsException
      */
     public static function putQRTag(
@@ -41,8 +42,8 @@ class QRCode
         string $idToken,
         string $versao,
         string $urlqr,
-        string $urichave = '',
-        Certificate $certificate = null
+        string $urichave,
+        ?Certificate $certificate = null
     ): string {
         $token = trim($token);
         $idToken = trim($idToken);
@@ -113,7 +114,6 @@ class QRCode
                 $cDest
             );
         } else {
-            //$assinatura = $dom->getElementsByTagName('SignatureValue')->item(0)->nodeValue;
             $qrcode = self::get300(
                 $chNFe,
                 $urlqr,
