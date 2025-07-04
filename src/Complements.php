@@ -214,7 +214,9 @@ class Complements
 
     /**
      * Authorize NFe
-     * @throws \InvalidArgumentException
+     * @param string $request
+     * @param string $response
+     * @return string
      */
     protected static function addNFeProtocol(string $request, string $response): string
     {
@@ -246,29 +248,6 @@ class Complements
         }
         //retorno pode vir sem o protNFe
         $retProt = $ret->getElementsByTagName('protNFe')->length > 0 ? $ret->getElementsByTagName('protNFe') : null;
-        if ($retProt === null && in_array($cStat, ['100', '150', '110', '205', '301', '302', '303'])) {
-            //fabricar um retProt na estrutura esperada
-            $prot = $ret->createElement('protNFe');
-            $prot->setAttribute('versao', '4.00');
-            $infProt = $ret->createElement('infProt');
-            $tp = $ret->createElement('tpAmb', $prottpAmb);
-            $infProt->appendChild($tp);
-            $ver = $ret->createElement('verAplic', $verAplic);
-            $infProt->appendChild($ver);
-            $cha = $ret->createElement('chNFe', $chNFe);
-            $infProt->appendChild($cha);
-            $dh = $ret->createElement('dhRecbto', $dhRecbto);
-            $infProt->appendChild($dh);
-            $digVal = $ret->createElement('digVal', $digNFe);
-            $infProt->appendChild($digVal);
-            $cs = $ret->createElement('cStat', $cStat);
-            $infProt->appendChild($cs);
-            $xm = $ret->createElement('xMotivo', $xMotivo);
-            $infProt->appendChild($xm);
-            $prot->appendChild($infProt);
-            $ret->appendChild($prot);
-            $retProt = $ret->getElementsByTagName('protNFe')->length > 0 ? $ret->getElementsByTagName('protNFe') : null;
-        }
         $digProt = null;
         foreach ($retProt as $rp) {
             $infProt = $rp->getElementsByTagName('infProt')->item(0);
