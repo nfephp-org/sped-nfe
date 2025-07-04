@@ -70,6 +70,8 @@
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
 			<xs:pattern value="[0-9]{15}"/>
+            <xs:maxLength value="17"/>
+            <xs:pattern value="[0-9]{15}|[0-9]{17}"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TRec">
