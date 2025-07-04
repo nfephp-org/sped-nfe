@@ -109,6 +109,10 @@ class Tools
      */
     protected $versao = '4.00';
     /**
+     * @var string|null
+     */
+    protected $qrcode_version = null;
+    /**
      * urlPortal
      * Instância do WebService
      *
@@ -179,7 +183,7 @@ class Tools
      * Loads configurations and Digital Certificate, map all paths, set timezone and instanciate Contingency::class
      * @param string $configJson content of config in json format
      */
-    public function __construct(string $configJson, Certificate $certificate, Contingency $contingency = null)
+    public function __construct(string $configJson, Certificate $certificate, ?Contingency $contingency = null)
     {
         $this->pathwsfiles = realpath(__DIR__ . '/../../storage') . '/';
         //valid config json string
@@ -203,6 +207,18 @@ class Tools
     public function setEnvironmentTimeZone(string $acronym): void
     {
         $this->timezone = TimeZoneByUF::get($acronym);
+    }
+
+    /**
+     * Force use this version for QRCode format in NFCe
+     * @param string $version
+     * @return void
+     */
+    public function forceQRCodeVersion(string $version): void
+    {
+        if ($version == '200' || $version == '300') {
+            $this->qrcode_version = $version;
+        }
     }
 
     /**
@@ -260,7 +276,7 @@ class Tools
      * @param int $model
      * @return int modelo class parameter
      */
-    public function model(int $model = null): int
+    public function model(?int $model = null): int
     {
         if ($model == 55 || $model == 65) {
             $this->modelo = $model;
@@ -273,7 +289,7 @@ class Tools
      * @param string $version
      * @throws InvalidArgumentException
      */
-    public function version(string $version = null): string
+    public function version(?string $version = null): string
     {
         if (null === $version) {
             return $this->versao;
@@ -396,7 +412,7 @@ class Tools
     protected function checkContingencyForWebServices(string $service)
     {
         $type = !empty($this->contingency) ? $this->contingency->type : '';
-        $mod = $this->modelo;
+
         if (!empty($type)) {
             if ($this->modelo == 65) {
                 throw new RuntimeException(
@@ -517,20 +533,27 @@ class Tools
      */
     protected function addQRCode(DOMDocument $dom): string
     {
-        if (empty($this->config->CSC) || empty($this->config->CSCid)) {
-            throw new \RuntimeException("O QRCode não pode ser criado pois faltam dados CSC e/ou CSCId");
-        }
         $memmod = $this->modelo;
         $this->modelo = 65;
         $cUF = $dom->getElementsByTagName('cUF')->item(0)->nodeValue;
         $tpAmb = $dom->getElementsByTagName('tpAmb')->item(0)->nodeValue;
         $uf = UFList::getUFByCode((int)$cUF);
         $this->servico('NfeConsultaQR', $uf, $tpAmb);
+        $qrversion = $this->urlVersion;
+        if (!empty($this->qrcode_version)) {
+            $qrversion = $this->qrcode_version;
+        }
+        if ($qrversion !== '300') {
+            if (empty($this->config->CSC) || empty($this->config->CSCid)) {
+                throw new \RuntimeException("O QRCode não pode ser criado pois faltam dados CSC e/ou CSCId");
+            }
+        }
+        //qrcode versão 3 não requer CSD nem CSCid
         $signed = QRCode::putQRTag(
             $dom,
-            $this->config->CSC,
-            $this->config->CSCid,
-            $this->urlVersion,
+            $this->config->CSC ?? '',
+            $this->config->CSCid ?? '',
+            $qrversion,
             $this->urlService,
             $this->getURIConsultaNFCe($uf, $tpAmb)
         );

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by sas-softwares@procergs.rs.gov.br (PROCERGS) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/nfe" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" targetNamespace="http://www.portalfiscal.inf.br/nfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="tiposBasico_v1.03.xsd"/>
+	<xs:element name="detEvento">
+		<xs:annotation>
+			<xs:documentation>Schema XML de validação do evento de Cancelamento do Comprovante de Entrega da NF-e</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="descEvento">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="Cancelamento Insucesso na Entrega da NF-e"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="cOrgaoAutor" type="TCOrgaoIBGE"/>
+				<xs:element name="verAplic" type="TVerAplic">
+					<xs:annotation>
+						<xs:documentation>Versão do Aplicativo do Autor do Evento</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="nProtEvento" type="TProt">
+					<xs:annotation>
+						<xs:documentation>Número do Protocolo de Autorização do Evento da NF-e a que se refere este cancelamento.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="versao" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:whiteSpace value="preserve"/>
+						<xs:enumeration value="1.00"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

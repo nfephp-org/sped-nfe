@@ -132,8 +132,8 @@ class ValidTXT
                     '?',
                     $field
                 );
-                 $newfield = preg_replace('/\xE0[\x80-\x9F][\x80-\xBF]' .
-                    '|\xED[\xA0-\xBF][\x80-\xBF]/S', '?', $newfield);
+                $newfield = preg_replace('/\xE0[\x80-\x9F][\x80-\xBF]' .
+                   '|\xED[\xA0-\xBF][\x80-\xBF]/S', '?', $newfield);
                 if ($field != $newfield) {
                     $errors[] = "ERRO: ($num) Existem caracteres não UTF-8, não permitidos, "
                         . "no campo [" . htmlentities($newfield) . "]";

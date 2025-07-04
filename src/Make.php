@@ -799,7 +799,7 @@ class Make
     {
         $possible = ['refNFe', 'refNFeSig'];
         $std = $this->equilizeParameters($std, $possible);
-        if (empty($std->refNFe) && empty($std->refNFe)) {
+        if (empty($std->refNFe) && empty($std->refNFeSig)) {
             return $this->dom->createElement("refNFe", '');
         }
         $num = $this->buildNFref();
@@ -1229,7 +1229,7 @@ class Make
             $std->indIEDest = 2;
         }
         if ($this->mod == '65') {
-            $std->indIEDest = 9;
+            $std->indIEDest = '9';
             if (empty($std->xNome)) {
                 $flagNome = false; //marca se xNome é ou não obrigatório
             }
@@ -6189,7 +6189,7 @@ class Make
      * Grupo Totais referentes ao ICMS W02 pai W01
      * tag NFe/infNFe/total/ICMSTot
      */
-    public function tagICMSTot(stdClass $std = null): DOMElement
+    public function tagICMSTot(?stdClass $std = null): DOMElement
     {
         $this->buildTotal();
         $possible = [
@@ -6493,7 +6493,7 @@ class Make
      * tag NFe/infNFe/total/ISSQNTot (opcional)
      * @return DOMElement|void
      */
-    public function tagISSQNTot(stdClass $std = null)
+    public function tagISSQNTot(?stdClass $std = null)
     {
         if (empty($this->aItensServ)) {
             //não existem itens com ISSQN

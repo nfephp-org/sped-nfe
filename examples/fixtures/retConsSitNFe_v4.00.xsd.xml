@@ -1,0 +1,185 @@
+<nfe:retConsSitNFe versao="4.00" xmlns:nfe="http://www.portalfiscal.inf.br/nfe" xmlns:xd="http://www.w3.org/2000/09/xmldsig#">
+  <nfe:tpAmb>1</nfe:tpAmb>
+  <nfe:verAplic>string</nfe:verAplic>
+  <nfe:cStat>stri</nfe:cStat>
+  <nfe:xMotivo>string</nfe:xMotivo>
+  <nfe:cUF>35</nfe:cUF>
+  <nfe:dhRecbto>string</nfe:dhRecbto>
+  <nfe:chNFe>string</nfe:chNFe>
+  <!--Optional:-->
+  <nfe:protNFe versao="string">
+    <nfe:infProt Id="string">
+      <nfe:tpAmb>1</nfe:tpAmb>
+      <nfe:verAplic>string</nfe:verAplic>
+      <nfe:chNFe>string</nfe:chNFe>
+      <nfe:dhRecbto>2004-02-14T16:44:14</nfe:dhRecbto>
+      <!--Optional:-->
+      <nfe:nProt>string</nfe:nProt>
+      <!--Optional:-->
+      <nfe:digVal>dmVycmFudHF1ZQ==</nfe:digVal>
+      <nfe:cStat>stri</nfe:cStat>
+      <nfe:xMotivo>string</nfe:xMotivo>
+    </nfe:infProt>
+    <!--Optional:-->
+    <xd:Signature Id="string">
+      <xd:SignedInfo Id="string">
+        <xd:CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+        <xd:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+        <xd:Reference Id="string" URI="http://www.sample.org/turbine/circum" Type="http://www.test.com/fremunt/foedere">
+          <xd:Transforms>
+            <xd:Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315">
+              <xd:XPath>string</xd:XPath>
+            </xd:Transform>
+            <xd:Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315">
+              <xd:XPath>string</xd:XPath>
+            </xd:Transform>
+          </xd:Transforms>
+          <xd:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+          <xd:DigestValue>c2NlcHRyYQ==</xd:DigestValue>
+        </xd:Reference>
+      </xd:SignedInfo>
+      <xd:SignatureValue Id="string">ZXQ=</xd:SignatureValue>
+      <xd:KeyInfo Id="string">
+        <xd:X509Data>
+          <xd:X509Certificate>dHVyYmluZQ==</xd:X509Certificate>
+        </xd:X509Data>
+      </xd:KeyInfo>
+    </xd:Signature>
+  </nfe:protNFe>
+  <!--Optional:-->
+  <nfe:retCancNFe versao="string">
+    <nfe:infCanc Id="string">
+      <nfe:tpAmb>2</nfe:tpAmb>
+      <nfe:verAplic>string</nfe:verAplic>
+      <nfe:cStat>stri</nfe:cStat>
+      <nfe:xMotivo>string</nfe:xMotivo>
+      <nfe:cUF>43</nfe:cUF>
+      <!--Optional:-->
+      <nfe:chNFe>string</nfe:chNFe>
+      <!--Optional:-->
+      <nfe:dhRecbto>2014-10-27T07:44:59</nfe:dhRecbto>
+      <!--Optional:-->
+      <nfe:nProt>string</nfe:nProt>
+    </nfe:infCanc>
+    <!--Optional:-->
+    <xd:Signature Id="string">
+      <xd:SignedInfo Id="string">
+        <xd:CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+        <xd:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+        <xd:Reference Id="string" URI="http://www.any.edu/ac/hoc" Type="http://www.test.org/caelumque/speluncis">
+          <xd:Transforms>
+            <xd:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature">
+              <xd:XPath>string</xd:XPath>
+            </xd:Transform>
+            <xd:Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315">
+              <xd:XPath>string</xd:XPath>
+            </xd:Transform>
+          </xd:Transforms>
+          <xd:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+          <xd:DigestValue>Y29uaXVueA==</xd:DigestValue>
+        </xd:Reference>
+      </xd:SignedInfo>
+      <xd:SignatureValue Id="string">cHJhZXRlcmVh</xd:SignatureValue>
+      <xd:KeyInfo Id="string">
+        <xd:X509Data>
+          <xd:X509Certificate>YXJjZQ==</xd:X509Certificate>
+        </xd:X509Data>
+      </xd:KeyInfo>
+    </xd:Signature>
+  </nfe:retCancNFe>
+  <!--Zero or more repetitions:-->
+  <nfe:procEventoNFe versao="string">
+    <nfe:evento versao="string">
+      <nfe:infEvento Id="string">
+        <nfe:cOrgao>28</nfe:cOrgao>
+        <nfe:tpAmb>2</nfe:tpAmb>
+        <!--You have a CHOICE of the next 2 items at this level-->
+        <nfe:CNPJ>string</nfe:CNPJ>
+        <nfe:CPF>string</nfe:CPF>
+        <nfe:chNFe>string</nfe:chNFe>
+        <nfe:dhEvento>string</nfe:dhEvento>
+        <nfe:tpEvento>string</nfe:tpEvento>
+        <nfe:nSeqEvento>string</nfe:nSeqEvento>
+        <nfe:verEvento>string</nfe:verEvento>
+        <nfe:detEvento>
+          <!--You may enter ANY elements at this point-->
+          <AnyElement/>
+        </nfe:detEvento>
+      </nfe:infEvento>
+      <xd:Signature Id="string">
+        <xd:SignedInfo Id="string">
+          <xd:CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+          <xd:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+          <xd:Reference Id="string" URI="http://www.any.com/quisquam/et" Type="http://www.sample.gov/ac/sed">
+            <xd:Transforms>
+              <xd:Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315">
+                <xd:XPath>string</xd:XPath>
+              </xd:Transform>
+              <xd:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature">
+                <xd:XPath>string</xd:XPath>
+              </xd:Transform>
+            </xd:Transforms>
+            <xd:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+            <xd:DigestValue>cGVjdG9yZQ==</xd:DigestValue>
+          </xd:Reference>
+        </xd:SignedInfo>
+        <xd:SignatureValue Id="string">YXVzdHJpcw==</xd:SignatureValue>
+        <xd:KeyInfo Id="string">
+          <xd:X509Data>
+            <xd:X509Certificate>YW5ub3M=</xd:X509Certificate>
+          </xd:X509Data>
+        </xd:KeyInfo>
+      </xd:Signature>
+    </nfe:evento>
+    <nfe:retEvento versao="string">
+      <nfe:infEvento Id="string">
+        <nfe:tpAmb>2</nfe:tpAmb>
+        <nfe:verAplic>string</nfe:verAplic>
+        <nfe:cOrgao>52</nfe:cOrgao>
+        <nfe:cStat>stri</nfe:cStat>
+        <nfe:xMotivo>string</nfe:xMotivo>
+        <!--Optional:-->
+        <nfe:chNFe>string</nfe:chNFe>
+        <!--Optional:-->
+        <nfe:tpEvento>string</nfe:tpEvento>
+        <!--Optional:-->
+        <nfe:xEvento>string</nfe:xEvento>
+        <!--Optional:-->
+        <nfe:nSeqEvento>string</nfe:nSeqEvento>
+        <!--You have a CHOICE of the next 2 items at this level-->
+        <nfe:CNPJDest>string</nfe:CNPJDest>
+        <nfe:CPFDest>string</nfe:CPFDest>
+        <!--Optional:-->
+        <nfe:emailDest>string</nfe:emailDest>
+        <nfe:dhRegEvento>string</nfe:dhRegEvento>
+        <!--Optional:-->
+        <nfe:nProt>string</nfe:nProt>
+      </nfe:infEvento>
+      <!--Optional:-->
+      <xd:Signature Id="string">
+        <xd:SignedInfo Id="string">
+          <xd:CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+          <xd:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+          <xd:Reference Id="string" URI="http://www.sample.com/bella/volutans" Type="http://www.your.com/magno/et">
+            <xd:Transforms>
+              <xd:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature">
+                <xd:XPath>string</xd:XPath>
+              </xd:Transform>
+              <xd:Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315">
+                <xd:XPath>string</xd:XPath>
+              </xd:Transform>
+            </xd:Transforms>
+            <xd:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+            <xd:DigestValue>cmVnZW1xdWU=</xd:DigestValue>
+          </xd:Reference>
+        </xd:SignedInfo>
+        <xd:SignatureValue Id="string">YW5ub3M=</xd:SignatureValue>
+        <xd:KeyInfo Id="string">
+          <xd:X509Data>
+            <xd:X509Certificate>aW5maXhpdA==</xd:X509Certificate>
+          </xd:X509Data>
+        </xd:KeyInfo>
+      </xd:Signature>
+    </nfe:retEvento>
+  </nfe:procEventoNFe>
+</nfe:retConsSitNFe>

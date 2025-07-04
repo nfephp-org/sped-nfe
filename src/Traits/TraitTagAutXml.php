@@ -2,14 +2,14 @@
 
 namespace NFePHP\NFe\Traits;
 
-use NFePHP\Common\DOMImproved;
+use NFePHP\Common\DOMImproved as Dom;
 use stdClass;
 use DOMElement;
 
 /**
- * @method equilizeParameters($std, $possible)
- * @property DOMImproved $dom
+ * @property Dom $dom
  * @property array $aAutXML
+ * @method equilizeParameters($std, $possible)
  */
 
 trait TraitTagAutXml

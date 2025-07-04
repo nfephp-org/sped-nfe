@@ -116,7 +116,7 @@ class Tools extends ToolsCommon
      * @param int $tpAmb
      * @throws InvalidArgumentException
      */
-    public function sefazConsultaRecibo(string $recibo, int $tpAmb = null): string
+    public function sefazConsultaRecibo(string $recibo, ?int $tpAmb = null): string
     {
         if (empty($recibo)) {
             throw new InvalidArgumentException('Consulta Recibo: numero do recibo vazio!');
@@ -150,7 +150,7 @@ class Tools extends ToolsCommon
      * @param int $tpAmb
      * @throws InvalidArgumentException
      */
-    public function sefazConsultaChave(string $chave, int $tpAmb = null): string
+    public function sefazConsultaChave(string $chave, ?int $tpAmb = null): string
     {
         if (empty($chave)) {
             throw new InvalidArgumentException('Consulta chave: a chave esta vazia!');
@@ -194,8 +194,8 @@ class Tools extends ToolsCommon
         int $nIni,
         int $nFin,
         string $xJust,
-        int $tpAmb = null,
-        string $ano = null
+        ?int $tpAmb = null,
+        ?string $ano = null
     ): string {
         if (empty($nIni) || empty($nFin) || empty($xJust)) {
             throw new InvalidArgumentException('Inutilizacao: parametros incompletos!');
@@ -345,7 +345,7 @@ class Tools extends ToolsCommon
      * @param bool $ignoreContingency
      * @return string xml soap response
      */
-    public function sefazStatus(string $uf = '', int $tpAmb = null, bool $ignoreContingency = true): string
+    public function sefazStatus(string $uf = '', ?int $tpAmb = null, bool $ignoreContingency = true): string
     {
         if (empty($tpAmb)) {
             $tpAmb = $this->tpAmb;
@@ -379,7 +379,7 @@ class Tools extends ToolsCommon
      * @param string $fonte data source 'AN' and for some cases it may be 'RS'
      * @return string
      */
-    public function sefazDistDFe(int $ultNSU = 0, int $numNSU = 0, string $chave = null, string $fonte = 'AN'): string
+    public function sefazDistDFe(int $ultNSU = 0, int $numNSU = 0, ?string $chave = null, string $fonte = 'AN'): string
     {
         //carrega serviço
         $servico = 'NfeDistribuicaoDFe';
@@ -623,7 +623,7 @@ class Tools extends ToolsCommon
         string $xJust,
         string $nProt,
         string $chNFeRef,
-        string $verAplic = null,
+        ?string $verAplic = null,
         ?\DateTimeInterface $dhEvento = null,
         ?string $lote = null
     ): string {
@@ -862,7 +862,7 @@ class Tools extends ToolsCommon
             $std->verAplic = $this->verAplic;
         }
         $tpEvento = self::EVT_CONCILIACAO;
-        $cod = UFList::getCodeByUF($this->config->siglaUF);
+
         $tagAdic = "<verAplic>{$std->verAplic}</verAplic>";
         if (!empty($std->detPag) && is_array($std->detPag)) {
             foreach ($std->detPag as $pag) {
@@ -993,7 +993,7 @@ class Tools extends ToolsCommon
      * @throws InvalidArgumentException
      * @throws RuntimeException
      */
-    public function sefazEPEC(string &$xml, string $verAplic = null): string
+    public function sefazEPEC(string &$xml, ?string $verAplic = null): string
     {
         if (empty($xml)) {
             throw new InvalidArgumentException('EPEC: parâmetro xml esta vazio!');
@@ -1305,7 +1305,7 @@ class Tools extends ToolsCommon
         //verifica a validade no webservice da SEFAZ
         $tpAmb = $dom->getElementsByTagName('tpAmb')->item(0)->nodeValue;
         $infNFe  = $dom->getElementsByTagName('infNFe')->item(0);
-        $chNFe = preg_replace('/[^0-9]/', '', $infNFe->getAttribute("Id"));
+        $chNFe = substr($infNFe->getAttribute("Id"), 3, 44);
         $protocol = $dom->getElementsByTagName('nProt')->item(0)->nodeValue;
         $digval = $dom->getElementsByTagName('DigestValue')->item(0)->nodeValue;
         //consulta a NFe

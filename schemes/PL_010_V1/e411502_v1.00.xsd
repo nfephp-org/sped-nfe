@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/nfe" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" targetNamespace="http://www.portalfiscal.inf.br/nfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:include schemaLocation="tiposBasico_v1.03.xsd"/>
+  <xs:element name="detEvento">
+    <xs:annotation>
+            <xs:documentation>Informações do Fisco</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="descEvento">
+                <xs:annotation>
+                    <xs:documentation>Fisco Prorrogação ICMS remessa para industrialização</xs:documentation>
+                </xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Fisco - Prorrogação ICMS remessa para industrialização" />
+						<xs:enumeration value="Fisco - Prorrogacao ICMS remessa para industrializacao" />
+					</xs:restriction>
+				</xs:simpleType>
+            </xs:element>
+            <xs:element name="idPedido">
+                <xs:annotation>
+                    <xs:documentation>Identificador do Pedido de Prorrogação ou Cancelamento de Pedido de Prorrogação que deu origem ao evento do Fisco, a regra de formação do Id é:
+                        ID + tpEvento + chave da NF-e + nSeqEvento
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:ID">
+                        <xs:pattern value="ID[0-9]{52}"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="respCancPedido" type="TRespCancPedido"/>  
+        </xs:sequence>
+        <xs:attribute name="versao" use="required">
+            <xs:annotation>
+                <xs:documentation>Versão do Fisco</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:whiteSpace value="preserve"/>
+                    <xs:enumeration value="1.00"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:complexType name="TRespCancPedido">
+    <xs:annotation>
+        <xs:documentation>Resposta a um tpEvento 111502 ou 111503.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+        <xs:element name="statCancPedido">
+            <xs:annotation>
+                <xs:documentation>Resposta do Fisco ao Cancelamento do Pedido de Prorrogação: 1 - Deferido, 2 - Indeferido</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:whiteSpace value="preserve" /> 
+                    <xs:enumeration value="1" /> 
+                    <xs:enumeration value="2" />
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:element>
+        <xs:element name="justStatus">
+            <xs:annotation>
+                <xs:documentation>Justificativa da resposta do Fisco ao Cancelamento de Pedido de Prorrogação</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:whiteSpace value="preserve" /> 
+                    <xs:enumeration value="1" /> 
+                    <xs:enumeration value="2" />
+                    <xs:enumeration value="3" />
+					<xs:enumeration value="4" />
+					<xs:enumeration value="5" />
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:element>
+		<xs:element name="justStaOutra" maxOccurs="1" minOccurs="0" >
+            <xs:annotation>
+                <xs:documentation>Justificativa diferente das opções disponíveis no campo P29</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+					<xs:minLength value="0"/>
+					<xs:maxLength value="1000"/>
+				</xs:restriction>
+            </xs:simpleType>
+        </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+ 
+</xs:schema>

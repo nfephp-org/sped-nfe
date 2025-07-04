@@ -8,10 +8,12 @@ use NFePHP\NFe\Tools;
 use NFePHP\NFe\Make;
 use NFePHP\Common\Certificate;
 use NFePHP\Common\Soap\SoapFake;
+use NFePHP\NFe\Common\Standardize;
+use NFePHP\NFe\Complements;
 
 $arr = [
     "atualizacao" => "2017-02-20 09:11:21",
-    "tpAmb"       => 2,
+    "tpAmb"       => 2, //Homologação
     "razaosocial" => "SUA RAZAO SOCIAL LTDA",
     "cnpj"        => "99999999999999",
     "siglaUF"     => "SP",
@@ -37,7 +39,6 @@ $tools = new Tools($configJson, Certificate::readPfx($pfxcontent, 'associacao'))
 $tools->model('65');
 
 try {
-
     $make = new Make();
 
 
@@ -63,7 +64,7 @@ try {
     $std->tpImp = 1;
     $std->tpEmis = 1;
     $std->cDV = 2;
-    $std->tpAmb = 2;
+    $std->tpAmb = 2; //Homologação
     $std->finNFe = 1;
     $std->indFinal = 1;
     $std->indPres = 1;
@@ -163,7 +164,7 @@ try {
     $tag->infAdProd = 'DE POLIESTER 100%';
     $make->taginfAdProd($tag);
 
-    //Imposto 
+    //Imposto
     $std = new stdClass();
     $std->item = 1; //item da NFe
     $std->vTotTrib = 25.00;
@@ -286,16 +287,33 @@ try {
 
     $make->monta();
     $xml = $make->getXML();
-    
 
+    //Assina
     $xml = $tools->signNFe($xml);
+
+    //Envia para a Sefaz
+    $idLote = str_pad(1, 15, '0', STR_PAD_LEFT); // Identificador do lote
+    $response = $tools->sefazEnviaLote([$xml], $idLote, 1); //1 = envio síncrono
+
+    $stdCl = new Standardize($response);
+    $respObj = $stdCl->toStd();
+    
+    if ($respObj->cStat != 104) {
+        throw new \Exception(sprintf('Lote não enviado (%s - %s)', $respObj->cStat, $respObj->xMotivo));
+    }
+
+    if ($respObj->protNFe->infProt->cStat != 100) {
+        throw new \Exception(sprintf('Nfce não autorizada (%s - %s)', $respObj->protNFe->infProt->cStat, $respObj->protNFe->infProt->xMotivo));
+    }
+
+    //Salva o protocolo de autorização no xml
+    $authorizedXml = Complements::toAuthorize($xml, $response);
+
+    //Gera o arquivo xml e salva
+    file_put_contents(__DIR__. '/nfce_protocolado.xml', $authorizedXml);
     
     header('Content-Type: application/xml; charset=utf-8');
-    echo $xml;
-    
+    echo $authorizedXml;
 } catch (\Exception $e) {
     echo $e->getMessage();
-}    
-
-
-
+}
