@@ -76,15 +76,17 @@ class QRCode
         $tpEmis = (int)$ide->getElementsByTagName('tpEmis')->item(0)->nodeValue;
         $tp_idDest = ''; //1 - CNPJ, 2 - CPF, 3 - idEstrangeiro e vazio quando não existe dest
         $cDest = '';
-        if (!empty($dest) && $idDest != 3) {
-            $cDest = (string)!empty($dest->getElementsByTagName('CNPJ')->item(0)->nodeValue)
-            ? $dest->getElementsByTagName('CNPJ')->item(0)->nodeValue
-            : $dest->getElementsByTagName('CPF')->item(0)->nodeValue;
-            $tp_idDest = strlen($cDest) == 14 ? '1' : '2'; //CNPJ ou CPF
-        }
-        if ($idDest == 3) {
-            $cDest = (string)$dest->getElementsByTagName('idEstrangeiro')->item(0)->nodeValue;
-            $tp_idDest = '3'; //Estrangeiro
+        if (!empty($dest)) {
+            if (!empty($dest->getElementsByTagName('CNPJ')->item(0)->nodeValue)) {
+                $cDest = $dest->getElementsByTagName('CNPJ')->item(0)->nodeValue;
+                $tp_idDest = 1;
+            } elseif (!empty($dest->getElementsByTagName('CPF')->item(0)->nodeValue)) {
+                $cDest = $dest->getElementsByTagName('CPF')->item(0)->nodeValue;
+                $tp_idDest = 2;
+            } elseif (!empty($dest->getElementsByTagName('idEstrangeiro')->item(0)->nodeValue)) {
+                $cDest = $dest->getElementsByTagName('idEstrangeiro')->item(0)->nodeValue;
+                $tp_idDest = 3;
+            }
         }
         $vNF = $icmsTot->getElementsByTagName('vNF')->item(0)->nodeValue;
         $vICMS = $icmsTot->getElementsByTagName('vICMS')->item(0)->nodeValue;
