@@ -113,7 +113,7 @@ class QRCode
                 $dhEmi,
                 $vNF,
                 $tpEmis,
-                (int) $tp_idDest,
+                $tp_idDest,
                 $cDest,
                 $certificate
             );
@@ -176,7 +176,7 @@ class QRCode
      * @param string $dhEmi
      * @param string $vNF
      * @param int $tpEmis
-     * @param int $tp_idDest
+     * @param string $tp_idDest
      * @param string $cDest
      * @param Certificate $certificate
      * @return string
@@ -189,7 +189,7 @@ class QRCode
         string $dhEmi,
         string $vNF,
         int $tpEmis,
-        int $tp_idDest,
+        string $tp_idDest,
         string $cDest,
         Certificate $certificate
     ): string {
