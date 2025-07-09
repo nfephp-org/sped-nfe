@@ -1546,16 +1546,18 @@ final class MakeDev
         }
         if ($this->schema > 9) {
             //Totalizador do IS
-            if (empty($this->ISTot)) {
+            if (empty($this->ISTot) && !empty($this->stdIStot->vIS)) {
                 //não foi informado o total do IS, obter do calculado
                 $tis = [
-                    'vIS' => null
+                    'vIS' => $this->stdIStot->vIS
                 ];
                 $this->tagISTot((object) $tis);
             }
-            $this->addTag($total, $this->ISTot);
+            if (!empty($this->ISTot)) {
+                $this->addTag($total, $this->ISTot);
+            }
             //Totalizador do IBSCBS
-            if (empty($this->IBSCBSTot)) {
+            if (empty($this->IBSCBSTot) && !empty($this->stdIBSCBSTot->vBCIBSCBS)) {
                 //não foi informado o total do IBSCBS, obter do calculado
                 $ib = [
                     'vBCIBSCBS',
@@ -1582,16 +1584,18 @@ final class MakeDev
                 ];
                 $this->tagIBSCBSTot((object) $ib);
             }
-            $this->addTag($total, $this->IBSCBSTot);
-            //campo vNFTot PL_010
-            $vNFTot = $this->stdTot->vNF + $this->stdTot->vIBS + $this->stdTot->vCBS + $this->stdTot->vIS;
-            $this->dom->addChild(
-                $total,
-                "vNFTot",
-                $this->conditionalNumberFormatting($vNFTot, 2),
-                false,
-                "$identificador Valor total da NF-e com IBS / CBS / IS"
-            );
+            if (!empty($this->IBSCBSTot)) {
+                $this->addTag($total, $this->IBSCBSTot);
+                //campo vNFTot PL_010
+                $vNFTot = $this->stdTot->vNF + $this->stdTot->vIBS + $this->stdTot->vCBS + $this->stdTot->vIS;
+                $this->dom->addChild(
+                    $total,
+                    "vNFTot",
+                    $this->conditionalNumberFormatting($vNFTot, 2),
+                    false,
+                    "$identificador Valor total da NF-e com IBS / CBS / IS"
+                );
+            }
         }
         $this->addTag($this->infNFe, $total);
     }
