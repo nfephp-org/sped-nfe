@@ -1587,7 +1587,7 @@ final class MakeDev
             if (!empty($this->IBSCBSTot)) {
                 $this->addTag($total, $this->IBSCBSTot);
                 //campo vNFTot PL_010
-                $vNFTot = $this->stdTot->vNF + $this->stdTot->vIBS + $this->stdTot->vCBS + $this->stdTot->vIS;
+                $vNFTot = $this->stdTot->vNF; //+ $this->stdTot->vIBS + $this->stdTot->vCBS + $this->stdTot->vIS;
                 $this->dom->addChild(
                     $total,
                     "vNFTot",
