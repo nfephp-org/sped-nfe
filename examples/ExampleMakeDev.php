@@ -752,6 +752,7 @@ try {
         'pBCOp',
         'UFST'
     ];
+    $mk->tagICMSPart((object)$ic);
 
     //ICMSSN
     //Tributação do ICMS pelo SIMPLES NACIONAL
@@ -787,6 +788,7 @@ try {
         'vICMSEfet',
         'vICMSSubstituto'
     ];
+    $mk->tagICMSSN((object)$ic);
 
     //ICMSST
     //Grupo de informação do ICMSST devido para a UF de destino, nas operações interestaduais de produtos que
