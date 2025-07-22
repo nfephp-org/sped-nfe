@@ -5,6 +5,7 @@ namespace NFePHP\NFe\Traits;
 use NFePHP\Common\DOMImproved;
 use stdClass;
 use DOMElement;
+use DOMException;
 
 /**
  * @method equilizeParameters($std, $possible)
@@ -19,7 +20,7 @@ trait TraitTagDetIS
      * Grupo IS (Imposto selectivo) UB01 pai H01
      * @param stdClass $std
      * @return DOMElement
-     * @throws \DOMException
+     * @throws DOMException
      */
     public function tagIS(stdClass $std): DOMElement
     {

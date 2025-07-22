@@ -684,8 +684,8 @@ $mk->tagrastro($std);
 
 # Informações específicas de produtos e serviços
 
-> **Haverá um "choice" (escolha) entre os registros desse grupo portanto apenas um será inserido no item da NFe**
-> **E essa escolha será feita ne sequencia de inserção no XML, portanto tenha atenção a isso !!** 
+> **Haverá um "choice" (escolha) entre os registros desse grupo, portanto apenas um será inserido no item da NFe**
+> **E essa escolha será feita na sequência de inserção no XML, sendo usado o primeiro grupo encontrado, dentre os possíveis, portanto tenha atenção a isso !!** 
 
 ## function tagveicProd(object $veic): DOMElement  (SEM ALTERAÇÃO)
 Node prod/veicProd - Veículos novos - OPCIONAL
@@ -912,7 +912,6 @@ $mk->tagRECOPI((object) $rc);
 
 # FIM das Informações específicas de produtos e serviços
 
-
 ## function tagimposto(object $std): DOMElement    (SEM ALTERAÇÂO)
 Node det/imposto - Grupo de Impostos - OBRIGATÓRIO
 
@@ -927,34 +926,577 @@ $std->vTotTrib = 0; //opcional Valor estimado total de impostos federais, estadu
 $mk->tagimposto($std);
 ```
 
+## Grupo de dados relativos ao ICMS
+> **Haverá um "choice" (escolha) entre os registros desse grupo, portanto apenas um será inserido no item da NFe**
+> Choice (ICMSXX ou ICMSPart ou ICMSSN ou ICMSST)
+> **E essa escolha será feita na sequência de inserção no XML, sendo usado o primeiro grupo encontrado, dentre os possíveis, portanto tenha atenção a isso !!** 
 
+## function tagICMS(object $std): DOMElement    (SEM ALTERAÇÂO)
+Node det/imposto/ICMS/ICMSxx - Grupo do ICMS - opcional
+
+> NOTA: os campos serão usados conforme o CST indicado, e todos os campos que não pertencem ao CST indicado serão ignorados.
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+
+```php
+$std = new stdClass();
+$std->item = 1; //OBRIGATÓRIO item da NFe 
+$std->orig = 0; //OBRIGATÓRIO Origem da Mercadoria/Serviço
+    //0 - Nacional, exceto as indicadas nos códigos 3 a 5;
+    //1 - Estrangeira - Importação direta, exceto a indicada no código 6;
+    //2 - Estrangeira - Adquirida no mercado interno, exceto a indicada no código 7;
+    //3 - Nacional, mercadoria ou bem com Conteúdo de Importação superior a 40%;
+    //4 - Nacional, cuja produção tenha sido feita em conformidade com os processos produtivos básicos de que tratam o Decreto-Lei nº 288/1967 , e as Leis nºs 8.248/1991, 8.387/1991, 10.176/2001 e 11.484/2007;
+    //5 - Nacional, mercadoria ou bem com Conteúdo de Importação inferior ou igual a 40%;
+    //6 - Estrangeira - Importação direta, sem similar nacional, constante em lista de Resolução Camex e gás natural;
+    //7 - Estrangeira - Adquirida no mercado interno, sem similar nacional, constante em lista de Resolução Camex e gás natural.  
+$std->CST = '00'; //OBRIGATÓRIO Código de Situação Tributária
+    //00 - tributada integralmente.
+    //02 - Tributação monofásica própria sobre combustíveis
+    //10 - tributada e com cobrança do ICMS por substituição tributária.
+    //15 - Tributação monofásica própria e com responsabilidade pela retenção sobre combustíveis
+    //20 - tributada com redução de base de cálculo.
+    //30 - isenta ou não tributada e com cobrança do ICMS por substituição tributária.
+    //40 - isenta.
+    //41 - não tributada.
+    //50 - suspensão.
+    //51 - diferimento (a exigência do preenchimento das informações do ICMS diferido fica a critério de cada UF).
+    //53 - Tributação monofásica sobre combustíveis com recolhimento diferido
+    //60 - cobrado anteriormente por substituição tributária.
+    //61 - Tributação monofásica sobre combustíveis cobrada anteriormente
+    //70 - tributada com redução de base de cálculo e com cobrança do ICMS por substituição tributária.
+    //90 - outras (regime Normal).
+$std->modBC = '3'; //OBRIGATÓRIO Modalidade de determinação da BC do ICMS
+    //0 - Margem Valor Agregado (%).
+    //1 - Pauta (Valor).
+    //2 - Preço Tabelado Máx. (valor).
+    //3 - Valor da operação
+$std->vBC = '1200'; //OBRIGATÓRIO Valor da Base de Cálculo do ICMS
+$std->pICMS = 10; //opcional Percentual de ICMS
+$std->vICMS = 120; //opcional Valor do ICMS
+$std->pFCP = null; //opcional Percentual do Fundo de Combate a Pobreza do ICMS
+$std->vFCP = null; //opcional Valor do Fundo de Combate a Pobreza
+$std->vBCFCP = null; //opcional Valor da Base de Cálculo do Fundo de Combate a Porbreza
+$std->modBCST = null; //opcional Modalidade de determinação da base de cálculo do ICMS ST
+    //0 - Preço tabelado ou máximo sugerido.
+    //1 - Lista Negativa (valor).
+    //2 - Lista Positiva (valor).
+    //3 - Lista Neutra (valor).
+    //4 - Margem Valor Agregado (%).
+    //5 - Pauta (valor).
+$std->pMVAST = null; //opcional Percentual da margem de valor Adicionado do ICMS ST 
+$std->pRedBCST = null; //opcional Percentual da Redução de Base de Cálculo do ICMS ST
+$std->vBCST = null; //opcional Valor da Base de Calculo do ICMS ST
+$std->pICMSST = null; //opcional Percentual do ICMS ST
+$std->vICMSST = null; //opcional Valor do ICMS ST
+$std->vBCFCPST = null; //opcional Valor da Base de Cálculo do Fundo de Combate a Pobreza do ICMS ST 
+$std->pFCPST = null; //opcional Percentual do Fundo de Combate a Pobreza do ICMS ST
+$std->vFCPST = null; //opcional Valor do Fundo de Combate a Pobreza do ICMS ST
+$std->vICMSDeson = null; //opcional Valor do ICMS Desonerado
+$std->motDesICMS = null; //opcional Motivo da Deseoneração do ICMS
+    //3-Uso na agropecuária;
+    //9-Outros;
+    //12-Fomento agropecuário
+$std->pRedBC = null; //opcional Percentual da Redução de Base de Cálculo do ICMS 
+$std->vICMSOp = null; //opcional Valor do ICMS da Operação
+$std->pDif = null; //opcional Percentual do diferemento
+$std->vICMSDif = null; //opcional Valor do ICMS da diferido
+$std->vBCSTRet = null; //opcional Valor da BC do ICMS ST retido anteriormente
+$std->pST = null; //opcional Aliquota suportada pelo consumidor final
+std->vICMSSTRet = null; //opcional Valor do ICMS ST retido anteriormente
+$std->vBCFCPSTRet = null; //opcional Valor da Base de cálculo do FCP retido anteriormente por ST
+$std->pFCPSTRet = null; //opcional Percentual de FCP retido anteriormente por substituição tributária
+$std->vFCPSTRet = null; //opcional Valor do FCP retido por substituição tributária
+$std->pRedBCEfet = null; //opcional Percentual de redução da base de cálculo efetiva
+$std->vBCEfet = null; //opcional Valor da base de cálculo efetiva
+$std->pICMSEfet = null; //opcional Alíquota do ICMS efetiva
+$std->vICMSEfet = null; //opcional Valor do ICMS efetivo
+$std->vICMSSubstituto = null; //opcional alor do ICMS Próprio do Substituto cobrado em operação anterior
+$mk->tagICMS($std);
+```
+
+## function tagICMSPart(object $std): DOMElement    (SEM ALTERAÇÂO)
+Node det/imposto/ICMS/ICMSPart
+
+> Partilha do ICMS entre a UF de origem e UF de destino ou a UF definida na legislação.
+> Operação interestadual para consumidor final com partilha do ICMS  devido na operação entre a UF de origem e a UF do destinatário ou a UF definida na legislação. (Ex. UF da concessionária de entrega de veículos)
+
+```php
+$ic = [
+    'item' => 1, //OBRIGATÓRIO item da NFe 
+    'orig' => '0', //OBRIGATÓRIO Origem da Mercadoria/Serviço
+        //0 - Nacional, exceto as indicadas nos códigos 3 a 5;
+        //1 - Estrangeira - Importação direta, exceto a indicada no código 6;
+        //2 - Estrangeira - Adquirida no mercado interno, exceto a indicada no código 7;
+        //3 - Nacional, mercadoria ou bem com Conteúdo de Importação superior a 40%;
+        //4 - Nacional, cuja produção tenha sido feita em conformidade com os processos produtivos básicos de que tratam o Decreto-Lei nº 288/1967 , e as Leis nºs 8.248/1991, 8.387/1991, 10.176/2001 e 11.484/2007;
+        //5 - Nacional, mercadoria ou bem com Conteúdo de Importação inferior ou igual a 40%;
+        //6 - Estrangeira - Importação direta, sem similar nacional, constante em lista de Resolução Camex e gás natural;
+        //7 - Estrangeira - Adquirida no mercado interno, sem similar nacional, constante em lista de Resolução Camex e gás natural. 
+    'CST' => '10', //OBRIGATÓRIO Tributação do ICMS
+        //10 - tributada e com cobrança do ICMS por substituição tributária.
+        //90 - outras (regime Normal).
+    'modBC' => 3, //OBRIGATÓRIO Modalidade de determinação da BC do ICMS
+        //0 - Margem Valor Agregado (%);
+        //1 - Pauta (valor);
+        //2 - Preço Tabelado Máximo (valor);
+        //3 - Valor da Operação.
+    'vBC' => 100, //OBRIGATÓRIO Valor da Base de Cálculo do ICMSPart
+    'pRedBC' => null, //opcional Percentual da Redução de Base de Cálculo
+    'pICMS' => 18, //OBRIGATÓRIO Aliquota do ICMS
+    'vICMS' => 18.00, //OBRIGATÓRIO Valor do ICMS
+    'modBCST' => null,//opcional Modalidade de determinação da BC do ICMS ST
+        //0 – Preço tabelado ou máximo sugerido;
+        //1 - Lista Negativa (valor);
+        //2 - Lista Positiva (valor);
+        //3 - Lista Neutra (valor);
+        //4 - Margem Valor Agregado (%);
+        //5 - Pauta (valor).
+        //6 - Valor da Operação
+    'pMVAST' => null, //opcional Percentual da Margem de Valor Adicionado ICMS ST
+    'pRedBCST' => null, //opcional Percentual de redução da BC ICMS ST
+    'vBCST' => 0, //OBRIGATÓRIO Valor da BC do ICMS ST
+    'pICMSST' => 0, //OBRIGATÓRIO Alíquota do ICMS ST
+    'vICMSST' => 0, //OBRIGATÓRIO Valor do ICMS ST
+    //subgrupo - os parámetros abaixo compõe um subgrupo se um for informado, os demais parametros também devem ser
+    'vBCFCPST' => null, //opcional Valor da Base de cálculo do FCP retido por substituicao tributaria.
+    'pFCPST' => null, //opcional Percentual de FCP retido por substituição tributária.
+    'vFCPST' => null, //opcional Valor do FCP retido por substituição tributária.
+    //fim subgrupo
+    'pBCOp' => null, //OBRIGATÓRIO Percentual para determinação do valor  da Base de Cálculo da operação própria.
+    'UFST' => null //OBRIGATÓRIO Sigla da UF para qual é devido o ICMS ST da operação.
+];
+$mk->tagICMSPart((object)$ic);
+```
+
+## function tagICMSST(object $std): DOMElement    (SEM ALTERAÇÂO)
+Node det/imposto/ICMS/ICMSST
+
+> Grupo de informação do ICMSST devido para a UF de destino, nas operações interestaduais de produtos que tiveram retenção antecipada de ICMS por ST na UF do remetente. Repasse via Substituto Tributário.
+
+```php
+$ic = [
+    'item' => 1, //OBRIGATÓRIO item da NFe 
+    'orig' => '0', //OBRIGATÓRIO Origem da Mercadoria/Serviço
+        //0 - Nacional, exceto as indicadas nos códigos 3 a 5;
+        //1 - Estrangeira - Importação direta, exceto a indicada no código 6;
+        //2 - Estrangeira - Adquirida no mercado interno, exceto a indicada no código 7;
+        //3 - Nacional, mercadoria ou bem com Conteúdo de Importação superior a 40%;
+        //4 - Nacional, cuja produção tenha sido feita em conformidade com os processos produtivos básicos de que tratam o Decreto-Lei nº 288/1967 , e as Leis nºs 8.248/1991, 8.387/1991, 10.176/2001 e 11.484/2007;
+        //5 - Nacional, mercadoria ou bem com Conteúdo de Importação inferior ou igual a 40%;
+        //6 - Estrangeira - Importação direta, sem similar nacional, constante em lista de Resolução Camex e gás natural;
+        //7 - Estrangeira - Adquirida no mercado interno, sem similar nacional, constante em lista de Resolução Camex e gás natural. 
+    'CST' => '41', //OBRIGATÓRIO Tributação do ICMS
+        //41 - Não Tributado.                                    
+        //60 - Cobrado anteriormente por substituição tributária.
+    'vBCSTRet' => 100, //OBRIGATÓRIO Informar o valor da BC do ICMS ST retido na UF remetente
+    'vICMSSTRet' => 17, //OBRIGATÓRIO Informar o valor do ICMS ST retido na UF remetente (iv2.0))
+    'vBCSTDest' => 100, //OBRIGATÓRIO Informar o valor da BC do ICMS ST da UF destino
+    'vICMSSTDest' => 17, //OBRIGATÓRIO Informar o valor da BC do ICMS ST da UF destino (v2.0)
+    //subgrupo
+    'vBCFCPSTRet' => null, //opcional Informar o valor da Base de Cálculo do FCP retido anteriormente por ST.
+    'pFCPSTRet' => null, //opcional Percentual relativo ao Fundo de Combate à Pobreza (FCP) retido por substituição tributária.
+    'vFCPSTRet' => null, //opcional Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP) retido por substituição tributária.
+    //fim subgrupo
+    'pST' => null, //opcional Aliquota suportada pelo consumidor final
+    'vICMSSubstituto' => null, //opcional Valor do ICMS Próprio do Substituto cobrado em operação anterio
+    //subgrupo
+    'pRedBCEfet' => null, //opcional Percentual de redução da base de cálculo efetiva.
+    'vBCEfet' => null, //opcional Valor da base de cálculo efetiva
+    'pICMSEfet' => null, //opcional Alíquota do ICMS efetivo.
+    'vICMSEfet' => null //opcional Valor do ICMS efetivo.
+    //fim subgrupo
+];
+$mk->tagICMSST((object) $ic);
+```
+
+## function tagICMSSN(object $std): DOMElement    (SEM ALTERAÇÂO)
+Node det/imposto/ICMS/ICMSSNXXX
+
+> Tributação do ICMS pelo SIMPLES NACIONAL, usado apenas para empresas CRT 1 - Simples Nacional 
+> NOTA: os parametros são opcionais ou obrigatórios dependendo do CSOSN selecionado vide documentação da NFe
+
+```php
+$ic = [
+    'item' => 1, //OBRIGATÓRIO item da NFe 
+    'orig' => '0', //OBRIGATÓRIO Origem da Mercadoria/Serviço
+        //0 - Nacional, exceto as indicadas nos códigos 3 a 5;
+        //1 - Estrangeira - Importação direta, exceto a indicada no código 6;
+        //2 - Estrangeira - Adquirida no mercado interno, exceto a indicada no código 7;
+        //3 - Nacional, mercadoria ou bem com Conteúdo de Importação superior a 40%;
+        //4 - Nacional, cuja produção tenha sido feita em conformidade com os processos produtivos básicos de que tratam o Decreto-Lei nº 288/1967 , e as Leis nºs 8.248/1991, 8.387/1991, 10.176/2001 e 11.484/2007;
+        //5 - Nacional, mercadoria ou bem com Conteúdo de Importação inferior ou igual a 40%;
+        //6 - Estrangeira - Importação direta, sem similar nacional, constante em lista de Resolução Camex e gás natural;
+        //7 - Estrangeira - Adquirida no mercado interno, sem similar nacional, constante em lista de Resolução Camex e gás natural. 
+    'CSOSN' => '102', //OBRIGATÓRIO Código de Situação da Operação no Simples Nacional
+        //101 - Tributação pelo Simples com Permissão de Crédito
+        //102 - Tributação pelo Simples sem Permissão de Crédito
+        //103 - Isenção do ICMS no Simples para receita bruta
+        //201 - Simples Nacional com Permissão de Crédito e ICMS por Substituição Tributária
+        //202 - Simples Nacional sem Permissão de crédito e com cobrança de ICMS por substituição tributária
+        //203 - Isenção do ICMS no Simples para faixa da Receita Bruta e com cobrança de ICMS por substituição tributária
+        //300 - Imunidade
+        //400 - Não tributado pelo Simples
+        //500 - ICMS cobrado anteriormente por substituição
+        //900 - Outros. (neste código estão todas as operações que não se encaixam nos demais já citados).
+    'pCredSN' => null, //opcional Alíquota aplicável de cálculo do crédito (Simples Nacional).
+    'vCredICMSSN' => null, //opcional Valor crédito do ICMS que pode ser aproveitado nos termos do art. 23 da LC 123 (Simples Nacional)
+    'modBCST' => null, //opcional Modalidade de determinação da BC do ICMS ST
+        //0 – Preço tabelado ou máximo sugerido;
+        //1 - Lista Negativa (valor);
+        //2 - Lista Positiva (valor);
+        //3 - Lista Neutra (valor);
+        //4 - Margem Valor Agregado (%);
+        //5 - Pauta (valor). (v2.0)
+        //6 - Valor da Operação
+    'pMVAST' => null, //opcional Percentual da Margem de Valor Adicionado ICMS ST 
+    'pRedBCST' => null, //opcional Percentual da Redução de BC do ICMS ST
+    'vBCST' => null, //opcional Valor da BC do ICMS ST
+    'pICMSST' => null, //opcional Alíquota do imposto do ICMS ST
+    'vICMSST' => null, //opcional Valor do ICMS ST
+    'vBCFCPST' => null, //opcional Valor da Base de Cálculo do FCP retido por Substituição Tributária
+    'pFCPST' => null, //opcional Percentual do FCP retido por Substituição Tributária"
+    'vFCPST' => null, //opcional Valor do FCP retido por Substituição Tributária
+     'vBCSTRet' => null, //opcional Valor da BC do ICMS ST retido
+     'pST' => null, //opcional Alíquota suportada pelo Consumidor Final
+     'vICMSSTRet' => null, //opcional Valor do ICMS ST retido
+     'vBCFCPSTRet' => null, //opcional Valor da Base de Cálculo do FCP retido anteriormente por Substituição Tributária
+     'pFCPSTRet' => null, //opcional Percentual do FCP retido anteriormente por Substituição Tributária
+     'vFCPSTRet' => null, //opcional Valor do FCP retido anteiormente por Substituição Tributária
+     'modBC' => null, //opcional Modalidade de determinação da BC do ICMS
+        //0 - Margem Valor Agregado (%);
+        //1 - Pauta (valor);
+        //2 - Preço Tabelado Máximo (valor);
+        //3 - Valor da Operação
+     'vBC' => null, //opcional Valor da BC do ICMS
+     'pRedBC' => null, //opcional Percentual da Redução de BC
+     'pICMS' => null, //opcional Alíquota do imposto
+     'vICMS' => null, //opcional Valor do ICMS
+     'pRedBCEfet' => null, //opcional Percentual de redução da base de cálculo efetiva
+     'vBCEfet' => null, //opcional Valor da base de cálculo efetiva
+     'pICMSEfet' => null, //opcional Alíquota do ICMS efetiva
+     'vICMSEfet' => null, //opcional Valor do ICMS efetivo
+     'vICMSSubstituto' => null //opcional Valor do ICMS próprio do Substituto
+];
+$mk->tagICMSSN((object)$ic);
+```
+
+## function tagICMSUFDest(object $std): DOMElement    (SEM ALTERAÇÂO)
+Node det/imposto/ICMSUFDest
+
+> Grupo a ser informado nas vendas interestarduais para consumidor final, não contribuinte de ICMS
+
+```php
+$ufd = [
+    'item' => 1, //OBRIGATÓRIO referencia ao item da NFe
+    'vBCUFDest' => 200, //OBRIGATÓRIO Valor da Base de Cálculo do ICMS na UF do destinatário 2 decimais
+    'vBCFCPUFDest' => 200, //opcional Valor da Base de Cálculo do FCP na UF do destinatário. 2 decimais
+    'pFCPUFDest' => 2, //opcional Percentual adicional inserido na alíquota interna da UF de destino, relativo ao Fundo de Combate à Pobreza (FCP) naquela UF. até 4 decimais
+    'pICMSUFDest' => 21.5, //OBRIGATÓRIO Alíquota adotada nas operações internas na UF do destinatário para o produto / mercadoria. até 4 decimais
+    'pICMSInter' => 7, //OBRIGATÓRIO Alíquota interestadual das UF envolvidas 4.00 ou 7.00 ou 12.00
+    //'pICMSInterPart' => 100, //DEFAULT 100 Percentual de partilha para a UF do destinatário
+    'vFCPUFDest' => 3.45, //opcional Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP) da UF 2 decimais
+    'vICMSUFDest' => 34.97, //OBRIGATÓRIO Valor do ICMS de partilha para a UF do destinatário 2 decimais
+    //'vICMSUFRemet' => 0 //DEFAULT ZERO Valor do ICMS de partilha para a UF do remetente.
+];
+$mk->tagICMSUFDest((object)$ufd);
+```
+
+## function tagIPI(object $std): DOMElement    (SEM ALTERAÇÂO)
+Node det/imposto/IPI/IPITrib ou det/imposto/IPI/IPINT 
+
+```php
+$ipi = [
+    'item' => 1, //OBRIGATÓRIO referencia ao item da NFe
+    'CNPJProd' => '12345678901234', //opcional CNPJ do produtor da mercadoria, quando diferente do emitente.
+         // Somente para os casos de exportação direta ou indireta.
+    'cSelo' => 'PICABOO', //opcional Código do selo de controle do IPI de 1 60 caracteres
+    'qSelo' => 9999999999, //opcional Quantidade de selo de controle do IPI até 12 digitos
+    'cEnq' => '108', //OBRIGATÓRIO Código de Enquadramento Legal do IPI (tabela a ser criada pela RFB) de 1 a 3 caracteres
+    'CST' => '00', //OBRIGATÓRIO
+    //IPITrib
+        //00-Entrada com recuperação de crédito
+        //49 - Outras entradas
+        //50-Saída tributada
+        //99-Outras saídas
+    //IPINT
+        //01-Entrada tributada com alíquota zero
+        //02-Entrada isenta
+        //03-Entrada não-tributada
+        //04-Entrada imune
+        //05-Entrada com suspensão
+        //51-Saída tributada com alíquota zero
+        //52-Saída isenta
+        //53-Saída não-tributada
+        //54-Saída imune
+        //55-Saída com suspensão
+    'vBC' => 200.00, //opcional Valor da BC do IPI 2 decimais
+    'pIPI' => 5.00, //opcional Alíquota do IPI até 4 decimais
+    'vIPI' => 10.00, //opcional Valor do IPI 2 decimais
+    'qUnid' => 1000, //opcional Quantidade total na unidade padrão para tributação até 4 decimais
+    'vUnid' => 0.2222 //opcional Valor por Unidade Tributável.
+            // Informar o valor do imposto Pauta por unidade de medida até 4 decimais.
+];
+ $mk->tagIPI((object)$ipi);
+```
+
+## function tagII(object $std): DOMElement    (SEM ALTERAÇÂO)
+Note det/imposto/II
+
+> Grupo de dados do Imposto de Importação
+
+```php
+$ii = [
+    'item' => 1, //OBRIGATÓRIO referencia ao item da NFe
+    'vBC' => 100.22, //OBRIGATÓRIO Base da BC do Imposto de Importação 2 decimais
+    'vDespAdu' => 21.87, //OBRIGATÓRIO  Valor das despesas aduaneiras 2 decimais
+    'vII' => 10.01, //OBRIGATÓRIO Valor do Imposto de Importação 2 decimais
+    'vIOF' => 0.21 //OBRIGATÓRIO Valor do Imposto sobre Operações Financeiras 2 decimais
+];
+$mk->tagII((object) $ii);
+```
+
+## function tagISSQN(object $std): DOMElement    (SEM ALTERAÇÂO)
+Node det/imposto/ISSQN
+
+> Grupo de informações do ISSQN
+
+```php
+$iqn = [
+        'item' => 1,  //OBRIGATÓRIO referencia ao item da NFe
+        'vBC' => 200.00, //OBRIGATÓRIO Valor da BC do ISSQN 2 decimais
+        'vAliq' => 5, //OBRIGATÓRIO Alíquota do ISSQN até 4 decimais
+        'vISSQN' => 10, //OBRIGATÓRIO Valor da do ISSQN 2 decimais
+        'cMunFG' => '12343567', //OBRIGATÓRIO Informar o município de ocorrência do fato gerador do ISSQN.
+            // Utilizar a Tabela do IBGE (Anexo VII - Tabela de UF, Município e País).
+            // “Atenção, não vincular com os campos B12, C10 ou E10” v2.0
+        'cListServ' => '10.10', //OBRIGATÓRIO Informar o Item da lista de serviços da LC 116/03
+            // em que se classifica o serviço.
+        'vDeducao' => 2.00, //opcional Valor dedução para redução da base de cálculo 2 decimais
+        'vOutro' => 1.00,  //opcional Valor outras retenções 2 decimais
+        'vDescIncond' => 0,  //opcional Valor desconto incondicionado 2 decimais
+        'vDescCond' => 0,  //opcional Valor desconto condicionado 2 decimais
+        'vISSRet' => 0, //opcional Valor Retenção ISS 2 decimais
+        'indISS' => 1, //OBRIGATÓRIO Exibilidade do ISS:
+            //1-Exigível;
+            //2-Não incidente;
+            //3-Isenção;
+            //4-Exportação;
+            //5-Imunidade;
+            //6-Exig.Susp. Judicial;
+            //7-Exig.Susp. ADM
+        'cServico' => '1ABRT82828', //opcional Código do serviço prestado dentro do município de 1 a 20 caracteres
+        'cMun' => '1234567',  //opcional Código do Município de Incidência do Imposto
+        'cPais' => '105',  //opcional Código de Pais de 1 a 4 digitos
+        'nProcesso' => 'ABC10000001992981',  //opcional Número do Processo administrativo ou judicial
+            // de suspenção do processo até 30 caracteres
+        'indIncentivo' => 2 //OBRIGATÓRIO Indicador de Incentivo Fiscal. 1=Sim; 2=Não
+    ];
+    $mk->tagISSQN((object)$iqn);
+```
+
+## function tagPIS(object $std): DOMElement    (SEM ALTERAÇÂO)
+Node det/imposto/PIS/PISAliq ou det/imposto/PIS/PISQtde ou det/imposto/PIS/PISNT ou det/imposto/PIS/PISOutr
+
+> Grupo de dados do PIS
+
+```php
+$std = new stdClass();
+$std->item = 1; //OBRIGATÓRIO referencia ao item da NFe
+$std->CST = '03';  //OBRIGATÓRIO Código de Situação Tributária do PIS
+        //PISAliq
+            //01 – Operação Tributável - Base de Cálculo = Valor da Operação Alíquota Normal (Cumulativo/Não Cumulativo)
+            //02 - Operação Tributável - Base de Calculo = Valor da Operação (Alíquota Diferenciada)
+        //PISQtde
+            //03 - Operação Tributável - Base de Calculo = Quantidade Vendida x Alíquota por Unidade de Produto;
+        //PISNT
+            //04 - Operação Tributável - Tributação Monofásica - (Alíquota Zero);
+            //06 - Operação Tributável - Alíquota Zero;
+            //07 - Operação Isenta da contribuição;
+            //08 - Operação Sem Incidência da contribuição;
+            //09 - Operação com suspensão da contribuição;
+        //PISOutr
+            //49 - Outras Operações de Saída
+            //50 - Operação com Direito a Crédito - Vinculada Exclusivamente a Receita Tributada no Mercado Interno
+            //51 - Operação com Direito a Crédito - Vinculada Exclusivamente a Receita Não-Tributada no Mercado Interno
+            //52 - Operação com Direito a Crédito - Vinculada Exclusivamente a Receita de Exportação
+            //53 - Operação com Direito a Crédito - Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno
+            //54 - Operação com Direito a Crédito - Vinculada a Receitas Tributadas no Mercado Interno e de Exportação
+            //55 - Operação com Direito a Crédito - Vinculada a Receitas Não Tributadas no Mercado Interno e de Exportação
+            //56 - Operação com Direito a Crédito - Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno e de Exportação
+            //60 - Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita Tributada no Mercado Interno
+            //61 - Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita Não-Tributada no Mercado Interno
+            //62 - Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita de Exportação
+            //63 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno
+            //64 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas no Mercado Interno e de Exportação
+            //65 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Não-Tributadas no Mercado Interno e de Exportação
+            //66 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno e de Exportação
+            //67 - Crédito Presumido - Outras Operações
+            //70 - Operação de Aquisição sem Direito a Crédito
+            //71 - Operação de Aquisição com Isenção
+            //72 - Operação de Aquisição com Suspensão
+            //73 - Operação de Aquisição a Alíquota Zero
+            //74 - Operação de Aquisição sem Incidência da Contribuição
+            //75 - Operação de Aquisição por Substituição Tributária
+            //98 - Outras Operações de Entrada
+            //99 - Outras Operações.
+$std->vBC = 1200; //opcional Valor da BC do PIS 2 decimais
+$std->pPIS = 6; //opcional Alíquota do PIS (em percentual) até 4 decimais
+$std->vPIS = 12.00; //opcional Valor do PIS 2 decimais
+$std->qBCProd = 12; //opcional Quantidade Vendida  (NT2011/004) até 4 decimais
+$std->vAliqProd = 1; //opcionalAlíquota do PIS (em reais) (NT2011/004) até 4 decimais
+$mk->tagPIS($std);
+```
+
+## function tagPISST(object $std): DOMElement    (SEM ALTERAÇÂO)
+Node det/imposto/PISST
+
+> Grupo de informações sobre o PISST
+
+```php
+$pst = [
+    'item' => 1, //OBRIGATÓRIO referencia ao item da NFe
+    'vBC' => 389.98, //opcional Valor da BC do PIS ST
+    'pPIS' => 4.33, //opcional Alíquota do PIS ST (em percentual)
+    'vPIS' => 20.22, //OBRIGATÓRIO Valor do PIS ST
+    'qBCProd' => 2000, //opcional Quantidade Vendida
+    'vAliqProd' => 12, //opcional Alíquota do PIS ST (em reais)
+    'indSomaPISST' => 1, //opcional Indica se o valor do PISST compõe o valor total da NF-e
+];
+$mk->tagPISST((object) $pst);
+```
+
+## function tagCOFINS(object $std): DOMElement    (SEM ALTERAÇÂO)
+Node det/imposto/COFINS/COFINSAliq 
+ou det/imposto/COFINS/COFINSQtde 
+ou det/imposto/COFINS/COFINSNT
+ou det/imposto/COFINS/COFINSOutr
+
+> Grupo de informações sobre COFINS
+> Alguns parâmetros são opcionais, dependendo do CST 
+
+```php
+$std = new stdClass();
+$std->item = 1; //OBRIGATÓRIO referencia ao item da NFe
+$std->CST = '99'; //OBRIGATÓRIO   //OBRIGATÓRIO Código de Situação Tributária do COFINS
+        //COFINSAliq
+            //01 – Operação Tributável - Base de Cálculo = Valor da Operação Alíquota Normal (Cumulativo/Não Cumulativo)
+            //02 - Operação Tributável - Base de Calculo = Valor da Operação (Alíquota Diferenciada)
+        //COFINSQtde
+            //03 - Operação Tributável - Base de Calculo = Quantidade Vendida x Alíquota por Unidade de Produto;
+        //COFINSNT
+            //04 - Operação Tributável - Tributação Monofásica - (Alíquota Zero);
+            //06 - Operação Tributável - Alíquota Zero;
+            //07 - Operação Isenta da contribuição;
+            //08 - Operação Sem Incidência da contribuição;
+            //09 - Operação com suspensão da contribuição;
+        //COFINSOutr
+            //49 - Outras Operações de Saída
+            //50 - Operação com Direito a Crédito - Vinculada Exclusivamente a Receita Tributada no Mercado Interno
+            //51 - Operação com Direito a Crédito - Vinculada Exclusivamente a Receita Não-Tributada no Mercado Interno
+            //52 - Operação com Direito a Crédito - Vinculada Exclusivamente a Receita de Exportação
+            //53 - Operação com Direito a Crédito - Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno
+            //54 - Operação com Direito a Crédito - Vinculada a Receitas Tributadas no Mercado Interno e de Exportação
+            //55 - Operação com Direito a Crédito - Vinculada a Receitas Não Tributadas no Mercado Interno e de Exportação
+            //56 - Operação com Direito a Crédito - Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno e de Exportação
+            //60 - Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita Tributada no Mercado Interno
+            //61 - Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita Não-Tributada no Mercado Interno
+            //62 - Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita de Exportação
+            //63 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno
+            //64 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas no Mercado Interno e de Exportação
+            //65 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Não-Tributadas no Mercado Interno e de Exportação
+            //66 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno e de Exportação
+            //67 - Crédito Presumido - Outras Operações
+            //70 - Operação de Aquisição sem Direito a Crédito
+            //71 - Operação de Aquisição com Isenção
+            //72 - Operação de Aquisição com Suspensão
+            //73 - Operação de Aquisição a Alíquota Zero
+            //74 - Operação de Aquisição sem Incidência da Contribuição
+            //75 - Operação de Aquisição por Substituição Tributária
+            //98 - Outras Operações de Entrada
+            //99 - Outras Operações.
+$std->vBC = 10000; //opcional Valor de Base de calculo do COFINS
+$std->pCOFINS = 7; //opcional Aliquota do COFINS
+$std->vCOFINS = 12.00; //opcional Valor do COFINS
+$std->qBCProd = 12; //opcional Quantidade Vendida
+$std->vAliqProd = 1; //opcional Alíquota do COFINS (em reais)
+$mk->tagCOFINS($std);
+```
+
+## function tagCOFINSST(object $std): DOMElement    (SEM ALTERAÇÂO)
+Node det/imposto/COFINSST
+
+> Grupo de informações do COFINSST
+
+```php
+$cst = [
+    'item' => 1, //OBRIGATÓRIO referencia ao item da NFe
+    'vBC' => 2000.33, //OBRIGATÓRIO Valor da BC do COFINS ST 2 decimais
+    'vCOFINS' => 14.22, //OBRIGATÓRIO Valore do COFINS ST
+    'pCOFINS' => 7.1111, //opcional Alíquota do COFINS ST(em percentual) até 4 decimais
+    'qBCProd' => 2039.3882, //opcional Quantidade Vendida até 4 decimais
+    'vAliqProd' => 12.2342, //opcional Alíquota do COFINS ST(em reais)  até 4 decimais
+    'indSomaCOFINSST' => 1 //opcional Indica se o valor da COFINS ST compõe o valor total da NFe
+            //0-não
+            //1-sim
+];
+$mk->tagCOFINSST((object) $cst);
+```
+
+## function tagIS(object $std): DOMElement    (NOVO MÉTODO Reforma Tributária)
+Node det/imposto/IS - Grupo de informações sobre o Imposto Seletivo - OPCIONAL
+
+> Este é o gruoo referente ao "imposto do pecado" será alicado a produtos especificos
+> IMPORTANTE: Esse imposto NÃO SUBSTITUI O IPI
+
+```php
+$is = [
+    'item' => 1, //OBRIGATÓRIO referencia ao item da NFe
+    'CSTIS' => '123', //OBRIGATÓRIO Código Situação Tributária do Imposto Seletivo 3 digitos
+    'cClassTribIS' => '111111', //OBRIGATÓRIO Código de Classificação Tributária do IBS e da CBS 6 digitos
+    'vBCIS' => 200.00, //OBRIGATÓRIO Valor do BC 2 decimais
+    'pIS' => 33.3333, //OBRIGATÓRIO Alíquota do Imposto Seletivo (percentual) até 4 decimais
+    'pISEspec' => 45, //opcional Alíquota do Imposto Seletivo (por valor)  até 4 decimais
+    'uTrib' => 'KG', //OBRIGATÓRIO Unidade de medida apropriada especificada em Lei Ordinaria para fins
+          // de apuração do Imposto Seletivo de 1 a 6 caracteres
+    'qTrib' => 100, //OBRIGATÓRIO Quantidade com base no campo uTrib informado até 4 decimais
+    'vIS' => 200.00 //OBRIGATÓRIO Valor do Imposto Seletivo calculado 2 decimais
+];
+$mk->tagIS((object) $is);
+```
 
 ```php
 ```
 
-
+```php
+```
 
 ```php
 ```
 
+```php
+```
 
 ```php
 ```
 
+```php
+```
 
 ```php
 ```
 
+```php
+```
 
 ```php
 ```
 
-
 ```php
 ```
 
-
-```php
-```
 
 
