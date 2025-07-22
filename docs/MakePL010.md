@@ -1014,7 +1014,27 @@ $std->pRedBCEfet = null; //opcional Percentual de redução da base de cálculo 
 $std->vBCEfet = null; //opcional Valor da base de cálculo efetiva
 $std->pICMSEfet = null; //opcional Alíquota do ICMS efetiva
 $std->vICMSEfet = null; //opcional Valor do ICMS efetivo
-$std->vICMSSubstituto = null; //opcional alor do ICMS Próprio do Substituto cobrado em operação anterior
+$std->vICMSSubstituto = null; //opcional Valor do ICMS Próprio do Substituto cobrado em operação anterior
+$std->vICMSSTDeson = null; //opcional 
+$std->motDesICMSST = null; //opcional ,
+$std->pFCPDif = null; //opcional 
+$std->vFCPDif = null; //opcional 
+$std->vFCPEfet = null; //opcional 
+$std->pRedAdRem = null; //opcional 
+$std->motRedAdRem = null; //opcional 
+$std->qBCMono = null; //opcional 
+$std->adRemICMS = null; //opcional 
+$std->vICMSMono = null; //opcional 
+$std->vICMSMonoOp = null; //opcional 
+$std->adRemICMSReten = null; //opcional 
+$std->qBCMonoReten = null; //opcional 
+$std->vICMSMonoReten = null; //opcional 
+$std->vICMSMonoDif = null; //opcional 
+$std->qBCMonoRet = null; //opcional 
+$std->vICMSMonoRet = null; //opcional 
+$std->adRemICMSRet = null; //opcional 
+$std->cBenefRBC = null; //opcional 
+$std->indDeduzDeson = null; //opcional 
 $mk->tagICMS($std);
 ```
 
@@ -1449,7 +1469,7 @@ $mk->tagCOFINSST((object) $cst);
 ## function tagIS(object $std): DOMElement    (NOVO MÉTODO Reforma Tributária)
 Node det/imposto/IS - Grupo de informações sobre o Imposto Seletivo - OPCIONAL
 
-> Este é o gruoo referente ao "imposto do pecado" será alicado a produtos especificos
+> Este é o grupo referente ao "imposto do pecado" será aplicado a produtos específicos
 > IMPORTANTE: Esse imposto NÃO SUBSTITUI O IPI
 
 ```php
