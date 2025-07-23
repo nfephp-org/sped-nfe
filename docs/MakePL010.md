@@ -20,7 +20,8 @@ Para construir o XML da NFe (ou da NFCe) deve ser usada a classe Make::class
 
 # Métodos
 
-> Abaixo estão TODOS os métodos da classe Make:class com seus respectivos parâmetros em ordem de entrada. 
+> Abaixo estão TODOS os métodos da classe Make:class com seus respectivos parâmetros em ordem de entrada.
+> ### Os valores dos parâmetros são apenas exemplos "CHUTADOS", e não correspondem à nenhum calculo ou ponderação real. 
 
 > **ALTERAÇÃO na construção da Make:class**
 ## function __construct(string $schema)         (ALTERADO com PARÂMETRO de criação)
@@ -310,7 +311,10 @@ $gcg = [
         //2 Estados
         //3 Distrito Federal
         //4 Municípios
-    'pRedutor' => 10.0000 //OBRIGATÓRIO Percentual de redução de alíquota em compra governamental
+    'pRedutor' => 10.0000, //OBRIGATÓRIO Percentual de redução de alíquota em compra governamental
+    'tpOperGov' => 1 //OBRIGATÓRIO Tipo da operação com ente governamental
+        //1 - Fornecimento
+        //2 - Recebimento do Pagamento 
 ];
 $mk->taggCompraGov((object)$gcg);
 ```
@@ -482,6 +486,7 @@ $std->indTot = 1;
 $std->xPed = '12345';
 $std->nItemPed = 1;
 $std->nFCI = '12345678-1234-1234-1234-123456789012';
+$std->indBemMovelUsado = null; //opcional 1-Bem Móvel Usado ou null
 $std->vItem = null; //opcional Valor total do Item, correspondente à sua participação no total da nota.
     // A soma dos itens deverá corresponder ao total da nota. com duas decimais
 $mk->tagprod($std);
@@ -538,6 +543,7 @@ $ref = [
 $mk->tagDFeReferenciado((object) $ref);
 ```
 
+//ver make com tagCreditoPresumidoProd
 ## function taggCred(object $gc): DOMElement    (NOVO MÉTODO Reforma Tributária)
 Node prod/gCred - Grupo de informações sobre o CréditoPresumido - OPCIONAL
 
@@ -1044,6 +1050,11 @@ Node det/imposto/ICMS/ICMSPart
 > Partilha do ICMS entre a UF de origem e UF de destino ou a UF definida na legislação.
 > Operação interestadual para consumidor final com partilha do ICMS  devido na operação entre a UF de origem e a UF do destinatário ou a UF definida na legislação. (Ex. UF da concessionária de entrega de veículos)
 
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+
 ```php
 $ic = [
     'item' => 1, //OBRIGATÓRIO item da NFe 
@@ -1097,6 +1108,11 @@ Node det/imposto/ICMS/ICMSST
 
 > Grupo de informação do ICMSST devido para a UF de destino, nas operações interestaduais de produtos que tiveram retenção antecipada de ICMS por ST na UF do remetente. Repasse via Substituto Tributário.
 
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+
 ```php
 $ic = [
     'item' => 1, //OBRIGATÓRIO item da NFe 
@@ -1138,6 +1154,10 @@ Node det/imposto/ICMS/ICMSSNXXX
 
 > Tributação do ICMS pelo SIMPLES NACIONAL, usado apenas para empresas CRT 1 - Simples Nacional 
 > NOTA: os parametros são opcionais ou obrigatórios dependendo do CSOSN selecionado vide documentação da NFe
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $ic = [
@@ -1209,6 +1229,11 @@ Node det/imposto/ICMSUFDest
 
 > Grupo a ser informado nas vendas interestarduais para consumidor final, não contribuinte de ICMS
 
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+
 ```php
 $ufd = [
     'item' => 1, //OBRIGATÓRIO referencia ao item da NFe
@@ -1227,6 +1252,13 @@ $mk->tagICMSUFDest((object)$ufd);
 
 ## function tagIPI(object $std): DOMElement    (SEM ALTERAÇÂO)
 Node det/imposto/IPI/IPITrib ou det/imposto/IPI/IPINT 
+
+> Grupo de informações sobre o IPI
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
 
 ```php
 $ipi = [
@@ -1267,6 +1299,11 @@ $ipi = [
 Note det/imposto/II
 
 > Grupo de dados do Imposto de Importação
+ 
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
 
 ```php
 $ii = [
@@ -1283,6 +1320,11 @@ $mk->tagII((object) $ii);
 Node det/imposto/ISSQN
 
 > Grupo de informações do ISSQN
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+ 
 
 ```php
 $iqn = [
@@ -1322,6 +1364,11 @@ $iqn = [
 Node det/imposto/PIS/PISAliq ou det/imposto/PIS/PISQtde ou det/imposto/PIS/PISNT ou det/imposto/PIS/PISOutr
 
 > Grupo de dados do PIS
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
 
 ```php
 $std = new stdClass();
@@ -1376,6 +1423,11 @@ Node det/imposto/PISST
 
 > Grupo de informações sobre o PISST
 
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+
 ```php
 $pst = [
     'item' => 1, //OBRIGATÓRIO referencia ao item da NFe
@@ -1397,6 +1449,11 @@ ou det/imposto/COFINS/COFINSOutr
 
 > Grupo de informações sobre COFINS
 > Alguns parâmetros são opcionais, dependendo do CST 
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
 
 ```php
 $std = new stdClass();
@@ -1451,6 +1508,11 @@ Node det/imposto/COFINSST
 
 > Grupo de informações do COFINSST
 
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+
 ```php
 $cst = [
     'item' => 1, //OBRIGATÓRIO referencia ao item da NFe
@@ -1470,7 +1532,13 @@ $mk->tagCOFINSST((object) $cst);
 Node det/imposto/IS - Grupo de informações sobre o Imposto Seletivo - OPCIONAL
 
 > Este é o grupo referente ao "imposto do pecado" será aplicado a produtos específicos
-> IMPORTANTE: Esse imposto NÃO SUBSTITUI O IPI
+> IMPORTANTE: Esse imposto NÃO SUBSTITUI O IPI, o ipi permanecerá mesmo quanado a Reforma Tributaria do Consumo estiver concluída.
+> Mas é importanta acompanhar as aliquotas do IPI na TIPI 
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
 
 ```php
 $is = [
@@ -1488,25 +1556,269 @@ $is = [
 $mk->tagIS((object) $is);
 ```
 
-```php
-```
+## function tagIBSCBS(object $std): DOMElement    (NOVO MÉTODO Reforma Tributária)
+Node det/imposto/IBSCBS
+Node det/imposto/IBSCBS/gIBSCBS/gIBSUF
+Node det/imposto/IBSCBS/gIBSCBS/gIBSUF/gDif
+Node det/imposto/IBSCBS/gIBSCBS/gIBSUF/gDevTrib
+Node det/imposto/IBSCBS/gIBSCBS/gIBSUF/gRed
+Node det/imposto/IBSCBS/gIBSCBS/gIBSMun
+Node det/imposto/IBSCBS/gIBSCBS/gIBSMun/gDif
+Node det/imposto/IBSCBS/gIBSCBS/gIBSMun/gDevTrib
+Node det/imposto/IBSCBS/gIBSCBS/gIBSMun/gRed
+Node det/imposto/IBSCBS/gIBSCBS/gCBS
+Node det/imposto/IBSCBS/gIBSCBS/gCBS/gDif
+Node det/imposto/IBSCBS/gIBSCBS/gCBS/gDevTrib
+Node det/imposto/IBSCBS/gIBSCBS/gCBS/gRed
+
+> Grupo CBS IBS Completo
+> NOTA: subgrupo gIBSCBS fará um "choice" (escolha) com gIBSCBSMono e gTransfCred   
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
+$ibscbs = [
+    'item' => 1, //OBRIGATÓRIO referencia ao item da NFe
+    'CST' => '000', //OBRIGATÓRIO CST IBS/CBS 3 digitos
+        // 000 - Tributação integral
+        // 010 - Tributação com alíquotas uniformes - operações setor financeiro
+        // 011 - Tributação com alíquotas uniformes reduzidas em 60% ou 30%
+        // 200 - Alíquota zero, Alíquota zero apenas CBS e reduzida em 60% para IBS, reduzida em 80%, 70%, 60%, 50%, 40%, 30%
+        // 210 - Alíquota reduzida em 50% com redutor de base de cálculo, reduzida em 70% com redutor de base de cálculo
+        // 220 - Alíquota fixa
+        // 221 - Alíquota fixa proporcional
+        // 400 - Isenção
+        // 410 - Imunidade e não incidência
+    'cClassTrib' => '111111', //OBRIGATÓRIO
+    //######### subgrupo gIBSCBS 
+    'vBC' => 100, //opcional Base de cálculo do IBS e CBS 13v2. Se este campo for declarado, alguns outros parametros serão OBRIGATÓRIOS  
+         //dados IBS Estadual
+    'gIBSUF_pIBSUF' => 10, //opcional Alíquota do IBS de competência das UF 3v2-4, OBRIGATÓRIO se vBC for informado
+        //removido 'gIBSUF_vTribOp' => 2, //opcional Valor bruto do tributo na operação 13v2
+    'gIBSUF_pDif' => 5, //opcional Percentual do diferimento 3v2-4
+    'gIBSUF_vDif' => 30, //opcional Valor do Diferimento 13v2
+    'gIBSUF_vDevTrib' => 10, //opcional Valor do tributo devolvido 13v2
+    'gIBSUF_pRedAliq' => 10, //opcional Percentual da redução de alíquota 3v2-4
+    'gIBSUF_pAliqEfet' => 20, //opcional Alíquota Efetiva do IBS de competência das UF que será aplicada a BC 3v2-4
+    'gIBSUF_vIBSUF' => 10, //opcional Valor do IBS de competência da UF 13v2
+        //dados IBS Municipal
+    'gIBSMun_pIBSMun' => 2.3454, //opcional Alíquota do IBS de competência do município 3v2-4,OBRIGATÓRIO se vBC for informado
+        //removido 'gIBSMun_vTribOp' => 2, //opcional Valor bruto do tributo na operação 13v2
+    'gIBSMun_pDif' => 10, //opcional Percentual do diferimento 3v2-4
+    'gIBSMun_vDif' => 22, //opcional Valor do Diferimento 13v2
+    'gIBSMun_vDevTrib', //opcional Valor do tributo devolvido 13v2
+    'gIBSMun_pRedAliq' => 3, //opcional Percentual da redução de alíquota 3v2-4
+    'gIBSMun_pAliqEfet' => 12.34, //opcional Alíquota Efetiva do IBS de competência do Município que será aplicada a BC 3v2
+    'gIBSMun_vIBSMun' => 40, //opcional Valor do IBS de competência do Município 13v2
+        // dados CBS (imposto federal)
+    'gCBS_pCBS' => 20, //opcional Alíquota da CBS 3v2-4, OBRIGATÓRIO se vBC for informado
+    'gCBS_pDif' => 10, //opcional Percentual do diferimento 3v2-4
+    'gCBS_vCBSOp' => 0, //opcional Valor da CBS Bruto na operação '0|0\.[0-9]{2}
+    'gCBS_vDif' => 20, //opcional Valor do Diferimento 13v2
+    'gCBS_vDevTrib' => 10, //opcional Valor do tributo devolvido 13v2
+    'gCBS_pRedAliq' => 20, //opcional Percentual da redução de alíquota 3v2-4
+    'gCBS_pAliqEfet' => 3.54, //opcional Alíquota Efetiva da CBS que será aplicada a Base de Cálculo 3v2
+    'gCBS_vCBS' => 21.83, //opcional Valor da CBS 13v2
+];
+$mk->tagIBSCBS((object) $ibscbs);
 ```
+## function tagIBSCBSTribRegular(object $std): DOMElement    (NOVO MÉTODO Reforma Tributária)
+Node det/imposto/IBSCBS/gIBSCBS/gTribRegular
+
+> Grupo de informações da Tributação Regular. Informar como seria a tributação caso não cumprida a condição resolutória/suspensiva.
+> Este subgrupo pertence a gIBSCBS e somente será incluso caso gIBSCBS exista 
+> Exemplo 1: Art. 442, §4. Operações com ZFM e ALC. Exemplo 2: Operações com suspensão do tributo.
+> NOTA: quando o CST do IBSCBS for 550 é OBRIGATÓRIA essa tag
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
+$reg = [
+    'item' => 1, //OBRIGATÓRIO referencia ao item da NFe
+    'CSTReg' => '123', //OBRIGATÓRIO Código de Situação Tributária do IBS e CBS 3 digitos
+    'cClassTribReg' => '111111', //OBRIGATÓRIO Código de Classificação Tributária do IBS e CBS 6
+    'pAliqEfetRegIBSUF' => 10.1234, //OBRIGATÓRIO Valor da alíquota do IBS da UF 3v2-4
+    'vTribRegIBSUF' => 100, //OBRIGATÓRIO Valor do Tributo do IBS da UF 13v2
+    'pAliqEfetRegIBSMun' => 5.1234, //OBRIGATÓRIO Valor da alíquota do IBS do Município 3v2-4
+    'vTribRegIBSMun' => 50, //OBRIGATÓRIO Valor do Tributo do IBS do Município 13v2
+    'pAliqEfetRegCBS' => 10.1234, //OBRIGATÓRIO Valor da alíquota da CBS 3v2-4
+    'vTribRegCBS' => 100, //OBRIGATÓRIO Valor do Tributo da CBS 13v2
+];
+$mk->tagIBSCBSTribRegular((object) $reg);
 ```
 
-```php
-```
+## function tagIBSCredPresobject $std): DOMElement    (NOVO MÉTODO Reforma Tributária)
+Node det/imposto/IBSCBS/gIBSCBS/gIBSCredPres
+
+> Grupo de Informações do Crédito Presumido referente ao IBS, quando aproveitado pelo emitente do documento.
+> Este subgrupo pertence a gIBSCBS e somente será incluso caso gIBSCBS exista
+> NOTA: é necessário usar a Tabela de Crédito Presumido fornecida pela Receita Federal, pois depende da operação sendo realizada 
+> vide https://dfe-portal.svrs.rs.gov.br/DFE/TabelaCreditoPresumido 
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
+$cred = [
+    'item' => 1, //OBRIGATÓRIO referencia ao item da NFe
+    'cCredPres' => '11', //OBRIGATÓRIO Código de Classificação do Crédito Presumido 2 caracteres
+    'pCredPres' => 2.3234, //OBRIGATÓRIO Percentual do Crédito Presumido 3v2-4
+    'vCredPres' => 22.30, //OBRIGATÓRIO Valor do Crédito Presumido 13v2
+    'vCredPresCondSus' => 0, //OBRIGATÓRIO Valor do Crédito Presumido em condição suspensiva 13v2
+];
+$mk->tagIBSCredPres((object) $cred);
 ```
 
-```php
-```
+## function tagCBSCredPresobject $std): DOMElement    (NOVO MÉTODO Reforma Tributária)
+Node det/imposto/IBSCBS/gIBSCBS/gCBSCredPres
+
+> Grupo de Informações do Crédito Presumido referente ao CBS, quando aproveitado pelo emitente do documento.
+> Este subgrupo pertence a gIBSCBS e somente será incluso caso gIBSCBS exista
+> NOTA: é necessário usar a Tabela de Crédito Presumido fornecida pela Receita Federal, pois depende da operação sendo realizada
+> vide https://dfe-portal.svrs.rs.gov.br/DFE/TabelaCreditoPresumido
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
+$cred = [
+    'item' => 1, //OBRIGATÓRIO referencia ao item da NFe
+    'cCredPres' => '11', //OBRIGATÓRIO Código de Classificação do Crédito Presumido 2 caracteres
+    'pCredPres' => 2.1111, //OBRIGATÓRIO Percentual do Crédito Presumido 3v2-4
+    'vCredPres' => 12.34, //OBRIGATÓRIO Valor do Crédito Presumido 13v2
+    'vCredPresCondSus' => 9.00, //OBRIGATÓRIO Valor do Crédito Presumido em condição suspensiva 13v2
+];
+$mk->tagCBSCredPres((object) $cred);
+```
+
+## function taggTribCompraGov(object $std): DOMElement    (NOVO MÉTODO Reforma Tributária))
+Node det/imposto/IBSCBS/gIBSCBS/gTribCompraGov
+
+> Grupo de informações da composição do valor do IBS e da CBS em compras governamental
+> Este subgrupo pertence a gIBSCBS e somente será incluso caso gIBSCBS exista
+> NOTA: esse grupo somente será informado em caso de compra governamental
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$cg = [
+    'item' => 1,
+    'pAliqIBSUF' => 10, //OBRIGATÓRIO Alíquota do IBS de competência do Estado
+    'vTribIBSUF' => 20.12, //OBRIGATÓRIO Valor que seria devido a UF, sem aplicação do Art. 473. da LC 214/2025
+    'pAliqIBSMun' => 1, //OBRIGATÓRIO Alíquota do IBS de competência do Município
+    'vTribIBSMun' => 2.01, //OBRIGATÓRIO Valor que seria devido a CBS, sem aplicação do Art. 473. da LC 214/2025
+    'pAliqCBS' => 10, //OBRIGATÓRIO Alíquota do CBS
+    'vTribCBS' => 20.12, //OBRIGATÓRIO Valor que seria devido a CBS, sem aplicação do Art. 473. da LC 214/2025
+];
+$mk->taggCompraGov((object) $cg);
+```
+
+## function tagIBSCBSMono(object $std): DOMElement    (NOVO MÉTODO Reforma Tributária)
+Node det/imposto/IBSCBS/gIBSCBSMono
+
+> Grupo de Informações do IBS e CBS em operações com imposto monofásico
+> Este grupo é um "choice" (escolha) com gIBSCBS, caso exista gIBSCBS esse grupo não será incluso na NFe
+> NOTA: caso seja declarado o parâmetro do subgrupo, todos os parâmetros do mesmo subgrupo serão obrigatórios
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$mono = [
+    'item' => 1, //OBRIGATÓRIO referencia ao item da NFe
+    
+    //############# subgrupo monofasico
+    'qBCMono' => 1.00, //opcional Quantidade tributada na monofasia  Se este parâmetro for declarado, todos do subgrupo serão OBRIGATÓRIOS
+    'adRemIBS' => 10.00, //opcional Alíquota ad rem do IBS
+    'vIBSMono' => 100.00, //opcional Valor do IBS monofásico
+    'adRemCBS' => 2.00, //opcional Alíquota ad rem da CBS
+    'vCBSMono' => 200.00, //opcional Valor do CBS monofásico
+    //############# fim subgrupo monofasico
+    
+    //############# subgrupo monofasico sujeito a retenção
+    'qBCMonoReten' => 1.00, //opcional Quantidade tributada na monofasia sujeita a retenção. Se este parâmetro for declarado, todos do subgrupo serão OBRIGATÓRIOS
+    'adRemIBSReten' => 10.00, //opcional Alíquota ad rem do IBS sujeita a retenção
+    'vIBSMonoReten' => 10.00, //opcional Valor do IBS monofásico sujeito a retenção
+    'adRemCBSReten' => 1.00, //opcional Alíquota ad rem da CBS sujeita a retenção
+    'vCBSMonoReten' => 10.00, //opcional Valor do CBS monofásico sujeito a retenção
+    //############# fim subgrupo monofasico sujeito a retenção
+    
+    //############# subgrupo monofasico retido anteriormente
+    'qBCMonoRet' => 1.00, //opcional  Se este parâmetro for declarado, todos do subgrupo serão OBRIGATÓRIOS
+    'adRemIBSRet' => 1.00, //opcional Quantidade tributada na monofasia retida anteriormente
+    'vIBSMonoRet' => 1.00, //opcional Valor do IBS monofásico retido anteriormente
+    'adRemCBSRet' => 1.00, //opcional Alíquota ad rem da CBS retida anteriormente
+    'vCBSMonoRet' => 1.00, //opcional Valor do CBS monofásico retido anteriormente
+    //############# fim subgrupo monofasico retido
+    
+    //############# subgrupo monofasico diferimento
+    'pDifIBS' => 2.00, //opcional Percentual do diferimento do imposto monofásico. 3v2-4. Se este parâmetro for declarado todos abaixo serão OBRIGATÓRIOS
+    'vIBSMonoDif' => 2.00, //opcionalValor do IBS monofásico diferido 13v2
+    'pDifCBS' => 1.00, //opcional Percentual do diferimento do imposto monofásico. 3v2-4
+    // Se declarado todos abaixo serão OBRIGATÓRIOS
+    'vCBSMonoDif' => 1.00, //opcional Valor do IBS monofásico diferido 13v2
+    //############# subgrupo monofasico diferimento
+    
+    'vTotIBSMonoItem' => 111.00, //OBRIGATÓRIO Total de IBS Monofásico 13v2
+    'vTotCBSMonoItem' => 212.00//OBRIGATÓRIO Total da CBS Monofásica 13v2
+];
+$mk->tagIBSCBSMono((object) $mono);
+```
+
+## function taggTranfCred(object $std): DOMElement    (NOVO MÉTODO Reforma Tributária)
+Node det/imposto/IBSCBS/gTranfCred
+
+> Grupo de Informações de transferência de Crédito
+> Este grupo é um "choice" (escolha) com gIBSCBS e gIBSCBSMono, caso exista gIBSCBS ou gIBSCBSMono esse grupo não será incluso na NFe
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$transf = [
+    'item' => 1, //OBRIGATÓRIO
+    'vIBS' => 200.00, //OBRIGATÓRIO Valor do IBS a ser transferido 13v2
+    'vCBS' => 35.23, //OBRIGATÓRIO Valor do CBS a ser transferido 13v2
+];
+$mk->taggTranfCred((object) $transf);
+```
+## function taggCredPresIBSZFM(object $std): DOMElement    (NOVO MÉTODO Reforma Tributária)
+Node det/imposto/IBSCBS/gCredPresIBSZFM
+
+> Grupo de informações de Crédito Presumido em operações com a Zona Franca de Manaus
+> Classificação de acordo com o art. 450, § 1º, da LC 214/25 para o cálculo do crédito presumido na ZFM
+
+| Parâmetro | Tipo | Descrição |
+| :--- | :---: | :--- |
+| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$zfm = [
+    'item' => 1, //OBRIGATÓRIO
+    'tpCredPresIBSZFM' => 0, //OBRIGATÓRIO Tipo de classificação de acordo com o art. 450, § 1º, da LC 214/25 para o
+                             // cálculo do crédito presumido na ZFM
+            //0 - Sem Crédito Presumido
+            //1 - Bens de consumo final (55%)
+            //2 - Bens de capital (75%)
+            //3 - Bens intermediários (90,25%)
+            //4 - Bens de informática e outros definidos em legislação (100%)
+    'vCredPresIBSZFM' => 0 //opcional Valor do crédito presumido calculado sobre o saldo devedor apurado 13v2
+            //É obrigatório para nota de crédito com tpNFCredito = 02 - Apropriação de crédito presumido de IBS sobre
+            // o saldo devedor na ZFM (art. 450, § 1º, LC 214/25)
+            //Vedado para documentos que não sejam nota de crédito com tpNFCredito = 02 - Apropriação de crédito
+            // presumido de IBS sobre o saldo devedor na ZFM (art. 450, § 1º, LC 214/25)
+];
+$mk->taggCredPresIBSZFM((object) $zfm);
 ```
 
 ```php
