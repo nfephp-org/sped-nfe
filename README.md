@@ -11,6 +11,7 @@ Biblioteca para geração e comunicação das NFe com as SEFAZ autorizadoras, e 
 - Nota Técnica 2021.003 v.1.40 Validação GTIN
 - Nota Técnica 2024.003 v.1.05 Informações de Produtos da Agricultura, Pecuária e Produção Florestal e Alteração de regra de validação
 - Nota Técnica 2023.001 v.1.60 Tributação Monofásica sobre Combustíveis
+- Nota Técnica 2025.001 v.1.00 Simplificação Operacional: NFC-e (QR-Code versão 3) (Envio sincrono NFe)
 - Nota Técnica 2025.002-RTC v.1.10 Reforma Tributária do Consumo – Adequações NF-e / NFC-e
 - Schema PL_010v1.10b de 09/06/2025  
 
