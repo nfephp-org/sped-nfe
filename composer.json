@@ -1,5 +1,5 @@
 {
-    "name": "IXC-Soft/ixc-nfe",
+    "name": "ixc-soft/ixc-nfe",
     "type": "library",
     "description": "Adaptação da IXCSoft sobre a API para geração e comunicação da NFe e NFCe com as SEFAZ autorizadoras.",
     "keywords": [
