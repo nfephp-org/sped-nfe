@@ -1,14 +1,14 @@
 {
-    "name": "nfephp-org/sped-nfe",
+    "name": "IXC-Soft/ixc-nfe",
     "type": "library",
-    "description": "API para geração e comunicação da NFe e NFCe com as SEFAZ autorizadoras.",
+    "description": "Adaptação da IXCSoft sobre a API para geração e comunicação da NFe e NFCe com as SEFAZ autorizadoras.",
     "keywords": [
         "nfe",
         "nfce",
         "sped",
         "nfephp"
     ],
-    "homepage": "https://github.com/nfephp-org/sped-nfe",
+    "homepage": "https://github.com/IXC-Soft/ixc-nfe",
     "license": [
         "LGPL-3.0-or-later",
         "GPL-3.0-or-later",
@@ -25,6 +25,12 @@
             "name": "Gustavo Lidani",
             "email": "lidanig0@gmail.com",
             "homepage": "https://github.com/lidani",
+            "role": "Developer"
+        },
+        {
+            "name": "Eduardo Santos",
+            "email": "eduardo.pinto@ixcsoft.com.br",
+            "homepage": "https://github.com/duzzk1",
             "role": "Developer"
         },
         {
