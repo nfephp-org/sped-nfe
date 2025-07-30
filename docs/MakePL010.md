@@ -1,6 +1,6 @@
 # CONSTRUÇÃO DO XML com dados do schema PL_010v1
 
-> **IMPORTANTE:** Houveram modificações nos métodos e em alguns campos desses métodos para a criação do XML.
+> **IMPORTANTE:** Alguns métodos foram alterados em alguns campos desses métodos para a criação do XML.
  
 > A mesma classe é capaz de criar os XML com os schemas da versão PL_009, bem como com os schemas da versão PL_010.
 > Isso com base nos dados de configuração informados na construção da classe ($schema). 
@@ -16,12 +16,12 @@ Para construir o XML da NFe (ou da NFCe) deve ser usada a classe Make::class
 - A nova classe "Make:class" foi redesenhada para permitir o uso dos métodos sem necessidade de observar qualquer sequência lógica. Ou seja, podem ser chamados os métodos de forma totalmente aleatória, sem prejuízo para a construção do XML.
 - Porém, existem métodos OBRIGATÓRIOS que deverão ser implementados SEMPRE, caso contrario serão gerados erros e o XML não passará na validação com o schema.
 
-> NOTA: como forma de diminuir o tamanho do código a classe foi dividida em traits para os principais blocos construtivos do XML, mas houve um aumento nas propriedades da Make:class e portanto deve gerar um leve aumento no uso de memória para a construção do XML.
+> NOTA: como forma de diminuir o tamanho do código a classe foi dividida em traits para os principais blocos construtivos do XML, mas houve um aumento nas propriedades da Make:class, o que pode gerar um leve aumento no uso de memória para a construção do XML.
 
-# Métodos
+# <a name="#Topo">Métodos</a>
 
-> Abaixo estão TODOS os métodos da classe Make:class com seus respectivos parâmetros em ordem de entrada.
-> ### Os valores dos parâmetros são apenas exemplos "CHUTADOS", e não correspondem à nenhum calculo ou ponderação real. 
+> Abaixo estão descritos TODOS os métodos da classe Make class com os seus respectívos parâmetros em ordem de entrada.
+> ### Os valores dos parâmetros são apenas exemplos "CHUTADOS", e não correspondem a nenhum cálculo ou ponderação real. 
 
 > **ALTERAÇÃO na construção da Make:class**
 ## function __construct(string $schema)         (ALTERADO com PARÂMETRO de criação)
@@ -34,7 +34,7 @@ $schema = 'PL_010_V1';
 
 $mk = new Make($schema); //se não informado o schema será usado o PL_009_V4, o conjunto de xsd atualmente em uso.
 $mk->setOnlyAscii(false); //opções true remove todos a acentuação ou false (default) mantêm os acentos nos textos
-$mk->setCheckGtin(true); //opções true ativa a verificação do numero GTIN ou false desativa esse validação  
+$mk->setCheckGtin(true); //opções true ativa a verificação do número GTIN ou false desativa essa validação  
 ```
 
 ## function taginfNFe($std):DOMElement    (SEM ALTERAÇÂO)
@@ -43,9 +43,9 @@ Node principal - OBRIGATÓRIO
 > NOTA: **se o parâmetro $std->Id não for passado a chave será criada e inclusa e poderá ser recuperada no parâmetro chNFe da classe,**
 **De outra forma se a chave for passada no parâmetro $std->Id e estiver incorreta, um erro será inserido na proriedade errors.**
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $std = new stdClass();
@@ -59,14 +59,14 @@ $mk->taginfNFe($std);
 ## function tagide(object $ide):DOMElement   (ALTERAÇÂO nos PARÂMETROS)
 Node ide - identificação da NFe - OBRIGATÓRIO
 
-> Nota: os campos novos relativos a Reforma Tributária listados abaixo, serão ignorados se usar o schema PL_009_V4.
+> Nota: os campos novos relacionados à Reforma Tributária listados abaixo, serão ignorados se usar o schema PL_009_V4.
 > - cMunFGIBS
 > - tpNFDebito
 > - tpNFCredito
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $ide = [
@@ -144,14 +144,14 @@ $ide = [
 $mk->tagide((object)$ide);
 ```
 
-## function tagEmit(object $emit):DOMElement    (SEM ALTERAÇÃO)
+## #emit function tagEmit(object $emit):DOMElement    (SEM ALTERAÇÃO)  [Volta](#Topo)
 Node emit - Informações do Emitente - OBRIGATÓRIO
 
 > NOTA: a partir de 2026 o CNPJ poderá ser ALFA NUMÉRICO !!
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $emi = [
@@ -175,9 +175,9 @@ $mk->tagEmit((object)$emi);
 ## function tagEnderemit(object $ender):DOMElement)   (SEM ALTERAÇÃO)
 Node enderEmit - Endereço do Emitente da NFe - OBRIGATÓRIO
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $end = [
@@ -203,9 +203,9 @@ $end = [
 ## function tagrefNFe(object $ref):DOMElement   (SEM ALTERAÇÃO)
 Node NFref/refNFe - NFe referenciada - OPCIONAL
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $ref = [
@@ -217,11 +217,11 @@ $mk->tagrefNFe((object)$ref);
 ## function tagrefNF(object $nf):DOMElement     (SEM ALTERAÇÃO)
 Node NFref/refNF - NFe referenciada - OPCIONAL
 
-> Esta tag está em desuso pois as NF de papel estão sendo substituídas pos documentos eletrônicos.
+> Esta tag está em desuso, pois as NF de papel estão sendo substituídas pos documentos eletrônicos.
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $nf = [
@@ -238,11 +238,11 @@ $mk->tagrefNF((object)$nf);
 ## function tagrefNFP(object $nfp):DOMElement    (SEM ALTERAÇÃO)
 Node NFref/refNFP - NFe de Produtor Rural referenciada - OPCIONAL
 
-> Esta tag está em desuso pois as NF de papel estão sendo substituídas pos documentos eletrônicos.
+> Esta tag está em desuso, pois as NF de papel estão sendo substituídas pos documentos eletrônicos.
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $nfp = [
@@ -261,9 +261,9 @@ $mk->tagrefNFP((object)$nfp);
 ## function tagrefCTe(object $cte):DOMElement     (SEM ALTERAÇÃO)
 Node NFref/refCTe - CTe Conhecimento de Transporte referenciada - OPCIONAL
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $cte = [
@@ -277,9 +277,9 @@ Node NFref/refECF - Cupom Fiscal vinculado à NF-e - OPCIONAL
 
 > Esta tag está em desuso, pois os ECF estão sendo substituídos por NFCe
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $ecf = [
@@ -300,9 +300,9 @@ Node PL_010 - Reforma Tributária - Compra Governamental - OPCIONAL
 
 > Esta tag somente será inserida quando schema usado for o PL_010
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $gcg = [
@@ -322,9 +322,9 @@ $mk->taggCompraGov((object)$gcg);
 ## function tagdest(object $dest): DOMElement  (SEM ALTERAÇÃO)
 Node dest - Identificação do Destinatário - OPCIONAL
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $dest = [
@@ -347,9 +347,9 @@ $mk->tagdest((object)$dest);
 ## function tagenderdest(object $end): DOMElement   (SEM ALTERAÇÃO)
 Node enderdest - Endereço do Destinatário - OPCIONAL
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $end = [
@@ -372,9 +372,9 @@ $mk->tagenderdest((object)$end);
 ## function tagretirada(object $ret): DOMElement   (SEM ALTERAÇÃO)
 Node retirada - Identificação do Local de Retirada (informar apenas quando for diferente do endereço do remetente) - OPCIONAL
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $ret = [
@@ -401,9 +401,9 @@ $mk->tagretirada((object)$ret);
 ## function tagentrega(object $ent): DOMElement    (SEM ALTERAÇÂO)
 Node entrega - Identificação do Local de Entrega (informar apenas quando for diferente do endereço do destinatário) - OPCIONAL
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $ent = [
@@ -432,9 +432,9 @@ Node autXML - Pessoas autorizadas para o download do XML da NF-e - OPCIONAL
 
 > NOTA MULTIPLAS ENTRADAS - Podem haver até 10 registros de pessoas autorizadas. Então podem repetidos até 10 vezes essa tag.
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $aut = [
@@ -449,12 +449,12 @@ Node det/prod - Produtos - OBRIGATÓRIO
 
 >  NOTA MULTIPLAS ENTRADAS - a tag dev/prod pode ocorrer até 990 vezes 
 
-> Nota: campo novo relativo a Reforma Tributária
+> Nota: campo novo relativo à Reforma Tributária
 > - vItem - Valor total do Item, correspondente à sua participação no total da nota. A soma dos itens deverá corresponder ao total da nota.
  
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $std = new stdClass();
@@ -495,9 +495,9 @@ $mk->tagprod($std);
 ## funtion taginfAdProd(object $inf): DOMElement     (SEM ALTERAÇÃO)
 Node dev/prod/infAdProd - Informações adicionais do produto (norma referenciada, informações complementares, etc) - OPCIONAL
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $inf = [
@@ -512,9 +512,9 @@ Node prod/infAdProd/obsItem - Grupo de observações de uso livre (para o item d
 
 > NOTA este método substitui o anterior tagprodObsCont()
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $obs = [
@@ -530,9 +530,9 @@ $mk->tagObsItem((object) $obs);
 ## function tagDFeReferenciado(object $ref): DOMElement   (NOVO MÉTODO Reforma Tributária)
 Node det/DFeReferenciado - Referenciamento de item de outros DFe - OPCIONAL
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $ref = [
@@ -549,9 +549,9 @@ Node prod/gCred - Grupo de informações sobre o CréditoPresumido - OPCIONAL
 
 > NOTA MULTIPLAS ENTRADAS - podem ocorrer até 4 registros desse grupo por item da NFe
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $gc = [
@@ -568,9 +568,9 @@ Node prod/NVE - Nomenclatura de Valor aduaneiro e Estatístico - OPCIONAL
 
 > NOTA MULTIPLAS ENTRADAS - podem ocorrer até 8 registros desse grupo por item da NFe
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $std = [
@@ -586,14 +586,14 @@ Node prod/DI - Delcaração de Importação - OPCIONAL
 > NOTA MULTIPLAS ENTRADAS - podem ocorrer até 100 registros desse grupo por item da NFe
 > Obrigatório em NFe de Importação 
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $std = new stdClass();
 $std->item = 1; //OBRIGATÓRIO referencia ao item da NFe
-$std->nDI = '123049'; //OBRIGATÓRIO  Número do Documento de Importação (DI, DSI, DIRE, DUImp) de 1 à 15 caracteres
+$std->nDI = '123049'; //OBRIGATÓRIO Número do Documento de Importação (DI, DSI, DIRE, DUImp) de 1 à 15 caracteres
 $std->dDI = '2018-04-22'; //OBRIGATÓRIO Data de registro da DI/DSI/DA (AAAA-MM-DD)
 $std->xLocDesemb = 'SANTOS'; //OBRIGATÓRIO Local do desembaraço aduaneiro de 1 à 60 caracteres
 $std->UFDesemb = 'SP'; //OBRIGATÓRIO UF onde ocorreu o desembaraço aduaneiro duas letras
@@ -631,9 +631,9 @@ Node prod/DI/adi - Adições da DI OBRIGATÓRIA se existir a DI - OPCIONAL
 > NOTA MULTIPLAS ENTRADAS - podem ocorrer até 999 registros para cada DI declarada por item da NFe
 > Obrigatório em NFe de Importação
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $std = new \stdClass();
@@ -653,9 +653,9 @@ Node prod/detExport - etalhe da exportação - OPCIONAL
 > NOTA MULTIPLAS ENTRADAS - podem ocorrer até 500 registros por item 
 > Usado em NFe de Exportação apenas
  
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $std = new \stdClass();
@@ -672,9 +672,9 @@ $mk->tagdetExport($std);
 Node prod/rastro - Rastreabilidade - OPCIONAL
 > NOTA MULTIPLAS ENTRADAS - Dados de rastreabilidade uso em medicamentos, podem ocorrer até 500 repetições por item da NFe
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual | 
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual | 
  
 ```php
 $std = new \stdClass();
@@ -696,9 +696,9 @@ $mk->tagrastro($std);
 ## function tagveicProd(object $veic): DOMElement  (SEM ALTERAÇÃO)
 Node prod/veicProd - Veículos novos - OPCIONAL
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $veic = [
@@ -781,9 +781,9 @@ $mk->tagveicProd((object)$veic);
 ## function tagmed(object $std): DOMElement   (SEM ALTERAÇÃO)
 Node prod/med - Detalhamento de Medicamentos e de matérias-primas farmacêuticas - OPCIONAL
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $std = new stdClass();
@@ -800,9 +800,9 @@ $mk->tagmed($std);
 ## function tagarma(object $arma): DOMElement   (SEM ALTERAÇÃO)
 Node prod/arma - Detalhamento de Armamento - OPCIONAL
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $arma = [
@@ -822,9 +822,9 @@ Node prod/comb - Informar apenas para operações com combustíveis líquidos - 
 
 > Gás liquefeito é liquido, só para lembrar.
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $comb = [
@@ -862,9 +862,9 @@ $mk->tagcomb((object) $comb);
 ## function tagencerrante(object $enc): DOMElement    (SEM ALTERAÇÂO)
 Node prod/comb/encerrante - Informações do grupo de encerrante - OPCIONAL
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $enc = [
@@ -883,9 +883,9 @@ Node prod/comb/origComb - Grupo indicador da origem do combustível - OPCIONAL
 
 > NOTA MULTIPLAS ENTRADAS - podem ocorrer até 30 registros por item da NFe
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $orig = [
@@ -904,9 +904,9 @@ Node prod/nRECOPI - Reconhecimento e Controle de Papel Imune - OPCIONAL
 
 > Sistema de Registro e Controle das Operações com Papel Imune provê o prévio reconhecimento da não incidência do imposto e o registro das operações realizadas com o papel destinado à impressão de livro, jornal ou periódico (papel imune)
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $rc = [
@@ -921,9 +921,9 @@ $mk->tagRECOPI((object) $rc);
 ## function tagimposto(object $std): DOMElement    (SEM ALTERAÇÂO)
 Node det/imposto - Grupo de Impostos - OBRIGATÓRIO
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $std = new stdClass();
@@ -942,9 +942,9 @@ Node det/imposto/ICMS/ICMSxx - Grupo do ICMS - opcional
 
 > NOTA: os campos serão usados conforme o CST indicado, e todos os campos que não pertencem ao CST indicado serão ignorados.
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 
 ```php
@@ -955,7 +955,7 @@ $std->orig = 0; //OBRIGATÓRIO Origem da Mercadoria/Serviço
     //1 - Estrangeira - Importação direta, exceto a indicada no código 6;
     //2 - Estrangeira - Adquirida no mercado interno, exceto a indicada no código 7;
     //3 - Nacional, mercadoria ou bem com Conteúdo de Importação superior a 40%;
-    //4 - Nacional, cuja produção tenha sido feita em conformidade com os processos produtivos básicos de que tratam o Decreto-Lei nº 288/1967 , e as Leis nºs 8.248/1991, 8.387/1991, 10.176/2001 e 11.484/2007;
+    //4 - Nacional, cuja produção tenha sido feita em conformidade com os processos produtivos básicos de que tratam o Decreto-Lei n.º 288/1967 , e as Leis nºs 8.248/1991, 8.387/1991, 10.176/2001 e 11.484/2007;
     //5 - Nacional, mercadoria ou bem com Conteúdo de Importação inferior ou igual a 40%;
     //6 - Estrangeira - Importação direta, sem similar nacional, constante em lista de Resolução Camex e gás natural;
     //7 - Estrangeira - Adquirida no mercado interno, sem similar nacional, constante em lista de Resolução Camex e gás natural.  
@@ -1050,9 +1050,9 @@ Node det/imposto/ICMS/ICMSPart
 > Partilha do ICMS entre a UF de origem e UF de destino ou a UF definida na legislação.
 > Operação interestadual para consumidor final com partilha do ICMS  devido na operação entre a UF de origem e a UF do destinatário ou a UF definida na legislação. (Ex. UF da concessionária de entrega de veículos)
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 
 ```php
@@ -1063,7 +1063,7 @@ $ic = [
         //1 - Estrangeira - Importação direta, exceto a indicada no código 6;
         //2 - Estrangeira - Adquirida no mercado interno, exceto a indicada no código 7;
         //3 - Nacional, mercadoria ou bem com Conteúdo de Importação superior a 40%;
-        //4 - Nacional, cuja produção tenha sido feita em conformidade com os processos produtivos básicos de que tratam o Decreto-Lei nº 288/1967 , e as Leis nºs 8.248/1991, 8.387/1991, 10.176/2001 e 11.484/2007;
+        //4 - Nacional, cuja produção tenha sido feita em conformidade com os processos produtivos básicos de que tratam o Decreto-Lei n.º 288/1967 , e as Leis nums 8.248/1991, 8.387/1991, 10.176/2001 e 11.484/2007;
         //5 - Nacional, mercadoria ou bem com Conteúdo de Importação inferior ou igual a 40%;
         //6 - Estrangeira - Importação direta, sem similar nacional, constante em lista de Resolução Camex e gás natural;
         //7 - Estrangeira - Adquirida no mercado interno, sem similar nacional, constante em lista de Resolução Camex e gás natural. 
@@ -1108,9 +1108,9 @@ Node det/imposto/ICMS/ICMSST
 
 > Grupo de informação do ICMSST devido para a UF de destino, nas operações interestaduais de produtos que tiveram retenção antecipada de ICMS por ST na UF do remetente. Repasse via Substituto Tributário.
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 
 ```php
@@ -1155,9 +1155,9 @@ Node det/imposto/ICMS/ICMSSNXXX
 > Tributação do ICMS pelo SIMPLES NACIONAL, usado apenas para empresas CRT 1 - Simples Nacional 
 > NOTA: os parametros são opcionais ou obrigatórios dependendo do CSOSN selecionado vide documentação da NFe
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $ic = [
@@ -1229,9 +1229,9 @@ Node det/imposto/ICMSUFDest
 
 > Grupo a ser informado nas vendas interestarduais para consumidor final, não contribuinte de ICMS
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 
 ```php
@@ -1255,9 +1255,9 @@ Node det/imposto/IPI/IPITrib ou det/imposto/IPI/IPINT
 
 > Grupo de informações sobre o IPI
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 
 ```php
@@ -1300,9 +1300,9 @@ Note det/imposto/II
 
 > Grupo de dados do Imposto de Importação
  
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 
 ```php
@@ -1321,9 +1321,9 @@ Node det/imposto/ISSQN
 
 > Grupo de informações do ISSQN
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
  
 
 ```php
@@ -1365,9 +1365,9 @@ Node det/imposto/PIS/PISAliq ou det/imposto/PIS/PISQtde ou det/imposto/PIS/PISNT
 
 > Grupo de dados do PIS
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 
 ```php
@@ -1423,9 +1423,9 @@ Node det/imposto/PISST
 
 > Grupo de informações sobre o PISST
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 
 ```php
@@ -1450,9 +1450,9 @@ ou det/imposto/COFINS/COFINSOutr
 > Grupo de informações sobre COFINS
 > Alguns parâmetros são opcionais, dependendo do CST 
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 
 ```php
@@ -1508,9 +1508,9 @@ Node det/imposto/COFINSST
 
 > Grupo de informações do COFINSST
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 
 ```php
@@ -1535,9 +1535,9 @@ Node det/imposto/IS - Grupo de informações sobre o Imposto Seletivo - OPCIONAL
 > IMPORTANTE: Esse imposto NÃO SUBSTITUI O IPI, o ipi permanecerá mesmo quanado a Reforma Tributaria do Consumo estiver concluída.
 > Mas é importanta acompanhar as aliquotas do IPI na TIPI 
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 
 ```php
@@ -1574,9 +1574,9 @@ Node det/imposto/IBSCBS/gIBSCBS/gCBS/gRed
 > Grupo CBS IBS Completo
 > NOTA: subgrupo gIBSCBS fará um "choice" (escolha) com gIBSCBSMono e gTransfCred   
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $ibscbs = [
@@ -1632,9 +1632,9 @@ Node det/imposto/IBSCBS/gIBSCBS/gTribRegular
 > Exemplo 1: Art. 442, §4. Operações com ZFM e ALC. Exemplo 2: Operações com suspensão do tributo.
 > NOTA: quando o CST do IBSCBS for 550 é OBRIGATÓRIA essa tag
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $reg = [
@@ -1659,9 +1659,9 @@ Node det/imposto/IBSCBS/gIBSCBS/gIBSCredPres
 > NOTA: é necessário usar a Tabela de Crédito Presumido fornecida pela Receita Federal, pois depende da operação sendo realizada 
 > vide https://dfe-portal.svrs.rs.gov.br/DFE/TabelaCreditoPresumido 
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $cred = [
@@ -1682,9 +1682,9 @@ Node det/imposto/IBSCBS/gIBSCBS/gCBSCredPres
 > NOTA: é necessário usar a Tabela de Crédito Presumido fornecida pela Receita Federal, pois depende da operação sendo realizada
 > vide https://dfe-portal.svrs.rs.gov.br/DFE/TabelaCreditoPresumido
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $cred = [
@@ -1704,9 +1704,9 @@ Node det/imposto/IBSCBS/gIBSCBS/gTribCompraGov
 > Este subgrupo pertence a gIBSCBS e somente será incluso caso gIBSCBS exista
 > NOTA: esse grupo somente será informado em caso de compra governamental
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $cg = [
@@ -1728,9 +1728,9 @@ Node det/imposto/IBSCBS/gIBSCBSMono
 > Este grupo é um "choice" (escolha) com gIBSCBS, caso exista gIBSCBS esse grupo não será incluso na NFe
 > NOTA: caso seja declarado o parâmetro do subgrupo, todos os parâmetros do mesmo subgrupo serão obrigatórios
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $mono = [
@@ -1780,9 +1780,9 @@ Node det/imposto/IBSCBS/gTranfCred
 > Grupo de Informações de transferência de Crédito
 > Este grupo é um "choice" (escolha) com gIBSCBS e gIBSCBSMono, caso exista gIBSCBS ou gIBSCBSMono esse grupo não será incluso na NFe
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $transf = [
@@ -1798,9 +1798,9 @@ Node det/imposto/IBSCBS/gCredPresIBSZFM
 > Grupo de informações de Crédito Presumido em operações com a Zona Franca de Manaus
 > Classificação de acordo com o art. 450, § 1º, da LC 214/25 para o cálculo do crédito presumido na ZFM
 
-| Parâmetro | Tipo | Descrição |
-| :--- | :---: | :--- |
-| $std | stdClass | contêm os dados dos campos, nomeados conforme manual |
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
 
 ```php
 $zfm = [
