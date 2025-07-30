@@ -25,7 +25,7 @@ Para construir o XML da NFe (ou da NFCe) deve ser usada a classe Make::class
 
 [tag infNFe](#tag-infNFe) - Cria a tag infNFe, com as informações da NFe/NFCe (OBRIGATÓRIA)
 
-[tag ide](#tag-ide) - Cria a tag ide, identificação da NFe/NFCe  (OBRIGATÓRIA) **(RTC)**
+[tag ide](#tag-ide) - Cria a tag ide, identificação da NFe/NFCe  (OBRIGATÓRIA) <font color="red">**(RTC)**</font>
 
 [tag emit](#tag-emit) - Cria a tag emit, com os dados principais do emitente (OBRIGATÓRIA)
 
@@ -45,7 +45,7 @@ Choice entre refNFe ou refNFeSig ou refNF ou refNFP ou refCTe ou refECF
 
 [tag refECF—](#tag-refECF) - Cria a tag NFref/refECF
 
-[tag gCompraGov](#tag-gCompraGov) - Cria a tag gCompraGov, grupo de compra Governamental **(RTC)**
+[tag gCompraGov](#tag-gCompraGov) - Cria a tag gCompraGov, grupo de compra Governamental <font color="red">**(RTC)**</font>
 
 
 > **ALTERAÇÃO na construção da Make:class**
