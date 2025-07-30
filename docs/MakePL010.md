@@ -43,7 +43,7 @@ Choice entre refNFe ou refNFeSig ou refNF ou refNFP ou refCTe ou refECF
 
 [tag refCTe](#tag-refCTe) - Cria a tag NFref/refCTe (opcional)
 
-[tag refECF—](#tag-refECF) - Cria a tag NFref/refECF (opcional)
+[tag refECF](#tag-refECF) - Cria a tag NFref/refECF (opcional)
 
 [tag gCompraGov](#tag-gCompraGov) - Cria a tag gCompraGov, grupo de compra Governamental $${\color{red}(RTC)}$$ (opcional)
 
@@ -57,7 +57,7 @@ Choice entre refNFe ou refNFeSig ou refNF ou refNFP ou refCTe ou refECF
 
 [tag autXML](#tag-autXML) - Cria as referencias de autorização de terceiros baixarem o documento fiscal (opcional)
 
-
+[tag prod](#tag-prod) - Cria a tag det/prod, com dados do produto/serviço (OBRIGATÓRIA) $${\color{red}(RTC)}$$
 
 > **ALTERAÇÃO na construção da Make:class**
 ## function __construct(string $schema)         (ALTERADO com PARÂMETRO de criação)
@@ -75,7 +75,7 @@ $mk->setCheckGtin(false); //opções true ativa a verificação do número GTIN 
 ## tag infNFe
 [Volta](#Métodos)
 
-### function taginfNFe($std):DOMElement    (SEM ALTERAÇÂO)
+### function taginfNFe($std):DOMElement    (SEM ALTERAÇÃO)
 Node principal - OBRIGATÓRIO
 
 > NOTA: **se o parâmetro $std->Id não for passado a chave será criada e inclusa e poderá ser recuperada no parâmetro chNFe da classe,**
@@ -270,7 +270,7 @@ $mk->tagrefNFe((object)$ref);
 ### function tagrefNF(object $nf):DOMElement     (SEM ALTERAÇÃO)
 Node NFref/refNF - NFe referenciada - OPCIONAL
 
-> Esta tag está em desuso, pois as NF de papel estão sendo substituídas pos documentos eletrônicos.
+> Esta tag está em desuso, pois as NF de papel, estão sendo substituídas pos documentos eletrônicos.
 
 | Parâmetro |   Tipo   | Descrição                                            |
 |:----------|:--------:|:-----------------------------------------------------|
@@ -475,7 +475,7 @@ $mk->tagretirada((object)$ret);
 # tag entrega
 [Volta](#Métodos)
 
-### function tagentrega(object $ent): DOMElement    (SEM ALTERAÇÂO)
+### function tagentrega(object $ent): DOMElement    (SEM ALTERAÇÃO)
 Node entrega - Identificação do Local de Entrega (informar apenas quando for diferente do endereço do destinatário) - OPCIONAL
 
 | Parâmetro |   Tipo   | Descrição                                            |
@@ -524,10 +524,13 @@ $aut = [
 $mk->tagautXML((object)$aut);
 ```
 
-## funtion tagprod(object $prod): DOMElement    (ALTERAÇÂO nos PARÂMETROS)
+# tag prod
+[Volta](#Métodos)
+
+### funtion tagprod(object $prod): DOMElement    (ALTERAÇÃO nos PARÂMETROS)
 Node det/prod - Produtos - OBRIGATÓRIO
 
->  NOTA MULTIPLAS ENTRADAS - a tag dev/prod pode ocorrer até 990 vezes 
+>  NOTA MÚLTIPLAS ENTRADAS - a tag dev/prod pode ocorrer até 990 vezes 
 
 > Nota: campo novo relativo à Reforma Tributária
 > - vItem - Valor total do Item, correspondente à sua participação no total da nota. A soma dos itens deverá corresponder ao total da nota.
@@ -939,7 +942,7 @@ $comb = [
 $mk->tagcomb((object) $comb);
 ```
 
-## function tagencerrante(object $enc): DOMElement    (SEM ALTERAÇÂO)
+## function tagencerrante(object $enc): DOMElement    (SEM ALTERAÇÃO)
 Node prod/comb/encerrante - Informações do grupo de encerrante - OPCIONAL
 
 | Parâmetro |   Tipo   | Descrição                                            |
@@ -958,7 +961,7 @@ $enc = [
 $mk->tagencerrante((object) $enc);
 ```
 
-## function tagorigComb(object $orig): DOMElement    (SEM ALTERAÇÂO)
+## function tagorigComb(object $orig): DOMElement    (SEM ALTERAÇÃO)
 Node prod/comb/origComb - Grupo indicador da origem do combustível - OPCIONAL
 
 > NOTA MULTIPLAS ENTRADAS - podem ocorrer até 30 registros por item da NFe
@@ -979,7 +982,7 @@ $orig = [
 $mk->tagorigComb((object) $orig);
 ```
 
-## function tagRECOPI(object $rc): DOMElement    (SEM ALTERAÇÂO)
+## function tagRECOPI(object $rc): DOMElement    (SEM ALTERAÇÃO)
 Node prod/nRECOPI - Reconhecimento e Controle de Papel Imune - OPCIONAL
 
 > Sistema de Registro e Controle das Operações com Papel Imune provê o prévio reconhecimento da não incidência do imposto e o registro das operações realizadas com o papel destinado à impressão de livro, jornal ou periódico (papel imune)
@@ -998,7 +1001,7 @@ $mk->tagRECOPI((object) $rc);
 
 # FIM das Informações específicas de produtos e serviços
 
-## function tagimposto(object $std): DOMElement    (SEM ALTERAÇÂO)
+## function tagimposto(object $std): DOMElement    (SEM ALTERAÇÃO)
 Node det/imposto - Grupo de Impostos - OBRIGATÓRIO
 
 | Parâmetro |   Tipo   | Descrição                                            |
@@ -1017,7 +1020,7 @@ $mk->tagimposto($std);
 > Choice (ICMSXX ou ICMSPart ou ICMSSN ou ICMSST)
 > **E essa escolha será feita na sequência de inserção no XML, sendo usado o primeiro grupo encontrado, dentre os possíveis, portanto tenha atenção a isso !!** 
 
-## function tagICMS(object $std): DOMElement    (SEM ALTERAÇÂO)
+## function tagICMS(object $std): DOMElement    (SEM ALTERAÇÃO)
 Node det/imposto/ICMS/ICMSxx - Grupo do ICMS - opcional
 
 > NOTA: os campos serão usados conforme o CST indicado, e todos os campos que não pertencem ao CST indicado serão ignorados.
@@ -1124,7 +1127,7 @@ $std->indDeduzDeson = null; //opcional
 $mk->tagICMS($std);
 ```
 
-## function tagICMSPart(object $std): DOMElement    (SEM ALTERAÇÂO)
+## function tagICMSPart(object $std): DOMElement    (SEM ALTERAÇÃO)
 Node det/imposto/ICMS/ICMSPart
 
 > Partilha do ICMS entre a UF de origem e UF de destino ou a UF definida na legislação.
@@ -1183,7 +1186,7 @@ $ic = [
 $mk->tagICMSPart((object)$ic);
 ```
 
-## function tagICMSST(object $std): DOMElement    (SEM ALTERAÇÂO)
+## function tagICMSST(object $std): DOMElement    (SEM ALTERAÇÃO)
 Node det/imposto/ICMS/ICMSST
 
 > Grupo de informação do ICMSST devido para a UF de destino, nas operações interestaduais de produtos que tiveram retenção antecipada de ICMS por ST na UF do remetente. Repasse via Substituto Tributário.
@@ -1229,7 +1232,7 @@ $ic = [
 $mk->tagICMSST((object) $ic);
 ```
 
-## function tagICMSSN(object $std): DOMElement    (SEM ALTERAÇÂO)
+## function tagICMSSN(object $std): DOMElement    (SEM ALTERAÇÃO)
 Node det/imposto/ICMS/ICMSSNXXX
 
 > Tributação do ICMS pelo SIMPLES NACIONAL, usado apenas para empresas CRT 1 - Simples Nacional 
@@ -1304,7 +1307,7 @@ $ic = [
 $mk->tagICMSSN((object)$ic);
 ```
 
-## function tagICMSUFDest(object $std): DOMElement    (SEM ALTERAÇÂO)
+## function tagICMSUFDest(object $std): DOMElement    (SEM ALTERAÇÃO)
 Node det/imposto/ICMSUFDest
 
 > Grupo a ser informado nas vendas interestarduais para consumidor final, não contribuinte de ICMS
@@ -1330,7 +1333,7 @@ $ufd = [
 $mk->tagICMSUFDest((object)$ufd);
 ```
 
-## function tagIPI(object $std): DOMElement    (SEM ALTERAÇÂO)
+## function tagIPI(object $std): DOMElement    (SEM ALTERAÇÃO)
 Node det/imposto/IPI/IPITrib ou det/imposto/IPI/IPINT 
 
 > Grupo de informações sobre o IPI
@@ -1375,7 +1378,7 @@ $ipi = [
  $mk->tagIPI((object)$ipi);
 ```
 
-## function tagII(object $std): DOMElement    (SEM ALTERAÇÂO)
+## function tagII(object $std): DOMElement    (SEM ALTERAÇÃO)
 Note det/imposto/II
 
 > Grupo de dados do Imposto de Importação
@@ -1396,7 +1399,7 @@ $ii = [
 $mk->tagII((object) $ii);
 ```
 
-## function tagISSQN(object $std): DOMElement    (SEM ALTERAÇÂO)
+## function tagISSQN(object $std): DOMElement    (SEM ALTERAÇÃO)
 Node det/imposto/ISSQN
 
 > Grupo de informações do ISSQN
@@ -1440,7 +1443,7 @@ $iqn = [
     $mk->tagISSQN((object)$iqn);
 ```
 
-## function tagPIS(object $std): DOMElement    (SEM ALTERAÇÂO)
+## function tagPIS(object $std): DOMElement    (SEM ALTERAÇÃO)
 Node det/imposto/PIS/PISAliq ou det/imposto/PIS/PISQtde ou det/imposto/PIS/PISNT ou det/imposto/PIS/PISOutr
 
 > Grupo de dados do PIS
@@ -1498,7 +1501,7 @@ $std->vAliqProd = 1; //opcionalAlíquota do PIS (em reais) (NT2011/004) até 4 d
 $mk->tagPIS($std);
 ```
 
-## function tagPISST(object $std): DOMElement    (SEM ALTERAÇÂO)
+## function tagPISST(object $std): DOMElement    (SEM ALTERAÇÃO)
 Node det/imposto/PISST
 
 > Grupo de informações sobre o PISST
@@ -1521,7 +1524,7 @@ $pst = [
 $mk->tagPISST((object) $pst);
 ```
 
-## function tagCOFINS(object $std): DOMElement    (SEM ALTERAÇÂO)
+## function tagCOFINS(object $std): DOMElement    (SEM ALTERAÇÃO)
 Node det/imposto/COFINS/COFINSAliq 
 ou det/imposto/COFINS/COFINSQtde 
 ou det/imposto/COFINS/COFINSNT
@@ -1583,7 +1586,7 @@ $std->vAliqProd = 1; //opcional Alíquota do COFINS (em reais)
 $mk->tagCOFINS($std);
 ```
 
-## function tagCOFINSST(object $std): DOMElement    (SEM ALTERAÇÂO)
+## function tagCOFINSST(object $std): DOMElement    (SEM ALTERAÇÃO)
 Node det/imposto/COFINSST
 
 > Grupo de informações do COFINSST
