@@ -20,11 +20,13 @@ Para construir o XML da NFe (ou da NFCe) deve ser usada a classe Make::class
 
 # Métodos
 
-[tag infNFe](#tag-infNFe) - Cria a tag infNFe (OBRIGATÓRIA)
+[tag infNFe](#tag-infNFe) - Cria a tag infNFe, com as informações da NFe/NFCe (OBRIGATÓRIA)
 
-[tag ide](#tag-ide) - Cria a tag ide  (OBRIGATÓRIA)
+[tag ide](#tag-ide) - Cria a tag ide, identificação da NFe/NFCe  (OBRIGATÓRIA)
 
-[tag emit](#tag-emit) - Cria a tag emit, com os dados principais do emitente (opcional para NFCe)
+[tag emit](#tag-emit) - Cria a tag emit, com os dados principais do emitente (OBRIGATÓRIA)
+
+[tag enderEmit]($tag-enderEmit)) - Cria a tag enderEmit, com o endereço do emitente (OBRIGATÓRIA)
 
 
 
@@ -188,7 +190,10 @@ $emi = [
 $mk->tagEmit((object)$emi);
 ```
 
-## function tagEnderemit(object $ender):DOMElement)   (SEM ALTERAÇÃO)
+# tag enderEmit
+[Volta](#Métodos)
+
+### function tagEnderemit(object $ender):DOMElement)   (SEM ALTERAÇÃO)
 Node enderEmit - Endereço do Emitente da NFe - OBRIGATÓRIO
 
 | Parâmetro |   Tipo   | Descrição                                            |
