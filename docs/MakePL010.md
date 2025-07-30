@@ -20,7 +20,8 @@ Para construir o XML da NFe (ou da NFCe) deve ser usada a classe Make::class
 
 # Métodos
 
-[tag emit](#tag-emit)
+[tag infNFe](#tag-infNFe) - Cria a tag infNFe
+[tag emit](#tag-emit) - Cria a tag emit, com os dados principais do emitente
 
 > Abaixo estão descritos TODOS os métodos da classe Make class com os seus respectívos parâmetros em ordem de entrada.
 > ### Os valores dos parâmetros são apenas exemplos "CHUTADOS", e não correspondem a nenhum cálculo ou ponderação real. 
@@ -38,8 +39,10 @@ $mk = new Make($schema); //se não informado o schema será usado o PL_009_V4, o
 $mk->setOnlyAscii(false); //opções true remove todos a acentuação ou false (default) mantêm os acentos nos textos
 $mk->setCheckGtin(true); //opções true ativa a verificação do número GTIN ou false desativa essa validação  
 ```
+## tag infNFe
+[Volta](#Métodos)
 
-## function taginfNFe($std):DOMElement    (SEM ALTERAÇÂO)
+### **function taginfNFe($std):DOMElement    (SEM ALTERAÇÂO)**
 Node principal - OBRIGATÓRIO
 
 > NOTA: **se o parâmetro $std->Id não for passado a chave será criada e inclusa e poderá ser recuperada no parâmetro chNFe da classe,**
