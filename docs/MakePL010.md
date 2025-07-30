@@ -26,7 +26,7 @@ Para construir o XML da NFe (ou da NFCe) deve ser usada a classe Make::class
 
 [tag emit](#tag-emit) - Cria a tag emit, com os dados principais do emitente (OBRIGATÓRIA)
 
-[tag enderEmit]($tag-enderEmit) - Cria a tag enderEmit, com o endereço do emitente (OBRIGATÓRIA)
+[tag enderEmit](#tag-enderEmit) - Cria a tag enderEmit, com o endereço do emitente (OBRIGATÓRIA)
 
 
 
@@ -43,8 +43,8 @@ Método construtor. Instancia a classe
 $schema = 'PL_010_V1';
 
 $mk = new Make($schema); //se não informado o schema será usado o PL_009_V4, o conjunto de xsd atualmente em uso.
-$mk->setOnlyAscii(false); //opções true remove todos a acentuação ou false (default) mantêm os acentos nos textos
-$mk->setCheckGtin(true); //opções true ativa a verificação do número GTIN ou false desativa essa validação  
+$mk->setOnlyAscii(false); //opções true remove todos a acentuação ou false mantêm os acentos nos textos. DEFAULT false
+$mk->setCheckGtin(false); //opções true ativa a verificação do número GTIN ou false desativa essa validação. DEFAULT false  
 ```
 ## tag infNFe
 [Volta](#Métodos)
@@ -221,7 +221,10 @@ $end = [
 
 > NOTA MULTIPLAS ENTRADAS - Podem ocorrer até 999 referencias por NFe, entre NFe, NF, CTe e ECF.
 
-## function tagrefNFe(object $ref):DOMElement   (SEM ALTERAÇÃO)
+# tag refNFe
+[Volta](#Métodos)
+
+### function tagrefNFe(object $ref):DOMElement   (SEM ALTERAÇÃO)
 Node NFref/refNFe - NFe referenciada - OPCIONAL
 
 | Parâmetro |   Tipo   | Descrição                                            |
@@ -235,7 +238,10 @@ $ref = [
 $mk->tagrefNFe((object)$ref);
 ```
 
-## function tagrefNF(object $nf):DOMElement     (SEM ALTERAÇÃO)
+# tag refNF
+[Volta](#Métodos)
+
+### function tagrefNF(object $nf):DOMElement     (SEM ALTERAÇÃO)
 Node NFref/refNF - NFe referenciada - OPCIONAL
 
 > Esta tag está em desuso, pois as NF de papel estão sendo substituídas pos documentos eletrônicos.
@@ -256,7 +262,10 @@ $nf = [
 $mk->tagrefNF((object)$nf);
 ```
 
-## function tagrefNFP(object $nfp):DOMElement    (SEM ALTERAÇÃO)
+# tag refNFP
+[Volta](#Métodos)
+
+### function tagrefNFP(object $nfp):DOMElement    (SEM ALTERAÇÃO)
 Node NFref/refNFP - NFe de Produtor Rural referenciada - OPCIONAL
 
 > Esta tag está em desuso, pois as NF de papel estão sendo substituídas pos documentos eletrônicos.
@@ -279,7 +288,10 @@ $nfp = [
 $mk->tagrefNFP((object)$nfp);
 ```
 
-## function tagrefCTe(object $cte):DOMElement     (SEM ALTERAÇÃO)
+# tag refCTe
+[Volta](#Métodos)
+
+### function tagrefCTe(object $cte):DOMElement     (SEM ALTERAÇÃO)
 Node NFref/refCTe - CTe Conhecimento de Transporte referenciada - OPCIONAL
 
 | Parâmetro |   Tipo   | Descrição                                            |
@@ -293,7 +305,10 @@ $cte = [
 $mk->tagrefCTe((object)$cte);
 ```
 
-## function tagrefECF(object $ecf):DOMElement  (SEM ALTERAÇÃO)
+# tag refECF
+[Volta](#Métodos)
+
+### function tagrefECF(object $ecf):DOMElement  (SEM ALTERAÇÃO)
 Node NFref/refECF - Cupom Fiscal vinculado à NF-e - OPCIONAL
 
 > Esta tag está em desuso, pois os ECF estão sendo substituídos por NFCe
