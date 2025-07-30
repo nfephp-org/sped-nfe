@@ -26,7 +26,7 @@ Para construir o XML da NFe (ou da NFCe) deve ser usada a classe Make::class
 
 [tag emit](#tag-emit) - Cria a tag emit, com os dados principais do emitente (OBRIGATÓRIA)
 
-[tag enderEmit]($tag-enderEmit)) - Cria a tag enderEmit, com o endereço do emitente (OBRIGATÓRIA)
+[tag enderEmit]($tag-enderEmit) - Cria a tag enderEmit, com o endereço do emitente (OBRIGATÓRIA)
 
 
 
