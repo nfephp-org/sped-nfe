@@ -20,6 +20,9 @@ Para construir o XML da NFe (ou da NFCe) deve ser usada a classe Make::class
 
 # Métodos
 
+> Abaixo estão descritos TODOS os métodos da classe Make class com os seus respectívos parâmetros em ordem de entrada.
+> ### Os valores dos parâmetros são apenas exemplos "CHUTADOS", e não correspondem a nenhum cálculo ou ponderação real.
+
 [tag infNFe](#tag-infNFe) - Cria a tag infNFe, com as informações da NFe/NFCe (OBRIGATÓRIA)
 
 [tag ide](#tag-ide) - Cria a tag ide, identificação da NFe/NFCe  (OBRIGATÓRIA)
@@ -28,10 +31,21 @@ Para construir o XML da NFe (ou da NFCe) deve ser usada a classe Make::class
 
 [tag enderEmit](#tag-enderEmit) - Cria a tag enderEmit, com o endereço do emitente (OBRIGATÓRIA)
 
+** DOCUMENTOS REFERENCIADOS **
+
+Choice entre refNFe ou refNFeSig ou refNF ou refNFP ou refCTe ou refECF
+
+[tag refNFe](#tag-refNFe) - Cria a tag NFref/refNFe ou NFref/refNFeSig  
+
+[tag refNF](#tag-refNF) - Cria a tag NFref/refNF
+
+[tag refNFP](#tag-refNFP) - Cria a tag NFref/refNFP
+
+[tag refCTe](#tag-refCTe) - Cria a tag NFref/refCTe
+
+[tag refECF](#tag-refECF) - Cria a tag NFref/refECF
 
 
-> Abaixo estão descritos TODOS os métodos da classe Make class com os seus respectívos parâmetros em ordem de entrada.
-> ### Os valores dos parâmetros são apenas exemplos "CHUTADOS", e não correspondem a nenhum cálculo ou ponderação real. 
 
 > **ALTERAÇÃO na construção da Make:class**
 ## function __construct(string $schema)         (ALTERADO com PARÂMETRO de criação)
