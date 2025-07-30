@@ -148,7 +148,8 @@ $mk->tagide((object)$ide);
 
 ## tag emit
 [Volta](#Métodos)
-function tagEmit(object $emit):DOMElement    (SEM ALTERAÇÃO)
+
+### **function tagEmit(object $emit):DOMElement    (SEM ALTERAÇÃO)**
 Node emit - Informações do Emitente - OBRIGATÓRIO
 
 > NOTA: a partir de 2026 o CNPJ poderá ser ALFA NUMÉRICO !!
