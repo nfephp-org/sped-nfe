@@ -43,7 +43,7 @@ Choice entre refNFe ou refNFeSig ou refNF ou refNFP ou refCTe ou refECF
 
 [tag refCTe](#tag-refCTe) - Cria a tag NFref/refCTe
 
-[tag refECF](#tag-refECF) - Cria a tag NFref/refECF
+[tag refECF—](#tag-refECF)Cria a tag NFref/refECF
 
 
 
