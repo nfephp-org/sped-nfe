@@ -45,7 +45,7 @@ $mk->setCheckGtin(true); //opções true ativa a verificação do número GTIN o
 ## tag infNFe
 [Volta](#Métodos)
 
-### **function taginfNFe($std):DOMElement    (SEM ALTERAÇÂO)**
+### function taginfNFe($std):DOMElement    (SEM ALTERAÇÂO)
 Node principal - OBRIGATÓRIO
 
 > NOTA: **se o parâmetro $std->Id não for passado a chave será criada e inclusa e poderá ser recuperada no parâmetro chNFe da classe,**
@@ -64,7 +64,10 @@ $std->pk_nItem = null; //deixe essa variavel sempre como NULL
 $mk->taginfNFe($std);
 ```
 
-## function tagide(object $ide):DOMElement   (ALTERAÇÂO nos PARÂMETROS)
+## tag ide
+[Volta](#Métodos)
+
+### function tagide(object $ide):DOMElement   (ALTERAÇÂO nos PARÂMETROS)
 Node ide - identificação da NFe - OBRIGATÓRIO
 
 > Nota: os campos novos relacionados à Reforma Tributária listados abaixo, serão ignorados se usar o schema PL_009_V4.
@@ -155,7 +158,7 @@ $mk->tagide((object)$ide);
 ## tag emit
 [Volta](#Métodos)
 
-### **function tagEmit(object $emit):DOMElement    (SEM ALTERAÇÃO)**
+### function tagEmit(object $emit):DOMElement    (SEM ALTERAÇÃO)
 Node emit - Informações do Emitente - OBRIGATÓRIO
 
 > NOTA: a partir de 2026 o CNPJ poderá ser ALFA NUMÉRICO !!
