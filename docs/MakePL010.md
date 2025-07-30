@@ -35,17 +35,28 @@ Para construir o XML da NFe (ou da NFCe) deve ser usada a classe Make::class
 
 Choice entre refNFe ou refNFeSig ou refNF ou refNFP ou refCTe ou refECF
 
-[tag refNFe](#tag-refNFe) - Cria a tag NFref/refNFe ou NFref/refNFeSig  
+[tag refNFe](#tag-refNFe) - Cria a tag NFref/refNFe ou NFref/refNFeSig (opcional)
 
-[tag refNF](#tag-refNF) - Cria a tag NFref/refNF
+[tag refNF](#tag-refNF) - Cria a tag NFref/refNF (opcional)
 
-[tag refNFP](#tag-refNFP) - Cria a tag NFref/refNFP
+[tag refNFP](#tag-refNFP) - Cria a tag NFref/refNFP (opcional)
 
-[tag refCTe](#tag-refCTe) - Cria a tag NFref/refCTe
+[tag refCTe](#tag-refCTe) - Cria a tag NFref/refCTe (opcional)
 
-[tag refECF—](#tag-refECF) - Cria a tag NFref/refECF
+[tag refECF—](#tag-refECF) - Cria a tag NFref/refECF (opcional)
 
-[tag gCompraGov](#tag-gCompraGov) - Cria a tag gCompraGov, grupo de compra Governamental $${\color{red}(RTC)}$$
+[tag gCompraGov](#tag-gCompraGov) - Cria a tag gCompraGov, grupo de compra Governamental $${\color{red}(RTC)}$$ (opcional)
+
+[tag dest](#tag-dest) - Cria a tag dest, dados do destinatário (opcional)
+
+[tag enderDest](#tag-dest) - Cria a tag enderDest, endereçõ do destinatário (opcional)
+ 
+[tag retirada](#tag-retirada) - Cria a tag retirada, com os dados do local de retirada da mercadoria (opcional)
+
+[tag entrega](#tag-entrega) - Cria a tag entrega, com os dados do local de entrega da mercadoria (opcional)
+
+[tag autXML](#tag-autXML) - Cria as referencias de autorização de terceiros baixarem o documento fiscal (opcional)
+
 
 
 > **ALTERAÇÃO na construção da Make:class**
@@ -373,7 +384,10 @@ $gcg = [
 $mk->taggCompraGov((object)$gcg);
 ```
 
-## function tagdest(object $dest): DOMElement  (SEM ALTERAÇÃO)
+# tag dest
+[Volta](#Métodos)
+
+### function tagdest(object $dest): DOMElement  (SEM ALTERAÇÃO)
 Node dest - Identificação do Destinatário - OPCIONAL
 
 | Parâmetro |   Tipo   | Descrição                                            |
@@ -398,7 +412,10 @@ $dest = [
 $mk->tagdest((object)$dest);
 ```
 
-## function tagenderdest(object $end): DOMElement   (SEM ALTERAÇÃO)
+# tag enderDest
+[Volta](#Métodos)
+
+### function tagenderdest(object $end): DOMElement   (SEM ALTERAÇÃO)
 Node enderdest - Endereço do Destinatário - OPCIONAL
 
 | Parâmetro |   Tipo   | Descrição                                            |
@@ -423,7 +440,10 @@ $end = [
 $mk->tagenderdest((object)$end);
 ```
 
-## function tagretirada(object $ret): DOMElement   (SEM ALTERAÇÃO)
+# tag retirada
+[Volta](#Métodos)
+
+### function tagretirada(object $ret): DOMElement   (SEM ALTERAÇÃO)
 Node retirada - Identificação do Local de Retirada (informar apenas quando for diferente do endereço do remetente) - OPCIONAL
 
 | Parâmetro |   Tipo   | Descrição                                            |
@@ -452,7 +472,10 @@ $ret = [
 $mk->tagretirada((object)$ret);
 ```
 
-## function tagentrega(object $ent): DOMElement    (SEM ALTERAÇÂO)
+# tag entrega
+[Volta](#Métodos)
+
+### function tagentrega(object $ent): DOMElement    (SEM ALTERAÇÂO)
 Node entrega - Identificação do Local de Entrega (informar apenas quando for diferente do endereço do destinatário) - OPCIONAL
 
 | Parâmetro |   Tipo   | Descrição                                            |
@@ -481,7 +504,10 @@ $ent = [
 $mk->tagentrega((object)$ent);
 ```
 
-## function tagautxml(object $aut): DOMElement   (SEM ALTERAÇÃO)
+# tag autXML
+[Volta](#Métodos)
+
+### function tagautXML(object $aut): DOMElement   (SEM ALTERAÇÃO)
 Node autXML - Pessoas autorizadas para o download do XML da NF-e - OPCIONAL
 
 > NOTA MULTIPLAS ENTRADAS - Podem haver até 10 registros de pessoas autorizadas. Então podem repetidos até 10 vezes essa tag.
@@ -495,7 +521,7 @@ $aut = [
     'CNPJ' => '01234123456789', //este é o campo prioritário caso sejam informados os dois apenas o CNPJ será considerado
     'CPF' => null
 ];
-$mk->tagautxml((object)$aut);
+$mk->tagautXML((object)$aut);
 ```
 
 ## funtion tagprod(object $prod): DOMElement    (ALTERAÇÂO nos PARÂMETROS)
