@@ -20,8 +20,9 @@ Para construir o XML da NFe (ou da NFCe) deve ser usada a classe Make::class
 
 # Métodos
 
-[tag infNFe](#tag-infNFe) - Cria a tag infNFe
-[tag emit](#tag-emit) - Cria a tag emit, com os dados principais do emitente
+[tag infNFe](#tag-infNFe) - Cria a tag infNFe (OBRIGATÓRIA)
+
+[tag emit](#tag-emit) - Cria a tag emit, com os dados principais do emitente (opcional para NFCe)
 
 > Abaixo estão descritos TODOS os métodos da classe Make class com os seus respectívos parâmetros em ordem de entrada.
 > ### Os valores dos parâmetros são apenas exemplos "CHUTADOS", e não correspondem a nenhum cálculo ou ponderação real. 
