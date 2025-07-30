@@ -146,7 +146,8 @@ $ide = [
 $mk->tagide((object)$ide);
 ```
 
-## tag emit         [Volta](#Métodos)
+## tag emit
+[Volta](#Métodos)
 function tagEmit(object $emit):DOMElement    (SEM ALTERAÇÃO)
 Node emit - Informações do Emitente - OBRIGATÓRIO
 
