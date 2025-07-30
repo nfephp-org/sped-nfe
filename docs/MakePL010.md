@@ -25,7 +25,7 @@ Para construir o XML da NFe (ou da NFCe) deve ser usada a classe Make::class
 
 [tag infNFe](#tag-infNFe) - Cria a tag infNFe, com as informações da NFe/NFCe (OBRIGATÓRIA)
 
-[tag ide](#tag-ide) - Cria a tag ide, identificação da NFe/NFCe  (OBRIGATÓRIA)
+[tag ide](#tag-ide) - Cria a tag ide, identificação da NFe/NFCe  (OBRIGATÓRIA) **(RTC)**
 
 [tag emit](#tag-emit) - Cria a tag emit, com os dados principais do emitente (OBRIGATÓRIA)
 
@@ -43,8 +43,9 @@ Choice entre refNFe ou refNFeSig ou refNF ou refNFP ou refCTe ou refECF
 
 [tag refCTe](#tag-refCTe) - Cria a tag NFref/refCTe
 
-[tag refECF—](#tag-refECF)Cria a tag NFref/refECF
+[tag refECF—](#tag-refECF) - Cria a tag NFref/refECF
 
+[tag gCompraGov](#tag-gCompraGov) - Cria a tag gCompraGov, grupo de compra Governamental **(RTC)**
 
 
 > **ALTERAÇÃO na construção da Make:class**
@@ -345,7 +346,10 @@ $mk->tagrefECF((object)$ecf);
 
 # Fim do Bloco de Documentos Referenciados na NFe
 
-## function taggCompraGov(object $gcg): DOMElement       (NOVO MÉTODO)  
+# tag gCompraGov
+[Volta](#Métodos)
+
+### function taggCompraGov(object $gcg): DOMElement       (NOVO MÉTODO)  
 Node PL_010 - Reforma Tributária - Compra Governamental - OPCIONAL
 
 > Esta tag somente será inserida quando schema usado for o PL_010
