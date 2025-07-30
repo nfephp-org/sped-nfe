@@ -25,7 +25,7 @@ Para construir o XML da NFe (ou da NFCe) deve ser usada a classe Make::class
 
 [tag infNFe](#tag-infNFe) - Cria a tag infNFe, com as informações da NFe/NFCe (OBRIGATÓRIA)
 
-[tag ide](#tag-ide) - Cria a tag ide, identificação da NFe/NFCe  (OBRIGATÓRIA) $${\color{red}(RTC)}$$
+[tag ide](#tag-ide) - Cria a tag ide, identificação da NFe/NFCe  (OBRIGATÓRIA) **$${\color{red}(RTC)}$$**
 
 [tag emit](#tag-emit) - Cria a tag emit, com os dados principais do emitente (OBRIGATÓRIA)
 
