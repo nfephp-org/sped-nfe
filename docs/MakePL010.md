@@ -83,31 +83,31 @@ Node ide - identificação da NFe - OBRIGATÓRIO
 
 ```php
 $ide = [
-    'cUF' => 12, //OBRIGATÒRIO numero da UF
+    'cUF' => 12, // OBRIGATÓRIO numero da UF
     'cNF' => null, //opcional 8 digitos max, será preenchido automaticamente com zeros a esquerda
                    //se deixado com null, será inserido um valor aleatório de acordo com as regras da SEFAZ
                    //se forem informados mais de 8 digitos o valor será truncado para 8 digitos
-    'natOp' => 'REMESSA P/ INDUSTRIALIZAÇÃO', //OBRIGATÒRIO max 60 caracteres
-    'mod' => 55, //OBRIGATÒRIO modelo 55 ou 65
-    'serie' => 1, //OBRIGATÒRIO série normal 0-889 SCAN 900-999
-    'nNF' => 100, //OBRIGATÒRIO até 9 digitos
+    'natOp' => 'REMESSA P/ INDUSTRIALIZAÇÃO', // OBRIGATÓRIO max 60 caracteres
+    'mod' => 55, // OBRIGATÓRIO modelo 55 ou 65
+    'serie' => 1, // OBRIGATÓRIO série normal 0-889 SCAN 900-999
+    'nNF' => 100, // OBRIGATÓRIO até 9 digitos
     'dhEmi' => null, //opcional se deixado com null, será inserida a data e hora atual para a UF
     'dhSaiEnt' => null, //opcional
                         //CUIDADO ao inserir deve corresponder a data e hora correta para a UF e deve ser maior ou igual a dhEmi
-    'tpNF' => 1, //OBRIGATÒRIO 0-entrada; 1-saída
-    'idDest' => 3, //OBRIGATÒRIO 1-Interna;2-Interestadual;3-Exterior
-    'cMunFG' => 2111300, //OBRIGATÒRIO 7 digitos IBGE Código do Município de Ocorrência do Fato Gerador
+    'tpNF' => 1, // OBRIGATÓRIO 0-entrada; 1-saída
+    'idDest' => 3, // OBRIGATÓRIO 1-Interna;2-Interestadual;3-Exterior
+    'cMunFG' => 2111300, // OBRIGATÓRIO 7 digitos IBGE Código do Município de Ocorrência do Fato Gerador
     'cMunFGIBS' => 2111300, //opcional 7 digitos IBGE apenas PL_010 em diante
                             //cMunFGIBS somente deve ser preenchido quando indPres = 5 (Operação presencial, fora do estabelecimento),
                             //e não tiver endereço do destinatário (tag <enderDest>) ou local de entrega (tag <entrega>).
-    'tpImp' => 1, //OBRIGATÒRIO
+    'tpImp' => 1, // OBRIGATÓRIO
         //0-sem DANFE;
         //1-DANFe Retrato;
         //2-DANFe Paisagem;
         //3-DANFe Simplificado;
         //4-DANFe NFC-e;
         //5-DANFe NFC-e em mensagem eletrônica
-    'tpEmis' => 1, //OBRIGATÒRIO
+    'tpEmis' => 1, // OBRIGATÓRIO
         //1 - Normal;
         //2 - Contingência FS
         //3 - Regime Especial NFF (NT 2021.002)
@@ -118,8 +118,8 @@ $ide = [
         //9 - Contingência off-line NFC-e
     'cDV' => null, //opcional 1 digito
         //será calculado e inserido automaticamente, substituindo o cDV incorreto informado
-    'tpAmb' => 2, //OBRIGATÒRIO 1-produçao 2-homologação
-    'finNFe' => 1, //OBRIGATÒRIO
+    'tpAmb' => 2, // OBRIGATÓRIO 1-produçao 2-homologação
+    'finNFe' => 1, // OBRIGATÓRIO
         //1 - NFe normal
         //2 - NFe complementar
         //3 - NFe de ajuste
@@ -134,8 +134,8 @@ $ide = [
         //05=Transferência de crédito de sucessão.
     'tpNFCredito' => '01', //opcional apenas PL_010 em diante
         //01 - a definir ?????????????????????????????????????????????
-    'indFinal' => 0, //OBRIGATÒRIO 0 Normal; 1 Consumidor final;
-    'indPres' => 9, //OBRIGATÒRIO
+    'indFinal' => 0, // OBRIGATÓRIO 0 Normal; 1 Consumidor final;
+    'indPres' => 9, // OBRIGATÓRIO
         //1 Operação presencial;
         //2 Operação não presencial, pela Internet;
         //3 Operação não presencial, Teleatendimento;
