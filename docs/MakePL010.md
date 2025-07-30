@@ -69,7 +69,7 @@ $mk->taginfNFe($std);
 ## tag ide
 [Volta](#Métodos)
 
-### function tagide(object $ide):DOMElement   (ALTERAÇÂO nos PARÂMETROS)
+### function tagide(object $ide):DOMElement   (ALTERAÇÃO nos PARÂMETROS)
 Node ide - identificação da NFe - OBRIGATÓRIO
 
 > Nota: os campos novos relacionados à Reforma Tributária listados abaixo, serão ignorados se usar o schema PL_009_V4.
