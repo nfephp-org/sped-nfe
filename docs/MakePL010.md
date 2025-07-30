@@ -18,9 +18,9 @@ Para construir o XML da NFe (ou da NFCe) deve ser usada a classe Make::class
 
 > NOTA: como forma de diminuir o tamanho do código a classe foi dividida em traits para os principais blocos construtivos do XML, mas houve um aumento nas propriedades da Make:class, o que pode gerar um leve aumento no uso de memória para a construção do XML.
 
-# <a name="#Topo">Métodos</a>
+# Métodos
 
-[tag emit](#emit)
+[tag emit](#tag-emit)
 
 > Abaixo estão descritos TODOS os métodos da classe Make class com os seus respectívos parâmetros em ordem de entrada.
 > ### Os valores dos parâmetros são apenas exemplos "CHUTADOS", e não correspondem a nenhum cálculo ou ponderação real. 
@@ -146,7 +146,8 @@ $ide = [
 $mk->tagide((object)$ide);
 ```
 
-## <a name="#emit">function tagEmit(object $emit):DOMElement    (SEM ALTERAÇÃO)</a>  [Volta](#Topo)
+## tag emit         [Volta](#Métodos)
+function tagEmit(object $emit):DOMElement    (SEM ALTERAÇÃO)
 Node emit - Informações do Emitente - OBRIGATÓRIO
 
 > NOTA: a partir de 2026 o CNPJ poderá ser ALFA NUMÉRICO !!
