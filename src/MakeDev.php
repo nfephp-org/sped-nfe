@@ -488,7 +488,7 @@ final class MakeDev
      * Função construtora cria um objeto DOMDocument
      * que será carregado com o documento fiscal
      */
-    public function __construct(string $schema)
+    public function __construct($schema = null)
     {
         $this->schema = 9; //PL_009_V4
         if (!empty($schema)) {

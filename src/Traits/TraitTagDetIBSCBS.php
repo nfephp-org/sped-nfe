@@ -246,7 +246,15 @@ trait TraitTagDetIBSCBS
                 true,
                 "$identificador Valor do IBS de competência do Município (vIBSMun)"
             );
+
             $gIBSCBS->appendChild($gIBSMun);
+            $this->dom->addChild(
+                $gIBSCBS,
+                "vIBS",
+                $this->conditionalNumberFormatting($this->stdIBSCBSTot->vIBS),
+                true,
+                "$identificador Valor do Total do IBS"
+            );
             //gripo de Informações da CBS
             $identificador = "UB12 <IBSCBS/gIBSCBS/gCBS> -";
             $gCBS = $this->dom->createElement("gCBS");
@@ -627,146 +635,156 @@ trait TraitTagDetIBSCBS
 
         $identificador = "UB84 <gIBSCBSMono> -";
         $gIBSCBSMono = $this->dom->createElement("gIBSCBSMono");
+
+
         if (!empty($std->qBCMono)) {
+            $padrao  = $this->dom->createElement("gMonoPadrao");
             $this->dom->addChild(
-                $gIBSCBSMono,
+                $padrao,
                 "qBCMono",
                 $this->conditionalNumberFormatting($std->qBCMono, 4),
                 true,
                 "$identificador Quantidade tributada na monofasia (qBCMono)"
             );
             $this->dom->addChild(
-                $gIBSCBSMono,
+                $padrao,
                 "adRemIBS",
                 $this->conditionalNumberFormatting($std->adRemIBS ?? 0, 4),
                 true,
                 "$identificador Alíquota ad rem do IBS (adRemIBS)"
             );
             $this->dom->addChild(
-                $gIBSCBSMono,
+                $padrao,
                 "adRemCBS",
                 $this->conditionalNumberFormatting($std->adRemCBS ?? 0, 4),
                 true,
                 "$identificador Alíquota ad rem do CBS (adRemCBS)"
             );
             $this->dom->addChild(
-                $gIBSCBSMono,
+                $padrao,
                 "vIBSMono",
                 $this->conditionalNumberFormatting($std->vIBSMono ?? 0),
                 true,
                 "$identificador Valor do IBS monofásico (vIBSMono)"
             );
             $this->dom->addChild(
-                $gIBSCBSMono,
+                $padrao,
                 "vCBSMono",
                 $this->conditionalNumberFormatting($std->vCBSMono ?? 0),
                 true,
                 "$identificador Valor do CBS monofásico (vCBSMono)"
             );
+            $gIBSCBSMono->appendChild($padrao);
         }
         if (!empty($std->qBCMonoReten)) {
+            $reten = $this->dom->createElement("gMonoReten");
             $this->dom->addChild(
-                $gIBSCBSMono,
+                $reten,
                 "qBCMonoReten",
                 $this->conditionalNumberFormatting($std->qBCMonoReten, 4),
                 true,
                 "$identificador Quantidade tributada sujeita à retenção na monofasia (qBCMonoReten)"
             );
             $this->dom->addChild(
-                $gIBSCBSMono,
+                $reten,
                 "adRemIBSReten",
                 $this->conditionalNumberFormatting($std->adRemIBSReten ?? null, 4),
                 true,
                 "$identificador Alíquota ad rem do IBS sujeito a retenção (adRemIBSReten)"
             );
             $this->dom->addChild(
-                $gIBSCBSMono,
+                $reten,
                 "vIBSMonoReten",
                 $this->conditionalNumberFormatting($std->vIBSMonoReten ?? null),
                 true,
                 "$identificador Valor do IBS monofásico sujeito a retenção (vIBSMonoReten)"
             );
             $this->dom->addChild(
-                $gIBSCBSMono,
+                $reten,
                 "adRemCBSReten",
                 $this->conditionalNumberFormatting($std->adRemCBSReten ?? null, 4),
                 true,
                 "$identificador Alíquota ad rem do CBS sujeito a retenção (adRemCBSReten)"
             );
             $this->dom->addChild(
-                $gIBSCBSMono,
+                $reten,
                 "vCBSMonoReten",
                 $this->conditionalNumberFormatting($std->vCBSMonoReten ?? null),
                 true,
                 "$identificador Valor do CBS monofásico sujeito a retenção (vCBSMonoReten)"
             );
+            $gIBSCBSMono->appendChild($reten);
         }
         if (!empty($std->qBCMonoRet)) {
+            $ret = $this->dom->createElement("gMonoRet");
             $this->dom->addChild(
-                $gIBSCBSMono,
+                $ret,
                 "qBCMonoRet",
                 $this->conditionalNumberFormatting($std->qBCMonoRet, 4),
                 true,
                 "$identificador Quantidade tributada retida anteriormente (qBCMonoRet)"
             );
             $this->dom->addChild(
-                $gIBSCBSMono,
+                $ret,
                 "adRemIBSRet",
                 $this->conditionalNumberFormatting($std->adRemIBSRet ?? null, 4),
                 true,
                 "$identificador Alíquota ad rem do IBS retido anteriormente (adRemIBSRet)"
             );
             $this->dom->addChild(
-                $gIBSCBSMono,
+                $ret,
                 "vIBSMonoRet",
                 $this->conditionalNumberFormatting($std->vIBSMonoRet ?? null),
                 true,
                 "$identificador Valor do IBS retido anteriormente (vIBSMonoRet)"
             );
             $this->dom->addChild(
-                $gIBSCBSMono,
+                $ret,
                 "adRemCBSRet",
                 $this->conditionalNumberFormatting($std->adRemCBSRet ?? null, 4),
                 true,
                 "$identificador Alíquota ad rem do CBS retido anteriormente (adRemCBSRet)"
             );
             $this->dom->addChild(
-                $gIBSCBSMono,
+                $ret,
                 "vCBSMonoRet",
                 $this->conditionalNumberFormatting($std->vCBSMonoRet ?? null),
                 true,
                 "$identificador Valor do CBS retido anteriormente (vCBSMonoRet)"
             );
+            $gIBSCBSMono->appendChild($ret);
         }
         if (!empty($std->pDifIBS) || !empty($std->pDifCBS)) {
+            $dif = $this->dom->createElement("gMonoDif");
             $this->dom->addChild(
-                $gIBSCBSMono,
+                $dif,
                 "pDifIBS",
                 $this->conditionalNumberFormatting($std->pDifIBS, 4),
                 true,
                 "$identificador Percentual do diferimento do imposto monofásico (pDifIBS)"
             );
             $this->dom->addChild(
-                $gIBSCBSMono,
+                $dif,
                 "vIBSMonoDif",
                 $this->conditionalNumberFormatting($std->vIBSMonoDif ?? null),
                 true,
                 "$identificador Valor do IBS monofásico diferido (vIBSMonoDif)"
             );
             $this->dom->addChild(
-                $gIBSCBSMono,
+                $dif,
                 "pDifCBS",
                 $this->conditionalNumberFormatting($std->pDifCBS, 4),
                 true,
                 "$identificador Percentual do diferimento do imposto monofásico (pDifCBS)"
             );
             $this->dom->addChild(
-                $gIBSCBSMono,
+                $dif,
                 "vCBSMonoDif",
                 $this->conditionalNumberFormatting($std->vCBSMonoDif ?? null),
                 true,
                 "$identificador Valor da CBS Monofásica diferida (vCBSMonoDif)"
             );
+            $gIBSCBSMono->appendChild($dif);
         }
         $this->dom->addChild(
             $gIBSCBSMono,

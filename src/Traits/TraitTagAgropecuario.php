@@ -28,7 +28,6 @@ trait TraitTagAgropecuario
         $possible = [
             'tpGuia',
             'UFGuia',
-            'serieGuia',
             'nGuia'
         ];
         $std = $this->equilizeParameters($std, $possible);
@@ -47,13 +46,6 @@ trait TraitTagAgropecuario
             !empty($std->UFGuia) ? $std->UFGuia : null,
             false,
             "UF de emissão"
-        );
-        $this->dom->addChild(
-            $guia,
-            "serieGuia",
-            $std->serieGuia ?? null,
-            false,
-            "Série da Guia"
         );
         $this->dom->addChild(
             $guia,
