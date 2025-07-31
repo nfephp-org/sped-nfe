@@ -294,7 +294,7 @@ trait TraitTagDet
         $this->dom->addChild(
             $prod,
             "indBemMovelUsado",
-            !empty($std->indBemMovelUsado) ? 1 : 0,
+            !empty($std->indBemMovelUsado) ? 1 : null,
             false,
             "$identificador Indicador de fornecimento de bem móvel usado (indBemMovelUsado)"
         );
