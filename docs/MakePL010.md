@@ -59,6 +59,12 @@ Choice entre refNFe ou refNFeSig ou refNF ou refNFP ou refCTe ou refECF
 
 [tag prod](#tag-prod) - Cria a tag det/prod, com dados do produto/serviço (OBRIGATÓRIA) $${\color{red}(RTC)}$$
 
+[tag infAdProd](#tag-infadprod) - Cria a tag det/prod/infAdProd, com informações adicionais (opcional)
+
+[tag ObsItem](#tag-ObsItem) - Cria as tags det/prod/obsItem/obsCont ou obsFisco, substitui  tagprodObsCont() (opcional)
+
+
+
 > **ALTERAÇÃO na construção da Make:class**
 ## function __construct(string $schema)         (ALTERADO com PARÂMETRO de criação)
 Método construtor. Instancia a classe 
@@ -575,7 +581,10 @@ $std->vItem = null; //opcional Valor total do Item, correspondente à sua partic
 $mk->tagprod($std);
 ```
 
-## funtion taginfAdProd(object $inf): DOMElement     (SEM ALTERAÇÃO)
+# tag infAdProd
+[Volta](#Métodos)
+
+### funtion taginfAdProd(object $inf): DOMElement     (SEM ALTERAÇÃO)
 Node dev/prod/infAdProd - Informações adicionais do produto (norma referenciada, informações complementares, etc) - OPCIONAL
 
 | Parâmetro |   Tipo   | Descrição                                            |
@@ -590,7 +599,10 @@ $inf = [
 $mk->taginfAdProd((object) $inf);
 ```
 
-## function tagObsItem(object $obs): DOMElement   (NOVO MÉTODO)
+# tag ObsItem
+[Volta](#Métodos)
+
+### function tagObsItem(object $obs): DOMElement   (NOVO MÉTODO)
 Node prod/infAdProd/obsItem - Grupo de observações de uso livre (para o item da NF-e) - OPCIONAL
 
 > NOTA este método substitui o anterior tagprodObsCont()
