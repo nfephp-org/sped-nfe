@@ -13,13 +13,13 @@ Biblioteca para geração e comunicação das NFe com as SEFAZ autorizadoras, e 
 - Nota Técnica 2023.001 v.1.60 Tributação Monofásica sobre Combustíveis
 - Nota Técnica 2025.001 v.1.00 Simplificação Operacional: NFC-e (QR-Code versão 3) (Envio sincrono NFe)
 - Nota Técnica 2025.002-RTC v.1.10 Reforma Tributária do Consumo – Adequações NF-e / NFC-e
-- Schema PL_010v1.10b de 09/06/2025  
+- Schema PL_010v1.10b de 09/06/2025
+- Nota Técnica 2025.002-RTC v.1.20 Reforma Tributária do Consumo – Adequações NF-e / NFC-e
+- Schema PL_010v1.20b de 30/07/2025
 
-*Utilize o chat do Gitter para iniciar discussões específicas sobre o desenvolvimento deste pacote.*
 
 ![PHP Supported Version][ico-php]
 ![Actions](https://github.com/nfephp-org/sped-nfe/actions/workflows/ci.yml/badge.svg)
-[![Chat][ico-gitter]][link-gitter]
 [![codecov](https://codecov.io/gh/nfephp-org/sped-nfe/branch/master/graph/badge.svg?token=UsZnjTNKKh)](https://codecov.io/gh/nfephp-org/sped-nfe)
 
 [![Latest Stable Version][ico-stable]][link-packagist]
@@ -192,7 +192,6 @@ Este pacote está diponibilizado sob LGPLv3 ou MIT License (MIT). Leia  [Arquivo
 [ico-downloads]: https://img.shields.io/packagist/dt/nfephp-org/sped-nfe.svg?style=flat-square
 [ico-version]: https://img.shields.io/packagist/v/nfephp-org/sped-nfe.svg?style=flat-square
 [ico-license]: https://poser.pugx.org/nfephp-org/nfephp/license.svg?style=flat-square
-[ico-gitter]: https://img.shields.io/badge/GITTER-4%20users%20online-green.svg?style=flat-square
 
 
 [link-packagist]: https://packagist.org/packages/nfephp-org/sped-nfe
