@@ -1012,7 +1012,6 @@
               </gRed>
               <vIBSMun>string</vIBSMun>
             </gIBSMun>
-            <vIBS>string</vIBS>
             <gCBS>
               <pCBS>string</pCBS>
               <!--Optional:-->
@@ -1069,37 +1068,25 @@
             </gTribCompraGov>
           </gIBSCBS>
           <gIBSCBSMono>
-            <!--Optional:-->
-            <gMonoPadrao>
-              <qBCMono>string</qBCMono>
-              <adRemIBS>string</adRemIBS>
-              <adRemCBS>string</adRemCBS>
-              <vIBSMono>string</vIBSMono>
-              <vCBSMono>string</vCBSMono>
-            </gMonoPadrao>
-            <!--Optional:-->
-            <gMonoReten>
-              <qBCMonoReten>string</qBCMonoReten>
-              <adRemIBSReten>string</adRemIBSReten>
-              <vIBSMonoReten>string</vIBSMonoReten>
-              <adRemCBSReten>string</adRemCBSReten>
-              <vCBSMonoReten>string</vCBSMonoReten>
-            </gMonoReten>
-            <!--Optional:-->
-            <gMonoRet>
-              <qBCMonoRet>string</qBCMonoRet>
-              <adRemIBSRet>string</adRemIBSRet>
-              <vIBSMonoRet>string</vIBSMonoRet>
-              <adRemCBSRet>string</adRemCBSRet>
-              <vCBSMonoRet>string</vCBSMonoRet>
-            </gMonoRet>
-            <!--Optional:-->
-            <gMonoDif>
-              <pDifIBS>string</pDifIBS>
-              <vIBSMonoDif>string</vIBSMonoDif>
-              <pDifCBS>string</pDifCBS>
-              <vCBSMonoDif>string</vCBSMonoDif>
-            </gMonoDif>
+            <qBCMono>string</qBCMono>
+            <adRemIBS>string</adRemIBS>
+            <adRemCBS>string</adRemCBS>
+            <vIBSMono>string</vIBSMono>
+            <vCBSMono>string</vCBSMono>
+            <qBCMonoReten>string</qBCMonoReten>
+            <adRemIBSReten>string</adRemIBSReten>
+            <vIBSMonoReten>string</vIBSMonoReten>
+            <adRemCBSReten>string</adRemCBSReten>
+            <vCBSMonoReten>string</vCBSMonoReten>
+            <qBCMonoRet>string</qBCMonoRet>
+            <adRemIBSRet>string</adRemIBSRet>
+            <vIBSMonoRet>string</vIBSMonoRet>
+            <adRemCBSRet>string</adRemCBSRet>
+            <vCBSMonoRet>string</vCBSMonoRet>
+            <pDifIBS>string</pDifIBS>
+            <vIBSMonoDif>string</vIBSMonoDif>
+            <pDifCBS>string</pDifCBS>
+            <vCBSMonoDif>string</vCBSMonoDif>
             <vTotIBSMonoItem>string</vTotIBSMonoItem>
             <vTotCBSMonoItem>string</vTotCBSMonoItem>
           </gIBSCBSMono>
@@ -1271,7 +1258,7 @@
         </gMono>
       </IBSCBSTot>
       <!--Optional:-->
-      <vNFTot>string</vNFTot>
+      <vNFTot>anyType</vNFTot>
     </total>
     <transp>
       <modFrete>3</modFrete>
@@ -1482,6 +1469,7 @@
         <tpGuia>4</tpGuia>
         <UFGuia>BA</UFGuia>
         <!--Optional:-->
+        <serieGuia>string</serieGuia>
         <nGuia>string</nGuia>
       </guiaTransito>
     </agropecuario>
