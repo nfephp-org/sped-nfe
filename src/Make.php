@@ -7768,7 +7768,7 @@ class Make
      * @return DOMElement
      * @throws \DOMException
      */
-    public function tagagropecuarioDefencivo(stdClass $std): DOMElement
+    public function tagAgropecuarioDefensivo(stdClass $std): DOMElement
     {
         $possible = [
             'nReceituario',
@@ -7804,7 +7804,7 @@ class Make
      * @return DOMElement
      * @throws \DOMException
      */
-    public function tagagropecuarioGuia(stdClass $std): DOMElement
+    public function tagAgropecuarioGuia(stdClass $std): DOMElement
     {
         $possible = [
             'tpGuia',
