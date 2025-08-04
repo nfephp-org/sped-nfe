@@ -948,14 +948,14 @@ final class MakeDev
                         //add gTribRegular
                         $gIBSCBS->appendChild($this->aGTribRegular[$item]);
                     }
-                    
+
                     if (!empty($this->aIBSCredPres[$item]) && !empty($gIBSCBS)) {
-                        //add gTribRegular
+                        //add aIBSCredPres
                         $gIBSCBS->appendChild($this->aIBSCredPres[$item]);
                     }
 
                     if (!empty($this->aCBSCredPres[$item]) && !empty($gIBSCBS)) {
-                        //add gTribRegular
+                        //add aCBSCredPres
                         $gIBSCBS->appendChild($this->aCBSCredPres[$item]);
                     }
                     //CHICE gIBSCBS, gIBSCBSMono, gTranfCred
