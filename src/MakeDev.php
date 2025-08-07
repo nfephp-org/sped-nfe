@@ -948,19 +948,11 @@ final class MakeDev
                         //add gTribRegular
                         $gIBSCBS->appendChild($this->aGTribRegular[$item]);
                     }
-                    if (!empty($this->aIBSCBSCredPres[$item])  && !empty($gIBSCBS)) {
-                        $tribreg = $this->aIBSCBSCredPres[$item];
-                        $gIBSCredPres = $tribreg->getElementsByTagName("gIBSCredPres")->item(0);
-                        if (!empty($gIBSCredPres)) {
-                            //add gIBSCredPres
-                            $gIBSCBS->appendChild($gIBSCredPres);
-                        }
-                        //add gCBSCredPres
-                        $gCBSCredPres = $tribreg->getElementsByTagName("gIBSCredPres")->item(0);
-                        if (!empty($gCBSCredPres)) {
-                            //add gCBSCredPres
-                            $ibscbs->appendChild($gCBSCredPres);
-                        }
+                    if (!empty($this->aIBSCredPres[$item])  && !empty($gIBSCBS)) {
+                        $gIBSCBS->appendChild($this->aIBSCredPres[$item]);
+                    }
+                    if (!empty($this->aCBSCredPres[$item])  && !empty($gIBSCBS)) {
+                        $ibscbs->appendChild($this->aCBSCredPres[$item]);
                     }
                     //CHICE gIBSCBS, gIBSCBSMono, gTranfCred
                     //existe o grupo gIBSCBS no node IBSCBS ?
