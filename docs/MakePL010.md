@@ -115,13 +115,13 @@ Choice entre refNFe ou refNFeSig ou refNF ou refNFP ou refCTe ou refECF
 
 [tag ICMS](#tag-ICMS) - Cria a tag Grupo do ICMS do item (opcional) 
 
-[tag ICMSPart](#tag ICMSPart) - Cria Grupo de Partilha do ICMS entre a UF de origem e UF de destino ou a UF definida na legislação. (opcional)
+[tag ICMSPart](#tag-ICMSPart) - Cria Grupo de Partilha do ICMS entre a UF de origem e UF de destino ou a UF definida na legislação. (opcional)
 
-[tag ICMSST](#tag ICMSST) - Cria tag Grupo de informação do ICMSST (opcional) 
+[tag ICMSST](#tag-ICMSST) - Cria tag Grupo de informação do ICMSST (opcional) 
 
 [tag ICMSSN](#tag-ICMSSN) - Cria tag Grupo de Tributação do ICMS pelo SIMPLES NACIONAL (opcional)  
 
-[tag ICMSUFDest](#tag ICMSUFDest) - Cria a tag Grupo a ser informado nas vendas interestarduais para consumidor final, não contribuinte de ICMS (opcional)
+[tag ICMSUFDest](#tag-ICMSUFDest) - Cria a tag Grupo a ser informado nas vendas interestarduais para consumidor final, não contribuinte de ICMS (opcional)
 
 
 [tag IPI](#tag-IPI) - Cria tag do Grupo de informações sobre o IPI do item (opcional)
