@@ -20,23 +20,26 @@ Para construir o XML da NFe (ou da NFCe) deve ser usada a classe Make::class
 
 # Métodos
 
-metodos substituidos
-tagexportInd
-tagCEST
+## Métodos Substituídos (não existem mais na MakeDev)
+
+- tagCEST => incorporado pelo método [tagprod](#tag=prod)
+- tagprodObsCont => substituida por [tagObsItem](#tag-ObsItem) 
+- tagexportInd => vide no método [tagdetExport](#tag-detExport)
+- tagCreditoPresumidoProd => substituido por [taggCred]($tag-gCred)
 
 
 > Abaixo estão descritos TODOS os métodos da classe Make class com os seus respectívos parâmetros em ordem de entrada.
 > ### Os valores dos parâmetros são apenas exemplos "CHUTADOS", e não correspondem a nenhum cálculo ou ponderação real.
 
-[tag infNFe](#tag-infNFe) - Cria a tag infNFe, com as informações da NFe/NFCe (OBRIGATÓRIA)
+[tag infNFe](#tag-infNFe) - Cria a tag infNFe, com as informações da NFe/NFCe $${\color{red}(OBRIGATÓRIA)}$$
 
-[tag ide](#tag-ide) - Cria a tag ide, identificação da NFe/NFCe  (OBRIGATÓRIA) $${\color{red}(RTC)}$$
+[tag ide](#tag-ide) - Cria a tag ide, identificação da NFe/NFCe  $${\color{red}(OBRIGATÓRIA)}$$ $${\color{red}(RTC)}$$
 
-[tag emit](#tag-emit) - Cria a tag emit, com os dados principais do emitente (OBRIGATÓRIA)
+[tag emit](#tag-emit) - Cria a tag emit, com os dados principais do emitente $${\color{red}(OBRIGATÓRIA)}$$
 
-[tag enderEmit](#tag-enderEmit) - Cria a tag enderEmit, com o endereço do emitente (OBRIGATÓRIA)
+[tag enderEmit](#tag-enderEmit) - Cria a tag enderEmit, com o endereço do emitente $${\color{red}(OBRIGATÓRIA)}$$
 
-** DOCUMENTOS REFERENCIADOS **
+**DOCUMENTOS REFERENCIADOS**
 
 Choice entre refNFe ou refNFeSig ou refNF ou refNFP ou refCTe ou refECF
 
@@ -50,6 +53,8 @@ Choice entre refNFe ou refNFeSig ou refNF ou refNFP ou refCTe ou refECF
 
 [tag refECF](#tag-refECF) - Cria a tag NFref/refECF (opcional)
 
+
+
 [tag gCompraGov](#tag-gCompraGov) - Cria a tag gCompraGov, grupo de compra Governamental $${\color{red}(RTC)}$$ (opcional)
 
 [tag dest](#tag-dest) - Cria a tag dest, dados do destinatário (opcional)
@@ -62,11 +67,51 @@ Choice entre refNFe ou refNFeSig ou refNF ou refNFP ou refCTe ou refECF
 
 [tag autXML](#tag-autXML) - Cria as referencias de autorização de terceiros baixarem o documento fiscal (opcional)
 
-[tag prod](#tag-prod) - Cria a tag det/prod, com dados do produto/serviço (OBRIGATÓRIA) $${\color{red}(RTC)}$$
+**DADOS DOS ITENS DA NFe**
+
+[tag prod](#tag-prod) - Cria a tag det/prod, com dados do produto/serviço $${\color{red}(OBRIGATÓRIA)}$$ $${\color{red}(RTC)}$$
 
 [tag infAdProd](#tag-infadprod) - Cria a tag det/prod/infAdProd, com informações adicionais (opcional)
 
 [tag ObsItem](#tag-ObsItem) - Cria as tags det/prod/obsItem/obsCont ou obsFisco, substitui  tagprodObsCont() (opcional)
+
+[tag DFeReferenciado](#tag-DFeReferenciado) - Cria a tag det/prod/DFeReferenciado (opcional) $${\color{red}(RTC)}$$
+
+
+[tag gCred](#tag-gCred) - Cria informações sobre o CréditoPresumido, podem ocorrer até 4 registros desse grupo por item da NFe (opcional)  
+
+[tag NVE](#tag-NVE) - Cria as tgas de Nomenclatura de Valor aduaneiro e Estatístico, podem ocorrer até 8 registros desse grupo por item da NFe (opcional)
+
+**GRUPO DE DADOS DE IMPORTAÇÃO DO ITEM**
+
+[tag DI](#tag-DI) - Cria as tags de Declaração de Importação, podem ocorrer até 100 registros desse grupo por item da NFe (opcional)
+
+[tag adi](#tag-adi) - Cria as Adições da DI, OBRIGATÓRIA se existir a DI, podem ocorrer até 999 registros para cada DI declarada por item da NFe (opcional)
+
+[tag detExport](#tag-detExport) - Cria as tags de Detalhe da exportação, podem ocorrer até 500 registros por item (opcional)
+
+[tag rastro](#tag-rastro) - Cria as tags de Rastreabilidade, podem ocorrer até 500 repetições por item da NFe (opcional)
+
+[tag veicProd](#tag-veicProd) - Cria a tag de Veículos novos (opcional)
+
+[tag med](#tag med) - Cria tag de Detalhamento de Medicamentos e de matérias-primas farmacêuticas (opcional)
+
+[tag arma](#tag-arma) - Cria a tag de Detalhamento de Armamento (opcional)
+
+**GRUPO DE ITEM DE VENDA COMBUSTIVEIS LIQUIDOS**
+
+[tag comb](#tag-comb) - Cria a tag para operações com combustíveis líquidos (opcional)
+
+[tag encerrante](#tag-encerrante) - Cria a tag de Informações do grupo de encerrante (Combustíveis) (opcional)
+
+[tag origComb](#tag-origComb) - Cria as tags de origem do combustível, podem ocorrer até 30 registros por item da NFe (opcional) 
+
+[tag RECOPI](#tag-RECOPI) - Cria a tag Reconhecimento e Controle de Papel Imune (opcional)
+
+[tag imposto](#tag-imposto) - Cria a tag de Grupo de Impostos do item $${\color{red}(OBRIGATÓRIA)}$$
+
+
+
 
 tagTotal Observação: a tag vNFTot será exigida somente quando os novos
 campos do IBS/CBS se tornarem obrigatórios (outubro/2025 em
@@ -545,8 +590,7 @@ $mk->tagautXML((object)$aut);
 ### funtion tagprod(object $prod): DOMElement    (ALTERAÇÃO nos PARÂMETROS)
 Node det/prod - Produtos - OBRIGATÓRIO
 
-NOTA: o método tagCEST() foi substituído, 
-NOTA: tagdetExport substitui dois métodos tagExportInd
+> NOTA: o método tagCEST() foi substituído, com dados diretos nesta tag, 
 
 >  NOTA MÚLTIPLAS ENTRADAS - a tag dev/prod pode ocorrer até 990 vezes 
 
@@ -584,10 +628,13 @@ $std->vSeg = 20.00;
 $std->vDesc = 10.00;
 $std->vOutro = 15.00;
 $std->indTot = 1;
+$std->indBemMovelUsado = null; //opcional 1-Bem Móvel Usado ou null
 $std->xPed = '12345';
 $std->nItemPed = 1;
 $std->nFCI = '12345678-1234-1234-1234-123456789012';
-$std->indBemMovelUsado = null; //opcional 1-Bem Móvel Usado ou null
+$std->CEST = null;
+$std->indEscala = null;
+$std->CNPJFab = null;
 $std->vItem = null; //opcional Valor total do Item, correspondente à sua participação no total da nota.
     // A soma dos itens deverá corresponder ao total da nota. com duas decimais
 $mk->tagprod($std);
@@ -634,6 +681,9 @@ $obs = [
 $mk->tagObsItem((object) $obs);
 ```
 
+# tag DFeReferenciado
+[Volta](#Métodos)
+
 ## function tagDFeReferenciado(object $ref): DOMElement   (NOVO MÉTODO Reforma Tributária)
 Node det/DFeReferenciado - Referenciamento de item de outros DFe - OPCIONAL
 
@@ -650,9 +700,13 @@ $ref = [
 $mk->tagDFeReferenciado((object) $ref);
 ```
 
-//ver make com tagCreditoPresumidoProd
+# tag gCred
+[Volta](#Métodos)
+
 ## function taggCred(object $gc): DOMElement    (NOVO MÉTODO Reforma Tributária)
 Node prod/gCred - Grupo de informações sobre o CréditoPresumido - OPCIONAL
+
+> NOTA: substitui tagCreditoPresumidoProd
 
 > NOTA MULTIPLAS ENTRADAS - podem ocorrer até 4 registros desse grupo por item da NFe
 
@@ -669,6 +723,9 @@ $gc = [
 ];
 $mk->taggCred((object)$gc);
 ```
+
+# tag NVE
+[Volta](#Métodos)
 
 ## function tagnve(object $std): DOMElement      (SEM ALTERAÇÃO)
 Node prod/NVE - Nomenclatura de Valor aduaneiro e Estatístico - OPCIONAL
@@ -687,8 +744,11 @@ $std = [
 $mk->tagnve((object)$std);
 ```
 
+# tag DI
+[Volta](#Métodos)
+
 ## function tagDI(object $std): DOMElement   (SEM ALTERAÇÃO)
-Node prod/DI - Delcaração de Importação - OPCIONAL
+Node prod/DI - Declaração de Importação - OPCIONAL
 
 > NOTA MULTIPLAS ENTRADAS - podem ocorrer até 100 registros desse grupo por item da NFe
 > Obrigatório em NFe de Importação 
@@ -732,6 +792,9 @@ $std->cExportador = 'exportador China1'; //OBRIGATÓRIO Código do exportador (u
 $mk->tagDI($std);
 ```
 
+# tag adi
+[Volta](#Métodos)
+
 ## function tagadi(object $std): DOMElement    (SEM ALTERAÇÃO)
 Node prod/DI/adi - Adições da DI OBRIGATÓRIA se existir a DI - OPCIONAL
 
@@ -754,8 +817,11 @@ $std->nDraw = null; //opcional Número do ato concessório de Drawback de 1 à 2
 $mk->tagadi($std);
 ```
 
+# tag detExport
+[Volta](#Métodos)
+
 ## function tagdetExport(objetc $std): DOMElement     (SEM ALTERAÇÃO)
-Node prod/detExport - etalhe da exportação - OPCIONAL
+Node prod/detExport - Detalhe da exportação - OPCIONAL
 
 > NOTA MULTIPLAS ENTRADAS - podem ocorrer até 500 registros por item 
 > Usado em NFe de Exportação apenas
@@ -774,6 +840,9 @@ $std->chNFe = '12345678901234567890123456789012345678901234'; //opcional Chave d
 $std->qExport = 12455.9000; //opcional Quantidade do item efetivamente exportado até 4 decimais
 $mk->tagdetExport($std);
 ```
+
+# tag rastro
+[Volta](#Métodos)
 
 ## function tagrastro(object $std): DOMElement   (SEM ALTERAÇÃO)
 Node prod/rastro - Rastreabilidade - OPCIONAL
@@ -799,6 +868,9 @@ $mk->tagrastro($std);
 
 > **Haverá um "choice" (escolha) entre os registros desse grupo, portanto apenas um será inserido no item da NFe**
 > **E essa escolha será feita na sequência de inserção no XML, sendo usado o primeiro grupo encontrado, dentre os possíveis, portanto tenha atenção a isso !!** 
+
+# tag veicProd
+[Volta](#Métodos)
 
 ## function tagveicProd(object $veic): DOMElement  (SEM ALTERAÇÃO)
 Node prod/veicProd - Veículos novos - OPCIONAL
@@ -885,6 +957,9 @@ $veic = [
 $mk->tagveicProd((object)$veic);
 ```
 
+# tag med
+[Volta](#Métodos)
+
 ## function tagmed(object $std): DOMElement   (SEM ALTERAÇÃO)
 Node prod/med - Detalhamento de Medicamentos e de matérias-primas farmacêuticas - OPCIONAL
 
@@ -903,6 +978,9 @@ $std->xMotivoIsencao = ''; //opcional de 1 à 255 caracteres
 $std->vPMC = 200.00; //OBRIGATÓRIO Preço máximo consumidor com até duas decimais
 $mk->tagmed($std);
 ```
+
+# tag arma
+[Volta](#Métodos)
 
 ## function tagarma(object $arma): DOMElement   (SEM ALTERAÇÃO)
 Node prod/arma - Detalhamento de Armamento - OPCIONAL
@@ -923,6 +1001,9 @@ $arma = [
 ];
 $mk->tagarma((object)$arma);
 ```
+
+# tag comb
+[Volta](#Métodos)
 
 ## functicon tagcomb(object $comb)   (SEM ALTERAÇÃO)
 Node prod/comb - Informar apenas para operações com combustíveis líquidos - OPCIONAL
@@ -966,6 +1047,9 @@ $comb = [
 $mk->tagcomb((object) $comb);
 ```
 
+# tag encerrante
+[Volta](#Métodos)
+
 ## function tagencerrante(object $enc): DOMElement    (SEM ALTERAÇÃO)
 Node prod/comb/encerrante - Informações do grupo de encerrante - OPCIONAL
 
@@ -984,6 +1068,9 @@ $enc = [
 ];
 $mk->tagencerrante((object) $enc);
 ```
+
+# tag origComb
+[Volta](#Métodos)
 
 ## function tagorigComb(object $orig): DOMElement    (SEM ALTERAÇÃO)
 Node prod/comb/origComb - Grupo indicador da origem do combustível - OPCIONAL
@@ -1006,6 +1093,9 @@ $orig = [
 $mk->tagorigComb((object) $orig);
 ```
 
+# tag RECOPI
+[Volta](#Métodos)
+
 ## function tagRECOPI(object $rc): DOMElement    (SEM ALTERAÇÃO)
 Node prod/nRECOPI - Reconhecimento e Controle de Papel Imune - OPCIONAL
 
@@ -1024,6 +1114,10 @@ $mk->tagRECOPI((object) $rc);
 ```
 
 # FIM das Informações específicas de produtos e serviços
+
+
+# tag imposto
+[Volta](#Métodos)
 
 ## function tagimposto(object $std): DOMElement    (SEM ALTERAÇÃO)
 Node det/imposto - Grupo de Impostos - OBRIGATÓRIO
