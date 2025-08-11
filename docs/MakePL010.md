@@ -110,14 +110,37 @@ Choice entre refNFe ou refNFeSig ou refNF ou refNFP ou refCTe ou refECF
 
 [tag imposto](#tag-imposto) - Cria a tag de Grupo de Impostos do item $${\color{red}(OBRIGATÓRIA)}$$
 
+**Grupo de dados relativos ao ICMS**
+> **Haverá um "choice" (escolha) (ICMSXX ou ICMSPart ou ICMSSN ou ICMSST)
+
+[tag ICMS](#tag-ICMS) - Cria a tag Grupo do ICMS do item (opcional) 
+
+[tag ICMSPart](#tag ICMSPart) - Cria Grupo de Partilha do ICMS entre a UF de origem e UF de destino ou a UF definida na legislação. (opcional)
+
+[tag ICMSST](#tag ICMSST) - Cria tag Grupo de informação do ICMSST (opcional) 
+
+[tag ICMSSN](#tag-ICMSSN) - Cria tag Grupo de Tributação do ICMS pelo SIMPLES NACIONAL (opcional)  
+
+[tag ICMSUFDest](#tag ICMSUFDest) - Cria a tag Grupo a ser informado nas vendas interestarduais para consumidor final, não contribuinte de ICMS (opcional)
+
+
+[tag IPI](#tag-IPI) - Cria tag do Grupo de informações sobre o IPI do item (opcional)
+
+[tag II](#tag-II) - Cria tag Grupo de dados do Imposto de Importação do item (opcional)
+
+[tag ISSQN](#tag-ISSQN) - Cria tag do Grupo de informações do ISSQN (opcional)
+
+[tag PIS](#tag-PIS) - Cria a tag do Grupo de dados do PIS do item (opcional)
 
 
 
+```
 tagTotal Observação: a tag vNFTot será exigida somente quando os novos
 campos do IBS/CBS se tornarem obrigatórios (outubro/2025 em
 homologação e janeiro/2026 em produção). Até essas datas, o não
 preenchimento dessa tag não causará rejeição, mas será validada se for
-informada.
+informada. 
+```
 
 > **ALTERAÇÃO na construção da Make:class**
 ## function __construct(string $schema)         (ALTERADO com PARÂMETRO de criação)
@@ -1138,6 +1161,10 @@ $mk->tagimposto($std);
 > Choice (ICMSXX ou ICMSPart ou ICMSSN ou ICMSST)
 > **E essa escolha será feita na sequência de inserção no XML, sendo usado o primeiro grupo encontrado, dentre os possíveis, portanto tenha atenção a isso !!** 
 
+
+# tag ICMS
+[Volta](#Métodos)
+
 ## function tagICMS(object $std): DOMElement    (SEM ALTERAÇÃO)
 Node det/imposto/ICMS/ICMSxx - Grupo do ICMS - opcional
 
@@ -1245,6 +1272,9 @@ $std->indDeduzDeson = null; //opcional
 $mk->tagICMS($std);
 ```
 
+# tag ICMSPart
+[Volta](#Métodos)
+
 ## function tagICMSPart(object $std): DOMElement    (SEM ALTERAÇÃO)
 Node det/imposto/ICMS/ICMSPart
 
@@ -1304,6 +1334,9 @@ $ic = [
 $mk->tagICMSPart((object)$ic);
 ```
 
+# tag ICMSST
+[Volta](#Métodos)
+
 ## function tagICMSST(object $std): DOMElement    (SEM ALTERAÇÃO)
 Node det/imposto/ICMS/ICMSST
 
@@ -1349,6 +1382,9 @@ $ic = [
 ];
 $mk->tagICMSST((object) $ic);
 ```
+
+# tag ICMSSN
+[Volta](#Métodos)
 
 ## function tagICMSSN(object $std): DOMElement    (SEM ALTERAÇÃO)
 Node det/imposto/ICMS/ICMSSNXXX
@@ -1425,6 +1461,9 @@ $ic = [
 $mk->tagICMSSN((object)$ic);
 ```
 
+# tag ICMSUFDest
+[Volta](#Métodos)
+
 ## function tagICMSUFDest(object $std): DOMElement    (SEM ALTERAÇÃO)
 Node det/imposto/ICMSUFDest
 
@@ -1450,6 +1489,9 @@ $ufd = [
 ];
 $mk->tagICMSUFDest((object)$ufd);
 ```
+
+# tag IPI
+[Volta](#Métodos)
 
 ## function tagIPI(object $std): DOMElement    (SEM ALTERAÇÃO)
 Node det/imposto/IPI/IPITrib ou det/imposto/IPI/IPINT 
@@ -1496,6 +1538,9 @@ $ipi = [
  $mk->tagIPI((object)$ipi);
 ```
 
+# tag II
+[Volta](#Métodos)
+
 ## function tagII(object $std): DOMElement    (SEM ALTERAÇÃO)
 Note det/imposto/II
 
@@ -1516,6 +1561,9 @@ $ii = [
 ];
 $mk->tagII((object) $ii);
 ```
+
+# tag ISSQN
+[Volta](#Métodos)
 
 ## function tagISSQN(object $std): DOMElement    (SEM ALTERAÇÃO)
 Node det/imposto/ISSQN
@@ -1560,6 +1608,9 @@ $iqn = [
     ];
     $mk->tagISSQN((object)$iqn);
 ```
+
+# tag PIS
+[Volta](#Métodos)
 
 ## function tagPIS(object $std): DOMElement    (SEM ALTERAÇÃO)
 Node det/imposto/PIS/PISAliq ou det/imposto/PIS/PISQtde ou det/imposto/PIS/PISNT ou det/imposto/PIS/PISOutr
