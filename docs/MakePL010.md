@@ -130,7 +130,32 @@ Choice entre refNFe ou refNFeSig ou refNF ou refNFP ou refCTe ou refECF
 
 [tag ISSQN](#tag-ISSQN) - Cria tag do Grupo de informações do ISSQN (opcional)
 
+
+**Grupo de dados relativos ao PIS**
+> *Haverá um "choice" (escolha) (PIS ou PISST)*
+ 
 [tag PIS](#tag-PIS) - Cria a tag do Grupo de dados do PIS do item (opcional)
+
+[tag PISST](#tag-PISST) - Cria tag com Grupo de informações sobre o PISST (opcional)
+
+
+**Grupo de dados relativos ao COFINS**
+> *Haverá um "choice" (escolha) (COFINS ou COFINSST)*
+
+[tag COFINS](#tag-COFINS) - Cria tag com Grupo de informações sobre COFINS (opcional)
+
+[tag COFINSST](#tag-COFINSST) - Cria tag com Grupo de informações sobre COFINSST (opcional)
+
+[tag IS](#tag-IS) - Cria tag grupo referente ao "imposto do pecado" será aplicado a produtos específicos (opcional) $${\color{red}(RTC)}$$
+
+**Grupo de dados relativos ao IBSCBS**
+> *Haverá um "choice" (escolha)  (gIBSCBSMono ou gTransfCred)
+ 
+[tag IBSCBS](#tag-IBSCBS) - Cria a tag Grupo CBS IBS Completo (opcional) $${\color{red}(RTC)}$$
+
+[tag IBSCBSMono](#tag-IBSCBSMono) - Cria a tag Grupo de Informações do IBS e CBS em operações com imposto monofásico (opcional) $${\color{red}(RTC)}$$
+
+[tag gTransfCred](#tag-gTransfCred) - Cria a tag Grupo de Informações de transferência de Crédito IBS/CBS (opcional) $${\color{red}(RTC)}$$
 
 
 
@@ -1670,6 +1695,9 @@ $std->vAliqProd = 1; //opcionalAlíquota do PIS (em reais) (NT2011/004) até 4 d
 $mk->tagPIS($std);
 ```
 
+# tag PISST
+[Volta](#Métodos)
+
 ## function tagPISST(object $std): DOMElement    (SEM ALTERAÇÃO)
 Node det/imposto/PISST
 
@@ -1692,6 +1720,9 @@ $pst = [
 ];
 $mk->tagPISST((object) $pst);
 ```
+
+# tag COFINS
+[Volta](#Métodos)
 
 ## function tagCOFINS(object $std): DOMElement    (SEM ALTERAÇÃO)
 Node det/imposto/COFINS/COFINSAliq 
@@ -1755,6 +1786,9 @@ $std->vAliqProd = 1; //opcional Alíquota do COFINS (em reais)
 $mk->tagCOFINS($std);
 ```
 
+# tag COFINSST
+[Volta](#Métodos)
+
 ## function tagCOFINSST(object $std): DOMElement    (SEM ALTERAÇÃO)
 Node det/imposto/COFINSST
 
@@ -1779,6 +1813,9 @@ $cst = [
 ];
 $mk->tagCOFINSST((object) $cst);
 ```
+
+# tag IS
+[Volta](#Métodos)
 
 ## function tagIS(object $std): DOMElement    (NOVO MÉTODO Reforma Tributária)
 Node det/imposto/IS - Grupo de informações sobre o Imposto Seletivo - OPCIONAL
@@ -1807,6 +1844,9 @@ $is = [
 ];
 $mk->tagIS((object) $is);
 ```
+
+# tag IBSCBS
+[Volta](#Métodos)
 
 ## function tagIBSCBS(object $std): DOMElement    (NOVO MÉTODO Reforma Tributária)
 Node det/imposto/IBSCBS
@@ -1875,6 +1915,85 @@ $ibscbs = [
 ];
 $mk->tagIBSCBS((object) $ibscbs);
 ```
+
+# tag IBSCBSMono
+[Volta](#Métodos)
+
+## function tagIBSCBSMono(object $std): DOMElement    (NOVO MÉTODO Reforma Tributária)
+Node det/imposto/IBSCBS/gIBSCBSMono
+
+> Grupo de Informações do IBS e CBS em operações com imposto monofásico
+> Este grupo é um "choice" (escolha) com gIBSCBS, caso exista gIBSCBS esse grupo não será incluso na NFe
+> NOTA: caso seja declarado o parâmetro do subgrupo, todos os parâmetros do mesmo subgrupo serão obrigatórios
+
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$mono = [
+    'item' => 1, //OBRIGATÓRIO referencia ao item da NFe
+    
+    //############# subgrupo monofasico
+    'qBCMono' => 1.00, //opcional Quantidade tributada na monofasia  Se este parâmetro for declarado, todos do subgrupo serão OBRIGATÓRIOS
+    'adRemIBS' => 10.00, //opcional Alíquota ad rem do IBS
+    'vIBSMono' => 100.00, //opcional Valor do IBS monofásico
+    'adRemCBS' => 2.00, //opcional Alíquota ad rem da CBS
+    'vCBSMono' => 200.00, //opcional Valor do CBS monofásico
+    //############# fim subgrupo monofasico
+    
+    //############# subgrupo monofasico sujeito a retenção
+    'qBCMonoReten' => 1.00, //opcional Quantidade tributada na monofasia sujeita a retenção. Se este parâmetro for declarado, todos do subgrupo serão OBRIGATÓRIOS
+    'adRemIBSReten' => 10.00, //opcional Alíquota ad rem do IBS sujeita a retenção
+    'vIBSMonoReten' => 10.00, //opcional Valor do IBS monofásico sujeito a retenção
+    'adRemCBSReten' => 1.00, //opcional Alíquota ad rem da CBS sujeita a retenção
+    'vCBSMonoReten' => 10.00, //opcional Valor do CBS monofásico sujeito a retenção
+    //############# fim subgrupo monofasico sujeito a retenção
+    
+    //############# subgrupo monofasico retido anteriormente
+    'qBCMonoRet' => 1.00, //opcional  Se este parâmetro for declarado, todos do subgrupo serão OBRIGATÓRIOS
+    'adRemIBSRet' => 1.00, //opcional Quantidade tributada na monofasia retida anteriormente
+    'vIBSMonoRet' => 1.00, //opcional Valor do IBS monofásico retido anteriormente
+    'adRemCBSRet' => 1.00, //opcional Alíquota ad rem da CBS retida anteriormente
+    'vCBSMonoRet' => 1.00, //opcional Valor do CBS monofásico retido anteriormente
+    //############# fim subgrupo monofasico retido
+    
+    //############# subgrupo monofasico diferimento
+    'pDifIBS' => 2.00, //opcional Percentual do diferimento do imposto monofásico. 3v2-4. Se este parâmetro for declarado todos abaixo serão OBRIGATÓRIOS
+    'vIBSMonoDif' => 2.00, //opcionalValor do IBS monofásico diferido 13v2
+    'pDifCBS' => 1.00, //opcional Percentual do diferimento do imposto monofásico. 3v2-4
+    // Se declarado todos abaixo serão OBRIGATÓRIOS
+    'vCBSMonoDif' => 1.00, //opcional Valor do IBS monofásico diferido 13v2
+    //############# subgrupo monofasico diferimento
+    
+    'vTotIBSMonoItem' => 111.00, //OBRIGATÓRIO Total de IBS Monofásico 13v2
+    'vTotCBSMonoItem' => 212.00//OBRIGATÓRIO Total da CBS Monofásica 13v2
+];
+$mk->tagIBSCBSMono((object) $mono);
+```
+
+# tag gTransfCred
+[Volta](#Métodos)
+
+## function taggTranfCred(object $std): DOMElement    (NOVO MÉTODO Reforma Tributária)
+Node det/imposto/IBSCBS/gTranfCred
+
+> Grupo de Informações de transferência de Crédito
+> Este grupo é um "choice" (escolha) com gIBSCBS e gIBSCBSMono, caso exista gIBSCBS ou gIBSCBSMono esse grupo não será incluso na NFe
+
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$transf = [
+    'item' => 1, //OBRIGATÓRIO
+    'vIBS' => 200.00, //OBRIGATÓRIO Valor do IBS a ser transferido 13v2
+    'vCBS' => 35.23, //OBRIGATÓRIO Valor do CBS a ser transferido 13v2
+];
+$mk->taggTranfCred((object) $transf);
+```
+
 ## function tagIBSCBSTribRegular(object $std): DOMElement    (NOVO MÉTODO Reforma Tributária)
 Node det/imposto/IBSCBS/gIBSCBS/gTribRegular
 
@@ -1972,77 +2091,7 @@ $cg = [
 $mk->taggCompraGov((object) $cg);
 ```
 
-## function tagIBSCBSMono(object $std): DOMElement    (NOVO MÉTODO Reforma Tributária)
-Node det/imposto/IBSCBS/gIBSCBSMono
 
-> Grupo de Informações do IBS e CBS em operações com imposto monofásico
-> Este grupo é um "choice" (escolha) com gIBSCBS, caso exista gIBSCBS esse grupo não será incluso na NFe
-> NOTA: caso seja declarado o parâmetro do subgrupo, todos os parâmetros do mesmo subgrupo serão obrigatórios
-
-| Parâmetro |   Tipo   | Descrição                                            |
-|:----------|:--------:|:-----------------------------------------------------|
-| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
-
-```php
-$mono = [
-    'item' => 1, //OBRIGATÓRIO referencia ao item da NFe
-    
-    //############# subgrupo monofasico
-    'qBCMono' => 1.00, //opcional Quantidade tributada na monofasia  Se este parâmetro for declarado, todos do subgrupo serão OBRIGATÓRIOS
-    'adRemIBS' => 10.00, //opcional Alíquota ad rem do IBS
-    'vIBSMono' => 100.00, //opcional Valor do IBS monofásico
-    'adRemCBS' => 2.00, //opcional Alíquota ad rem da CBS
-    'vCBSMono' => 200.00, //opcional Valor do CBS monofásico
-    //############# fim subgrupo monofasico
-    
-    //############# subgrupo monofasico sujeito a retenção
-    'qBCMonoReten' => 1.00, //opcional Quantidade tributada na monofasia sujeita a retenção. Se este parâmetro for declarado, todos do subgrupo serão OBRIGATÓRIOS
-    'adRemIBSReten' => 10.00, //opcional Alíquota ad rem do IBS sujeita a retenção
-    'vIBSMonoReten' => 10.00, //opcional Valor do IBS monofásico sujeito a retenção
-    'adRemCBSReten' => 1.00, //opcional Alíquota ad rem da CBS sujeita a retenção
-    'vCBSMonoReten' => 10.00, //opcional Valor do CBS monofásico sujeito a retenção
-    //############# fim subgrupo monofasico sujeito a retenção
-    
-    //############# subgrupo monofasico retido anteriormente
-    'qBCMonoRet' => 1.00, //opcional  Se este parâmetro for declarado, todos do subgrupo serão OBRIGATÓRIOS
-    'adRemIBSRet' => 1.00, //opcional Quantidade tributada na monofasia retida anteriormente
-    'vIBSMonoRet' => 1.00, //opcional Valor do IBS monofásico retido anteriormente
-    'adRemCBSRet' => 1.00, //opcional Alíquota ad rem da CBS retida anteriormente
-    'vCBSMonoRet' => 1.00, //opcional Valor do CBS monofásico retido anteriormente
-    //############# fim subgrupo monofasico retido
-    
-    //############# subgrupo monofasico diferimento
-    'pDifIBS' => 2.00, //opcional Percentual do diferimento do imposto monofásico. 3v2-4. Se este parâmetro for declarado todos abaixo serão OBRIGATÓRIOS
-    'vIBSMonoDif' => 2.00, //opcionalValor do IBS monofásico diferido 13v2
-    'pDifCBS' => 1.00, //opcional Percentual do diferimento do imposto monofásico. 3v2-4
-    // Se declarado todos abaixo serão OBRIGATÓRIOS
-    'vCBSMonoDif' => 1.00, //opcional Valor do IBS monofásico diferido 13v2
-    //############# subgrupo monofasico diferimento
-    
-    'vTotIBSMonoItem' => 111.00, //OBRIGATÓRIO Total de IBS Monofásico 13v2
-    'vTotCBSMonoItem' => 212.00//OBRIGATÓRIO Total da CBS Monofásica 13v2
-];
-$mk->tagIBSCBSMono((object) $mono);
-```
-
-## function taggTranfCred(object $std): DOMElement    (NOVO MÉTODO Reforma Tributária)
-Node det/imposto/IBSCBS/gTranfCred
-
-> Grupo de Informações de transferência de Crédito
-> Este grupo é um "choice" (escolha) com gIBSCBS e gIBSCBSMono, caso exista gIBSCBS ou gIBSCBSMono esse grupo não será incluso na NFe
-
-| Parâmetro |   Tipo   | Descrição                                            |
-|:----------|:--------:|:-----------------------------------------------------|
-| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
-
-```php
-$transf = [
-    'item' => 1, //OBRIGATÓRIO
-    'vIBS' => 200.00, //OBRIGATÓRIO Valor do IBS a ser transferido 13v2
-    'vCBS' => 35.23, //OBRIGATÓRIO Valor do CBS a ser transferido 13v2
-];
-$mk->taggTranfCred((object) $transf);
-```
 ## function taggCredPresIBSZFM(object $std): DOMElement    (NOVO MÉTODO Reforma Tributária)
 Node det/imposto/IBSCBS/gCredPresIBSZFM
 
