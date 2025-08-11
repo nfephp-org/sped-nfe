@@ -20,6 +20,11 @@ Para construir o XML da NFe (ou da NFCe) deve ser usada a classe Make::class
 
 # Métodos
 
+metodos substituidos
+tagexportInd
+tagCEST
+
+
 > Abaixo estão descritos TODOS os métodos da classe Make class com os seus respectívos parâmetros em ordem de entrada.
 > ### Os valores dos parâmetros são apenas exemplos "CHUTADOS", e não correspondem a nenhum cálculo ou ponderação real.
 
@@ -63,7 +68,11 @@ Choice entre refNFe ou refNFeSig ou refNF ou refNFP ou refCTe ou refECF
 
 [tag ObsItem](#tag-ObsItem) - Cria as tags det/prod/obsItem/obsCont ou obsFisco, substitui  tagprodObsCont() (opcional)
 
-
+tagTotal Observação: a tag vNFTot será exigida somente quando os novos
+campos do IBS/CBS se tornarem obrigatórios (outubro/2025 em
+homologação e janeiro/2026 em produção). Até essas datas, o não
+preenchimento dessa tag não causará rejeição, mas será validada se for
+informada.
 
 > **ALTERAÇÃO na construção da Make:class**
 ## function __construct(string $schema)         (ALTERADO com PARÂMETRO de criação)
@@ -535,6 +544,9 @@ $mk->tagautXML((object)$aut);
 
 ### funtion tagprod(object $prod): DOMElement    (ALTERAÇÃO nos PARÂMETROS)
 Node det/prod - Produtos - OBRIGATÓRIO
+
+NOTA: o método tagCEST() foi substituído, 
+NOTA: tagdetExport substitui dois métodos tagExportInd
 
 >  NOTA MÚLTIPLAS ENTRADAS - a tag dev/prod pode ocorrer até 990 vezes 
 

@@ -22,7 +22,6 @@ use DOMException;
  */
 trait TraitTagTotal
 {
-
     /**
      * Valor vNTTot
      * tag NFe/infNFe/total/vNFTot
