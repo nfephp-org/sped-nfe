@@ -111,7 +111,7 @@ Choice entre refNFe ou refNFeSig ou refNF ou refNFP ou refCTe ou refECF
 [tag imposto](#tag-imposto) - Cria a tag de Grupo de Impostos do item $${\color{red}(OBRIGATÓRIA)}$$
 
 **Grupo de dados relativos ao ICMS**
-> **Haverá um "choice" (escolha) (ICMSXX ou ICMSPart ou ICMSSN ou ICMSST)
+> *Haverá um "choice" (escolha) (ICMSXX ou ICMSPart ou ICMSSN ou ICMSST)*
 
 [tag ICMS](#tag-ICMS) - Cria a tag Grupo do ICMS do item (opcional) 
 
