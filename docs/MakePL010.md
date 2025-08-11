@@ -149,7 +149,7 @@ Choice entre refNFe ou refNFeSig ou refNF ou refNFP ou refCTe ou refECF
 [tag IS](#tag-IS) - Cria tag grupo referente ao "imposto do pecado" será aplicado a produtos específicos (opcional) $${\color{red}(RTC)}$$
 
 **Grupo de dados relativos ao IBSCBS**
-> *Haverá um "choice" (escolha)  (gIBSCBSMono ou gTransfCred)
+> *Haverá um "choice" (escolha)  (gIBSCBSMono ou gTransfCred)*
  
 [tag IBSCBS](#tag-IBSCBS) - Cria a tag Grupo CBS IBS Completo (opcional) $${\color{red}(RTC)}$$
 
