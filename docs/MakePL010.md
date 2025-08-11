@@ -146,10 +146,12 @@ Choice entre refNFe ou refNFeSig ou refNF ou refNFP ou refCTe ou refECF
 
 [tag COFINSST](#tag-COFINSST) - Cria tag com Grupo de informações sobre COFINSST (opcional)
 
+**Grupo de dados relativos ao Imposto Seletivo (IS)**
+
 [tag IS](#tag-IS) - Cria tag grupo referente ao "imposto do pecado" será aplicado a produtos específicos (opcional) $${\color{red}(RTC)}$$
 
 **Grupo de dados relativos ao IBSCBS**
-> *Haverá um "choice" (escolha)  (gIBSCBSMono ou gTransfCred)*
+> *Haverá um "choice" (escolha)  (gIBSCBS ou gIBSCBSMono ou gTransfCred)*
  
 [tag IBSCBS](#tag-IBSCBS) - Cria a tag Grupo CBS IBS Completo (opcional) $${\color{red}(RTC)}$$
 
