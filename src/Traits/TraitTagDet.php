@@ -323,7 +323,7 @@ trait TraitTagDet
         $this->aProd[$std->item] = $prod;
         //Valor total do Item, correspondente à sua participação no total da nota.
         //A soma dos itens deverá corresponder ao total da nota.
-        if (!empty($std->vItem) && is_numeric($std->vItem) && $std->item > 0) {
+        if (!empty($std->vItem) && is_numeric($std->vItem) && $std->item > 0 && $this->schema > 9) {
             $vItem = $this->dom->createElement(
                 "vItem",
                 $this->conditionalNumberFormatting($std->vItem, 2)
