@@ -1159,7 +1159,7 @@ final class MakeDev
         $vCBS = 0;
         $vTotIBSMonoItem = 0;
         $vTotCBSMonoItem = 0;
-        if (!empty($cbs)) {
+        if (!empty($cbs) && $this->schema > 9) {
             $vIBSUF = (float) !empty($cbs->getElementsByTagName("vIBSUF")->item(0)->nodeValue) ?
                 $cbs->getElementsByTagName("vIBSUF")->item(0)->nodeValue : 0;
             $vIBSMun = (float) !empty($cbs->getElementsByTagName("vIBSMun")->item(0)->nodeValue) ?
@@ -1175,7 +1175,7 @@ final class MakeDev
         }
         //IS
         $vIS = 0;
-        if (!empty($is)) {
+        if (!empty($is) && $this->schema > 9) {
             $vIS = (float) !empty($is->getElementsByTagName("vIS")->item(0)->nodeValue) ?
                 $is->getElementsByTagName("vIS")->item(0)->nodeValue : 0;
         }
