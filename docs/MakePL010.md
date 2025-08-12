@@ -240,7 +240,7 @@ Choice entre refNFe ou refNFeSig ou refNF ou refNFP ou refCTe ou refECF
 [tag infRespTec](#tag-infRespTec) - Cria atag com dados do responsável técnico (opcional)
 
 
-** Dados Colheita de Cana**
+**Dados Colheita de Cana**
 
 [tag cana](#tag-cana) - Cria tag com dados da Colheita de Cana (opcional)
 
