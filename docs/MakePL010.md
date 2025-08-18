@@ -123,12 +123,13 @@ Choice entre refNFe ou refNFeSig ou refNF ou refNFP ou refCTe ou refECF
 
 [tag ICMSUFDest](#tag-ICMSUFDest) - Cria a tag Grupo a ser informado nas vendas interestarduais para consumidor final, não contribuinte de ICMS (opcional)
 
+**Grupo de dados dos outros Impostos**
 
 [tag IPI](#tag-IPI) - Cria tag do Grupo de informações sobre o IPI do item (opcional)
 
 [tag II](#tag-II) - Cria tag Grupo de dados do Imposto de Importação do item (opcional)
 
-[tag ISSQN](#tag-ISSQN) - Cria tag do Grupo de informações do ISSQN (opcional)
+[tag ISSQN](#tag-ISSQN) - Cria tag do Grupo de informações do ISSQN do item (opcional)
 
 
 **Grupo de dados relativos ao PIS**
@@ -146,9 +147,11 @@ Choice entre refNFe ou refNFeSig ou refNF ou refNFP ou refCTe ou refECF
 
 [tag COFINSST](#tag-COFINSST) - Cria tag com Grupo de informações sobre COFINSST (opcional)
 
+
 **Grupo de dados relativos ao Imposto Seletivo (IS)**
 
 [tag IS](#tag-IS) - Cria tag grupo referente ao "imposto do pecado" será aplicado a produtos específicos (opcional) $${\color{red}(RTC)}$$
+
 
 **Grupo de dados relativos ao IBSCBS**
 > *Haverá um "choice" (escolha)  (gIBSCBS ou gIBSCBSMono ou gTransfCred)*
@@ -159,6 +162,98 @@ Choice entre refNFe ou refNFeSig ou refNF ou refNFP ou refCTe ou refECF
 
 [tag gTransfCred](#tag-gTransfCred) - Cria a tag Grupo de Informações de transferência de Crédito IBS/CBS (opcional) $${\color{red}(RTC)}$$
 
+[tag IBSCBSTribRegular](#tag-IBSCBSTribRegular) - Cria tag Grupo de informações da Tributação Regular (opcional) $${\color{red}(RTC)}$$
+
+[tag IBSCredPres](#tag-IBSCredPres) - Cria tag Grupo de Informações do Crédito Presumido referente ao IBS (opcional) $${\color{red}(RTC)}$$
+
+[tag CBSCredPres](#tag-CBSCredPres) - Cria tag Grupo de Informações do Crédito Presumido referente ao CBS (opcional) $${\color{red}(RTC)}$$
+
+[tag gTribCompraGov](#tag-gTribCompraGov) - Cria tag Grupo de informações da composição do valor do IBS e da CBS em compras governamentais (opcional) $${\color{red}(RTC)}$$
+
+[tag gCredPresIBSZFM](#tag-gCredPresIBSZFM) - Cria tag Grupo de informações de Crédito Presumido em operações com a Zona Franca de Manaus  (opcional) $${\color{red}(RTC)}$$
+
+[tag impostoDevol](#tag-impostoDevol) - Cria a tag Grupo de infomrções sobre IPI devolvido (opcional)
+
+**Dados de Totais da NFe**
+
+[tag total](tag-total) - Cria vNFTot (opcional) $${\color{red}(RTC)}$$
+
+[tag ICMSTot](#tag-ICMSTot) - Cria tag com totais de ICMS, IPI, PIS, COFINS (opcional)
+
+[tag ISSQNTot](#tag-ISSQNTot) - Cria tag com totais de ISSQN (opcional)
+
+[tag ISTot](#tag-ISTot) - Cria tag com totais do Imposto Seletivo IS (opcional) $${\color{red}(RTC)}$$
+
+[tag IBSCBSTot](#tag-IBSCBSTot) - Cria tag com os totais do IBS e CBS (opcional) $${\color{red}(RTC)}$$
+
+[tag retTrib](#tag retTrib) - Cria tag com as retenções de Tributos (opcional)
+
+
+**Dados de Transporte**
+
+[tag transp](#tag-transp) - Cria a tag de Dados dos transportes da NF-e $${\color{red}(OBRIGATÓRIA)}$$
+
+[tag transporta](#tag-transporta) - Cria tag com Dados do transportador (opcional)
+
+[tag rettransp](#tag-rettransp) - Cria tag com Dados da retenção  ICMS do Transporte (opcional) 
+
+[tag veicTransp](#tag-veicTransp) - Cria tag com identificação do veiculo de tranporte (opcional)
+
+[tag reboque](#tag-reboque) - Cria até 5 tags com os dados dos reboque, podem ocorrer até 5 registros (opcional)
+
+[tag vagao](#tag-vagao) - Cria tag com identificação do vagão (opcional)
+
+[tag balsa](#tag-balsa) - Cria tag com identificação da balsa (opcional)
+
+[tag vol](#tag-vol) - Cria tag dados dos volumes, podem ocorrer até 5000 registros (opcional)  
+
+[tag lacres](#tag-lacres) - Cria tag com os Lacres dos volumes, podem ocorrer até 5000 registros por volume (opcional)
+
+
+**Dados de Pagamento/Cobrança**
+
+[tag fat](#tag-fat) - Cria tag com dados de faturamento (opcional)
+
+[tag dup](#tag-dup) - Cria tags com as duplicatas (opcional)
+
+[tag pag](#tag-pag) - Cria tag de dados de pagamento $${\color{red}(OBRIGATÓRIA)}$$
+
+[tag detpag](#tag-detpag) - Cria tag com detalhes dos pagamentos (opcional)
+
+
+**Dados outras informações**
+
+[tag intermed](#tag-intermed) - Cria tag com os dados do intermediador (opcional)
+
+[tag infadic](#tag-infadic) - Cria a tag com as informações adicionais da NFe (opcional)
+
+[tag obsCont](#tag-obsCont) - Cria as tags com observações do emitente (opcional)
+
+[tag obsFisco](#tag-obsFisco) - Cria as tags com observações do fisco (opcional)
+
+[tag procRef](#tag-procRef) - Cria a tag com dados do processo referenciado (opcional)
+
+[tag exporta](#tag-exporta) - Cria tag com dados da Exportação (opcional)
+
+[tag compra](#tag-compra) - Cria tag com dados da Compra (opcional)
+
+[tag infRespTec](#tag-infRespTec) - Cria atag com dados do responsável técnico (opcional)
+
+
+**Dados Colheita de Cana**
+
+[tag cana](#tag-cana) - Cria tag com dados da Colheita de Cana (opcional)
+
+[tag fordia](#tag-fordia) - Cria tag com dados diários da colheita de cana (opcional)
+
+[tag deduc](#tag-deduc) - Cria tag com dados de deduções referentes a colheita de cana (opcional)
+
+
+**Dados Agropecuario**
+
+[tag AgropecuarioGuia](#$tag-AgropecuarioGuia) - Cria dados da Guia de transporte Agropecuario (opcional)
+
+[tag AgropecuarioDefensivo](#$tag-AgropecuarioDefensivo) - Cria as tags com dados da receita do defensivo agricola (opcional)
 
 
 ```
@@ -1996,6 +2091,9 @@ $transf = [
 $mk->taggTranfCred((object) $transf);
 ```
 
+# tag IBSCBSTribRegular
+[Volta](#Métodos)
+
 ## function tagIBSCBSTribRegular(object $std): DOMElement    (NOVO MÉTODO Reforma Tributária)
 Node det/imposto/IBSCBS/gIBSCBS/gTribRegular
 
@@ -2023,7 +2121,10 @@ $reg = [
 $mk->tagIBSCBSTribRegular((object) $reg);
 ```
 
-## function tagIBSCredPresobject $std): DOMElement    (NOVO MÉTODO Reforma Tributária)
+# tag IBSCredPres
+[Volta](#Métodos)
+
+## function tagIBSCredPres(object $std): DOMElement    (NOVO MÉTODO Reforma Tributária)
 Node det/imposto/IBSCBS/gIBSCBS/gIBSCredPres
 
 > Grupo de Informações do Crédito Presumido referente ao IBS, quando aproveitado pelo emitente do documento.
@@ -2046,7 +2147,10 @@ $cred = [
 $mk->tagIBSCredPres((object) $cred);
 ```
 
-## function tagCBSCredPresobject $std): DOMElement    (NOVO MÉTODO Reforma Tributária)
+# tag CBSCredPres
+[Volta](#Métodos)
+
+## function tagCBSCredPres(object $std): DOMElement    (NOVO MÉTODO Reforma Tributária)
 Node det/imposto/IBSCBS/gIBSCBS/gCBSCredPres
 
 > Grupo de Informações do Crédito Presumido referente ao CBS, quando aproveitado pelo emitente do documento.
@@ -2068,6 +2172,9 @@ $cred = [
 ];
 $mk->tagCBSCredPres((object) $cred);
 ```
+
+# tag gTribCompraGov
+[Volta](#Métodos)
 
 ## function taggTribCompraGov(object $std): DOMElement    (NOVO MÉTODO Reforma Tributária))
 Node det/imposto/IBSCBS/gIBSCBS/gTribCompraGov
@@ -2093,6 +2200,8 @@ $cg = [
 $mk->taggCompraGov((object) $cg);
 ```
 
+# tag gCredPresIBSZFM
+[Volta](#Métodos)
 
 ## function taggCredPresIBSZFM(object $std): DOMElement    (NOVO MÉTODO Reforma Tributária)
 Node det/imposto/IBSCBS/gCredPresIBSZFM
@@ -2121,6 +2230,255 @@ $zfm = [
             // presumido de IBS sobre o saldo devedor na ZFM (art. 450, § 1º, LC 214/25)
 ];
 $mk->taggCredPresIBSZFM((object) $zfm);
+```
+
+# tag impostoDevol
+[Volta](#Métodos)
+
+## function tagimpostoDevol(object $std): DOMElement    (SEM ALTERAÇÃO)
+Node det/imposto/impostoDevol
+
+> Grupo de infomrções sobre IPI devolvido
+ 
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$idev = [
+    'item' => 1, //OBRIGATÓRIO referencia ao item da NFe
+    'pDevol' => 85.00, //OBRIGATRÓRIO Percentual da mercadoria devolvida 2 devimais max = 100.00
+    'vIPIDevol' => 0.00 ////OBRIGATRÓRIO Valor do IPI devolvido 2 decimais
+];
+$mk->tagimpostoDevol((object) $idev);
+```
+
+# tag transp
+[Volta](#Métodos)
+
+## function tagtransp(object $std) DOMElement    (SEM ALTERAÇÃO)
+Node infNFe/transp
+
+> Dados dos transportes da NF-e
+
+```php
+$tr = [
+    'modFrete' => 0 //OBRIGATÓRIO
+        //0 - Contratação do Frete por conta do Remetente (CIF);
+        //1 - Contratação do Frete por conta do destinatário/remetente (FOB);
+        //2 - Contratação do Frete por conta de terceiros;
+        //3 - Transporte próprio por conta do remetente;
+        //4 - Transporte próprio por conta do destinatário;
+        //9 - Sem Ocorrência de transporte.
+];
+$mk->tagtransp((object) $tr);
+```
+
+# tag transporta
+[Volta](#Métodos)
+
+## function tagtransporta(object $std) DOMElement    (SEM ALTERAÇÃO)
+Node infNFe/transp/transporta
+
+> Dados do transportador
+
+```php
+$std = [
+    'CNPJ' => '01234123456789', //opcional
+    'CPF' => '12345678901', //opcional
+    'xNome' => 'Joãozinho', //opcional 2 a 60 caracteres
+    'xEnder' => 'Rua Direita do Sul, 1245 - fundos',
+    'IE' => '123456',
+    'xMun' => 'São Vito',
+    'UF' => 'SP'
+];
+$mk->tagtransporta((object)$std);
+```
+
+# tag rettransp
+[Volta](#Métodos)
+
+## function tagrettransp(object $std) DOMElement    (SEM ALTERAÇÃO)
+Node infNFe/transp/retTransp
+
+> Dados da retenção  ICMS do Transporte
+
+```php
+$std = [
+    'vServ' => 1500.00,
+    'vBCRet' => 1500.00,
+    'pICMSRet' => 10.0,
+    'vICMSRet' => 150.00,
+    'CFOP' => '1111',
+    'cMunFG' => 3512345,
+];
+$mk->tagrettransp((object)$std);
+```
+
+# tag veictransp
+[Volta](#Métodos)
+
+## function tagveictransp(object $std) DOMElement    (SEM ALTERAÇÃO)
+Node infNFe/transp/veicTransp
+
+> Dados do veículo (choice com VAGÃO ou BALSA)
+
+```php
+$std = [
+    'placa' => 'XYZ9999',
+    'UF' => 'SP',
+    'RNTC' => '123-AZV-222',
+];
+$mk->tagveictransp((object)$std);
+```
+
+# tag reboque
+[Volta](#Métodos)
+
+## function tagreboque(object $std) DOMElement    (SEM ALTERAÇÃO)
+Node infNFe/transp/reboque
+
+> Dados do reboque  (choice com VAGÃO ou BALSA)
+> NOTA MULTIPLAS ENTRADAS - Podem ocorrer até 5 reboques por veículo
+
+```php
+$std = new \stdClass();
+$std->placa = 'ABC0011';
+$std->UF = 'RJ';
+$std->RNTC = 'R0011';
+$mk->tagreboque($std);
+```
+
+# tag vagao
+[Volta](#Métodos)
+
+## function tagvagao(object $std) DOMElement    (SEM ALTERAÇÃO)
+Node infNFe/transp/vagao
+
+> Identificação do vagão (será inserido caso não exista nem veiculo e nem reboques)
+
+```php
+$std = new \stdClass();
+$std->vagao = 'HTRE-20930';
+$mk->tagvagao($std);
+```
+
+# tag balsa
+[Volta](#Métodos)
+
+## function tagbalsa(object $std) DOMElement    (SEM ALTERAÇÃO)
+Node infNFe/transp/balsa
+
+> Identificação da balsa (será inserido caso não exista nem veiculo, nem reboques, e nem vagão)
+
+```php
+$std = new \stdClass();
+$std->balsa = '111-ARR-STS';
+$mk->tagbalsa($std);
+```
+
+# tag vol
+[Volta](#Métodos)
+
+## function tagvol(object $std) DOMElement    (SEM ALTERAÇÃO)
+Node infNFe/vol
+
+> Dados dos volumes 
+> NOTA MULTIPLAS ENTRADAS - Podem ocorrer até 5000 registros de volumes por NFe
+
+```php
+$std = [
+    'item' => 1, //identificação do volume
+    'qVol' => 12,
+    'esp' => 'CAIXAS',
+    'marca' => 'RR',
+    'nVol' => '001,002,003,006.008,231,2990,392,42,788,9874,054',
+    'pesoL' => 222.30,
+    'pesoB' => 225.60,
+];
+$mk->tagvol((object)$std);
+```
+
+# tag lacres
+[Volta](#Métodos)
+
+## function taglacres(object $std) DOMElement    (SEM ALTERAÇÃO)
+Node infNFe/vol/lacres
+
+> Dados dos lacres dos volumes
+> NOTA MULTIPLAS ENTRADAS - Podem ocorrer até 5000 registros de lacres por volume
+
+```php
+$std = new \stdClass();
+$std->item = 1;
+$std->nLacre = 'LCR9099',
+$mk->taglacres($std);
+```
+
+# tag fat
+[Volta](#Métodos)
+
+## function tagfat(object $std) DOMElement    (SEM ALTERAÇÃO)
+Node 
+```php
+```
+
+# tag dup
+[Volta](#Métodos)
+
+
+## function tagdup(object $std) DOMElement    (SEM ALTERAÇÃO)
+
+```php
+```
+
+# tag pag
+[Volta](#Métodos)
+
+## function tagpag(object $std) DOMElement    (SEM ALTERAÇÃO)
+
+```php
+```
+
+# tag detpag
+[Volta](#Métodos)
+
+## function tagdetpag(object $std) DOMElement    (SEM ALTERAÇÃO)
+
+```php
+```
+
+# tag intermed
+[Volta](#Métodos)
+
+## function tagintermed(object $std) DOMElement    (SEM ALTERAÇÃO)
+
+```php
+```
+
+
+```php
+```
+
+
+```php
+```
+
+```php
+```
+
+
+```php
+```
+
+```php
+```
+
+
+```php
+```
+
+```php
 ```
 
 ```php

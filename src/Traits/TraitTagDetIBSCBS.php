@@ -252,13 +252,15 @@ trait TraitTagDetIBSCBS
             //Quando houver crédito presumido com indicador
             //“IndDeduzCredPres=1”, o vCredPres deve ser
             //abatido desse valor.
+            //@todo recolocar em setembro é obrigatório em v1.02
+            /*
             $this->dom->addChild(
                 $gIBSCBS,
                 "vIBS",
                 $this->conditionalNumberFormatting($this->stdIBSCBSTot->vIBS),
                 true,
                 "$identificador Valor do Total do IBS"
-            );
+            );*/
             //gripo de Informações da CBS
             $identificador = "UB12 <IBSCBS/gIBSCBS/gCBS> -";
             $gCBS = $this->dom->createElement("gCBS");
