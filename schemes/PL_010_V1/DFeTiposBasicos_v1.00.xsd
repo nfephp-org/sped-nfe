@@ -331,7 +331,7 @@
 								</xs:sequence>
 							</xs:complexType>
 						</xs:element>
-						<xs:element name="vIBS" type="TDec1302" minOccurs="0">
+						<xs:element name="vIBS" type="TDec1302">
 							<xs:annotation>
 								<xs:documentation>Valor total do IBS</xs:documentation>
 							</xs:annotation>
@@ -776,7 +776,7 @@
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
-				<xs:element name="vIBS" type="TDec1302">
+				<xs:element name="vIBS" type="TDec1302" minOccurs="0">
 					<xs:annotation>
 						<xs:documentation>Valor do IBS</xs:documentation>
 					</xs:annotation>
