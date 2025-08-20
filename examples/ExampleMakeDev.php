@@ -1047,7 +1047,7 @@ try {
         // dados CBS (imposto federal)
         'gCBS_pCBS' => 20, //opcional Alíquota da CBS 3v2-4, OBRIGATÓRIO se vBC for informado
         'gCBS_pDif' => 10, //opcional Percentual do diferimento 3v2-4
-        'gCBS_vCBSOp' => 0, //opcional Valor da CBS Bruto na operação '0|0\.[0-9]{2}
+        // removido 'gCBS_vCBSOp' => 0, //opcional Valor da CBS Bruto na operação '0|0\.[0-9]{2}
         'gCBS_vDif' => 20, //opcional Valor do Diferimento 13v2
         'gCBS_vDevTrib' => 10, //opcional Valor do tributo devolvido 13v2
         'gCBS_pRedAliq' => 20, //opcional Percentual da redução de alíquota 3v2-4
