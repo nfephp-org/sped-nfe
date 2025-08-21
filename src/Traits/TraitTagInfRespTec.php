@@ -68,7 +68,7 @@ trait TraitTagInfRespTec
             . "desenvolvedora do sistema."
         );
         if (!empty($std->CSRT) && !empty($std->idCSRT)) {
-            $this->csrt = $std->idCSRT;
+            $this->csrt = $std->CSRT;
             $this->dom->addChild(
                 $infRespTec,
                 "idCSRT",
