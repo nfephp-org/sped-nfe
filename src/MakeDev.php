@@ -496,7 +496,7 @@ final class MakeDev
     {
         $this->schema = 9; //PL_009_V4
         if (!empty($schema)) {
-            $this->schema = (int) preg_replace("/[^0-9]/", "", substr($schema, 0, 6));
+            $this->schema = (int)preg_replace("/[^0-9]/", "", substr($schema, 0, 6));
         }
         $this->dom = new Dom('1.0', 'UTF-8');
         $this->dom->preserveWhiteSpace = false;
@@ -555,7 +555,7 @@ final class MakeDev
         $this->stdISSQNTot->vISSRet = 0;
         $this->stdISSQNTot->cRegTrib = 0;
 
-        $this->stdIStot  = new stdClass();
+        $this->stdIStot = new stdClass();
         $this->stdIStot->vIS = 0;
 
         $this->stdIBSCBSTot = new stdClass();
@@ -612,7 +612,7 @@ final class MakeDev
      */
     public function getModelo(): int
     {
-        return (int) $this->mod;
+        return (int)$this->mod;
     }
 
     /**
@@ -745,7 +745,7 @@ final class MakeDev
                 if (count($nves) > 8) {
                     $this->errors[] = "I05a <NVE> Item: $item - As tags NVE são limitadas a 8 repetições "
                         . "por item da NFe";
-                    $nves = array_slice($nves, 0, 8) ;
+                    $nves = array_slice($nves, 0, 8);
                 }
                 $node = $prod->getElementsByTagName("NCM")->item(0);
                 foreach ($nves as $nve) {
@@ -758,7 +758,7 @@ final class MakeDev
                 if (count($gcs) > 4) {
                     $this->errors[] = "<gCred> Item: $item - As tags gCred são limitadas a 4 "
                         . "repetições por item da NFe";
-                    $gbs = array_slice($gcs, 0, 4) ;
+                    $gbs = array_slice($gcs, 0, 4);
                 }
                 $node = $prod->getElementsByTagName("EXTIPI")->item(0);
                 if (empty($node)) {
@@ -952,10 +952,10 @@ final class MakeDev
                         //add gTribRegular
                         $gIBSCBS->appendChild($this->aGTribRegular[$item]);
                     }
-                    if (!empty($this->aIBSCredPres[$item])  && !empty($gIBSCBS)) {
+                    if (!empty($this->aIBSCredPres[$item]) && !empty($gIBSCBS)) {
                         $gIBSCBS->appendChild($this->aIBSCredPres[$item]);
                     }
-                    if (!empty($this->aCBSCredPres[$item])  && !empty($gIBSCBS)) {
+                    if (!empty($this->aCBSCredPres[$item]) && !empty($gIBSCBS)) {
                         $ibscbs->appendChild($this->aCBSCredPres[$item]);
                     }
                     //CHICE gIBSCBS, gIBSCBSMono, gTranfCred
@@ -994,11 +994,13 @@ final class MakeDev
             }
             if ($this->schema > 9) {
                 //vItem => det  ...  incluso tagProd() PL_010
-                if (empty($this->aVItem[$item])) {
-                    //não foi passado o vItem totalizando os valores a serem processados
-                    $this->aVItem[$item] = $this->calculateItemValue($det);
+                //if (empty($this->aVItem[$item])) {
+                //não foi passado o vItem totalizando os valores a serem processados
+                //    $this->aVItem[$item] = $this->calculateItemValue($det);
+                //}
+                if (!empty($this->aVItem[$item])) {
+                    $this->addTag($det, $this->aVItem[$item]);
                 }
-                $this->addTag($det, $this->aVItem[$item]);
                 //DFEReferenciado => det PL_010
                 if (!empty($this->aDFeReferenciado[$item])) {
                     $this->addTag($det, $this->aDFeReferenciado[$item], 'Falta a tag det!');
@@ -1078,23 +1080,23 @@ final class MakeDev
         $tpOP = 0;
         if (!empty($veicProd)) {
             $value = $veicProd->getElementsByTagName("tpOp")->item(0)->nodeValue ?? null;
-            $tpOP = (int) isset($value) ? $value : 0;
+            $tpOP = (int)isset($value) ? $value : 0;
         }
         //Valor do imposto de importação
         $vII = 0;
         if (!empty($ii)) {
             $value = $ii->getElementsByTagName("vII")->item(0)->nodeValue ?? null;
-            $vII = (float) !empty($value) ? $value : 0;
+            $vII = (float)!empty($value) ? $value : 0;
         }
-        $vProd = (float) !empty($det->getElementsByTagName("vProd")->item(0)->nodeValue) ?
+        $vProd = (float)!empty($det->getElementsByTagName("vProd")->item(0)->nodeValue) ?
             $det->getElementsByTagName("vProd")->item(0)->nodeValue : 0;
-        $vDesc = (float) !empty($det->getElementsByTagName("vDesc")->item(0)->nodeValue) ?
+        $vDesc = (float)!empty($det->getElementsByTagName("vDesc")->item(0)->nodeValue) ?
             $det->getElementsByTagName("vDesc")->item(0)->nodeValue : 0;
-        $vFrete = (float) !empty($det->getElementsByTagName("vFrete")->item(0)->nodeValue) ?
+        $vFrete = (float)!empty($det->getElementsByTagName("vFrete")->item(0)->nodeValue) ?
             $det->getElementsByTagName("vFrete")->item(0)->nodeValue : 0;
-        $vSeg = (float) !empty($det->getElementsByTagName("vSeg")->item(0)->nodeValue) ?
+        $vSeg = (float)!empty($det->getElementsByTagName("vSeg")->item(0)->nodeValue) ?
             $det->getElementsByTagName("vSeg")->item(0)->nodeValue : 0;
-        $vOutro = (float) !empty($det->getElementsByTagName("vOutro")->item(0)->nodeValue) ?
+        $vOutro = (float)!empty($det->getElementsByTagName("vOutro")->item(0)->nodeValue) ?
             $det->getElementsByTagName("vOutro")->item(0)->nodeValue : 0;
         $icmsdeson = 0;
         $vICMSST = 0;
@@ -1102,32 +1104,32 @@ final class MakeDev
         $vFCPST = 0;
         if (!empty($icms)) {
             //aplica desoneração caso indDeduzDeson = 1
-            $indDeduzDeson = (int) !empty($icms->getElementsByTagName("indDeduzDeson")
+            $indDeduzDeson = (int)!empty($icms->getElementsByTagName("indDeduzDeson")
                 ->item(0)->nodeValue) ?
                 $icms->getElementsByTagName("indDeduzDeson")->item(0)->nodeValue :
                 0;
-            $vICMSDeson = (float) !empty($icms->getElementsByTagName("vICMSDeson")
+            $vICMSDeson = (float)!empty($icms->getElementsByTagName("vICMSDeson")
                 ->item(0)->nodeValue) ?
                 $icms->getElementsByTagName("vICMSDeson")->item(0)->nodeValue : 0;
             $icmsdeson = $vICMSDeson * $indDeduzDeson;
-            $vICMSST = (float) !empty($icms->getElementsByTagName("vICMSST")->item(0)->nodeValue) ?
+            $vICMSST = (float)!empty($icms->getElementsByTagName("vICMSST")->item(0)->nodeValue) ?
                 $icms->getElementsByTagName("vICMSST")->item(0)->nodeValue : 0;
-            $vICMSMonoReten = (float) !empty($icms->getElementsByTagName("vICMSMonoReten")
+            $vICMSMonoReten = (float)!empty($icms->getElementsByTagName("vICMSMonoReten")
                 ->item(0)->nodeValue) ?
                 $icms->getElementsByTagName("vICMSMonoReten")->item(0)->nodeValue : 0;
-            $vFCPST = (float) !empty($icms->getElementsByTagName("vFCPST")->item(0)->nodeValue) ?
+            $vFCPST = (float)!empty($icms->getElementsByTagName("vFCPST")->item(0)->nodeValue) ?
                 $icms->getElementsByTagName("vFCPST")->item(0)->nodeValue : 0;
         }
         //IPI
         $vIPI = 0;
         if (!empty($ipi)) {
-            $vIPI = (float) !empty($ipi->getElementsByTagName("vIPI")->item(0)->nodeValue) ?
+            $vIPI = (float)!empty($ipi->getElementsByTagName("vIPI")->item(0)->nodeValue) ?
                 $ipi->getElementsByTagName("vIPI")->item(0)->nodeValue : 0;
         }
         //IPIDevol
         $vIPIDevol = 0;
         if (!empty($impostoDevol)) {
-            $vIPIDevol = (float) !empty($impostoDevol->getElementsByTagName("vIPIDevol")
+            $vIPIDevol = (float)!empty($impostoDevol->getElementsByTagName("vIPIDevol")
                 ->item(0)->nodeValue) ?
                 $impostoDevol->getElementsByTagName("vIPIDevol")->item(0)->nodeValue : 0;
         }
@@ -1136,20 +1138,20 @@ final class MakeDev
         //PISST
         $vPIS = 0;
         if (!empty($pisst)) {
-            $indSomaPISST = (int) !empty($pisst->getElementsByTagName("indSomaPISST")
+            $indSomaPISST = (int)!empty($pisst->getElementsByTagName("indSomaPISST")
                 ->item(0)->nodeValue) ?
                 $pisst->getElementsByTagName("indSomaPISST")->item(0)->nodeValue : 0;
-            $vPIS = (float) !empty($pisst->getElementsByTagName("vPIS")->item(0)->nodeValue) ?
+            $vPIS = (float)!empty($pisst->getElementsByTagName("vPIS")->item(0)->nodeValue) ?
                 $pisst->getElementsByTagName("vPIS")->item(0)->nodeValue : 0;
             $vPIS = $vPIS * $indSomaPISST;
         }
         //COFINSST
         $vCOFINS = 0;
         if (!empty($cofinsst)) {
-            $indSomaCOFINSST = (int) !empty($cofinsst->getElementsByTagName("indSomaCOFINSST")
+            $indSomaCOFINSST = (int)!empty($cofinsst->getElementsByTagName("indSomaCOFINSST")
                 ->item(0)->nodeValue) ?
                 $cofinsst->getElementsByTagName("indSomaCOFINSST")->item(0)->nodeValue : 0;
-            $vCOFINS = (float) !empty($cofinsst->getElementsByTagName("vCOFINS")->item(0)->nodeValue)
+            $vCOFINS = (float)!empty($cofinsst->getElementsByTagName("vCOFINS")->item(0)->nodeValue)
                 ? $cofinsst->getElementsByTagName("vCOFINS")->item(0)->nodeValue : 0;
             $vCOFINS = $vCOFINS * $indSomaCOFINSST;
         }
@@ -1160,23 +1162,23 @@ final class MakeDev
         $vTotIBSMonoItem = 0;
         $vTotCBSMonoItem = 0;
         if (!empty($cbs) && $this->schema > 9) {
-            $vIBSUF = (float) !empty($cbs->getElementsByTagName("vIBSUF")->item(0)->nodeValue) ?
+            $vIBSUF = (float)!empty($cbs->getElementsByTagName("vIBSUF")->item(0)->nodeValue) ?
                 $cbs->getElementsByTagName("vIBSUF")->item(0)->nodeValue : 0;
-            $vIBSMun = (float) !empty($cbs->getElementsByTagName("vIBSMun")->item(0)->nodeValue) ?
+            $vIBSMun = (float)!empty($cbs->getElementsByTagName("vIBSMun")->item(0)->nodeValue) ?
                 $cbs->getElementsByTagName("vIBSMun")->item(0)->nodeValue : 0;
-            $vCBS = (float) !empty($cbs->getElementsByTagName("vCBS")->item(0)->nodeValue) ?
+            $vCBS = (float)!empty($cbs->getElementsByTagName("vCBS")->item(0)->nodeValue) ?
                 $cbs->getElementsByTagName("vCBS")->item(0)->nodeValue : 0;
-            $vTotIBSMonoItem = (float) !empty($cbs->getElementsByTagName("vTotIBSMonoItem")
+            $vTotIBSMonoItem = (float)!empty($cbs->getElementsByTagName("vTotIBSMonoItem")
                 ->item(0)->nodeValue) ?
                 $cbs->getElementsByTagName("vTotIBSMonoItem")->item(0)->nodeValue : 0;
-            $vTotCBSMonoItem = (float) !empty($cbs->getElementsByTagName("vTotCBSMonoItem")
+            $vTotCBSMonoItem = (float)!empty($cbs->getElementsByTagName("vTotCBSMonoItem")
                 ->item(0)->nodeValue) ?
                 $cbs->getElementsByTagName("vTotCBSMonoItem")->item(0)->nodeValue : 0;
         }
         //IS
         $vIS = 0;
         if (!empty($is) && $this->schema > 9) {
-            $vIS = (float) !empty($is->getElementsByTagName("vIS")->item(0)->nodeValue) ?
+            $vIS = (float)!empty($is->getElementsByTagName("vIS")->item(0)->nodeValue) ?
                 $is->getElementsByTagName("vIS")->item(0)->nodeValue : 0;
         }
         //Somatório
@@ -1513,7 +1515,7 @@ final class MakeDev
                 'qBCMonoRet' => null,
                 'vICMSMonoRet' => null,
             ];
-            $this->tagICMSTot((object) $icms);
+            $this->tagICMSTot((object)$icms);
         }
         //Até 2036 esta tag deverá existir segundo a documentação atual da SEFAZ
         $this->addTag($total, $this->ICMSTot);
@@ -1533,7 +1535,7 @@ final class MakeDev
                 'vISSRet' => null,
                 'cRegTrib' => null
             ];
-            $this->tagISSQNTot((object) $iss);
+            $this->tagISSQNTot((object)$iss);
         }
         $this->addTag($total, $this->ISSQNTot);
         //Grupo Retenções de Tributos
@@ -1547,7 +1549,7 @@ final class MakeDev
                 $tis = [
                     'vIS' => $this->stdIStot->vIS
                 ];
-                $this->tagISTot((object) $tis);
+                $this->tagISTot((object)$tis);
             }
             if (!empty($this->ISTot)) {
                 $this->addTag($total, $this->ISTot);
@@ -1578,7 +1580,7 @@ final class MakeDev
                     'gMono_vIBSMonoRet',
                     'gMono_vCBSMonoRet',
                 ];
-                $this->tagIBSCBSTot((object) $ib);
+                $this->tagIBSCBSTot((object)$ib);
             }
             if (!empty($this->IBSCBSTot)) {
                 $this->addTag($total, $this->IBSCBSTot);
@@ -1719,7 +1721,7 @@ final class MakeDev
     {
         $ppl = array_map('strtolower', $possible);
         $std = self::propertiesToLower($std);
-        $equalized =  Strings::equilizeParameters(
+        $equalized = Strings::equilizeParameters(
             $std,
             $ppl,
             $this->replaceAccentedChars
