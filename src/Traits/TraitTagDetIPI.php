@@ -81,7 +81,7 @@ trait TraitTagDetIPI
                 true,
                 "$identificador Código da situação tributária do IPI (CST)"
             );
-            if (!empty($std->vBC) && isset($std->pIPI)) {
+            if (isset($std->vBC) && isset($std->pIPI)) {
                 $this->dom->addChild(
                     $ipiTrib,
                     "vBC",
