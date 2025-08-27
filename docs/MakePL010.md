@@ -1343,6 +1343,7 @@ $std->modBCST = null; //opcional Modalidade de determinação da base de cálcul
     //3 - Lista Neutra (valor).
     //4 - Margem Valor Agregado (%).
     //5 - Pauta (valor).
+    //6 - Valor da Operação
 $std->pMVAST = null; //opcional Percentual da margem de valor Adicionado do ICMS ST 
 $std->pRedBCST = null; //opcional Percentual da Redução de Base de Cálculo do ICMS ST
 $std->vBCST = null; //opcional Valor da Base de Calculo do ICMS ST
