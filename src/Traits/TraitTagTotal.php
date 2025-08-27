@@ -33,7 +33,11 @@ trait TraitTagTotal
         $possible = ['vNFTot'];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = "W01 <vNFTot> -";
-        $this->vNFTot = $this->conditionalNumberFormatting($std->vNFTot, 2);
+        if (!isset($std->vNFTot)) {
+            $this->vNFTot = null;
+            return null;
+        }
+        $this->vNFTot = $std->vNFTot;
         return $this->vNFTot;
     }
 
