@@ -2254,6 +2254,135 @@ $idev = [
 $mk->tagimpostoDevol((object) $idev);
 ```
 
+# tag total
+[Volta](#Métodos)
+
+## function tagTotal(stdClass $std): ?float   (NOVO MÉTODO Reforma Tributária)
+Node infNFe/total
+
+> NOTA: Caso não seja informada essa tag o valor de vNFTot, que represneta o valor Total da NF considerando os impostos 
+> por fora IBS, CBS e IS, NÃO SERA INCLUIDO NA NF-e.
+
+> NOTA: Por enquanto esse valor é opcional e não deve ser informado, porém em 2026 poderá ser necessário informar.
+ 
+> NOTA: Esse valor NÃO SERÁ nem calculado, nem inserido automaticamente na NFe, enquanto for opcional. 
+ 
+> Dados dos totais da NF-e
+
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual | 
+
+```php
+$total = [
+    'vNFtot' => 1000, //opcional, popula a tag total/vNFTot 
+];
+$mk->tagTotal((object) $idev);
+```
+
+# tag ICMSTot
+[Volta](#Métodos)
+
+## function tagICMSTot(stdClass $std): DOMElement    (SEM ALTERAÇÃO)
+Node infNFe/total/ICMSTot
+
+> Cria tag com totais de ICMS, IPI, PIS, COFINS (opcional)
+
+
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual | 
+
+```php
+$std = new \stdClass();
+$std->vBC = 2000;
+$std->vICMS = 360;
+$std->vICMSDeson = 20;
+$std->vICMSUFDest = 3;
+$std->vFCPUFDest = 2;
+$std->vICMSUFRemet = 4;
+$std->vFCP = 2;
+$std->vBCST = 20;
+$std->vST = 1.50;
+$std->vFCPST = 2.22;
+$std->vFCPSTRet = 0.23;
+$std->qBCMono = null;
+$std->vICMSMono = null;
+$std->qBCMonoReten = null;
+$std->vICMSMonoReten = null;
+$std->qBCMonoRet = null;
+$std->vICMSMonoRet = null;
+$std->vProd = 2000;
+$std->vFrete = 100;
+$std->vSeg = 5;
+$std->vDesc = 1;
+$std->vII = 12;
+$std->vIPI = 23;
+$std->vIPIDevol = 9;
+$std->vPIS = 6;
+$std->vCOFINS = 25;
+$std->vOutro = 11;
+$std->vNF = 2345.83;
+$std->vTotTrib = 798.12;
+
+$mk->tagICMSTot($std);
+```
+ 
+
+# tag ISSQNTot
+[Volta](#Métodos)
+
+## function tagISSQNTot(stdClass $std): DOMElement    (SEM ALTERAÇÃO)
+
+> Cria tag com totais de ISSQN (opcional)
+
+
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual | 
+
+```php
+$std = new \stdClass();
+$std->vServ = 123.33;
+$std->vBC = 123.33;
+$std->vISS = 0;
+$std->vPIS = 0 ;
+$std->vCOFINS = 0;
+$std->dCompet = '2025-03-11';
+$std->vDeducao = 0;
+$std->vOutro = 0;
+$std->vDescIncond = null;
+$std->vDescCond = null;;
+$std->vISSRet = 1.23;
+$std->cRegTrib = 6;
+
+$mk->tagISQNTot($std);
+```
+ 
+
+# tag ISTot
+[Volta](#Métodos)
+
+## function tagISTot(stdClass $std): DOMElement   (NOVO MÉTODO Reforma Tributária)
+
+> Cria tag com totais do Imposto Seletivo IS (opcional) $${\color{red}(RTC)}$$
+
+# tag IBSCBSTot
+[Volta](#Métodos)
+
+## function tagIBSCBSTot(stdClass $std): DOMElement    (NOVO MÉTODO Reforma Tributária)
+
+> Cria tag com os totais do IBS e CBS (opcional) $${\color{red}(RTC)}$$
+
+# tag retTrib
+[Volta](#Métodos)
+
+## function tagretTribt(stdClass $std): DOMElement    (SEM ALTERAÇÃO)
+
+> Cria tag com as retenções de Tributos (opcional)
+
+
+
 # tag transp
 [Volta](#Métodos)
 
