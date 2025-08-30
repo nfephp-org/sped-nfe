@@ -80,6 +80,7 @@ trait TraitTagTotal
             'vICMSMonoReten',
             'qBCMonoRet',
             'vICMSMonoRet',
+            '$vTotTrib'
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = "W01 <ICMSTot> -";
