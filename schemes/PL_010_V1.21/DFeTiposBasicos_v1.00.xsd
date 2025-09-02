@@ -28,6 +28,15 @@
 			<xs:pattern value="\d{6}"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:simpleType name="TcCredPres">
+		<xs:annotation>
+			<xs:documentation>Código de Classificação do Crédito Presumido do IBS e da CBS, conforme tabela cCredPres</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:pattern value="\d{2}"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:simpleType name="TDec1104">
 		<xs:annotation>
 			<xs:documentation>Tipo Decimal com 15 dígitos, sendo 11 de corpo e 4 decimais</xs:documentation>
@@ -776,7 +785,7 @@
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
-				<xs:element name="vIBS" type="TDec1302" minOccurs="0">
+				<xs:element name="vIBS" type="TDec1302">
 					<xs:annotation>
 						<xs:documentation>Valor do IBS</xs:documentation>
 					</xs:annotation>
@@ -860,9 +869,9 @@
 			<xs:documentation>Tipo Crédito Presumido</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="cCredPres">
+			<xs:element name="cCredPres" type="TcCredPres">
 				<xs:annotation>
-					<xs:documentation>Usar tabela Cred Presumido, para o emitente da nota.</xs:documentation>
+					<xs:documentation>Código de Classificação do Crédito Presumido do IBS e da CBS</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="pCredPres" type="TDec_0302_04">

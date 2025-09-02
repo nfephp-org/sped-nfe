@@ -7360,12 +7360,13 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 	</xs:simpleType>
 	<xs:simpleType name="TTpNFCredito">
 		<xs:annotation>
-			<xs:documentation>Tipo de Nota de Crédito: 01=Multa e juros; 02=Apropriação de crédito presumido de IBS sobre o saldo devedor na ZFM (art. 450, § 1º, LC 214/25)</xs:documentation>
+			<xs:documentation>Tipo de Nota de Crédito: 01=Multa e juros; 02=Apropriação de crédito presumido de IBS sobre o saldo devedor na ZFM (art. 450, § 1º, LC 214/25); 03=Retorno</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
 			<xs:enumeration value="01"/>
 			<xs:enumeration value="02"/>
+			<xs:enumeration value="03"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TProcEmi">
