@@ -124,7 +124,7 @@ final class MakeDev
      */
     public $dom;
     /**
-     * @var float
+     * @var float|null
      */
     protected $vNFTot;
     /**
@@ -267,6 +267,10 @@ final class MakeDev
      * @var DOMElement
      */
     protected $cana;
+    /**
+     * @var DOMElement
+     */
+    protected $infNFeSupl;
     /**
      * @var array
      */
@@ -1586,7 +1590,8 @@ final class MakeDev
                 $this->addTag($total, $this->IBSCBSTot);
                 //campo vNFTot PL_010
                 //if (empty($this->vNFTot)) {
-                    //$this->vNFTot = $this->stdTot->vNF; //@todo 2026 + $this->stdTot->vIBS + $this->stdTot->vCBS + $this->stdTot->vIS;
+                    //$this->vNFTot = $this->stdTot->vNF;
+                    //@todo 2026 + $this->stdTot->vIBS + $this->stdTot->vCBS + $this->stdTot->vIS;
                 //}
                 if (!empty($this->vNFTot)) {
                     $this->dom->addChild(

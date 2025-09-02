@@ -9,6 +9,7 @@ use NFePHP\Common\DOMImproved as Dom;
 
 /**
  * @property DOMElement $infNFe
+ * @property DOMElement $infNFeSupl
  * @property string $version
  * @property string $chNFe
  * @property Dom $dom
@@ -38,5 +39,29 @@ trait TraitTagInfNfe
         }
         $this->chNFe = $chave;
         return $this->infNFe;
+    }
+
+    /**
+     * Informações suplementares da Nota Fiscal
+     */
+    public function taginfNFeSupl(stdClass $std): DOMElement
+    {
+        $possible = ['qrcode', 'urlChave'];
+        $std = $this->equilizeParameters($std, $possible);
+
+        $infNFeSupl = $this->dom->createElement("infNFeSupl");
+        $nodeqr = $infNFeSupl->appendChild($this->dom->createElement('qrCode'));
+        $nodeqr->appendChild($this->dom->createCDATASection($std->qrcode));
+        //incluido no layout 4.00
+        $std->urlChave = !empty($std->urlChave) ? $std->urlChave : null;
+        $this->dom->addChild(
+            $infNFeSupl,
+            "urlChave",
+            $std->urlChave,
+            false,
+            "URL de consulta por chave de acesso a ser impressa no DANFE NFC-e"
+        );
+        $this->infNFeSupl = $infNFeSupl;
+        return $infNFeSupl;
     }
 }
