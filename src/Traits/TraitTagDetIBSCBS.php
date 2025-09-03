@@ -638,12 +638,12 @@ trait TraitTagDetIBSCBS
         ];
         $std = $this->equilizeParameters($std, $possible);
         //Totalizador
-        $this->stdIBSCBSTot->gIBSCBSMono->vIBSMono += $std->vIBSMono ?? 0;
-        $this->stdIBSCBSTot->gIBSCBSMono->vCBSMono += $std->vCBSMono ?? 0;
-        $this->stdIBSCBSTot->gIBSCBSMono->vIBSMonoReten += $std->vIBSMonoReten ?? 0;
-        $this->stdIBSCBSTot->gIBSCBSMono->vCBSMonoReten += $std->vCBSMonoReten ?? 0;
-        $this->stdIBSCBSTot->gIBSCBSMono->vIBSMonoRet += $std->vIBSMonoRet ?? 0;
-        $this->stdIBSCBSTot->gIBSCBSMono->vCBSMonoRet += $std->vCBSMonoRet ?? 0;
+        $this->stdIBSCBSTot->gMono->vIBSMono += $std->vIBSMono ?? 0;
+        $this->stdIBSCBSTot->gMono->vCBSMono += $std->vCBSMono ?? 0;
+        $this->stdIBSCBSTot->gMono->vIBSMonoReten += $std->vIBSMonoReten ?? 0;
+        $this->stdIBSCBSTot->gMono->vCBSMonoReten += $std->vCBSMonoReten ?? 0;
+        $this->stdIBSCBSTot->gMono->vIBSMonoRet += $std->vIBSMonoRet ?? 0;
+        $this->stdIBSCBSTot->gMono->vCBSMonoRet += $std->vCBSMonoRet ?? 0;
 
         $identificador = "UB84 <gIBSCBSMono> -";
         $gIBSCBSMono = $this->dom->createElement("gIBSCBSMono");
