@@ -427,10 +427,13 @@ trait TraitTagDetICMS
                 }
                 break;
             case '20':
-                $this->stdTot->vICMSDeson += (float)!empty($std->vICMSDeson) ? $std->vICMSDeson : 0;
+                $this->stdTot->vICMSDeson += (float) !empty($std->vICMSDeson) ? $std->vICMSDeson : 0;
                 $this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
                 $this->stdTot->vICMS += (float) !empty($std->vICMS) ? $std->vICMS : 0;
                 $this->stdTot->vFCP += (float) !empty($std->vFCP) ? $std->vFCP : 0;
+                if (!$std->indDeduzDeson) {
+                    $this->stdTot->vICMSDesonNaoDeduz += (float) !empty($std->vICMSDeson) ? $std->vICMSDeson : 0;
+                }
                 $icms = $this->dom->createElement("ICMS20");
                 $this->dom->addChild(
                     $icms,
@@ -528,10 +531,13 @@ trait TraitTagDetICMS
                 );
                 break;
             case '30':
-                $this->stdTot->vICMSDeson += (float)!empty($std->vICMSDeson) ? $std->vICMSDeson : 0;
+                $this->stdTot->vICMSDeson += (float) !empty($std->vICMSDeson) ? $std->vICMSDeson : 0;
                 $this->stdTot->vBCST += (float) !empty($std->vBCST) ? $std->vBCST : 0;
                 $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
                 $this->stdTot->vFCPST += (float) !empty($std->vFCPST) ? $std->vFCPST : 0;
+                if (!$std->indDeduzDeson) {
+                    $this->stdTot->vICMSDesonNaoDeduz += (float) !empty($std->vICMSDeson) ? $std->vICMSDeson : 0;
+                }
                 $icms = $this->dom->createElement("ICMS30");
                 $this->dom->addChild(
                     $icms,
@@ -638,7 +644,10 @@ trait TraitTagDetICMS
             case '40':
             case '41':
             case '50':
-                $this->stdTot->vICMSDeson += (float)!empty($std->vICMSDeson) ? $std->vICMSDeson : 0;
+                $this->stdTot->vICMSDeson += (float) !empty($std->vICMSDeson) ? $std->vICMSDeson : 0;
+                if (!$std->indDeduzDeson) {
+                    $this->stdTot->vICMSDesonNaoDeduz += (float) !empty($std->vICMSDeson) ? $std->vICMSDeson : 0;
+                }
                 $icms = $this->dom->createElement("ICMS40");
                 $this->dom->addChild(
                     $icms,
@@ -1021,6 +1030,9 @@ trait TraitTagDetICMS
                 $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
                 $this->stdTot->vFCPST += (float) !empty($std->vFCPST) ? $std->vFCPST : 0;
                 $this->stdTot->vFCP += (float) !empty($std->vFCP) ? $std->vFCP : 0;
+                if (!$std->indDeduzDeson) {
+                    $this->stdTot->vICMSDesonNaoDeduz += (float) !empty($std->vICMSDeson) ? $std->vICMSDeson : 0;
+                }
                 $icms = $this->dom->createElement("ICMS70");
                 $this->dom->addChild(
                     $icms,
@@ -1203,6 +1215,9 @@ trait TraitTagDetICMS
                 $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
                 $this->stdTot->vFCPST += (float) !empty($std->vFCPST) ? $std->vFCPST : 0;
                 $this->stdTot->vFCP += (float) !empty($std->vFCP) ? $std->vFCP : 0;
+                if (!$std->indDeduzDeson) {
+                    $this->stdTot->vICMSDesonNaoDeduz += (float) !empty($std->vICMSDeson) ? $std->vICMSDeson : 0;
+                }
                 $icms = $this->dom->createElement("ICMS90");
                 $this->dom->addChild(
                     $icms,
