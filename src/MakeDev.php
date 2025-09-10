@@ -511,6 +511,7 @@ final class MakeDev
         $this->stdTot->vBC = 0;
         $this->stdTot->vICMS = 0;
         $this->stdTot->vICMSDeson = 0;
+        $this->stdTot->vICMSDesonNaoDeduz = 0;
         $this->stdTot->vFCPUFDest = 0;
         $this->stdTot->vICMSUFDest = 0;
         $this->stdTot->vICMSUFRemet = 0;
@@ -1024,6 +1025,7 @@ final class MakeDev
         $this->stdTot->vBC = round($this->stdTot->vBC, 2);
         $this->stdTot->vICMS = round($this->stdTot->vICMS, 2);
         $this->stdTot->vICMSDeson = round($this->stdTot->vICMSDeson, 2);
+        $this->stdTot->vICMSDesonNaoDeduz = round($this->stdTot->vICMSDesonNaoDeduz, 2);        
         $this->stdTot->vFCP = round($this->stdTot->vFCP, 2);
         $this->stdTot->vFCPUFDest = round($this->stdTot->vFCPUFDest, 2);
         $this->stdTot->vICMSUFDest = round($this->stdTot->vICMSUFDest, 2);
@@ -1048,6 +1050,7 @@ final class MakeDev
         $this->stdTot->vNF = $this->stdTot->vProd
             - $this->stdTot->vDesc
             - $this->stdTot->vICMSDeson
+            + $this->stdTot->vICMSDesonNaoDeduz
             + $this->stdTot->vST
             + $this->stdTot->vFCPST
             + $this->stdTot->vICMSMonoReten
