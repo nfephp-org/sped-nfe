@@ -11,6 +11,7 @@ use NFePHP\Common\Strings;
  * @property Dom $dom
  * @property DOMElement $emit
  * @property DOMElement $enderEmit
+ * @property int $crt
  * @method equilizeParameters($std, $possible)
  */
 
@@ -34,6 +35,7 @@ trait TraitTagEmit
             'CPF'
         ];
         $std = $this->equilizeParameters($std, $possible);
+        $this->crt = $std->CRT;
         $identificador = 'C01 <emit> - ';
         $this->emit = $this->dom->createElement("emit");
         if (!empty($std->CNPJ)) {
