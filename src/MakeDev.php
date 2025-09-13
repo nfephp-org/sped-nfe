@@ -88,6 +88,10 @@ final class MakeDev
      */
     protected $tpAmb = 2;
     /**
+     * @var int
+     */
+    protected $crt;
+    /**
      * @var array
      */
     public $errors = [];
@@ -941,7 +945,7 @@ final class MakeDev
             if (!empty($this->aICMSUFDest[$item])) {
                 $this->addTag($imposto, $this->aICMSUFDest[$item], 'Falta a tag det/imposto!');
             }
-            if ($this->schema > 9) {
+            if ($this->schema > 9 && $this->crt == 3) {
                 //IS => imposto - somente para PL_010 em diante
                 if (!empty($this->aIS[$item])) {
                     $this->addTag($imposto, $this->aIS[$item], 'Falta a tag det/imposto!');
@@ -996,7 +1000,7 @@ final class MakeDev
             if (!empty($this->aObsItem[$item])) {
                 $this->addTag($det, $this->aObsItem[$item], 'Falta a tag det!');
             }
-            if ($this->schema > 9) {
+            if ($this->schema > 9 && $this->crt == 3) {
                 //vItem => det  ...  incluso tagProd() PL_010
                 //if (empty($this->aVItem[$item])) {
                 //não foi passado o vItem totalizando os valores a serem processados

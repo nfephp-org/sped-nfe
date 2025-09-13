@@ -81,6 +81,8 @@ trait TraitTagDetIBSCBS
         $this->stdIBSCBSTot->gIBSMun->vIBSMun += $std->gIBSMun_vIBSMun ?? 0;
         $this->stdIBSCBSTot->vIBS += $std->gIBSMun_vIBSMun ?? 0;
 
+        $vIBSItem = ($std->gIBSUF_vIBSUF ?? 0) + ($std->gIBSMun_vIBSMun ?? 0);
+
         $this->stdIBSCBSTot->gCBS->vDif += $std->gCBS_vDif ?? 0;
         $this->stdIBSCBSTot->gCBS->vDevTrib += $std->gCBS_vDevTrib ?? 0;
         $this->stdIBSCBSTot->vCBS += $std->gCBS_vCBS ?? 0;
@@ -255,7 +257,7 @@ trait TraitTagDetIBSCBS
             $this->dom->addChild(
                 $gIBSCBS,
                 "vIBS",
-                $this->conditionalNumberFormatting($this->stdIBSCBSTot->vIBS),
+                $this->conditionalNumberFormatting($vIBSItem),
                 true,
                 "$identificador Valor do Total do IBS"
             );
