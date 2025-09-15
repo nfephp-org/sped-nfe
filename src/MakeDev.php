@@ -1563,7 +1563,8 @@ final class MakeDev
                 $this->addTag($total, $this->ISTot);
             }
             //Totalizador do IBSCBS
-            if (empty($this->IBSCBSTot) && !empty($this->stdIBSCBSTot->vBCIBSCBS)) {
+            //if (empty($this->IBSCBSTot) && !empty($this->stdIBSCBSTot->vBCIBSCBS)) {
+            if ($this->schema > 9) {
                 //não foi informado o total do IBSCBS, obter do calculado
                 $ib = [
                     'vBCIBSCBS',
