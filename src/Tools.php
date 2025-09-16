@@ -469,10 +469,6 @@ class Tools extends ToolsCommon
         ?\DateTimeInterface $dhEvento = null,
         ?string $lote = null
     ): string {
-        $xCondUso = 'O emitente ou destinatário da NF-e, declara que permite o '
-            . 'transportador declarado no campo CNPJ/CPF deste evento a '
-            . 'autorizar os transportadores subcontratados ou redespachados a '
-            . 'terem acesso ao download da NF-e';
         if (empty($std->verAplic) && !empty($this->verAplic)) {
             $std->verAplic = $this->verAplic;
         }
@@ -485,8 +481,14 @@ class Tools extends ToolsCommon
             ? "<CNPJ>{$std->CNPJ}</CNPJ>"
             : "<CPF>{$std->CPF}</CPF>";
         $tagAdic .= "</autXML>"
-            . "<tpAutorizacao>{$std->tpAutorizacao}</tpAutorizacao>"
-            . "<xCondUso>$xCondUso</xCondUso>";
+            . "<tpAutorizacao>{$std->tpAutorizacao}</tpAutorizacao>";
+        if ($std->tpAutorizacao === 1) {
+            $xCondUso = 'O emitente ou destinatário da NF-e, declara que permite o '
+            . 'transportador declarado no campo CNPJ/CPF deste evento a '
+            . 'autorizar os transportadores subcontratados ou redespachados a '
+            . 'terem acesso ao download da NF-e';
+            $tagAdic .= "<xCondUso>$xCondUso</xCondUso>";
+        }
         return $this->sefazEvento(
             'AN',
             $std->chNFe,
