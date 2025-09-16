@@ -81,22 +81,26 @@ trait TraitTagDetIBSCBS
         $this->cst_ibscbs = $std->CST ?? null;
         $identificador = "UB12 <IBSCBS> -";
         //totalizador do IBS e CBS
-        $this->stdIBSCBSTot->vBCIBSCBS += $std->vBC ?? 0;
-        $this->stdIBSCBSTot->gIBSUF->vDif += $std->gIBSUF_pDif ?? 0;
-        $this->stdIBSCBSTot->gIBSUF->vDevTrib += $std->gIBSUF_vDevTrib ?? 0;
-        $this->stdIBSCBSTot->gIBSUF->vIBSUF += $std->gIBSUF_vIBSUF ?? 0;
-        $this->stdIBSCBSTot->vIBS += $std->gIBSUF_vIBSUF ?? 0;
+        isset($std->vBC) ? $this->stdIBSCBSTot->vBCIBSCBS += $std->vBC : null;
+        isset($std->gIBSUF_pDif) ? $this->stdIBSCBSTot->gIBSUF->vDif += $std->gIBSUF_pDif : null;
+        isset($std->gIBSUF_vDevTrib) ? $this->stdIBSCBSTot->gIBSUF->vDevTrib += $std->gIBSUF_vDevTrib : null;
+        isset($std->gIBSUF_vIBSUF) ? $this->stdIBSCBSTot->gIBSUF->vIBSUF += $std->gIBSUF_vIBSUF : null;
+        isset($std->gIBSUF_vIBSUF) ? $this->stdIBSCBSTot->vIBS += $std->gIBSUF_vIBSUF : null;
 
-        $this->stdIBSCBSTot->gIBSMun->vDif += $std->gIBSMun_vDif ?? 0;
-        $this->stdIBSCBSTot->gIBSMun->vDevTrib += $std->gIBSMun_vDevTrib ?? 0;
-        $this->stdIBSCBSTot->gIBSMun->vIBSMun += $std->gIBSMun_vIBSMun ?? 0;
-        $this->stdIBSCBSTot->vIBS += $std->gIBSMun_vIBSMun ?? 0;
-
-        $vIBSItem = ($std->gIBSUF_vIBSUF ?? 0) + ($std->gIBSMun_vIBSMun ?? 0);
-
-        $this->stdIBSCBSTot->gCBS->vDif += $std->gCBS_vDif ?? 0;
-        $this->stdIBSCBSTot->gCBS->vDevTrib += $std->gCBS_vDevTrib ?? 0;
-        $this->stdIBSCBSTot->vCBS += $std->gCBS_vCBS ?? 0;
+        isset($std->gIBSMun_vDif) ? $this->stdIBSCBSTot->gIBSMun->vDif += $std->gIBSMun_vDif : null;
+        isset($std->gIBSMun_vDevTrib) ? $this->stdIBSCBSTot->gIBSMun->vDevTrib += $std->gIBSMun_vDevTrib : null;
+        isset($std->gIBSMun_vIBSMun) ? $this->stdIBSCBSTot->gIBSMun->vIBSMun += $std->gIBSMun_vIBSMun : null;
+        isset($std->gIBSMun_vIBSMun) ? $this->stdIBSCBSTot->vIBS += $std->gIBSMun_vIBSMun : null;
+        $vIBSItem = null;
+        if (isset($std->gIBSUF_vIBSUF)) {
+            $vIBSItem = $std->gIBSUF_vIBSUF;
+            if (isset($std->gIBSMun_vIBSMun)) {
+                $vIBSItem += $std->gIBSMun_vIBSMun;
+            }
+        }
+        isset($std->gCBS_vDif) ? $this->stdIBSCBSTot->gCBS->vDif += $std->gCBS_vDif : null;
+        isset($std->gCBS_vDevTrib) ? $this->stdIBSCBSTot->gCBS->vDevTrib += $std->gCBS_vDevTrib : null;
+        isset($std->gCBS_vCBS) ? $this->stdIBSCBSTot->vCBS += $std->gCBS_vCBS : null;
 
         $ibscbs = $this->dom->createElement("IBSCBS");
         $this->dom->addChild(
@@ -449,8 +453,8 @@ trait TraitTagDetIBSCBS
         ];
         $std = $this->equilizeParameters($std, $possible);
         //Totalizador
-        $this->stdIBSCBSTot->vCredPres += $std->vCredPres ?? 0;
-        $this->stdIBSCBSTot->vCredPresCondSus += $std->vCredPresCondSus ?? 0;
+        isset($std->vCredPres) ? $this->stdIBSCBSTot->vCredPres += $std->vCredPres : null;
+        isset($std->vCredPresCondSus) ? $this->stdIBSCBSTot->vCredPresCondSus += $std->vCredPresCondSus : null;
         $identificador = "UB73 <gIBSCredPres> -";
         $gIBSCredPres = $this->dom->createElement("gIBSCredPres");
         $this->dom->addChild(
@@ -648,12 +652,12 @@ trait TraitTagDetIBSCBS
         ];
         $std = $this->equilizeParameters($std, $possible);
         //Totalizador
-        $this->stdIBSCBSTot->gMono->vIBSMono += $std->vIBSMono ?? 0;
-        $this->stdIBSCBSTot->gMono->vCBSMono += $std->vCBSMono ?? 0;
-        $this->stdIBSCBSTot->gMono->vIBSMonoReten += $std->vIBSMonoReten ?? 0;
-        $this->stdIBSCBSTot->gMono->vCBSMonoReten += $std->vCBSMonoReten ?? 0;
-        $this->stdIBSCBSTot->gMono->vIBSMonoRet += $std->vIBSMonoRet ?? 0;
-        $this->stdIBSCBSTot->gMono->vCBSMonoRet += $std->vCBSMonoRet ?? 0;
+        isset($std->vIBSMono) ? $this->stdIBSCBSTot->gMono->vIBSMono += $std->vIBSMono : null;
+        isset($std->vCBSMono) ? $this->stdIBSCBSTot->gMono->vCBSMono += $std->vCBSMono : null;
+        isset($std->vIBSMonoReten) ? $this->stdIBSCBSTot->gMono->vIBSMonoReten += $std->vIBSMonoReten : null;
+        isset($std->vCBSMonoReten) ? $this->stdIBSCBSTot->gMono->vCBSMonoReten += $std->vCBSMonoReten : null;
+        isset($std->vIBSMonoRet) ? $this->stdIBSCBSTot->gMono->vIBSMonoRet += $std->vIBSMonoRet : null;
+        isset($std->vCBSMonoRet) ? $this->stdIBSCBSTot->gMono->vCBSMonoRet += $std->vCBSMonoRet : null;
 
         $identificador = "UB84 <gIBSCBSMono> -";
         $gIBSCBSMono = $this->dom->createElement("gIBSCBSMono");
