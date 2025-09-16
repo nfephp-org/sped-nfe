@@ -171,4 +171,21 @@ class MakeDevTest extends TestCase
         $this->assertStringContainsString('procEmi', $errors[14]);
         $this->assertStringContainsString('verProc', $errors[15]);
     }
+
+    public function testTagideVersaoQuantroPontoZeroModeloCinquentaECincoEmContigencia()
+    {
+        $std = new \stdClass();
+        $std->versao = '4.00';
+
+        $this->make->taginfNFe($std);
+
+        $std = new \stdClass();
+        $std->dhCont = '2018-06-26T17:45:49-03:00';
+        $std->xJust = 'SEFAZ INDISPONIVEL';
+
+        $ide = $this->make->tagide($std);
+
+        $this->assertEquals($std->dhCont, $ide->getElementsByTagName('dhCont')->item(0)->nodeValue);
+        $this->assertEquals($std->xJust, $ide->getElementsByTagName('xJust')->item(0)->nodeValue);
+    }
 }
