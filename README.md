@@ -153,7 +153,7 @@ Para contribuir com correções de BUGS, melhoria no código, documentação, el
 1. Faça um fork do projeto em sua conta no GitHub
 2. Baixe a biblioteca na sua maquina de desenvolvimento a partir do seu próprio fork
 3. Execute o composer install na raiz do projeto (prefira usar o PHP 8.2 ou 8.3)
-4. Cria uma relação com o projeto original usando o git, com isso terá um bloco denominado "upstream" com uma cópia do projeto original
+4. Crie uma relação com o projeto original usando o git, com isso criará um bloco denominado "upstream" com uma cópia do projeto original
 ```
 git remote add upstream git@github.com:nfephp-org/sped-nfe.git
 ```
@@ -164,17 +164,17 @@ git merge upstream/master
 git push
 ```
 6. Agora pode codar sobre sua cópia da biblioteca
-7. Ao terminar, sempre teste suas alterações para garantir o funcionamento, para isso recomendo criar uma pasta denominada local na raiz, esta pasta não será enviada ao repositório.
-8. Sempre antes de fazer envio ao seu repositório execute a partir de raiz do projeto na sua maquina: 
+7. Ao terminar, sempre teste suas alterações para garantir o funcionamento, para isso recomendo criar uma pasta denominada "local" na raiz, e esta pasta não será enviada ao repositório, então poderá ter dados sensíveis.
+8. Sempre, antes de fazer envio ao seu repositório execute os comandos abaixo, a partir de raiz do projeto na sua maquina: 
 ```
 composer phpcbf
 composer phpcs
 composer stan
 composer test
 ```
-9. Se nenhum erro for indicado pos esses testes pode enviar ao seu repositório, lá serão executados os comando do GitHuib Actions
+9. Se nenhum erro for indicado pos esses testes, pode enviar ao seu repositório, lá serão executados os comandos do GitHub Actions
 10. Se passar nos testes, pode fazer um pull request para o projeto original.
-11. Se o PR for aceito não esqueça de repetir os comandos do passo 5.
+11. Se o PR for aceito, não esqueça de repetir os comandos do passo 5.
  
 ## Change log
 
