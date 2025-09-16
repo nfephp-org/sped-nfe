@@ -188,4 +188,71 @@ class MakeDevTest extends TestCase
         $this->assertEquals($std->dhCont, $ide->getElementsByTagName('dhCont')->item(0)->nodeValue);
         $this->assertEquals($std->xJust, $ide->getElementsByTagName('xJust')->item(0)->nodeValue);
     }
+
+    public function testTagideVersaoQuantroPontoZeroModeloSessentaECinco()
+    {
+        $std = new \stdClass();
+        $std->versao = '4.00';
+
+        $this->make->taginfNFe($std);
+
+        $std = new \stdClass();
+        $std->cUF = '50';
+        $std->cNF = '80070008';
+        $std->natOp = 'VENDA';
+        $std->indPag = '1';
+        $std->mod = '65';
+        $std->serie = '1';
+        $std->nNF = '1';
+        $std->dhEmi = '2018-06-23T17:45:49-03:00';
+        $std->dhSaiEnt = null;
+        $std->tpNF = '1';
+        $std->idDest = '1';
+        $std->cMunFG = '5002704';
+        $std->cMunFGIBS = '5002704'; //RTC somente será incluso se informado e indPres = 5
+        $std->tpImp = '4';
+        $std->tpEmis = '1';
+        $std->tpNFDebito = '1'; //RTC ou é debito ou nenhum dos dois
+        $std->tpNFCredito = '1'; //RTC ou é credito ou nenhum dos dois
+        $std->cDV = '2';
+        $std->tpAmb = '2';
+        $std->finNFe = '1';
+        $std->indFinal = '0';
+        $std->indPres = '5';
+        $std->indIntermed = '1';
+        $std->procEmi = '0';
+        $std->verProc = '5.0';
+        $std->dhCont = null;
+        $std->xJust = null;
+
+        $ide = $this->make->tagide($std);
+
+        $this->assertEquals($std->cUF, $ide->getElementsByTagName('cUF')->item(0)->nodeValue);
+        $this->assertEquals($std->cNF, $ide->getElementsByTagName('cNF')->item(0)->nodeValue);
+        $this->assertEquals($std->natOp, $ide->getElementsByTagName('natOp')->item(0)->nodeValue);
+        $this->assertEmpty($ide->getElementsByTagName('indPag')->item(0));
+        $this->assertEquals($std->mod, $ide->getElementsByTagName('mod')->item(0)->nodeValue);
+        $this->assertEquals($std->serie, $ide->getElementsByTagName('serie')->item(0)->nodeValue);
+        $this->assertEquals($std->nNF, $ide->getElementsByTagName('nNF')->item(0)->nodeValue);
+        $this->assertEquals($std->dhEmi, $ide->getElementsByTagName('dhEmi')->item(0)->nodeValue);
+        $this->assertEmpty($ide->getElementsByTagName('dhSaiEnt')->item(0));
+        $this->assertEquals($std->tpNF, $ide->getElementsByTagName('tpNF')->item(0)->nodeValue);
+        $this->assertEquals($std->idDest, $ide->getElementsByTagName('idDest')->item(0)->nodeValue);
+        $this->assertEquals($std->cMunFG, $ide->getElementsByTagName('cMunFG')->item(0)->nodeValue);
+        $this->assertEquals($std->cMunFGIBS, $ide->getElementsByTagName('cMunFGIBS')->item(0)->nodeValue);
+        $this->assertEquals($std->tpImp, $ide->getElementsByTagName('tpImp')->item(0)->nodeValue);
+        $this->assertEquals($std->tpEmis, $ide->getElementsByTagName('tpEmis')->item(0)->nodeValue);
+        $this->assertEquals($std->tpNFDebito, $ide->getElementsByTagName('tpNFDebito')->item(0)->nodeValue);
+        $this->assertEmpty($ide->getElementsByTagName('tpNFCredito')->item(0));
+        $this->assertEquals($std->cDV, $ide->getElementsByTagName('cDV')->item(0)->nodeValue);
+        $this->assertEquals($std->tpAmb, $ide->getElementsByTagName('tpAmb')->item(0)->nodeValue);
+        $this->assertEquals($std->finNFe, $ide->getElementsByTagName('finNFe')->item(0)->nodeValue);
+        $this->assertEquals($std->indFinal, $ide->getElementsByTagName('indFinal')->item(0)->nodeValue);
+        $this->assertEquals($std->indPres, $ide->getElementsByTagName('indPres')->item(0)->nodeValue);
+        $this->assertEquals($std->indIntermed, $ide->getElementsByTagName('indIntermed')->item(0)->nodeValue);
+        $this->assertEquals($std->procEmi, $ide->getElementsByTagName('procEmi')->item(0)->nodeValue);
+        $this->assertEquals($std->verProc, $ide->getElementsByTagName('verProc')->item(0)->nodeValue);
+        $this->assertEmpty($ide->getElementsByTagName('dhCont')->item(0));
+        $this->assertEmpty($ide->getElementsByTagName('xJust')->item(0));
+    }
 }

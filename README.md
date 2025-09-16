@@ -111,15 +111,15 @@ Para que este pacote possa funcionar são necessários os seguintes requisitos d
 > - [posprint](https://github.com/nfephp-org/posprint) Impressão de documentos em impressoras térmicas POS
 
 
-## Como eu faço uso desta API no meu projeto?
+## Como eu faço uso desta biblioteca no meu projeto?
 
-Primeiro, esta API faz uso dos recursos mais atuais do PHP para classes e objetos, portanto abaixo vai um exemplo ERRADO de uso:
+Primeiro, esta biblioteca faz uso dos recursos mais atuais do PHP para classes e objetos, portanto abaixo vai um exemplo ERRADO de uso:
 ```
 require 'sped-nfe/src/Make.php';
 
 $nfe = new Make();
 ```
-Portanto, você deve primeiro entender que para usar esta API você precisará trabalhar com NAMESPACES pois esta API trabalha com NAMESPACES.
+Portanto, você deve primeiro entender que para usar esta biblioteca você precisará trabalhar com NAMESPACES pois trabalhamos com NAMESPACES.
 
 Agora que você sabe que NAMESPACES é requerido, o uso correto para o exemplo acima seria:
 ```
@@ -131,28 +131,10 @@ use NFePHP\NFe\Make;
 $nfe = new Make();
 ```
 
-
-## Donations
-
-**Estamos em busca de *doadores* e *patrocinadores* para ajudar a financiar parte do desenvolvimento deste pacote e de outros pacotes, aqueles que estiverem interessados por favor entrem em contato com o autor pelo email linux.rlm@gmail.com** 
-
-Este é um projeto totalmente *Open Source*, para usá-lo, copiá-lo ou modificá-lo você não paga absolutamente nada. Porém para continuarmos a mantê-lo de forma adequada é necessária alguma contribuição seja feita, seja auxiliando na codificação, na documentação, na realização de testes e identificação de falhas e BUGs.
-
-Mas também, caso você ache que qualquer informação obtida aqui, lhe foi útil e que isso vale algum dinheiro e está disposto a doar algo, sinta-se livre para enviar qualquer quantia, seja diretamente ao autor ou através do PayPal e do PagSeguro.
-
-<a target="_blank" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=linux%2erlm%40gmail%2ecom&lc=BR&item_name=NFePHP%20OpenSource%20API&item_number=nfephp&currency_code=BRL&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest">
-<img alt="Doar com Paypal" src="https://www.paypalobjects.com/pt_BR/BR/i/btn/btn_donateCC_LG.gif"/></a>
-
-<a target="_blank" href="https://pag.ae/bkXPq4">
-<img alt="Doar PagSeguro" src="https://stc.pagseguro.uol.com.br/public/img/botoes/doacoes/120x53-doar.gif"/></a>
-
-
 ## Acknowledgments
 
-- A todos os colegas que colaboram de alguma forma com o desenvolvimento contínuo desta API.
+- A todos os colegas que colaboram de alguma forma com o desenvolvimento contínuo desta biblioteca.
 
-<a href="https://www.jetbrains.com/?from=NFePHP"><img src="https://github.com/robmachado/sped-nfe/blob/master/docs/images/jetbrains.png" alt="JetBrains" width="80"></a> | A JetBrains pelo fornecimento de uma licença do PHPStorm um dos melhores IDE para desenvolvimento em PHP.
------ | -----
 
 ## Documentation
 
@@ -160,10 +142,40 @@ O processo de documentação ainda está no inicio, mas já existem alguns docum
 
 [Documentação](docs/Funcionalidades.md)
 
+### Para tirar suas duvidas não inicie uma ISSUE, mas se inscreva no grupo do google [NFePHP](http://groups.google.com/group/nfephp).
+ 
 ## Contributing
 
 Para contribuir com correções de BUGS, melhoria no código, documentação, elaboração de testes ou qualquer outro auxílio técnico e de programação por favor observe o [CONTRIBUTING](CONTRIBUTING.md) e o  [Código de Conduta](CONDUCT.md) para maiores detalhes.
 
+### Etapas para contribuir
+
+1. Faça um fork do projeto em sua conta no GitHub
+2. Baixe a biblioteca na sua maquina de desenvolvimento a partir do seu próprio fork
+3. Execute o composer install na raiz do projeto (prefira usar o PHP 8.2 ou 8.3)
+4. Cria uma relação com o projeto original usando o git, com isso terá um bloco denominado "upstream" com uma cópia do projeto original
+```
+git remote add upstream git@github.com:nfephp-org/sped-nfe.git
+```
+5. Antes de começar a codar sobre sua cópia sempre sincronize o projeto com o repositório principal
+```
+git fetch upstream
+git merge upstream/master
+git push
+```
+6. Agora pode codar sobre sua cópia da biblioteca
+7. Ao terminar, sempre teste suas alterações para garantir o funcionamento, para isso recomendo criar uma pasta denominada local na raiz, esta pasta não será enviada ao repositório.
+8. Sempre antes de fazer envio ao seu repositório execute a partir de raiz do projeto na sua maquina: 
+```
+composer phpcbf
+composer phpcs
+composer stan
+composer test
+```
+9. Se nenhum erro for indicado pos esses testes pode enviar ao seu repositório, lá serão executados os comando do GitHuib Actions
+10. Se passar nos testes, pode fazer um pull request para o projeto original.
+11. Se o PR for aceito não esqueça de repetir os comandos do passo 5.
+ 
 ## Change log
 
 Acompanhe o [CHANGELOG](CHANGELOG.md) para maiores informações sobre as alterações recentes.
