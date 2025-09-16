@@ -116,6 +116,10 @@ final class MakeDev
      */
     protected string $csrt;
     /**
+     * @var string
+     */
+    protected $cst_ibscbs;
+    /**
      * @var bool
      */
     protected bool $checkgtin = false;
@@ -945,7 +949,7 @@ final class MakeDev
             if (!empty($this->aICMSUFDest[$item])) {
                 $this->addTag($imposto, $this->aICMSUFDest[$item], 'Falta a tag det/imposto!');
             }
-            if ($this->schema > 9 && $this->crt == 3) {
+            if ($this->schema > 9) {
                 //IS => imposto - somente para PL_010 em diante
                 if (!empty($this->aIS[$item])) {
                     $this->addTag($imposto, $this->aIS[$item], 'Falta a tag det/imposto!');
@@ -1000,7 +1004,7 @@ final class MakeDev
             if (!empty($this->aObsItem[$item])) {
                 $this->addTag($det, $this->aObsItem[$item], 'Falta a tag det!');
             }
-            if ($this->schema > 9 && $this->crt == 3) {
+            if ($this->schema > 9) {
                 //vItem => det  ...  incluso tagProd() PL_010
                 //if (empty($this->aVItem[$item])) {
                 //não foi passado o vItem totalizando os valores a serem processados
@@ -1563,7 +1567,7 @@ final class MakeDev
                 $this->addTag($total, $this->ISTot);
             }
             //Totalizador do IBSCBS
-            if (empty($this->IBSCBSTot)) {
+            if (empty($this->IBSCBSTot) && !empty($this->cst_ibscbs)) {
                 //não foi informado o total do IBSCBS, obter do calculado
                 $ib = [
                     'vBCIBSCBS',
