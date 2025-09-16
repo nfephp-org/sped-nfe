@@ -14,6 +14,7 @@ use DOMException;
  * @property array $aICMSPart
  * @property array $aICMSST
  * @property array $aICMSUFDest
+ * @property int $indDeduzDeson
  * @method equilizeParameters($std, $possible)
  * @method conditionalNumberFormatting($value, $decimal = 2)
  */
@@ -90,6 +91,7 @@ trait TraitTagDetICMS
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = "N01 <ICMSxx> Item: $std->item -";
+        $this->indDeduzDeson = $std->indDeduzDeson ?? 0;
         $icms = null;
         switch ($std->CST) {
             case '00':

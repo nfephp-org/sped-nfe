@@ -120,6 +120,10 @@ final class MakeDev
      */
     protected $cst_ibscbs;
     /**
+     * @var int
+     */
+    protected $indDeduzDeson = 0;
+    /**
      * @var bool
      */
     protected bool $checkgtin = false;
@@ -1055,7 +1059,7 @@ final class MakeDev
 
         $this->stdTot->vNF = $this->stdTot->vProd
             - $this->stdTot->vDesc
-            - $this->stdTot->vICMSDeson
+            - $this->stdTot->vICMSDeson * $this->indDeduzDeson
             + $this->stdTot->vST
             + $this->stdTot->vFCPST
             + $this->stdTot->vICMSMonoReten
