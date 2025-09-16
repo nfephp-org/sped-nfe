@@ -148,7 +148,7 @@ O processo de documentação ainda está no inicio, mas já existem alguns docum
 
 Para contribuir com correções de BUGS, melhoria no código, documentação, elaboração de testes ou qualquer outro auxílio técnico e de programação por favor observe o [CONTRIBUTING](CONTRIBUTING.md) e o  [Código de Conduta](CONDUCT.md) para maiores detalhes.
 
-### Etapas para contribuir no Código
+### Etapas para contribuir com Código
 
 1. Faça um fork do projeto em sua conta no GitHub
 2. Baixe a biblioteca na sua maquina de desenvolvimento a partir do seu próprio fork
