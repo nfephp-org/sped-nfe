@@ -2,9 +2,15 @@
 
 namespace NFePHP\NFe\Traits;
 
+use NFePHP\Common\DOMImproved as Dom;
 use stdClass;
 use DOMElement;
 
+/**
+ * @property Dom $dom
+ * @property DOMElement $retirada
+ * @method equilizeParameters($std, $possible)
+ */
 trait TraitTagRetirada
 {
     /**
@@ -35,20 +41,23 @@ trait TraitTagRetirada
         $std = $this->equilizeParameters($std, $possible);
         $identificador = 'F01 <retirada> - ';
         $this->retirada = $this->dom->createElement("retirada");
-        $this->dom->addChild(
-            $this->retirada,
-            "CNPJ",
-            $std->CNPJ,
-            false,
-            $identificador . "CNPJ do Cliente da Retirada"
-        );
-        $this->dom->addChild(
-            $this->retirada,
-            "CPF",
-            $std->CPF,
-            false,
-            $identificador . "CPF do Cliente da Retirada"
-        );
+        if (!empty($std->CNPJ)) {
+            $this->dom->addChild(
+                $this->retirada,
+                "CNPJ",
+                $std->CNPJ,
+                false,
+                $identificador . "CNPJ do Cliente da Retirada"
+            );
+        } elseif (!empty($std->CPF)) {
+            $this->dom->addChild(
+                $this->retirada,
+                "CPF",
+                $std->CPF,
+                false,
+                $identificador . "CPF do Cliente da Retirada"
+            );
+        }
         $this->dom->addChild(
             $this->retirada,
             "xNome",

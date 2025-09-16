@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by sas-software@procergs.rs.gov.br (PROCERGS) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/nfe" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" targetNamespace="http://www.portalfiscal.inf.br/nfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="tiposBasico_v1.03.xsd"/>
+	<xs:element name="detEvento">
+		<xs:annotation>
+			<xs:documentation>Informações do Evento de Solicitação de Apropriação de crédito presumido</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="descEvento">
+					<xs:annotation>
+						<xs:documentation>Descrição do Evento de Solicitação de Apropriação de crédito presumido</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="Solicitação de Apropriação de crédito presumido"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="cOrgaoAutor" type="TCodUfIBGE">
+					<xs:annotation>
+						<xs:documentation>Código do Órgão Autor do Evento. Informar o Código da UF para este Evento.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="tpAutor">
+					<xs:annotation>
+						<xs:documentation>Informar 1=Empresa emitente
+													Valores: 1=Empresa Emitente, 2=Empresa destinatária; 3=Empresa; 5=Fisco;6=RFB; 9=Outros Órgãos;
+						</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="1"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="verAplic" type="TVerAplic">
+					<xs:annotation>
+						<xs:documentation>Versão do Aplicativo que recebeu o Evento</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="gCredPres" maxOccurs="990">
+					<xs:annotation>
+						<xs:documentation>Informações de crédito presumido por item</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="vBC" type="TDec_1302">
+								<xs:annotation>
+									<xs:documentation>Valor do base de cálculo do item</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="gIBS" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="cCredPres">
+											<xs:annotation>
+												<xs:documentation>Usar tabela Cred Presumido, para o emitente da nota.</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:whiteSpace value="preserve"/>
+													<xs:pattern value="[0-9]{2}"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="pCredPres" type="TDec_0302_04">
+											<xs:annotation>
+												<xs:documentation>Percentual do Crédito Presumido</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="vCredPres" type="TDec1302">
+											<xs:annotation>
+												<xs:documentation>Valor do Crédito Presumido</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="gCBS" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="cCredPres">
+											<xs:annotation>
+												<xs:documentation>Usar tabela Cred Presumido, para o emitente da nota.</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:whiteSpace value="preserve"/>
+													<xs:pattern value="[0-9]{2}"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="pCredPres" type="TDec_0302_04">
+											<xs:annotation>
+												<xs:documentation>Percentual do Crédito Presumido</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="vCredPres" type="TDec1302">
+											<xs:annotation>
+												<xs:documentation>Valor do Crédito Presumido</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="nItem" type="TnItem" use="required">
+							<xs:annotation>
+								<xs:documentation>Corresponde ao atributo “nItem” do elemento “det” da NF-e de importação </xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="versao">
+				<xs:annotation>
+					<xs:documentation>Versão do evento de Irregularidade Fiscal</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:whiteSpace value="preserve"/>
+						<xs:enumeration value="1.00"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+		<xs:unique name="pk_nItem">
+			<xs:selector xpath="./*"/>
+			<xs:field xpath="@nItem"/>
+		</xs:unique>
+	</xs:element>
+</xs:schema>

@@ -2,9 +2,15 @@
 
 namespace NFePHP\NFe\Traits;
 
+use NFePHP\Common\DOMImproved as Dom;
 use stdClass;
 use DOMElement;
 
+/**
+ * @property Dom $dom
+ * @property DOMElement $entrega
+ * @method equilizeParameters($std, $possible)
+ */
 trait TraitTagEntrega
 {
     /**
@@ -35,20 +41,23 @@ trait TraitTagEntrega
         $std = $this->equilizeParameters($std, $possible);
         $identificador = 'G01 <entrega> - ';
         $this->entrega = $this->dom->createElement("entrega");
-        $this->dom->addChild(
-            $this->entrega,
-            "CNPJ",
-            $std->CNPJ,
-            false,
-            $identificador . "CNPJ do Cliente da Entrega"
-        );
-        $this->dom->addChild(
-            $this->entrega,
-            "CPF",
-            $std->CPF,
-            false,
-            $identificador . "CPF do Cliente da Entrega"
-        );
+        if (!empty($std->CNPJ)) {
+            $this->dom->addChild(
+                $this->entrega,
+                "CNPJ",
+                $std->CNPJ,
+                false,
+                $identificador . "CNPJ do Cliente da Entrega"
+            );
+        } elseif (!empty($std->CPF)) {
+            $this->dom->addChild(
+                $this->entrega,
+                "CPF",
+                $std->CPF,
+                false,
+                $identificador . "CPF do Cliente da Entrega"
+            );
+        }
         $this->dom->addChild(
             $this->entrega,
             "xNome",

@@ -2,20 +2,19 @@
 
 namespace NFePHP\NFe\Traits;
 
-use NFePHP\Common\DOMImproved;
+use NFePHP\Common\DOMImproved as Dom;
 use NFePHP\Common\Exception\RuntimeException;
 use stdClass;
 use DOMElement;
 use NFePHP\Common\Strings;
 
 /**
- * @method equilizeParameters($std, $possible)
- * @property DOMImproved $dom
+ * @property Dom $dom
  * @property int $mod
  * @property int $tpAmb
  * @property DOMElement $dest
+ * @method equilizeParameters($std, $possible)
  */
-
 trait TraitTagDest
 {
     /**
@@ -39,7 +38,6 @@ trait TraitTagDest
         $identificador = 'E01 <dest> - ';
         $flagNome = true; //marca se xNome é ou não obrigatório
         $temIE = !empty($std->IE) && $std->IE !== 'ISENTO'; // Tem inscrição municipal
-        $this->dest = $this->dom->createElement("dest");
         if (!$temIE && $std->indIEDest == 1) {
             $std->indIEDest = 2;
         }
@@ -50,6 +48,7 @@ trait TraitTagDest
             }
         }
         $xNome = $std->xNome;
+        $this->dest = $this->dom->createElement("dest");
         if ($this->tpAmb == '2' && !empty($xNome)) {
             $xNome = 'NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
             //a exigência do CNPJ 99999999000191 não existe mais
@@ -60,7 +59,7 @@ trait TraitTagDest
             $this->dom->addChild(
                 $this->dest,
                 "CNPJ",
-                Strings::onlyNumbers($std->CNPJ),
+                $std->CNPJ,
                 true,
                 $identificador . "CNPJ do destinatário"
             );
@@ -86,7 +85,7 @@ trait TraitTagDest
         $this->dom->addChild(
             $this->dest,
             "xNome",
-            substr(trim($xNome), 0, 60),
+            $xNome,
             $flagNome, //se mod 55 true ou mod 65 false
             $identificador . "Razão Social ou nome do destinatário"
         );
@@ -116,14 +115,14 @@ trait TraitTagDest
         $this->dom->addChild(
             $this->dest,
             "IM",
-            Strings::onlyNumbers($std->IM),
+            $std->IM,
             false,
             $identificador . "Inscrição Municipal do Tomador do Serviço do destinatário"
         );
         $this->dom->addChild(
             $this->dest,
             "email",
-            substr(trim($std->email), 0, 60),
+            $std->email,
             false,
             $identificador . "Email do destinatário"
         );
@@ -234,11 +233,13 @@ trait TraitTagDest
             false,
             $identificador . "Telefone do Endereço do Destinatário"
         );
-        $node = $this->dest->getElementsByTagName("indIEDest")->item(0);
-        if (!isset($node)) {
-            $node = $this->dest->getElementsByTagName("IE")->item(0);
+        if (!empty($this->dest)) {
+            $node = $this->dest->getElementsByTagName("indIEDest")->item(0);
+            if (!isset($node)) {
+                $node = $this->dest->getElementsByTagName("IE")->item(0);
+            }
+            $this->dest->insertBefore($this->enderDest, $node);
         }
-        $this->dest->insertBefore($this->enderDest, $node);
         return $this->enderDest;
     }
 }

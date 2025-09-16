@@ -30,4 +30,7 @@ parameters:
 			count: 1
 			path: src/Exception/DocumentsException.php
 
-
+		-
+			message: "#^Access to an undefined property object\\:\\:\\$item\\.$#"
+			count: 1
+			path: src/Traits/TraitTagDet.php
