@@ -82,7 +82,8 @@ trait TraitTagIde
         }
         if (empty($std->dhEmi)) {
             $dhEmi = null;
-            if (empty($std->cUF) || !in_array($std->cUF, [
+            if (
+                empty($std->cUF) || !in_array($std->cUF, [
                     12, 27, 13, 16, 29, 23, 53, 32, 52, 21, 31, 50, 51,
                     15, 25, 26, 22, 41, 33, 24, 11, 14, 43, 42, 28, 35, 17
                 ])
