@@ -103,7 +103,7 @@ trait TraitTagDetIBSCBS
             "$identificador Código de Classificação Tributária do IBS e CBS (cClassTrib)"
         );
         //gIBSCBS é opcional e também é um choice com IBSCBSMono
-        if (!empty($std->vBC)) {
+        if (!is_null($std->vBC) && is_numeric($std->vBC)) {
             $identificador = "UB12 <IBSCBS/gIBSCBS> -";
             $gIBSCBS = $this->dom->createElement("gIBSCBS");
             $this->dom->addChild(
