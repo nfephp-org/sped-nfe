@@ -81,6 +81,7 @@ trait TraitTagIde
             $std->cDV = 0;
         }
         if (empty($std->dhEmi)) {
+            $dhEmi = null;
             if (empty($std->cUF) || !in_array($std->cUF, [
                     12, 27, 13, 16, 29, 23, 53, 32, 52, 21, 31, 50, 51,
                     15, 25, 26, 22, 41, 33, 24, 11, 14, 43, 42, 28, 35, 17
@@ -88,9 +89,10 @@ trait TraitTagIde
             ) {
                 $this->errors[] = "$identificador Campo cUF incorreto !";
             } else {
-                $tz = TimeZoneByUF::get($std->cuf);
-                $std->dhEmi = (new DateTime('now', new DateTimeZone($tz)))->format('Y-m-d\TH:i:sP');
+                $tz = TimeZoneByUF::get($std->cUF);
+                $dhEmi = (new DateTime('now', new DateTimeZone($tz)))->format('Y-m-d\TH:i:sP');
             }
+            $std->dhEmi = $dhEmi;
         }
         if (!empty($std->dhSaiEnt) && !empty($std->dhEmi)) {
             $tze = substr($std->dhEmi, -5);
