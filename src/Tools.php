@@ -485,8 +485,10 @@ class Tools extends ToolsCommon
             ? "<CNPJ>{$std->CNPJ}</CNPJ>"
             : "<CPF>{$std->CPF}</CPF>";
         $tagAdic .= "</autXML>"
-            . "<tpAutorizacao>{$std->tpAutorizacao}</tpAutorizacao>"
-            . "<xCondUso>$xCondUso</xCondUso>";
+            . "<tpAutorizacao>{$std->tpAutorizacao}</tpAutorizacao>";
+        if ($std->tpAutorizacao == 1) {
+            $tagAdic .= "<xCondUso>$xCondUso</xCondUso>";
+        }
         return $this->sefazEvento(
             'AN',
             $std->chNFe,

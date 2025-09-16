@@ -243,7 +243,7 @@ class ToolsTest extends NFeTestCase
         $std->tpAutor = 1;
         $std->verAplic = 2;
         $std->CNPJ = '88880563000162';
-        $std->tpAutorizacao = 0;
+        $std->tpAutorizacao = 1;
         $std->chNFe = '35220605730928000145550010000048661583302923';
         $std->nSeqEvento = 1;
         $dhEvento = new \DateTime('2024-05-31T13:45:41-03:00');
