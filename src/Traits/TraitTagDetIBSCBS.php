@@ -138,14 +138,14 @@ trait TraitTagDetIBSCBS
                 $this->dom->addChild(
                     $gDif,
                     "pDif",
-                    $this->conditionalNumberFormatting($std->gIBSUF_pDif, 4),
+                    $this->conditionalNumberFormatting($std->gIBSUF_pDif ?? 0, 4),
                     true,
                     "$identificador Percentual do diferimento (pDif)"
                 );
                 $this->dom->addChild(
                     $gDif,
                     "vDif",
-                    $this->conditionalNumberFormatting($std->gIBSUF_vDif),
+                    $this->conditionalNumberFormatting($std->gIBSUF_vDif ?? 0),
                     true,
                     "$identificador Valor do diferimento (vDif)"
                 );
@@ -176,7 +176,7 @@ trait TraitTagDetIBSCBS
                 $this->dom->addChild(
                     $gRed,
                     "pAliqEfet",
-                    $this->conditionalNumberFormatting($std->gIBSUF_pAliqEfet),
+                    $this->conditionalNumberFormatting($std->gIBSUF_pAliqEfet ?? 0),
                     true,
                     "$identificador Alíquota Efetiva do IBS de competência das UF "
                     . "que será aplicada a Base de Cálculo (pAliqEfet)"
@@ -214,7 +214,7 @@ trait TraitTagDetIBSCBS
                 $this->dom->addChild(
                     $gDif,
                     "vDif",
-                    $this->conditionalNumberFormatting($std->gIBSMun_vDif),
+                    $this->conditionalNumberFormatting($std->gIBSMun_vDif ?? 0),
                     true,
                     "$identificador Valor do diferimento (vDif)"
                 );
@@ -245,7 +245,7 @@ trait TraitTagDetIBSCBS
                 $this->dom->addChild(
                     $gRed,
                     "pAliqEfet",
-                    $this->conditionalNumberFormatting($std->gIBSMun_pAliqEfet),
+                    $this->conditionalNumberFormatting($std->gIBSMun_pAliqEfet ?? 0),
                     true,
                     "$identificador Alíquota Efetiva do IBS de competência das UF que será aplicada "
                     . "a Base de Cálculo (pAliqEfet)"
@@ -293,7 +293,7 @@ trait TraitTagDetIBSCBS
                 $this->dom->addChild(
                     $gDif,
                     "vDif",
-                    $this->conditionalNumberFormatting($std->gCBS_vDif),
+                    $this->conditionalNumberFormatting($std->gCBS_vDif ?? 0),
                     false,
                     "$identificador Valor do diferimento (vDif)"
                 );
@@ -324,7 +324,7 @@ trait TraitTagDetIBSCBS
                 $this->dom->addChild(
                     $gRed,
                     "pAliqEfet",
-                    $this->conditionalNumberFormatting($std->gCBS_pAliqEfet),
+                    $this->conditionalNumberFormatting($std->gCBS_pAliqEfet ?? 0),
                     true,
                     "$identificador Alíquota Efetiva do IBS de competência das UF que será aplicada "
                     . "a Base de Cálculo (pAliqEfet)"
