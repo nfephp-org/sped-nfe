@@ -108,9 +108,9 @@ final class MakeDev
      */
     protected string $version;
     /**
-     * @var int
+     * @var string
      */
-    protected int $mod = 55;
+    protected string $mod = '55';
     /**
      * @var string
      */

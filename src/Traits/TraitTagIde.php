@@ -202,13 +202,17 @@ trait TraitTagIde
         );
         //PL_010 NT_2025.002v1.01
         if ($this->schema > 9) {
-            $this->dom->addChild(
-                $ide,
-                "cMunFGIBS",
-                $std->cMunFGIBS,
-                false,
-                $identificador . "Código do Município de Ocorrência do Fato Gerador do IBS/CSB"
-            );
+            if ($std->indPres == 5) {
+                //Campo preenchido somente quando “indPres = 5 (Operação presencial, fora do estabelecimento) ”,
+                //e não tiver endereço do destinatário (Grupo: E05) ou local de entrega (Grupo: G01)
+                $this->dom->addChild(
+                    $ide,
+                    "cMunFGIBS",
+                    !empty($std->cMunFGIBS) ? $std->cMunFGIBS : null,
+                    false,
+                    $identificador . "Código do Município de Ocorrência do Fato Gerador do IBS/CSB"
+                );
+            }
         }
         $this->dom->addChild(
             $ide,
@@ -247,20 +251,23 @@ trait TraitTagIde
         );
         //PL_010 NT_2025.002v1.01
         if ($this->schema > 9) {
-            $this->dom->addChild(
-                $ide,
-                "tpNFDebito",
-                $std->tpNFDebito,
-                false,
-                $identificador . "Tipo de Nota de Débito"
-            );
-            $this->dom->addChild(
-                $ide,
-                "tpNFCredito",
-                $std->tpNFCredito,
-                false,
-                $identificador . "Tipo de Nota de Crédito"
-            );
+            if (!empty($std->tpNFDebito)) {
+                $this->dom->addChild(
+                    $ide,
+                    "tpNFDebito",
+                    $std->tpNFDebito,
+                    false,
+                    $identificador . "Tipo de Nota de Débito"
+                );
+            } elseif (!empty($std->tpNFCredito)) {
+                $this->dom->addChild(
+                    $ide,
+                    "tpNFCredito",
+                    $std->tpNFCredito,
+                    false,
+                    $identificador . "Tipo de Nota de Crédito"
+                );
+            }
         }
         $this->dom->addChild(
             $ide,

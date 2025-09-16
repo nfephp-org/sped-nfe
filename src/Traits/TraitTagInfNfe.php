@@ -29,7 +29,10 @@ trait TraitTagInfNfe
         $chave = null;
         $this->version = (string) $std->versao;
         if (!empty($std->Id)) {
-            $chave = substr($std->Id, 3, 44);
+            $chave = $std->Id;
+            if (substr($std->Id, 0, 3) == 'NFe') {
+                $chave = substr($std->Id, 3, 44);
+            }
         }
         $this->infNFe = $this->dom->createElement("infNFe");
         $this->infNFe->setAttribute("Id", 'NFe' . $chave);
