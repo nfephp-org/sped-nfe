@@ -963,7 +963,6 @@ final class MakeDev
                     $ibscbs = $this->aIBSCBS[$item];
                     //existe o grupo gIBSCBS no node IBSCBS ?
                     $gIBSCBS = $ibscbs->getElementsByTagName("gIBSCBS")->item(0);
-
                     if (!empty($this->aGTribRegular[$item]) && !empty($gIBSCBS)) {
                         //add gTribRegular
                         $gIBSCBS->appendChild($this->aGTribRegular[$item]);
@@ -972,11 +971,14 @@ final class MakeDev
                         $gIBSCBS->appendChild($this->aIBSCredPres[$item]);
                     }
                     if (!empty($this->aCBSCredPres[$item]) && !empty($gIBSCBS)) {
-                        $ibscbs->appendChild($this->aCBSCredPres[$item]);
+                        $gIBSCBS->appendChild($this->aCBSCredPres[$item]);
+                    }
+                    if (!empty($this->aGTribCompraGov[$item]) && !empty($gIBSCBS)) {
+                        $gIBSCBS->appendChild($this->aGTribCompraGov[$item]);
                     }
                     //CHICE gIBSCBS, gIBSCBSMono, gTranfCred
                     //existe o grupo gIBSCBS no node IBSCBS ?
-                    $gIBSCBS = $ibscbs->getElementsByTagName("gIBSCBS")->item(0);
+                    ///$gIBSCBS = $ibscbs->getElementsByTagName("gIBSCBS")->item(0);
                     if (!empty($gIBSCBS)) {
                         //add gIBSCBS ao node imposto
                         $this->addTag($ibscbs, $gIBSCBS, 'Falta a tag IBSCBS!');
@@ -984,7 +986,7 @@ final class MakeDev
                         //não existe gIBSCBS, então add gIBSCBSMono
                         $this->addTag($ibscbs, $this->aGIBSCBSMono[$item], 'Falta a tag IBSCBS!');
                     } elseif (!empty($this->aGTransfCred[$item])) {
-                        //gTranfCred
+                        //não existe gIBSCBS, nem gIBSCBSMono então add gTransfCred
                         $this->addTag($ibscbs, $this->aGTransfCred[$item], 'Falta a tag IBSCBS!');
                     }
                     //gCredPresIBSZFM
