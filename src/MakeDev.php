@@ -972,7 +972,7 @@ final class MakeDev
                         $gIBSCBS->appendChild($this->aIBSCredPres[$item]);
                     }
                     if (!empty($this->aCBSCredPres[$item]) && !empty($gIBSCBS)) {
-                        $ibscbs->appendChild($this->aCBSCredPres[$item]);
+                        $gIBSCBS->appendChild($this->aCBSCredPres[$item]);
                     }
                     //CHICE gIBSCBS, gIBSCBSMono, gTranfCred
                     //existe o grupo gIBSCBS no node IBSCBS ?
