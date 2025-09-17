@@ -82,7 +82,7 @@ trait TraitTagDetIBSCBS
         $identificador = "UB12 <IBSCBS> -";
         //totalizador do IBS e CBS
         isset($std->vBC) ? $this->stdIBSCBSTot->vBCIBSCBS += $std->vBC : null;
-        isset($std->gIBSUF_pDif) ? $this->stdIBSCBSTot->gIBSUF->vDif += $std->gIBSUF_pDif : null;
+        isset($std->gIBSUF_vDif) ? $this->stdIBSCBSTot->gIBSUF->vDif += $std->gIBSUF_vDif : null;
         isset($std->gIBSUF_vDevTrib) ? $this->stdIBSCBSTot->gIBSUF->vDevTrib += $std->gIBSUF_vDevTrib : null;
         isset($std->gIBSUF_vIBSUF) ? $this->stdIBSCBSTot->gIBSUF->vIBSUF += $std->gIBSUF_vIBSUF : null;
         isset($std->gIBSUF_vIBSUF) ? $this->stdIBSCBSTot->vIBS += $std->gIBSUF_vIBSUF : null;
