@@ -843,7 +843,7 @@ trait TraitTagDetIBSCBS
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = "UB106 <gTranfCred> -";
-        $gTrans = $this->dom->createElement("gTranfCred");
+        $gTrans = $this->dom->createElement("gTransfCred");
         $this->dom->addChild(
             $gTrans,
             "vIBS",
