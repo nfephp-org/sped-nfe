@@ -391,7 +391,7 @@ trait TraitTagDetIBSCBS
         $this->dom->addChild(
             $gTribRegular,
             "pAliqEfetRegIBSUF",
-            $this->conditionalNumberFormatting($std->pAliqEfetRegIBSUF / 100, 4),
+            $this->conditionalNumberFormatting($std->pAliqEfetRegIBSUF, 4),
             true,
             "$identificador Alíquota do IBS da UF (pAliqEfetRegIBSUF)"
         );
@@ -405,7 +405,7 @@ trait TraitTagDetIBSCBS
         $this->dom->addChild(
             $gTribRegular,
             "pAliqEfetRegIBSMun",
-            $this->conditionalNumberFormatting($std->pAliqEfetRegIBSMun / 100, 4),
+            $this->conditionalNumberFormatting($std->pAliqEfetRegIBSMun, 4),
             true,
             "$identificador Alíquota do IBS do Município (pAliqEfetRegIBSMun)"
         );
@@ -419,7 +419,7 @@ trait TraitTagDetIBSCBS
         $this->dom->addChild(
             $gTribRegular,
             "pAliqEfetRegCBS",
-            $this->conditionalNumberFormatting($std->pAliqEfetRegCBS / 100, 4),
+            $this->conditionalNumberFormatting($std->pAliqEfetRegCBS, 4),
             true,
             "$identificador Alíquota da CBS (pAliqEfetRegCBS)"
         );
