@@ -886,14 +886,16 @@ trait TraitTagDetIBSCBS
             "$identificador Tipo de classificação de acordo com o art. 450, paragrafo 1, da LC 214/25 para o "
                 . "cálculo do crédito presumido na ZFM (tpCredPresIBSZFM)"
         );
-        $this->dom->addChild(
-            $cred,
-            "vCredPresIBSZFM",
-            $std->vCredPresIBSZFM,
-            true,
-            "$identificador Valor do crédito presumido calculado sobre o saldo devedor "
-                . "apurado (vCredPresIBSZFM)"
-        );
+        if (!empty($std->vCredPresIBSZFM)) {
+            $this->dom->addChild(
+                $cred,
+                "vCredPresIBSZFM",
+                $std->vCredPresIBSZFM,
+                true,
+                "$identificador Valor do crédito presumido calculado sobre o saldo devedor "
+                    . "apurado (vCredPresIBSZFM)"
+            );
+        }
         $this->aGCredPresIBSZFM[$std->item] = $cred;
         return $cred;
     }
