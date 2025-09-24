@@ -39,6 +39,10 @@ class Tools
      */
     public $config;
     /**
+     * @var int
+     */
+    public $cUF;
+    /**
      * Path to storage folder
      * @var string
      */
@@ -200,6 +204,7 @@ class Tools
         } else {
             $this->contingency = $contingency;
         }
+        $this->cUF = UFList::getCodeByUF($this->config->siglaUF);
     }
 
     /**
