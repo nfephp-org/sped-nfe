@@ -180,7 +180,7 @@ trait TraitTagDetIBSCBS
                 $this->dom->addChild(
                     $gRed,
                     "pAliqEfet",
-                    $this->conditionalNumberFormatting($std->gIBSUF_pAliqEfet ?? 0),
+                    $this->conditionalNumberFormatting($std->gIBSUF_pAliqEfet ?? 0, 4),
                     true,
                     "$identificador Alíquota Efetiva do IBS de competência das UF "
                     . "que será aplicada a Base de Cálculo (pAliqEfet)"
@@ -249,7 +249,7 @@ trait TraitTagDetIBSCBS
                 $this->dom->addChild(
                     $gRed,
                     "pAliqEfet",
-                    $this->conditionalNumberFormatting($std->gIBSMun_pAliqEfet ?? 0),
+                    $this->conditionalNumberFormatting($std->gIBSMun_pAliqEfet ?? 0, 4),
                     true,
                     "$identificador Alíquota Efetiva do IBS de competência das UF que será aplicada "
                     . "a Base de Cálculo (pAliqEfet)"
@@ -328,7 +328,7 @@ trait TraitTagDetIBSCBS
                 $this->dom->addChild(
                     $gRed,
                     "pAliqEfet",
-                    $this->conditionalNumberFormatting($std->gCBS_pAliqEfet ?? 0),
+                    $this->conditionalNumberFormatting($std->gCBS_pAliqEfet ?? 0, 4),
                     true,
                     "$identificador Alíquota Efetiva do IBS de competência das UF que será aplicada "
                     . "a Base de Cálculo (pAliqEfet)"
