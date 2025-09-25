@@ -1474,7 +1474,7 @@ class Tools extends ToolsCommon
                 break;
             case 110001:
                 $std->alias = 'envEvento';
-                $std->desc = 'Evento de Cancelamento';
+                $std->desc = 'Cancelamento de Evento';
                 break;
             case 112110:
                 $std->alias = 'envEvento';
