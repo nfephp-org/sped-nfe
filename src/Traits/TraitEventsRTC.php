@@ -41,7 +41,7 @@ trait TraitEventsRTC
             . "<indQuitacao>1</indQuitacao>";
 
         return $this->sefazEvento(
-            $this->config->siglaUF,
+            'SVRS',
             $std->chNFe,
             $tpEvento,
             $std->nSeqEvento ?? 1,
@@ -123,7 +123,7 @@ trait TraitEventsRTC
         $tagAdic .= $gcred;
 
         return $this->sefazEvento(
-            $this->config->siglaUF,
+            'SVRS',
             $std->chNFe,
             $tpEvento,
             $std->nSeqEvento ?? 1,
@@ -190,7 +190,7 @@ trait TraitEventsRTC
             $tagAdic .= $gc;
         }
         return $this->sefazEvento(
-            $this->config->siglaUF,
+            'SVRS',
             $std->chNFe,
             $tpEvento,
             $std->nSeqEvento ?? 1,
@@ -227,7 +227,7 @@ trait TraitEventsRTC
             . "<verAplic>{$verAplic}</verAplic>"
             . "<indAceitacao>1</indAceitacao>";
         return $this->sefazEvento(
-            $this->config->siglaUF,
+            'SVRS',
             $std->chNFe,
             $tpEvento,
             $std->nSeqEvento ?? 1,
@@ -288,7 +288,7 @@ trait TraitEventsRTC
             $tagAdic .= $gc;
         }
         return $this->sefazEvento(
-            $this->config->siglaUF,
+            'SVRS',
             $std->chNFe,
             $tpEvento,
             $std->nSeqEvento ?? 1,
@@ -351,7 +351,7 @@ trait TraitEventsRTC
             $tagAdic .= $gc;
         }
         return $this->sefazEvento(
-            $this->config->siglaUF,
+            'SVRS',
             $std->chNFe,
             $tpEvento,
             $std->nSeqEvento ?? 1,
@@ -402,7 +402,7 @@ trait TraitEventsRTC
             $tagAdic .= $cred;
         }
         return $this->sefazEvento(
-            $this->config->siglaUF,
+            'SVRS',
             $std->chNFe,
             $tpEvento,
             $std->nSeqEvento ?? 1,
@@ -440,7 +440,7 @@ trait TraitEventsRTC
             . "<verAplic>{$verAplic}</verAplic>"
             . "<indAceitacao>1</indAceitacao>";
         return $this->sefazEvento(
-            $this->config->siglaUF,
+            'SVRS',
             $std->chNFe,
             $tpEvento,
             $std->nSeqEvento ?? 1,
@@ -478,7 +478,7 @@ trait TraitEventsRTC
             . "<verAplic>{$verAplic}</verAplic>"
             . "<indAceitacao>1</indAceitacao>";
         return $this->sefazEvento(
-            $this->config->siglaUF,
+            'SVRS',
             $std->chNFe,
             $tpEvento,
             $std->nSeqEvento ?? 1,
@@ -509,7 +509,7 @@ trait TraitEventsRTC
             . "<tpEventoAut>{$std->tpEventoAut}</tpEventoAut>"
             . "<nProtEvento>{$std->nProtEvento}</nProtEvento>";
         return $this->sefazEvento(
-            $this->config->siglaUF,
+            'SVRS',
             $std->chNFe,
             $tpEvento,
             $std->nSeqEvento ?? 1,
@@ -554,7 +554,7 @@ trait TraitEventsRTC
             $tagAdic .= $gc;
         }
         return $this->sefazEvento(
-            $this->config->siglaUF,
+            'SVRS',
             $std->chNFe,
             $tpEvento,
             $std->nSeqEvento ?? 1,
@@ -602,7 +602,7 @@ trait TraitEventsRTC
             $tagAdic .= $gc;
         }
         return $this->sefazEvento(
-            $this->config->siglaUF,
+            'SVRS',
             $std->chNFe,
             $tpEvento,
             $std->nSeqEvento ?? 1,
@@ -651,7 +651,7 @@ trait TraitEventsRTC
             $tagAdic .= $gc;
         }
         return $this->sefazEvento(
-            $this->config->siglaUF,
+            'SVRS',
             $std->chNFe,
             $tpEvento,
             $std->nSeqEvento ?? 1,
@@ -696,7 +696,7 @@ trait TraitEventsRTC
             $tagAdic .= $gc;
         }
         return $this->sefazEvento(
-            $this->config->siglaUF,
+            'SVRS',
             $std->chNFe,
             $tpEvento,
             $std->nSeqEvento ?? 1,

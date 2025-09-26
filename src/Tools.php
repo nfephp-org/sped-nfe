@@ -1162,7 +1162,30 @@ class Tools extends ToolsCommon
         $sSeqEvento = str_pad((string)$nSeqEvento, 2, "0", STR_PAD_LEFT);
         $eventId = "ID" . $tpEvento . $chave . $sSeqEvento;
         //NT 2024.002 versão 1.00 - Maio 2024, comentário P08 elemento cOrgao
-        if (in_array($tpEvento, [self::EVT_CONCILIACAO, self::EVT_CANCELA_CONCILIACAO]) && $uf === 'SVRS') {
+        //NT N2025.002 versão 1.20 - Setembro 2025, 8.1 - Eventos
+        if (
+            in_array(
+                $tpEvento,
+                [
+                    self::EVT_CONCILIACAO,
+                    self::EVT_CANCELA_CONCILIACAO,
+                    112110,
+                    211110,
+                    211120,
+                    211128,
+                    211130,
+                    211140,
+                    211150,
+                    212110,
+                    212120,
+                    110001,
+                    112120,
+                    211124,
+                    112130,
+                    112140,
+                ]
+            ) && $uf === 'SVRS'
+        ) {
             $cOrgao = 92;
         } else {
             $cOrgao = UFList::getCodeByUF($uf);
@@ -1451,7 +1474,7 @@ class Tools extends ToolsCommon
                 break;
             case 110001:
                 $std->alias = 'envEvento';
-                $std->desc = 'Evento de Cancelamento';
+                $std->desc = 'Cancelamento de Evento';
                 break;
             case 112110:
                 $std->alias = 'envEvento';
