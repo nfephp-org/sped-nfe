@@ -202,6 +202,15 @@ class Parser
     }
 
     /**
+     * Create tag taggCompraGov [B31]
+     * B31|tpEnteGov|pRedutor|tpOperGov|
+     */
+    protected function b31Entity(stdClass $std): void
+    {
+        $this->make->taggCompraGov($std);
+    }
+
+    /**
      * Create tag nfref [BA]
      * BA|
      */
@@ -1352,6 +1361,16 @@ class Parser
     protected function w02Entity(stdClass $std): void
     {
         $this->make->tagICMSTot($std);
+    }
+
+    /**
+     * Cria tag IBS / CBS / IS [W03], belongs to [W02]
+     * W03|vIBS|vCBS|vIS|vBCIBSCBS|gIBS_vIBS|gIBS_vCredPres|gIBS_vCredPresCondSus|gIBSUF_vDif|gIBSUF_vDevTrib|gIBSUF_vIBSUF|gIBSMun_vDif|gIBSMun_vDevTrib|gIBSMun_vIBSMun|gCBS_vDif|gCBS_vDevTrib|gCBS_vCBS|gCBS_vCredPres|gCBS_vCredPresCondSus|gMono_vIBSMono|gMono_vCBSMono|gMono_vIBSMonoReten|gMono_vCBSMonoReten|gMono_vIBSMonoRet|gMono_vCBSMonoRet|
+     */
+    protected function w03Entity(stdClass $std): void
+    {
+        $this->make->tagISTot($std);
+        $this->make->tagIBSCBSTot($std);
     }
 
     protected function w04cEntity($std)
