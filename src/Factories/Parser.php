@@ -101,6 +101,8 @@ class Parser
      * @var stdClass|null
      */
     protected $stdTransporta;
+
+    protected $BB02RefNFe = [];
     /**
      * @var string
      */
@@ -298,11 +300,26 @@ class Parser
     }
 
     /**
+     * BB02|refNFe|
+     */
+    protected function bb02Entity(stdClass $std): void
+    {
+        $this->BB02RefNFe[] = (string) $std->refNFe;
+    }
+
+    /**
      * Load fields for tag emit [C]
      * C|XNome|XFant|IE|IEST|IM|CNAE|CRT|
      */
     protected function cEntity(stdClass $std): void
     {
+        if (count($this->BB02RefNFe) > 0) {
+            $ref = [
+                'refNfe' => $this->BB02RefNFe,
+            ];
+            $this->dom->taggPagAntecipado((object) $ref);
+            $this->BB02RefNFe = [];
+        }
         $this->stdEmit = $std;
         $this->stdEmit->CNPJ = null;
         $this->stdEmit->CPF = null;

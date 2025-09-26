@@ -11,6 +11,8 @@
     "BA14": "BA14|CPF|",
     "BA19": "B19|refCTe|",
     "BA20": "BA20|mod|nECF|nCOO|",
+    "BB": "BB|",
+    "BB02": "BB02|refNFe|",
     "C": "C|xNome|xFant|IE|IEST|IM|CNAE|CRT|",
     "C02": "C02|CNPJ|",
     "C02A": "C02a|CPF|",
