@@ -1090,7 +1090,7 @@ class MakeTest extends TestCase
         //$std->nGuia = '123456789'; //Obrigatório se houver guia 9 digitos, opcional caso contrario
 
         $element = $this->make->tagAgropecuarioDefensivo($std);
-        $this->validarCriacaoTag2($std, $element, 'agropecuario', ['nReceituario', 'CPFRespTec']);
+        $this->validarCriacaoTag2($std, $element, 'defensivo', ['nReceituario', 'CPFRespTec']);
     }
 
     public function test_tagagropecuario_guia(): void
@@ -1104,7 +1104,7 @@ class MakeTest extends TestCase
         $std->nGuia = '123456789'; //Obrigatório se houver guia 9 digitos, opcional caso contrario
 
         $element = $this->make->tagAgropecuarioGuia($std);
-        $this->validarCriacaoTag2($std, $element, 'agropecuario', ['tpGuia']);
+        $this->validarCriacaoTag2($std, $element, 'guiaTransito', ['tpGuia']);
     }
 
     private function validarCriacaoTag2(
