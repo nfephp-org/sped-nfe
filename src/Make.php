@@ -7791,10 +7791,8 @@ class Make
             "CPF do Responsável Técnico, emitente do receituário"
         );
         $this->aDefencivo[] = $def;
-        $agro = $this->dom->createElement("agropecuario");
-        $agro->appendChild($def);
         $this->flagAgro = true;
-        return $agro;
+        return $def;
     }
 
     /**
@@ -7843,10 +7841,8 @@ class Make
             "Número da Guia"
         );
         $this->agropecuarioGuia = $guia;
-        $agro = $this->dom->createElement("agropecuario");
-        $agro->appendChild($guia);
         $this->flagAgro = true;
-        return $agro;
+        return $guia;
     }
 
     /**
