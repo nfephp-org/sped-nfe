@@ -1,7 +1,7 @@
 {
     "NOTAFISCAL": "NOTAFISCAL|qtd|",
     "A": "A|versao|Id|pk_nItem|",
-    "B": "B|cUF|cNF|natOp|mod|serie|nNF|dhEmi|dhSaiEnt|tpNF|idDest|cMunFG|cMunFGIBS|tpImp|tpEmis|cDV|tpAmb|finNFe|indFinal|indPres|indIntermed|procEmi|verProc|dhCont|xJust|",
+    "B": "B|cUF|cNF|natOp|mod|serie|nNF|dhEmi|dhSaiEnt|tpNF|idDest|cMunFG|cMunFGIBS|tpNFDebito|tpNFCredito|tpImp|tpEmis|cDV|tpAmb|finNFe|indFinal|indPres|indIntermed|procEmi|verProc|dhCont|xJust|",
     "B31": "B31|tpEnteGov|pRedutor|tpOperGov|",
     "BA": "BA|",
     "BA02": "BA02|refNFe|",
