@@ -909,6 +909,35 @@ final class MakeDev
                 $prod->appendChild($this->aRECOPI[$item]);
             }
             $this->addTag($det, $prod, 'Falta a tag det!');
+            if (!empty($this->aCest[$item])) {
+                /** @var array<int, \DOMElement> $cests */
+                $cests = $this->aCest[$item];
+                foreach ($cests as $child) {
+                    //nó de referência para inserção (antes de cBenef|EXTIPI|CFOP)
+                    $node = $prod->getElementsByTagName("cBenef")->item(0);
+                    if (empty($node)) {
+                        $node = $prod->getElementsByTagName("EXTIPI")->item(0);
+                        if (empty($node)) {
+                            $node = $prod->getElementsByTagName("CFOP")->item(0);
+                        }
+                    }
+                    //CEST (obrigatório dentro do grupo informado)
+                    $cchild = $child->getElementsByTagName("CEST")->item(0);
+                    if (!empty($cchild) && !empty($node)) {
+                        $prod->insertBefore($cchild, $node);
+                    }
+                    //indEscala (opcional)
+                    $cchild = $child->getElementsByTagName("indEscala")->item(0);
+                    if (!empty($cchild) && !empty($node)) {
+                        $prod->insertBefore($cchild, $node);
+                    }
+                    //CNPJFab (opcional)
+                    $cchild = $child->getElementsByTagName("CNPJFab")->item(0);
+                    if (!empty($cchild) && !empty($node)) {
+                        $prod->insertBefore($cchild, $node);
+                    }
+                }
+            }
 
             //imposto => det
             $imposto = $this->dom->createElement("imposto");
