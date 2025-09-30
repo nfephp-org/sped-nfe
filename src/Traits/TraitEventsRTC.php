@@ -95,7 +95,7 @@ trait TraitEventsRTC
         $gcred = '';
         foreach ($std->itens as $item) {
             $bc = number_format($item->vBC, 2, '.', '');
-            $gcred = "<gCredPres><nItem>{$item->item}</nItem><vBC>{$bc}</vBC>";
+            $gcred .= "<gCredPres><nItem>{$item->item}</nItem><vBC>{$bc}</vBC>";
             if (!empty($item->gIBS)) {
                 $g = $item->gIBS;
                 $pc = number_format($g->pCredPres, 4, '.', '');
