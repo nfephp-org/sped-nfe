@@ -11,6 +11,7 @@ use NFePHP\NFe\Traits\TraitTagComb;
 use NFePHP\NFe\Traits\TraitTagCompra;
 use NFePHP\NFe\Traits\TraitTagDet;
 use NFePHP\NFe\Traits\TraitTagDetCOFINS;
+use NFePHP\NFe\Traits\TraitTagDetCEST;
 use NFePHP\NFe\Traits\TraitTagDetII;
 use NFePHP\NFe\Traits\TraitTagDetImposto;
 use NFePHP\NFe\Traits\TraitTagDetICMS;
@@ -63,6 +64,7 @@ final class MakeDev
     use TraitTagDetII;
     use TraitTagDetPIS;
     use TraitTagDetCOFINS;
+    use TraitTagDetCEST;
     use TraitTagDetIS;
     use TraitTagDetIBSCBS;
     use TraitTagComb;
@@ -602,6 +604,15 @@ final class MakeDev
         $this->stdIBSCBSTot->gMono->vCBSMonoReten = 0;
         $this->stdIBSCBSTot->gMono->vIBSMonoRet = 0;
         $this->stdIBSCBSTot->gMono->vCBSMonoRet = 0;
+    }
+
+    /**
+     * Getter para propriedades protegidas
+     * @param string $name
+     * @return mixed
+     */
+    public function __get($name) {
+        return $this->$name;
     }
 
     /**
