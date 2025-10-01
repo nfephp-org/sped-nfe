@@ -1133,6 +1133,7 @@ class Tools extends ToolsCommon
             112130 => ['versao' => '1.00', 'nome' => 'envEvento'],
             112140 => ['versao' => '1.00', 'nome' => 'envEvento'],
             211110 => ['versao' => '1.00', 'nome' => 'envEvento'],
+            211120 => ['versao' => '1.00', 'nome' => 'envEvento'],
             211128 => ['versao' => '1.00', 'nome' => 'envEvento'],
             211130 => ['versao' => '1.00', 'nome' => 'envEvento'],
             211140 => ['versao' => '1.00', 'nome' => 'envEvento'],
