@@ -174,8 +174,7 @@ trait TraitEventsRTC
             $vi = number_format($item->vIBS, 2, '.', '');
             $vc = number_format($item->vCBS, 2, '.', '');
             $qt = number_format($item->quantidade, 4, '.', '');
-            $gc = "<gConsumo>"
-                . "<nItem>{$item->item}</nItem>"
+            $gc = "<gConsumo nItem=\"{$item->item}\">"
                 . "<vIBS>{$vi}</vIBS>"
                 . "<vCBS>{$vc}</vCBS>"
                 . "<gControleEstoque>"
@@ -184,7 +183,7 @@ trait TraitEventsRTC
                 . "</gControleEstoque>"
                 . "<DFeReferenciado>"
                 . "<chaveAcesso>{$item->chave}</chaveAcesso>"
-                . "<nItem>{$item->nItem}</nItem>"
+                . "<nItemDFeRef>{$item->nItem}</nItemDFeRef>"
                 . "</DFeReferenciado>"
                 . "</gConsumo>";
             $tagAdic .= $gc;
