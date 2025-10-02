@@ -20,6 +20,7 @@ class ValidTXT
     public const LOCAL = "LOCAL";
     public const LOCAL_V12 = "LOCAL_V12";
     public const SEBRAE = "SEBRAE";
+    public const RTC = "RTC";
 
     /**
      * Loads structure of txt from json file in storage folder
@@ -30,9 +31,11 @@ class ValidTXT
     {
         $path = realpath(__DIR__ . "/../../storage");
         $comp = '';
-        if (strtoupper($baselayout) === 'SEBRAE') {
+        if (strtoupper($baselayout) === self::SEBRAE) {
             $comp = '_sebrae';
-        } elseif (strtoupper($baselayout) === 'LOCAL_V12') {
+        } elseif (strtoupper($baselayout) === self::RTC) {
+            $comp = '_rtc';
+        } elseif (strtoupper($baselayout) === self::LOCAL_V12) {
             $comp = '_v1.2';
         }
         $file = $path . '/txtstructure' . ($version * 100) . $comp . '.json';
