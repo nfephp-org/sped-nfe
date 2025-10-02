@@ -339,13 +339,12 @@ trait TraitEventsRTC
             $vi = number_format($item->vIBS, 2, '.', '');
             $vc = number_format($item->vCBS, 2, '.', '');
             $qtd = number_format($item->quantidade, 4, '.', '');
-            $gc = "<gConsumoComb>"
-                . "<nItem>{$item->item}</nItem>"
+            $gc = "<gConsumoComb nItem=\"{$item->item}\">"
                 . "<vIBS>{$vi}</vIBS>"
                 . "<vCBS>{$vc}</vCBS>"
                 . "<gControleEstoque>"
-                . "<qConsumo>{$qtd}</qConsumo>"
-                . "<uConsumo>{$item->unidade}</uConsumo>"
+                . "<qComb>{$qtd}</qComb>"
+                . "<uComb>{$item->unidade}</uComb>"
                 . "</gControleEstoque>"
                 . "</gConsumoComb>";
             $tagAdic .= $gc;
