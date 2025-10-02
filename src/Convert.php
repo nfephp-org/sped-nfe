@@ -25,6 +25,7 @@ class Convert
     public const LOCAL = "LOCAL";
     public const LOCAL_V12 = "LOCAL_V12";
     public const SEBRAE = "SEBRAE";
+    public const RTC = "RTC";
 
     protected $txt;
     protected $dados;
