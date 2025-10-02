@@ -389,12 +389,11 @@ trait TraitEventsRTC
             . "<tpAutor>2</tpAutor>"  //2=Empresa destinatária.
             . "<verAplic>{$verAplic}</verAplic>";
         foreach ($std->itens as $item) {
-            $vi = number_format($item->vIBS, 2, '.', '');
-            $vc = number_format($item->vCBS, 2, '.', '');
-            $cred = "<gCredito>"
-                . "<nItem>{$item->item}</nItem>"
-                . "<vIBS>{$vi}</vIBS>"
-                . "<vCBS>{$vc}</vCBS>"
+            $vi = number_format($item->vCredIBS, 2, '.', '');
+            $vc = number_format($item->vCredCBS, 2, '.', '');
+            $cred = "<gCredito nItem=\"{$item->item}\">"
+                . "<vCredIBS>{$vi}</vCredIBS>"
+                . "<vCredCBS>{$vc}</vCredCBS>"
                 . "</gCredito>";
             $tagAdic .= $cred;
         }
