@@ -1,9 +1,10 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/debian
 {
-    "name": "Ubuntu - PHP 7.4",
+    "name": "Debian - PHP 7.4",
     // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-    "image": "mcr.microsoft.com/devcontainers/php:7.4",
+    // "image": "mcr.microsoft.com/devcontainers/php:7.4",
+    "build": { "dockerfile": "Dockerfile" },
     // "features": {
     //     "ghcr.io/nils-geistmann/devcontainers-features/zsh:0": {
     //         "setLocale": true,
