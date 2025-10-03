@@ -22,7 +22,6 @@
     "customizations": {
         "vscode": {
             "extensions": [
-                "streetsidesoftware.code-spell-checker",
                 "bmewburn.vscode-intelephense-client",
                 "xdebug.php-debug",
                 "xdebug.php-pack",
@@ -30,7 +29,7 @@
                 "PKief.material-icon-theme"
             ]
         }
-    },
+    }
     // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
     // "remoteUser": "root"
 }
