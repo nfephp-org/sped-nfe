@@ -17,15 +17,20 @@
     // Features to add to the dev container. More info: https://containers.dev/features.
     // "features": {},
     // Use 'forwardPorts' to make a list of ports inside the container available locally.
-    // "forwardPorts": [],
+    "forwardPorts": [9000],
     // Configure tool-specific properties.
-    // "customizations": {
-    //     "vscode": {
-    //         "extensions": [
-    //             "streetsidesoftware.code-spell-checker"
-    //         ]
-    //     }
-    // },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "streetsidesoftware.code-spell-checker",
+                "bmewburn.vscode-intelephense-client",
+                "xdebug.php-debug",
+                "xdebug.php-pack",
+                "zobo.php-intellisense",
+                "PKief.material-icon-theme"
+            ]
+        }
+    },
     // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
     // "remoteUser": "root"
 }
