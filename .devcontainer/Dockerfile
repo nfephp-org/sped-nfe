@@ -1,5 +1,5 @@
 FROM mcr.microsoft.com/devcontainers/php:7.4
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
