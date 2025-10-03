@@ -1,0 +1,30 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/debian
+{
+    "name": "Ubuntu - PHP 7.4",
+    // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+    "image": "mcr.microsoft.com/devcontainers/php:7.4",
+    // "features": {
+    //     "ghcr.io/nils-geistmann/devcontainers-features/zsh:0": {
+    //         "setLocale": true,
+    //         "theme": "robbyrussell",
+    //         "plugins": "git docker",
+    //         "desiredLocale": "en_US.UTF-8 UTF-8"
+    //     },
+    //     "ghcr.io/davzucky/devcontainers-features-wolfi/bash:1": {}
+    // },
+    // Features to add to the dev container. More info: https://containers.dev/features.
+    // "features": {},
+    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+    // "forwardPorts": [],
+    // Configure tool-specific properties.
+    // "customizations": {
+    //     "vscode": {
+    //         "extensions": [
+    //             "streetsidesoftware.code-spell-checker"
+    //         ]
+    //     }
+    // },
+    // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+    // "remoteUser": "root"
+}
