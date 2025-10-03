@@ -1528,7 +1528,7 @@ class Tools extends ToolsCommon
                 break;
             case 212120:
                 $std->alias = 'envEvento';
-                $std->desc = 'Manifestação sobre Pedido de Transferência de Crédito de CBS em Operações de Sucessão';
+                $std->desc = 'Manifestação sobre Pedido de Transferência de Crédito de CBS em Operação de Sucessão';
                 break;
             default:
                 $msg = "O código do tipo de evento informado não corresponde a "
