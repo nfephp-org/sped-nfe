@@ -1,4 +1,5 @@
 FROM mcr.microsoft.com/devcontainers/php:7.4
+ENV YARNKEY=yarn-keyring.gpg
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
