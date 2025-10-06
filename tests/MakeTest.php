@@ -457,7 +457,21 @@ class MakeTest extends TestCase
         $tag = $this->make->tagprodObsCont($std);
 
         $this->assertEquals('obsItem', $tag->nodeName);
-        $this->assertEquals($std->xCampo, $tag->getElementsByTagName('xCampo')->item(0)->nodeValue);
+        $this->assertEquals($std->xCampo, $tag->getElementsByTagName('obsCont')->item(0)->getAttribute('xCampo'));
+        $this->assertEquals($std->xTexto, $tag->getElementsByTagName('xTexto')->item(0)->nodeValue);
+    }
+
+    public function test_tagprodObsFisco(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->xCampo = 'abc';
+        $std->xTexto = '123';
+
+        $tag = $this->make->tagprodObsFisco($std);
+
+        $this->assertEquals('obsItem', $tag->nodeName);
+        $this->assertEquals($std->xCampo, $tag->getElementsByTagName('obsFisco')->item(0)->getAttribute('xCampo'));
         $this->assertEquals($std->xTexto, $tag->getElementsByTagName('xTexto')->item(0)->nodeValue);
     }
 
