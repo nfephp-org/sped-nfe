@@ -633,14 +633,17 @@ trait TraitEventsRTC
         foreach ($std->itens as $item) {
             $vi = number_format($item->vIBS, 2, '.', '');
             $vc = number_format($item->vCBS, 2, '.', '');
+            $gvi = number_format($item->gControleEstoque_vIBS, 2, '.', '');
+            $gvc = number_format($item->gControleEstoque_vCBS, 2, '.', '');
             $qtd = number_format($item->quantidade, 4, '.', '');
-            $gc = "<gPerecimento>"
-                . "<nItem>{$item->item}</nItem>"
+            $gc = "<gPerecimento nItem=\"{$item->item}\">"
                 . "<vIBS>{$vi}</vIBS>"
                 . "<vCBS>{$vc}</vCBS>"
                 . "<gControleEstoque>"
                 . "<qPerecimento>{$qtd}</qPerecimento>"
                 . "<uPerecimento>{$item->unidade}</uPerecimento>"
+                . "<vIBS>{$gvi}</vIBS>"
+                . "<vCBS>{$gvc}</vCBS>"
                 . "</gControleEstoque>"
                 . "</gPerecimento>";
             $tagAdic .= $gc;
