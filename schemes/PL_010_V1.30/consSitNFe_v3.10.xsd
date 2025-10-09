@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/nfe" targetNamespace="http://www.portalfiscal.inf.br/nfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="leiauteConsSitNFe_v3.10.xsd"/>
+	<xs:element name="consSitNFe" type="TConsSitNFe">
+		<xs:annotation>
+			<xs:documentation>Schema de validação XML dp Pedido de Consulta da Situação Atual da Nota Fiscal Eletrônica</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

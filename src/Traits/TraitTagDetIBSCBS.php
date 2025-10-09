@@ -16,6 +16,8 @@ use DOMException;
  * @property array $aGIBSCBSMono
  * @property array $aGTransfCred
  * @property array $aGCredPresIBSZFM
+ * @property array $aGAjusteCompet
+ * @property array $aGEstornoCred
  * @property string $cst_ibscbs
  * @property stdClass $stdIBSCBSTot
  * @property stdClass $stdIBSCredPresTot
@@ -27,6 +29,8 @@ use DOMException;
  * @property stdClass $stdGIBSCBS
  * @property stdClass $stdGIBSCBSMono
  * @property stdClass $stdGTransfCred
+ * @property stdClass $aGCredPresOper
+ *
  * @method equilizeParameters($std, $possible)
  * @method conditionalNumberFormatting($value, $decimal = 2)
  */
@@ -48,6 +52,7 @@ trait TraitTagDetIBSCBS
             'item',
             'CST',
             'cClassTrib',
+            'indDoacao',
             'vBC',
             //dados IBS Estadual
             'gIBSUF_pIBSUF', //opcional Alíquota do IBS de competência das UF 3v2-4, OBRIGATÓRIO se vBC for informado
@@ -59,17 +64,17 @@ trait TraitTagDetIBSCBS
             'gIBSUF_vIBSUF', //OBRIGATÓRIO Valor do IBS de competência da UF 13v2
             //dados IBS Municipal
             'gIBSMun_pIBSMun', //opcional Alíquota do IBS de competência do município 3v2-4
-                //OBRIGATÓRIO se vBC for informado
+            //OBRIGATÓRIO se vBC for informado
             'gIBSMun_pDif', //opcional Percentual do diferimento 3v2-4
             'gIBSMun_vDif', //opcional Valor do Diferimento 13v2
             'gIBSMun_vDevTrib', //opcional Valor do tributo devolvido 13v2
             'gIBSMun_pRedAliq', //opcional Percentual da redução de alíquota 3v2-4
             'gIBSMun_pAliqEfet', //opcional Alíquota Efetiva do IBS de competência do Município
-                // que será aplicada a BC 3v2-4
+            // que será aplicada a BC 3v2-4
             'gIBSMun_vIBSMun', //opcional Valor do IBS de competência do Município 13v2
             // dados CBS (imposto federal)
             'gCBS_pCBS', //opcional Alíquota da CBS 3v2-4
-                // OBRIGATÓRIO se vBC for informado
+            // OBRIGATÓRIO se vBC for informado
             'gCBS_pDif', //opcional Percentual do diferimento 3v2-4
             'gCBS_vDif', //opcional Valor do Diferimento 13v2
             'gCBS_vDevTrib', //opcional Valor do tributo devolvido 13v2
@@ -116,6 +121,14 @@ trait TraitTagDetIBSCBS
             $std->cClassTrib,
             true,
             "$identificador Código de Classificação Tributária do IBS e CBS (cClassTrib)"
+        );
+        $this->dom->addChild(
+            $ibscbs,
+            "indDoacao",
+            !empty($std->indDoacao) ? 1 : null, //somente aceita numero 1
+            false,
+            "$identificador Indica a natureza da operação de doação, orientando a apuração e a geração"
+            . "de débitos ou estornos conforme o cenário (indDoacao)"
         );
         //gIBSCBS é opcional e também é um choice com IBSCBSMono
         if (!is_null($std->vBC) && is_numeric($std->vBC)) {
@@ -435,6 +448,7 @@ trait TraitTagDetIBSCBS
     }
 
     /**
+     * REMOVIDO PELA NT 2025.002_V1.30 - PL_010_V1.30
      * Grupo de Informações do Crédito Presumido referente ao IBS UB73 pai UB15
      * $this->aIBSCredPres[$item]/gIBSCredPres
      * IBSCBS/gIBSCBS/gIBSCredPres
@@ -493,6 +507,7 @@ trait TraitTagDetIBSCBS
     }
 
     /**
+     * REMOVIDO PELA NT 2025.002_V1.30 - PL_010_V1.30
      * Grupo de Informações do Crédito Presumido referente ao CBS UB78 pai UB15
      * $this->aCBSCredPres[$item]/gCBSCredPres
      * IBSCBS/gCBSCBS/gCBSCredPres
@@ -659,10 +674,10 @@ trait TraitTagDetIBSCBS
         isset($std->vIBSMonoRet) ? $this->stdIBSCBSTot->gMono->vIBSMonoRet += $std->vIBSMonoRet : null;
         isset($std->vCBSMonoRet) ? $this->stdIBSCBSTot->gMono->vCBSMonoRet += $std->vCBSMonoRet : null;
 
-        $identificador = "UB84 <gIBSCBSMono> -";
+        $identificador = "UB84 gIBSCBSMono -";
         $gIBSCBSMono = $this->dom->createElement("gIBSCBSMono");
         if (!empty($std->qBCMono)) {
-            $padrao  = $this->dom->createElement("gMonoPadrao");
+            $padrao = $this->dom->createElement("gMonoPadrao");
             $this->dom->addChild(
                 $padrao,
                 "qBCMono",
@@ -830,6 +845,8 @@ trait TraitTagDetIBSCBS
 
     /**
      * Grupo de Transferecnia de Creditos
+     * det/imposto/IBSCBS/gTransfCred
+     * $this->aIBSCBS[item] append $this->aGTransfCred[item]
      * @param stdClass $std
      * @return DOMElement
      * @throws DOMException
@@ -842,7 +859,7 @@ trait TraitTagDetIBSCBS
             'vCBS'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "UB106 <gTranfCred> -";
+        $identificador = "UB106 gTranfCred -";
         $gTrans = $this->dom->createElement("gTransfCred");
         $this->dom->addChild(
             $gTrans,
@@ -863,7 +880,10 @@ trait TraitTagDetIBSCBS
     }
 
     /**
-     * Grupo de Credito Presumido de IBS com a ZF de Manaus
+     * Grupo de Crédito Presumido de IBS com a ZF de Manaus
+     * det/imposto/IBSCBS/gCredPresIBSZFM
+     * $this->aIBSCBS[item] append $this->aGCredPresIBSZFM[item]
+     * NT 2025.002_v1.30 - PL_010_V1.30
      * @param stdClass $std
      * @return DOMElement
      * @throws DOMException
@@ -872,31 +892,223 @@ trait TraitTagDetIBSCBS
     {
         $possible = [
             'item',
+            'competApur',
             'tpCredPresIBSZFM',
             'vCredPresIBSZFM'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "UB109 <gCredPresIBSZFM> -";
+        $identificador = "UB131 gCredPresIBSZFM -";
         $cred = $this->dom->createElement("gCredPresIBSZFM");
+        $this->dom->addChild(
+            $cred,
+            "competApur",
+            $std->competApur,
+            false,
+            "$identificador Ano e mês referência do período de apuração (AAAA-MM) (competApur)"
+        );
         $this->dom->addChild(
             $cred,
             "tpCredPresIBSZFM",
             $std->tpCredPresIBSZFM,
             true,
             "$identificador Tipo de classificação de acordo com o art. 450, paragrafo 1, da LC 214/25 para o "
-                . "cálculo do crédito presumido na ZFM (tpCredPresIBSZFM)"
+            . "cálculo do crédito presumido na ZFM (tpCredPresIBSZFM)"
         );
-        if (!empty($std->vCredPresIBSZFM)) {
-            $this->dom->addChild(
-                $cred,
-                "vCredPresIBSZFM",
-                $std->vCredPresIBSZFM,
-                true,
-                "$identificador Valor do crédito presumido calculado sobre o saldo devedor "
-                    . "apurado (vCredPresIBSZFM)"
-            );
-        }
+        $this->dom->addChild(
+            $cred,
+            "vCredPresIBSZFM",
+            $this->conditionalNumberFormatting($std->vCredPresIBSZFM),
+            true,
+            "$identificador Valor do crédito presumido calculado sobre o saldo devedor "
+            . "apurado (vCredPresIBSZFM)"
+        );
         $this->aGCredPresIBSZFM[$std->item] = $cred;
+        return $cred;
+    }
+
+    /**
+     * Grupo Ajuste de Competência
+     * det/imposto/IBSCBS/gAjusteCompet
+     * $this->aIBSCBS[item] append $this->aGAjusteCompet[item]
+     * NT 2025.002_v1.30 - PL_010_V1.30
+     * @param stdClass $std
+     * @return DOMElement
+     * @throws DOMException
+     */
+    public function taggAjusteCompet(stdClass $std): DOMElement
+    {
+        $possible = [
+            'item',
+            'competApur',
+            'vIBS',
+            'vCBS',
+        ];
+        $std = $this->equilizeParameters($std, $possible);
+        $identificador = "UB112 gAjusteCompet -";
+        $ajust = $this->dom->createElement("gAjusteCompet");
+        $this->dom->addChild(
+            $ajust,
+            "competApur",
+            $std->competApur,
+            true,
+            "$identificador Ano e mês referência do período de apuração (AAAA-MM) (competApur)"
+        );
+        $this->dom->addChild(
+            $ajust,
+            "vIBS",
+            $this->conditionalNumberFormatting($std->vIBS),
+            true,
+            "$identificador Valor do IBS (vIBS)"
+        );
+        $this->dom->addChild(
+            $ajust,
+            "vCBS",
+            $this->conditionalNumberFormatting($std->vCBS),
+            true,
+            "$identificador Valor do CBS (vCBS)"
+        );
+        $this->aGAjusteCompet[$std->item] = $ajust;
+        return $ajust;
+    }
+
+    /**
+     * Grupo de Estorno de Crédito
+     * /det/imposto/IBSCBS/gEstornoCred
+     * $this->aIBSCBS[item] append $this->aGEstornoCred[item]
+     * NT 2025.002_v1.30 - PL_010_V1.30
+     * @param stdClass $std
+     * @return DOMElement
+     * @throws DOMException
+     */
+    public function taggEstornoCred(stdClass $std): DOMElement
+    {
+        $possible = [
+            'item',
+            'vIBSEstCred',
+            'vCBSEstCred',
+        ];
+        $std = $this->equilizeParameters($std, $possible);
+        $identificador = "UB116 gEstornoCred -";
+
+        //totalizador
+        $this->stdIBSCBSTot->gEstornoCred->vIBSEstCred += $std->vIBSEstCred;
+        $this->stdIBSCBSTot->gEstornoCred->vCBSEstCred += $std->vCBSEstCred;
+
+        $estorno = $this->dom->createElement("gEstornoCred");
+        $this->dom->addChild(
+            $estorno,
+            "vIBSEstCred",
+            $this->conditionalNumberFormatting($std->vIBSEstCred),
+            true,
+            "$identificador Valor do IBS a ser estornado (vIBSEstCred)"
+        );
+        $this->dom->addChild(
+            $estorno,
+            "vCBSEstCred",
+            $this->conditionalNumberFormatting($std->vCBSEstCred),
+            true,
+            "$identificador Valor do CBS a ser estornado (vCBSEstCred)"
+        );
+        $this->aGEstornoCred[$std->item] = $estorno;
+        return $estorno;
+    }
+
+    /**
+     * Grupo de Crédito Presumido da Operação
+     * det/imposto/IBSCBS/gCredPresOper
+     * $this->aIBSCBS[item] append $this->aGCredPresOper[item]
+     * NT 2025.002_v1.30 - PL_010_V1.30
+     * @param stdClass $std
+     * @return DOMElement
+     * @throws DOMException
+     */
+    public function taggCredPresOper(stdClass $std): DOMElement
+    {
+        $possible = [
+            'item',
+            'vBCCredPres',
+            'cCredPres',
+            'ibs_pCredPres',
+            'ibs_vCredPres',
+            'ibs_vCredPresCondSus',
+            'cbs_pCredPres',
+            'cbs_vCredPres',
+            'cbs_vCredPresCondSus',
+        ];
+        $std = $this->equilizeParameters($std, $possible);
+        $identificador = "UB120 gCredPresOper -";
+        $cred = $this->dom->createElement("gCredPresOper");
+        $this->dom->addChild(
+            $cred,
+            "vBCCredPres",
+            $this->conditionalNumberFormatting($std->vBCCredPres),
+            true,
+            "$identificador Valor da Base de Cálculo do Crédito Presumido da Operação (vBCCredPres)"
+        );
+        $this->dom->addChild(
+            $cred,
+            "cCredPres",
+            $std->cCredPres,
+            true,
+            "$identificador Código de Classificação do Crédito Presumido (cCredPres)"
+        );
+        if (isset($std->ibs_pCredPres) && isset($std->ibs_vCredPres) && isset($std->ibs_vCredPresCondSus)) {
+            $gibs = $this->dom->createElement("gIBSCredPres");
+            $this->dom->addChild(
+                $gibs,
+                "pCredPres",
+                $this->conditionalNumberFormatting($std->ibs_pCredPres, 4),
+                true,
+                "$identificador Percentual do Crédito Presumido (ibs_pCredPres)"
+            );
+            if (!empty($std->ibs_vCredPres)) {
+                $this->dom->addChild(
+                    $gibs,
+                    "vCredPres",
+                    $this->conditionalNumberFormatting($std->ibs_vCredPres),
+                    true,
+                    "$identificador Valor do Crédito Presumido (ibs_vCredPres)"
+                );
+            } else {
+                $this->dom->addChild(
+                    $gibs,
+                    "vCredPresCondSus",
+                    $this->conditionalNumberFormatting($std->ibs_vCredPresCondSus),
+                    true,
+                    "$identificador Valor do Crédito Presumido em condição suspensiva. (ibs_vCredPresCondSus)"
+                );
+            }
+            $cred->appendChild($gibs);
+        }
+        if (isset($std->cbs_pCredPres) && isset($std->cbs_vCredPres) && isset($std->cbs_vCredPresCondSus)) {
+            $gcbs = $this->dom->createElement("gCBSCredPres");
+            $this->dom->addChild(
+                $gcbs,
+                "pCredPres",
+                $this->conditionalNumberFormatting($std->cbs_pCredPres, 4),
+                true,
+                "$identificador Percentual do Crédito Presumido (cbs_pCredPres)"
+            );
+            if (!empty($std->cbs_vCredPres)) {
+                $this->dom->addChild(
+                    $gcbs,
+                    "vCredPres",
+                    $this->conditionalNumberFormatting($std->cbs_vCredPres),
+                    true,
+                    "$identificador Valor do Crédito Presumido (cbs_vCredPres)"
+                );
+            } else {
+                $this->dom->addChild(
+                    $gcbs,
+                    "vCredPresCondSus",
+                    $this->conditionalNumberFormatting($std->cbs_vCredPresCondSus),
+                    true,
+                    "$identificador Valor do Crédito Presumido em condição suspensiva. (cbs_vCredPresCondSus)"
+                );
+            }
+            $cred->appendChild($gcbs);
+        }
+        $this->aGCredPresOper[$std->item] = $cred;
         return $cred;
     }
 }

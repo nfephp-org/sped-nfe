@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/nfe" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" targetNamespace="http://www.portalfiscal.inf.br/nfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="tiposBasico_v1.03.xsd"/>
+	<xs:element name="detEvento">
+		<xs:annotation>
+			<xs:documentation>Schema XML de validação do evento do cancelamento 1101111</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="descEvento">
+					<xs:annotation>
+						<xs:documentation>Descrição do Evento - “Cancelamento”</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:whiteSpace value="preserve"/>
+							<xs:enumeration value="Cancelamento"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="nProt" type="TProt">
+					<xs:annotation>
+						<xs:documentation>Número do Protocolo de Status da NF-e. 1 posição (1 – Secretaria de Fazenda Estadual 2 – Receita Federal); 2 posições ano; 10 seqüencial no ano.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="xJust" type="TJust">
+					<xs:annotation>
+						<xs:documentation>Justificativa do cancelamento</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="versao" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:whiteSpace value="preserve"/>
+						<xs:enumeration value="1.00"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -51,6 +51,7 @@ trait TraitTagDet
             'xProd',
             'NCM',
             'cBenef',
+            'tpCredPresIBSZFM',
             'EXTIPI',
             'CFOP',
             'uCom',
@@ -175,6 +176,14 @@ trait TraitTagDet
             $std->cBenef,
             false,
             "$identificador Código de Benefício Fiscal utilizado pela UF"
+        );
+        //NT 2025.002_V1.30 - PL_010_V1.30
+        $this->dom->addChild(
+            $prod,
+            "tpCredPresIBSZFM",
+            $std->tpCredPresIBSZFM,
+            false,
+            "$identificador Classificação para subapuração do IBS na ZFM"
         );
         $this->dom->addChild(
             $prod,
