@@ -44,6 +44,7 @@ trait TraitTagIde
             'nNF',
             'dhEmi',
             'dhSaiEnt',
+            'dPrevEntrega',
             'tpNF',
             'idDest',
             'cMunFG',
@@ -124,7 +125,7 @@ trait TraitTagIde
                 }
             }
         }
-        $this->tpAmb = $std->tpAmb;
+        $this->tpAmb = (int) $std->tpAmb;
         $this->mod = empty($std->mod) ? '55' : $std->mod;
 
         $ide = $this->dom->createElement("ide");
@@ -186,6 +187,14 @@ trait TraitTagIde
                 $identificador . "Data e hora de Saída ou da Entrada da Mercadoria/Produto"
             );
         }
+        //NT 2025.002_V1.30 - PL_010_V.130
+        $this->dom->addChild(
+            $ide,
+            "dPrevEntrega",
+            $std->dPrevEntrega,
+            false,
+            $identificador . "Data da previsão de entrega ou disponibilização do bem."
+        );
         $this->dom->addChild(
             $ide,
             "tpNF",

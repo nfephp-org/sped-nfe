@@ -94,6 +94,11 @@ SCAN 900-999</xs:documentation>
 											<xs:documentation>Data e Hora da saída ou de entrada da mercadoria / produto (AAAA-MM-DDTHH:mm:ssTZD)</xs:documentation>
 										</xs:annotation>
 									</xs:element>
+									<xs:element name="dPrevEntrega" type="TData" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Data da previsão de entrega ou disponibilização do bem (AAAA-MM-DD)</xs:documentation>
+										</xs:annotation>
+									</xs:element>
 									<xs:element name="tpNF">
 										<xs:annotation>
 											<xs:documentation>Tipo do Documento Fiscal (0 - entrada; 1 - saída)</xs:documentation>
@@ -204,13 +209,7 @@ Campo preenchido somente quando “indPres = 5 (Operação presencial, fora do e
 									</xs:element>
 									<xs:element name="tpNFDebito" type="TTpNFDebito" minOccurs="0">
 										<xs:annotation>
-											<xs:documentation>Tipo de Nota de Débito:
-01=Transferência de créditos para Cooperativas; 
-02=Anulação de Crédito por Saídas Imunes/Isentas; 
-03=Débitos de notas fiscais não processadas na apuração; 
-04=Multa e juros; 
-05=Transferência de crédito de sucessão.
-											</xs:documentation>
+											<xs:documentation>Tipo de Nota de Débito</xs:documentation>
 										</xs:annotation>
 									</xs:element>
 									<xs:element name="tpNFCredito" type="TTpNFCredito" minOccurs="0">
@@ -992,6 +991,11 @@ Formato ”CFOP9999”.</xs:documentation>
 															</xs:element>
 														</xs:sequence>
 													</xs:complexType>
+												</xs:element>
+												<xs:element name="tpCredPresIBSZFM" type="TTpCredPresIBSZFM" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Classificação para subapuração do IBS na ZFM</xs:documentation>
+													</xs:annotation>
 												</xs:element>
 												<xs:element name="EXTIPI" minOccurs="0">
 													<xs:annotation>
@@ -7345,7 +7349,15 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 	</xs:simpleType>
 	<xs:simpleType name="TTpNFDebito">
 		<xs:annotation>
-			<xs:documentation>Tipo de Nota de Débito: 01=Transferência de créditos para Cooperativas; 02=Anulação de Crédito por Saídas Imunes/Isentas; 03=Débitos de notas fiscais não processadas na apuração; 04=Multa e juros; 05=Transferência de crédito de sucessão); 06=Pagamento antecipado; 07=Perda em estoque</xs:documentation>
+			<xs:documentation>Tipo de Nota de Débito: 
+			01=Transferência de créditos para Cooperativas; 
+			02=Anulação de Crédito por Saídas Imunes/Isentas; 
+			03=Débitos de notas fiscais não processadas na apuração; 
+			04=Multa e juros; 
+			05=Transferência de crédito na sucessão; 
+			06=Pagamento antecipado; 
+			07=Perda em estoque; 
+			08=Desenquadramento do SN;</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
@@ -7356,17 +7368,26 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 			<xs:enumeration value="05"/>
 			<xs:enumeration value="06"/>
 			<xs:enumeration value="07"/>
+			<xs:enumeration value="08"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TTpNFCredito">
 		<xs:annotation>
-			<xs:documentation>Tipo de Nota de Crédito: 01=Multa e juros; 02=Apropriação de crédito presumido de IBS sobre o saldo devedor na ZFM (art. 450, § 1º, LC 214/25); 03=Retorno</xs:documentation>
+			<xs:documentation>Tipo de Nota de Crédito: 
+			01=Multa e juros; 
+			02=Apropriação de crédito presumido de IBS sobre o saldo devedor na ZFM (art. 450, § 1º, LC 214/25);
+			03=Retorno por recusa na entrega ou por não localização do destinatário na tentativa de entrega;
+			04=Redução de valores;
+			05=Transferência de crédito na sucessão;
+			</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
 			<xs:enumeration value="01"/>
 			<xs:enumeration value="02"/>
 			<xs:enumeration value="03"/>
+			<xs:enumeration value="04"/>
+			<xs:enumeration value="05"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TProcEmi">
