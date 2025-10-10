@@ -39,7 +39,7 @@ trait TraitTagRetirada
             'IE'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = 'F01 <retirada> - ';
+        $identificador = 'F01 retirada -';
         $this->retirada = $this->dom->createElement("retirada");
         if (!empty($std->CNPJ)) {
             $this->dom->addChild(

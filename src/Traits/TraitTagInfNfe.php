@@ -51,7 +51,7 @@ trait TraitTagInfNfe
     {
         $possible = ['qrcode', 'urlChave'];
         $std = $this->equilizeParameters($std, $possible);
-
+        $identificador = " infNFeSupl -";
         $infNFeSupl = $this->dom->createElement("infNFeSupl");
         $nodeqr = $infNFeSupl->appendChild($this->dom->createElement('qrCode'));
         $nodeqr->appendChild($this->dom->createCDATASection($std->qrcode));
@@ -62,7 +62,7 @@ trait TraitTagInfNfe
             "urlChave",
             $std->urlChave,
             false,
-            "URL de consulta por chave de acesso a ser impressa no DANFE NFC-e"
+            "$identificador URL de consulta por chave de acesso a ser impressa no DANFE NFC-e"
         );
         $this->infNFeSupl = $infNFeSupl;
         return $infNFeSupl;

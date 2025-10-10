@@ -84,7 +84,7 @@ trait TraitTagDetIBSCBS
         ];
         $std = $this->equilizeParameters($std, $possible);
         $this->cst_ibscbs = $std->CST ?? null;
-        $identificador = "UB12 <IBSCBS> -";
+        $identificador = "UB12 IBSCBS Item $std->item -";
         //totalizador do IBS e CBS
         isset($std->vBC) ? $this->stdIBSCBSTot->vBCIBSCBS += $std->vBC : null;
         isset($std->gIBSUF_vDif) ? $this->stdIBSCBSTot->gIBSUF->vDif += $std->gIBSUF_vDif : null;
@@ -384,7 +384,7 @@ trait TraitTagDetIBSCBS
             'vTribRegCBS',
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "UB68 <gTribRegular> -";
+        $identificador = "UB68 gTribRegular Item: $std->item -";
         $gTribRegular = $this->dom->createElement("gTribRegular");
         $this->dom->addChild(
             $gTribRegular,
@@ -469,7 +469,7 @@ trait TraitTagDetIBSCBS
         //Totalizador
         isset($std->vCredPres) ? $this->stdIBSCBSTot->vCredPres += $std->vCredPres : null;
         isset($std->vCredPresCondSus) ? $this->stdIBSCBSTot->vCredPresCondSus += $std->vCredPresCondSus : null;
-        $identificador = "UB73 <gIBSCredPres> -";
+        $identificador = "UB73 gIBSCredPres Item: $std->item -";
         $gIBSCredPres = $this->dom->createElement("gIBSCredPres");
         $this->dom->addChild(
             $gIBSCredPres,
@@ -528,7 +528,7 @@ trait TraitTagDetIBSCBS
         //Totalizador
         $this->stdIBSCBSTot->vCredPres += $std->vCredPres ?? 0;
         $this->stdIBSCBSTot->vCredPresCondSus += $std->vCredPresCondSus ?? 0;
-        $identificador = "UB78 <gCBSCredPres> -";
+        $identificador = "UB78 gCBSCredPres Item: $std->item -";
         $gCBSCredPres = $this->dom->createElement("gCBSCredPres");
         $this->dom->addChild(
             $gCBSCredPres,
@@ -583,7 +583,7 @@ trait TraitTagDetIBSCBS
             'vTribCBS',
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "UB82a <gTribCompraGov> -";
+        $identificador = "UB82a gTribCompraGov Item: $std->item -";
         $gTrib = $this->dom->createElement("gTribCompraGov");
         $this->dom->addChild(
             $gTrib,
@@ -674,7 +674,7 @@ trait TraitTagDetIBSCBS
         isset($std->vIBSMonoRet) ? $this->stdIBSCBSTot->gMono->vIBSMonoRet += $std->vIBSMonoRet : null;
         isset($std->vCBSMonoRet) ? $this->stdIBSCBSTot->gMono->vCBSMonoRet += $std->vCBSMonoRet : null;
 
-        $identificador = "UB84 gIBSCBSMono -";
+        $identificador = "UB84 gIBSCBSMono Item: $std->item -";
         $gIBSCBSMono = $this->dom->createElement("gIBSCBSMono");
         if (!empty($std->qBCMono)) {
             $padrao = $this->dom->createElement("gMonoPadrao");
@@ -859,7 +859,7 @@ trait TraitTagDetIBSCBS
             'vCBS'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "UB106 gTranfCred -";
+        $identificador = "UB106 gTranfCred Item: $std->item -";
         $gTrans = $this->dom->createElement("gTransfCred");
         $this->dom->addChild(
             $gTrans,
@@ -897,7 +897,7 @@ trait TraitTagDetIBSCBS
             'vCredPresIBSZFM'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "UB131 gCredPresIBSZFM -";
+        $identificador = "UB131 gCredPresIBSZFM Item: $std->item -";
         $cred = $this->dom->createElement("gCredPresIBSZFM");
         $this->dom->addChild(
             $cred,
@@ -944,7 +944,7 @@ trait TraitTagDetIBSCBS
             'vCBS',
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "UB112 gAjusteCompet -";
+        $identificador = "UB112 gAjusteCompet Item: $std->item -";
         $ajust = $this->dom->createElement("gAjusteCompet");
         $this->dom->addChild(
             $ajust,
@@ -988,7 +988,7 @@ trait TraitTagDetIBSCBS
             'vCBSEstCred',
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "UB116 gEstornoCred -";
+        $identificador = "UB116 gEstornoCred Item: $std->item -";
 
         //totalizador
         $this->stdIBSCBSTot->gEstornoCred->vIBSEstCred += $std->vIBSEstCred;
@@ -1036,7 +1036,7 @@ trait TraitTagDetIBSCBS
             'cbs_vCredPresCondSus',
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "UB120 gCredPresOper -";
+        $identificador = "UB120 gCredPresOper Item: $std->item -";
         $cred = $this->dom->createElement("gCredPresOper");
         $this->dom->addChild(
             $cred,

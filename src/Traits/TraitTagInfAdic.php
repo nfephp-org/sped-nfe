@@ -25,8 +25,8 @@ trait TraitTagInfAdic
     {
         $possible = ['infAdFisco', 'infCpl'];
         $std = $this->equilizeParameters($std, $possible);
+        $identificador = 'Z01 infAdic -';
         $this->infAdic = $this->dom->createElement("infAdic");
-        $identificador = 'Z01 <infAdic> - ';
         $this->dom->addChild(
             $this->infAdic,
             "infAdFisco",
@@ -52,6 +52,7 @@ trait TraitTagInfAdic
     {
         $possible = ['xCampo', 'xTexto'];
         $std = $this->equilizeParameters($std, $possible);
+        $identificador = ' obsCont -';
         $obsCont = $this->dom->createElement("obsCont");
         $obsCont->setAttribute("xCampo", $std->xCampo ?? '');
         $this->dom->addChild(
@@ -59,7 +60,7 @@ trait TraitTagInfAdic
             "xTexto",
             $std->xTexto ?? '',
             true,
-            "Conteúdo do campo"
+            "$identificador Conteúdo do campo"
         );
         $this->aObsCont[] = $obsCont;
         return $obsCont;
@@ -73,6 +74,7 @@ trait TraitTagInfAdic
     {
         $possible = ['xCampo', 'xTexto'];
         $std = $this->equilizeParameters($std, $possible);
+        $identificador = ' obsCont -';
         $obsFisco = $this->dom->createElement("obsFisco");
         $obsFisco->setAttribute("xCampo", $std->xCampo ?? '');
         $this->dom->addChild(
@@ -80,7 +82,7 @@ trait TraitTagInfAdic
             "xTexto",
             $std->xTexto ?? '',
             true,
-            "Conteúdo do campo"
+            "$identificador Conteúdo do campo"
         );
         $this->aObsFisco[] = $obsFisco;
         return $obsFisco;
@@ -94,27 +96,28 @@ trait TraitTagInfAdic
     {
         $possible = ['nProc', 'indProc', 'tpAto'];
         $std = $this->equilizeParameters($std, $possible);
+        $identificador = ' procRef -';
         $procRef = $this->dom->createElement("procRef");
         $this->dom->addChild(
             $procRef,
             "nProc",
             $std->nProc,
             true,
-            "Identificador do processo ou ato concessório"
+            "$identificador Identificador do processo ou ato concessório"
         );
         $this->dom->addChild(
             $procRef,
             "indProc",
             $std->indProc,
             true,
-            "Indicador da origem do processo"
+            "$identificador Indicador da origem do processo"
         );
         $this->dom->addChild(
             $procRef,
             "tpAto",
             $std->tpAto,
             false,
-            "Tipo do ato concessório"
+            "$identificador Tipo do ato concessório"
         );
         $this->aProcRef[] = $procRef;
         return $procRef;

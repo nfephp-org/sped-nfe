@@ -45,7 +45,7 @@ trait TraitTagDetISSQN
             'indIncentivo'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "U01 <ISSQN> Item: $std->item -";
+        $identificador = "U01 ISSQN Item: $std->item -";
         // Adiciona o totalizador, somente se maior que ZERO
         if ($std->vBC > 0) {
             $this->stdISSQNTot->vBC += (float)$std->vBC;

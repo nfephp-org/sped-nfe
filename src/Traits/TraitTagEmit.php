@@ -36,7 +36,7 @@ trait TraitTagEmit
         ];
         $std = $this->equilizeParameters($std, $possible);
         $this->crt = $std->CRT;
-        $identificador = 'C01 <emit> - ';
+        $identificador = 'C01 emit -';
         $this->emit = $this->dom->createElement("emit");
         if (!empty($std->CNPJ)) {
             $this->dom->addChild(
@@ -133,7 +133,7 @@ trait TraitTagEmit
         ];
         $std = $this->equilizeParameters($std, $possible);
 
-        $identificador = 'C05 <enderEmit> - ';
+        $identificador = 'C05 enderEmit -';
         $this->enderEmit = $this->dom->createElement("enderEmit");
         $this->dom->addChild(
             $this->enderEmit,

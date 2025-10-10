@@ -35,7 +35,7 @@ trait TraitTagDest
             'idEstrangeiro'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = 'E01 <dest> - ';
+        $identificador = 'E01 dest -';
         $flagNome = true; //marca se xNome é ou não obrigatório
         $temIE = !empty($std->IE) && $std->IE !== 'ISENTO'; // Tem inscrição municipal
         if (!$temIE && $std->indIEDest == 1) {
@@ -151,7 +151,7 @@ trait TraitTagDest
         ];
         $std = $this->equilizeParameters($std, $possible);
 
-        $identificador = 'E05 <enderDest> - ';
+        $identificador = 'E05 enderDest -';
         if (!$this->dest) {
             throw new RuntimeException('A TAG dest deve ser criada antes do endereço do mesmo.');
         }

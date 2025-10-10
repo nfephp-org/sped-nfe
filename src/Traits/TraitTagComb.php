@@ -46,7 +46,7 @@ trait TraitTagComb
         ];
         $std = $this->equilizeParameters($std, $possible);
 
-        $identificador = "L101 <comb> Item: $std->item -";
+        $identificador = "L101 comb Item: $std->item -";
         $comb = $this->dom->createElement("comb");
         $this->dom->addChild(
             $comb,
@@ -178,7 +178,7 @@ trait TraitTagComb
             'vEncFin'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "LA11 <encerrante> Item: $std->item -";
+        $identificador = "LA11 encerrante Item: $std->item -";
         $encerrante = $this->dom->createElement("encerrante");
         $this->dom->addChild(
             $encerrante,
@@ -237,7 +237,7 @@ trait TraitTagComb
             'pOrig'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "LA18 <origComb> Item: $std->item -";
+        $identificador = "LA18 origComb Item: $std->item -";
         $origComb = $this->dom->createElement("origComb");
         $this->dom->addChild(
             $origComb,

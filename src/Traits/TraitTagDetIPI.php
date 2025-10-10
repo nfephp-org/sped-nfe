@@ -39,7 +39,7 @@ trait TraitTagDetIPI
             'vUnid'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "O01 <IPI> Item: $std->item -";
+        $identificador = "O01 IPI Item: $std->item -";
         $ipi = $this->dom->createElement('IPI');
         $this->dom->addChild(
             $ipi,

@@ -36,7 +36,7 @@ trait TraitTagDetPIS
             'vAliqProd'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "Q01 <PIS> Item: $std->item -";
+        $identificador = "Q01 PIS Item: $std->item -";
         switch ($std->CST) {
             case '01':
             case '02':
@@ -221,7 +221,7 @@ trait TraitTagDetPIS
             'indSomaPISST',
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "R01 <PISST> Item: $std->item -";
+        $identificador = "R01 PISST Item: $std->item -";
         if ($std->indSomaPISST == 1) {
             $this->stdTot->vPISST += $std->vPIS;
         }
