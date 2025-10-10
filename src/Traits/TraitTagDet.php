@@ -78,7 +78,7 @@ trait TraitTagDet
             'vItem' //PL_010
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "I01 <prod> - Item: $std->item";
+        $identificador = "I01 prod - Item: $std->item";
         //totalizador
         if ($std->indTot == 1) {
             $this->stdTot->vProd += (float) $this->conditionalNumberFormatting($std->vProd);
@@ -178,13 +178,15 @@ trait TraitTagDet
             "$identificador Código de Benefício Fiscal utilizado pela UF"
         );
         //NT 2025.002_V1.30 - PL_010_V1.30
-        $this->dom->addChild(
-            $prod,
-            "tpCredPresIBSZFM",
-            $std->tpCredPresIBSZFM,
-            false,
-            "$identificador Classificação para subapuração do IBS na ZFM"
-        );
+        if ($this->schema > 9) {
+            $this->dom->addChild(
+                $prod,
+                "tpCredPresIBSZFM",
+                $std->tpCredPresIBSZFM,
+                false,
+                "$identificador Classificação para subapuração do IBS na ZFM"
+            );
+        }
         $this->dom->addChild(
             $prod,
             "EXTIPI",
@@ -378,7 +380,7 @@ trait TraitTagDet
             'obsFisco_xTexto'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "VA01 <obsItem> Item: $std->item -";
+        $identificador = "VA01 obsItem Item: $std->item -";
         $obsItem = $this->dom->createElement("obsItem");
         if (!empty($std->obsCont_xCampo) && !empty($std->obsCont_xTexto)) {
             $obsCont = $this->dom->createElement("obsCont");
@@ -419,7 +421,6 @@ trait TraitTagDet
     {
         $possible = ['item', 'NVE'];
         $std = $this->equilizeParameters($std, $possible);
-
         if ($std->NVE == '') {
             return null;
         }
@@ -439,7 +440,7 @@ trait TraitTagDet
     {
         $possible = ['item', 'cCredPresumido', 'pCredPresumido', 'vCredPresumido'];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = ' <gCred> - ';
+        $identificador = " gCred Item: $std->item -";
         $gCred = $this->dom->createElement("gCred");
         $this->dom->addChild(
             $gCred,
@@ -491,7 +492,7 @@ trait TraitTagDet
             'cExportador'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "I8 <DI> Item: $std->item -";
+        $identificador = "I8 DI Item: $std->item -";
         $tDI = $this->dom->createElement("DI");
         $this->dom->addChild(
             $tDI,
@@ -605,7 +606,7 @@ trait TraitTagDet
             'nDraw'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "I25 <adi> Item: $std->item -";
+        $identificador = "I25 adi Item: $std->item -";
         $adi = $this->dom->createElement("adi");
         $this->dom->addChild(
             $adi,
@@ -663,7 +664,7 @@ trait TraitTagDet
             'qExport'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "I50 <detExport> Item: $std->item -";
+        $identificador = "I50 detExport Item: $std->item -";
         $detExport = $this->dom->createElement("detExport");
         $this->dom->addChild(
             $detExport,

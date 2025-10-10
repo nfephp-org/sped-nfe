@@ -45,7 +45,7 @@ trait TraitTagCobr
             'vLiq'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = 'Y02 <fat> -';
+        $identificador = 'Y02 fat -';
         $this->buildCobr();
         $fat = $this->dom->createElement("fat");
         $this->dom->addChild(
@@ -97,7 +97,7 @@ trait TraitTagCobr
             'vDup'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = 'Y07 <dup> -';
+        $identificador = 'Y07 dup -';
         $this->buildCobr();
         $dup = $this->dom->createElement("dup");
         $this->dom->addChild(

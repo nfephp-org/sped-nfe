@@ -65,7 +65,7 @@ trait TraitTagIde
             'xJust'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = 'B01 <ide> - ';
+        $identificador = 'B01 ide - ';
         //proteção em função do modelo de schema, nullificar campos não pertencentes ao schema.
         if ($this->schema < 10) {
             $std->cMunFGIBS = null;
@@ -188,13 +188,15 @@ trait TraitTagIde
             );
         }
         //NT 2025.002_V1.30 - PL_010_V.130
-        $this->dom->addChild(
-            $ide,
-            "dPrevEntrega",
-            $std->dPrevEntrega,
-            false,
-            $identificador . "Data da previsão de entrega ou disponibilização do bem."
-        );
+        if ($this->schema > 9) {
+            $this->dom->addChild(
+                $ide,
+                "dPrevEntrega",
+                $std->dPrevEntrega,
+                false,
+                $identificador . "Data da previsão de entrega ou disponibilização do bem."
+            );
+        }
         $this->dom->addChild(
             $ide,
             "tpNF",

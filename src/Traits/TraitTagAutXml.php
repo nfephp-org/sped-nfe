@@ -22,7 +22,7 @@ trait TraitTagAutXml
     {
         $possible = ['CNPJ', 'CPF'];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = 'G50 <autXML> - ';
+        $identificador = 'G50 autXML - ';
         $std->CNPJ = !empty($std->CNPJ) ? $std->CNPJ : null;
         $std->CPF = !empty($std->CPF) ? $std->CPF : null;
         $autXML = $this->dom->createElement("autXML");

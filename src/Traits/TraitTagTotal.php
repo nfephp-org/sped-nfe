@@ -491,16 +491,19 @@ trait TraitTagTotal
      * @param stdClass|null $std
      * @return DOMElement|false
      * @param stdClass $std
-     * @return DOMElement
+     * @return ?DOMElement
      * @throws DOMException
      */
-    public function tagISTot(stdClass $std): DOMElement
+    public function tagISTot(stdClass $std): ?DOMElement
     {
         $possible = ['vIS'];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = "W31 ISTot -";
         $vIS = $std->vIS ?? ($this->stdIStot->vIS ?? 0);
         $this->stdTot->vIS = $vIS;
+        if (empty($vIS)) {
+            return null;
+        }
         $istot = $this->dom->createElement('ISTot');
         $this->dom->addChild(
             $istot,

@@ -50,7 +50,7 @@ trait TraitTagRefs
     {
         $possible = ['cUF', 'AAMM', 'CNPJ', 'mod', 'serie', 'nNF'];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = 'BA03 <refNF> - ';
+        $identificador = 'BA03 refNF -';
         $nfref = $this->dom->createElement("NFref");
         $refNF = $this->dom->createElement("refNF");
         $this->dom->addChild(
@@ -120,7 +120,7 @@ trait TraitTagRefs
             'nNF'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = 'BA10 <refNFP> - ';
+        $identificador = 'BA10 refNFP -';
         $nfref = $this->dom->createElement("NFref");
         $refNFP = $this->dom->createElement("refNFP");
         $this->dom->addChild(
@@ -213,7 +213,7 @@ trait TraitTagRefs
     {
         $possible = ['mod', 'nECF', 'nCOO'];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = 'BA20 <refECF> - ';
+        $identificador = 'BA20 refECF -';
         $nfref = $this->dom->createElement("NFref");
         $refECF = $this->dom->createElement("refECF");
         $this->dom->addChild(

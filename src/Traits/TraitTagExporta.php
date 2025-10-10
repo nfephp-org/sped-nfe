@@ -25,7 +25,7 @@ trait TraitTagExporta
     {
         $possible = ['UFSaidaPais', 'xLocExporta', 'xLocDespacho'];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = 'ZA01 <exporta> -';
+        $identificador = 'ZA01 exporta -';
         $this->exporta = $this->dom->createElement("exporta");
         $this->dom->addChild(
             $this->exporta,
