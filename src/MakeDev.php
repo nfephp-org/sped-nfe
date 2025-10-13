@@ -1018,7 +1018,7 @@ final class MakeDev
         $enddest = !empty($this->dest->getElementsByTagName('enderDest')->item(0))
             ? $this->dest->getElementsByTagName('enderDest')->item(0)
             : null;
-        if (is_null($enddest) && !is_null($this->enderDest)) {
+        if (is_null($enddest) && !empty($this->enderDest)) {
             $node = $this->dest->getElementsByTagName("indIEDest")->item(0);
             if (!isset($node)) {
                 $node = $this->dest->getElementsByTagName("IE")->item(0);
