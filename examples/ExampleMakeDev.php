@@ -682,7 +682,7 @@ try {
     //############################## TAG <det/imposto> OBRIGATÓRIA #####################################################
     $std = new stdClass();
     $std->item = 1; //OBRIGATÓRIO referencia ao item da NFe
-    $std->vTotTrib = 0; //opcional Valor estimado total de impostos federais, estaduais e municipais 2 decimais
+    $std->vTotTrib = 100; //opcional Valor estimado total de impostos federais, estaduais e municipais 2 decimais
     $mk->tagimposto($std);
 
     //############################## TAG <det/imposto/ICMS> opcional ###################################################
@@ -752,6 +752,7 @@ try {
         'pBCOp',
         'UFST'
     ];
+    $mk->tagICMSPart((object)$ic);
 
     //ICMSSN
     //Tributação do ICMS pelo SIMPLES NACIONAL
@@ -787,6 +788,7 @@ try {
         'vICMSEfet',
         'vICMSSubstituto'
     ];
+    $mk->tagICMSSN((object)$ic);
 
     //ICMSST
     //Grupo de informação do ICMSST devido para a UF de destino, nas operações interestaduais de produtos que
@@ -1007,7 +1009,7 @@ try {
         'qTrib' => 100, //OBRIGATÓRIO Quantidade com base no campo uTrib informado até 4 decimais
         'vIS' => 200.00 //OBRIGATÓRIO Valor do Imposto Seletivo calculado 2 decimais
     ];
-    $mk->tagIS((object) $is);
+    //$mk->tagIS((object) $is);
 
     //############################## TAG <det/imposto/IBCCBS> opcional ################################################
     $ibs = [
@@ -1045,7 +1047,7 @@ try {
         // dados CBS (imposto federal)
         'gCBS_pCBS' => 20, //opcional Alíquota da CBS 3v2-4, OBRIGATÓRIO se vBC for informado
         'gCBS_pDif' => 10, //opcional Percentual do diferimento 3v2-4
-        'gCBS_vCBSOp' => 0, //opcional Valor da CBS Bruto na operação '0|0\.[0-9]{2}
+        // removido 'gCBS_vCBSOp' => 0, //opcional Valor da CBS Bruto na operação '0|0\.[0-9]{2}
         'gCBS_vDif' => 20, //opcional Valor do Diferimento 13v2
         'gCBS_vDevTrib' => 10, //opcional Valor do tributo devolvido 13v2
         'gCBS_pRedAliq' => 20, //opcional Percentual da redução de alíquota 3v2-4
@@ -1137,7 +1139,7 @@ try {
             //2 - Bens de capital (75%)
             //3 - Bens intermediários (90,25%)
             //4 - Bens de informática e outros definidos em legislação (100%)
-        'vCredPresIBSZFM' => 0 //OBRIGATÓRIO Valor do crédito presumido calculado sobre o saldo devedor apurado 13v2
+        'vCredPresIBSZFM' => 0 //opcional Valor do crédito presumido calculado sobre o saldo devedor apurado 13v2
             //É obrigatório para nota de crédito com tpNFCredito = 02 - Apropriação de crédito presumido de IBS sobre
             // o saldo devedor na ZFM (art. 450, § 1º, LC 214/25)
             //Vedado para documentos que não sejam nota de crédito com tpNFCredito = 02 - Apropriação de crédito
@@ -1154,9 +1156,6 @@ try {
         'vIPIDevol' => 0.00 ////OBRIGATRÓRIO Valor do IPI devolvido 2 decimais
     ];
     $mk->tagimpostoDevol((object) $idev);
-
-
-
 
     //############################## TAG <transp> OBRIGATÓRIA #####################################################
     //transp OBRIGATÓRIA

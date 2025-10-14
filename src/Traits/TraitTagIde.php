@@ -44,6 +44,7 @@ trait TraitTagIde
             'nNF',
             'dhEmi',
             'dhSaiEnt',
+            'dPrevEntrega',
             'tpNF',
             'idDest',
             'cMunFG',
@@ -64,7 +65,7 @@ trait TraitTagIde
             'xJust'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = 'B01 <ide> - ';
+        $identificador = 'B01 ide - ';
         //proteção em função do modelo de schema, nullificar campos não pertencentes ao schema.
         if ($this->schema < 10) {
             $std->cMunFGIBS = null;
@@ -81,12 +82,19 @@ trait TraitTagIde
             $std->cDV = 0;
         }
         if (empty($std->dhEmi)) {
-            try {
-                $tz = TimeZoneByUF::get($std->cUF);
-                $std->dhEmi = (new DateTime('now', new DateTimeZone($tz)))->format('Y-m-d\TH:i:sP');
-            } catch (Exception $e) {
+            $dhEmi = null;
+            if (
+                empty($std->cUF) || !in_array($std->cUF, [
+                    12, 27, 13, 16, 29, 23, 53, 32, 52, 21, 31, 50, 51,
+                    15, 25, 26, 22, 41, 33, 24, 11, 14, 43, 42, 28, 35, 17
+                ])
+            ) {
                 $this->errors[] = "$identificador Campo cUF incorreto !";
+            } else {
+                $tz = TimeZoneByUF::get($std->cUF);
+                $dhEmi = (new DateTime('now', new DateTimeZone($tz)))->format('Y-m-d\TH:i:sP');
             }
+            $std->dhEmi = $dhEmi;
         }
         if (!empty($std->dhSaiEnt) && !empty($std->dhEmi)) {
             $tze = substr($std->dhEmi, -5);
@@ -117,8 +125,8 @@ trait TraitTagIde
                 }
             }
         }
-        $this->tpAmb = $std->tpAmb;
-        $this->mod = $std->mod;
+        $this->tpAmb = (int) $std->tpAmb;
+        $this->mod = empty($std->mod) ? '55' : $std->mod;
 
         $ide = $this->dom->createElement("ide");
         $this->dom->addChild(
@@ -179,6 +187,16 @@ trait TraitTagIde
                 $identificador . "Data e hora de Saída ou da Entrada da Mercadoria/Produto"
             );
         }
+        //NT 2025.002_V1.30 - PL_010_V.130
+        if ($this->schema > 9) {
+            $this->dom->addChild(
+                $ide,
+                "dPrevEntrega",
+                $std->dPrevEntrega,
+                false,
+                $identificador . "Data da previsão de entrega ou disponibilização do bem."
+            );
+        }
         $this->dom->addChild(
             $ide,
             "tpNF",
@@ -202,13 +220,17 @@ trait TraitTagIde
         );
         //PL_010 NT_2025.002v1.01
         if ($this->schema > 9) {
-            $this->dom->addChild(
-                $ide,
-                "cMunFGIBS",
-                $std->cMunFGIBS,
-                false,
-                $identificador . "Código do Município de Ocorrência do Fato Gerador do IBS/CSB"
-            );
+            if ($std->indPres == 5) {
+                //Campo preenchido somente quando “indPres = 5 (Operação presencial, fora do estabelecimento) ”,
+                //e não tiver endereço do destinatário (Grupo: E05) ou local de entrega (Grupo: G01)
+                $this->dom->addChild(
+                    $ide,
+                    "cMunFGIBS",
+                    !empty($std->cMunFGIBS) ? $std->cMunFGIBS : null,
+                    false,
+                    $identificador . "Código do Município de Ocorrência do Fato Gerador do IBS/CSB"
+                );
+            }
         }
         $this->dom->addChild(
             $ide,
@@ -247,20 +269,23 @@ trait TraitTagIde
         );
         //PL_010 NT_2025.002v1.01
         if ($this->schema > 9) {
-            $this->dom->addChild(
-                $ide,
-                "tpNFDebito",
-                $std->tpNFDebito,
-                false,
-                $identificador . "Tipo de Nota de Débito"
-            );
-            $this->dom->addChild(
-                $ide,
-                "tpNFCredito",
-                $std->tpNFCredito,
-                false,
-                $identificador . "Tipo de Nota de Crédito"
-            );
+            if (!empty($std->tpNFDebito)) {
+                $this->dom->addChild(
+                    $ide,
+                    "tpNFDebito",
+                    $std->tpNFDebito,
+                    false,
+                    $identificador . "Tipo de Nota de Débito"
+                );
+            } elseif (!empty($std->tpNFCredito)) {
+                $this->dom->addChild(
+                    $ide,
+                    "tpNFCredito",
+                    $std->tpNFCredito,
+                    false,
+                    $identificador . "Tipo de Nota de Crédito"
+                );
+            }
         }
         $this->dom->addChild(
             $ide,

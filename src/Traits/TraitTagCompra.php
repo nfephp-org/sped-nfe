@@ -25,7 +25,7 @@ trait TraitTagCompra
     {
         $possible = ['xNEmp', 'xPed', 'xCont'];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = 'ZB01 <compra> -';
+        $identificador = 'ZB01 compra -';
         $this->compra = $this->dom->createElement("compra");
         $this->dom->addChild(
             $this->compra,

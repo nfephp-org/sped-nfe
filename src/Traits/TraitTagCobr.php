@@ -8,8 +8,8 @@ use DOMElement;
 use DOMException;
 
 /**
- * @property  Dom $dom
- * @property DOMElement $cobr
+ * @property Dom $dom
+ * @property ?DOMElement $cobr
  * @method equilizeParameters($std, $possible)
  * @method conditionalNumberFormatting($value, $decimal = 2)
  */
@@ -24,7 +24,7 @@ trait TraitTagCobr
      */
     protected function buildCobr()
     {
-        if (!$this->cobr) {
+        if (empty($this->cobr)) {
             $this->cobr = $this->dom->createElement("cobr");
         }
     }
@@ -45,7 +45,7 @@ trait TraitTagCobr
             'vLiq'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = 'Y02 <fat> -';
+        $identificador = 'Y02 fat -';
         $this->buildCobr();
         $fat = $this->dom->createElement("fat");
         $this->dom->addChild(
@@ -76,6 +76,7 @@ trait TraitTagCobr
             false,
             "$identificador Valor Líquido da Fatura"
         );
+
         $this->dom->appChild($this->cobr, $fat, 'Inclui fatura na tag cobr');
         return $fat;
     }
@@ -96,7 +97,7 @@ trait TraitTagCobr
             'vDup'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = 'Y07 <dup> -';
+        $identificador = 'Y07 dup -';
         $this->buildCobr();
         $dup = $this->dom->createElement("dup");
         $this->dom->addChild(

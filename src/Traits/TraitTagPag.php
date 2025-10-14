@@ -32,7 +32,7 @@ trait TraitTagPag
             'vTroco'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = 'YA01 <pag> - ';
+        $identificador = 'YA01 pag -';
         $this->pag = $this->dom->createElement("pag");
         //incluso no layout 4.00
         $this->dom->addChild(
@@ -73,7 +73,7 @@ trait TraitTagPag
             'idTermPag'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = 'YA01a <detPag> - ';
+        $identificador = 'YA01a detPag -';
         $detPag = $this->dom->createElement("detPag");
         $this->dom->addChild(
             $detPag,

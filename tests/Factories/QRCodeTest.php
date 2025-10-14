@@ -52,7 +52,7 @@ class QRCodeTest extends NFeTestCase
         $sigla = '';
         $versao = '200';
         $urlqr = 'https://www.homologacao.nfce.fazenda.sp.gov.br/NFCeConsultaPublica/Paginas/ConsultaQRCode.aspx';
-        $response = QRCode::putQRTag($dom, $token, $idToken, $versao, $urlqr);
+        $response = QRCode::putQRTag($dom, $token, $idToken, $versao, $urlqr, '', $this->certificate);
     }
 
     public function testPutQRTagFailWithoutCSCid()
@@ -67,7 +67,7 @@ class QRCodeTest extends NFeTestCase
         $sigla = '';
         $versao = '200';
         $urlqr = 'https://www.homologacao.nfce.fazenda.sp.gov.br/NFCeConsultaPublica/Paginas/ConsultaQRCode.aspx';
-        $response = QRCode::putQRTag($dom, $token, $idToken, $versao, $urlqr);
+        $response = QRCode::putQRTag($dom, $token, $idToken, $versao, $urlqr, '', $this->certificate);;
     }
 
     public function testPutQRTagFailWithoutURL()
@@ -82,6 +82,6 @@ class QRCodeTest extends NFeTestCase
         $sigla = '';
         $versao = '200';
         $urlqr = '';
-        $response = QRCode::putQRTag($dom, $token, $idToken, $versao, $urlqr);
+        $response = QRCode::putQRTag($dom, $token, $idToken, $versao, $urlqr, '', $this->certificate);;;
     }
 }

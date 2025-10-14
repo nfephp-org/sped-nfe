@@ -32,14 +32,14 @@ trait TraitTagInfRespTec
             'idCSRT'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = 'ZD01 <infRespTec> - ';
+        $identificador = 'ZD01 infRespTec -';
         $infRespTec = $this->dom->createElement("infRespTec");
         $this->dom->addChild(
             $infRespTec,
             "CNPJ",
             $std->CNPJ ?? '',
             true,
-            "Informar o CNPJ da pessoa jurídica responsável pelo sistema "
+            "$identificador Informar o CNPJ da pessoa jurídica responsável pelo sistema "
             . "utilizado na emissão do documento fiscal eletrônico",
             true
         );
@@ -48,7 +48,7 @@ trait TraitTagInfRespTec
             "xContato",
             $std->xContato,
             true,
-            "Informar o nome da pessoa a ser contatada na empresa desenvolvedora "
+            "$identificador Informar o nome da pessoa a ser contatada na empresa desenvolvedora "
             . "do sistema utilizado na emissão do documento fiscal eletrônico"
         );
         $this->dom->addChild(
@@ -56,7 +56,7 @@ trait TraitTagInfRespTec
             "email",
             $std->email,
             true,
-            "Informar o e-mail da pessoa a ser contatada na empresa "
+            "$identificador Informar o e-mail da pessoa a ser contatada na empresa "
             . "desenvolvedora do sistema."
         );
         $this->dom->addChild(
@@ -64,24 +64,24 @@ trait TraitTagInfRespTec
             "fone",
             $std->fone,
             true,
-            "Informar o telefone da pessoa a ser contatada na empresa "
+            "$identificador Informar o telefone da pessoa a ser contatada na empresa "
             . "desenvolvedora do sistema."
         );
         if (!empty($std->CSRT) && !empty($std->idCSRT)) {
-            $this->csrt = $std->idCSRT;
+            $this->csrt = $std->CSRT;
             $this->dom->addChild(
                 $infRespTec,
                 "idCSRT",
                 $std->idCSRT,
                 true,
-                "Identificador do CSRT utilizado para montar o hash do CSRT"
+                "$identificador Identificador do CSRT utilizado para montar o hash do CSRT"
             );
             $this->dom->addChild(
                 $infRespTec,
                 "hashCSRT",
                 $this->hashCSRT($std->CSRT),
                 true,
-                "hash do CSRT"
+                "$identificador hash do CSRT"
             );
         }
         $this->infRespTec = $infRespTec;

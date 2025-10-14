@@ -35,7 +35,7 @@ trait TraitTagTransp
             'modFrete'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = 'X01 <transp> -';
+        $identificador = 'X01 transp -';
         $this->transp = $this->dom->createElement("transp");
         $this->dom->addChild(
             $this->transp,
@@ -66,7 +66,7 @@ trait TraitTagTransp
             'CPF'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = 'X03 <transporta> -';
+        $identificador = 'X03 transporta -';
         $transporta = $this->dom->createElement("transporta");
         if (!empty($std->CNPJ)) {
             $this->dom->addChild(
@@ -142,7 +142,7 @@ trait TraitTagTransp
             'cMunFG'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = 'X11 <retTransp> -';
+        $identificador = 'X11 retTransp -';
         $retTransp = $this->dom->createElement("retTransp");
         $this->dom->addChild(
             $retTransp,
@@ -206,7 +206,7 @@ trait TraitTagTransp
             'RNTC'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = 'X18 <veicTransp> -';
+        $identificador = 'X18 veicTransp -';
         $veicTransp = $this->dom->createElement("veicTransp");
         $this->dom->addChild(
             $veicTransp,
@@ -249,7 +249,7 @@ trait TraitTagTransp
             'RNTC'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = 'X22 <reboque> -';
+        $identificador = 'X22 reboque -';
         $reboque = $this->dom->createElement("reboque");
         $this->dom->addChild(
             $reboque,
@@ -332,7 +332,7 @@ trait TraitTagTransp
             'pesoB'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = 'X26 <vol> -';
+        $identificador = 'X26 vol -';
         $vol = $this->dom->createElement("vol");
         $this->dom->addChild(
             $vol,
@@ -394,7 +394,7 @@ trait TraitTagTransp
             'nLacre'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = 'X33 <lacres> -';
+        $identificador = 'X33 lacres -';
         $lacre = $this->dom->createElement("lacres");
         $this->dom->addChild(
             $lacre,

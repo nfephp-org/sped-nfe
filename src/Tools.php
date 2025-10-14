@@ -23,12 +23,14 @@ use NFePHP\Common\UFList;
 use NFePHP\NFe\Common\Tools as ToolsCommon;
 use NFePHP\NFe\Common\Webservices;
 use NFePHP\NFe\Traits\TraitEPECNfce;
+use NFePHP\NFe\Traits\TraitEventsRTC;
 use RuntimeException;
 use InvalidArgumentException;
 
 class Tools extends ToolsCommon
 {
     use TraitEPECNfce;
+    use TraitEventsRTC;
 
     public const EVT_CONFIRMACAO = 210200; //only one per nfe seq=n
     public const EVT_CIENCIA = 210210; //only one per nfe seq=1
@@ -485,8 +487,10 @@ class Tools extends ToolsCommon
             ? "<CNPJ>{$std->CNPJ}</CNPJ>"
             : "<CPF>{$std->CPF}</CPF>";
         $tagAdic .= "</autXML>"
-            . "<tpAutorizacao>{$std->tpAutorizacao}</tpAutorizacao>"
-            . "<xCondUso>$xCondUso</xCondUso>";
+            . "<tpAutorizacao>{$std->tpAutorizacao}</tpAutorizacao>";
+        if ($std->tpAutorizacao == 1) {
+            $tagAdic .= "<xCondUso>$xCondUso</xCondUso>";
+        }
         return $this->sefazEvento(
             'AN',
             $std->chNFe,
@@ -1073,7 +1077,15 @@ class Tools extends ToolsCommon
             . "<vICMS>{$vICMS}</vICMS>"
             . "<vST>{$vST}</vST>"
             . "</dest>";
-        return $this->sefazEvento('AN', $chNFe, self::EVT_EPEC, $nSeqEvento, $tagAdic);
+        return $this->sefazEvento(
+            'AN',
+            $chNFe,
+            self::EVT_EPEC,
+            $nSeqEvento,
+            $tagAdic,
+            null,
+            null
+        );
     }
 
     /**
@@ -1115,6 +1127,20 @@ class Tools extends ToolsCommon
             self::EVT_CANCELA_INSUCESSO_ENTREGA => ['versao' => '1.00', 'nome' => 'envEventoCancInsucessoNFe'],
             self::EVT_CONCILIACAO => ['versao' => '1.00', 'nome' => 'envEventoEConf'],
             self::EVT_CANCELA_CONCILIACAO => ['versao' => '1.00', 'nome' => 'envEventoCancEConf'],
+            110001 => ['versao' => '1.00', 'nome' => 'envEvento'],
+            112110 => ['versao' => '1.00', 'nome' => 'envEvento'],
+            112120 => ['versao' => '1.00', 'nome' => 'envEvento'],
+            112130 => ['versao' => '1.00', 'nome' => 'envEvento'],
+            112140 => ['versao' => '1.00', 'nome' => 'envEvento'],
+            211110 => ['versao' => '1.00', 'nome' => 'envEvento'],
+            211120 => ['versao' => '1.00', 'nome' => 'envEvento'],
+            211128 => ['versao' => '1.00', 'nome' => 'envEvento'],
+            211130 => ['versao' => '1.00', 'nome' => 'envEvento'],
+            211140 => ['versao' => '1.00', 'nome' => 'envEvento'],
+            211150 => ['versao' => '1.00', 'nome' => 'envEvento'],
+            212110 => ['versao' => '1.00', 'nome' => 'envEvento'],
+            212120 => ['versao' => '1.00', 'nome' => 'envEvento'],
+            211124 => ['versao' => '1.00', 'nome' => 'envEvento'],
         ];
         $verEvento = $this->urlVersion;
         if (!empty($eventos[$tpEvento])) {
@@ -1137,7 +1163,30 @@ class Tools extends ToolsCommon
         $sSeqEvento = str_pad((string)$nSeqEvento, 2, "0", STR_PAD_LEFT);
         $eventId = "ID" . $tpEvento . $chave . $sSeqEvento;
         //NT 2024.002 versão 1.00 - Maio 2024, comentário P08 elemento cOrgao
-        if (in_array($tpEvento, [self::EVT_CONCILIACAO, self::EVT_CANCELA_CONCILIACAO]) && $uf === 'SVRS') {
+        //NT N2025.002 versão 1.20 - Setembro 2025, 8.1 - Eventos
+        if (
+            in_array(
+                $tpEvento,
+                [
+                    self::EVT_CONCILIACAO,
+                    self::EVT_CANCELA_CONCILIACAO,
+                    112110,
+                    211110,
+                    211120,
+                    211128,
+                    211130,
+                    211140,
+                    211150,
+                    212110,
+                    212120,
+                    110001,
+                    112120,
+                    211124,
+                    112130,
+                    112140,
+                ]
+            ) && $uf === 'SVRS'
+        ) {
             $cOrgao = 92;
         } else {
             $cOrgao = UFList::getCodeByUF($uf);
@@ -1423,6 +1472,63 @@ class Tools extends ToolsCommon
             case self::EVT_CANCELA_CONCILIACAO:
                 $std->alias = 'EventoCancEConf';
                 $std->desc = 'Cancelamento Conciliação Financeira';
+                break;
+            case 110001:
+                $std->alias = 'envEvento';
+                $std->desc = 'Cancelamento de Evento';
+                break;
+            case 112110:
+                $std->alias = 'envEvento';
+                $std->desc = 'Informação de efetivo pagamento integral para liberar crédito presumido do adquirente';
+                break;
+            case 112120:
+                $std->alias = 'envEvento';
+                $std->desc = 'Importação em ALC/ZFM não convertida em isenção';
+                break;
+            case 112130:
+                $std->alias = 'envEvento';
+                $std->desc = 'Perecimento, perda, roubo ou furto durante o transporte contratado pelo fornecedor';
+                break;
+            case 112140:
+                $std->alias = 'envEvento';
+                $std->desc = 'Fornecimento não realizado com pagamento antecipado';
+                break;
+            case 211124:
+                $std->alias = 'envEvento';
+                $std->desc = 'Perecimento, perda, roubo ou furto durante o transporte contratado pelo adquirente';
+                break;
+            case 211110:
+                $std->alias = 'envEvento';
+                $std->desc = 'Solicitação de Apropriação de crédito presumido';
+                break;
+            case 211120:
+                $std->alias = 'envEvento';
+                $std->desc = 'Destinação de item para consumo pessoal';
+                break;
+            case 211128:
+                $std->alias = 'envEvento';
+                $std->desc = 'Aceite de débito na apuração por emissão de nota de crédito';
+                break;
+            case 211130:
+                $std->alias = 'envEvento';
+                $std->desc = 'Imobilização de Item';
+                break;
+            case 211140:
+                $std->alias = 'envEvento';
+                $std->desc = 'Solicitação de Apropriação de Crédito de Combustível';
+                break;
+            case 211150:
+                $std->alias = 'envEvento';
+                $std->desc = 'Solicitação de Apropriação de Crédito para bens e serviços que dependem de '
+                    . 'atividade do adquirente';
+                break;
+            case 212110:
+                $std->alias = 'envEvento';
+                $std->desc = 'Manifestação sobre Pedido de Transferência de Crédito de IBS em Operação de Sucessão';
+                break;
+            case 212120:
+                $std->alias = 'envEvento';
+                $std->desc = 'Manifestação sobre Pedido de Transferência de Crédito de CBS em Operação de Sucessão';
                 break;
             default:
                 $msg = "O código do tipo de evento informado não corresponde a "

@@ -17,11 +17,33 @@ use DOMException;
  * @property stdclass $stdTot Totalizador
  * @property stdclass $stdISSQNTot Totalizador
  * @property stdclass $stdIBSCBSTot Totalizador
+ * @property array $aItensServ
  * @method equilizeParameters($std, $possible)
  * @method conditionalNumberFormatting($value, $decimal = 2)
  */
 trait TraitTagTotal
 {
+    protected bool $flagISSQNCalc = false;
+
+    /**
+     * Valor vNTTot
+     * tag NFe/infNFe/total/vNFTot
+     * @param stdClass $std
+     * @return float|null
+     */
+    public function tagTotal(stdClass $std): ?float
+    {
+        $possible = ['vNFTot'];
+        $std = $this->equilizeParameters($std, $possible);
+        $identificador = "W01 <vNFTot> -";
+        if (!isset($std->vNFTot)) {
+            $this->vNFTot = null;
+            return null;
+        }
+        $this->vNFTot = $std->vNFTot;
+        return $this->vNFTot;
+    }
+
     /**
      * Grupo Totais referentes ao ICMS W02 pai W01
      * tag NFe/infNFe/total/ICMSTot
@@ -61,6 +83,7 @@ trait TraitTagTotal
             'vICMSMonoReten',
             'qBCMonoRet',
             'vICMSMonoRet',
+            '$vTotTrib'
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = "W01 <ICMSTot> -";
@@ -136,7 +159,7 @@ trait TraitTagTotal
             $this->conditionalNumberFormatting($vFCPUFDest),
             false,
             "$identificador Valor total do ICMS relativo ao Fundo de Combate à Pobreza(FCP) "
-            . "para a UF de destino"
+                . "para a UF de destino"
         );
         $this->dom->addChild(
             $ICMSTot,
@@ -159,7 +182,7 @@ trait TraitTagTotal
             $this->conditionalNumberFormatting($vFCP),
             false,
             "$identificador Valor total do ICMS relativo ao Fundo de Combate à Pobreza(FCP) "
-            . "para a UF de destino"
+                . "para a UF de destino"
         );
         $this->dom->addChild(
             $ICMSTot,
@@ -182,7 +205,7 @@ trait TraitTagTotal
             $this->conditionalNumberFormatting($vFCPST),
             false, //true para 4.00
             "$identificador Valor Total do FCP (Fundo de Combate à Pobreza) "
-            . "retido por substituição tributária"
+                . "retido por substituição tributária"
         );
         //incluso na 4.00
         $this->dom->addChild(
@@ -191,7 +214,7 @@ trait TraitTagTotal
             $this->conditionalNumberFormatting($vFCPSTRet),
             false, //true para 4.00
             "$identificador Valor Total do FCP retido anteriormente por "
-            . "Substituição Tributária"
+                . "Substituição Tributária"
         );
         //incluso NT 2023.001-1.10
         $this->dom->addChild(
@@ -329,11 +352,16 @@ trait TraitTagTotal
      * Grupo Totais referentes ao ISSQN W17 pai W01
      * tag NFe/infNFe/total/ISSQNTot (opcional)
      * @param stdClass|null $std
-     * @return DOMElement|false
+     * @return DOMElement|null
      * @throws DOMException
      */
     public function tagISSQNTot(?stdClass $std = null)
     {
+        if (empty($this->aItensServ)) {
+            return null;
+        }
+
+        $this->buildISSQNTot();
         $possible = [
             'vServ',
             'vBC',
@@ -465,16 +493,25 @@ trait TraitTagTotal
     }
 
     /**
+     * Grupo total do imposto seletivo
+     * total/ISTot
+     * 2025.002_v1.30 - PL_010_V1.30
+     * @param stdClass|null $std
+     * @return DOMElement|false
      * @param stdClass $std
-     * @return DOMElement
+     * @return ?DOMElement
      * @throws DOMException
      */
-    public function tagISTot(stdClass $std): DOMElement
+    public function tagISTot(stdClass $std): ?DOMElement
     {
         $possible = ['vIS'];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "<ISTot> -";
+        $identificador = "W31 ISTot -";
         $vIS = $std->vIS ?? ($this->stdIStot->vIS ?? 0);
+        $this->stdTot->vIS = $vIS;
+        if (empty($vIS)) {
+            return null;
+        }
         $istot = $this->dom->createElement('ISTot');
         $this->dom->addChild(
             $istot,
@@ -488,7 +525,9 @@ trait TraitTagTotal
     }
 
     /**
-     *
+     * Totais da NF-e com IBS e CBS
+     * infNFe/total/IBSCBSTot
+     * NT 2025.002_v1.30 - PL_010_V1.30
      * @param stdClass $std
      * @return DOMElement
      * @throws DOMException
@@ -517,14 +556,17 @@ trait TraitTagTotal
             'gMono_vCBSMonoReten',
             'gMono_vIBSMonoRet',
             'gMono_vCBSMonoRet',
+            'vNFTot',
+            'gEstonoCred_vIBSEstCred',
+            'gEstonoCred_vCBSEstCred',
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "<IBSCBSTot> -";
+        $identificador = "W34 IBSCBSTot -";
 
         $vBCIBSCBS = $std->vBCIBSCBS ?? $this->stdIBSCBSTot->vBCIBSCBS;
         $gIBS_vIBS = $std->gIBS_vIBS ?? $this->stdIBSCBSTot->vIBS;
-        $gIBS_vCredPres = $std->gIBS_vCredPres ?? $this->stdIBSCBSTot->vCredPres;
-        $gIBS_vCredPresCondSus = $std->gIBS_vCredPresCondSus ?? $this->stdIBSCBSTot->vCredPresCondSus;
+        $gIBS_vCredPres = $std->gIBS_vCredPres ?? 0;
+        $gIBS_vCredPresCondSus = $std->gIBS_vCredPresCondSus ?? 0;
         $gIBSUF_vDif = $std->gIBSUF_vDif ?? $this->stdIBSCBSTot->gIBSUF->vDif;
         $gIBSUF_vDevTrib = $std->gIBSUF_vDevTrib ?? $this->stdIBSCBSTot->gIBSUF->vDevTrib;
         $gIBSUF_vIBSUF = $std->gIBSUF_vIBSUF ?? $this->stdIBSCBSTot->gIBSUF->vIBSUF;
@@ -533,15 +575,22 @@ trait TraitTagTotal
         $gIBSMun_vIBSMun = $std->gIBSMun_vIBSMun ?? $this->stdIBSCBSTot->gIBSMun->vIBSMun;
         $gCBS_vDif = $std->gCBS_vDif ?? $this->stdIBSCBSTot->gCBS->vDif;
         $gCBS_vDevTrib = $std->gCBS_vDevTrib ?? $this->stdIBSCBSTot->gCBS->vDevTrib;
-        $gCBS_vCBS = $std->gCBS_vCBS ?? $this->stdIBSCBSTot->gCBS->vCBS;
-        $gCBS_vCredPres = $std->gCBS_vCredPres ?? $this->stdIBSCBSTot->gCBS->vCredPres;
-        $gCBS_vCredPresCondSus = $std->gCBS_vCredPresCondSus ?? $this->stdIBSCBSTot->gCBS->vCredPresCondSus;
+        $gCBS_vCBS = $std->gCBS_vCBS ?? $this->stdIBSCBSTot->vCBS;
+        $gCBS_vCredPres = $std->gCBS_vCredPres ?? 0;
+        $gCBS_vCredPresCondSus = $std->gCBS_vCredPresCondSus ?? 0;
         $gMono_vIBSMono = $std->gMono_vIBSMono ?? $this->stdIBSCBSTot->gMono->vIBSMono;
         $gMono_vCBSMono = $std->gMono_vCBSMono ?? $this->stdIBSCBSTot->gMono->vCBSMono;
         $gMono_vIBSMonoReten = $std->gMono_vIBSMonoReten ?? $this->stdIBSCBSTot->gMono->vIBSMonoReten;
         $gMono_vCBSMonoReten = $std->gMono_vCBSMonoReten ?? $this->stdIBSCBSTot->gMono->vCBSMonoReten;
         $gMono_vIBSMonoRet = $std->gMono_vIBSMonoRet ?? $this->stdIBSCBSTot->gMono->vIBSMonoRet;
         $gMono_vCBSMonoRet = $std->gMono_vCBSMonoRet ?? $this->stdIBSCBSTot->gMono->vCBSMonoRet;
+        $this->stdTot->vNFTot = $std->vNFTot ?? 0;
+        $gEstornoCred_vIBSEstCred = $std->gEstonoCred_vIBSEstCred ?? $this->stdIBSCBSTot->gEstornoCred->vIBSEstCred;
+        $gEstornoCred_vCBSEstCred = $std->gEstonoCred_vCBSEstCred ?? $this->stdIBSCBSTot->gEstornoCred->vCBSEstCred;
+
+        //totalizador final
+        $this->stdTot->vIBS = $gIBS_vIBS;
+        $this->stdTot->vCBS = $gCBS_vCBS;
 
         $ibstot = $this->dom->createElement('IBSCBSTot');
         $this->dom->addChild(
@@ -551,7 +600,7 @@ trait TraitTagTotal
             true,
             "$identificador Valor total da BC do IBS e da CBS"
         );
-        if (!empty($std->gIBS_vIBS)) {
+        if (!empty($gIBS_vIBS)) {
             $gIBS = $this->dom->createElement('gIBS');
             $gIBSUF = $this->dom->createElement('gIBSUF');
             $this->dom->addChild(
@@ -575,7 +624,7 @@ trait TraitTagTotal
                 true,
                 "$identificador Valor total do IBS da UF (gIBSUF/vIBSUF)"
             );
-            $this->dom->appChild($gIBS, $gIBSUF);
+            $gIBS->appendChild($gIBSUF);
             $gIBSMun = $this->dom->createElement('gIBSMun');
             $this->dom->addChild(
                 $gIBSMun,
@@ -598,7 +647,7 @@ trait TraitTagTotal
                 true,
                 "$identificador Valor total do IBS do Município (gIBSMun/vIBSMun)"
             );
-            $this->dom->appChild($gIBS, $gIBSMun);
+            $gIBS->appendChild($gIBSMun);
             $this->dom->addChild(
                 $gIBS,
                 "vIBS",
@@ -620,9 +669,9 @@ trait TraitTagTotal
                 true,
                 "$identificador Valor total do crédito presumido em condição suspensiva."
             );
-            $this->dom->appChild($ibstot, $gIBS);
+            $ibstot->appendChild($gIBS);
         }
-        if (!empty($std->gCBS_vCBS)) {
+        if (!empty($gCBS_vCBS)) {
             $gCBS = $this->dom->createElement('gCBS');
             $this->dom->addChild(
                 $gCBS,
@@ -659,9 +708,9 @@ trait TraitTagTotal
                 true,
                 "$identificador Valor total do crédito presumido em condição suspensiva. (gCBS/vCrePresCondSus)"
             );
-            $this->dom->appChild($ibstot, $gCBS);
+            $ibstot->appendChild($gCBS);
         }
-        if (!empty($std->gMono_vIBSMono) || !empty($std->gMono_vCBSMono)) {
+        if (!empty($gMono_vIBSMono) || !empty($gMono_vCBSMono)) {
             $gMono = $this->dom->createElement('gMono');
             $this->dom->addChild(
                 $gMono,
@@ -705,7 +754,26 @@ trait TraitTagTotal
                 true,
                 "$identificador Total da CBS monofásica retida anteriormente"
             );
-            $this->dom->appChild($ibstot, $gMono);
+            $ibstot->appendChild($gMono);
+        }
+        //NT 2025.002_v1.30 - PL_010_V1.30
+        if (!empty($gEstornoCred_vIBSEstCred) || !empty($gEstornoCred_vCBSEstCred)) {
+            $gEst = $this->dom->createElement('gEstornoCred');
+            $this->dom->addChild(
+                $gEst,
+                "vIBSEstCred",
+                $this->conditionalNumberFormatting($gEstornoCred_vIBSEstCred),
+                true,
+                "$identificador Valor total do IBS estornado (vIBSEstCred)"
+            );
+            $this->dom->addChild(
+                $gEst,
+                "vCBSEstCred",
+                $this->conditionalNumberFormatting($gEstornoCred_vCBSEstCred),
+                true,
+                "$identificador Valor total do CBS estornado (vCBSEstCred)"
+            );
+            $ibstot->appendChild($gEst);
         }
         $this->IBSCBSTot = $ibstot;
         return $ibstot;
@@ -730,7 +798,7 @@ trait TraitTagTotal
             'vRetPrev'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "W23 <retTrib> -";
+        $identificador = "W23 retTrib -";
         $retTrib = $this->dom->createElement("retTrib");
         $this->dom->addChild(
             $retTrib,
@@ -783,5 +851,50 @@ trait TraitTagTotal
         );
         $this->retTrib = $retTrib;
         return $retTrib;
+    }
+
+    protected function buildISSQNTot()
+    {
+        if ($this->flagISSQNCalc) {
+            return;
+        }
+
+        //totaliza PIS e COFINS dos Itens de Serviço
+        foreach ($this->aItensServ as $item) {
+            if (!empty($this->aPIS[$item])) {
+                $vPIS = (float) $this->getNodeValue($this->aPIS[$item], 'vPIS');
+                $this->stdISSQNTot->vPIS += (float) $vPIS;
+                //remove esse valor do total já contabiizado no stdTot
+                $this->stdTot->vPIS -= $vPIS;
+            }
+            //totalizar COFINS desses itens
+            if (!empty($this->aCOFINS[$item])) {
+                $vCOFINS = (float) $this->getNodeValue($this->aCOFINS[$item], 'vCOFINS');
+                $this->stdISSQNTot->vCOFINS += (float) $vCOFINS;
+                //remove esse valor do total já contabiizado no stdTot
+                $this->stdTot->vCOFINS -= $vCOFINS;
+            }
+        }
+        $this->stdISSQNTot->vServ = $this->conditionalNumberFormatting($this->stdISSQNTot->vServ);
+        $this->stdISSQNTot->vBC = $this->conditionalNumberFormatting($this->stdISSQNTot->vBC);
+        $this->stdISSQNTot->vISS = $this->conditionalNumberFormatting($this->stdISSQNTot->vISS);
+        $this->stdISSQNTot->vPIS = $this->conditionalNumberFormatting($this->stdISSQNTot->vPIS);
+        $this->stdISSQNTot->vCOFINS = $this->conditionalNumberFormatting($this->stdISSQNTot->vCOFINS);
+        $this->stdISSQNTot->vDeducao = $this->conditionalNumberFormatting($this->stdISSQNTot->vDeducao);
+        $this->stdISSQNTot->vOutro = $this->conditionalNumberFormatting($this->stdISSQNTot->vOutro);
+        $this->stdISSQNTot->vDescIncond = $this->conditionalNumberFormatting($this->stdISSQNTot->vDescIncond);
+        $this->stdISSQNTot->vDescCond = $this->conditionalNumberFormatting($this->stdISSQNTot->vDescCond);
+        $this->stdISSQNTot->vISSRet = $this->conditionalNumberFormatting($this->stdISSQNTot->vISSRet);
+
+        $this->flagISSQNCalc = true;
+    }
+
+    private function getNodeValue(DOMElement $node, string $name)
+    {
+        $dom = new Dom('1.0', 'utf-8');
+        $dom->loadXML("<root></root>");
+        $newnode = $dom->importNode($node, true);
+        $dom->documentElement->appendChild($newnode);
+        return $dom->getNodeValue($name);
     }
 }

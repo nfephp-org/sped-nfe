@@ -39,7 +39,7 @@ trait TraitTagDetIPI
             'vUnid'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "O01 <IPI> Item: $std->item -";
+        $identificador = "O01 IPI Item: $std->item -";
         $ipi = $this->dom->createElement('IPI');
         $this->dom->addChild(
             $ipi,
@@ -47,7 +47,7 @@ trait TraitTagDetIPI
             $std->CNPJProd,
             false,
             "$identificador CNPJ do produtor da mercadoria, quando diferente do emitente. "
-            . "Somente para os casos de exportação direta ou indireta. (CNPJProd)"
+                . "Somente para os casos de exportação direta ou indireta. (CNPJProd)"
         );
         $this->dom->addChild(
             $ipi,
@@ -81,7 +81,7 @@ trait TraitTagDetIPI
                 true,
                 "$identificador Código da situação tributária do IPI (CST)"
             );
-            if (!empty($std->vBC) && !empty($std->pIIPI)) {
+            if (isset($std->vBC) && isset($std->pIPI)) {
                 $this->dom->addChild(
                     $ipiTrib,
                     "vBC",
@@ -103,7 +103,7 @@ trait TraitTagDetIPI
                     $this->conditionalNumberFormatting($std->qUnid, 4),
                     false,
                     "$identificador Quantidade total na unidade padrão para tributação (somente para os "
-                    . "produtos tributados por unidade) (qUnid)"
+                        . "produtos tributados por unidade) (qUnid)"
                 );
                 $this->dom->addChild(
                     $ipiTrib,

@@ -32,35 +32,35 @@ trait TraitTagAgropecuario
             'nGuia'
         ];
         $std = $this->equilizeParameters($std, $possible);
-
+        $identificador = 'ZF04 guiaTransito -';
         $guia = $this->dom->createElement("guiaTransito");
         $this->dom->addChild(
             $guia,
             "tpGuia",
             $std->tpGuia,
             true,
-            "Tipo da Guia"
+            "$identificador Tipo da Guia"
         );
         $this->dom->addChild(
             $guia,
             "UFGuia",
             !empty($std->UFGuia) ? $std->UFGuia : null,
             false,
-            "UF de emissão"
+            "$identificador UF de emissão"
         );
         $this->dom->addChild(
             $guia,
             "serieGuia",
             $std->serieGuia ?? null,
             false,
-            "Série da Guia"
+            "$identificador Série da Guia"
         );
         $this->dom->addChild(
             $guia,
             "nGuia",
             $std->nGuia,
             true,
-            "Número da Guia"
+            "$identificador Número da Guia"
         );
         $this->agropecuarioGuia = $guia;
         return $guia;
@@ -80,20 +80,21 @@ trait TraitTagAgropecuario
             'CPFRespTec'
         ];
         $std = $this->equilizeParameters($std, $possible);
+        $identificador = 'ZF02 defencifo -';
         $def = $this->dom->createElement("defensivo");
         $this->dom->addChild(
             $def,
             "nReceituario",
             $std->nReceituario,
             true,
-            "Número da receita ou receituário do agrotóxico/defensivo agrícola"
+            "$identificador Número da receita ou receituário do agrotóxico/defensivo agrícola"
         );
         $this->dom->addChild(
             $def,
             "CPFRespTec",
             $std->CPFRespTec,
             true,
-            "CPF do Responsável Técnico, emitente do receituário"
+            "$identificador CPF do Responsável Técnico, emitente do receituário"
         );
         $this->aAgropecuarioDefensivo[] = $def;
         return $def;

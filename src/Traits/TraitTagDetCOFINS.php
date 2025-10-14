@@ -36,7 +36,7 @@ trait TraitTagDetCOFINS
             'vAliqProd'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "S01 <COFINS> Item: $std->item -";
+        $identificador = "S01 COFINS Item: $std->item -";
         switch ($std->CST) {
             case '01':
             case '02':
@@ -141,7 +141,7 @@ trait TraitTagDetCOFINS
             'indSomaCOFINSST'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "T01 <COFINS> Item: $std->item -";
+        $identificador = "T01 COFINSST Item: $std->item -";
         if ($std->indSomaCOFINSST == 1) {
             $this->stdTot->vCOFINSST += $std->vCOFINS;
         }
@@ -205,7 +205,7 @@ trait TraitTagDetCOFINS
      */
     protected function buildCOFINSAliq(stdClass $std): DOMElement
     {
-        $identificador = "S02 <COFINSAliq> Item: $std->item -";
+        $identificador = "S02 COFINSAliq Item: $std->item -";
         $confinsAliq = $this->dom->createElement('COFINSAliq');
         $this->dom->addChild(
             $confinsAliq,
@@ -248,7 +248,7 @@ trait TraitTagDetCOFINS
      */
     protected function buildCOFINSNT(stdClass $std): DOMElement
     {
-        $identificador = "S04 <COFINSNT> Item: $std->item -";
+        $identificador = "S04 COFINSNT Item: $std->item -";
         $confinsnt = $this->dom->createElement('COFINSNT');
         $this->dom->addChild(
             $confinsnt,
@@ -270,7 +270,7 @@ trait TraitTagDetCOFINS
      */
     protected function buildCOFINSoutr(stdClass $std): DOMElement
     {
-        $identificador = "S05 <COFINSoutr> Item: $std->item -";
+        $identificador = "S05 COFINSoutr Item: $std->item -";
         $confinsoutr = $this->dom->createElement('COFINSOutr');
         $this->dom->addChild(
             $confinsoutr,

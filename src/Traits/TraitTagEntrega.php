@@ -39,7 +39,7 @@ trait TraitTagEntrega
             'IE'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = 'G01 <entrega> - ';
+        $identificador = 'G01 entrega -';
         $this->entrega = $this->dom->createElement("entrega");
         if (!empty($std->CNPJ)) {
             $this->dom->addChild(

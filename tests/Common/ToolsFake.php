@@ -12,7 +12,7 @@ use NFePHP\NFe\Factories\Contingency;
  */
 class ToolsFake extends Tools
 {
-    public function __construct($configJson, Certificate $certificate, Contingency $contingency = null)
+    public function __construct($configJson, Certificate $certificate, ?Contingency $contingency = null)
     {
         parent::__construct($configJson, $certificate, $contingency);
         $this->soap = new SoapFake();

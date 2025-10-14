@@ -28,7 +28,7 @@ trait TraitTagGCompraGov
     {
         $possible = ['tpEnteGov', 'pRedutor', 'tpOperGov'];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = 'B31 <gCompraGov> - ';
+        $identificador = 'B31 gCompraGov -';
         $gc = $this->dom->createElement("gCompraGov");
         $this->dom->addChild(
             $gc,

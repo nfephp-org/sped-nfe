@@ -457,7 +457,21 @@ class MakeTest extends TestCase
         $tag = $this->make->tagprodObsCont($std);
 
         $this->assertEquals('obsItem', $tag->nodeName);
-        $this->assertEquals($std->xCampo, $tag->getElementsByTagName('xCampo')->item(0)->nodeValue);
+        $this->assertEquals($std->xCampo, $tag->getElementsByTagName('obsCont')->item(0)->getAttribute('xCampo'));
+        $this->assertEquals($std->xTexto, $tag->getElementsByTagName('xTexto')->item(0)->nodeValue);
+    }
+
+    public function test_tagprodObsFisco(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->xCampo = 'abc';
+        $std->xTexto = '123';
+
+        $tag = $this->make->tagprodObsFisco($std);
+
+        $this->assertEquals('obsItem', $tag->nodeName);
+        $this->assertEquals($std->xCampo, $tag->getElementsByTagName('obsFisco')->item(0)->getAttribute('xCampo'));
         $this->assertEquals($std->xTexto, $tag->getElementsByTagName('xTexto')->item(0)->nodeValue);
     }
 
@@ -1089,8 +1103,8 @@ class MakeTest extends TestCase
         //$std->serieGuia = 'A12345678'; //opcional 9 caracteres
         //$std->nGuia = '123456789'; //Obrigatório se houver guia 9 digitos, opcional caso contrario
 
-        $element = $this->make->tagagropecuario($std);
-        $this->validarCriacaoTag2($std, $element, 'agropecuario', ['nReceituario', 'CPFRespTec']);
+        $element = $this->make->tagAgropecuarioDefensivo($std);
+        $this->validarCriacaoTag2($std, $element, 'defensivo', ['nReceituario', 'CPFRespTec']);
     }
 
     public function test_tagagropecuario_guia(): void
@@ -1103,8 +1117,8 @@ class MakeTest extends TestCase
         $std->serieGuia = 'A12345678'; //opcional 9 caracteres
         $std->nGuia = '123456789'; //Obrigatório se houver guia 9 digitos, opcional caso contrario
 
-        $element = $this->make->tagagropecuario($std);
-        $this->validarCriacaoTag2($std, $element, 'agropecuario', ['tpGuia']);
+        $element = $this->make->tagAgropecuarioGuia($std);
+        $this->validarCriacaoTag2($std, $element, 'guiaTransito', ['tpGuia']);
     }
 
     private function validarCriacaoTag2(

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2008 (http://www.altova.com) by sas-softwares@procergs.rs.gov.br (PROCERGS) -->
+<!-- edited with XMLSpy v2025 rel. 2 (x64) (https://www.altova.com) by PROCERGS (Procergs - Centro de Tecnologia da Informação e Comunicação do Estado do Rio Grande do Sul S.A.) -->
 <!-- PL_009  alterações de esquema decorrentes da - NT2016.002 v1.20 - 31/05/2017 13:14hs-->
 <!-- PL_008g  alterações de esquema decorrentes da - NT2015.002  - 15/07/2015 -->
 <!-- PL_008h  alterações de esquema decorrentes da - NT2015.003 - 17/09/2015 -->
@@ -5519,7 +5519,7 @@ Substituição Tributaria;</xs:documentation>
 											<xs:documentation>Valores totais da NF com IBS / CBS</xs:documentation>
 										</xs:annotation>
 									</xs:element>
-									<xs:element name="vNFTot" minOccurs="0">
+									<xs:element name="vNFTot" type="TDec_1302Opc" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Valor Total da NF considerando os impostos por fora IBS, CBS e IS</xs:documentation>
 										</xs:annotation>

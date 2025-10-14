@@ -551,109 +551,137 @@
 			<xs:annotation>
 				<xs:documentation>Monofasia</xs:documentation>
 			</xs:annotation>
-			<xs:sequence minOccurs="0">
-				<xs:element name="qBCMono" type="TDec_1104Op">
-					<xs:annotation>
-						<xs:documentation>Quantidade tributada na monofasia</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-				<xs:element name="adRemIBS" type="TDec_0302_04">
-					<xs:annotation>
-						<xs:documentation>Alíquota ad rem do IBS</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-				<xs:element name="adRemCBS" type="TDec_0302_04">
-					<xs:annotation>
-						<xs:documentation>Alíquota ad rem da CBS</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-				<xs:element name="vIBSMono" type="TDec1302">
-					<xs:annotation>
-						<xs:documentation>Valor do IBS monofásico</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-				<xs:element name="vCBSMono" type="TDec1302">
-					<xs:annotation>
-						<xs:documentation>Valor da CBS monofásica</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-			</xs:sequence>
-			<xs:sequence minOccurs="0">
-				<xs:element name="qBCMonoReten" type="TDec_1104Op">
-					<xs:annotation>
-						<xs:documentation>Quantidade tributada sujeita a retenção.</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-				<xs:element name="adRemIBSReten" type="TDec_0302_04">
-					<xs:annotation>
-						<xs:documentation>Alíquota ad rem do IBS sujeito a retenção</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-				<xs:element name="vIBSMonoReten" type="TDec1302">
-					<xs:annotation>
-						<xs:documentation>Valor do IBS monofásico sujeito a retenção</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-				<xs:element name="adRemCBSReten" type="TDec_0302_04">
-					<xs:annotation>
-						<xs:documentation>Alíquota ad rem da CBS sujeita a retenção</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-				<xs:element name="vCBSMonoReten" type="TDec1302">
-					<xs:annotation>
-						<xs:documentation>Valor da CBS monofásica sujeita a retenção</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-			</xs:sequence>
-			<xs:sequence minOccurs="0">
-				<xs:element name="qBCMonoRet" type="TDec_1104Op">
-					<xs:annotation>
-						<xs:documentation>Quantidade tributada retida anteriormente</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-				<xs:element name="adRemIBSRet" type="TDec_0302_04">
-					<xs:annotation>
-						<xs:documentation>Alíquota ad rem do IBS retido anteriormente</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-				<xs:element name="vIBSMonoRet" type="TDec1302">
-					<xs:annotation>
-						<xs:documentation>Valor do IBS retido anteriormente</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-				<xs:element name="adRemCBSRet" type="TDec_0302_04">
-					<xs:annotation>
-						<xs:documentation>Alíquota ad rem da CBS retida anteriormente</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-				<xs:element name="vCBSMonoRet" type="TDec1302">
-					<xs:annotation>
-						<xs:documentation>Valor da CBS retida anteriormente</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-			</xs:sequence>
-			<xs:sequence minOccurs="0">
-				<xs:element name="pDifIBS" type="TDec_0302_04">
-					<xs:annotation>
-						<xs:documentation>Percentual do diferimento do imposto monofásico</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-				<xs:element name="vIBSMonoDif" type="TDec1302">
-					<xs:annotation>
-						<xs:documentation>Valor do IBS monofásico diferido</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-				<xs:element name="pDifCBS" type="TDec1302">
-					<xs:annotation>
-						<xs:documentation>Percentual do diferimento do imposto monofásico</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-				<xs:element name="vCBSMonoDif" type="TDec1302">
-					<xs:annotation>
-						<xs:documentation>Valor da CBS monofásica diferida</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-			</xs:sequence>
+			<xs:element name="gMonoPadrao" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Grupo de informações da Tributação Monofásica padrão</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="qBCMono" type="TDec_1104Op">
+							<xs:annotation>
+								<xs:documentation>Quantidade tributada na monofasia</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="adRemIBS" type="TDec_0302_04">
+							<xs:annotation>
+								<xs:documentation>Alíquota ad rem do IBS</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="adRemCBS" type="TDec_0302_04">
+							<xs:annotation>
+								<xs:documentation>Alíquota ad rem da CBS</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="vIBSMono" type="TDec1302">
+							<xs:annotation>
+								<xs:documentation>Valor do IBS monofásico</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="vCBSMono" type="TDec1302">
+							<xs:annotation>
+								<xs:documentation>Valor da CBS monofásica</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="gMonoReten" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Grupo de informações da Tributação Monofásica sujeita a retenção</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="qBCMonoReten" type="TDec_1104Op">
+							<xs:annotation>
+								<xs:documentation>Quantidade tributada sujeita a retenção.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="adRemIBSReten" type="TDec_0302_04">
+							<xs:annotation>
+								<xs:documentation>Alíquota ad rem do IBS sujeito a retenção</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="vIBSMonoReten" type="TDec1302">
+							<xs:annotation>
+								<xs:documentation>Valor do IBS monofásico sujeito a retenção</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="adRemCBSReten" type="TDec_0302_04">
+							<xs:annotation>
+								<xs:documentation>Alíquota ad rem da CBS sujeita a retenção</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="vCBSMonoReten" type="TDec1302">
+							<xs:annotation>
+								<xs:documentation>Valor da CBS monofásica sujeita a retenção</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="gMonoRet" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Grupo de informações da Tributação Monofásica retida anteriormente</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="qBCMonoRet" type="TDec_1104Op">
+							<xs:annotation>
+								<xs:documentation>Quantidade tributada retida anteriormente</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="adRemIBSRet" type="TDec_0302_04">
+							<xs:annotation>
+								<xs:documentation>Alíquota ad rem do IBS retido anteriormente</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="vIBSMonoRet" type="TDec1302">
+							<xs:annotation>
+								<xs:documentation>Valor do IBS retido anteriormente</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="adRemCBSRet" type="TDec_0302_04">
+							<xs:annotation>
+								<xs:documentation>Alíquota ad rem da CBS retida anteriormente</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="vCBSMonoRet" type="TDec1302">
+							<xs:annotation>
+								<xs:documentation>Valor da CBS retida anteriormente</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="gMonoDif" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Grupo de informações do diferimento da Tributação Monofásica</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="pDifIBS" type="TDec_0302_04">
+							<xs:annotation>
+								<xs:documentation>Percentual do diferimento do imposto monofásico</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="vIBSMonoDif" type="TDec1302">
+							<xs:annotation>
+								<xs:documentation>Valor do IBS monofásico diferido</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="pDifCBS" type="TDec1302">
+							<xs:annotation>
+								<xs:documentation>Percentual do diferimento do imposto monofásico</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="vCBSMonoDif" type="TDec1302">
+							<xs:annotation>
+								<xs:documentation>Valor da CBS monofásica diferida</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
 			<xs:element name="vTotIBSMonoItem" type="TDec1302">
 				<xs:annotation>
 					<xs:documentation>Total de IBS monofásico do item</xs:documentation>
@@ -679,74 +707,81 @@
 					<xs:documentation>Valor do BC</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="gIBSUF">
-				<xs:annotation>
-					<xs:documentation>Grupo de informações do IBS na UF</xs:documentation>
-				</xs:annotation>
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="pIBSUF" type="TDec_0302_04">
-							<xs:annotation>
-								<xs:documentation>Aliquota do IBS de competência das UF</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="gDif" type="TDif" minOccurs="0">
-							<xs:annotation>
-								<xs:documentation>Grupo de campos do Diferimento</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="gDevTrib" type="TDevTrib" minOccurs="0">
-							<xs:annotation>
-								<xs:documentation>Grupo de Informações da devolução de tributos</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="gRed" type="TRed" minOccurs="0">
-							<xs:annotation>
-								<xs:documentation>Grupo de campos da redução de aliquota</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="vIBSUF" type="TDec1302">
-							<xs:annotation>
-								<xs:documentation>Valor do IBS de competência das UF</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="gIBSMun">
-				<xs:annotation>
-					<xs:documentation>Grupo de Informações do IBS no Município</xs:documentation>
-				</xs:annotation>
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="pIBSMun" type="TDec_0302_04">
-							<xs:annotation>
-								<xs:documentation>Aliquota do IBS Municipal</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="gDif" type="TDif" minOccurs="0">
-							<xs:annotation>
-								<xs:documentation>Grupo de campos do Diferimento</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="gDevTrib" type="TDevTrib" minOccurs="0">
-							<xs:annotation>
-								<xs:documentation>Grupo de Informações da devolução de tributos</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="gRed" type="TRed" minOccurs="0">
-							<xs:annotation>
-								<xs:documentation>Grupo de campos da redução de aliquota</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="vIBSMun" type="TDec1302">
-							<xs:annotation>
-								<xs:documentation>Valor do IBS Municipal</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
+			<xs:sequence>
+				<xs:element name="gIBSUF">
+					<xs:annotation>
+						<xs:documentation>Grupo de informações do IBS na UF</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="pIBSUF" type="TDec_0302_04">
+								<xs:annotation>
+									<xs:documentation>Aliquota do IBS de competência das UF</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="gDif" type="TDif" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Grupo de campos do Diferimento</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="gDevTrib" type="TDevTrib" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Grupo de Informações da devolução de tributos</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="gRed" type="TRed" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Grupo de campos da redução de aliquota</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="vIBSUF" type="TDec1302">
+								<xs:annotation>
+									<xs:documentation>Valor do IBS de competência das UF</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="gIBSMun">
+					<xs:annotation>
+						<xs:documentation>Grupo de Informações do IBS no Município</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="pIBSMun" type="TDec_0302_04">
+								<xs:annotation>
+									<xs:documentation>Aliquota do IBS Municipal</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="gDif" type="TDif" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Grupo de campos do Diferimento</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="gDevTrib" type="TDevTrib" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Grupo de Informações da devolução de tributos</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="gRed" type="TRed" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Grupo de campos da redução de aliquota</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="vIBSMun" type="TDec1302">
+								<xs:annotation>
+									<xs:documentation>Valor do IBS Municipal</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="vIBS" type="TDec1302" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Valor do IBS</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
 			<xs:element name="gCBS">
 				<xs:annotation>
 					<xs:documentation>Grupo de Tributação da CBS</xs:documentation>
