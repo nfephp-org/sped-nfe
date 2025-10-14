@@ -45,6 +45,25 @@ trait TraitTagTotal
     }
 
     /**
+     * Valor vNTTot
+     * tag NFe/infNFe/total/vNFTot
+     * @param stdClass $std
+     * @return float|null
+     */
+    public function tagTotal(stdClass $std): ?float
+    {
+        $possible = ['vNFTot'];
+        $std = $this->equilizeParameters($std, $possible);
+        $identificador = "W01 <vNFTot> -";
+        if (!isset($std->vNFTot)) {
+            $this->vNFTot = null;
+            return null;
+        }
+        $this->vNFTot = $std->vNFTot;
+        return $this->vNFTot;
+    }
+
+    /**
      * Grupo Totais referentes ao ICMS W02 pai W01
      * tag NFe/infNFe/total/ICMSTot
      * @param stdClass $std

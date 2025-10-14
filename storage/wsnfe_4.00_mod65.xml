@@ -106,7 +106,7 @@
        <NfeStatusServico method="nfeStatusServicoNF" operation="NFeStatusServico4" version="4.00">https://nfe.sefaz.go.gov.br/nfe/services/NFeStatusServico4</NfeStatusServico>
        <RecepcaoEvento method="nfeRecepcaoEvento" operation="NFeRecepcaoEvento" version="1.00">https://nfe.sefaz.go.gov.br/nfe/services/NFeRecepcaoEvento4</RecepcaoEvento>
        <CscNFCe method="admCscNFCe" operation="CscNFCe" version="1.00">https://nfe.sefaz.go.gov.br/nfe/services/v2/CscNFCe</CscNFCe>
-       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="300">https://nfeweb.sefaz.go.gov.br/nfeweb/sites/nfce/danfeNFCe</NfeConsultaQR>
+       <NfeConsultaQR method="QR-CODE" operation="NfeConsultaQR" version="200">https://nfeweb.sefaz.go.gov.br/nfeweb/sites/nfce/danfeNFCe</NfeConsultaQR>
     </producao>
   </UF>
   <UF>
