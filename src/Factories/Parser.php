@@ -1428,6 +1428,15 @@ class Parser
     }
 
     /**
+     * Create tag IBSCBS gTribRegular  UB68|CSTReg|cClassTribReg|pAliqEfetRegIBSUF|vTribRegIBSUF|pAliqEfetRegIBSMun|vTribRegIBSMun|pAliqEfetRegCBS|vTribRegCBS|
+     */
+    protected function ub68Entity(stdClass $std): void
+    {
+        $std->item = $this->item;
+        $this->make->tagIBSCBSTribRegular($std);
+    }
+
+    /**
      * Create tag gIBSCredPres UB73|cCredPres|pCredPres|vCredPres|vCredPresCondSus|
      */
     protected function ub73Entity(stdClass $std): void
@@ -1443,6 +1452,43 @@ class Parser
     {
         $std->item = $this->item;
         $this->make->tagCBSCredPres($std);
+    }
+
+    /**
+     * Create tag IBSCBS gTribCompraGov UB82a|pAliqIBSUF|vTribIBSUF|pAliqIBSMun|vTribIBSMun|pAliqCBS|vTribCBS|
+     */
+    protected function ub82aEntity(stdClass $std): void
+    {
+        $std->item = $this->item;
+        $this->make->taggTribCompraGov($std);
+    }
+
+
+    /**
+     * Create tag IBSCBS gIBSCBSMono UB84|qBCMono|adRemIBS|adRemCBS|vIBSMono|vCBSMono|qBCMonoReten|adRemIBSReten|vIBSMonoReten|adRemCBSReten|vCBSMonoReten|qBCMonoRet|adRemIBSRet|vIBSMonoRet|adRemCBSRet|vCBSMonoRet|pDifIBS|vIBSMonoDif|pDifCBS|vCBSMonoDif|vTotIBSMonoItem|vTotCBSMonoItem|
+     */
+    protected function ub84Entity(stdClass $std): void
+    {
+        $std->item = $this->item;
+        $this->make->tagIBSCBSMono($std);
+    }
+
+    /**
+     * Create tag IBSCBS gTransfCred UB106|vIBS|vCBS|
+     */
+    protected function ub106Entity(stdClass $std): void
+    {
+        $std->item = $this->item;
+        $this->make->taggTransfCred($std);
+    }
+
+    /**
+     * Create tag IBSCBS gCredPresIBSZFM UB109|tpCredPresIBSZFM|vCredPresIBSZFM|
+     */
+    protected function ub109Entity(stdClass $std): void
+    {
+        $std->item = $this->item;
+        $this->make->taggCredPresIBSZFM($std);
     }
 
     /**
