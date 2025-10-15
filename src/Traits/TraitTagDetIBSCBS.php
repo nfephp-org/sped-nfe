@@ -1052,7 +1052,7 @@ trait TraitTagDetIBSCBS
             true,
             "$identificador Código de Classificação do Crédito Presumido (cCredPres)"
         );
-        if (isset($std->ibs_pCredPres) && isset($std->ibs_vCredPres) && isset($std->ibs_vCredPresCondSus)) {
+        if (isset($std->ibs_pCredPres) && (isset($std->ibs_vCredPres) || isset($std->ibs_vCredPresCondSus))) {
             $gibs = $this->dom->createElement("gIBSCredPres");
             $this->dom->addChild(
                 $gibs,
@@ -1080,7 +1080,7 @@ trait TraitTagDetIBSCBS
             }
             $cred->appendChild($gibs);
         }
-        if (isset($std->cbs_pCredPres) && isset($std->cbs_vCredPres) && isset($std->cbs_vCredPresCondSus)) {
+        if (isset($std->cbs_pCredPres) && (isset($std->cbs_vCredPres) || isset($std->cbs_vCredPresCondSus))) {
             $gcbs = $this->dom->createElement("gCBSCredPres");
             $this->dom->addChild(
                 $gcbs,
