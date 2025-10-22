@@ -4,17 +4,17 @@
 	<xs:include schemaLocation="tiposBasico_v1.03.xsd"/>
 	<xs:element name="detEvento">
 		<xs:annotation>
-			<xs:documentation>Informações do Cancelamento de evento</xs:documentation>
+			<xs:documentation>Informações do Evento de Atualização da Data de Previsão de Entrega</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="descEvento">
 					<xs:annotation>
-						<xs:documentation>Informar “Cancelamento de Evento"</xs:documentation>
+						<xs:documentation>Descrição do evento: "Atualização da Data de Previsão de Entrega"</xs:documentation>
 					</xs:annotation>
 					<xs:simpleType>
 						<xs:restriction base="xs:string">
-							<xs:enumeration value="Cancelamento de Evento"/>
+							<xs:enumeration value="Atualização da Data de Previsão de Entrega"/>
 						</xs:restriction>
 					</xs:simpleType>
 				</xs:element>
@@ -23,39 +23,27 @@
 						<xs:documentation>Código do Órgão Autor do Evento. Informar o Código da UF para este Evento.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
+				<xs:element name="tpAutor">
+					<xs:annotation>
+						<xs:documentation>Informar 1=Empresa emitente
+													Valores: 1=Empresa Emitente, 2=Empresa destinatária; 3=Empresa; 5=Fisco;6=RFB; 9=Outros Órgãos;
+						</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="1"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
 				<xs:element name="verAplic" type="TVerAplic">
 					<xs:annotation>
 						<xs:documentation>Versão do Aplicativo que recebeu o Evento</xs:documentation>
 					</xs:annotation>
 				</xs:element>
-				<xs:element name="tpEventoAut">
+				<xs:element name="dPrevEntrega" type="TData">
 					<xs:annotation>
-						<xs:documentation>Código do evento autorizado a ser cancelado</xs:documentation>
-					</xs:annotation>
-					<xs:simpleType>
-						<xs:restriction base="xs:string">
-							<xs:enumeration value="112110"/>
-							<xs:enumeration value="112120"/>
-							<xs:enumeration value="112130"/>
-							<xs:enumeration value="112140"/>
-							<xs:enumeration value="112150"/>
-							<xs:enumeration value="211110"/>
-							<xs:enumeration value="211120"/>
-							<xs:enumeration value="211124"/>
-							<xs:enumeration value="211128"/>
-							<xs:enumeration value="211130"/>
-							<xs:enumeration value="211140"/>
-							<xs:enumeration value="211150"/>
-							<xs:enumeration value="212110"/>
-							<xs:enumeration value="212120"/>
-							<xs:enumeration value="412120"/>
-							<xs:enumeration value="412130"/>
-						</xs:restriction>
-					</xs:simpleType>
-				</xs:element>
-				<xs:element name="nProtEvento" type="TProt">
-					<xs:annotation>
-						<xs:documentation>Informar o número do Protocolo de Autorização do Evento a ser cancelado</xs:documentation>
+						<xs:documentation>Data da previsão de entrega ou disponibilização do bem.
+						</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 			</xs:sequence>

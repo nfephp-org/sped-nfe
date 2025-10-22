@@ -87,7 +87,7 @@
 												<xs:documentation>Informar a chave da nota (NFe ou NFCe) emitida para o fornecimento nos casos em que a legislação obriga a emissão de documento fiscal.</xs:documentation>
 											</xs:annotation>
 										</xs:element>
-										<xs:element name="nItemDFeRef"  type="TnItem">
+										<xs:element name="nItem" type="TnItem">
 											<xs:annotation>
 												<xs:documentation>Corresponde ao atributo “nItem” do elemento “det” do documento referenciado</xs:documentation>
 											</xs:annotation>
