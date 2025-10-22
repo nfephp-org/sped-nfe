@@ -142,6 +142,8 @@ trait TraitTagDetOptions
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = "J01 veicProd Item: $std->item -";
+        //dados para calculo de vITem
+        $this->aVItem[$std->item]['tpOp'] = ($std->tpOp ?? 0);
         $veicProd = $this->dom->createElement("veicProd");
         $this->dom->addChild(
             $veicProd,

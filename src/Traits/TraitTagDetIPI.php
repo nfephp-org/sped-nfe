@@ -40,6 +40,8 @@ trait TraitTagDetIPI
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = "O01 IPI Item: $std->item -";
+        //dados para calculo de vItem
+        $this->aVItem[$std->item]['vIPI'] = ($std->vIPI ?? 0);
         $ipi = $this->dom->createElement('IPI');
         $this->dom->addChild(
             $ipi,

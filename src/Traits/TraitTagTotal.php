@@ -26,19 +26,15 @@ trait TraitTagTotal
      * Valor vNTTot
      * tag NFe/infNFe/total/vNFTot
      * @param stdClass $std
-     * @return float|null
+     * @return float
      */
-    public function tagTotal(stdClass $std): ?float
+    public function tagTotal(stdClass $std): float
     {
         $possible = ['vNFTot'];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = "W01 <vNFTot> -";
-        if (!isset($std->vNFTot)) {
-            $this->vNFTot = null;
-            return null;
-        }
-        $this->vNFTot = $std->vNFTot;
-        return $this->vNFTot;
+        $this->stdTot->vNFTot = ($std->vNFTot ?? 0);
+        return $this->stdTot->vNFTot;
     }
 
     /**

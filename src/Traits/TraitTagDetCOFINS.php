@@ -37,6 +37,11 @@ trait TraitTagDetCOFINS
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = "S01 COFINS Item: $std->item -";
+        //dados para calculo de vItem
+        if (empty($this->aVItem[$std->item])) {
+            $this->aVItem[$std->item] = $this->aVItemStruct;
+        }
+        $this->aVItem[$std->item]['vCOFINS'] = $std->vCOFINS;
         switch ($std->CST) {
             case '01':
             case '02':
@@ -142,6 +147,12 @@ trait TraitTagDetCOFINS
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = "T01 COFINSST Item: $std->item -";
+        //dados para calculo de vItem
+        if (empty($this->aVItem[$std->item])) {
+            $this->aVItem[$std->item] = $this->aVItemStruct;
+        }
+        $this->aVItem[$std->item]['indSomaCOFINSST'] = ($std->indSomaCOFINSST ?? 0);
+        $this->aVItem[$std->item]['vCOFINSST'] = ($std->vCOFINS ?? 0);
         if ($std->indSomaCOFINSST == 1) {
             $this->stdTot->vCOFINSST += $std->vCOFINS;
         }

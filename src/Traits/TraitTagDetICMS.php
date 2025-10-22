@@ -205,6 +205,10 @@ trait TraitTagDetICMS
                 $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
                 $this->stdTot->vFCPST += (float) !empty($std->vFCPST) ? $std->vFCPST : 0;
                 $this->stdTot->vFCP += (float) !empty($std->vFCP) ? $std->vFCP : 0;
+                //dados calculo vItem
+                $this->aVItem[$std->item]['vFCPST'] = ($std->vFCPST ?? 0);
+                $this->aVItem[$std->item]['vICMSST'] = ($std->vICMSST ?? 0);
+                ;
                 $icms = $this->dom->createElement("ICMS10");
                 $this->dom->addChild(
                     $icms,
@@ -354,6 +358,8 @@ trait TraitTagDetICMS
                 $this->stdTot->vICMSMono += (float) !empty($std->vICMSMono) ? $std->vICMSMono : 0;
                 $this->stdTot->qBCMonoReten += (float) !empty($std->qBCMonoReten) ? $std->qBCMonoReten : 0;
                 $this->stdTot->vICMSMonoReten += (float) !empty($std->vICMSMonoReten) ? $std->vICMSMonoReten : 0;
+                //dados calculo vItem
+                $this->aVItem[$std->item]['vICMSMonoReten'] = ($std->vICMSMonoReten ?? 0);
                 $icms = $this->dom->createElement("ICMS15");
                 $this->dom->addChild(
                     $icms,
@@ -433,6 +439,10 @@ trait TraitTagDetICMS
                 $this->stdTot->vBC += (float) !empty($std->vBC) ? $std->vBC : 0;
                 $this->stdTot->vICMS += (float) !empty($std->vICMS) ? $std->vICMS : 0;
                 $this->stdTot->vFCP += (float) !empty($std->vFCP) ? $std->vFCP : 0;
+                //dados calculo vItem
+                $this->aVItem[$std->item]['indDeduzDeson'] = ($std->indDeduzDeson ?? 0);
+                $this->aVItem[$std->item]['vICMSDeson'] = ($std->vICMSDeson ?? 0);
+
                 $icms = $this->dom->createElement("ICMS20");
                 $this->dom->addChild(
                     $icms,
@@ -534,6 +544,12 @@ trait TraitTagDetICMS
                 $this->stdTot->vBCST += (float) !empty($std->vBCST) ? $std->vBCST : 0;
                 $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
                 $this->stdTot->vFCPST += (float) !empty($std->vFCPST) ? $std->vFCPST : 0;
+                //dados calculo vItem
+                $this->aVItem[$std->item]['indDeduzDeson'] = ($std->indDeduzDeson ?? 0);
+                $this->aVItem[$std->item]['vICMSDeson'] = ($std->vICMSDeson ?? 0);
+                $this->aVItem[$std->item]['vFCPST'] = ($std->vFCPST ?? 0);
+                $this->aVItem[$std->item]['vICMSST'] = ($std->vICMSST ?? 0);
+                ;
                 $icms = $this->dom->createElement("ICMS30");
                 $this->dom->addChild(
                     $icms,
@@ -641,6 +657,9 @@ trait TraitTagDetICMS
             case '41':
             case '50':
                 $this->stdTot->vICMSDeson += (float)!empty($std->vICMSDeson) ? $std->vICMSDeson : 0;
+                //dados calculo vItem
+                $this->aVItem[$std->item]['indDeduzDeson'] = ($std->indDeduzDeson ?? 0);
+                $this->aVItem[$std->item]['vICMSDeson'] = ($std->vICMSDeson ?? 0);
                 $icms = $this->dom->createElement("ICMS40");
                 $this->dom->addChild(
                     $icms,
@@ -815,6 +834,8 @@ trait TraitTagDetICMS
                 $this->stdTot->vICMSMono += (float) !empty($std->vICMSMono) ? $std->vICMSMono : 0;
                 $this->stdTot->qBCMonoReten += (float) !empty($std->qBCMonoReten) ? $std->qBCMonoReten : 0;
                 $this->stdTot->vICMSMonoReten += (float) !empty($std->vICMSMonoReten) ? $std->vICMSMonoReten : 0;
+                //dados calculo vItem
+                $this->aVItem[$std->item]['vICMSMonoReten'] = ($std->vICMSMonoReten ?? 0);
                 $icms = $this->dom->createElement("ICMS53");
                 $this->dom->addChild(
                     $icms,
@@ -1023,6 +1044,12 @@ trait TraitTagDetICMS
                 $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
                 $this->stdTot->vFCPST += (float) !empty($std->vFCPST) ? $std->vFCPST : 0;
                 $this->stdTot->vFCP += (float) !empty($std->vFCP) ? $std->vFCP : 0;
+                //dados calculo vItem
+                $this->aVItem[$std->item]['indDeduzDeson'] = ($std->indDeduzDeson ?? 0);
+                $this->aVItem[$std->item]['vICMSDeson'] = ($std->vICMSDeson ?? 0);
+                $this->aVItem[$std->item]['vFCPST'] = ($std->vFCPST ?? 0);
+                $this->aVItem[$std->item]['vICMSST'] = ($std->vICMSST ?? 0);
+                ;
                 $icms = $this->dom->createElement("ICMS70");
                 $this->dom->addChild(
                     $icms,
@@ -1205,6 +1232,12 @@ trait TraitTagDetICMS
                 $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
                 $this->stdTot->vFCPST += (float) !empty($std->vFCPST) ? $std->vFCPST : 0;
                 $this->stdTot->vFCP += (float) !empty($std->vFCP) ? $std->vFCP : 0;
+                //dados calculo vItem
+                $this->aVItem[$std->item]['indDeduzDeson'] = ($std->indDeduzDeson ?? 0);
+                $this->aVItem[$std->item]['vICMSDeson'] = ($std->vICMSDeson ?? 0);
+                $this->aVItem[$std->item]['vFCPST'] = ($std->vFCPST ?? 0);
+                $this->aVItem[$std->item]['vICMSST'] = ($std->vICMSST ?? 0);
+                ;
                 $icms = $this->dom->createElement("ICMS90");
                 $this->dom->addChild(
                     $icms,
@@ -1421,6 +1454,8 @@ trait TraitTagDetICMS
         $this->stdTot->vICMS += (float) !empty($std->vICMS) ? $std->vICMS : 0;
         $this->stdTot->vBCST += (float) !empty($std->vBCST) ? $std->vBCST : 0;
         $this->stdTot->vST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
+        //dados calculo vItem
+        $this->stdTot->vICMSST += (float) !empty($std->vICMSST) ? $std->vICMSST : 0;
         $icmsPart = $this->dom->createElement("ICMSPart");
         $this->dom->addChild(
             $icmsPart,
@@ -1584,6 +1619,7 @@ trait TraitTagDetICMS
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = "N10b ICMSST Item: $std->item -";
+        //totalizador
         $this->stdTot->vFCPSTRet += (float) !empty($std->vFCPSTRet) ? $std->vFCPSTRet : 0;
         $icmsST = $this->dom->createElement("ICMSST");
         $this->dom->addChild(

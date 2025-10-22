@@ -143,6 +143,7 @@ trait TraitTagTransp
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = 'X11 retTransp -';
+
         $retTransp = $this->dom->createElement("retTransp");
         $this->dom->addChild(
             $retTransp,

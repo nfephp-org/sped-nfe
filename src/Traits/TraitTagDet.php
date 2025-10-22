@@ -79,6 +79,17 @@ trait TraitTagDet
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = "I01 prod - Item: $std->item";
+        //dados para calculo do vItem
+        if (empty($this->aVItem[$std->item])) {
+            $this->aVItem[$std->item] = $this->aVItemStruct;
+        }
+        $this->aVItem[$std->item]['indTot'] = ($std->indTot ?? 0);
+        $this->aVItem[$std->item]['vProd'] = ($std->vProd ?? 0);
+        $this->aVItem[$std->item]['vDesc'] = ($std->vDesc ?? 0);
+        $this->aVItem[$std->item]['vSeg'] = ($std->vSeg ?? 0);
+        $this->aVItem[$std->item]['vFrete'] = ($std->vFrete ?? 0);
+        $this->aVItem[$std->item]['vOutro'] = ($std->vOutro ?? 0);
+        $this->aVItem[$std->item]['vItem'] = ($std->vItem ?? 0);
         //totalizador
         if ($std->indTot == 1) {
             $this->stdTot->vProd += (float) $this->conditionalNumberFormatting($std->vProd);
@@ -87,7 +98,6 @@ trait TraitTagDet
         $this->stdTot->vSeg += (float) $this->conditionalNumberFormatting($std->vSeg);
         $this->stdTot->vDesc += (float) $this->conditionalNumberFormatting($std->vDesc);
         $this->stdTot->vOutro += (float) $this->conditionalNumberFormatting($std->vOutro);
-
         $cean = !empty($std->cEAN) ? trim(strtoupper($std->cEAN)) : '';
         $ceantrib = !empty($std->cEANTrib) ? trim(strtoupper($std->cEANTrib)) : '';
         if ($this->checkgtin) {
@@ -332,15 +342,6 @@ trait TraitTagDet
             . "Ficha de Conteúdo de Importação"
         );
         $this->aProd[$std->item] = $prod;
-        //Valor total do Item, correspondente à sua participação no total da nota.
-        //A soma dos itens deverá corresponder ao total da nota.
-        if (!empty($std->vItem) && is_numeric($std->vItem) && $std->item > 0 && $this->schema > 9) {
-            $vItem = $this->dom->createElement(
-                "vItem",
-                $this->conditionalNumberFormatting($std->vItem, 2)
-            );
-            $this->aVItem[$std->item] = $vItem;
-        }
         return $prod;
     }
 
