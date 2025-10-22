@@ -59,6 +59,8 @@ trait TraitTagDetImposto
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = "U50 impostoDevol Item: $std->item -";
+        //dados para calculo de vITem
+        $this->aVItem[$std->item]['vIPIDevol'] = ($std->vIPIDevol ?? 0);
         //totalizador
         $this->stdTot->vIPIDevol += (float) $std->vIPIDevol;
         $impostoDevol = $this->dom->createElement("impostoDevol");

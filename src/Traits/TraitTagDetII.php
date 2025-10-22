@@ -34,6 +34,8 @@ trait TraitTagDetII
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = "P01 II Item: $std->item -";
+        //dados para calculo de vItem
+        $this->aVItem[$std->item]['vII'] = ($std->vII ?? 0);
         //totalizador
         $this->stdTot->vII += (float) $std->vII;
         $tii = $this->dom->createElement('II');

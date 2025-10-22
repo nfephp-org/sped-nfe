@@ -37,6 +37,8 @@ trait TraitTagDetPIS
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = "Q01 PIS Item: $std->item -";
+        //dados para calculo de vITem
+        $this->aVItem[$std->item]['vPIS'] = $std->vPIS;
         switch ($std->CST) {
             case '01':
             case '02':
@@ -222,6 +224,9 @@ trait TraitTagDetPIS
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = "R01 PISST Item: $std->item -";
+        //dados para calculo de vITem
+        $this->aVItem[$std->item]['indSomaPISST'] = ($std->indSomaPISST ?? 0);
+        $this->aVItem[$std->item]['vPISST'] = ($std->vPIS ?? 0);
         if ($std->indSomaPISST == 1) {
             $this->stdTot->vPISST += $std->vPIS;
         }

@@ -2009,6 +2009,7 @@ $ibscbs = [
     //######### subgrupo gIBSCBS 
     'vBC' => 100, //opcional Base de cálculo do IBS e CBS 13v2. Se este campo for declarado, alguns outros parametros serão OBRIGATÓRIOS  
          //dados IBS Estadual
+    'vIBS' => null, //opcional soma de vIBSUF e vIBSMun, se não informado será calculado pela classe     
     'gIBSUF_pIBSUF' => 10, //opcional Alíquota do IBS de competência das UF 3v2-4, OBRIGATÓRIO se vBC for informado
         //removido 'gIBSUF_vTribOp' => 2, //opcional Valor bruto do tributo na operação 13v2
     'gIBSUF_pDif' => 5, //opcional Percentual do diferimento 3v2-4

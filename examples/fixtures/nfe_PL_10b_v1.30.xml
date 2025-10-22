@@ -23,9 +23,9 @@
       <tpAmb>1</tpAmb>
       <finNFe>5</finNFe>
       <!--Optional:-->
-      <tpNFDebito>08</tpNFDebito>
+      <tpNFDebito>04</tpNFDebito>
       <!--Optional:-->
-      <tpNFCredito>04</tpNFCredito>
+      <tpNFCredito>02</tpNFCredito>
       <indFinal>0</indFinal>
       <indPres>5</indPres>
       <!--Optional:-->
