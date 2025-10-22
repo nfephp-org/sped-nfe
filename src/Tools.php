@@ -1132,6 +1132,7 @@ class Tools extends ToolsCommon
             112120 => ['versao' => '1.00', 'nome' => 'envEvento'],
             112130 => ['versao' => '1.00', 'nome' => 'envEvento'],
             112140 => ['versao' => '1.00', 'nome' => 'envEvento'],
+            112150 => ['versao' => '1.00', 'nome' => 'envEvento'],
             211110 => ['versao' => '1.00', 'nome' => 'envEvento'],
             211120 => ['versao' => '1.00', 'nome' => 'envEvento'],
             211128 => ['versao' => '1.00', 'nome' => 'envEvento'],
@@ -1184,6 +1185,7 @@ class Tools extends ToolsCommon
                     211124,
                     112130,
                     112140,
+                    112150,
                 ]
             ) && $uf === 'SVRS'
         ) {
@@ -1492,6 +1494,10 @@ class Tools extends ToolsCommon
             case 112140:
                 $std->alias = 'envEvento';
                 $std->desc = 'Fornecimento não realizado com pagamento antecipado';
+                break;
+            case 112150:
+                $std->alias = 'envEvento';
+                $std->desc = 'Atualização da Data de Previsão de Entrega';
                 break;
             case 211124:
                 $std->alias = 'envEvento';
