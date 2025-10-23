@@ -34,7 +34,10 @@ class ValidTXT
             $comp = '_sebrae';
         } elseif (strtoupper($baselayout) === 'LOCAL_V12') {
             $comp = '_v1.2';
+        } elseif (strtoupper($baselayout) === 'LOCAL_V13') {
+            $comp = '_v1.3';
         }
+        
         $file = $path . '/txtstructure' . ($version * 100) . $comp . '.json';
         if (!is_file($file)) {
             throw new \InvalidArgumentException("O arquivo de estrutura para a "
