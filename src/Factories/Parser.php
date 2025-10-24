@@ -32,7 +32,7 @@ class Parser
      */
     protected $structure;
     /**
-     * @var Make
+     * @var \NFePHP\NFe\Make|\NFePHP\NFe\MakeDev
      */
     protected $make;
     /**
@@ -1771,7 +1771,7 @@ class Parser
 
         $this->mergeStdClass($std);
 
-        $this->tagIBSCBS($this->stdAuxiliar);
+        $this->make->tagIBSCBS($this->stdAuxiliar);
 
         $this->stdAuxiliar = null;
     }
@@ -1785,7 +1785,7 @@ class Parser
     {
         $std->item = $this->item;
 
-        $this->tagIBSCBSTribRegular($std);
+        $this->make->tagIBSCBSTribRegular($std);
     }
 
     /**
@@ -1796,7 +1796,7 @@ class Parser
     {
         $std->item = $this->item;
 
-        $this->tagIBSCredPres($std);
+        $this->make->tagIBSCredPres($std);
     }
 
 
@@ -1808,7 +1808,7 @@ class Parser
     {
         $std->item = $this->item;
 
-        $this->tagCBSCredPres($std);
+        $this->make->tagCBSCredPres($std);
     }
 
     /**
@@ -1819,7 +1819,7 @@ class Parser
     {
         $std->item = $this->item;
 
-        $this->taggTribCompraGov($std);
+        $this->make->taggTribCompraGov($std);
     }
 
     /**
@@ -1863,7 +1863,7 @@ class Parser
 
         $this->mergeStdClass($std);
 
-        $this->tagIBSCBSMono($this->stdAuxiliar);
+        $this->make->tagIBSCBSMono($this->stdAuxiliar);
 
         $this->stdAuxiliar = null;
     }
@@ -1877,7 +1877,7 @@ class Parser
     {
         $std->item = $this->item;
 
-        $this->taggAjusteCompet($std);
+        $this->make->taggAjusteCompet($std);
     }
 
     /**
@@ -1888,7 +1888,7 @@ class Parser
     {
         $std->item = $this->item;
 
-        $this->taggEstornoCred($std);
+        $this->make->taggEstornoCred($std);
     }
 
     /**
@@ -1900,7 +1900,7 @@ class Parser
     {
         $std->item = $this->item;
 
-        $this->taggEstornoCred($std);
+        $this->make->taggEstornoCred($std);
     }
 
     /**
@@ -1912,7 +1912,7 @@ class Parser
     {
         $std->item = $this->item;
 
-        $this->taggCredPresIBSZFM($std);
+        $this->make->taggCredPresIBSZFM($std);
     }
 
     /**
@@ -1921,7 +1921,7 @@ class Parser
      */
     protected function w31Entity(stdClass $std): void
     {
-        $this->tagISTot($std);
+        $this->make->tagISTot($std);
     }
 
     /**
@@ -1978,7 +1978,7 @@ class Parser
     {
         $this->mergeStdClass($std);
 
-        $this->tagIBSCBSTot($this->stdAuxiliar);
+        $this->make->tagIBSCBSTot($this->stdAuxiliar);
 
         $this->stdAuxiliar = null;
     }
