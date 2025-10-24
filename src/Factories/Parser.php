@@ -1674,37 +1674,6 @@ class Parser
     }
 
     /**
-     * Grupo IS (Imposto selectivo) UB01 pai H01
-     * UB01|CSTIS|cClassTribIS|vBCIS|pIS|pISEspec|uTrib|qTrib|vIS|
-     */
-    protected function ub01Entity(stdClass $std): void
-    {
-        $std->item = $this->item;
-        $this->make->tagIS($std);
-    }
-
-    /**
-     * Informações do Imposto de Bens e Serviços - IBS e da Contribuição de Bens e Serviços - CBS
-     * UB12|CST|cClassTrib|indDoacao|
-     */
-    protected function ub12Entity(stdClass $std): void
-    {
-        $std->item = $this->item;
-
-        $this->make->tagIS($std);
-    }
-
-    /**
-     * Grupo IS (Imposto selectivo) UB01 pai H01
-     * UB01|CSTIS|cClassTribIS|vBCIS|pIS|pISEspec|uTrib|qTrib|vIS|
-     */
-    protected function ub12Entity(stdClass $std): void
-    {
-        $std->item = $this->item;
-        $this->make->tagIS($std);
-    }
-
-    /**
      * Creates stdClass aux
      */
     protected function mergeStdClass(stdClass $std): void
@@ -1726,6 +1695,7 @@ class Parser
     protected function ub01Entity(stdClass $std): void
     {
         $std->item = $this->item;
+
         $this->make->tagIS($std);
     }
 
@@ -1736,6 +1706,7 @@ class Parser
     protected function ub12Entity(stdClass $std): void
     {
         $std->item = $this->item;
+
         $this->mergeStdClass($std);
     }
 
@@ -1746,6 +1717,7 @@ class Parser
     protected function ub17Entity(stdClass $std): void
     {
         $std->item = $this->item;
+
         $this->mergeStdClass($std);
     }
 
@@ -1756,6 +1728,7 @@ class Parser
     protected function ub36Entity(stdClass $std): void
     {
         $std->item = $this->item;
+
         $this->mergeStdClass($std);
     }
 
@@ -1766,6 +1739,7 @@ class Parser
     protected function ub55Entity(stdClass $std): void
     {
         $std->item = $this->item;
+        
         $this->mergeStdClass($std);
 
         $this->tagIBSCBS($this->stdAuxiliar);
