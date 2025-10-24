@@ -1700,7 +1700,8 @@ class Parser
     }
 
     /**
-     * Informações do Imposto de Bens e Serviços - IBS e da Contribuição de Bens e Serviços - CBS - pai M01
+     * Informações do Imposto de Bens e Serviços
+     * IBS e da Contribuição de Bens e Serviços - CBS - pai M01
      * UB12|CST|cClassTrib|indDoacao|vBC|
      */
     protected function ub12Entity(stdClass $std): void
@@ -1711,8 +1712,9 @@ class Parser
     }
 
     /**
-     * Grupo de Informações do IBS para a UF - pai UB15
-     * UB17|gIBSUF_pIBSUF|gIBSUF_pDif|gIBSUF_vDif|gIBSUF_vDevTrib|gIBSUF_pRedAliq|gIBSUF_pAliqEfet|gIBSUF_vIBSUF|
+     * Grupo de Informações do IBS para a UF
+     * UB17|gIBSUF_pIBSUF|gIBSUF_pDif|gIBSUF_vDif|gIBSUF_vDevTrib
+     *     |gIBSUF_pRedAliq|gIBSUF_pAliqEfet|gIBSUF_vIBSUF|
      */
     protected function ub17Entity(stdClass $std): void
     {
@@ -1722,8 +1724,9 @@ class Parser
     }
 
     /**
-     * Grupo de Informações do IBS para o município  - pai UB15
-     * UB36|gIBSMun_pIBSMun|gIBSMun_pDif|gIBSMun_vDif|gIBSMun_vDevTrib|gIBSMun_pRedAliq|gIBSMun_pAliqEfet|gIBSMun_vIBSMun|
+     * Grupo de Informações do IBS para o município
+     * UB36|gIBSMun_pIBSMun|gIBSMun_pDif|gIBSMun_vDif|gIBSMun_vDevTrib
+     *     |gIBSMun_pRedAliq|gIBSMun_pAliqEfet|gIBSMun_vIBSMun|
      */
     protected function ub36Entity(stdClass $std): void
     {
@@ -1733,13 +1736,14 @@ class Parser
     }
 
     /**
-     * Grupo de Informações da CBS  - Pai UB15
-     * UB55|gCBS_pCBS|gCBS_pDif|gCBS_vDif|gCBS_vDevTrib|gCBS_pRedAliq|gCBS_pAliqEfet|gCBS_vCBS|
+     * Grupo de Informações da CBS
+     * UB55|gCBS_pCBS|gCBS_pDif|gCBS_vDif|gCBS_vDevTrib
+     *     |gCBS_pRedAliq|gCBS_pAliqEfet|gCBS_vCBS|
      */
     protected function ub55Entity(stdClass $std): void
     {
         $std->item = $this->item;
-        
+
         $this->mergeStdClass($std);
 
         $this->tagIBSCBS($this->stdAuxiliar);
@@ -1748,8 +1752,9 @@ class Parser
     }
 
     /**
-     * Grupo de informações da Tributação Regular - Pai UB15
-     * UB68|CSTReg|cClassTribReg|pAliqEfetRegIBSUF|vTribRegIBSUF|pAliqEfetRegIBSMun|vTribRegIBSMun|pAliqEfetRegCBS|vTribRegCBS|
+     * Grupo de informações da Tributação Regular
+     * UB68|CSTReg|cClassTribReg|pAliqEfetRegIBSUF|vTribRegIBSUF|pAliqEfetRegIBSMun
+     *     |vTribRegIBSMun|pAliqEfetRegCBS|vTribRegCBS|
      */
     protected function ub68Entity(stdClass $std): void
     {
@@ -1759,7 +1764,7 @@ class Parser
     }
 
     /**
-     * Grupo de Informações do Crédito Presumido referente ao IBS - Pai UB15
+     * Grupo de Informações do Crédito Presumido referente ao IBS
      * UB73|cCredPres|pCredPres|vCredPres|vCredPresCondSus|
      */
     protected function ub73Entity(stdClass $std): void
@@ -1771,7 +1776,7 @@ class Parser
 
 
     /**
-     * Grupo de Informações do Crédito Presumido referente a CBS - Pai UB15
+     * Grupo de Informações do Crédito Presumido referente a CBS
      * UB78|cCredPres|pCredPres|vCredPres|vCredPresCondSus|
      */
     protected function ub78Entity(stdClass $std): void
@@ -1782,7 +1787,7 @@ class Parser
     }
 
     /**
-     * Grupo de informações da composição do valor do IBS e da CBS em compras governamentais - Pai UB15
+     * Grupo de informações da composição do valor do IBS e da CBS em compras governamentais
      * UB82A|pAliqIBSUF|vTribIBSUF|pAliqIBSMun|vTribIBSMun|pAliqCBS|vTribCBS|
      */
     protected function ub82aEntity(stdClass $std): void
@@ -1793,7 +1798,7 @@ class Parser
     }
 
     /**
-     * Grupo de Informações do IBS e CBS em operações com imposto monofásico - Pai UB15
+     * Grupo de Informações do IBS e CBS em operações com imposto monofásico
      * UB84|qBCMono|adRemIBS|adRemCBS|vIBSMono|vCBSMono|vTotIBSMonoItem|vTotCBSMonoItem|
      */
     protected function ub84Entity(stdClass $std): void
@@ -1803,7 +1808,7 @@ class Parser
     }
 
     /**
-     * Grupo de informações da Tributação Monofásica Sujeita à Retenção - Pai UB15
+     * Grupo de informações da Tributação Monofásica Sujeita à Retenção
      * UB90|qBCMonoReten|adRemIBSReten|vIBSMonoReten|adRemCBSReten|vCBSMonoReten|
      */
     protected function ub90Entity(stdClass $std): void
@@ -1813,7 +1818,7 @@ class Parser
     }
 
     /**
-     * Grupo de informações da Tributação Monofásica Retida Anteriormente - Pai UB15
+     * Grupo de informações da Tributação Monofásica Retida Anteriormente
      * UB94|qBCMonoRet|adRemIBSRet|vIBSMonoRet|adRemCBSRet|vCBSMonoRet|
      */
     protected function ub94Entity(stdClass $std): void
@@ -1824,7 +1829,7 @@ class Parser
     }
 
     /**
-     * Grupo de informações do Diferimento da Tributação Monofásica - Pai UB15
+     * Grupo de informações do Diferimento da Tributação Monofásica
      * UB99|pDifIBS|vIBSMonoDif|pDifCBS|vCBSMonoDif|
      */
     protected function ub99Entity(stdClass $std): void
@@ -1840,7 +1845,7 @@ class Parser
 
 
     /**
-     * Ajuste de Competência - Pai UB15
+     * Ajuste de Competência
      * UB112|competApur|vIBS|vCBS|vIBSEstCred|vCBSEstCred|
      */
     protected function ub112Entity(stdClass $std): void
@@ -1863,7 +1868,8 @@ class Parser
 
     /**
      * Crédito Presumido da Operação - Pai UB119
-     * UB120|vBCCredPres|ibs_pCredPres|ibs_vCredPres|ibs_vCredPresCondSus|cbs_pCredPres|cbs_vCredPres|cbs_vCredPresCondSus|
+     * UB120|vBCCredPres|ibs_pCredPres|ibs_vCredPres|ibs_vCredPresCondSus|cbs_pCredPres
+     *      |cbs_vCredPres|cbs_vCredPresCondSus|
      */
     protected function ub120Entity(stdClass $std): void
     {
@@ -1873,7 +1879,8 @@ class Parser
     }
 
     /**
-     * Grupo para apropriação de crédito presumido de IBS sobre o saldo devedor na ZFM (art. 450, § 1º, LC 214/25) - Pai UB119
+     * Grupo para apropriação de crédito presumido de IBS sobre o
+     * saldo devedor na ZFM (art. 450, § 1º, LC 214/25) - Pai UB119
      * UB131|competApur|tpCredPresIBSZFM|vCredPresIBSZFM|
      */
     protected function ub131Entity(stdClass $std): void
@@ -1930,7 +1937,8 @@ class Parser
 
     /**
      * Grupo total da Monofasia
-     * W57|gMono_vIBSMono|gMono_vCBSMono|gMono_vIBSMonoReten|gMono_vCBSMonoReten|gMono_vIBSMonoRet|gMono_vCBSMonoRet|
+     * W57|gMono_vIBSMono|gMono_vCBSMono|gMono_vIBSMonoReten|gMono_vCBSMonoReten
+     *    |gMono_vIBSMonoRet|gMono_vCBSMonoRet|
      */
     protected function w57Entity(stdClass $std): void
     {
