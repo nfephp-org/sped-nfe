@@ -1371,11 +1371,23 @@ class Parser
         $this->make->tagICMSTot($std);
     }
 
-    protected function w04cEntity($std) {}
+    protected function w04cEntity(stdClass $std): void
+    {
+        //fake não faz nada
+        $field = null;
+    }
 
-    protected function w04eEntity($std) {}
+    protected function w04eEntity(stdClass $std): void
+    {
+        //fake não faz nada
+        $field = null;
+    }
 
-    protected function w04gEntity($std) {}
+    protected function w04gEntity(stdClass $std): void
+    {
+        //fake não faz nada
+        $field = null;
+    }
 
     /**
      * Create tag ISSQNTot [W17], belongs to [W]
