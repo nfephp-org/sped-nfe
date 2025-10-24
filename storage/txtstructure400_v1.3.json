@@ -1,7 +1,7 @@
 {
     "NOTAFISCAL": "NOTAFISCAL|qtd|",
     "A": "A|versao|Id|pk_nItem|",
-    "B": "B|cUF|cNF|natOp|mod|serie|nNF|dhEmi|dhSaiEnt|tpNF|idDest|cMunFG|tpImp|tpEmis|cDV|tpAmb|finNFe|indFinal|indPres|indIntermed|procEmi|verProc|dhCont|xJust|indPag|dPrevEntrega|tpNFDebito|tpNFCredito|cMunFGIBS|cMunFGIBS|",
+    "B": "B|cUF|cNF|natOp|mod|serie|nNF|dhEmi|dhSaiEnt|tpNF|idDest|cMunFG|tpImp|tpEmis|cDV|tpAmb|finNFe|indFinal|indPres|indIntermed|procEmi|verProc|dhCont|xJust|indPag|dPrevEntrega|tpNFDebito|tpNFCredito|cMunFGIBS|",
     "BA": "BA|",
     "BA02": "BA02|refNFe|",
     "BA03": "BA03|cUF|AAMM|CNPJ|mod|serie|nNF|",
@@ -126,7 +126,7 @@
     "W42": "W42|gIBSMun_vDif|gIBSMun_vDevTrib|gIBSMun_vIBSMun|",
     "W50": "W50|gCBS_vDif|gCBS_vDevTrib|gCBS_vCBS|gCBS_vCredPres|gCBS_vCredPresCondSus|",
     "W57": "W57|gMono_vIBSMono|gMono_vCBSMono|gMono_vIBSMonoReten|gMono_vCBSMonoReten|gMono_vIBSMonoRet|gMono_vCBSMonoRet|",
-    "W59E": "W59E|gEstonoCred_vIBSEstCred|gEstonoCred_vCBSEstCred",
+    "W59E": "W59E|gEstonoCred_vIBSEstCred|gEstonoCred_vCBSEstCred|",
     "X": "X|modFrete|",
     "X03": "X03|xNome|IE|xEnder|xMun|UF|",
     "X04": "X04|CNPJ|",

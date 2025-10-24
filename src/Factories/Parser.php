@@ -141,7 +141,7 @@ class Parser
     public function toXml(array $nota): ?string
     {
         $this->array2xml($nota);
-        if ($this->make->monta()) {
+        if ($this->make->montaNFe()) {
             return $this->make->getXML();
         }
         return null;
@@ -1928,7 +1928,7 @@ class Parser
      * Totais da NF-e com IBS e CBS - Pai w01
      * W34|vBCIBSCBS|
      */
-    protected function w341Entity(stdClass $std): void
+    protected function w34Entity(stdClass $std): void
     {
         $this->mergeStdClass($std);
     }
@@ -1974,7 +1974,7 @@ class Parser
      * Grupo total do Estorno de Crédito
      * W59E|gEstonoCred_vIBSEstCred|gEstonoCred_vCBSEstCred
      */
-    protected function w95eEntity(stdClass $std): void
+    protected function w59eEntity(stdClass $std): void
     {
         $this->mergeStdClass($std);
 
