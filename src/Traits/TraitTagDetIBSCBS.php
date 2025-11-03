@@ -458,7 +458,6 @@ trait TraitTagDetIBSCBS
     {
         $possible = [
             'item',
-            'cCredPres',
             'pCredPres',
             'vCredPres',
             'vCredPresCondSus',
@@ -469,13 +468,6 @@ trait TraitTagDetIBSCBS
         isset($std->vCredPresCondSus) ? $this->stdIBSCBSTot->vCredPresCondSus += $std->vCredPresCondSus : null;
         $identificador = "UB73 gIBSCredPres Item: $std->item -";
         $gIBSCredPres = $this->dom->createElement("gIBSCredPres");
-        $this->dom->addChild(
-            $gIBSCredPres,
-            "cCredPres",
-            $std->cCredPres,
-            true,
-            "$identificador Código de Classificação do Crédito Presumido (cCredPres)"
-        );
         $this->dom->addChild(
             $gIBSCredPres,
             "pCredPres",
@@ -517,7 +509,6 @@ trait TraitTagDetIBSCBS
     {
         $possible = [
             'item',
-            'cCredPres',
             'pCredPres',
             'vCredPres',
             'vCredPresCondSus',
@@ -528,13 +519,6 @@ trait TraitTagDetIBSCBS
         $this->stdIBSCBSTot->vCredPresCondSus += $std->vCredPresCondSus ?? 0;
         $identificador = "UB78 gCBSCredPres Item: $std->item -";
         $gCBSCredPres = $this->dom->createElement("gCBSCredPres");
-        $this->dom->addChild(
-            $gCBSCredPres,
-            "cCredPres",
-            $std->cCredPres,
-            true,
-            "$identificador Código de Classificação do Crédito Presumido (cCredPres)"
-        );
         $this->dom->addChild(
             $gCBSCredPres,
             "pCredPres",
