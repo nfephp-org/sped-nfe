@@ -464,8 +464,8 @@ trait TraitTagDetIBSCBS
         ];
         $std = $this->equilizeParameters($std, $possible);
         //Totalizador
-        isset($std->vCredPres) ? $this->stdIBSCBSTot->vCredPres += $std->vCredPres : null;
-        isset($std->vCredPresCondSus) ? $this->stdIBSCBSTot->vCredPresCondSus += $std->vCredPresCondSus : null;
+        isset($std->vCredPres) ? $this->stdIBSCBSTot->gIBS->vCredPres += $std->vCredPres : null;
+        isset($std->vCredPresCondSus) ? $this->stdIBSCBSTot->gIBS->vCredPresCondSus += $std->vCredPresCondSus : null;
         $identificador = "UB73 gIBSCredPres Item: $std->item -";
         $gIBSCredPres = $this->dom->createElement("gIBSCredPres");
         $this->dom->addChild(
@@ -515,8 +515,8 @@ trait TraitTagDetIBSCBS
         ];
         $std = $this->equilizeParameters($std, $possible);
         //Totalizador
-        $this->stdIBSCBSTot->vCredPres += $std->vCredPres ?? 0;
-        $this->stdIBSCBSTot->vCredPresCondSus += $std->vCredPresCondSus ?? 0;
+        $this->stdIBSCBSTot->gCBS->vCredPres += $std->vCredPres ?? 0;
+        $this->stdIBSCBSTot->gCBS->vCredPresCondSus += $std->vCredPresCondSus ?? 0;
         $identificador = "UB78 gCBSCredPres Item: $std->item -";
         $gCBSCredPres = $this->dom->createElement("gCBSCredPres");
         $this->dom->addChild(
