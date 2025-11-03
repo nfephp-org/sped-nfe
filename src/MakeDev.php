@@ -300,8 +300,6 @@ final class MakeDev
         $this->stdIBSCBSTot->vBCIBSCBS = 0;
         $this->stdIBSCBSTot->vIBS = 0;
         $this->stdIBSCBSTot->vCBS = 0;
-        $this->stdIBSCBSTot->vCredPres = 0;
-        $this->stdIBSCBSTot->vCredPresCondSus = 0;
         $this->stdIBSCBSTot->gIBSUF = new stdClass();
         $this->stdIBSCBSTot->gIBSUF->vDif = 0;
         $this->stdIBSCBSTot->gIBSUF->vDevTrib = 0;
@@ -310,9 +308,14 @@ final class MakeDev
         $this->stdIBSCBSTot->gIBSMun->vDif = 0;
         $this->stdIBSCBSTot->gIBSMun->vDevTrib = 0;
         $this->stdIBSCBSTot->gIBSMun->vIBSMun = 0;
+        $this->stdIBSCBSTot->gIBS = new stdClass();
+        $this->stdIBSCBSTot->gIBS->vCredPres = 0;
+        $this->stdIBSCBSTot->gIBS->vCredPresCondSus = 0;
         $this->stdIBSCBSTot->gCBS = new stdClass();
         $this->stdIBSCBSTot->gCBS->vDif = 0;
         $this->stdIBSCBSTot->gCBS->vDevTrib = 0;
+        $this->stdIBSCBSTot->gCBS->vCredPres = 0;
+        $this->stdIBSCBSTot->gCBS->vCredPresCondSus = 0;
         $this->stdIBSCBSTot->gMono = new stdClass();
         $this->stdIBSCBSTot->gMono->vIBSMono = 0;
         $this->stdIBSCBSTot->gMono->vCBSMono = 0;
