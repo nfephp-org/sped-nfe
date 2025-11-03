@@ -29,7 +29,7 @@ use DOMException;
  * @property stdClass $stdGIBSCBS
  * @property stdClass $stdGIBSCBSMono
  * @property stdClass $stdGTransfCred
- * @property stdClass $aGCredPresOper
+ * @property array $aGCredPresOper
  *
  * @method equilizeParameters($std, $possible)
  * @method conditionalNumberFormatting($value, $decimal = 2)

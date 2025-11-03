@@ -81,8 +81,8 @@ final class MakeDev
     use TraitTagTotal;
     use TraitCalculations;
 
-    const METHOD_CALCULATION_V1 = 1; //by values, calculate vItem and vNFTot
-    const METHOD_CALCULATION_V2 = 1; //by tags, calculate vItem and vNFTot
+    public const METHOD_CALCULATION_V1 = 1; //by values, calculate vItem and vNFTot
+    public const METHOD_CALCULATION_V2 = 1; //by tags, calculate vItem and vNFTot
 
     protected int $schema; //esta propriedade da classe estabelece qual é a versão do schema sendo considerado
     protected int $tpAmb = 2;
@@ -169,6 +169,7 @@ final class MakeDev
     protected array $aInfAdProd = [];
     protected array $aIBSCBS = [];
     protected array $aGTribRegular = [];
+    protected array $aGCredPresOper = [];
     protected array $aIBSCredPres = [];
     protected array $aCBSCredPres = [];
     protected array $aGTribCompraGov = [];
