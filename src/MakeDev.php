@@ -81,8 +81,8 @@ final class MakeDev
     use TraitTagTotal;
     use TraitCalculations;
 
-    const METHOD_CALCULATION_V1 = 1; //by values, calculate vItem and vNFTot
-    const METHOD_CALCULATION_V2 = 1; //by tags, calculate vItem and vNFTot
+    public const METHOD_CALCULATION_V1 = 1; //by values, calculate vItem and vNFTot
+    public const METHOD_CALCULATION_V2 = 1; //by tags, calculate vItem and vNFTot
 
     protected int $schema; //esta propriedade da classe estabelece qual é a versão do schema sendo considerado
     protected int $tpAmb = 2;
@@ -169,6 +169,7 @@ final class MakeDev
     protected array $aInfAdProd = [];
     protected array $aIBSCBS = [];
     protected array $aGTribRegular = [];
+    protected array $aGCredPresOper = [];
     protected array $aIBSCredPres = [];
     protected array $aCBSCredPres = [];
     protected array $aGTribCompraGov = [];
@@ -177,7 +178,7 @@ final class MakeDev
     protected array $aGCredPresIBSZFM = [];
     protected array $aGAjusteCompet = [];
     protected array $aGEstornoCred = [];
-    protected array $aGCredPresOper = [];
+    protected array $aGper = [];
     protected array $aIS = [];
     protected array $aII = [];
     protected array $aObsItem = [];
@@ -300,8 +301,6 @@ final class MakeDev
         $this->stdIBSCBSTot->vBCIBSCBS = 0;
         $this->stdIBSCBSTot->vIBS = 0;
         $this->stdIBSCBSTot->vCBS = 0;
-        $this->stdIBSCBSTot->vCredPres = 0;
-        $this->stdIBSCBSTot->vCredPresCondSus = 0;
         $this->stdIBSCBSTot->gIBSUF = new stdClass();
         $this->stdIBSCBSTot->gIBSUF->vDif = 0;
         $this->stdIBSCBSTot->gIBSUF->vDevTrib = 0;
@@ -310,9 +309,14 @@ final class MakeDev
         $this->stdIBSCBSTot->gIBSMun->vDif = 0;
         $this->stdIBSCBSTot->gIBSMun->vDevTrib = 0;
         $this->stdIBSCBSTot->gIBSMun->vIBSMun = 0;
+        $this->stdIBSCBSTot->gIBS = new stdClass();
+        $this->stdIBSCBSTot->gIBS->vCredPres = 0;
+        $this->stdIBSCBSTot->gIBS->vCredPresCondSus = 0;
         $this->stdIBSCBSTot->gCBS = new stdClass();
         $this->stdIBSCBSTot->gCBS->vDif = 0;
         $this->stdIBSCBSTot->gCBS->vDevTrib = 0;
+        $this->stdIBSCBSTot->gCBS->vCredPres = 0;
+        $this->stdIBSCBSTot->gCBS->vCredPresCondSus = 0;
         $this->stdIBSCBSTot->gMono = new stdClass();
         $this->stdIBSCBSTot->gMono->vIBSMono = 0;
         $this->stdIBSCBSTot->gMono->vCBSMono = 0;
@@ -699,14 +703,6 @@ final class MakeDev
                         //add gTribRegular
                         $gIBSCBS->appendChild($this->aGTribRegular[$item]);
                     }
-                    //REMOVIDO PELA NT 2025.002_v1.30 - PL_010_V1.30
-                    if (!empty($this->aIBSCredPres[$item]) && !empty($gIBSCBS)) {
-                        $gIBSCBS->appendChild($this->aIBSCredPres[$item]);
-                    }
-                    //REMOVIDO PELA NT 2025.002_v1.30 - PL_010_V1.30
-                    if (!empty($this->aCBSCredPres[$item]) && !empty($gIBSCBS)) {
-                        $gIBSCBS->appendChild($this->aCBSCredPres[$item]);
-                    }
                     if (!empty($this->aGTribCompraGov[$item]) && !empty($gIBSCBS)) {
                         $gIBSCBS->appendChild($this->aGTribCompraGov[$item]);
                     }
@@ -734,6 +730,16 @@ final class MakeDev
                         $this->addTag($ibscbs, $this->aGCredPresOper[$item], 'Falta a tag IBSCBS!');
                     } elseif (!empty($this->aGCredPresIBSZFM[$item])) {
                         $this->addTag($ibscbs, $this->aGCredPresIBSZFM[$item], 'Falta a tag IBSCBS!');
+                    }
+                    //CredPres
+                    $gCredPresOper = $ibscbs->getElementsByTagName("gCredPresOper")->item(0);
+                    if ($gCredPresOper) {
+                        if (!empty($this->aIBSCredPres[$item])) {
+                            $gCredPresOper->appendChild($this->aIBSCredPres[$item]);
+                        }
+                        if (!empty($this->aCBSCredPres[$item])) {
+                            $gCredPresOper->appendChild($this->aCBSCredPres[$item]);
+                        }
                     }
                     $this->addTag($imposto, $ibscbs, 'Falta a tag det/imposto!');
                 }

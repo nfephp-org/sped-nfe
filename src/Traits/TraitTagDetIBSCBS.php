@@ -29,7 +29,7 @@ use DOMException;
  * @property stdClass $stdGIBSCBS
  * @property stdClass $stdGIBSCBSMono
  * @property stdClass $stdGTransfCred
- * @property stdClass $aGCredPresOper
+ * @property array $aGCredPresOper
  *
  * @method equilizeParameters($std, $possible)
  * @method conditionalNumberFormatting($value, $decimal = 2)
@@ -458,24 +458,16 @@ trait TraitTagDetIBSCBS
     {
         $possible = [
             'item',
-            'cCredPres',
             'pCredPres',
             'vCredPres',
             'vCredPresCondSus',
         ];
         $std = $this->equilizeParameters($std, $possible);
         //Totalizador
-        isset($std->vCredPres) ? $this->stdIBSCBSTot->vCredPres += $std->vCredPres : null;
-        isset($std->vCredPresCondSus) ? $this->stdIBSCBSTot->vCredPresCondSus += $std->vCredPresCondSus : null;
+        isset($std->vCredPres) ? $this->stdIBSCBSTot->gIBS->vCredPres += $std->vCredPres : null;
+        isset($std->vCredPresCondSus) ? $this->stdIBSCBSTot->gIBS->vCredPresCondSus += $std->vCredPresCondSus : null;
         $identificador = "UB73 gIBSCredPres Item: $std->item -";
         $gIBSCredPres = $this->dom->createElement("gIBSCredPres");
-        $this->dom->addChild(
-            $gIBSCredPres,
-            "cCredPres",
-            $std->cCredPres,
-            true,
-            "$identificador Código de Classificação do Crédito Presumido (cCredPres)"
-        );
         $this->dom->addChild(
             $gIBSCredPres,
             "pCredPres",
@@ -517,24 +509,16 @@ trait TraitTagDetIBSCBS
     {
         $possible = [
             'item',
-            'cCredPres',
             'pCredPres',
             'vCredPres',
             'vCredPresCondSus',
         ];
         $std = $this->equilizeParameters($std, $possible);
         //Totalizador
-        $this->stdIBSCBSTot->vCredPres += $std->vCredPres ?? 0;
-        $this->stdIBSCBSTot->vCredPresCondSus += $std->vCredPresCondSus ?? 0;
+        $this->stdIBSCBSTot->gCBS->vCredPres += $std->vCredPres ?? 0;
+        $this->stdIBSCBSTot->gCBS->vCredPresCondSus += $std->vCredPresCondSus ?? 0;
         $identificador = "UB78 gCBSCredPres Item: $std->item -";
         $gCBSCredPres = $this->dom->createElement("gCBSCredPres");
-        $this->dom->addChild(
-            $gCBSCredPres,
-            "cCredPres",
-            $std->cCredPres,
-            true,
-            "$identificador Código de Classificação do Crédito Presumido (cCredPres)"
-        );
         $this->dom->addChild(
             $gCBSCredPres,
             "pCredPres",
