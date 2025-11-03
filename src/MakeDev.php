@@ -177,7 +177,7 @@ final class MakeDev
     protected array $aGCredPresIBSZFM = [];
     protected array $aGAjusteCompet = [];
     protected array $aGEstornoCred = [];
-    protected array $aGCredPresOper = [];
+    protected array $aGper = [];
     protected array $aIS = [];
     protected array $aII = [];
     protected array $aObsItem = [];
@@ -733,10 +733,10 @@ final class MakeDev
                     //CredPres
                     $gCredPresOper = $ibscbs->getElementsByTagName("gCredPresOper")->item(0);
                     if ($gCredPresOper) {
-                        if (!empty($this->aIBSCredPres[$item]) && !empty($gIBSCBS)) {
+                        if (!empty($this->aIBSCredPres[$item])) {
                             $gCredPresOper->appendChild($this->aIBSCredPres[$item]);
                         }
-                        if (!empty($this->aCBSCredPres[$item]) && !empty($gCredPresOper)) {
+                        if (!empty($this->aCBSCredPres[$item])) {
                             $gCredPresOper->appendChild($this->aCBSCredPres[$item]);
                         }
                     }
