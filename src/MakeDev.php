@@ -699,14 +699,6 @@ final class MakeDev
                         //add gTribRegular
                         $gIBSCBS->appendChild($this->aGTribRegular[$item]);
                     }
-                    //REMOVIDO PELA NT 2025.002_v1.30 - PL_010_V1.30
-                    if (!empty($this->aIBSCredPres[$item]) && !empty($gIBSCBS)) {
-                        $gIBSCBS->appendChild($this->aIBSCredPres[$item]);
-                    }
-                    //REMOVIDO PELA NT 2025.002_v1.30 - PL_010_V1.30
-                    if (!empty($this->aCBSCredPres[$item]) && !empty($gIBSCBS)) {
-                        $gIBSCBS->appendChild($this->aCBSCredPres[$item]);
-                    }
                     if (!empty($this->aGTribCompraGov[$item]) && !empty($gIBSCBS)) {
                         $gIBSCBS->appendChild($this->aGTribCompraGov[$item]);
                     }
@@ -734,6 +726,16 @@ final class MakeDev
                         $this->addTag($ibscbs, $this->aGCredPresOper[$item], 'Falta a tag IBSCBS!');
                     } elseif (!empty($this->aGCredPresIBSZFM[$item])) {
                         $this->addTag($ibscbs, $this->aGCredPresIBSZFM[$item], 'Falta a tag IBSCBS!');
+                    }
+                    //CredPres
+                    $gCredPresOper = $ibscbs->getElementsByTagName("gCredPresOper")->item(0);
+                    if ($gCredPresOper) {
+                        if (!empty($this->aIBSCredPres[$item]) && !empty($gIBSCBS)) {
+                            $gCredPresOper->appendChild($this->aIBSCredPres[$item]);
+                        }
+                        if (!empty($this->aCBSCredPres[$item]) && !empty($gCredPresOper)) {
+                            $gCredPresOper->appendChild($this->aCBSCredPres[$item]);
+                        }
                     }
                     $this->addTag($imposto, $ibscbs, 'Falta a tag det/imposto!');
                 }
