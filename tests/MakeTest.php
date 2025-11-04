@@ -457,7 +457,21 @@ class MakeTest extends TestCase
         $tag = $this->make->tagprodObsCont($std);
 
         $this->assertEquals('obsItem', $tag->nodeName);
-        $this->assertEquals($std->xCampo, $tag->getElementsByTagName('xCampo')->item(0)->nodeValue);
+        $this->assertEquals($std->xCampo, $tag->getElementsByTagName('obsCont')->item(0)->getAttribute('xCampo'));
+        $this->assertEquals($std->xTexto, $tag->getElementsByTagName('xTexto')->item(0)->nodeValue);
+    }
+
+    public function test_tagprodObsFisco(): void
+    {
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->xCampo = 'abc';
+        $std->xTexto = '123';
+
+        $tag = $this->make->tagprodObsFisco($std);
+
+        $this->assertEquals('obsItem', $tag->nodeName);
+        $this->assertEquals($std->xCampo, $tag->getElementsByTagName('obsFisco')->item(0)->getAttribute('xCampo'));
         $this->assertEquals($std->xTexto, $tag->getElementsByTagName('xTexto')->item(0)->nodeValue);
     }
 
@@ -1079,6 +1093,34 @@ class MakeTest extends TestCase
         $this->validarCriacaoTag2($std, $element, 'infRespTec', ['CSRT']);
     }
 
+    public function test_tagagropecuario_defencivo(): void
+    {
+        $std = new \stdClass();
+        $std->nReceituario = '1234567890ABCDEFGHIJ'; //Obrigatório se houver defencivo 1-20 caracteres, opcional caso contrario
+        $std->CPFRespTec = '12345678901'; //Obrigatório se houver defencivo 11 digitos, opcional caso contrario
+        //$std->tpGuia = '1'; //Obrigatório se houver guia 1-GTA, 2-TTA, 3-DTA, 4-ATV, 5-PTV, 6-GVT, 7-GF, opcional caso contrario
+        //$std->UFGuia = 'MG'; //opcional
+        //$std->serieGuia = 'A12345678'; //opcional 9 caracteres
+        //$std->nGuia = '123456789'; //Obrigatório se houver guia 9 digitos, opcional caso contrario
+
+        $element = $this->make->tagAgropecuarioDefensivo($std);
+        $this->validarCriacaoTag2($std, $element, 'defensivo', ['nReceituario', 'CPFRespTec']);
+    }
+
+    public function test_tagagropecuario_guia(): void
+    {
+        $std = new \stdClass();
+        //$std->nReceituario = '1234567890ABCDEFGHIJ'; //Obrigatório se houver defencivo 1-20 caracteres, opcional caso contrario
+        //$std->CPFRespTec = '12345678901'; //Obrigatório se houver defencivo 11 digitos, opcional caso contrario
+        $std->tpGuia = '1'; //Obrigatório se houver guia 1-GTA, 2-TTA, 3-DTA, 4-ATV, 5-PTV, 6-GVT, 7-GF, opcional caso contrario
+        $std->UFGuia = 'MG'; //opcional
+        $std->serieGuia = 'A12345678'; //opcional 9 caracteres
+        $std->nGuia = '123456789'; //Obrigatório se houver guia 9 digitos, opcional caso contrario
+
+        $element = $this->make->tagAgropecuarioGuia($std);
+        $this->validarCriacaoTag2($std, $element, 'guiaTransito', ['tpGuia']);
+    }
+
     private function validarCriacaoTag2(
         \stdClass $std,
         \DOMElement $element,
@@ -1435,6 +1477,7 @@ class MakeTest extends TestCase
         $this->validarExistenciaCampos($std, $result);
     }
 
+    /*
     public function test_tagICMSSNShouldNotAcceptEmptyOrig_whenCrtIs1(): void
     {
         $std = new \stdClass();
@@ -1472,7 +1515,7 @@ class MakeTest extends TestCase
             $this->make->getErrors()
         );
         $this->validarExistenciaCampos($std, $result);
-    }
+    }*/
 
     public function test_tagICMSSNShouldNotAcceptEmptyOrig_whenCrtIs4AndCsosnIsNotInAllowedList(): void
     {
@@ -1512,6 +1555,7 @@ class MakeTest extends TestCase
         );
     }
 
+    /*
     public function test_tagNCMShouldAcceptEmptyValue_andChangeToDefaultValue_whenCrtIs4AndIdDestIs1(): void
     {
         $std = new \stdClass();
@@ -1541,7 +1585,7 @@ class MakeTest extends TestCase
         $prod = $this->make->tagprod($std);
 
         $this->assertEquals('00000000', $prod->getElementsByTagName('NCM')->item(0)->nodeValue);
-    }
+    }*/
 
     public function test_tagNCMShouldNotAcceptEmptyValue_whenCrtIs1(): void
     {

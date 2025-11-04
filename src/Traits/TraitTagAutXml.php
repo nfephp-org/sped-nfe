@@ -2,14 +2,14 @@
 
 namespace NFePHP\NFe\Traits;
 
-use NFePHP\Common\DOMImproved;
+use NFePHP\Common\DOMImproved as Dom;
 use stdClass;
 use DOMElement;
 
 /**
- * @method equilizeParameters($std, $possible)
- * @property DOMImproved $dom
+ * @property Dom $dom
  * @property array $aAutXML
+ * @method equilizeParameters($std, $possible)
  */
 
 trait TraitTagAutXml
@@ -22,7 +22,7 @@ trait TraitTagAutXml
     {
         $possible = ['CNPJ', 'CPF'];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = 'G50 <autXML> - ';
+        $identificador = 'G50 autXML - ';
         $std->CNPJ = !empty($std->CNPJ) ? $std->CNPJ : null;
         $std->CPF = !empty($std->CPF) ? $std->CPF : null;
         $autXML = $this->dom->createElement("autXML");

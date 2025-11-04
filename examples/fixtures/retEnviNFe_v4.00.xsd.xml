@@ -1,0 +1,56 @@
+<nfe:retEnviNFe versao="string" xmlns:nfe="http://www.portalfiscal.inf.br/nfe" xmlns:xd="http://www.w3.org/2000/09/xmldsig#">
+  <nfe:tpAmb>2</nfe:tpAmb>
+  <nfe:verAplic>string</nfe:verAplic>
+  <nfe:cStat>stri</nfe:cStat>
+  <nfe:xMotivo>string</nfe:xMotivo>
+  <nfe:cUF>12</nfe:cUF>
+  <nfe:dhRecbto>string</nfe:dhRecbto>
+  <!--You have a CHOICE of the next 2 items at this level-->
+  <!--Optional:-->
+  <nfe:infRec>
+    <nfe:nRec>string</nfe:nRec>
+    <nfe:tMed>string</nfe:tMed>
+  </nfe:infRec>
+  <!--Optional:-->
+  <nfe:protNFe versao="string">
+    <nfe:infProt Id="string">
+      <nfe:tpAmb>1</nfe:tpAmb>
+      <nfe:verAplic>string</nfe:verAplic>
+      <nfe:chNFe>string</nfe:chNFe>
+      <nfe:dhRecbto>string</nfe:dhRecbto>
+      <!--Optional:-->
+      <nfe:nProt>string</nfe:nProt>
+      <!--Optional:-->
+      <nfe:digVal>c29ub3Jhcw==</nfe:digVal>
+      <nfe:cStat>stri</nfe:cStat>
+      <nfe:xMotivo>string</nfe:xMotivo>
+      <nfe:cMsg>string</nfe:cMsg>
+      <nfe:xMsg>string</nfe:xMsg>
+    </nfe:infProt>
+    <!--Optional:-->
+    <xd:Signature Id="string">
+      <xd:SignedInfo Id="string">
+        <xd:CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+        <xd:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+        <xd:Reference Id="string" URI="http://www.any.org/ventos/verrantque" Type="http://www.sample.org/turbine/circum">
+          <xd:Transforms>
+            <xd:Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315">
+              <xd:XPath>string</xd:XPath>
+            </xd:Transform>
+            <xd:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature">
+              <xd:XPath>string</xd:XPath>
+            </xd:Transform>
+          </xd:Transforms>
+          <xd:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+          <xd:DigestValue>ZnJlbXVudA==</xd:DigestValue>
+        </xd:Reference>
+      </xd:SignedInfo>
+      <xd:SignatureValue Id="string">Zm9lZGVyZQ==</xd:SignatureValue>
+      <xd:KeyInfo Id="string">
+        <xd:X509Data>
+          <xd:X509Certificate>ZmVyYW50</xd:X509Certificate>
+        </xd:X509Data>
+      </xd:KeyInfo>
+    </xd:Signature>
+  </nfe:protNFe>
+</nfe:retEnviNFe>

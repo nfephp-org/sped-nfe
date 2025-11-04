@@ -39,6 +39,10 @@ class Tools
      */
     public $config;
     /**
+     * @var int
+     */
+    public $cUF;
+    /**
      * Path to storage folder
      * @var string
      */
@@ -109,6 +113,10 @@ class Tools
      */
     protected $versao = '4.00';
     /**
+     * @var string|null
+     */
+    protected $qrcode_version = null;
+    /**
      * urlPortal
      * Instância do WebService
      *
@@ -177,9 +185,11 @@ class Tools
 
     /**
      * Loads configurations and Digital Certificate, map all paths, set timezone and instanciate Contingency::class
-     * @param string $configJson content of config in json format
+     * @param string $configJson
+     * @param Certificate $certificate
+     * @param Contingency|null $contingency
      */
-    public function __construct(string $configJson, Certificate $certificate, Contingency $contingency = null)
+    public function __construct(string $configJson, Certificate $certificate, ?Contingency $contingency = null)
     {
         $this->pathwsfiles = realpath(__DIR__ . '/../../storage') . '/';
         //valid config json string
@@ -194,6 +204,7 @@ class Tools
         } else {
             $this->contingency = $contingency;
         }
+        $this->cUF = UFList::getCodeByUF($this->config->siglaUF);
     }
 
     /**
@@ -203,6 +214,18 @@ class Tools
     public function setEnvironmentTimeZone(string $acronym): void
     {
         $this->timezone = TimeZoneByUF::get($acronym);
+    }
+
+    /**
+     * Force use this version for QRCode format in NFCe
+     * @param string $version
+     * @return void
+     */
+    public function forceQRCodeVersion(string $version): void
+    {
+        if ($version == '200' || $version == '300') {
+            $this->qrcode_version = $version;
+        }
     }
 
     /**
@@ -230,6 +253,8 @@ class Tools
 
     /**
      * Set application version
+     * @param string $ver
+     * @return void
      */
     public function setVerAplic(string $ver)
     {
@@ -240,6 +265,8 @@ class Tools
      * Load Soap Class
      * Soap Class may be \NFePHP\Common\Soap\SoapNative
      * or \NFePHP\Common\Soap\SoapCurl
+     * @param SoapInterface $soap
+     * @return void
      */
     public function loadSoapClass(SoapInterface $soap): void
     {
@@ -249,6 +276,8 @@ class Tools
 
     /**
      * Set OPENSSL Algorithm using OPENSSL constants
+     * @param int $algorithm
+     * @return void
      */
     public function setSignAlgorithm(int $algorithm = OPENSSL_ALGO_SHA1): void
     {
@@ -257,10 +286,10 @@ class Tools
 
     /**
      * Set or get model of document NFe = 55 or NFCe = 65
-     * @param int $model
+     * @param int|null $model
      * @return int modelo class parameter
      */
-    public function model(int $model = null): int
+    public function model(?int $model = null): int
     {
         if ($model == 55 || $model == 65) {
             $this->modelo = $model;
@@ -273,7 +302,7 @@ class Tools
      * @param string $version
      * @throws InvalidArgumentException
      */
-    public function version(string $version = null): string
+    public function version(?string $version = null): string
     {
         if (null === $version) {
             return $this->versao;
@@ -306,7 +335,8 @@ class Tools
 
     /**
      * Recover state acronym from cUF number
-     * @return string acronym sigla
+     * @param int $cUF
+     * @return string
      */
     public function getAcronym(int $cUF): string
     {
@@ -378,7 +408,10 @@ class Tools
     /**
      * Performs xml validation with its respective XSD structure definition document
      * NOTE: if don't exists the XSD file will return true
-     * @param string $version layout version
+     * @param string $version
+     * @param string $body
+     * @param string $method
+     * @return bool
      */
     protected function isValid(string $version, string $body, string $method): bool
     {
@@ -391,12 +424,13 @@ class Tools
 
     /**
      * Verifies the existence of the service
-     * @throws RuntimeException
+     * @param string $service
+     * @return void
      */
     protected function checkContingencyForWebServices(string $service)
     {
         $type = !empty($this->contingency) ? $this->contingency->type : '';
-        $mod = $this->modelo;
+
         if (!empty($type)) {
             if ($this->modelo == 65) {
                 throw new RuntimeException(
@@ -413,6 +447,8 @@ class Tools
 
     /**
      * Alter environment from "homologacao" to "producao" and vice-versa
+     * @param int $tpAmb
+     * @return void
      */
     public function setEnvironment(int $tpAmb = 2): void
     {
@@ -435,8 +471,11 @@ class Tools
 
     /**
      * Assembles all the necessary parameters for soap communication
-     * @param int|string $tpAmb 1-Production or 2-Homologation
-     * @throws RuntimeException
+     * @param string $service
+     * @param string $uf
+     * @param $tpAmb
+     * @param bool $ignoreContingency
+     * @return void
      */
     protected function servico(string $service, string $uf, $tpAmb, bool $ignoreContingency = false): void
     {
@@ -456,9 +495,14 @@ class Tools
                 throw new \RuntimeException("Servico [$service] indisponivel UF [$uf] ou modelo [$this->modelo]");
             }
         }
-        $this->urlcUF = $this->getcUF($uf); //recuperação do cUF
-        if ($this->urlcUF > 91) {
-            $this->urlcUF = $this->getcUF($this->config->siglaUF); //foi solicitado dado de SVCRS ou SVCAN
+        //NT 2024.002 1.00 Maio/2024, comentário P08 elemento cOrgao
+        if ($uf === 'SVRS') {
+            $this->urlcUF = 92;
+        } else {
+            $this->urlcUF = $this->getcUF($uf); //recuperação do cUF
+            if ($this->urlcUF > 91) {
+                $this->urlcUF = $this->getcUF($this->config->siglaUF); //foi solicitado dado de SVCRS ou SVCAN
+            }
         }
         $this->urlVersion = $stdServ->$service->version; //recuperação da versão
         $this->urlService = $stdServ->$service->url; //recuperação da url do serviço
@@ -472,7 +516,9 @@ class Tools
 
     /**
      * Send request message to webservice
-     * @throws RuntimeException
+     * @param string $request
+     * @param array $parameters
+     * @return string
      */
     protected function sendRequest(string $request, array $parameters = []): string
     {
@@ -509,25 +555,35 @@ class Tools
 
     /**
      * Add QRCode Tag to signed XML from a NFCe
+     * @param DOMDocument $dom
+     * @return string
      */
     protected function addQRCode(DOMDocument $dom): string
     {
-        if (empty($this->config->CSC) || empty($this->config->CSCid)) {
-            throw new \RuntimeException("O QRCode não pode ser criado pois faltam dados CSC e/ou CSCId");
-        }
         $memmod = $this->modelo;
         $this->modelo = 65;
         $cUF = $dom->getElementsByTagName('cUF')->item(0)->nodeValue;
         $tpAmb = $dom->getElementsByTagName('tpAmb')->item(0)->nodeValue;
         $uf = UFList::getUFByCode((int)$cUF);
         $this->servico('NfeConsultaQR', $uf, $tpAmb);
+        $qrversion = $this->urlVersion;
+        if (!empty($this->qrcode_version)) {
+            $qrversion = $this->qrcode_version;
+        }
+        if ($qrversion !== '300') {
+            if (empty($this->config->CSC) || empty($this->config->CSCid)) {
+                throw new \RuntimeException("O QRCode não pode ser criado pois faltam dados CSC e/ou CSCId");
+            }
+        }
+        //qrcode versão 3 não requer CSD nem CSCid
         $signed = QRCode::putQRTag(
             $dom,
-            $this->config->CSC,
-            $this->config->CSCid,
-            $this->urlVersion,
+            $this->config->CSC ?? '',
+            $this->config->CSCid ?? '',
+            $qrversion,
             $this->urlService,
-            $this->getURIConsultaNFCe($uf, $tpAmb)
+            $this->getURIConsultaNFCe($uf, $tpAmb),
+            $this->certificate
         );
         $this->modelo = $memmod;
         return Strings::clearXmlString($signed);

@@ -17,16 +17,21 @@
 namespace NFePHP\NFe;
 
 use InvalidArgumentException;
+use NFePHP\Common\DOMImproved;
+use NFePHP\Common\Strings;
 use NFePHP\Common\Signer;
 use NFePHP\Common\Strings;
 use NFePHP\Common\UFList;
 use NFePHP\NFe\Common\Tools as ToolsCommon;
+use NFePHP\NFe\Common\Webservices;
 use NFePHP\NFe\Traits\TraitEPECNfce;
+use NFePHP\NFe\Traits\TraitEventsRTC;
 use RuntimeException;
 
 class Tools extends ToolsCommon
 {
     use TraitEPECNfce;
+    use TraitEventsRTC;
 
     public const EVT_CONFIRMACAO = 210200; //only one per nfe seq=n
     public const EVT_CIENCIA = 210210; //only one per nfe seq=1
@@ -114,7 +119,7 @@ class Tools extends ToolsCommon
      * @param int $tpAmb
      * @throws InvalidArgumentException
      */
-    public function sefazConsultaRecibo(string $recibo, int $tpAmb = null): string
+    public function sefazConsultaRecibo(string $recibo, ?int $tpAmb = null): string
     {
         if (empty($recibo)) {
             throw new InvalidArgumentException('Consulta Recibo: numero do recibo vazio!');
@@ -148,7 +153,7 @@ class Tools extends ToolsCommon
      * @param int $tpAmb
      * @throws InvalidArgumentException
      */
-    public function sefazConsultaChave(string $chave, int $tpAmb = null): string
+    public function sefazConsultaChave(string $chave, ?int $tpAmb = null): string
     {
         if (empty($chave)) {
             throw new InvalidArgumentException('Consulta chave: a chave esta vazia!');
@@ -192,8 +197,8 @@ class Tools extends ToolsCommon
         int $nIni,
         int $nFin,
         string $xJust,
-        int $tpAmb = null,
-        string $ano = null
+        ?int $tpAmb = null,
+        ?string $ano = null
     ): string {
         if (empty($nIni) || empty($nFin) || empty($xJust)) {
             throw new InvalidArgumentException('Inutilizacao: parametros incompletos!');
@@ -343,7 +348,7 @@ class Tools extends ToolsCommon
      * @param bool $ignoreContingency
      * @return string xml soap response
      */
-    public function sefazStatus(string $uf = '', int $tpAmb = null, bool $ignoreContingency = true): string
+    public function sefazStatus(string $uf = '', ?int $tpAmb = null, bool $ignoreContingency = true): string
     {
         if (empty($tpAmb)) {
             $tpAmb = $this->tpAmb;
@@ -377,7 +382,7 @@ class Tools extends ToolsCommon
      * @param string $fonte data source 'AN' and for some cases it may be 'RS'
      * @return string
      */
-    public function sefazDistDFe(int $ultNSU = 0, int $numNSU = 0, string $chave = null, string $fonte = 'AN'): string
+    public function sefazDistDFe(int $ultNSU = 0, int $numNSU = 0, ?string $chave = null, string $fonte = 'AN'): string
     {
         //carrega serviço
         $servico = 'NfeDistribuicaoDFe';
@@ -483,8 +488,10 @@ class Tools extends ToolsCommon
         ? "<CNPJ>{$std->CNPJ}</CNPJ>"
         : "<CPF>{$std->CPF}</CPF>";
         $tagAdic .= "</autXML>"
-            . "<tpAutorizacao>{$std->tpAutorizacao}</tpAutorizacao>"
-            . "<xCondUso>$xCondUso</xCondUso>";
+            . "<tpAutorizacao>{$std->tpAutorizacao}</tpAutorizacao>";
+        if ($std->tpAutorizacao == 1) {
+            $tagAdic .= "<xCondUso>$xCondUso</xCondUso>";
+        }
         return $this->sefazEvento(
             'AN',
             $std->chNFe,
@@ -844,6 +851,58 @@ class Tools extends ToolsCommon
     }
 
     /**
+     * Request event of financial reconciliation
+     * @param \stdClass $std
+     * @param \DateTimeInterface|null $dhEvento
+     * @param string|null $lote
+     * @return string
+     * @throws \DOMException
+     */
+    public function sefazConciliacao(
+        \stdClass $std,
+        ?\DateTimeInterface $dhEvento = null,
+        ?string $lote = null
+    ): string {
+        if (empty($std->verAplic) && !empty($this->verAplic)) {
+            $std->verAplic = $this->verAplic;
+        }
+        $tpEvento = self::EVT_CONCILIACAO;
+
+        $tagAdic = "<verAplic>{$std->verAplic}</verAplic>";
+        if (!empty($std->detPag) && is_array($std->detPag)) {
+            foreach ($std->detPag as $pag) {
+                $tagAdic .= $this->tagdetPag($pag);
+            }
+        }
+        //cancela um evento anterior de conciliação financeira
+        if ($std->cancelar) {
+            $tpEvento = self::EVT_CANCELA_CONCILIACAO;
+            $tagAdic = "<verAplic>{$std->verAplic}</verAplic>"
+            . "<nProtEvento>{$std->protocolo}</nProtEvento>";
+        }
+        /*
+            NT 2024.002 1.00 Maio/2024, comentário P08 elemento cOrgao
+            Se for referente a uma NFe (mod 55) usar a SVRS
+            Se for referente a uma BFCe (mod 65) usar a URL normal
+         */
+        $uf = $this->config->siglaUF;
+        if ((int)$this->modelo === 55) {
+            $uf = 'SVRS';
+        } else {
+            $uf = Webservices::getAuth($uf, $this->modelo);
+        }
+        return $this->sefazEvento(
+            $uf,
+            $std->chNFe,
+            $tpEvento,
+            $std->nSeqEvento,
+            $tagAdic,
+            $dhEvento,
+            $lote
+        );
+    }
+
+    /**
      * Send event to SEFAZ in batch
      * @param string $uf
      * @param \stdClass $std
@@ -939,7 +998,7 @@ class Tools extends ToolsCommon
      * @throws InvalidArgumentException
      * @throws RuntimeException
      */
-    public function sefazEPEC(string &$xml, string $verAplic = null): string
+    public function sefazEPEC(string &$xml, ?string $verAplic = null): string
     {
         if (empty($xml)) {
             throw new InvalidArgumentException('EPEC: parâmetro xml esta vazio!');
@@ -1019,7 +1078,15 @@ class Tools extends ToolsCommon
             . "<vICMS>{$vICMS}</vICMS>"
             . "<vST>{$vST}</vST>"
             . "</dest>";
-        return $this->sefazEvento('AN', $chNFe, self::EVT_EPEC, $nSeqEvento, $tagAdic);
+        return $this->sefazEvento(
+            'AN',
+            $chNFe,
+            self::EVT_EPEC,
+            $nSeqEvento,
+            $tagAdic,
+            null,
+            null
+        );
     }
 
     /**
@@ -1059,6 +1126,23 @@ class Tools extends ToolsCommon
             self::EVT_EPEC => ['versao' => '1.00', 'nome' => 'envEPEC'],
             self::EVT_INSUCESSO_ENTREGA => ['versao' => '1.00', 'nome' => 'envEventoInsucessoNFe'],
             self::EVT_CANCELA_INSUCESSO_ENTREGA => ['versao' => '1.00', 'nome' => 'envEventoCancInsucessoNFe'],
+            self::EVT_CONCILIACAO => ['versao' => '1.00', 'nome' => 'envEventoEConf'],
+            self::EVT_CANCELA_CONCILIACAO => ['versao' => '1.00', 'nome' => 'envEventoCancEConf'],
+            110001 => ['versao' => '1.00', 'nome' => 'envEvento'],
+            112110 => ['versao' => '1.00', 'nome' => 'envEvento'],
+            112120 => ['versao' => '1.00', 'nome' => 'envEvento'],
+            112130 => ['versao' => '1.00', 'nome' => 'envEvento'],
+            112140 => ['versao' => '1.00', 'nome' => 'envEvento'],
+            112150 => ['versao' => '1.00', 'nome' => 'envEvento'],
+            211110 => ['versao' => '1.00', 'nome' => 'envEvento'],
+            211120 => ['versao' => '1.00', 'nome' => 'envEvento'],
+            211128 => ['versao' => '1.00', 'nome' => 'envEvento'],
+            211130 => ['versao' => '1.00', 'nome' => 'envEvento'],
+            211140 => ['versao' => '1.00', 'nome' => 'envEvento'],
+            211150 => ['versao' => '1.00', 'nome' => 'envEvento'],
+            212110 => ['versao' => '1.00', 'nome' => 'envEvento'],
+            212120 => ['versao' => '1.00', 'nome' => 'envEvento'],
+            211124 => ['versao' => '1.00', 'nome' => 'envEvento'],
         ];
         $verEvento = $this->urlVersion;
         if (!empty($eventos[$tpEvento])) {
@@ -1080,7 +1164,36 @@ class Tools extends ToolsCommon
         }
         $sSeqEvento = str_pad((string) $nSeqEvento, 2, "0", STR_PAD_LEFT);
         $eventId = "ID" . $tpEvento . $chave . $sSeqEvento;
-        $cOrgao = UFList::getCodeByUF($uf);
+        //NT 2024.002 versão 1.00 - Maio 2024, comentário P08 elemento cOrgao
+        //NT N2025.002 versão 1.20 - Setembro 2025, 8.1 - Eventos
+        if (
+            in_array(
+                $tpEvento,
+                [
+                    self::EVT_CONCILIACAO,
+                    self::EVT_CANCELA_CONCILIACAO,
+                    112110,
+                    211110,
+                    211120,
+                    211128,
+                    211130,
+                    211140,
+                    211150,
+                    212110,
+                    212120,
+                    110001,
+                    112120,
+                    211124,
+                    112130,
+                    112140,
+                    112150,
+                ]
+            ) && $uf === 'SVRS'
+        ) {
+            $cOrgao = 92;
+        } else {
+            $cOrgao = UFList::getCodeByUF($uf);
+        }
         $request = "<evento xmlns=\"$this->urlPortal\" versao=\"$this->urlVersion\">"
             . "<infEvento Id=\"$eventId\">"
             . "<cOrgao>$cOrgao</cOrgao>"
@@ -1091,12 +1204,11 @@ class Tools extends ToolsCommon
             $request .= "<CPF>$cnpj</CPF>";
         }
         $request .= "<chNFe>$chave</chNFe>"
-        . "<dhEvento>$dhEventoString</dhEvento>"
-        . "<tpEvento>$tpEvento</tpEvento>"
-        . "<nSeqEvento>$nSeqEvento</nSeqEvento>"
-        . "<verEvento>$verEvento</verEvento>"
-        //em alguns casos haverá um verAplic nesta posição ??? ver xsd conciliação
-         . "<detEvento versao=\"$verEvento\">"
+            . "<dhEvento>$dhEventoString</dhEvento>"
+            . "<tpEvento>$tpEvento</tpEvento>"
+            . "<nSeqEvento>$nSeqEvento</nSeqEvento>"
+            . "<verEvento>$verEvento</verEvento>"
+            . "<detEvento versao=\"$verEvento\">"
             . "<descEvento>$descEvento</descEvento>"
             . "$tagAdic"
             . "</detEvento>"
@@ -1126,7 +1238,6 @@ class Tools extends ToolsCommon
             $this->isValid($this->urlVersion, $request, 'envEvento');
         }
         $this->lastRequest = $request;
-        //return $request;
         $parameters = ['nfeDadosMsg' => $request];
         $body = "<nfeDadosMsg xmlns=\"$this->urlNamespace\">$request</nfeDadosMsg>";
         $this->lastResponse = $this->sendRequest($body, $parameters);
@@ -1245,8 +1356,8 @@ class Tools extends ToolsCommon
         $dom->loadXML($nfe);
         //verifica a validade no webservice da SEFAZ
         $tpAmb = $dom->getElementsByTagName('tpAmb')->item(0)->nodeValue;
-        $infNFe = $dom->getElementsByTagName('infNFe')->item(0);
-        $chNFe = preg_replace('/[^0-9]/', '', $infNFe->getAttribute("Id"));
+        $infNFe  = $dom->getElementsByTagName('infNFe')->item(0);
+        $chNFe = substr($infNFe->getAttribute("Id"), 3, 44);
         $protocol = $dom->getElementsByTagName('nProt')->item(0)->nodeValue;
         $digval = $dom->getElementsByTagName('DigestValue')->item(0)->nodeValue;
         //consulta a NFe
@@ -1357,11 +1468,171 @@ class Tools extends ToolsCommon
                 $std->alias = 'EventoCancInsucessoNFe';
                 $std->desc = 'Cancelamento Insucesso na Entrega da NF-e';
                 break;
+            case self::EVT_CONCILIACAO:
+                $std->alias = 'EventoEConf';
+                $std->desc = 'ECONF';
+                break;
+            case self::EVT_CANCELA_CONCILIACAO:
+                $std->alias = 'EventoCancEConf';
+                $std->desc = 'Cancelamento Conciliação Financeira';
+                break;
+            case 110001:
+                $std->alias = 'envEvento';
+                $std->desc = 'Cancelamento de Evento';
+                break;
+            case 112110:
+                $std->alias = 'envEvento';
+                $std->desc = 'Informação de efetivo pagamento integral para liberar crédito presumido do adquirente';
+                break;
+            case 112120:
+                $std->alias = 'envEvento';
+                $std->desc = 'Importação em ALC/ZFM não convertida em isenção';
+                break;
+            case 112130:
+                $std->alias = 'envEvento';
+                $std->desc = 'Perecimento, perda, roubo ou furto durante o transporte contratado pelo fornecedor';
+                break;
+            case 112140:
+                $std->alias = 'envEvento';
+                $std->desc = 'Fornecimento não realizado com pagamento antecipado';
+                break;
+            case 112150:
+                $std->alias = 'envEvento';
+                $std->desc = 'Atualização da Data de Previsão de Entrega';
+                break;
+            case 211124:
+                $std->alias = 'envEvento';
+                $std->desc = 'Perecimento, perda, roubo ou furto durante o transporte contratado pelo adquirente';
+                break;
+            case 211110:
+                $std->alias = 'envEvento';
+                $std->desc = 'Solicitação de Apropriação de crédito presumido';
+                break;
+            case 211120:
+                $std->alias = 'envEvento';
+                $std->desc = 'Destinação de item para consumo pessoal';
+                break;
+            case 211128:
+                $std->alias = 'envEvento';
+                $std->desc = 'Aceite de débito na apuração por emissão de nota de crédito';
+                break;
+            case 211130:
+                $std->alias = 'envEvento';
+                $std->desc = 'Imobilização de Item';
+                break;
+            case 211140:
+                $std->alias = 'envEvento';
+                $std->desc = 'Solicitação de Apropriação de Crédito de Combustível';
+                break;
+            case 211150:
+                $std->alias = 'envEvento';
+                $std->desc = 'Solicitação de Apropriação de Crédito para bens e serviços que dependem de '
+                    . 'atividade do adquirente';
+                break;
+            case 212110:
+                $std->alias = 'envEvento';
+                $std->desc = 'Manifestação sobre Pedido de Transferência de Crédito de IBS em Operação de Sucessão';
+                break;
+            case 212120:
+                $std->alias = 'envEvento';
+                $std->desc = 'Manifestação sobre Pedido de Transferência de Crédito de CBS em Operação de Sucessão';
+                break;
             default:
                 $msg = "O código do tipo de evento informado não corresponde a "
                     . "nenhum evento estabelecido.";
                 throw new RuntimeException($msg);
         }
         return $std;
+    }
+
+    /**
+     * Cria detPag para Consciliação financeira
+     * @param \stdClass $pag
+     * @return false|string
+     * @throws \DOMException
+     */
+    private function tagdetPag(\stdClass $pag)
+    {
+        $dom = new DOMImproved('1.0', 'UTF-8');
+        $dom->preserveWhiteSpace = false;
+        $dom->formatOutput = false;
+        $node = $dom->createElement('detPag');
+        $dom->addChild(
+            $node,
+            "indPag",
+            $pag->indPag ?? null,
+            false
+        );
+        $dom->addChild(
+            $node,
+            "tPag",
+            $pag->tPag ?? '',
+            true
+        );
+        $dom->addChild(
+            $node,
+            "xPag",
+            !empty($pag->xPag) ? Strings::replaceUnacceptableCharacters($pag->xPag) : null,
+            false
+        );
+        $dom->addChild(
+            $node,
+            "vPag",
+            number_format($pag->vPag, 2, '.', ''),
+            true
+        );
+        $dom->addChild(
+            $node,
+            "dPag",
+            $pag->dPag ?? '',
+            true
+        );
+        if (!empty($pag->CNPJPag) && !empty($pag->UFPag)) {
+            $dom->addChild(
+                $node,
+                "CNPJPag",
+                $pag->CNPJPag,
+                true
+            );
+            $dom->addChild(
+                $node,
+                "UFPag",
+                $pag->UFPag,
+                true
+            );
+            $dom->addChild(
+                $node,
+                "CNPJIF",
+                $pag->CNPJIF ?? null,
+                false
+            );
+        }
+        $dom->addChild(
+            $node,
+            "tBand",
+            $pag->tBand ?? null,
+            false
+        );
+        $dom->addChild(
+            $node,
+            "cAut",
+            $pag->cAut ?? null,
+            false
+        );
+        if (!empty($pag->CNPJReceb) && !empty($pag->UFReceb)) {
+            $dom->addChild(
+                $node,
+                "CNPJReceb",
+                $pag->CNPJReceb,
+                true
+            );
+            $dom->addChild(
+                $node,
+                "UFReceb",
+                $pag->UFReceb,
+                true
+            );
+        }
+        return $dom->saveXML($node);
     }
 }

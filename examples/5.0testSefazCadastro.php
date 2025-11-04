@@ -8,8 +8,8 @@ use NFePHP\Common\Certificate;
 use NFePHP\Common\Soap\SoapCurl;
 
 //tanto o config.json como o certificado.pfx podem estar
-//armazenados em uma base de dados, então não é necessário 
-///trabalhar com arquivos, este script abaixo serve apenas como 
+//armazenados em uma base de dados, então não é necessário
+///trabalhar com arquivos, este script abaixo serve apenas como
 //exemplo durante a fase de desenvolvimento e testes.
 $arr = [
     "atualizacao" => "2016-11-03 18:01:21",
@@ -27,21 +27,24 @@ $arr = [
         "proxyPort" => "",
         "proxyUser" => "",
         "proxyPass" => ""
-    ]   
+    ]
 ];
 //monta o config.json
 $configJson = json_encode($arr);
 
 //carrega o conteudo do certificado.
-$content = file_get_contents('expired_certificate.pfx');
+$content = file_get_contents('fixtures/expired_certificate.pfx');
+$soap = new \NFePHP\Common\Soap\SoapFake();
+$soap->disableCertValidation(true);
 
 $tools = new Tools($configJson, Certificate::readPfx($content, 'associacao'));
+$tools->loadSoapClass($soap);
 
-//Somente para modelo 55, o modelo 65 evidentemente não possue 
+//Somente para modelo 55, o modelo 65 evidentemente não possue
 //esse tipo de serviço
 $tools->model('55');
 
-//coloque a UF e escolha entre 
+//coloque a UF e escolha entre
 //CNPJ
 //IE
 //CPF
@@ -53,6 +56,6 @@ $iest = '';
 $cpf = '';
 $response = $tools->sefazCadastro($uf, $cnpj, $iest, $cpf);
 
-header('Content-type: text/xml; charset=UTF-8');
-echo $response;
+echo \NFePHP\NFe\Common\FakePretty::prettyPrint($response);
+
 

@@ -29,5 +29,3 @@ parameters:
 			message: "#^Unsafe usage of new static\\(\\)\\.$#"
 			count: 1
 			path: src/Exception/DocumentsException.php
-
-

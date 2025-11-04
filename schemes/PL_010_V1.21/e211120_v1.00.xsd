@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by sas-software@procergs.rs.gov.br (PROCERGS) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/nfe" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" targetNamespace="http://www.portalfiscal.inf.br/nfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="tiposBasico_v1.03.xsd"/>
+	<xs:element name="detEvento">
+		<xs:annotation>
+			<xs:documentation>Informações do Evento de Destinação de item para consumo pessoal</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="descEvento">
+					<xs:annotation>
+						<xs:documentation>Descrição do Evento de Destinação de item para consumo pessoal</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="Destinação de item para consumo pessoal"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="cOrgaoAutor" type="TCodUfIBGE">
+					<xs:annotation>
+						<xs:documentation>Código do Órgão Autor do Evento. Informar o Código da UF para este Evento.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="tpAutor">
+					<xs:annotation>
+						<xs:documentation>Caso NF-e de Importação, informar 1=Empresa Emitente.
+												Demais casos, informar 2=Empresa destinatária
+						</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="1"/>
+							<xs:enumeration value="2"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="verAplic" type="TVerAplic">
+					<xs:annotation>
+						<xs:documentation>Versão do Aplicativo que recebeu o Evento</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="gConsumo" maxOccurs="990">
+					<xs:annotation>
+						<xs:documentation>Informações por item da NF-e de Aquisição</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="vIBS" type="TDec_1302">
+								<xs:annotation>
+									<xs:documentation>Valor do IBS na nota de aquisição correspondente à quantidade destinada a uso e consumo pessoal</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="vCBS" type="TDec_1302">
+								<xs:annotation>
+									<xs:documentation>Valor da CBS na nota de aquisição correspondente à quantidade destinada a uso e consumo pessoal</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="gControleEstoque">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="qConsumo" type="TDec_1104">
+											<xs:annotation>
+												<xs:documentation>Informar a quantidade para consumo de pessoa física</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="uConsumo">
+											<xs:annotation>
+												<xs:documentation>Informar a unidade relativa ao campo gConsumo</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="TString">
+													<xs:maxLength value="6"/>
+													<xs:minLength value="1"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="DFeReferenciado">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="chaveAcesso" type="TChNFe">
+											<xs:annotation>
+												<xs:documentation>Informar a chave da nota (NFe ou NFCe) emitida para o fornecimento nos casos em que a legislação obriga a emissão de documento fiscal.</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="nItemDFeRef"  type="TnItem">
+											<xs:annotation>
+												<xs:documentation>Corresponde ao atributo “nItem” do elemento “det” do documento referenciado</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="nItem" type="TnItem" use="required">
+							<xs:annotation>
+								<xs:documentation>Corresponde ao atributo “nItem” do elemento “det” da NF-e de importação </xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="versao">
+				<xs:annotation>
+					<xs:documentation>Versão do leiaute do evento</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:whiteSpace value="preserve"/>
+						<xs:enumeration value="1.00"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+		<xs:unique name="pk_nItem">
+			<xs:selector xpath="./*"/>
+			<xs:field xpath="@nItem"/>
+		</xs:unique>
+	</xs:element>
+</xs:schema>

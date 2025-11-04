@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by sas-softwares@procergs.rs.gov.br (PROCERGS) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/nfe" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" targetNamespace="http://www.portalfiscal.inf.br/nfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="tiposBasico_v1.03.xsd"/>
+	<xs:element name="detEvento">
+		<xs:annotation>
+			<xs:documentation>Schema XML de validação do evento de Conciliação Financeira – ECONF</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="descEvento">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="ECONF"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="verAplic" type="TVerAplic">
+					<xs:annotation>
+						<xs:documentation>Versão do Aplicativo do Autor do Evento</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="detPag" maxOccurs="100">
+					<xs:annotation>
+						<xs:documentation>Grupo de detalhamento da forma de pagamento.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="indPag" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Indicador da Forma de Pagamento:0-Pagamento à Vista;1-Pagamento à Prazo;</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:whiteSpace value="preserve"/>
+										<xs:enumeration value="0"/>
+										<xs:enumeration value="1"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="tPag">
+								<xs:annotation>
+									<xs:documentation>Forma de Pagamento:</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:whiteSpace value="preserve"/>
+										<xs:pattern value="[0-9]{2}"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="xPag" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Descrição do Meio de Pagamento</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="TString">
+										<xs:minLength value="2"/>
+										<xs:maxLength value="60"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="vPag" type="TDec_1302">
+								<xs:annotation>
+									<xs:documentation>Valor do Pagamento. Esta tag poderá ser omitida quando a tag tPag=90 (Sem Pagamento), caso contrário deverá ser preenchida.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="dPag" type="TData">
+								<xs:annotation>
+									<xs:documentation>Data do Pagamento</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:sequence minOccurs="0">
+								<xs:element name="CNPJPag" type="TCnpj">
+									<xs:annotation>
+										<xs:documentation>CNPJ transacional do pagamento - Preencher informando o CNPJ do estabelecimento onde o pagamento foi processado/transacionado/recebido quando a emissão do documento fiscal ocorrer em estabelecimento distinto</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="UFPag" type="TUfEmi">
+									<xs:annotation>
+										<xs:documentation>UF do CNPJ do estabelecimento onde o pagamento foi processado/transacionado/recebido.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="CNPJIF" type="TCnpj" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation>CNPJ da instituição financeira, de pagamento, adquirente ou subadquirente.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="tBand" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation>Bandeira da operadora de cartão</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="xs:string">
+											<xs:whiteSpace value="preserve"/>
+											<xs:pattern value="[0-9]{2}"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+								<xs:element name="cAut" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation>Número de autorização da operação com cartões, PIX, boletos e outros pagamentos eletrônicos</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="TString">
+											<xs:minLength value="1"/>
+											<xs:maxLength value="128"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+							</xs:sequence>
+							<xs:sequence minOccurs="0">
+								<xs:element name="CNPJReceb" type="TCnpj">
+									<xs:annotation>
+										<xs:documentation>Informar o CNPJ do estabelecimento beneficiário do pagamento</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="UFReceb" type="TUfEmi">
+									<xs:annotation>
+										<xs:documentation>UF do CNPJ do estabelecimento beneficiário do pagamento..</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="versao" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:whiteSpace value="preserve"/>
+						<xs:enumeration value="1.00"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

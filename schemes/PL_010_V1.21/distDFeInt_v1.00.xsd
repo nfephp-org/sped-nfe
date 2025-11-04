@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/nfe" targetNamespace="http://www.portalfiscal.inf.br/nfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:include schemaLocation="tiposDistDFe_v1.00.xsd"/>
+  <xs:element name="distDFeInt">
+    <xs:annotation>
+      <xs:documentation>Schema de pedido de distribuição de DF-e de interesse</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="tpAmb" type="TAmb">
+          <xs:annotation>
+            <xs:documentation>
+            Identificação do Ambiente:
+            1 - Produção
+            2 - Homologação
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="cUFAutor" type="TCodUfIBGE">
+          <xs:annotation>
+            <xs:documentation>Código da UF do Autor</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:choice>
+          <xs:element name="CNPJ" type="TCnpj">
+            <xs:annotation>
+              <xs:documentation>CNPJ do interessado no DF-e</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CPF" type="TCpf">
+            <xs:annotation>
+              <xs:documentation>CPF do interessado no DF-e</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:choice>
+        <xs:choice>
+          <xs:element name="distNSU">
+            <xs:annotation>
+              <xs:documentation>Grupo para distribuir DF-e de interesse</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="ultNSU" type="TNSU">
+                  <xs:annotation>
+                    <xs:documentation>Último NSU recebido pelo ator. Caso seja informado com zero, ou com um NSU muito antigo, a consulta retornará unicamente as informações resumidas e documentos fiscais eletrônicos que tenham sido recepcionados pelo Ambiente Nacional nos últimos 3 meses.</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="consNSU">
+            <xs:annotation>
+              <xs:documentation>Grupo para consultar um DF-e a partir de um NSU específico</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="NSU" type="TNSU">
+                  <xs:annotation>
+                    <xs:documentation>Número Sequencial Único. Geralmente esta consulta será utilizada quando identificado pelo interessado um NSU faltante. O Web Service retornará o documento ou informará que o NSU não existe no Ambiente Nacional. Assim, esta consulta fechará a lacuna do NSU identificado como faltante.</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="versao" type="TVerDistDFe" use="required"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+
