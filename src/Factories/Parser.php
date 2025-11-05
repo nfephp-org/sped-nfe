@@ -1516,7 +1516,9 @@ class Parser
      */
     protected function w03Entity(stdClass $std): void
     {
-        $this->make->tagISTot($std);
+        if (! empty($std->vIS) && $std->vIS > 0) {
+            $this->make->tagISTot($std);
+        }
         $this->make->tagIBSCBSTot($std);
     }
 
