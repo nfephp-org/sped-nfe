@@ -35,13 +35,15 @@ trait TraitTagPag
         $identificador = 'YA01 pag -';
         $this->pag = $this->dom->createElement("pag");
         //incluso no layout 4.00
-        $this->dom->addChild(
-            $this->pag,
-            "vTroco",
-            $this->conditionalNumberFormatting($std->vTroco),
-            false,
-            "$identificador Valor do troco"
-        );
+        if (!empty($std->vTroco) && $std->vTroco> 0) {
+            $this->dom->addChild(
+                $this->pag,
+                "vTroco",
+                $this->conditionalNumberFormatting($std->vTroco),
+                false,
+                "$identificador Valor do troco"
+            );
+        }
         return $this->pag;
     }
 
