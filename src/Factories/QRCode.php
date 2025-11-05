@@ -54,21 +54,17 @@ class QRCode
         if (empty($versao)) {
             $versao = '200';
         }
-
         if ($versao < 300) {
             if (empty($token)) {
                 throw DocumentsException::wrongDocument(9); //Falta o CSC no config.json
             }
-
             if (empty($idToken)) {
                 throw DocumentsException::wrongDocument(10); //Falta o CSCId no config.json
             }
         }
-
         if (empty($urlqr)) {
             throw DocumentsException::wrongDocument(11); //Falta a URL do serviço NfeConsultaQR
         }
-
         $nfe = $dom->getElementsByTagName('NFe')->item(0);
         $infNFe = $dom->getElementsByTagName('infNFe')->item(0);
         $layoutver = $infNFe->getAttribute('versao');

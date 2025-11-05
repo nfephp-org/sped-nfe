@@ -1,29 +1,29 @@
-<nfe:retConsReciNFe versao="string" xmlns:nfe="http://www.portalfiscal.inf.br/nfe" xmlns:xd="http://www.w3.org/2000/09/xmldsig#">
-  <nfe:tpAmb>2</nfe:tpAmb>
-  <nfe:verAplic>string</nfe:verAplic>
-  <nfe:nRec>string</nfe:nRec>
-  <nfe:cStat>stri</nfe:cStat>
-  <nfe:xMotivo>string</nfe:xMotivo>
-  <nfe:cUF>12</nfe:cUF>
-  <nfe:dhRecbto>string</nfe:dhRecbto>
-  <nfe:cMsg>string</nfe:cMsg>
-  <nfe:xMsg>string</nfe:xMsg>
+<retConsReciNFe versao="string" xmlns:nfe="http://www.portalfiscal.inf.br/nfe" xmlns:xd="http://www.w3.org/2000/09/xmldsig#">
+  <tpAmb>2</tpAmb>
+  <verAplic>string</verAplic>
+  <nRec>string</nRec>
+  <cStat>stri</cStat>
+  <xMotivo>string</xMotivo>
+  <cUF>12</cUF>
+  <dhRecbto>string</dhRecbto>
+  <cMsg>string</cMsg>
+  <xMsg>string</xMsg>
   <!--0 to 50 repetitions:-->
-  <nfe:protNFe versao="string">
-    <nfe:infProt Id="string">
-      <nfe:tpAmb>1</nfe:tpAmb>
-      <nfe:verAplic>string</nfe:verAplic>
-      <nfe:chNFe>string</nfe:chNFe>
-      <nfe:dhRecbto>string</nfe:dhRecbto>
+  <protNFe versao="string">
+    <infProt Id="string">
+      <tpAmb>1</tpAmb>
+      <verAplic>string</verAplic>
+      <chNFe>string</chNFe>
+      <dhRecbto>string</dhRecbto>
       <!--Optional:-->
-      <nfe:nProt>string</nfe:nProt>
+      <nProt>string</nProt>
       <!--Optional:-->
-      <nfe:digVal>c29ub3Jhcw==</nfe:digVal>
-      <nfe:cStat>stri</nfe:cStat>
-      <nfe:xMotivo>string</nfe:xMotivo>
-      <nfe:cMsg>string</nfe:cMsg>
-      <nfe:xMsg>string</nfe:xMsg>
-    </nfe:infProt>
+      <digVal>c29ub3Jhcw==</digVal>
+      <cStat>stri</cStat>
+      <xMotivo>string</xMotivo>
+      <cMsg>string</cMsg>
+      <xMsg>string</xMsg>
+    </infProt>
     <!--Optional:-->
     <xd:Signature Id="string">
       <xd:SignedInfo Id="string">
@@ -49,5 +49,5 @@
         </xd:X509Data>
       </xd:KeyInfo>
     </xd:Signature>
-  </nfe:protNFe>
-</nfe:retConsReciNFe>
+  </protNFe>
+</retConsReciNFe>

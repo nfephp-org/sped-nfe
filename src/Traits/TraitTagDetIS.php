@@ -13,6 +13,7 @@ use DOMException;
  * @property DOMImproved $dom
  * @property array $aIS
  * @property stdClass $stdIStot
+ * @property bool $flagIS
  */
 trait TraitTagDetIS
 {
@@ -38,7 +39,8 @@ trait TraitTagDetIS
         $std = $this->equilizeParameters($std, $possible);
         $identificador = "UB01 IS Item: $std->item -";
         //totalizador
-        $this->stdIStot->vIS += (float) $std->vIS;
+        $this->flagIS = true;
+        $this->stdIStot->vIS += (float) ($std->vIS ?? 0);
         $is = $this->dom->createElement("IS");
         $this->dom->addChild(
             $is,

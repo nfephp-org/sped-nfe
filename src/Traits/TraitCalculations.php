@@ -219,7 +219,7 @@ trait TraitCalculations
                 + $vII
                 + $vIPI
                 + $vIPIDevol
-                + $vServ
+                + $vServ  //não reconheço esse campo no xml
                 + $vPISST
                 + $vCOFINSST;
             if ($year >= 2026) {
