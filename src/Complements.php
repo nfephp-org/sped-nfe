@@ -237,15 +237,8 @@ class Complements
         $ret->preserveWhiteSpace = false;
         $ret->formatOutput = false;
         $ret->loadXML($response);
-        $prottpAmb = $ret->getElementsByTagName('tpAmb')->item(0)->nodeValue;
-        $verAplic = $ret->getElementsByTagName('verAplic')->item(0)->nodeValue;
-        $chNFe = $ret->getElementsByTagName('chNFe')->item(0)->nodeValue;
-        $dhRecbto = $ret->getElementsByTagName('dhRecbto')->item(0)->nodeValue;
         $cStat = $ret->getElementsByTagName('cStat')->item(0)->nodeValue;
         $xMotivo = $ret->getElementsByTagName('xMotivo')->item(0)->nodeValue;
-        if ($chNFe !== $chave) {
-            throw DocumentsException::wrongDocument(5, 'A chave da NFe não é igual a chave do protocolo');
-        }
         //retorno pode vir sem o protNFe
         $retProt = $ret->getElementsByTagName('protNFe')->length > 0 ? $ret->getElementsByTagName('protNFe') : null;
         $digProt = null;
