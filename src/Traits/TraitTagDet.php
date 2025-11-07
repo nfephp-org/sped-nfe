@@ -160,7 +160,7 @@ trait TraitTagDet
         $this->dom->addChild(
             $prod,
             "CEST",
-            $std->CEST,
+            $std->CEST ?? null,
             false,
             "$identificador Codigo especificador da Substuicao Tributaria (CEST)"
         );
@@ -183,7 +183,7 @@ trait TraitTagDet
         $this->dom->addChild(
             $prod,
             "cBenef",
-            $std->cBenef,
+            $std->cBenef ?? null,
             false,
             "$identificador Código de Benefício Fiscal utilizado pela UF"
         );
@@ -343,6 +343,48 @@ trait TraitTagDet
         );
         $this->aProd[$std->item] = $prod;
         return $prod;
+    }
+
+    /**
+     * Define a tag referente ao Código Especificador da Substituição Tributária (CEST).
+     * tag NFe/infNFe/det[]/prod/CEST
+     *
+     * @param stdClass $std Objeto contendo os parâmetros necessários, incluindo item, CEST, indEscala e CNPJFab.
+     * @return DOMElement Elemento DOM representando o Código Especificador da Substituição Tributária (CEST).
+     * @throws DOMException Caso ocorra um erro na manipulação do DOM.
+     */
+    public function tagCEST(stdClass $std): DOMElement
+    {
+        $possible = ['item', 'CEST', 'indEscala', 'CNPJFab'];
+        $std = $this->equilizeParameters($std, $possible);
+        $identificador = 'I05b <ctrltST> - ';
+        $ctrltST = $this->dom->createElement("ctrltST");
+        $this->dom->addChild(
+            $ctrltST,
+            "CEST",
+            Strings::onlyNumbers($std->CEST),
+            true,
+            "$identificador [item $std->item] Numero CEST"
+        );
+        //incluido no layout 4.00
+        $this->dom->addChild(
+            $ctrltST,
+            "indEscala",
+            $std->indEscala,
+            false,
+            "$identificador [item $std->item] Indicador de Produção em escala relevante"
+        );
+        //incluido no layout 4.00
+        $this->dom->addChild(
+            $ctrltST,
+            "CNPJFab",
+            Strings::onlyNumbers($std->CNPJFab),
+            false,
+            "$identificador [item $std->item] CNPJ do Fabricante da Mercadoria,"
+            . "obrigatório para produto em escala NÃO relevante."
+        );
+        $this->aCest[$std->item] = $ctrltST;
+        return $ctrltST;
     }
 
     /**

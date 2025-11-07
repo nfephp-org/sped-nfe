@@ -23,7 +23,7 @@ class NFeTestCase extends TestCase
             "razaosocial" => "SUA RAZAO SOCIAL LTDA",
             "siglaUF" => "SP",
             "cnpj" => "93623057000128",
-            "schemes" => "PL_009_V4",
+            "schemes" => "PL_010_V1.30",
             "versao" => "4.00",
             "tokenIBPT" => "AAAAAAA",
             "CSC" => "GPB0JBWLUR6HWFTVEAS6RJ69GPCROFPBBB8G",
