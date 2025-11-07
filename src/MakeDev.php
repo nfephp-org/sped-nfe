@@ -90,6 +90,9 @@ final class MakeDev
     public array $errors = [];
     public ?string $chNFe;
     public string $xml;
+    protected bool $flagIS = false;
+    protected bool $flagIBSCBS = false;
+    protected bool $flagMono = false;
     protected int $calculationMethod = 2;
     protected string $version;
     protected string $mod = '55';

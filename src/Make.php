@@ -2,7 +2,6 @@
 
 namespace NFePHP\NFe;
 
-use NFePHP\Common\Keys;
 use NFePHP\Common\DOMImproved as Dom;
 use NFePHP\Common\Strings;
 use NFePHP\NFe\Traits\TraitCalculations;
@@ -41,7 +40,6 @@ use NFePHP\NFe\Traits\TraitTagTotal;
 use NFePHP\NFe\Traits\TraitTagTransp;
 use stdClass;
 use DOMElement;
-use DateTime;
 
 final class Make
 {
@@ -510,8 +508,8 @@ final class Make
                     $this->dom->insertAfter($nve, $node);
                 }
             }
-            //gCred => prod até 4 registros PL_010
-            if (!empty($this->aGCred[$item]) && $this->schema > 9) {
+            //gCred => prod até 4 registros
+            if (!empty($this->aGCred[$item])) {
                 $gcs = $this->aGCred[$item];
                 if (count($gcs) > 4) {
                     $this->errors[] = "<gCred> Item: $item - As tags gCred são limitadas a 4 "
@@ -524,6 +522,42 @@ final class Make
                 }
                 foreach ($gcs as $gc) {
                     $prod->insertBefore($gc, $node);
+                }
+            }
+            //CEST => prod
+            $cest = $prod->getElementsByTagName("CEST")->item(0)->nodeValue ?? null;
+            if (!empty($this->aCest[$item]) && empty($cest)) {
+                //não tem CEST no item produto, mas tem no array de $this->>aCest
+                $cest = $this->aCest[$item];
+                $codigo = $cest->getElementsByTagName("CEST")->item(0)->nodeValue ?? null;
+                $cBenef = $cest->getElementsByTagName("cBenef")->item(0)->nodeValue ?? null;
+                $CNPJFab = $cest->getElementsByTagName("CNPJFab")->item(0)->nodeValue ?? null;
+                $indEscala = $cest->getElementsByTagName("indEscala")->item(0)->nodeValue ?? null;
+                $node = $prod->getElementsByTagName("gCred")->item(0) ?? null;
+                if (empty($node)) {
+                    $node = $prod->getElementsByTagName("tpCredPresIBSZFM")->item(0) ?? null;
+                    if (empty($node)) {
+                        $node = $prod->getElementsByTagName("EXTIPI")->item(0) ?? null;
+                    }
+                    if (empty($node)) {
+                        $node = $prod->getElementsByTagName("CFOP")->item(0) ?? null;
+                    }
+                }
+                if (!empty($codigo)) {
+                    $child = $this->dom->createElement("CEST", $codigo);
+                    $prod->insertBefore($child, $node);
+                }
+                if (!empty($indEscala)) {
+                    $child = $this->dom->createElement("indEscala", $indEscala);
+                    $prod->insertBefore($child, $node);
+                }
+                if (!empty($CNPJFab)) {
+                    $child = $this->dom->createElement("CNPJFab", $CNPJFab);
+                    $prod->insertBefore($child, $node);
+                }
+                if (!empty($cBenef)) {
+                    $child = $this->dom->createElement("cBenef", $cBenef);
+                    $prod->insertBefore($child, $node);
                 }
             }
             //DI => prod

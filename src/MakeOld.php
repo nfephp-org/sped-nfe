@@ -8266,7 +8266,8 @@ class MakeOld
     protected function buildTotal()
     {
         //round all values
-        $this->stdTot->vBC = round($this->stdTot->vBC, 2, PHP_ROUND_HALF_UP);;
+        $this->stdTot->vBC = round($this->stdTot->vBC, 2, PHP_ROUND_HALF_UP);
+        ;
         $this->stdTot->vICMS = round($this->stdTot->vICMS, 2, PHP_ROUND_HALF_UP);
         $this->stdTot->vICMSDeson = round($this->stdTot->vICMSDeson, 2, PHP_ROUND_HALF_UP);
         $this->stdTot->vFCP = round($this->stdTot->vFCP, 2, PHP_ROUND_HALF_UP);

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace NFePHP\NFe\Tests;
 
-use NFePHP\NFe\Make;
+use NFePHP\NFe\MakeOld as Make;
 use PHPUnit\Framework\TestCase;
 
 class MakeTest extends TestCase

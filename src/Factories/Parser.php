@@ -16,7 +16,6 @@
 namespace NFePHP\NFe\Factories;
 
 use NFePHP\NFe\Make;
-use NFePHP\NFe\MakeDev;
 use NFePHP\NFe\Exception\DocumentsException;
 use stdClass;
 
@@ -32,7 +31,7 @@ class Parser
      */
     protected $structure;
     /**
-     * @var \NFePHP\NFe\Make|\NFePHP\NFe\MakeDev
+     * @var Make
      */
     protected $make;
     /**
@@ -111,6 +110,8 @@ class Parser
      * @var string
      */
     protected $baselayout;
+    protected array $detExport = [];
+    protected array $detExportInd = [];
 
     /**
      * Configure environment to correct NFe layout
@@ -127,8 +128,7 @@ class Parser
             $comp = "_v1.2";
         } elseif ($baselayout == self::LOCAL_V13) {
             $comp = "_v1.3";
-
-            $this->make = new MakeDev(10);
+            $this->make = new Make(10);
         }
         $this->baselayout = $baselayout;
         $path = realpath(__DIR__ . "/../../storage/txtstructure$ver" . $comp . ".json");
@@ -599,7 +599,7 @@ class Parser
     protected function i05gEntity(stdClass $std): void
     {
         $std->item = $this->item;
-        $this->make->tagCreditoPresumidoProd($std);
+        $this->make->taggCred($std);
     }
 
     /**
@@ -638,22 +638,12 @@ class Parser
 
     /**
      * Load fields for tag detExport [I50]
-     * I50|nDraw|
+     * I50|nDraw|nRE|chNFe|qExport
      */
     protected function i50Entity(stdClass $std): void
     {
         $std->item = $this->item;
         $this->make->tagdetExport($std);
-    }
-
-    /**
-     * Create tag detExport/exportInd [I52], belongs to [I50]
-     * I52|nRE|chNFe|qExport|
-     */
-    protected function i52Entity(stdClass $std): void
-    {
-        $std->item = $this->item;
-        $this->make->tagdetExportInd($std);
     }
 
     /**
@@ -761,7 +751,6 @@ class Parser
     {
         //create tag comb [LA]
         $this->buildLAEntity();
-
         $std->item = $this->item;
         $this->make->tagimposto($std);
     }
@@ -1720,7 +1709,6 @@ class Parser
     protected function ub01Entity(stdClass $std): void
     {
         $std->item = $this->item;
-
         $this->make->tagIS($std);
     }
 
@@ -1732,7 +1720,6 @@ class Parser
     protected function ub12Entity(stdClass $std): void
     {
         $std->item = $this->item;
-
         $this->mergeStdClass($std);
     }
 
@@ -1744,7 +1731,6 @@ class Parser
     protected function ub17Entity(stdClass $std): void
     {
         $std->item = $this->item;
-
         $this->mergeStdClass($std);
     }
 
@@ -1756,7 +1742,6 @@ class Parser
     protected function ub36Entity(stdClass $std): void
     {
         $std->item = $this->item;
-
         $this->mergeStdClass($std);
     }
 
@@ -1768,11 +1753,8 @@ class Parser
     protected function ub55Entity(stdClass $std): void
     {
         $std->item = $this->item;
-
         $this->mergeStdClass($std);
-
         $this->make->tagIBSCBS($this->stdAuxiliar);
-
         $this->stdAuxiliar = null;
     }
 
@@ -1784,31 +1766,17 @@ class Parser
     protected function ub68Entity(stdClass $std): void
     {
         $std->item = $this->item;
-
         $this->make->tagIBSCBSTribRegular($std);
     }
 
     /**
-     * Grupo de Informações do Crédito Presumido referente ao IBS
-     * UB73|cCredPres|pCredPres|vCredPres|vCredPresCondSus|
+     * Grupo de Informações do Crédito Presumido na Operação
+     * UB73|vBCCredPres|cCredPres|ibs_pCredPres|ibs_vCredPres|ibs_vCredPresCondSus|cbs_pCredPres|cbs_vCredPres|cbs_vCredPresCondSus|
      */
     protected function ub73Entity(stdClass $std): void
     {
         $std->item = $this->item;
-
-        $this->make->tagIBSCredPres($std);
-    }
-
-
-    /**
-     * Grupo de Informações do Crédito Presumido referente a CBS
-     * UB78|cCredPres|pCredPres|vCredPres|vCredPresCondSus|
-     */
-    protected function ub78Entity(stdClass $std): void
-    {
-        $std->item = $this->item;
-
-        $this->make->tagCBSCredPres($std);
+        $this->make->taggCredPresOper($std);
     }
 
     /**
@@ -1818,7 +1786,6 @@ class Parser
     protected function ub82aEntity(stdClass $std): void
     {
         $std->item = $this->item;
-
         $this->make->taggTribCompraGov($std);
     }
 
