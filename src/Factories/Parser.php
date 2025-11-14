@@ -1698,6 +1698,9 @@ class Parser
 
         $fields = get_object_vars($std);
         foreach ($fields as $key => $value) {
+            if (is_null($value)) {
+                continue;
+            }
             $this->stdAuxiliar->$key = $value;
         }
     }
