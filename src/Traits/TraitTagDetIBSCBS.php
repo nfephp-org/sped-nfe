@@ -135,9 +135,11 @@ trait TraitTagDetIBSCBS
             "$identificador Indica a natureza da operação de doação, orientando a apuração e a geração"
             . "de débitos ou estornos conforme o cenário (indDoacao)"
         );
-        //gIBSCBS é opcional e também é um choice com IBSCBSMono
-        if (!is_null($std->vBC) && is_numeric($std->vBC)) {
+        if (!empty($std->cClassTrib)) {
             $this->flagIBSCBS = true;
+        }
+        //gIBSCBS é opcional e também é um choice com IBSCBSMono
+        if (!is_null($std->vBC) && is_numeric($std->vBC) && $std->vBC > 0) {
             $identificador = "UB12 <IBSCBS/gIBSCBS> -";
             $gIBSCBS = $this->dom->createElement("gIBSCBS");
             $this->dom->addChild(
