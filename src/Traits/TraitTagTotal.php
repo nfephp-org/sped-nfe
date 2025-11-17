@@ -587,7 +587,7 @@ trait TraitTagTotal
             true,
             "$identificador Valor total da BC do IBS e da CBS (vBCIBSCBS)"
         );
-        if (!empty($gIBS_vIBS)) {
+        if (isset($gIBS_vIBS)) {
             $gIBS = $this->dom->createElement('gIBS');
             $gIBSUF = $this->dom->createElement('gIBSUF');
             $this->dom->addChild(
@@ -658,7 +658,7 @@ trait TraitTagTotal
             );
             $ibstot->appendChild($gIBS);
         }
-        if (!empty($gCBS_vCBS)) {
+        if (isset($gCBS_vCBS)) {
             $gCBS = $this->dom->createElement('gCBS');
             $this->dom->addChild(
                 $gCBS,
@@ -697,7 +697,7 @@ trait TraitTagTotal
             );
             $ibstot->appendChild($gCBS);
         }
-        if ($this->flagMono) {
+        if (isset($gMono_vIBSMono)) {
             $gMono = $this->dom->createElement('gMono');
             $this->dom->addChild(
                 $gMono,
@@ -744,7 +744,7 @@ trait TraitTagTotal
             $ibstot->appendChild($gMono);
         }
         //NT 2025.002_v1.30 - PL_010_V1.30
-        if (!empty($gEstornoCred_vIBSEstCred) || !empty($gEstornoCred_vCBSEstCred)) {
+        if (isset($gEstornoCred_vIBSEstCred) || isset($gEstornoCred_vCBSEstCred)) {
             $gEst = $this->dom->createElement('gEstornoCred');
             $this->dom->addChild(
                 $gEst,
