@@ -370,13 +370,20 @@ $ide = [
         //5 - Nota de crédito
         //6 - Nota de débito
     'tpNFDebito' => '01', //opcional apenas PL_010 em diante
-        //01=Transferência de créditos para Cooperativas;
-        //02=Anulação de Crédito por Saídas Imunes/Isentas;
-        //03=Débitos de notas fiscais não processadas na apuração;
-        //04=Multa e juros;
-        //05=Transferência de crédito de sucessão.
+        //01 - Transferência de créditos para Cooperativas;
+        //02 - Anulação de Crédito por Saídas Imunes/Isentas;
+        //03 - Débitos de notas fiscais não processadas na apuração;
+        //04 - Multa e juros;
+        //05 - Transferência de crédito na sucessão;
+        //06 - Pagamento antecipado;
+        //07 - Perda em estoque;
+        //08 - Desenquadramento do SN;
     'tpNFCredito' => '01', //opcional apenas PL_010 em diante
-        //01 - a definir ?????????????????????????????????????????????
+        //01 - Multa e juros;
+        //02 - Apropriação de crédito presumido de IBS sobre o saldo devedor na ZFM (art. 450, § 1º, LC 214/25);
+        //03 - Retorno por recusa total na entrega ou por não localização do destinatário na tentativa de entrega;
+        //04 - Redução de valores;
+        //05 - Transferência de crédito na sucessão;
     'indFinal' => 0, // OBRIGATÓRIO 0 Normal; 1 Consumidor final;
     'indPres' => 9, // OBRIGATÓRIO
         //1 Operação presencial;
