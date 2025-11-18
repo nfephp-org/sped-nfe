@@ -188,7 +188,7 @@ trait TraitTagIde
             );
         }
         //NT 2025.002_V1.30 - PL_010_V.130
-        if ($this->schema > 9) {
+        if ($this->schema > 9 && $this->mod == '55' && $std->dPrevEntrega != '') {
             $this->dom->addChild(
                 $ide,
                 "dPrevEntrega",
