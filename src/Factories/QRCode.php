@@ -237,6 +237,11 @@ class QRCode
             //emissão on-line
             return $url . "$chNFe|3|$tpAmb";
         }
+        //Manual Esp. Tec. DNAFE_NFCe_QR_Code versão 6.00 março/25
+        //página 30 - Caso Destinatário estrangeiro ou não identificado, informar apenas o separador “|”.
+        if ($tp_idDest == 3) {
+            $cDest = '';
+        }
         //emissão off-line
         $dt = new \DateTime($dhEmi);
         $dia = $dt->format('d');
