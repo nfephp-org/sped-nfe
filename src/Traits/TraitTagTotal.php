@@ -744,7 +744,7 @@ trait TraitTagTotal
             $ibstot->appendChild($gMono);
         }
         //NT 2025.002_v1.30 - PL_010_V1.30
-        if (isset($gEstornoCred_vIBSEstCred) || isset($gEstornoCred_vCBSEstCred)) {
+        if (!empty($gEstornoCred_vIBSEstCred) || !empty($gEstornoCred_vCBSEstCred)) {
             $gEst = $this->dom->createElement('gEstornoCred');
             $this->dom->addChild(
                 $gEst,
