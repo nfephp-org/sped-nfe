@@ -183,7 +183,7 @@ trait TraitEventsRTC
                 . "</gControleEstoque>"
                 . "<DFeReferenciado>"
                 . "<chaveAcesso>{$item->chave}</chaveAcesso>"
-                . "<nItemDFeRef>{$item->nItem}</nItemDFeRef>"
+                . "<nItem>{$item->nItem}</nItem>"
                 . "</DFeReferenciado>"
                 . "</gConsumo>";
             $tagAdic .= $gc;
@@ -500,7 +500,6 @@ trait TraitEventsRTC
         $verAplic = $this->resolveVerAplic($verAplic);
         $tpEvento = '110001';
         $tagAdic = "<cOrgaoAutor>{$this->cUF}</cOrgaoAutor>"
-            . "<tpAutor>{$std->tpAutor}</tpAutor>"
             . "<verAplic>{$verAplic}</verAplic>"
             . "<tpEventoAut>{$std->tpEventoAut}</tpEventoAut>"
             . "<nProtEvento>{$std->nProtEvento}</nProtEvento>";
