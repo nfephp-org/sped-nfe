@@ -2283,7 +2283,7 @@ trait TraitTagDetICMS
         $identificador = "NA01 ICMSUFDest Item: $std->item -";
         $this->stdTot->vICMSUFDest += (float) $std->vICMSUFDest;
         $this->stdTot->vFCPUFDest += (float) $std->vFCPUFDest;
-        $this->stdTot->vICMSUFRemet += (float) $std->vICMSUFRemet ?? 0;
+        $this->stdTot->vICMSUFRemet += (float) ($std->vICMSUFRemet ?? 0);
         $icmsUFDest = $this->dom->createElement('ICMSUFDest');
         $this->dom->addChild(
             $icmsUFDest,
@@ -2344,7 +2344,7 @@ trait TraitTagDetICMS
         $this->dom->addChild(
             $icmsUFDest,
             "vICMSUFRemet",
-            $this->conditionalNumberFormatting($std->vICMSUFRemet ?? 0),
+            $this->conditionalNumberFormatting(($std->vICMSUFRemet ?? 0)),
             true,
             "$identificador Valor do ICMS de partilha para a UF do remetente"
         );
