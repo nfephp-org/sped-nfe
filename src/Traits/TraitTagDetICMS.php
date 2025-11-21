@@ -2344,7 +2344,7 @@ trait TraitTagDetICMS
         $this->dom->addChild(
             $icmsUFDest,
             "vICMSUFRemet",
-            $std->vICMSUFRemet ?? 0,
+            $this->conditionalNumberFormatting($std->vICMSUFRemet ?? 0),
             true,
             "$identificador Valor do ICMS de partilha para a UF do remetente"
         );
