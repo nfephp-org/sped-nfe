@@ -41,21 +41,21 @@ trait TraitTagRetirada
         $std = $this->equilizeParameters($std, $possible);
         $identificador = 'F01 retirada -';
         $this->retirada = $this->dom->createElement("retirada");
-        if (!empty($std->CNPJ)) {
-            $this->dom->addChild(
-                $this->retirada,
-                "CNPJ",
-                $std->CNPJ,
-                false,
-                $identificador . "CNPJ do Cliente da Retirada"
-            );
-        } elseif (!empty($std->CPF)) {
+        if (!empty($std->CPF)) {
             $this->dom->addChild(
                 $this->retirada,
                 "CPF",
                 $std->CPF,
                 false,
                 $identificador . "CPF do Cliente da Retirada"
+            );
+        } else {
+            $this->dom->addChild(
+                $this->retirada,
+                "CNPJ",
+                $std->CNPJ ?? '',
+                true,
+                $identificador . "CNPJ do Cliente da Retirada"
             );
         }
         $this->dom->addChild(
