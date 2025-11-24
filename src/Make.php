@@ -101,6 +101,7 @@ final class Make
     protected bool $replaceAccentedChars = false;
     public Dom $dom;
     public stdClass $stdTot;
+    protected array $dataICMSTot;
     protected stdClass $stdISSQNTot;
     protected stdClass $stdIStot;
     protected stdClass $stdIBSCBSTot;
@@ -271,6 +272,11 @@ final class Make
         $this->stdTot->vOutro = 0;
         $this->stdTot->vNF = 0;
         $this->stdTot->vTotTrib = 0;
+        $this->stdTot->vRetPIS = 0;
+        $this->stdTot->vRetCOFINS = 0;
+        $this->stdTot->vRetCSLL = 0;
+        $this->stdTot->vRetIRRF = 0;
+        $this->stdTot->vRetPrev = 0;
         //PL_010 IBS CBS vNFTot
         $this->stdTot->vIBS = 0;
         $this->stdTot->vCBS = 0;
@@ -868,6 +874,13 @@ final class Make
             + $this->stdISSQNTot->vServ
             + $this->stdTot->vPISST
             + $this->stdTot->vCOFINSST;
+            /*
+            - $this->stdTot->vRetPIS //subtrai as retenções
+            - $this->stdTot->vRetCOFINS  //subtrai as retenções
+            - $this->stdTot->vRetCSLL //subtrai as retenções
+            - $this->stdTot->vRetIRRF //subtrai as retenções
+            - $this->stdTot->vRetPrev; //subtrai as retenções
+            */
     }
 
     /**
@@ -1120,7 +1133,7 @@ final class Make
         $identificador = 'W01 <total> -';
         $total = $this->dom->createElement('total');
         //Grupo Totais referentes ao ICMS
-        if (empty($this->ICMSTot)) {
+        if (empty($this->dataICMSTot)) {
             $icms = [
                 'vBC' => null,
                 'vICMS' => null,
@@ -1152,8 +1165,11 @@ final class Make
                 'qBCMonoRet' => null,
                 'vICMSMonoRet' => null,
             ];
-            $this->tagICMSTot((object)$icms);
+        } else {
+            $icms = $this->dataICMSTot;
         }
+        $this->buildTagICMSTot((object)$icms);
+
         //Até 2036 esta tag deverá existir segundo a documentação atual da SEFAZ
         $this->addTag($total, $this->ICMSTot);
         //Grupo Totais referentes ao ISSQN
