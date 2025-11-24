@@ -103,6 +103,7 @@ final class MakeDev
     protected bool $replaceAccentedChars = false;
     public Dom $dom;
     public stdClass $stdTot;
+    protected array $dataICMSTot;
     protected stdClass $stdISSQNTot;
     protected stdClass $stdIStot;
     protected stdClass $stdIBSCBSTot;
@@ -1093,7 +1094,7 @@ final class MakeDev
         $identificador = 'W01 <total> -';
         $total = $this->dom->createElement('total');
         //Grupo Totais referentes ao ICMS
-        if (empty($this->ICMSTot)) {
+        if (empty($this->dataICMSTot)) {
             $icms = [
                 'vBC' => null,
                 'vICMS' => null,
@@ -1125,10 +1126,10 @@ final class MakeDev
                 'qBCMonoRet' => null,
                 'vICMSMonoRet' => null,
             ];
-            $this->tagICMSTot((object)$icms);
+        } else {
+            $icms = $this->dataICMSTot;
         }
-        //Até 2036 esta tag deverá existir segundo a documentação atual da SEFAZ
-        $this->addTag($total, $this->ICMSTot);
+        $this->buildTagICMSTot((object)$icms);
         //Grupo Totais referentes ao ISSQN
         if (empty($this->ISSQNTot) && $this->stdISSQNTot->vServ > 0) {
             $iss = [
