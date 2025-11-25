@@ -645,18 +645,24 @@ final class MakeDev
                 $imposto = $this->aImposto[$item];
             }
             //ICMS => imposto
+            //ICMS => imposto
             $flagICMS = false;
+            $icms = $this->dom->createElement("ICMS");
             if (!empty($this->aICMS[$item])) {
                 $flagICMS = true;
-                $icms = $this->dom->createElement("ICMS");
                 $this->addTag($icms, $this->aICMS[$item]);
-                $this->addTag($imposto, $icms, 'Falta a tag det/imposto!');
-            }
-            if (!empty($this->aICMSSN[$item])) {
+            } elseif (!empty($this->aICMSPart[$item])) {
                 $flagICMS = true;
-                $icmssn = $this->dom->createElement("ICMS");
-                $this->addTag($icmssn, $this->aICMSSN[$item]);
-                $this->addTag($imposto, $icmssn, 'Falta a tag det/imposto!');
+                $this->addTag($icms, $this->aICMSPart[$item]);
+            } elseif (!empty($this->aICMSST[$item])) {
+                $flagICMS = true;
+                $this->addTag($icms, $this->aICMSST[$item]);
+            } elseif (!empty($this->aICMSSN[$item])) {
+                $flagICMS = true;
+                $this->addTag($icms, $this->aICMSSN[$item]);
+            }
+            if ($flagICMS) {
+                $this->addTag($imposto, $icms, 'Falta a tag det/imposto!');
             }
             //IPI => imposto
             if (!empty($this->aIPI[$item])) {
