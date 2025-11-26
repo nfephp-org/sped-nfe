@@ -1138,7 +1138,7 @@ final class MakeDev
         $this->buildTagICMSTot((object)$icms);
         $this->addTag($total, $this->ICMSTot ?? null);
         //Grupo Totais referentes ao ISSQN
-        if (empty($this->ISSQNTot) && $this->stdISSQNTot->vServ > 0) {
+        if (empty($this->ISSQNTot) && !empty($this->aISSQN)) {
             $iss = [
                 'vServ' => null,
                 'vBC' => null,
