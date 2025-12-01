@@ -100,7 +100,7 @@
     "UA": "UA|pDevol|vIPIDevol|",
     "UB": "UB|",
     "UB01": "UB01|CSTIS|cClassTribIS|vBCIS|pIS|pISEspec|uTrib|qTrib|vIS|",
-    "UB12": "UB12|CST|cClassTrib|vBC|gIBSUF_pIBSUF|gIBSUF_vIBSUF|gIBSMun_pIBSMun|gIBSMun_vIBSMun|gCBS_pCBS|gCBS_vCBS|",
+    "UB12": "UB12|CST|cClassTrib|vBC|gIBSUF_pIBSUF|gIBSUF_vIBSUF|gIBSMun_pIBSMun|gIBSMun_vIBSMun|gCBS_pCBS|gCBS_vCBS|gIBSUF_pDif|gIBSUF_vDif|gIBSUF_vDevTrib|gIBSUF_pRedAliq|gIBSUF_pAliqEfet|gIBSMun_pDif|gIBSMun_vDif|gIBSMun_vDevTrib|gIBSMun_pRedAliq|gIBSMun_pAliqEfet|gCBS_pDif|gCBS_vDif|gCBS_vDevTrib|gCBS_pRedAliq|gCBS_pAliqEfet|",
     "UB68": "UB68|CSTReg|cClassTribReg|pAliqEfetRegIBSUF|vTribRegIBSUF|pAliqEfetRegIBSMun|vTribRegIBSMun|pAliqEfetRegCBS|vTribRegCBS|",
     "UB73": "UB73|cCredPres|pCredPres|vCredPres|vCredPresCondSus|",
     "UB78": "UB78|cCredPres|pCredPres|vCredPres|vCredPresCondSus|",

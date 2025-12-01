@@ -1419,7 +1419,7 @@ class Parser
     }
 
     /**
-     * Create tag IBSCBS UB12|CST|cClassTrib|vBC|pIBSUF|vIBSUF|pIBSMun|vIBSMun|pCBS|vCBS|vIBS|
+     * Create tag IBSCBS UB12|CST|cClassTrib|vBC|gIBSUF_pIBSUF|gIBSUF_vIBSUF|gIBSMun_pIBSMun|gIBSMun_vIBSMun|gCBS_pCBS|gCBS_vCBS|gIBSUF_pDif|gIBSUF_vDif|gIBSUF_vDevTrib|gIBSUF_pRedAliq|gIBSUF_pAliqEfet|gIBSMun_pDif|gIBSMun_vDif|gIBSMun_vDevTrib|gIBSMun_pRedAliq|gIBSMun_pAliqEfet|gCBS_pDif|gCBS_vDif|gCBS_vDevTrib|gCBS_pRedAliq|gCBS_pAliqEfet|
      */
     protected function ub12Entity(stdClass $std): void
     {
