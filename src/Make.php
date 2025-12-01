@@ -806,23 +806,25 @@ final class Make
                 } else {
                     $this->calculateTtensValues2($det);
                 }
-                //adiciona o vItem informado ou o calculado
-                if (!empty($this->aVItem[$item]['vItem'])) {
-                    $this->dom->addChild(
-                        $det,
-                        "vItem",
-                        $this->conditionalNumberFormatting($this->aVItem[$item]['vItem']),
-                        true,
-                        "det nItem $item Valor Total do Item da NF-e"
-                    );
-                } else {
-                    $this->dom->addChild(
-                        $det,
-                        "vItem",
-                        $this->conditionalNumberFormatting($this->aVItem[$item]['vItemCalculated']),
-                        true,
-                        "det nItem $item Valor Total do Item da NF-e"
-                    );
+                if (!empty($this->aIBSCBS)) {
+                    //adiciona o vItem informado ou o calculado
+                    if (!empty($this->aVItem[$item]['vItem'])) {
+                        $this->dom->addChild(
+                            $det,
+                            "vItem",
+                            $this->conditionalNumberFormatting($this->aVItem[$item]['vItem']),
+                            true,
+                            "det nItem $item Valor Total do Item da NF-e"
+                        );
+                    } else {
+                        $this->dom->addChild(
+                            $det,
+                            "vItem",
+                            $this->conditionalNumberFormatting($this->aVItem[$item]['vItemCalculated']),
+                            true,
+                            "det nItem $item Valor Total do Item da NF-e"
+                        );
+                    }
                 }
                 //DFEReferenciado => det PL_010
                 if (!empty($this->aDFeReferenciado[$item])) {
