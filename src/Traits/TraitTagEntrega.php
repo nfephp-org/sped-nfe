@@ -39,23 +39,23 @@ trait TraitTagEntrega
             'IE'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = 'G01 <entrega> - ';
+        $identificador = 'G01 entrega -';
         $this->entrega = $this->dom->createElement("entrega");
-        if (!empty($std->CNPJ)) {
-            $this->dom->addChild(
-                $this->entrega,
-                "CNPJ",
-                $std->CNPJ,
-                false,
-                $identificador . "CNPJ do Cliente da Entrega"
-            );
-        } elseif (!empty($std->CPF)) {
+        if (!empty($std->CPF)) {
             $this->dom->addChild(
                 $this->entrega,
                 "CPF",
                 $std->CPF,
                 false,
                 $identificador . "CPF do Cliente da Entrega"
+            );
+        } else {
+            $this->dom->addChild(
+                $this->entrega,
+                "CNPJ",
+                $std->CNPJ ?? '',
+                true,
+                $identificador . "CNPJ do Cliente da Entrega"
             );
         }
         $this->dom->addChild(

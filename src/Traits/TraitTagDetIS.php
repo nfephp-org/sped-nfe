@@ -13,6 +13,7 @@ use DOMException;
  * @property DOMImproved $dom
  * @property array $aIS
  * @property stdClass $stdIStot
+ * @property bool $flagIS
  */
 trait TraitTagDetIS
 {
@@ -36,9 +37,10 @@ trait TraitTagDetIS
             'vIS'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "UB01 <IS> Item: $std->item -";
+        $identificador = "UB01 IS Item: $std->item -";
         //totalizador
-        $this->stdIStot->vIS += (float) $std->vIS;
+        $this->flagIS = true;
+        $this->stdIStot->vIS += (float) ($std->vIS ?? 0);
         $is = $this->dom->createElement("IS");
         $this->dom->addChild(
             $is,
@@ -54,41 +56,45 @@ trait TraitTagDetIS
             true,
             "$identificador Código de Classificação Tributária do Imposto Seletivo"
         );
-        $this->dom->addChild(
-            $is,
-            "vBCIS",
-            $this->conditionalNumberFormatting($std->vBCIS),
-            true,
-            "$identificador Valor da Base de Cálculo do Imposto Seletivo"
-        );
-        $this->dom->addChild(
-            $is,
-            "pIS",
-            $this->conditionalNumberFormatting($std->pIS, 4),
-            true,
-            "$identificador Alíquota do Imposto Seletivo"
-        );
-        $this->dom->addChild(
-            $is,
-            "pISEspec",
-            $this->conditionalNumberFormatting($std->pISEspec, 4),
-            false,
-            "$identificador Alíquota específica por unidade de medida apropriada"
-        );
-        $this->dom->addChild(
-            $is,
-            "uTrib",
-            $std->uTrib,
-            true,
-            "$identificador Unidade de Medida Tributável"
-        );
-        $this->dom->addChild(
-            $is,
-            "qTrib",
-            $this->conditionalNumberFormatting($std->qTrib, 4),
-            true,
-            "$identificador Quantidade com base no campo uTrib informado"
-        );
+        if (isset($std->vBCIS)) {
+            $this->dom->addChild(
+                $is,
+                "vBCIS",
+                $this->conditionalNumberFormatting($std->vBCIS),
+                true,
+                "$identificador Valor da Base de Cálculo do Imposto Seletivo"
+            );
+            $this->dom->addChild(
+                $is,
+                "pIS",
+                $this->conditionalNumberFormatting($std->pIS ?? 0, 4),
+                true,
+                "$identificador Alíquota do Imposto Seletivo"
+            );
+            $this->dom->addChild(
+                $is,
+                "pISEspec",
+                $this->conditionalNumberFormatting($std->pISEspec ?? null, 4),
+                false,
+                "$identificador Alíquota específica por unidade de medida apropriada"
+            );
+        }
+        if (!empty($std->uTrib) && !empty($std->qTrib)) {
+            $this->dom->addChild(
+                $is,
+                "uTrib",
+                $std->uTrib,
+                true,
+                "$identificador Unidade de Medida Tributável"
+            );
+            $this->dom->addChild(
+                $is,
+                "qTrib",
+                $this->conditionalNumberFormatting($std->qTrib, 4),
+                true,
+                "$identificador Quantidade com base no campo uTrib informado"
+            );
+        }
         $this->dom->addChild(
             $is,
             "vIS",

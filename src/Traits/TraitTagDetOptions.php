@@ -36,7 +36,7 @@ trait TraitTagDetOptions
         ];
         $std = $this->equilizeParameters($std, $possible);
         if (empty($std->nRECOPI) || !is_numeric($std->nRECOPI) || empty($std->item)) {
-            $this->errors[] = "LB01 <nRECOPI> Item: $std->item - Erro ao montar o campo nRECOPI";
+            $this->errors[] = "LB01 nRECOPI Item: $std->item - Erro ao montar o campo nRECOPI";
             return null;
         }
         $recopi = $this->dom->createElement("nRECOPI", $std->nRECOPI);
@@ -63,7 +63,7 @@ trait TraitTagDetOptions
             'cAgreg'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "I80 <rastro> Item: $std->item -";
+        $identificador = "I80 rastro Item: $std->item -";
         $rastro = $this->dom->createElement("rastro");
         $this->dom->addChild(
             $rastro,
@@ -141,7 +141,9 @@ trait TraitTagDetOptions
             'tpRest'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "J01 <veicProd> Item: $std->item -";
+        $identificador = "J01 veicProd Item: $std->item -";
+        //dados para calculo de vITem
+        $this->aVItem[$std->item]['tpOp'] = ($std->tpOp ?? 0);
         $veicProd = $this->dom->createElement("veicProd");
         $this->dom->addChild(
             $veicProd,
@@ -332,7 +334,7 @@ trait TraitTagDetOptions
             'xMotivoIsencao'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "K01 <med> Item: $std->item - ";
+        $identificador = "K01 med Item: $std->item - ";
         $med = $this->dom->createElement("med");
         $this->dom->addChild(
             $med,
@@ -376,7 +378,7 @@ trait TraitTagDetOptions
             'descr'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "L01 <arma> Item: $std->item -";
+        $identificador = "L01 arma Item: $std->item -";
         $arma = $this->dom->createElement("arma");
         $this->dom->addChild(
             $arma,
@@ -426,7 +428,7 @@ trait TraitTagDetOptions
             'nItem',
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "VC01 <DFeReferenciado> Item: $std->item -";
+        $identificador = "VC01 DFeReferenciado Item: $std->item -";
         $dfe = $this->dom->createElement("DFeReferenciado");
         $this->dom->addChild(
             $dfe,

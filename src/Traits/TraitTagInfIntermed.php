@@ -28,7 +28,7 @@ trait TraitTagInfIntermed
             'idCadIntTran'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = 'YB01 <infIntermed> -';
+        $identificador = 'YB01 infIntermed -';
         $tag = $this->dom->createElement("infIntermed");
         $this->dom->addChild(
             $tag,

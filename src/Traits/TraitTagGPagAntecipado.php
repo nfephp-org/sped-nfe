@@ -23,7 +23,7 @@ trait TraitTagGPagAntecipado
     {
         $possible = ['refNFe'];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = 'B34 <gPagAntecipado> - ';
+        $identificador = 'B34 gPagAntecipado -';
         $gc = $this->dom->createElement("gPagAntecipado");
         $arr = (array) $std->refNFe;
         foreach ($arr as $key => $value) {

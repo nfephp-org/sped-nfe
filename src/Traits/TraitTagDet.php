@@ -51,6 +51,7 @@ trait TraitTagDet
             'xProd',
             'NCM',
             'cBenef',
+            'tpCredPresIBSZFM',
             'EXTIPI',
             'CFOP',
             'uCom',
@@ -77,7 +78,18 @@ trait TraitTagDet
             'vItem' //PL_010
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "I01 <prod> - Item: $std->item";
+        $identificador = "I01 prod - Item: $std->item";
+        //dados para calculo do vItem
+        if (empty($this->aVItem[$std->item])) {
+            $this->aVItem[$std->item] = $this->aVItemStruct;
+        }
+        $this->aVItem[$std->item]['indTot'] = ($std->indTot ?? 0);
+        $this->aVItem[$std->item]['vProd'] = ($std->vProd ?? 0);
+        $this->aVItem[$std->item]['vDesc'] = ($std->vDesc ?? 0);
+        $this->aVItem[$std->item]['vSeg'] = ($std->vSeg ?? 0);
+        $this->aVItem[$std->item]['vFrete'] = ($std->vFrete ?? 0);
+        $this->aVItem[$std->item]['vOutro'] = ($std->vOutro ?? 0);
+        $this->aVItem[$std->item]['vItem'] = ($std->vItem ?? 0);
         //totalizador
         if ($std->indTot == 1) {
             $this->stdTot->vProd += (float) $this->conditionalNumberFormatting($std->vProd);
@@ -86,7 +98,6 @@ trait TraitTagDet
         $this->stdTot->vSeg += (float) $this->conditionalNumberFormatting($std->vSeg);
         $this->stdTot->vDesc += (float) $this->conditionalNumberFormatting($std->vDesc);
         $this->stdTot->vOutro += (float) $this->conditionalNumberFormatting($std->vOutro);
-
         $cean = !empty($std->cEAN) ? trim(strtoupper($std->cEAN)) : '';
         $ceantrib = !empty($std->cEANTrib) ? trim(strtoupper($std->cEANTrib)) : '';
         if ($this->checkgtin) {
@@ -149,7 +160,7 @@ trait TraitTagDet
         $this->dom->addChild(
             $prod,
             "CEST",
-            $std->CEST,
+            $std->CEST ?? null,
             false,
             "$identificador Codigo especificador da Substuicao Tributaria (CEST)"
         );
@@ -172,10 +183,20 @@ trait TraitTagDet
         $this->dom->addChild(
             $prod,
             "cBenef",
-            $std->cBenef,
+            $std->cBenef ?? null,
             false,
             "$identificador Código de Benefício Fiscal utilizado pela UF"
         );
+        //NT 2025.002_V1.30 - PL_010_V1.30
+        if (!empty($std->tpCredPresIBSZFM) && $this->schema > 9) {
+            $this->dom->addChild(
+                $prod,
+                "tpCredPresIBSZFM",
+                $std->tpCredPresIBSZFM,
+                false,
+                "$identificador Classificação para subapuração do IBS na ZFM"
+            );
+        }
         $this->dom->addChild(
             $prod,
             "EXTIPI",
@@ -321,16 +342,49 @@ trait TraitTagDet
             . "Ficha de Conteúdo de Importação"
         );
         $this->aProd[$std->item] = $prod;
-        //Valor total do Item, correspondente à sua participação no total da nota.
-        //A soma dos itens deverá corresponder ao total da nota.
-        if (!empty($std->vItem) && is_numeric($std->vItem) && $std->item > 0 && $this->schema > 9) {
-            $vItem = $this->dom->createElement(
-                "vItem",
-                $this->conditionalNumberFormatting($std->vItem, 2)
-            );
-            $this->aVItem[$std->item] = $vItem;
-        }
         return $prod;
+    }
+
+    /**
+     * Define a tag referente ao Código Especificador da Substituição Tributária (CEST).
+     * tag NFe/infNFe/det[]/prod/CEST
+     *
+     * @param stdClass $std Objeto contendo os parâmetros necessários, incluindo item, CEST, indEscala e CNPJFab.
+     * @return DOMElement Elemento DOM representando o Código Especificador da Substituição Tributária (CEST).
+     * @throws DOMException Caso ocorra um erro na manipulação do DOM.
+     */
+    public function tagCEST(stdClass $std): DOMElement
+    {
+        $possible = ['item', 'CEST', 'indEscala', 'CNPJFab'];
+        $std = $this->equilizeParameters($std, $possible);
+        $identificador = 'I05b <ctrltST> - ';
+        $ctrltST = $this->dom->createElement("ctrltST");
+        $this->dom->addChild(
+            $ctrltST,
+            "CEST",
+            Strings::onlyNumbers($std->CEST),
+            true,
+            "$identificador [item $std->item] Numero CEST"
+        );
+        //incluido no layout 4.00
+        $this->dom->addChild(
+            $ctrltST,
+            "indEscala",
+            $std->indEscala,
+            false,
+            "$identificador [item $std->item] Indicador de Produção em escala relevante"
+        );
+        //incluido no layout 4.00
+        $this->dom->addChild(
+            $ctrltST,
+            "CNPJFab",
+            Strings::onlyNumbers($std->CNPJFab),
+            false,
+            "$identificador [item $std->item] CNPJ do Fabricante da Mercadoria,"
+            . "obrigatório para produto em escala NÃO relevante."
+        );
+        $this->aCest[$std->item] = $ctrltST;
+        return $ctrltST;
     }
 
     /**
@@ -369,7 +423,7 @@ trait TraitTagDet
             'obsFisco_xTexto'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "VA01 <obsItem> Item: $std->item -";
+        $identificador = "VA01 obsItem Item: $std->item -";
         $obsItem = $this->dom->createElement("obsItem");
         if (!empty($std->obsCont_xCampo) && !empty($std->obsCont_xTexto)) {
             $obsCont = $this->dom->createElement("obsCont");
@@ -410,7 +464,6 @@ trait TraitTagDet
     {
         $possible = ['item', 'NVE'];
         $std = $this->equilizeParameters($std, $possible);
-
         if ($std->NVE == '') {
             return null;
         }
@@ -430,7 +483,7 @@ trait TraitTagDet
     {
         $possible = ['item', 'cCredPresumido', 'pCredPresumido', 'vCredPresumido'];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = ' <gCred> - ';
+        $identificador = " gCred Item: $std->item -";
         $gCred = $this->dom->createElement("gCred");
         $this->dom->addChild(
             $gCred,
@@ -482,7 +535,7 @@ trait TraitTagDet
             'cExportador'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "I8 <DI> Item: $std->item -";
+        $identificador = "I8 DI Item: $std->item -";
         $tDI = $this->dom->createElement("DI");
         $this->dom->addChild(
             $tDI,
@@ -596,7 +649,7 @@ trait TraitTagDet
             'nDraw'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "I25 <adi> Item: $std->item -";
+        $identificador = "I25 adi Item: $std->item -";
         $adi = $this->dom->createElement("adi");
         $this->dom->addChild(
             $adi,
@@ -654,7 +707,7 @@ trait TraitTagDet
             'qExport'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "I50 <detExport> Item: $std->item -";
+        $identificador = "I50 detExport Item: $std->item -";
         $detExport = $this->dom->createElement("detExport");
         $this->dom->addChild(
             $detExport,

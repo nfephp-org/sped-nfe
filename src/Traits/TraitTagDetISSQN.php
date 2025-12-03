@@ -45,7 +45,7 @@ trait TraitTagDetISSQN
             'indIncentivo'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "U01 <ISSQN> Item: $std->item -";
+        $identificador = "U01 ISSQN Item: $std->item -";
         // Adiciona o totalizador, somente se maior que ZERO
         if ($std->vBC > 0) {
             $this->stdISSQNTot->vBC += (float)$std->vBC;
@@ -56,18 +56,6 @@ trait TraitTagDetISSQN
             $this->stdISSQNTot->vDescIncond += $std->vDescIncond ?? 0.0;
             $this->stdISSQNTot->vDescCond += $std->vDescCond ?? 0.0;
         }
-        //$this->aItensServ[] = $std->item;
-        /**
-        // totalizador
-        if ($this->aProd[$std->item]->getElementsByTagName('indTot')->item(0)->nodeValue == 1) {
-            // Captura o valor do item
-            $vProd = (float) ($this->aProd[$std->item]->getElementsByTagName('vProd')->item(0)->nodeValue);
-
-            // Remove o valor to totalizador de produtos e Adiciona o valor do item no totalizador de serviços
-            $this->stdTot->vProd -= $vProd;
-            $this->stdISSQNTot->vServ += $vProd;
-        }*/
-
         $issqn = $this->dom->createElement("ISSQN");
         $this->dom->addChild(
             $issqn,

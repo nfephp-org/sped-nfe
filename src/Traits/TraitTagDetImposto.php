@@ -30,7 +30,7 @@ trait TraitTagDetImposto
         $std = $this->equilizeParameters($std, $possible);
         //totalizador dos valores dos itens
         $this->stdTot->vTotTrib += (float) $std->vTotTrib;
-        $identificador = "M01 <imposto> Item: $std->item -";
+        $identificador = "M01 imposto Item: $std->item -";
         $imposto = $this->dom->createElement("imposto");
         $this->dom->addChild(
             $imposto,
@@ -58,7 +58,9 @@ trait TraitTagDetImposto
             'vIPIDevol'
         ];
         $std = $this->equilizeParameters($std, $possible);
-        $identificador = "U50 <impostoDevol> Item: $std->item -";
+        $identificador = "U50 impostoDevol Item: $std->item -";
+        //dados para calculo de vITem
+        $this->aVItem[$std->item]['vIPIDevol'] = ($std->vIPIDevol ?? 0);
         //totalizador
         $this->stdTot->vIPIDevol += (float) $std->vIPIDevol;
         $impostoDevol = $this->dom->createElement("impostoDevol");

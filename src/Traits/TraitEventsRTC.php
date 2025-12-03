@@ -41,7 +41,7 @@ trait TraitEventsRTC
             . "<indQuitacao>1</indQuitacao>";
 
         return $this->sefazEvento(
-            $this->config->siglaUF,
+            'SVRS',
             $std->chNFe,
             $tpEvento,
             $std->nSeqEvento ?? 1,
@@ -95,7 +95,7 @@ trait TraitEventsRTC
         $gcred = '';
         foreach ($std->itens as $item) {
             $bc = number_format($item->vBC, 2, '.', '');
-            $gcred = "<gCredPres><nItem>{$item->item}</nItem><vBC>{$bc}</vBC>";
+            $gcred .= "<gCredPres nItem=\"{$item->item}\"><vBC>{$bc}</vBC>";
             if (!empty($item->gIBS)) {
                 $g = $item->gIBS;
                 $pc = number_format($g->pCredPres, 4, '.', '');
@@ -123,7 +123,7 @@ trait TraitEventsRTC
         $tagAdic .= $gcred;
 
         return $this->sefazEvento(
-            $this->config->siglaUF,
+            'SVRS',
             $std->chNFe,
             $tpEvento,
             $std->nSeqEvento ?? 1,
@@ -174,8 +174,7 @@ trait TraitEventsRTC
             $vi = number_format($item->vIBS, 2, '.', '');
             $vc = number_format($item->vCBS, 2, '.', '');
             $qt = number_format($item->quantidade, 4, '.', '');
-            $gc = "<gConsumo>"
-                . "<nItem>{$item->item}</nItem>"
+            $gc = "<gConsumo nItem=\"{$item->item}\">"
                 . "<vIBS>{$vi}</vIBS>"
                 . "<vCBS>{$vc}</vCBS>"
                 . "<gControleEstoque>"
@@ -190,7 +189,7 @@ trait TraitEventsRTC
             $tagAdic .= $gc;
         }
         return $this->sefazEvento(
-            $this->config->siglaUF,
+            'SVRS',
             $std->chNFe,
             $tpEvento,
             $std->nSeqEvento ?? 1,
@@ -227,7 +226,7 @@ trait TraitEventsRTC
             . "<verAplic>{$verAplic}</verAplic>"
             . "<indAceitacao>1</indAceitacao>";
         return $this->sefazEvento(
-            $this->config->siglaUF,
+            'SVRS',
             $std->chNFe,
             $tpEvento,
             $std->nSeqEvento ?? 1,
@@ -276,19 +275,18 @@ trait TraitEventsRTC
             $vi = number_format($item->vIBS, 2, '.', '');
             $vc = number_format($item->vCBS, 2, '.', '');
             $qtd = number_format($item->quantidade, 4, '.', '');
-            $gc = "<gImobilizacao>"
-                . "<nItem>{$item->item}</nItem>"
+            $gc = "<gImobilizacao nItem=\"{$item->item}\">"
                 . "<vIBS>{$vi}</vIBS>"
                 . "<vCBS>{$vc}</vCBS>"
                 . "<gControleEstoque>"
-                . "<qConsumo>{$qtd}</qConsumo>"
-                . "<uConsumo>{$item->unidade}</uConsumo>"
+                . "<qImobilizado>{$qtd}</qImobilizado>"
+                . "<uImobilizado>{$item->unidade}</uImobilizado>"
                 . "</gControleEstoque>"
                 . "</gImobilizacao>";
             $tagAdic .= $gc;
         }
         return $this->sefazEvento(
-            $this->config->siglaUF,
+            'SVRS',
             $std->chNFe,
             $tpEvento,
             $std->nSeqEvento ?? 1,
@@ -339,19 +337,18 @@ trait TraitEventsRTC
             $vi = number_format($item->vIBS, 2, '.', '');
             $vc = number_format($item->vCBS, 2, '.', '');
             $qtd = number_format($item->quantidade, 4, '.', '');
-            $gc = "<gConsumoComb>"
-                . "<nItem>{$item->item}</nItem>"
+            $gc = "<gConsumoComb nItem=\"{$item->item}\">"
                 . "<vIBS>{$vi}</vIBS>"
                 . "<vCBS>{$vc}</vCBS>"
                 . "<gControleEstoque>"
-                . "<qConsumo>{$qtd}</qConsumo>"
-                . "<uConsumo>{$item->unidade}</uConsumo>"
+                . "<qComb>{$qtd}</qComb>"
+                . "<uComb>{$item->unidade}</uComb>"
                 . "</gControleEstoque>"
                 . "</gConsumoComb>";
             $tagAdic .= $gc;
         }
         return $this->sefazEvento(
-            $this->config->siglaUF,
+            'SVRS',
             $std->chNFe,
             $tpEvento,
             $std->nSeqEvento ?? 1,
@@ -392,17 +389,16 @@ trait TraitEventsRTC
             . "<tpAutor>2</tpAutor>"  //2=Empresa destinatária.
             . "<verAplic>{$verAplic}</verAplic>";
         foreach ($std->itens as $item) {
-            $vi = number_format($item->vIBS, 2, '.', '');
-            $vc = number_format($item->vCBS, 2, '.', '');
-            $cred = "<gCredito>"
-                . "<nItem>{$item->item}</nItem>"
-                . "<vIBS>{$vi}</vIBS>"
-                . "<vCBS>{$vc}</vCBS>"
+            $vi = number_format($item->vCredIBS, 2, '.', '');
+            $vc = number_format($item->vCredCBS, 2, '.', '');
+            $cred = "<gCredito nItem=\"{$item->item}\">"
+                . "<vCredIBS>{$vi}</vCredIBS>"
+                . "<vCredCBS>{$vc}</vCredCBS>"
                 . "</gCredito>";
             $tagAdic .= $cred;
         }
         return $this->sefazEvento(
-            $this->config->siglaUF,
+            'SVRS',
             $std->chNFe,
             $tpEvento,
             $std->nSeqEvento ?? 1,
@@ -440,7 +436,7 @@ trait TraitEventsRTC
             . "<verAplic>{$verAplic}</verAplic>"
             . "<indAceitacao>1</indAceitacao>";
         return $this->sefazEvento(
-            $this->config->siglaUF,
+            'SVRS',
             $std->chNFe,
             $tpEvento,
             $std->nSeqEvento ?? 1,
@@ -478,7 +474,7 @@ trait TraitEventsRTC
             . "<verAplic>{$verAplic}</verAplic>"
             . "<indAceitacao>1</indAceitacao>";
         return $this->sefazEvento(
-            $this->config->siglaUF,
+            'SVRS',
             $std->chNFe,
             $tpEvento,
             $std->nSeqEvento ?? 1,
@@ -504,12 +500,11 @@ trait TraitEventsRTC
         $verAplic = $this->resolveVerAplic($verAplic);
         $tpEvento = '110001';
         $tagAdic = "<cOrgaoAutor>{$this->cUF}</cOrgaoAutor>"
-            . "<tpAutor>{$std->tpAutor}</tpAutor>"
             . "<verAplic>{$verAplic}</verAplic>"
             . "<tpEventoAut>{$std->tpEventoAut}</tpEventoAut>"
             . "<nProtEvento>{$std->nProtEvento}</nProtEvento>";
         return $this->sefazEvento(
-            $this->config->siglaUF,
+            'SVRS',
             $std->chNFe,
             $tpEvento,
             $std->nSeqEvento ?? 1,
@@ -542,8 +537,7 @@ trait TraitEventsRTC
             $vi = number_format($item->vIBS, 2, '.', '');
             $vc = number_format($item->vCBS, 2, '.', '');
             $qtd = number_format($item->quantidade, 4, '.', '');
-            $gc = "<gConsumo>"
-                . "<nItem>{$item->item}</nItem>"
+            $gc = "<gConsumo nItem=\"{$item->item}\">"
                 . "<vIBS>{$vi}</vIBS>"
                 . "<vCBS>{$vc}</vCBS>"
                 . "<gControleEstoque>"
@@ -554,7 +548,7 @@ trait TraitEventsRTC
             $tagAdic .= $gc;
         }
         return $this->sefazEvento(
-            $this->config->siglaUF,
+            'SVRS',
             $std->chNFe,
             $tpEvento,
             $std->nSeqEvento ?? 1,
@@ -590,8 +584,7 @@ trait TraitEventsRTC
             $vi = number_format($item->vIBS, 2, '.', '');
             $vc = number_format($item->vCBS, 2, '.', '');
             $qtd = number_format($item->quantidade, 4, '.', '');
-            $gc = "<gPerecimento>"
-                . "<nItem>{$item->item}</nItem>"
+            $gc = "<gPerecimento nItem=\"{$item->item}\">"
                 . "<vIBS>{$vi}</vIBS>"
                 . "<vCBS>{$vc}</vCBS>"
                 . "<gControleEstoque>"
@@ -602,7 +595,7 @@ trait TraitEventsRTC
             $tagAdic .= $gc;
         }
         return $this->sefazEvento(
-            $this->config->siglaUF,
+            'SVRS',
             $std->chNFe,
             $tpEvento,
             $std->nSeqEvento ?? 1,
@@ -638,20 +631,23 @@ trait TraitEventsRTC
         foreach ($std->itens as $item) {
             $vi = number_format($item->vIBS, 2, '.', '');
             $vc = number_format($item->vCBS, 2, '.', '');
+            $gvi = number_format($item->gControleEstoque_vIBS, 2, '.', '');
+            $gvc = number_format($item->gControleEstoque_vCBS, 2, '.', '');
             $qtd = number_format($item->quantidade, 4, '.', '');
-            $gc = "<gPerecimento>"
-                . "<nItem>{$item->item}</nItem>"
+            $gc = "<gPerecimento nItem=\"{$item->item}\">"
                 . "<vIBS>{$vi}</vIBS>"
                 . "<vCBS>{$vc}</vCBS>"
                 . "<gControleEstoque>"
                 . "<qPerecimento>{$qtd}</qPerecimento>"
                 . "<uPerecimento>{$item->unidade}</uPerecimento>"
+                . "<vIBS>{$gvi}</vIBS>"
+                . "<vCBS>{$gvc}</vCBS>"
                 . "</gControleEstoque>"
                 . "</gPerecimento>";
             $tagAdic .= $gc;
         }
         return $this->sefazEvento(
-            $this->config->siglaUF,
+            'SVRS',
             $std->chNFe,
             $tpEvento,
             $std->nSeqEvento ?? 1,
@@ -678,14 +674,13 @@ trait TraitEventsRTC
         $verAplic = $this->resolveVerAplic($verAplic);
         $tpEvento = '112140';
         $tagAdic = "<cOrgaoAutor>{$this->cUF}</cOrgaoAutor>"
-            . "<tpAutor>1</tpAutor>" //2=Empresa emitente
+            . "<tpAutor>1</tpAutor>" //1=Empresa emitente
             . "<verAplic>{$verAplic}</verAplic>";
         foreach ($std->itens as $item) {
             $vi = number_format($item->vIBS, 2, '.', '');
             $vc = number_format($item->vCBS, 2, '.', '');
             $qtd = number_format($item->quantidade, 4, '.', '');
-            $gc = "<gItemNaoFornecido>"
-                . "<nItem>{$item->item}</nItem>"
+            $gc = "<gItemNaoFornecido nItem=\"{$item->item}\">"
                 . "<vIBS>{$vi}</vIBS>"
                 . "<vCBS>{$vc}</vCBS>"
                 . "<gControleEstoque>"
@@ -696,7 +691,39 @@ trait TraitEventsRTC
             $tagAdic .= $gc;
         }
         return $this->sefazEvento(
-            $this->config->siglaUF,
+            'SVRS',
+            $std->chNFe,
+            $tpEvento,
+            $std->nSeqEvento ?? 1,
+            $tagAdic,
+            null,
+            null
+        );
+    }
+
+    /**
+     * Evento: Atualização da Data de Previsão de Entrega
+     * Função: Permitir ao fornecedor atualizar a data da previsão de entrega ou disponibilização do bem ao adquirente,
+     * de forma à remover o débito do mês em que foi previsto inicialmente.
+     * Modelo: NF-e modelo 55
+     * Autor do Evento: emitente da NF-e
+     * Código do Tipo de Evento: 112150
+     * @param stdClass $std
+     * @param string|null $verAplic
+     * @return string
+     */
+    public function sefazAtualizacaoDataEntrega(stdClass $std, ?string $verAplic = null): string
+    {
+        //apenas 55
+        $this->checkModel($std);
+        $verAplic = $this->resolveVerAplic($verAplic);
+        $tpEvento = '112150';
+        $tagAdic = "<cOrgaoAutor>{$this->cUF}</cOrgaoAutor>"
+            . "<tpAutor>1</tpAutor>" //1=Empresa emitente
+            . "<verAplic>{$verAplic}</verAplic>"
+            . "<dPrevEntrega>{$std->data_prevista}</dPrevEntrega>";
+        return $this->sefazEvento(
+            'SVRS',
             $std->chNFe,
             $tpEvento,
             $std->nSeqEvento ?? 1,
