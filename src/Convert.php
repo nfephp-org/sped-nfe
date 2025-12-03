@@ -56,6 +56,15 @@ class Convert
     }
 
     /**
+     * Static method to convert Txt to Xml
+     */
+    public static function parseDump(string $txt, string $baselayout = self::LOCAL): array
+    {
+        $conv = new static($txt, $baselayout);
+        return $conv->dump();
+    }
+
+    /**
      * Convert all nfe in XML, one by one
      * @throws \NFePHP\NFe\Exception\DocumentsException
      */
@@ -85,6 +94,37 @@ class Convert
             $i++;
         }
         return $this->xmls;
+    }
+
+    /**
+     * Convert all nfe in XML, one by one
+     * @throws \NFePHP\NFe\Exception\DocumentsException
+     */
+    public function dump(): array
+    {
+        if (!$this->isNFe($this->txt)) {
+            throw DocumentsException::wrongDocument(12, '');
+        }
+        $this->notas = $this->sliceNotas($this->dados);
+        $this->checkQtdNFe();
+        $this->validNotas();
+        $i = 0;
+        $aDumps = [];
+        foreach ($this->notas as $nota) {
+            $version = $this->layouts[$i];
+            $parser = new Parser($version, $this->baselayout);
+            try {
+                $aDumps[] = $parser->dump($nota);
+            } catch (\Throwable $e) {
+                if ($errors = $parser->getErrors()) {
+                    throw new ParserException(implode(', ', $errors));
+                } else {
+                    throw new RuntimeException($e->getMessage());
+                }
+            }
+            $i++;
+        }
+        return $aDumps;
     }
 
     /**

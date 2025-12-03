@@ -172,6 +172,30 @@ class Parser
         }
         return null;
     }
+    /**
+     * Convert txt to XML
+     */
+    public function dump(array $nota): array
+    {
+        $std = [];
+        foreach ($nota as $lin) {
+            if (empty($lin)) {
+                continue;
+            }
+            $fields = explode('|', $lin);
+            $metodo = strtolower(str_replace(' ', '', $fields[0])) . 'Entity';
+            if (! method_exists(self::class, $metodo)) {
+                throw DocumentsException::wrongDocument(16, $lin); //campo não definido
+            }
+            $struct = $this->structure[strtoupper($fields[0])];
+            $tag = (array) static::fieldsToStd($fields, $struct);
+            if (empty($tag)) {
+                continue;
+            }
+            $std[] = json_decode(json_encode(["tag" => $fields[0]] + $tag));
+        }
+        return $std;
+    }
 
     /**
      * Retorna erros na criacao do DOM
