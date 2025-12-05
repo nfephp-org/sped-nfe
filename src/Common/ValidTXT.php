@@ -34,11 +34,6 @@ class ValidTXT
         $comp = '';
         if (strtoupper($baselayout) === self::SEBRAE) {
             $comp = '_sebrae';
-<<<<<<< HEAD
-        } elseif (strtoupper($baselayout) === self::RTC) {
-            $comp = '_rtc';
-=======
->>>>>>> upstream/master
         } elseif (strtoupper($baselayout) === self::LOCAL_V12) {
             $comp = '_v1.2';
         } elseif (strtoupper($baselayout) === self::LOCAL_V13) {
