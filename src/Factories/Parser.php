@@ -16,7 +16,6 @@ namespace NFePHP\NFe\Factories;
 
 use stdClass;
 use NFePHP\NFe\Make;
-use NFePHP\NFe\MakeDev;
 use NFePHP\NFe\Exception\DocumentsException;
 
 class Parser
@@ -143,7 +142,7 @@ class Parser
             $comp = "_v1.2";
         } elseif ($baselayout == self::LOCAL_V13) {
             $comp = "_v1.3";
-            $this->make = new MakeDev(10);
+            $this->make = new Make(10);
         }
         $this->baselayout = $baselayout;
         $path = realpath(__DIR__ . "/../../storage/txtstructure$ver" . $comp . '.json');
