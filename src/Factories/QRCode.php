@@ -54,21 +54,17 @@ class QRCode
         if (empty($versao)) {
             $versao = '200';
         }
-
         if ($versao < 300) {
             if (empty($token)) {
                 throw DocumentsException::wrongDocument(9); //Falta o CSC no config.json
             }
-
             if (empty($idToken)) {
                 throw DocumentsException::wrongDocument(10); //Falta o CSCId no config.json
             }
         }
-
         if (empty($urlqr)) {
             throw DocumentsException::wrongDocument(11); //Falta a URL do serviço NfeConsultaQR
         }
-
         $nfe = $dom->getElementsByTagName('NFe')->item(0);
         $infNFe = $dom->getElementsByTagName('infNFe')->item(0);
         $layoutver = $infNFe->getAttribute('versao');
@@ -240,6 +236,11 @@ class QRCode
         if ($tpEmis != 9) {
             //emissão on-line
             return $url . "$chNFe|3|$tpAmb";
+        }
+        //Manual Esp. Tec. DNAFE_NFCe_QR_Code versão 6.00 março/25
+        //página 30 - Caso Destinatário estrangeiro ou não identificado, informar apenas o separador “|”.
+        if ($tp_idDest == 3) {
+            $cDest = '';
         }
         //emissão off-line
         $dt = new \DateTime($dhEmi);

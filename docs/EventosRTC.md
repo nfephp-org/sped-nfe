@@ -250,7 +250,6 @@ Tipo de Evento (Código - Descrição): 110001 - Cancelamento de Evento
 ```php
     $std = new stdClass();
     $std->chNFe = '35250530057049000141550010000280181030656857'; //OBRIGATÓRIO
-    $std->tpAutor = 1;  //OBRIGATÓRIO deve ser o mesmo que criou o evento a ser cancelado
     $std->tpEventoAut = '112110';  //OBRIGATÓRIO tipo do evento a ser cancelado
     $std->nProtEvento = '123456789012345';  //OBRIGATÓRIO numero do protocolo de autorização do evento a ser cancelado
     $response = $tools->sefazCancelaEvento($std);
@@ -258,7 +257,7 @@ Tipo de Evento (Código - Descrição): 110001 - Cancelamento de Evento
 |cStat|Erro|Correção|
 |:---:|:---|:---|
 |459|Rejeição: Cancelamento de Evento inexistente|Verificar os paramêtros e ver se não errou a chNFe e o tipo de evento|
-|1113|Rejeição: Autor do Evento de Cancelamento diverge do Autor do Evento a ser cancelado|Corrija o autor do evento|
+|1113|Rejeição: Autor do Evento de Cancelamento diverge do Autor do Evento a ser cancelado|
 |460|Rejeição: Protocolo do Evento difere do cadastrado|Corrija o numero do protocolo|
 
 

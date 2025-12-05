@@ -8,11 +8,11 @@ use NFePHP\Common\Certificate;
 use NFePHP\Common\Exception\ValidatorException;
 use NFePHP\Common\Signer;
 use NFePHP\Common\Validator;
-use NFePHP\NFe\MakeDev;
+use NFePHP\NFe\Make;
 
 try {
     $schema = 'PL_010_V1'; //PL_010_V1
-    $mk = new MakeDev($schema);
+    $mk = new Make($schema);
     $mk->setOnlyAscii(false);
     $mk->setCheckGtin(true);
 

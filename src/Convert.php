@@ -82,14 +82,19 @@ class Convert
         foreach ($this->notas as $nota) {
             $version = $this->layouts[$i];
             $parser = new Parser($version, $this->baselayout);
+            $errors = [];
             try {
                 $this->xmls[] = $parser->toXml($nota);
+                $errors = $parser->getErrors();
             } catch (\Throwable $e) {
                 if ($errors = $parser->getErrors()) {
                     throw new ParserException(implode(', ', $errors));
                 } else {
                     throw new RuntimeException($e->getMessage());
                 }
+            }
+            if (count($errors) > 0) {
+                throw new ParserException(implode(', ', $errors));
             }
             $i++;
         }

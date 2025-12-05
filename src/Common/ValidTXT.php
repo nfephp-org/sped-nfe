@@ -19,6 +19,7 @@ class ValidTXT
 {
     public const LOCAL = "LOCAL";
     public const LOCAL_V12 = "LOCAL_V12";
+    public const LOCAL_V13 = "LOCAL_V13";
     public const SEBRAE = "SEBRAE";
     public const RTC = "RTC";
 
@@ -33,10 +34,15 @@ class ValidTXT
         $comp = '';
         if (strtoupper($baselayout) === self::SEBRAE) {
             $comp = '_sebrae';
+<<<<<<< HEAD
         } elseif (strtoupper($baselayout) === self::RTC) {
             $comp = '_rtc';
+=======
+>>>>>>> upstream/master
         } elseif (strtoupper($baselayout) === self::LOCAL_V12) {
             $comp = '_v1.2';
+        } elseif (strtoupper($baselayout) === self::LOCAL_V13) {
+            $comp = '_v1.3';
         }
         $file = $path . '/txtstructure' . ($version * 100) . $comp . '.json';
         if (!is_file($file)) {
@@ -128,15 +134,15 @@ class ValidTXT
                 }
                 $newfield = preg_replace(
                     '/[\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F]' .
-                    '|[\x00-\x7F][\x80-\xBF]+' .
-                    '|([\xC0\xC1]|[\xF0-\xFF])[\x80-\xBF]*' .
-                    '|[\xC2-\xDF]((?![\x80-\xBF])|[\x80-\xBF]{2,})' .
-                    '|[\xE0-\xEF](([\x80-\xBF](?![\x80-\xBF]))|(?![\x80-\xBF]{2})|[\x80-\xBF]{3,})/S',
+                        '|[\x00-\x7F][\x80-\xBF]+' .
+                        '|([\xC0\xC1]|[\xF0-\xFF])[\x80-\xBF]*' .
+                        '|[\xC2-\xDF]((?![\x80-\xBF])|[\x80-\xBF]{2,})' .
+                        '|[\xE0-\xEF](([\x80-\xBF](?![\x80-\xBF]))|(?![\x80-\xBF]{2})|[\x80-\xBF]{3,})/S',
                     '?',
                     $field
                 );
                 $newfield = preg_replace('/\xE0[\x80-\x9F][\x80-\xBF]' .
-                   '|\xED[\xA0-\xBF][\x80-\xBF]/S', '?', $newfield);
+                    '|\xED[\xA0-\xBF][\x80-\xBF]/S', '?', $newfield);
                 if ($field != $newfield) {
                     $errors[] = "ERRO: ($num) Existem caracteres não UTF-8, não permitidos, "
                         . "no campo [" . htmlentities($newfield) . "]";
