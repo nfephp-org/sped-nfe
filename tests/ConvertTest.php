@@ -14,7 +14,7 @@ class ConvertTest extends TestCase
     public function test_convert()
     {
         $txt = file_get_contents(__DIR__ . '/fixtures/txt/nfe_4.00_local_01.txt');
-        $conv = new Convert($txt);
+        $conv = new Convert($txt, Convert::LOCAL_V12);
         $xmls = $conv->toXml();
         $this->assertCount(1, $xmls);
 
@@ -36,8 +36,20 @@ class ConvertTest extends TestCase
         $this->expectException(ParserException::class);
         $this->expectExceptionMessageMatches('/A chave informada está incorreta/');
         $txt = file_get_contents(__DIR__ . '/fixtures/txt/nfe_4.00_local_error.txt');
-        $conv = new Convert($txt);
+        $conv = new Convert($txt, Convert::LOCAL_V12);
         $conv->toXml();
+    }
+
+    /**
+     * @return void
+     */
+    public function test_convert_dump()
+    {
+        $txt = file_get_contents(__DIR__ . '/fixtures/txt/nfe_4.00_local_01.txt');
+        $conv = new Convert($txt, Convert::LOCAL_V12);
+        $stdNfe = $conv->dump()[0];
+
+        $this->assertSame('NFe35180825028332000105550010000005021000005010', $stdNfe[0]->Id);
     }
 
     /**
