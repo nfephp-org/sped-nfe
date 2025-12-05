@@ -126,6 +126,7 @@ class Parser
     protected $baselayout;
     protected array $detExport = [];
     protected array $detExportInd = [];
+    protected array $BB02RefNFe = [];
 
     /**
      * Configure environment to correct NFe layout
