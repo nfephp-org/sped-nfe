@@ -143,7 +143,7 @@ class Parser
             $comp = "_v1.2";
         } elseif ($baselayout == self::LOCAL_V13) {
             $comp = "_v1.3";
-            $this->make = new Make(10);
+            $this->make = new MakeDev(10);
         }
         $this->baselayout = $baselayout;
         $path = realpath(__DIR__ . "/../../storage/txtstructure$ver" . $comp . '.json');
@@ -367,7 +367,7 @@ class Parser
             $ref = [
                 'refNfe' => $this->BB02RefNFe,
             ];
-            $this->dom->taggPagAntecipado((object) $ref);
+            $this->make->taggPagAntecipado((object) $ref);
             $this->BB02RefNFe = [];
         }
         $this->stdEmit = $std;
