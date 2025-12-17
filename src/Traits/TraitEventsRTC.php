@@ -207,6 +207,7 @@ trait TraitEventsRTC
      *
      * $std = new stdClass;
      * $std->chNFe = '12345678901234567890123456789012345678901234';
+     * $std->indAceitacao = 1;
      * $std->nSeqEvento = 1;
      * $std->dhEvento = '2025-09-23\T13:34:30-03:00';
      * $std->lote = null;
@@ -224,7 +225,7 @@ trait TraitEventsRTC
         $tagAdic = "<cOrgaoAutor>{$this->cUF}</cOrgaoAutor>"
             . "<tpAutor>2</tpAutor>" //2=Empresa destinatária
             . "<verAplic>{$verAplic}</verAplic>"
-            . "<indAceitacao>1</indAceitacao>";
+            . "<indAceitacao>{$std->indAceitacao}</indAceitacao>";
         return $this->sefazEvento(
             'SVRS',
             $std->chNFe,
@@ -416,6 +417,7 @@ trait TraitEventsRTC
      *
      *   $std = new stdClass;
      *   $std->chNFe = '12345678901234567890123456789012345678901234';
+     * * $std->indAceitacao = 1;
      *   $std->nSeqEvento = 1;
      *   $std->dhEvento = '2025-09-23\T13:34:30-03:00';
      *   $std->lote = null;
@@ -434,7 +436,7 @@ trait TraitEventsRTC
         $tagAdic = "<cOrgaoAutor>{$this->cUF}</cOrgaoAutor>"
             . "<tpAutor>8</tpAutor>" //8= Empresa sucessora
             . "<verAplic>{$verAplic}</verAplic>"
-            . "<indAceitacao>1</indAceitacao>";
+            . "<indAceitacao>{$std->indAceitacao}</indAceitacao>";
         return $this->sefazEvento(
             'SVRS',
             $std->chNFe,
@@ -454,6 +456,7 @@ trait TraitEventsRTC
      *
      *   $std = new stdClass;
      *   $std->chNFe = '12345678901234567890123456789012345678901234';
+     * * $std->indAceitacao = 1;
      *   $std->nSeqEvento = 1;
      *   $std->dhEvento = '2025-09-23\T13:34:30-03:00';
      *   $std->lote = null;
@@ -472,7 +475,7 @@ trait TraitEventsRTC
         $tagAdic = "<cOrgaoAutor>{$this->cUF}</cOrgaoAutor>"
             . "<tpAutor>8</tpAutor>" //8= Empresa sucessora
             . "<verAplic>{$verAplic}</verAplic>"
-            . "<indAceitacao>1</indAceitacao>";
+            . "<indAceitacao>{$std->indAceitacao}</indAceitacao>";
         return $this->sefazEvento(
             'SVRS',
             $std->chNFe,
