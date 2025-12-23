@@ -188,7 +188,7 @@ trait TraitTagDet
             "$identificador Código de Benefício Fiscal utilizado pela UF"
         );
         //NT 2025.002_V1.30 - PL_010_V1.30
-        if (!empty($std->tpCredPresIBSZFM) && $this->schema > 9) {
+        if (isset($std->tpCredPresIBSZFM) && $this->schema > 9) {
             $this->dom->addChild(
                 $prod,
                 "tpCredPresIBSZFM",
