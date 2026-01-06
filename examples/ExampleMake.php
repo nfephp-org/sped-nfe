@@ -1279,6 +1279,7 @@ try {
 
     //############################## TAG <cobr/dup> opcional #####################################################
     //bloco de duplicadas (boletos)
+    // para não conflitar com o bloco tagfat, este bloco só é carregado quando for indPag = 1
     //nDup opcional string 1 a 60 caracteres
     //dVenc opcional data de vencimento no formato AAAA-MM-DD
     //vDup OBRIGATÓRIO numero com até 2 decimais
