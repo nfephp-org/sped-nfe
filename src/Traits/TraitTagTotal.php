@@ -740,7 +740,9 @@ trait TraitTagTotal
             );
             $ibstot->appendChild($gCBS);
         }
-        if (isset($gMono_vIBSMono)) {
+        if (!empty($gMono_vIBSMono) || !empty($gMono_vCBSMono) ||
+            !empty($gMono_vIBSMonoReten) || !empty($gMono_vCBSMonoReten) ||
+            !empty($gMono_vIBSMonoRet) || !empty($gMono_vCBSMonoRet)) {
             $gMono = $this->dom->createElement('gMono');
             $this->dom->addChild(
                 $gMono,
