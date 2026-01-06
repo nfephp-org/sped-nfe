@@ -222,7 +222,7 @@ trait TraitCalculations
                 + $vServ  //não reconheço esse campo no xml
                 + $vPISST
                 + $vCOFINSST;
-            if ($year >= 2026) {
+            if ($year > 2026) {
                 $vitem += $vIBS
                     + $vCBS
                     + $vIS
@@ -243,7 +243,7 @@ trait TraitCalculations
                 + $vServ
                 + $vPISST
                 + $vCOFINSST;
-            if ($year >= 2026) {
+            if ($year > 2026) {
                 $vitem += $vIBS
                     + $vCBS
                     + $vIS;

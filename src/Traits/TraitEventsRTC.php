@@ -209,7 +209,6 @@ trait TraitEventsRTC
      * $std->chNFe = '12345678901234567890123456789012345678901234';
      * $std->indAceitacao = 1;
      * $std->nSeqEvento = 1;
-     * $std->dhEvento = '2025-09-23\T13:34:30-03:00';
      * $std->lote = null;
      *
      * @param stdClass $std
@@ -255,7 +254,6 @@ trait TraitEventsRTC
      *  $std = new stdClass;
      *  $std->chNFe = '12345678901234567890123456789012345678901234';
      *  $std->nSeqEvento = 1;
-     *  $std->dhEvento = '2025-09-23\T13:34:30-03:00';
      *  $std->lote = null;
      *  $std->itens = $itens;
      *
@@ -317,10 +315,7 @@ trait TraitEventsRTC
      *   $std = new stdClass;
      *   $std->chNFe = '12345678901234567890123456789012345678901234';
      *   $std->nSeqEvento = 1;
-     *   $std->dhEvento = '2025-09-23\T13:34:30-03:00';
-     *   $std->lote = null;
-     *   $std->itens = $itens;
-     *
+     *   $std->itens
      * @param stdClass $std
      * @param string|null $verAplic
      * @return string
