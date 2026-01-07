@@ -1265,7 +1265,13 @@ final class Make
                         "$identificador Valor total da NF-e com IBS / CBS / IS"
                     );
                 } else {
-                    $this->errors[] = "tag total - O valor de vNFTot não pode ser ZERO.";
+                    $this->dom->addChild(
+                        $total,
+                        "vNFTot",
+                        0.00,
+                        false,
+                        "$identificador Valor total da NF-e com IBS / CBS / IS"
+                    );
                 }
             }
         }
