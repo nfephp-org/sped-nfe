@@ -1248,14 +1248,18 @@ final class Make
                 $this->addTag($total, $this->IBSCBSTot);
                 $vNFTotRecalculated = $this->reCalculateNFTotValue();
                 //add vNFTot informado ou calculado
-                if (!empty($this->stdTot->vNFTot)) {
-                    $this->dom->addChild(
-                        $total,
-                        "vNFTot",
-                        $this->conditionalNumberFormatting($this->stdTot->vNFTot, 2),
-                        false,
-                        "$identificador Valor total da NF-e com IBS / CBS / IS"
-                    );
+                if (isset($this->stdTot->vNFTot)) {
+                    if (empty($this->stdTot->vNFTot)) {
+                        $this->errors[] = "tag total - O valor de vNFTot não pode ser ZERO.";
+                    } else {
+                        $this->dom->addChild(
+                            $total,
+                            "vNFTot",
+                            $this->conditionalNumberFormatting($this->stdTot->vNFTot, 2),
+                            false,
+                            "$identificador Valor total da NF-e com IBS / CBS / IS"
+                        );
+                    }
                 } elseif (!empty($vNFTotRecalculated)) {
                     $this->dom->addChild(
                         $total,
@@ -1264,8 +1268,6 @@ final class Make
                         false,
                         "$identificador Valor total da NF-e com IBS / CBS / IS"
                     );
-                } else {
-                    $this->errors[] = "tag total - O valor de vNFTot não pode ser ZERO.";
                 }
             }
         }
