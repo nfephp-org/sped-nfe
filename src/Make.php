@@ -281,8 +281,8 @@ final class Make
         $this->stdTot->vIBS = 0;
         $this->stdTot->vCBS = 0;
         $this->stdTot->vIS = 0;
-        $this->stdTot->vNFTot = 0;
-        $this->stdTot->vNFTotCalculated = 0;
+        $this->stdTot->vNFTot = null;
+        $this->stdTot->vNFTotCalculated = null;
         //ISSQN
         $this->stdISSQNTot = new stdClass();
         $this->stdISSQNTot->vServ = 0;
