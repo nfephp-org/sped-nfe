@@ -346,45 +346,44 @@ trait TraitTagDet
     }
 
     /**
+     * Método mantido para atender processo e geração de XML a partir do TXT
+     * NÃO DEVE SER USADA PARA OPERAÇÕES NORMAIS DE CONSTRUÇÃO DE NF-E
      * Define a tag referente ao Código Especificador da Substituição Tributária (CEST).
      * tag NFe/infNFe/det[]/prod/CEST
      *
      * @param stdClass $std Objeto contendo os parâmetros necessários, incluindo item, CEST, indEscala e CNPJFab.
-     * @return DOMElement Elemento DOM representando o Código Especificador da Substituição Tributária (CEST).
      * @throws DOMException Caso ocorra um erro na manipulação do DOM.
      */
-    public function tagCEST(stdClass $std): DOMElement
+    public function tagCEST(stdClass $std)
     {
         $possible = ['item', 'CEST', 'indEscala', 'CNPJFab'];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = 'I05b <ctrltST> - ';
-        $ctrltST = $this->dom->createElement("ctrltST");
-        $this->dom->addChild(
-            $ctrltST,
-            "CEST",
-            Strings::onlyNumbers($std->CEST),
-            true,
-            "$identificador [item $std->item] Numero CEST"
-        );
-        //incluido no layout 4.00
-        $this->dom->addChild(
-            $ctrltST,
-            "indEscala",
-            $std->indEscala,
-            false,
-            "$identificador [item $std->item] Indicador de Produção em escala relevante"
-        );
-        //incluido no layout 4.00
-        $this->dom->addChild(
-            $ctrltST,
-            "CNPJFab",
-            Strings::onlyNumbers($std->CNPJFab),
-            false,
-            "$identificador [item $std->item] CNPJ do Fabricante da Mercadoria,"
-            . "obrigatório para produto em escala NÃO relevante."
-        );
-        $this->aCest[$std->item] = $ctrltST;
-        return $ctrltST;
+        if (!empty($this->aProd[$std->item])) {
+            $prod = $this->aProd[$std->item];
+            //caso exista a tag CEST finalizar
+            if (!empty($prod->getElementsByTagName('CEST')->item(0))) {
+                return;
+            }
+            $ncm = $prod->getElementsByTagName('NCM')->item(0);
+            $cest = $this->dom->createElement("CEST", Strings::onlyNumbers($std->CEST));
+            $this->dom->insertAfter($cest, $ncm);
+            $flagIndEscala = false;
+            if (isset($std->indEscala)) {
+                $indEscala = $this->dom->createElement("indEscala", $std->indEscala);
+                $this->dom->insertAfter($indEscala, $cest);
+                $flagIndEscala = true;
+            }
+            $CNPJFab = null;
+            if (isset($std->CNPJFab)) {
+                $CNPJFab = $this->dom->createElement("CNPJFab", $std->CNPJFab);
+                if ($flagIndEscala) {
+                    $this->dom->insertAfter($CNPJFab, $indEscala);
+                } else {
+                    $this->dom->insertAfter($CNPJFab, $cest);
+                }
+            }
+        }
     }
 
     /**
