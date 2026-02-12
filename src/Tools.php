@@ -443,7 +443,9 @@ class Tools extends ToolsCommon
             throw new InvalidArgumentException('CC-e: chave ou motivo da correcao vazio!');
         }
         $uf = $this->validKeyByUF($chave);
+        $xCorrecao = str_replace("\n", "||", $xCorrecao);
         $xCorrecao = Strings::replaceUnacceptableCharacters(substr(trim($xCorrecao), 0, 1000));
+        $xCorrecao = str_replace("||", "\n", $xCorrecao);
         $xCondUso = 'A Carta de Correcao e disciplinada pelo paragrafo '
             . '1o-A do art. 7o do Convenio S/N, de 15 de dezembro de 1970 '
             . 'e pode ser utilizada para regularizacao de erro ocorrido '
