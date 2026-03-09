@@ -438,7 +438,7 @@ trait TraitTagDet
         }
         if (!empty($std->obsFisco_xCampo) && !empty($std->obsFisco_xTexto)) {
             $obsFisco = $this->dom->createElement("obsFisco");
-            $obsFisco->setAttribute("xCampo", $std->obsCont_xCampo ?? '');
+            $obsFisco->setAttribute("xCampo", $std->obsFisco_xCampo ?? '');
             $this->dom->addChild(
                 $obsFisco,
                 "xTexto",

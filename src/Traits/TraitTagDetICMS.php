@@ -807,7 +807,7 @@ trait TraitTagDetICMS
                 $this->dom->addChild(
                     $icms,
                     'pFCPDif',
-                    $this->conditionalNumberFormatting($std->pFCPDif),
+                    $this->conditionalNumberFormatting($std->pFCPDif, 4),
                     false,
                     "$identificador Percentual do diferimento "
                     . "do ICMS relativo ao Fundo de Combate à Pobreza (FCP)"
@@ -1118,7 +1118,7 @@ trait TraitTagDetICMS
                 $this->dom->addChild(
                     $icms,
                     'vFCP',
-                    $std->vFCP,
+                    $this->conditionalNumberFormatting($std->vFCP),
                     false,
                     "$identificador Valor do FCP"
                 );
@@ -1301,7 +1301,7 @@ trait TraitTagDetICMS
                 $this->dom->addChild(
                     $icms,
                     'pDif',
-                    $this->conditionalNumberFormatting($std->pDif ?? null),
+                    $this->conditionalNumberFormatting($std->pDif ?? null, 4),
                     false,
                     "$identificador Percentual do diferimento"
                 );
@@ -1880,7 +1880,7 @@ trait TraitTagDetICMS
                 $this->dom->addChild(
                     $icmsSN,
                     'pCredSN',
-                    $this->conditionalNumberFormatting($std->pCredSN, 2),
+                    $this->conditionalNumberFormatting($std->pCredSN, 4),
                     true,
                     "$identificador Alíquota aplicável de cálculo do crédito (Simples Nacional)."
                 );
