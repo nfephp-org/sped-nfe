@@ -840,7 +840,7 @@ class TraitsCoverageTest extends TestCase
         $errors = $this->make->getErrors();
         $hasLimitError = false;
         foreach ($errors as $err) {
-            if (str_contains($err, 'obsCont')) {
+            if (strpos($err, 'obsCont') !== false) {
                 $hasLimitError = true;
                 break;
             }
@@ -866,7 +866,7 @@ class TraitsCoverageTest extends TestCase
         $errors = $this->make->getErrors();
         $hasLimitError = false;
         foreach ($errors as $err) {
-            if (str_contains($err, 'procRef')) {
+            if (strpos($err, 'procRef') !== false) {
                 $hasLimitError = true;
                 break;
             }
@@ -1565,7 +1565,7 @@ class TraitsCoverageTest extends TestCase
         $tools->getSoap()->setReturnValue($responseBody);
 
         // Build XML with tpEmis=1 (not contingency)
-        $xml = $this->buildEpecNfceXml('SP', '35', tpEmis: '1');
+        $xml = $this->buildEpecNfceXml('SP', '35', '1');
 
         $tools->sefazEpecNfce($xml);
     }
@@ -1635,7 +1635,7 @@ class TraitsCoverageTest extends TestCase
         $responseBody = file_get_contents($fixturesPath . 'xml/exemplo_retorno_sucesso_envia_lote.xml');
         $tools->getSoap()->setReturnValue($responseBody);
 
-        $xml = $this->buildEpecNfceXml('SP', '35', destType: 'CPF');
+        $xml = $this->buildEpecNfceXml('SP', '35', '4', 'CPF');
 
         $tools->sefazEpecNfce($xml);
         $request = $tools->getRequest();
@@ -1671,7 +1671,7 @@ class TraitsCoverageTest extends TestCase
         $responseBody = file_get_contents($fixturesPath . 'xml/exemplo_retorno_sucesso_envia_lote.xml');
         $tools->getSoap()->setReturnValue($responseBody);
 
-        $xml = $this->buildEpecNfceXml('SP', '35', destType: 'idEstrangeiro');
+        $xml = $this->buildEpecNfceXml('SP', '35', '4', 'idEstrangeiro');
 
         $tools->sefazEpecNfce($xml);
         $request = $tools->getRequest();
@@ -1707,7 +1707,7 @@ class TraitsCoverageTest extends TestCase
         $responseBody = file_get_contents($fixturesPath . 'xml/exemplo_retorno_sucesso_envia_lote.xml');
         $tools->getSoap()->setReturnValue($responseBody);
 
-        $xml = $this->buildEpecNfceXml('SP', '35', destType: 'none');
+        $xml = $this->buildEpecNfceXml('SP', '35', '4', 'none');
 
         $tools->sefazEpecNfce($xml);
         $request = $tools->getRequest();
