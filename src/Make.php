@@ -80,7 +80,7 @@ final class Make
     use TraitCalculations;
 
     public const METHOD_CALCULATION_V1 = 1; //by values, calculate vItem and vNFTot
-    public const METHOD_CALCULATION_V2 = 1; //by tags, calculate vItem and vNFTot
+    public const METHOD_CALCULATION_V2 = 2; //by tags, calculate vItem and vNFTot
 
     protected int $schema; //esta propriedade da classe estabelece qual é a versão do schema sendo considerado
     protected int $tpAmb = 2;

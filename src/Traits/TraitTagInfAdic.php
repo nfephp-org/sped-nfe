@@ -143,7 +143,7 @@ trait TraitTagInfAdic
             }
         }
         if (!empty($this->aObsFisco)) {
-            if (count($this->aObsCont) > 10) {
+            if (count($this->aObsFisco) > 10) {
                 $this->errors[] = "As tags obsFisco são limitadas a 10 registros.";
                 $this->aObsFisco = array_slice($this->aObsFisco, 0, 10);
             }

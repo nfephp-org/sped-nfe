@@ -807,7 +807,7 @@ trait TraitTagDetICMS
                 $this->dom->addChild(
                     $icms,
                     'pFCPDif',
-                    $this->conditionalNumberFormatting($std->pFCPDif),
+                    $this->conditionalNumberFormatting($std->pFCPDif, 4),
                     false,
                     "$identificador Percentual do diferimento "
                     . "do ICMS relativo ao Fundo de Combate à Pobreza (FCP)"
@@ -1118,7 +1118,7 @@ trait TraitTagDetICMS
                 $this->dom->addChild(
                     $icms,
                     'vFCP',
-                    $std->vFCP,
+                    $this->conditionalNumberFormatting($std->vFCP),
                     false,
                     "$identificador Valor do FCP"
                 );
@@ -1274,6 +1274,14 @@ trait TraitTagDetICMS
                     false,
                     "$identificador Percentual da Redução de BC"
                 );
+                //campo adicionado NT 2022.002 v1.30
+                $this->dom->addChild(
+                    $icms,
+                    'cBenefRBC',
+                    $std->cBenefRBC ?? null,
+                    false,
+                    "$identificador Código de Benefício Fiscal na UF aplicado ao item quando houver RBC"
+                );
                 $this->dom->addChild(
                     $icms,
                     'pICMS',
@@ -1281,6 +1289,30 @@ trait TraitTagDetICMS
                     false,
                     "$identificador Alíquota do imposto"
                 );
+                //grupo EXTRA NT 2022.002 v1.30
+                //estes 3 campos serão obrigatórios a partir de 06/06/2026
+                $this->dom->addChild(
+                    $icms,
+                    'vICMSOp',
+                    $this->conditionalNumberFormatting($std->vICMSOp),
+                    false,
+                    "$identificador Valor do ICMS da Operação"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'pDif',
+                    $this->conditionalNumberFormatting($std->pDif ?? null, 4),
+                    false,
+                    "$identificador Percentual do diferimento"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'vICMSDif',
+                    $this->conditionalNumberFormatting($std->vICMSDif ?? null),
+                    false,
+                    "$identificador Valor do ICMS diferido"
+                );
+                //fim grupo adicional
                 $this->dom->addChild(
                     $icms,
                     'vICMS',
@@ -1310,6 +1342,30 @@ trait TraitTagDetICMS
                     false,
                     "$identificador Valor do FCP"
                 );
+                //grupo adicional NT 2022.002 v1.30
+                //os dois primeiros campos serão obrigatórios a partir de 06/06/2026
+                $this->dom->addChild(
+                    $icms,
+                    'pFCPDif',
+                    $this->conditionalNumberFormatting($std->pFCPDif ?? null, 4),
+                    false,
+                    "$identificador Percentual do diferimento do ICMS relativo ao Fundo de Combate à Pobreza"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'vFCPDif',
+                    $this->conditionalNumberFormatting($std->vFCPDif ?? null),
+                    false,
+                    "$identificador Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP) diferido"
+                );
+                $this->dom->addChild(
+                    $icms,
+                    'vFCPEfet',
+                    $this->conditionalNumberFormatting($std->vFCPEfet ?? null),
+                    false,
+                    "$identificador Valor efetivo do ICMS relativo ao Fundo de Combate à Pobreza (FCP)"
+                );
+                //fim do grupo adicional
                 $this->dom->addChild(
                     $icms,
                     'modBCST',
@@ -1446,7 +1502,10 @@ trait TraitTagDetICMS
             'pFCPST',
             'vFCPST',
             'pBCOp',
-            'UFST'
+            'UFST',
+            'vICMSDeson',
+            'motDesICMS',
+            'indDeduzDeson'
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = "N10a ICMSPart Item: $std->item -";
@@ -1584,6 +1643,29 @@ trait TraitTagDetICMS
             true,
             "$identificador UF para qual é devido o ICMS ST"
         );
+        //grupo adicional NT 2022.002 v1.30
+        $this->dom->addChild(
+            $icmsPart,
+            'vICMSDeson',
+            $this->conditionalNumberFormatting($std->vICMSDeson ?? null),
+            false,
+            "$identificador Valor do ICMS desonerado"
+        );
+        $this->dom->addChild(
+            $icmsPart,
+            'motDesICMS',
+            $std->motDesICMS ?? null,
+            false,
+            "$identificador Motivo da desoneração do ICMS"
+        );
+        $this->dom->addChild(
+            $icmsPart,
+            'indDeduzDeson',
+            $std->indDeduzDeson ?? null,
+            false,
+            "$identificador Indica se o valor do ICMS desonerado (vICMSDeson) deduz do valor do item (vProd)."
+        );
+
         $this->aICMSPart[$std->item] = $icmsPart;
         return $icmsPart;
     }
@@ -1798,7 +1880,7 @@ trait TraitTagDetICMS
                 $this->dom->addChild(
                     $icmsSN,
                     'pCredSN',
-                    $this->conditionalNumberFormatting($std->pCredSN, 2),
+                    $this->conditionalNumberFormatting($std->pCredSN, 4),
                     true,
                     "$identificador Alíquota aplicável de cálculo do crédito (Simples Nacional)."
                 );
