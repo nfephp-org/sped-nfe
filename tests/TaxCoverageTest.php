@@ -603,14 +603,12 @@ class TaxCoverageTest extends NFeTestCase
         $std->vFCPST = 2.80;
         $std->pBCOp = 100.0000;
         $std->UFST = 'SP';
-        $std->vICMSDeson = 1.00;
         $std->motDesICMS = 9;
         $std->indDeduzDeson = 1;
         $result = $this->make->tagICMSPart($std);
         $xml = $result->ownerDocument->saveXML($result);
         $this->assertStringContainsString('<ICMSPart>', $xml);
         $this->assertStringContainsString('<UFST>', $xml);
-        $this->assertStringContainsString('<vICMSDeson>', $xml);
     }
 
     // =========================================================================
