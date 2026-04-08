@@ -841,7 +841,7 @@ class Tools extends ToolsCommon
             $tagAdic .= "<nProtEvento>{$std->protocolo}</nProtEvento>";
         }
         return $this->sefazEvento(
-            'AN',
+            'SVRS',
             $std->chNFe,
             $tpEvento,
             $std->nSeqEvento,
@@ -1188,6 +1188,8 @@ class Tools extends ToolsCommon
                     112130,
                     112140,
                     112150,
+                    self::EVT_INSUCESSO_ENTREGA,
+                    self::EVT_CANCELA_INSUCESSO_ENTREGA,
                 ]
             ) && $uf === 'SVRS'
         ) {
