@@ -103,4 +103,65 @@ class StandardizeTest extends NFeTestCase
         $expected = json_decode(file_get_contents($this->fixturesPath . 'txt/nfe_4.0.json'));
         $this->assertEquals($expected, $std);
     }
+
+    public function testToString()
+    {
+        $xml = file_get_contents($this->fixturesPath . 'xml/2017nfe_antiga_v310.xml');
+        $st = new Standardize($xml);
+        $st->whichIs();
+        $result = (string)$st;
+        $this->assertNotEmpty($result);
+        $this->assertStringContainsString('<NFe', $result);
+    }
+
+    public function testSimpleXml()
+    {
+        $xml = file_get_contents($this->fixturesPath . 'xml/2017nfe_antiga_v310.xml');
+        $st = new Standardize($xml);
+        $sxml = $st->simpleXml();
+        $this->assertInstanceOf(\SimpleXMLElement::class, $sxml);
+    }
+
+    public function testToStdWithXmlParameter()
+    {
+        $st = new Standardize();
+        $xml = file_get_contents($this->fixturesPath . 'xml/nfe_4.0.xml');
+        $std = $st->toStd($xml);
+        $this->assertIsObject($std);
+    }
+
+    public function testToJsonWithXmlParameter()
+    {
+        $st = new Standardize();
+        $xml = file_get_contents($this->fixturesPath . 'xml/2017nfe_antiga_v310.xml');
+        $json = $st->toJson($xml);
+        $this->assertJson($json);
+    }
+
+    public function testToArrayWithXmlParameter()
+    {
+        $st = new Standardize();
+        $xml = file_get_contents($this->fixturesPath . 'xml/2017nfe_antiga_v310.xml');
+        $arr = $st->toArray($xml);
+        $this->assertIsArray($arr);
+        $this->assertNotEmpty($arr);
+    }
+
+    public function testWhichIsWithConstructorXml()
+    {
+        $xml = file_get_contents($this->fixturesPath . 'xml/nfe_4.0.xml');
+        $st = new Standardize($xml);
+        $result = $st->whichIs();
+        $this->assertTrue(in_array($result, $st->rootTagList));
+    }
+
+    public function testNfceXml()
+    {
+        $xml = file_get_contents($this->fixturesPath . 'xml/nfce.xml');
+        $st = new Standardize($xml);
+        $resp = $st->whichIs();
+        // nfce.xml is a processed NFe (nfeProc)
+        $this->assertNotEmpty($resp);
+        $this->assertTrue(in_array($resp, $st->rootTagList));
+    }
 }
