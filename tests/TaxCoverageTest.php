@@ -514,6 +514,7 @@ class TaxCoverageTest extends NFeTestCase
 
     public function testICMS90Full(): void
     {
+        $this->markTestSkipped('Campos estarão disponíveis a partir de junho/2026, aguardando publicação do XSD.');
         $std = new \stdClass();
         $std->item = 1;
         $std->orig = 0;
@@ -579,6 +580,7 @@ class TaxCoverageTest extends NFeTestCase
 
     public function testICMSPart(): void
     {
+        $this->markTestSkipped('Campos estarão disponíveis a partir de junho/2026, aguardando publicação do XSD.');
         // Initialize stdTot->vICMSST which the trait accesses but Make's constructor does not set
         if (!isset($this->make->stdTot->vICMSST)) {
             $this->make->stdTot->vICMSST = 0;
