@@ -88,7 +88,7 @@ class ToolsTest extends NFeTestCase
         $object->pathwsfiles = realpath(__DIR__ . '/../storage') . '/';
 
         $method = new \ReflectionMethod(Tools::class, 'getURIConsultaNFCe');
-        $method->setAccessible(true);
+        @$method->setAccessible(true);
         $result = $method->invokeArgs($object, [$uf, '2']);
         $this->assertEquals(self::getUri('2', $uf), $result);
     }
@@ -107,7 +107,7 @@ class ToolsTest extends NFeTestCase
         ) . '/';
 
         $method = new \ReflectionMethod(Tools::class, 'getURIConsultaNFCe');
-        $method->setAccessible(true);
+        @$method->setAccessible(true);
         $result = $method->invokeArgs($object, [$uf, '1']);
         $this->assertEquals(self::getUri('1', $uf), $result);
     }
