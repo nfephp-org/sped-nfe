@@ -164,4 +164,66 @@ class StandardizeTest extends NFeTestCase
         $this->assertNotEmpty($resp);
         $this->assertTrue(in_array($resp, $st->rootTagList));
     }
+
+    public function testWhichIsDistDFeInt()
+    {
+        $xml = file_get_contents($this->fixturesPath . 'xml/exemplo_xml_dist_dfe.xml');
+        $st = new Standardize();
+        $resp = $st->whichIs($xml);
+        $this->assertEquals('distDFeInt', $resp);
+    }
+
+    public function testWhichIsRetConsStatServ()
+    {
+        $xml = file_get_contents($this->fixturesPath . 'xml/retConsStatServ.xml');
+        $st = new Standardize();
+        $resp = $st->whichIs($xml);
+        $this->assertEquals('retConsStatServ', $resp);
+    }
+
+    public function testWhichIsRetEnviNFe()
+    {
+        $xml = file_get_contents($this->fixturesPath . 'xml/retEnviNFe.xml');
+        $st = new Standardize();
+        $resp = $st->whichIs($xml);
+        $this->assertEquals('retEnviNFe', $resp);
+    }
+
+    public function testToStdWithNfceQRCode()
+    {
+        $xml = file_get_contents($this->fixturesPath . 'xml/nfce.xml');
+        $st = new Standardize($xml);
+        $std = $st->toStd();
+        $this->assertIsObject($std);
+        // nfce.xml has infNFeSupl with qrCode
+        if (isset($std->infNFeSupl)) {
+            $this->assertNotEmpty($std->infNFeSupl->qrCode);
+            $this->assertNotEmpty($std->infNFeSupl->urlChave);
+        }
+    }
+
+    public function testWhichIsWithNfeResultMsgEmpty()
+    {
+        $this->expectException(\NFePHP\NFe\Exception\DocumentsException::class);
+        $this->expectExceptionMessage('veio em BRANCO');
+        $xml = '<?xml version="1.0" encoding="utf-8"?>'
+            . '<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">'
+            . '<soap:Body><nfeResultMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NFeAutorizacao4"></nfeResultMsg>'
+            . '</soap:Body></soap:Envelope>';
+        $st = new Standardize();
+        $st->whichIs($xml);
+    }
+
+    public function testWhichIsWithNfeResultMsgNonEmpty()
+    {
+        $this->expectException(\NFePHP\NFe\Exception\DocumentsException::class);
+        // nfeResultMsg with content but no recognized root tag should throw "wrongDocument"
+        $xml = '<?xml version="1.0" encoding="utf-8"?>'
+            . '<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">'
+            . '<soap:Body><nfeResultMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NFeAutorizacao4">'
+            . '<unknownTag>test</unknownTag>'
+            . '</nfeResultMsg></soap:Body></soap:Envelope>';
+        $st = new Standardize();
+        $st->whichIs($xml);
+    }
 }
