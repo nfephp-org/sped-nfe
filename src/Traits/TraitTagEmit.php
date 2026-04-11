@@ -208,7 +208,7 @@ trait TraitTagEmit
         $this->dom->addChild(
             $this->enderEmit,
             "fone",
-            trim($std->fone),
+            trim($std->fone ?? ''),
             false,
             $identificador . "Telefone do Endereço do emitente"
         );
