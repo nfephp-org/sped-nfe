@@ -352,60 +352,417 @@ class ToolsTest extends NFeTestCase
         $this->assertSame($esperado, $request);
     }
 
-    /*public function test_sefazManifestaLote(): void
+    public function test_sefazDistDFe_com_numNSU(): void
     {
-        $chNFe = '35240305730928000145650010000001421071400478';
-        $xJust = 'Preenchimento incorreto dos dados';
-        $dhEvento = new \DateTime('2024-02-01 14:07:05 -03:00');
-        $tpEvento = 210210; //ciencia da operação
-        $retorno = $this->tools->sefazManifestaLote(
-            $chNFe,
-            $tpEvento,
-            $xJust,
-            1,
-            $dhEvento,
-            '123'
-        );
-        //@todo fazer mock do retorno
+        $this->tools->sefazDistDFe(0, 500);
         $request = $this->tools->getRequest();
-        $esperado = $this->getCleanXml(__DIR__ . '/fixtures/xml/exemplo_xml_request_sefazManifesta.xml');
-        $this->assertSame($esperado, $request);
+        $this->assertStringContainsString('<consNSU>', $request);
+        $this->assertStringContainsString('<NSU>000000000000500</NSU>', $request);
     }
 
-    /*public function test_sefazComprovanteEntrega(): void
+    public function test_sefazDistDFe_com_chave(): void
     {
-        $retorno = $this->tools->sefazComprovanteEntrega();
-    }
-
-    public function test_sefazInsucessoEntrega(): void
-    {
-        $retorno = $this->tools->sefazInsucessoEntrega();
-    }
-
-    public function test_sefazEventoLote(): void
-    {
-        $retorno = $this->tools->sefazEventoLote();
-    }
-
-    public function test_sefazEPEC(): void
-    {
-        $retorno = $this->tools->sefazEPEC();
+        $chave = '35220605730928000145550010000048661583302923';
+        $this->tools->sefazDistDFe(0, 0, $chave);
+        $request = $this->tools->getRequest();
+        $this->assertStringContainsString('<consChNFe>', $request);
+        $this->assertStringContainsString("<chNFe>$chave</chNFe>", $request);
     }
 
     public function test_sefazDownload(): void
     {
-        $retorno = $this->tools->sefazDownload();
+        $chave = '35220605730928000145550010000048661583302923';
+        $this->tools->sefazDownload($chave);
+        $request = $this->tools->getRequest();
+        $this->assertStringContainsString('<consChNFe>', $request);
+        $this->assertStringContainsString("<chNFe>$chave</chNFe>", $request);
+        $this->assertStringContainsString('distDFeInt', $request);
     }
 
-    public function test_sefazCsc(): void
+    public function test_sefazDownload_chave_vazia(): void
     {
-        $retorno = $this->tools->sefazCsc();
+        $this->expectException(\InvalidArgumentException::class);
+        $this->tools->sefazDownload('');
     }
 
-    public function test_sefazValidate(): void
+    public function test_sefazCsc_consulta(): void
     {
-        $retorno = $this->tools->sefazValidate();
-    }*/
+        $this->tools->model(65);
+        $this->tools->config->siglaUF = 'AM';
+        $this->tools->sefazCsc(1);
+        $request = $this->tools->getRequest();
+        $this->assertStringContainsString('<admCscNFCe', $request);
+        $this->assertStringContainsString('<indOp>1</indOp>', $request);
+    }
+
+    public function test_sefazCsc_solicita_novo(): void
+    {
+        $this->tools->model(65);
+        $this->tools->config->siglaUF = 'AM';
+        $this->tools->sefazCsc(2);
+        $request = $this->tools->getRequest();
+        $this->assertStringContainsString('<indOp>2</indOp>', $request);
+    }
+
+    public function test_sefazCsc_revoga(): void
+    {
+        $this->tools->model(65);
+        $this->tools->config->siglaUF = 'AM';
+        $this->tools->sefazCsc(3);
+        $request = $this->tools->getRequest();
+        $this->assertStringContainsString('<indOp>3</indOp>', $request);
+        $this->assertStringContainsString('<dadosCsc>', $request);
+        $this->assertStringContainsString('<idCsc>', $request);
+        $this->assertStringContainsString('<codigoCsc>', $request);
+    }
+
+    public function test_sefazCsc_indOp_invalido(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->tools->model(65);
+        $this->tools->sefazCsc(5);
+    }
+
+    public function test_sefazCsc_modelo_55_rejeita(): void
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->tools->model(55);
+        $this->tools->sefazCsc(1);
+    }
+
+    public function test_sefazManifestaLote_ciencia(): void
+    {
+        $std = new \stdClass();
+        $std->evento = [];
+        $evt = new \stdClass();
+        $evt->chNFe = '35220605730928000145550010000048661583302923';
+        $evt->tpEvento = Tools::EVT_CIENCIA;
+        $evt->nSeqEvento = 1;
+        $std->evento[] = $evt;
+
+        $dhEvento = new \DateTime('2024-02-01 14:07:05 -03:00');
+        $this->tools->sefazManifestaLote($std, $dhEvento, '999');
+        $request = $this->tools->getRequest();
+        $this->assertStringContainsString('Ciencia da Operacao', $request);
+        $this->assertStringContainsString('<idLote>999</idLote>', $request);
+    }
+
+    public function test_sefazManifestaLote_nao_realizada_com_justificativa(): void
+    {
+        $std = new \stdClass();
+        $std->evento = [];
+        $evt = new \stdClass();
+        $evt->chNFe = '35220605730928000145550010000048661583302923';
+        $evt->tpEvento = Tools::EVT_NAO_REALIZADA;
+        $evt->nSeqEvento = 1;
+        $evt->xJust = 'Operação não realizada por problemas logísticos';
+        $std->evento[] = $evt;
+
+        $dhEvento = new \DateTime('2024-02-01 14:07:05 -03:00');
+        $this->tools->sefazManifestaLote($std, $dhEvento, '888');
+        $request = $this->tools->getRequest();
+        $this->assertStringContainsString('Operacao nao Realizada', $request);
+        $this->assertStringContainsString('<xJust>', $request);
+    }
+
+    public function test_sefazManifestaLote_evento_vazio(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $std = new \stdClass();
+        $std->evento = [];
+        $this->tools->sefazManifestaLote($std);
+    }
+
+    public function test_sefazComprovanteEntrega(): void
+    {
+        $std = new \stdClass();
+        $std->chNFe = '35220605730928000145550010000048661583302923';
+        $std->nSeqEvento = 1;
+        $std->verAplic = '1.0.0';
+        $std->data_recebimento = '2024-02-01T14:07:05-03:00';
+        $std->documento_recebedor = '12345678901';
+        $std->nome_recebedor = 'FULANO DE TAL';
+        $std->latitude = '-23.550500';
+        $std->longitude = '-46.633300';
+        $std->imagem = base64_encode('fake_image_content');
+        $std->cancelar = false;
+
+        $dhEvento = new \DateTime('2024-02-01 14:07:05 -03:00');
+        $this->tools->sefazComprovanteEntrega($std, $dhEvento, '777');
+        $request = $this->tools->getRequest();
+        $this->assertStringContainsString('Comprovante de Entrega da NF-e', $request);
+        $this->assertStringContainsString('<dhEntrega>', $request);
+        $this->assertStringContainsString('<nDoc>12345678901</nDoc>', $request);
+        $this->assertStringContainsString('<xNome>FULANO DE TAL</xNome>', $request);
+        $this->assertStringContainsString('<latGPS>', $request);
+        $this->assertStringContainsString('<longGPS>', $request);
+        $this->assertStringContainsString('<hashComprovante>', $request);
+    }
+
+    public function test_sefazComprovanteEntrega_cancelamento(): void
+    {
+        $std = new \stdClass();
+        $std->chNFe = '35220605730928000145550010000048661583302923';
+        $std->nSeqEvento = 1;
+        $std->verAplic = '1.0.0';
+        $std->cancelar = true;
+        $std->nProcEvento = '135220000000001';
+        $std->imagem = '';
+
+        $dhEvento = new \DateTime('2024-02-01 14:07:05 -03:00');
+        $this->tools->sefazComprovanteEntrega($std, $dhEvento, '776');
+        $request = $this->tools->getRequest();
+        $this->assertStringContainsString('Cancelamento Comprovante de Entrega', $request);
+        $this->assertStringContainsString('<nProtEvento>135220000000001</nProtEvento>', $request);
+    }
+
+    public function test_sefazInsucessoEntrega(): void
+    {
+        $std = new \stdClass();
+        $std->chNFe = '35220605730928000145550010000048661583302923';
+        $std->nSeqEvento = 1;
+        $std->verAplic = '1.0.0';
+        $std->cancelar = false;
+        $std->data_tentativa = '2024-02-01T14:07:05-03:00';
+        $std->tentativas = 3;
+        $std->tipo_motivo = 1;
+        $std->justificativa = null;
+        $std->latitude = '-23.550500';
+        $std->longitude = '-46.633300';
+        $std->imagem = base64_encode('fake_image');
+
+        $dhEvento = new \DateTime('2024-02-01 14:07:05 -03:00');
+        $this->tools->sefazInsucessoEntrega($std, $dhEvento, '666');
+        $request = $this->tools->getRequest();
+        $this->assertStringContainsString('Insucesso na Entrega da NF-e', $request);
+        $this->assertStringContainsString('<dhTentativaEntrega>', $request);
+        $this->assertStringContainsString('<nTentativa>3</nTentativa>', $request);
+        $this->assertStringContainsString('<tpMotivo>1</tpMotivo>', $request);
+    }
+
+    public function test_sefazInsucessoEntrega_com_justificativa(): void
+    {
+        $std = new \stdClass();
+        $std->chNFe = '35220605730928000145550010000048661583302923';
+        $std->nSeqEvento = 1;
+        $std->verAplic = '1.0.0';
+        $std->cancelar = false;
+        $std->data_tentativa = '2024-02-01T14:07:05-03:00';
+        $std->tentativas = 1;
+        $std->tipo_motivo = 4;
+        $std->justificativa = 'Destinatario ausente no local informado';
+        $std->latitude = null;
+        $std->longitude = null;
+        $std->imagem = base64_encode('fake_image');
+
+        $dhEvento = new \DateTime('2024-02-01 14:07:05 -03:00');
+        $this->tools->sefazInsucessoEntrega($std, $dhEvento, '665');
+        $request = $this->tools->getRequest();
+        $this->assertStringContainsString('<tpMotivo>4</tpMotivo>', $request);
+        $this->assertStringContainsString('<xJustMotivo>', $request);
+    }
+
+    public function test_sefazInsucessoEntrega_cancelamento(): void
+    {
+        $std = new \stdClass();
+        $std->chNFe = '35220605730928000145550010000048661583302923';
+        $std->nSeqEvento = 1;
+        $std->verAplic = '1.0.0';
+        $std->cancelar = true;
+        $std->protocolo = '135220000000001';
+        $std->imagem = '';
+
+        $dhEvento = new \DateTime('2024-02-01 14:07:05 -03:00');
+        $this->tools->sefazInsucessoEntrega($std, $dhEvento, '664');
+        $request = $this->tools->getRequest();
+        $this->assertStringContainsString('Cancelamento Insucesso na Entrega', $request);
+        $this->assertStringContainsString('<nProtEvento>135220000000001</nProtEvento>', $request);
+    }
+
+    public function test_sefazConciliacao(): void
+    {
+        $std = new \stdClass();
+        $std->chNFe = '35220605730928000145550010000048661583302923';
+        $std->nSeqEvento = 1;
+        $std->verAplic = '1.0.0';
+        $std->cancelar = false;
+        $std->detPag = [
+            (object)[
+                'indPag' => '0',
+                'tPag' => '01',
+                'xPag' => 'Dinheiro',
+                'vPag' => 100.00,
+                'dPag' => '2024-02-01',
+            ],
+        ];
+
+        $dhEvento = new \DateTime('2024-02-01 14:07:05 -03:00');
+        $this->tools->sefazConciliacao($std, $dhEvento, '555');
+        $request = $this->tools->getRequest();
+        $this->assertStringContainsString('ECONF', $request);
+        $this->assertStringContainsString('<detPag>', $request);
+        $this->assertStringContainsString('<tPag>01</tPag>', $request);
+    }
+
+    public function test_sefazConciliacao_modelo65(): void
+    {
+        $this->tools->model(65);
+        $std = new \stdClass();
+        $std->chNFe = '35220605730928000145650010000048661583302923';
+        $std->nSeqEvento = 1;
+        $std->verAplic = '1.0.0';
+        $std->cancelar = false;
+        $std->detPag = [
+            (object)[
+                'indPag' => '0',
+                'tPag' => '01',
+                'vPag' => 100.00,
+                'dPag' => '2024-02-01',
+            ],
+        ];
+
+        $dhEvento = new \DateTime('2024-02-01 14:07:05 -03:00');
+        $this->tools->sefazConciliacao($std, $dhEvento, '554');
+        $request = $this->tools->getRequest();
+        $this->assertStringContainsString('ECONF', $request);
+    }
+
+    public function test_sefazConciliacao_cancelamento(): void
+    {
+        $std = new \stdClass();
+        $std->chNFe = '35220605730928000145550010000048661583302923';
+        $std->nSeqEvento = 1;
+        $std->verAplic = '1.0.0';
+        $std->cancelar = true;
+        $std->protocolo = '135220000000001';
+        $std->detPag = [];
+
+        $dhEvento = new \DateTime('2024-02-01 14:07:05 -03:00');
+        $this->tools->sefazConciliacao($std, $dhEvento, '553');
+        $request = $this->tools->getRequest();
+        $this->assertStringContainsString('Cancelamento Conciliação Financeira', $request);
+        $this->assertStringContainsString('<nProtEvento>135220000000001</nProtEvento>', $request);
+    }
+
+    public function test_sefazEventoLote_uf_vazia(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $std = new \stdClass();
+        $std->evento = [];
+        $this->tools->sefazEventoLote('', $std);
+    }
+
+    public function test_sefazEventoLote_confirmacao(): void
+    {
+        $std = new \stdClass();
+        $std->evento = [];
+        $evt = new \stdClass();
+        $evt->chave = '35220605730928000145550010000048661583302923';
+        $evt->tpEvento = Tools::EVT_CONFIRMACAO;
+        $evt->nSeqEvento = 1;
+        $evt->tagAdic = '';
+        $std->evento[] = $evt;
+
+        $dhEvento = new \DateTime('2024-02-01 14:07:05 -03:00');
+        $this->tools->sefazEventoLote('AN', $std, $dhEvento, '444');
+        $request = $this->tools->getRequest();
+        $this->assertStringContainsString('Confirmacao da Operacao', $request);
+        $this->assertStringContainsString('<idLote>444</idLote>', $request);
+    }
+
+    public function test_sefazEventoLote_desconhecimento(): void
+    {
+        $std = new \stdClass();
+        $std->evento = [];
+        $evt = new \stdClass();
+        $evt->chave = '35220605730928000145550010000048661583302923';
+        $evt->tpEvento = Tools::EVT_DESCONHECIMENTO;
+        $evt->nSeqEvento = 1;
+        $evt->tagAdic = '';
+        $std->evento[] = $evt;
+
+        $dhEvento = new \DateTime('2024-02-01 14:07:05 -03:00');
+        $this->tools->sefazEventoLote('AN', $std, $dhEvento, '443');
+        $request = $this->tools->getRequest();
+        $this->assertStringContainsString('Desconhecimento da Operacao', $request);
+    }
+
+    public function test_sefazManifestaLote_confirmacao_e_desconhecimento(): void
+    {
+        $std = new \stdClass();
+        $std->evento = [];
+
+        $evt1 = new \stdClass();
+        $evt1->chNFe = '35220605730928000145550010000048661583302923';
+        $evt1->tpEvento = Tools::EVT_CONFIRMACAO;
+        $evt1->nSeqEvento = 1;
+        $std->evento[] = $evt1;
+
+        $evt2 = new \stdClass();
+        $evt2->chNFe = '35220605730928000145550010000048662583302924';
+        $evt2->tpEvento = Tools::EVT_DESCONHECIMENTO;
+        $evt2->nSeqEvento = 1;
+        $std->evento[] = $evt2;
+
+        $dhEvento = new \DateTime('2024-02-01 14:07:05 -03:00');
+        $this->tools->sefazManifestaLote($std, $dhEvento, '442');
+        $request = $this->tools->getRequest();
+        $this->assertStringContainsString('Confirmacao da Operacao', $request);
+        $this->assertStringContainsString('Desconhecimento da Operacao', $request);
+    }
+
+    public function test_sefazComprovanteEntrega_sem_gps(): void
+    {
+        $std = new \stdClass();
+        $std->chNFe = '35220605730928000145550010000048661583302923';
+        $std->nSeqEvento = 1;
+        $std->verAplic = '1.0.0';
+        $std->data_recebimento = '2024-02-01T14:07:05-03:00';
+        $std->documento_recebedor = '12345678901';
+        $std->nome_recebedor = 'FULANO DE TAL';
+        $std->latitude = null;
+        $std->longitude = null;
+        $std->imagem = base64_encode('fake_image_content');
+        $std->cancelar = false;
+
+        $dhEvento = new \DateTime('2024-02-01 14:07:05 -03:00');
+        $this->tools->sefazComprovanteEntrega($std, $dhEvento, '775');
+        $request = $this->tools->getRequest();
+        $this->assertStringContainsString('Comprovante de Entrega da NF-e', $request);
+        $this->assertStringNotContainsString('<latGPS>', $request);
+    }
+
+    public function test_sefazConciliacao_com_CNPJPag(): void
+    {
+        $std = new \stdClass();
+        $std->chNFe = '35220605730928000145550010000048661583302923';
+        $std->nSeqEvento = 1;
+        $std->verAplic = '1.0.0';
+        $std->cancelar = false;
+        $std->detPag = [
+            (object)[
+                'indPag' => '0',
+                'tPag' => '03',
+                'xPag' => 'Cartao Credito',
+                'vPag' => 200.50,
+                'dPag' => '2024-02-01',
+                'CNPJPag' => '12345678000195',
+                'UFPag' => 'SP',
+                'CNPJIF' => '98765432000100',
+                'tBand' => '01',
+                'cAut' => 'AUTH999',
+                'CNPJReceb' => '11222333000144',
+                'UFReceb' => 'SP',
+            ],
+        ];
+
+        $dhEvento = new \DateTime('2024-02-01 14:07:05 -03:00');
+        $this->tools->sefazConciliacao($std, $dhEvento, '552');
+        $request = $this->tools->getRequest();
+        $this->assertStringContainsString('<CNPJPag>12345678000195</CNPJPag>', $request);
+        $this->assertStringContainsString('<UFPag>SP</UFPag>', $request);
+        $this->assertStringContainsString('<CNPJReceb>11222333000144</CNPJReceb>', $request);
+    }
 
     /**
      * @param string $xml
