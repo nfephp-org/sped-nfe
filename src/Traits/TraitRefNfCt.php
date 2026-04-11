@@ -7,10 +7,16 @@ use stdClass;
 use DOMElement;
 
 /**
+ * NOTA: Esta trait não é utilizada por nenhuma classe do projeto (código morto).
+ * A funcionalidade equivalente está implementada em TraitTagRefs.php, que é
+ * utilizada pela classe Make. Excluída do coverage em phpunit.xml.dist.
+ *
  * @method equilizeParameters($std, $possible)
  * @method buildNFref()
  * @property DOMImproved $dom
  * @property array $aNFref
+ *
+ * @deprecated Usar TraitTagRefs no lugar desta trait.
  */
 
 trait TraitRefNfCt

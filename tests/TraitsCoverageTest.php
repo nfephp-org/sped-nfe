@@ -2048,4 +2048,568 @@ class TraitsCoverageTest extends TestCase
 
         return $xml;
     }
+
+    // ──────────────────────────────────────────────────────────────────────
+    //  TraitTagPag – branches not yet covered
+    // ──────────────────────────────────────────────────────────────────────
+
+    public function test_tagpag_with_vTroco(): void
+    {
+        $this->setupBaseTags();
+
+        $std = new stdClass();
+        $std->vTroco = '5.50';
+        $result = $this->make->tagpag($std);
+
+        $this->assertInstanceOf(\DOMElement::class, $result);
+        $this->assertEquals('pag', $result->tagName);
+        $this->assertEquals('5.50', $result->getElementsByTagName('vTroco')->item(0)->nodeValue);
+    }
+
+    public function test_tagpag_without_vTroco(): void
+    {
+        $this->setupBaseTags();
+
+        $std = new stdClass();
+        $std->vTroco = null;
+        $result = $this->make->tagpag($std);
+
+        $this->assertInstanceOf(\DOMElement::class, $result);
+        $this->assertEquals('pag', $result->tagName);
+        $this->assertNull($result->getElementsByTagName('vTroco')->item(0));
+    }
+
+    public function test_tagdetPag_with_card_and_NT2023_004_fields(): void
+    {
+        $this->setupBaseTags();
+
+        $std = new stdClass();
+        $std->indPag = '0';
+        $std->tPag = '03';
+        $std->xPag = 'Cartão de Crédito';
+        $std->vPag = '150.00';
+        $std->dPag = '2026-01-15';
+        $std->CNPJPag = '12345678000195';
+        $std->UFPag = 'SP';
+        $std->tpIntegra = '1';
+        $std->CNPJ = '98765432000100';
+        $std->tBand = '01';
+        $std->cAut = 'AUTH123456';
+        $std->CNPJReceb = '11222333000144';
+        $std->idTermPag = 'TERM001';
+        $result = $this->make->tagdetPag($std);
+
+        $this->assertInstanceOf(\DOMElement::class, $result);
+        $this->assertEquals('detPag', $result->tagName);
+        $this->assertEquals('03', $result->getElementsByTagName('tPag')->item(0)->nodeValue);
+        $this->assertEquals('150.00', $result->getElementsByTagName('vPag')->item(0)->nodeValue);
+        $this->assertEquals('2026-01-15', $result->getElementsByTagName('dPag')->item(0)->nodeValue);
+        $this->assertEquals('12345678000195', $result->getElementsByTagName('CNPJPag')->item(0)->nodeValue);
+        $this->assertEquals('SP', $result->getElementsByTagName('UFPag')->item(0)->nodeValue);
+        $card = $result->getElementsByTagName('card')->item(0);
+        $this->assertNotNull($card);
+        $this->assertEquals('1', $card->getElementsByTagName('tpIntegra')->item(0)->nodeValue);
+        $this->assertEquals('98765432000100', $card->getElementsByTagName('CNPJ')->item(0)->nodeValue);
+        $this->assertEquals('01', $card->getElementsByTagName('tBand')->item(0)->nodeValue);
+        $this->assertEquals('AUTH123456', $card->getElementsByTagName('cAut')->item(0)->nodeValue);
+        $this->assertEquals('11222333000144', $card->getElementsByTagName('CNPJReceb')->item(0)->nodeValue);
+        $this->assertEquals('TERM001', $card->getElementsByTagName('idTermPag')->item(0)->nodeValue);
+    }
+
+    public function test_tagdetPag_without_card(): void
+    {
+        $this->setupBaseTags();
+
+        $std = new stdClass();
+        $std->indPag = '0';
+        $std->tPag = '01';
+        $std->vPag = '50.00';
+        $result = $this->make->tagdetPag($std);
+
+        $this->assertInstanceOf(\DOMElement::class, $result);
+        $this->assertEquals('detPag', $result->tagName);
+        $this->assertNull($result->getElementsByTagName('card')->item(0));
+    }
+
+    // ──────────────────────────────────────────────────────────────────────
+    //  TraitTagDest – uncovered branches
+    // ──────────────────────────────────────────────────────────────────────
+
+    public function test_tagDest_with_CPF(): void
+    {
+        $this->setupBaseTags();
+
+        $std = new stdClass();
+        $std->xNome = 'PESSOA FISICA TESTE';
+        $std->indIEDest = '9';
+        $std->CPF = '12345678901';
+        $std->CNPJ = null;
+        $std->idEstrangeiro = null;
+        $std->IE = null;
+        $std->ISUF = null;
+        $std->IM = null;
+        $std->email = 'teste@teste.com';
+        $result = $this->make->tagDest($std);
+
+        $this->assertInstanceOf(\DOMElement::class, $result);
+        $this->assertEquals('dest', $result->tagName);
+        $this->assertEquals('12345678901', $result->getElementsByTagName('CPF')->item(0)->nodeValue);
+    }
+
+    public function test_tagenderDest_all_fields(): void
+    {
+        $this->setupBaseTags();
+
+        $std = new stdClass();
+        $std->xNome = 'EMPRESA DEST LTDA';
+        $std->indIEDest = '1';
+        $std->CNPJ = '12345678000195';
+        $std->IE = '123456789';
+        $this->make->tagDest($std);
+
+        $std = new stdClass();
+        $std->xLgr = 'RUA DESTINO';
+        $std->nro = '200';
+        $std->xCpl = 'SALA 5';
+        $std->xBairro = 'CENTRO';
+        $std->cMun = '3550308';
+        $std->xMun = 'SAO PAULO';
+        $std->UF = 'SP';
+        $std->CEP = '01001000';
+        $std->cPais = '1058';
+        $std->xPais = 'BRASIL';
+        $std->fone = '1122223333';
+        $result = $this->make->tagenderDest($std);
+
+        $this->assertInstanceOf(\DOMElement::class, $result);
+        $this->assertEquals('enderDest', $result->tagName);
+        $this->assertEquals('SALA 5', $result->getElementsByTagName('xCpl')->item(0)->nodeValue);
+    }
+
+    // ──────────────────────────────────────────────────────────────────────
+    //  TraitTagEmit – uncovered tagenderEmit branch with xFant
+    // ──────────────────────────────────────────────────────────────────────
+
+    public function test_tagEmit_without_xFant(): void
+    {
+        $this->setupBaseTags();
+        $m = new Make();
+
+        $std = new stdClass();
+        $std->Id = '35170358716523000119550010000000301000000300';
+        $std->versao = '4.00';
+        $m->taginfNFe($std);
+
+        $std = new stdClass();
+        $std->xNome = 'EMPRESA SEM FANTASIA';
+        $std->IE = '123456789012';
+        $std->CNPJ = '58716523000119';
+        $std->CRT = '3';
+        $std->xFant = null;
+        $result = $m->tagEmit($std);
+
+        $this->assertInstanceOf(\DOMElement::class, $result);
+        $this->assertNull($result->getElementsByTagName('xFant')->item(0));
+    }
+
+    // ──────────────────────────────────────────────────────────────────────
+    //  TraitTagIde – uncovered lines
+    // ──────────────────────────────────────────────────────────────────────
+
+    public function test_tagide_with_contingency_fields(): void
+    {
+        $m = new Make();
+        $std = new stdClass();
+        $std->Id = '35170358716523000119550010000000301000000300';
+        $std->versao = '4.00';
+        $m->taginfNFe($std);
+
+        $std = new stdClass();
+        $std->cUF = '35';
+        $std->cNF = '80070008';
+        $std->natOp = 'VENDA';
+        $std->mod = '55';
+        $std->serie = '1';
+        $std->nNF = '1';
+        $std->dhEmi = '2026-01-15T10:00:00-03:00';
+        $std->dhSaiEnt = '2026-01-15T10:00:00-03:00';
+        $std->tpNF = '1';
+        $std->idDest = '1';
+        $std->cMunFG = '3550308';
+        $std->tpImp = '1';
+        $std->tpEmis = '9';
+        $std->cDV = '0';
+        $std->tpAmb = '2';
+        $std->finNFe = '1';
+        $std->indFinal = '0';
+        $std->indPres = '1';
+        $std->procEmi = '0';
+        $std->verProc = '5.0';
+        $std->dhCont = '2026-01-15T09:00:00-03:00';
+        $std->xJust = 'PROBLEMAS TECNICOS';
+        $result = $m->tagide($std);
+
+        $this->assertInstanceOf(\DOMElement::class, $result);
+        $this->assertEquals('ide', $result->tagName);
+        $this->assertEquals('9', $result->getElementsByTagName('tpEmis')->item(0)->nodeValue);
+        $this->assertEquals('2026-01-15T09:00:00-03:00', $result->getElementsByTagName('dhCont')->item(0)->nodeValue);
+        $this->assertEquals('PROBLEMAS TECNICOS', $result->getElementsByTagName('xJust')->item(0)->nodeValue);
+    }
+
+    public function test_tagide_NFCe_model_65(): void
+    {
+        $m = new Make();
+        $std = new stdClass();
+        $std->Id = '35170358716523000119650010000000301000000300';
+        $std->versao = '4.00';
+        $m->taginfNFe($std);
+
+        $std = new stdClass();
+        $std->cUF = '35';
+        $std->cNF = '80070008';
+        $std->natOp = 'VENDA';
+        $std->mod = '65';
+        $std->serie = '1';
+        $std->nNF = '1';
+        $std->dhEmi = '2026-01-15T10:00:00-03:00';
+        $std->tpNF = '1';
+        $std->idDest = '1';
+        $std->cMunFG = '3550308';
+        $std->tpImp = '4';
+        $std->tpEmis = '1';
+        $std->cDV = '0';
+        $std->tpAmb = '2';
+        $std->finNFe = '1';
+        $std->indFinal = '1';
+        $std->indPres = '1';
+        $std->procEmi = '0';
+        $std->verProc = '5.0';
+        $result = $m->tagide($std);
+
+        $this->assertInstanceOf(\DOMElement::class, $result);
+        $this->assertEquals('65', $result->getElementsByTagName('mod')->item(0)->nodeValue);
+    }
+
+    // ──────────────────────────────────────────────────────────────────────
+    //  TraitTagInfAdic – uncovered obsCont/obsFisco
+    // ──────────────────────────────────────────────────────────────────────
+
+    public function test_taginfAdic_with_obsCont(): void
+    {
+        $this->setupBaseTags();
+        $this->addProduct();
+
+        $std = new stdClass();
+        $std->infAdFisco = 'INFO FISCO TESTE';
+        $std->infCpl = 'INFORMACAO COMPLEMENTAR';
+        $this->make->taginfAdic($std);
+
+        $std = new stdClass();
+        $std->xCampo = 'campo1';
+        $std->xTexto = 'valor1';
+        $result = $this->make->tagobsCont($std);
+
+        $this->assertInstanceOf(\DOMElement::class, $result);
+        $this->assertEquals('obsCont', $result->tagName);
+    }
+
+    public function test_taginfAdic_with_obsFisco(): void
+    {
+        $this->setupBaseTags();
+        $this->addProduct();
+
+        $std = new stdClass();
+        $std->infAdFisco = 'INFO FISCO';
+        $std->infCpl = 'INFO COMPLEMENTAR';
+        $this->make->taginfAdic($std);
+
+        $std = new stdClass();
+        $std->xCampo = 'campoFisco';
+        $std->xTexto = 'valorFisco';
+        $result = $this->make->tagobsFisco($std);
+
+        $this->assertInstanceOf(\DOMElement::class, $result);
+        $this->assertEquals('obsFisco', $result->tagName);
+    }
+
+    // ──────────────────────────────────────────────────────────────────────
+    //  TraitTagDetIPI – uncovered tagIPI
+    // ──────────────────────────────────────────────────────────────────────
+
+    public function test_tagIPI_IPITrib(): void
+    {
+        $this->setupBaseTags();
+        $this->addProduct();
+
+        $std = new stdClass();
+        $std->item = 1;
+        $std->vTotTrib = '10.00';
+        $this->make->tagimposto($std);
+
+        $std = new stdClass();
+        $std->item = 1;
+        $std->clEnq = null;
+        $std->CNPJProd = null;
+        $std->cSelo = null;
+        $std->qSelo = null;
+        $std->cEnq = '999';
+        $std->CST = '50';
+        $std->vBC = '100.00';
+        $std->pIPI = '5.00';
+        $std->vIPI = '5.00';
+        $std->qUnid = null;
+        $std->vUnid = null;
+        $result = $this->make->tagIPI($std);
+
+        $this->assertInstanceOf(\DOMElement::class, $result);
+        $this->assertEquals('IPI', $result->tagName);
+        $this->assertEquals('999', $result->getElementsByTagName('cEnq')->item(0)->nodeValue);
+    }
+
+    public function test_tagIPI_IPINT(): void
+    {
+        $this->setupBaseTags();
+        $this->addProduct();
+
+        $std = new stdClass();
+        $std->item = 1;
+        $std->vTotTrib = '0';
+        $this->make->tagimposto($std);
+
+        $std = new stdClass();
+        $std->item = 1;
+        $std->clEnq = null;
+        $std->CNPJProd = null;
+        $std->cSelo = null;
+        $std->qSelo = null;
+        $std->cEnq = '999';
+        $std->CST = '01';
+        $std->vBC = null;
+        $std->pIPI = null;
+        $std->vIPI = null;
+        $std->qUnid = null;
+        $std->vUnid = null;
+        $result = $this->make->tagIPI($std);
+
+        $this->assertInstanceOf(\DOMElement::class, $result);
+    }
+
+    // ──────────────────────────────────────────────────────────────────────
+    //  Make – setters/getters/utility methods
+    // ──────────────────────────────────────────────────────────────────────
+
+    public function test_setOnlyAscii(): void
+    {
+        $m = new Make();
+        $m->setOnlyAscii(true);
+        // No assertion needed for coverage, just verify it doesn't throw
+        $this->assertTrue(true);
+    }
+
+    public function test_setCheckGtin(): void
+    {
+        $m = new Make();
+        $m->setCheckGtin(false);
+        $this->assertTrue(true);
+    }
+
+    public function test_setCalculationMethod(): void
+    {
+        $m = new Make();
+        $m->setCalculationMethod(Make::METHOD_CALCULATION_V1);
+        $this->assertTrue(true);
+    }
+
+    public function test_getModelo(): void
+    {
+        $this->setupBaseTags();
+        $modelo = $this->make->getModelo();
+        $this->assertEquals(55, $modelo);
+    }
+
+    public function test_getChave(): void
+    {
+        $m = new Make();
+        $chave = $m->getChave();
+        $this->assertIsString($chave);
+    }
+
+    public function test_getErrors(): void
+    {
+        $m = new Make();
+        $std = new stdClass();
+        $std->Id = '35170358716523000119550010000000301000000300';
+        $std->versao = '4.00';
+        $m->taginfNFe($std);
+        $errors = $m->getErrors();
+        $this->assertIsArray($errors);
+    }
+
+    // ──────────────────────────────────────────────────────────────────────
+    //  TraitTagTransp – uncovered reboque
+    // ──────────────────────────────────────────────────────────────────────
+
+    public function test_tagreboque(): void
+    {
+        $this->setupBaseTags();
+
+        $std = new stdClass();
+        $std->placa = 'ABC1234';
+        $std->UF = 'SP';
+        $std->RNTC = '12345678';
+        $std->vagao = null;
+        $std->balsa = null;
+        $result = $this->make->tagreboque($std);
+
+        $this->assertInstanceOf(\DOMElement::class, $result);
+        $this->assertEquals('reboque', $result->tagName);
+        $this->assertEquals('ABC1234', $result->getElementsByTagName('placa')->item(0)->nodeValue);
+    }
+
+    // ──────────────────────────────────────────────────────────────────────
+    //  TraitTagTotal – uncovered tagISSQNtot
+    // ──────────────────────────────────────────────────────────────────────
+
+    public function test_tagISSQNtot(): void
+    {
+        $this->setupBaseTags();
+        $this->addProduct();
+
+        $std = new stdClass();
+        $std->vServ = '100.00';
+        $std->vBC = '100.00';
+        $std->vISS = '5.00';
+        $std->vPIS = '1.00';
+        $std->vCOFINS = '3.00';
+        $std->dCompet = '2026-01-15';
+        $std->vDeducao = '10.00';
+        $std->vOutro = '2.00';
+        $std->vDescIncond = '3.00';
+        $std->vDescCond = '1.00';
+        $std->vISSRet = '0.50';
+        $std->cRegTrib = '1';
+        $result = $this->make->tagISSQNtot($std);
+
+        $this->assertInstanceOf(\DOMElement::class, $result);
+        $this->assertEquals('ISSQNtot', $result->tagName);
+    }
+
+    // ──────────────────────────────────────────────────────────────────────
+    //  TraitTagDet – uncovered taginfAdProd and tagprodObsCont/obsFisco
+    // ──────────────────────────────────────────────────────────────────────
+
+    public function test_taginfAdProd(): void
+    {
+        $this->setupBaseTags();
+        $this->addProduct();
+
+        $std = new stdClass();
+        $std->item = 1;
+        $std->infAdProd = 'Informação adicional do produto teste';
+        $result = $this->make->taginfAdProd($std);
+
+        $this->assertInstanceOf(\DOMElement::class, $result);
+        $this->assertEquals('Informação adicional do produto teste', $result->nodeValue);
+    }
+
+    // ──────────────────────────────────────────────────────────────────────
+    //  TraitTagDetCOFINS – uncovered COFINSAliq and COFINSNT
+    // ──────────────────────────────────────────────────────────────────────
+
+    public function test_tagCOFINS_CST_01(): void
+    {
+        $this->setupBaseTags();
+        $this->addProduct();
+
+        $std = new stdClass();
+        $std->item = 1;
+        $std->vTotTrib = '0';
+        $this->make->tagimposto($std);
+
+        $std = new stdClass();
+        $std->item = 1;
+        $std->CST = '01';
+        $std->vBC = '100.00';
+        $std->pCOFINS = '3.00';
+        $std->vCOFINS = '3.00';
+        $result = $this->make->tagCOFINS($std);
+
+        $this->assertInstanceOf(\DOMElement::class, $result);
+    }
+
+    public function test_tagCOFINSST(): void
+    {
+        $this->setupBaseTags();
+        $this->addProduct();
+
+        $std = new stdClass();
+        $std->item = 1;
+        $std->vTotTrib = '0';
+        $this->make->tagimposto($std);
+
+        $std = new stdClass();
+        $std->item = 1;
+        $std->vBC = '100.00';
+        $std->pCOFINS = '3.00';
+        $std->vCOFINS = '3.00';
+        $std->indSomaCOFINSST = '1';
+        $result = $this->make->tagCOFINSST($std);
+
+        $this->assertInstanceOf(\DOMElement::class, $result);
+    }
+
+    // ──────────────────────────────────────────────────────────────────────
+    //  TraitTagDetICMS – uncovered tagICMSUFDest branch
+    // ──────────────────────────────────────────────────────────────────────
+
+    public function test_tagICMS_CST_10_completo(): void
+    {
+        $this->setupBaseTags();
+        $this->addProduct();
+
+        $std = new stdClass();
+        $std->item = 1;
+        $std->orig = '0';
+        $std->CST = '10';
+        $std->modBC = '3';
+        $std->vBC = '100.00';
+        $std->pICMS = '18.00';
+        $std->vICMS = '18.00';
+        $std->modBCST = '0';
+        $std->pMVAST = '40.00';
+        $std->vBCST = '140.00';
+        $std->pICMSST = '18.00';
+        $std->vICMSST = '7.20';
+        $std->vBCFCPST = '140.00';
+        $std->pFCPST = '2.00';
+        $std->vFCPST = '2.80';
+        $result = $this->make->tagICMS($std);
+
+        $this->assertInstanceOf(\DOMElement::class, $result);
+    }
+
+    // ──────────────────────────────────────────────────────────────────────
+    //  TraitTagDetPIS – uncovered PISST
+    // ──────────────────────────────────────────────────────────────────────
+
+    public function test_tagPISST(): void
+    {
+        $this->setupBaseTags();
+        $this->addProduct();
+
+        $std = new stdClass();
+        $std->item = 1;
+        $std->vTotTrib = '0';
+        $this->make->tagimposto($std);
+
+        $std = new stdClass();
+        $std->item = 1;
+        $std->vBC = '100.00';
+        $std->pPIS = '1.65';
+        $std->vPIS = '1.65';
+        $std->indSomaPISST = '1';
+        $result = $this->make->tagPISST($std);
+
+        $this->assertInstanceOf(\DOMElement::class, $result);
+    }
 }

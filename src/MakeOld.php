@@ -5,6 +5,10 @@
  * Esta classe basica está estruturada para montar XML da NFe para o
  * layout versão 4.00, os demais modelos serão derivados deste
  *
+ * NOTA: Classe legada monolítica, substituída por Make.php que utiliza
+ * composição via traits. Não é referenciada internamente pelo projeto.
+ * Excluída do coverage em phpunit.xml.dist.
+ *
  * @category  API
  * @package   NFePHP\NFe\
  * @copyright Copyright (c) 2008-2020
@@ -13,6 +17,8 @@
  * @license   http://www.gnu.org/licenses/gpl.txt GPLv3+
  * @author    Roberto L. Machado <linux.rlm at gmail dot com>
  * @link      http://github.com/nfephp-org/sped-nfe for the canonical source repository
+ *
+ * @deprecated Usar Make no lugar desta classe.
  */
 
 namespace NFePHP\NFe;

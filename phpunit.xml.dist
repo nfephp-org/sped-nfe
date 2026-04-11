@@ -34,6 +34,10 @@
         </include>
         <exclude>
             <file>src/Common/FakePretty.php</file>
+            <!-- Trait não utilizada por nenhuma classe do projeto (código morto) -->
+            <file>src/Traits/TraitRefNfCt.php</file>
+            <!-- Classe legada monolítica substituída por Make.php (com traits), não referenciada internamente -->
+            <file>src/MakeOld.php</file>
         </exclude>
     </coverage>
 </phpunit>
