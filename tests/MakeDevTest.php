@@ -475,11 +475,434 @@ class MakeDevTest extends TestCase
         $this->assertStringContainsString('<gIBSCBSMono>', $xml);
     }
 
+    public function testRenderWithAdditionalPublicTags()
+    {
+        $this->buildMinimalNFe55();
+
+        $this->make->tagautXML((object) ['CNPJ' => '12345678000199']);
+        $this->make->tagrefNFe((object) ['refNFe' => '35170358716523000119550010000000301000000300']);
+        $this->make->tagNVE((object) ['item' => 1, 'NVE' => 'AA000001']);
+        $this->make->tagCEST((object) ['item' => 1, 'CEST' => '1234567']);
+        $this->make->tagRastro((object) [
+            'item' => 1,
+            'nLote' => 'L001',
+            'qLote' => 10,
+            'dFab' => '2024-01-01',
+            'dVal' => '2025-01-01',
+            'cAgreg' => 'AG1',
+        ]);
+        $this->make->tagObsItem((object) [
+            'item' => 1,
+            'obsCont_xCampo' => 'OBS1',
+            'obsCont_xTexto' => 'Texto contribuinte',
+            'obsFisco_xCampo' => 'FISCO1',
+            'obsFisco_xTexto' => 'Texto fisco',
+        ]);
+        $this->make->taginfAdProd((object) ['item' => 1, 'infAdProd' => 'Informacao adicional do produto']);
+        $this->make->tagDFeReferenciado((object) [
+            'item' => 1,
+            'chaveAcesso' => '35170358716523000119550010000000301000000300',
+            'nItem' => 1,
+        ]);
+        $this->make->tagIntermed((object) [
+            'CNPJ' => '12345678000199',
+            'idCadIntTran' => 'MARKETPLACE01',
+        ]);
+
+        $xml = $this->make->render();
+
+        $this->assertStringContainsString('<autXML>', $xml);
+        $this->assertStringContainsString('<NFref>', $xml);
+        $this->assertStringContainsString('<refNFe>35170358716523000119550010000000301000000300</refNFe>', $xml);
+        $this->assertStringContainsString('<NVE>AA000001</NVE>', $xml);
+        $this->assertStringContainsString('<CEST>1234567</CEST>', $xml);
+        $this->assertStringContainsString('<rastro>', $xml);
+        $this->assertStringContainsString('<obsItem>', $xml);
+        $this->assertStringContainsString('<infAdProd>Informacao adicional do produto</infAdProd>', $xml);
+        $this->assertStringContainsString('<DFeReferenciado>', $xml);
+        $this->assertStringContainsString('<infIntermed>', $xml);
+    }
+
+    public function testRenderWithPISSTCOFINSSTISAndAgropecuario()
+    {
+        $this->buildMinimalNFe55WithoutPisCofins();
+
+        $this->make->tagPISST((object) [
+            'item' => 1,
+            'vBC' => 100.00,
+            'pPIS' => 1.6500,
+            'vPIS' => 1.65,
+            'indSomaPISST' => 1,
+        ]);
+        $this->make->tagCOFINSST((object) [
+            'item' => 1,
+            'vBC' => 100.00,
+            'pCOFINS' => 7.6000,
+            'vCOFINS' => 7.60,
+            'indSomaCOFINSST' => 1,
+        ]);
+        $this->make->tagIS((object) [
+            'item' => 1,
+            'CSTIS' => '01',
+            'cClassTribIS' => '12345678',
+            'vBCIS' => 100.00,
+            'pIS' => 2.5000,
+            'vIS' => 2.50,
+        ]);
+        $this->make->tagAgropecuarioDefensivo((object) [
+            'nReceituario' => 'REC123',
+            'CPFRespTec' => '12345678901',
+        ]);
+
+        $xml = $this->make->render();
+
+        $this->assertStringContainsString('<PISST>', $xml);
+        $this->assertStringContainsString('<COFINSST>', $xml);
+        $this->assertStringContainsString('<IS>', $xml);
+        $this->assertStringContainsString('<ISTot>', $xml);
+        $this->assertStringContainsString('<vIS>2.50</vIS>', $xml);
+        $this->assertStringContainsString('<agropecuario>', $xml);
+        $this->assertStringContainsString('<defensivo>', $xml);
+    }
+
+    public function testRenderWithISSQNAndRecopi()
+    {
+        $this->buildMinimalNFe55WithoutICMSPisCofins();
+
+        $this->make->tagISSQN((object) [
+            'item' => 1,
+            'vBC' => 100.00,
+            'vAliq' => 5.0000,
+            'vISSQN' => 5.00,
+            'cMunFG' => 3518800,
+            'cListServ' => '1401',
+            'indISS' => 1,
+            'indIncentivo' => 2,
+        ]);
+        $this->make->tagRECOPI((object) [
+            'item' => 1,
+            'nRECOPI' => '123456789',
+        ]);
+
+        $xml = $this->make->render();
+
+        $this->assertStringContainsString('<ISSQN>', $xml);
+        $this->assertStringContainsString('<ISSQNtot>', $xml);
+        $this->assertStringContainsString('<vISS>5.00</vISS>', $xml);
+        $this->assertStringContainsString('<nRECOPI>123456789</nRECOPI>', $xml);
+    }
+
+    public function testRenderWithAdditionalRefsAndImportDeclaration()
+    {
+        $this->buildMinimalNFe55();
+
+        $this->make->tagrefNF((object) [
+            'cUF' => '35',
+            'AAMM' => '2404',
+            'CNPJ' => '12345678000199',
+            'mod' => '01',
+            'serie' => '1',
+            'nNF' => '12345',
+        ]);
+        $this->make->tagrefNFP((object) [
+            'cUF' => '35',
+            'AAMM' => '2404',
+            'CPF' => '12345678901',
+            'IE' => 'ISENTO',
+            'mod' => '04',
+            'serie' => '1',
+            'nNF' => '54321',
+        ]);
+        $this->make->tagrefCTe((object) [
+            'refCTe' => '35170358716523000119570010000000301000000300',
+        ]);
+        $this->make->tagrefECF((object) [
+            'mod' => '2B',
+            'nECF' => 1,
+            'nCOO' => 123,
+        ]);
+        $this->make->tagDI((object) [
+            'item' => 1,
+            'nDI' => 'DI001',
+            'dDI' => '2024-04-01',
+            'xLocDesemb' => 'PORTO DE SANTOS',
+            'UFDesemb' => 'SP',
+            'dDesemb' => '2024-04-02',
+            'tpViaTransp' => '1',
+            'vAFRMM' => 0.00,
+            'tpIntermedio' => '1',
+            'CPF' => '12345678901',
+            'UFTerceiro' => 'SP',
+            'cExportador' => 'EXPORTADOR01',
+        ]);
+        $this->make->tagadi((object) [
+            'item' => 1,
+            'nDI' => 'DI001',
+            'nAdicao' => 1,
+            'nSeqAdic' => 1,
+            'cFabricante' => 'FABRICANTE01',
+            'vDescDI' => 0.00,
+            'nDraw' => 'DRAW01',
+        ]);
+
+        $xml = $this->make->render();
+
+        $this->assertStringContainsString('<refNF>', $xml);
+        $this->assertStringContainsString('<refNFP>', $xml);
+        $this->assertStringContainsString('<refCTe>35170358716523000119570010000000301000000300</refCTe>', $xml);
+        $this->assertStringContainsString('<refECF>', $xml);
+        $this->assertStringContainsString('<DI>', $xml);
+        $this->assertStringContainsString('<adi>', $xml);
+        $this->assertStringContainsString('<cFabricante>FABRICANTE01</cFabricante>', $xml);
+    }
+
+    public function testRenderWithVeicProdAndAgropecuarioGuia()
+    {
+        $this->buildMinimalNFe55WithoutPisCofins();
+
+        $this->make->tagveicProd((object) [
+            'item' => 1,
+            'tpOp' => '1',
+            'chassi' => '9BWZZZ377VT004251',
+            'cCor' => '01',
+            'xCor' => 'BRANCO',
+            'pot' => '100',
+            'cilin' => '1600',
+            'pesoL' => '1200',
+            'pesoB' => '1500',
+            'nSerie' => 'SERIE123',
+            'tpComb' => '01',
+            'nMotor' => 'MOTOR123',
+            'CMT' => 3.5000,
+            'dist' => '2500',
+            'anoMod' => '2024',
+            'anoFab' => '2024',
+            'tpPint' => 'S',
+            'tpVeic' => '06',
+            'espVeic' => '01',
+            'VIN' => 'R',
+            'condVeic' => '1',
+            'cMod' => '001234',
+            'cCorDENATRAN' => '01',
+            'lota' => '5',
+            'tpRest' => '0',
+        ]);
+        $this->make->tagAgropecuarioGuia((object) [
+            'tpGuia' => '1',
+            'UFGuia' => 'SP',
+            'serieGuia' => 'A1',
+            'nGuia' => '123456',
+        ]);
+
+        $xml = $this->make->render();
+
+        $this->assertStringContainsString('<veicProd>', $xml);
+        $this->assertStringContainsString('<chassi>9BWZZZ377VT004251</chassi>', $xml);
+        $this->assertStringContainsString('<agropecuario>', $xml);
+        $this->assertStringContainsString('<guiaTransito>', $xml);
+        $this->assertStringContainsString('<nGuia>123456</nGuia>', $xml);
+    }
+
+    public function testRenderWithCana()
+    {
+        $this->buildMinimalNFe55();
+
+        $this->make->tagcana((object) [
+            'safra' => '2024',
+            'ref' => '04/2024',
+            'qTotMes' => '1000',
+            'qTotAnt' => '100',
+            'qTotGer' => '1100',
+            'vFor' => 100.00,
+            'vTotDed' => 10.00,
+            'vLiqFor' => 90.00,
+        ]);
+        $this->make->tagforDia((object) [
+            'dia' => 1,
+            'qtde' => 500.1234567890,
+        ]);
+        $this->make->tagforDia((object) [
+            'dia' => 2,
+            'qtde' => 499.8765432110,
+        ]);
+        $this->make->tagdeduc((object) [
+            'xDed' => 'TAXA',
+            'vDed' => 10.00,
+        ]);
+
+        $xml = $this->make->render();
+
+        $this->assertStringContainsString('<cana>', $xml);
+        $this->assertStringContainsString('<forDia dia="1">', $xml);
+        $this->assertStringContainsString('<forDia dia="2">', $xml);
+        $this->assertStringContainsString('<deduc>', $xml);
+        $this->assertStringContainsString('<vLiqFor>90.00</vLiqFor>', $xml);
+    }
+
+    public function testRenderWithMed()
+    {
+        $this->buildMinimalNFe55();
+
+        $this->make->tagmed((object) [
+            'item' => 1,
+            'cProdANVISA' => '123456789',
+            'xMotivoIsencao' => 'TESTE',
+            'vPMC' => 12.34,
+        ]);
+
+        $xml = $this->make->render();
+
+        $this->assertStringContainsString('<med>', $xml);
+        $this->assertStringContainsString('<cProdANVISA>123456789</cProdANVISA>', $xml);
+        $this->assertStringContainsString('<vPMC>12.34</vPMC>', $xml);
+    }
+
+    public function testRenderWithArma()
+    {
+        $this->buildMinimalNFe55();
+
+        $this->make->tagarma((object) [
+            'item' => 1,
+            'tpArma' => '1',
+            'nSerie' => 'SN123',
+            'nCano' => 'NC123',
+            'descr' => 'Arma de teste',
+        ]);
+
+        $xml = $this->make->render();
+
+        $this->assertStringContainsString('<arma>', $xml);
+        $this->assertStringContainsString('<tpArma>1</tpArma>', $xml);
+        $this->assertStringContainsString('<descr>Arma de teste</descr>', $xml);
+    }
+
+    public function testRenderWithCombEncerranteAndOrigComb()
+    {
+        $this->buildMinimalNFe55();
+
+        $this->make->tagcomb((object) [
+            'item' => 1,
+            'cProdANP' => '210203001',
+            'descANP' => 'GAS COMBUSTIVEL',
+            'pGLP' => 10.0000,
+            'pGNn' => 20.0000,
+            'pGNi' => 30.0000,
+            'vPart' => 40.00,
+            'CODIF' => '12345678901234567890',
+            'qTemp' => 5.0000,
+            'UFCons' => 'SP',
+            'pBio' => 1.5000,
+        ]);
+        $this->make->tagencerrante((object) [
+            'item' => 1,
+            'nBico' => '1',
+            'nBomba' => '2',
+            'nTanque' => '3',
+            'vEncIni' => 100.000,
+            'vEncFin' => 110.000,
+        ]);
+        $this->make->tagorigComb((object) [
+            'item' => 1,
+            'indImport' => '0',
+            'cUFOrig' => '35',
+            'pOrig' => 100.0000,
+        ]);
+
+        $xml = $this->make->render();
+
+        $this->assertStringContainsString('<comb>', $xml);
+        $this->assertStringContainsString('<encerrante>', $xml);
+        $this->assertStringContainsString('<origComb>', $xml);
+        $this->assertStringContainsString('<UFCons>SP</UFCons>', $xml);
+    }
+
+    public function testRenderWithDocumentComplementaryGroups()
+    {
+        $this->buildMinimalNFe55();
+
+        $this->make->tagretirada((object) [
+            'CPF' => '12345678901',
+            'xNome' => 'Local Retirada',
+            'xLgr' => 'Rua A',
+            'nro' => '10',
+            'xBairro' => 'Centro',
+            'cMun' => '3518800',
+            'xMun' => 'GUARARAPES',
+            'UF' => 'SP',
+            'CEP' => '16700000',
+        ]);
+        $this->make->tagentrega((object) [
+            'CNPJ' => '12345678000199',
+            'xNome' => 'Local Entrega',
+            'xLgr' => 'Rua B',
+            'nro' => '20',
+            'xBairro' => 'Centro',
+            'cMun' => '3518800',
+            'xMun' => 'GUARARAPES',
+            'UF' => 'SP',
+            'CEP' => '16700000',
+        ]);
+        $this->make->tagexporta((object) [
+            'UFSaidaPais' => 'SP',
+            'xLocExporta' => 'PORTO DE SANTOS',
+            'xLocDespacho' => 'ARMAZEM 1',
+        ]);
+        $this->make->tagcompra((object) [
+            'xNEmp' => 'EMP001',
+            'xPed' => 'PED001',
+            'xCont' => 'CONT001',
+        ]);
+        $this->make->tagfat((object) [
+            'nFat' => 'FAT001',
+            'vOrig' => 100.00,
+            'vDesc' => 0.00,
+            'vLiq' => 100.00,
+        ]);
+        $this->make->tagdup((object) [
+            'nDup' => '001',
+            'dVenc' => '2024-12-31',
+            'vDup' => 100.00,
+        ]);
+        $this->make->taginfRespTec((object) [
+            'CNPJ' => '12345678000199',
+            'xContato' => 'Contato Teste',
+            'email' => 'teste@example.com',
+            'fone' => '11999999999',
+        ]);
+
+        $xml = $this->make->render();
+
+        $this->assertStringContainsString('<retirada>', $xml);
+        $this->assertStringContainsString('<entrega>', $xml);
+        $this->assertStringContainsString('<exporta>', $xml);
+        $this->assertStringContainsString('<compra>', $xml);
+        $this->assertStringContainsString('<cobr>', $xml);
+        $this->assertStringContainsString('<fat>', $xml);
+        $this->assertStringContainsString('<dup>', $xml);
+        $this->assertStringContainsString('<infRespTec>', $xml);
+        $this->assertStringContainsString('<email>teste@example.com</email>', $xml);
+    }
+
     // =========================================================================
     // Helpers to build minimal NFe documents
     // =========================================================================
 
     private function buildMinimalNFe55(): void
+    {
+        $this->buildMinimalNFe55Base(true, true);
+    }
+
+    private function buildMinimalNFe55WithoutPisCofins(): void
+    {
+        $this->buildMinimalNFe55Base(false, true);
+    }
+
+    private function buildMinimalNFe55WithoutICMSPisCofins(): void
+    {
+        $this->buildMinimalNFe55Base(false, false);
+    }
+
+    private function buildMinimalNFe55Base(bool $withPisCofins, bool $withIcms): void
     {
         $std = new \stdClass();
         $std->versao = '4.00';
@@ -552,31 +975,35 @@ class MakeDevTest extends TestCase
         $std->indTot = 1;
         $this->make->tagprod($std);
 
-        $std = new \stdClass();
-        $std->item = 1;
-        $std->orig = 0;
-        $std->CST = '00';
-        $std->modBC = 3;
-        $std->vBC = 100.00;
-        $std->pICMS = 18.0000;
-        $std->vICMS = 18.00;
-        $this->make->tagICMS($std);
+        if ($withIcms) {
+            $std = new \stdClass();
+            $std->item = 1;
+            $std->orig = 0;
+            $std->CST = '00';
+            $std->modBC = 3;
+            $std->vBC = 100.00;
+            $std->pICMS = 18.0000;
+            $std->vICMS = 18.00;
+            $this->make->tagICMS($std);
+        }
 
-        $std = new \stdClass();
-        $std->item = 1;
-        $std->CST = '01';
-        $std->vBC = 100.00;
-        $std->pPIS = 1.65;
-        $std->vPIS = 1.65;
-        $this->make->tagPIS($std);
+        if ($withPisCofins) {
+            $std = new \stdClass();
+            $std->item = 1;
+            $std->CST = '01';
+            $std->vBC = 100.00;
+            $std->pPIS = 1.65;
+            $std->vPIS = 1.65;
+            $this->make->tagPIS($std);
 
-        $std = new \stdClass();
-        $std->item = 1;
-        $std->CST = '01';
-        $std->vBC = 100.00;
-        $std->pCOFINS = 7.60;
-        $std->vCOFINS = 7.60;
-        $this->make->tagCOFINS($std);
+            $std = new \stdClass();
+            $std->item = 1;
+            $std->CST = '01';
+            $std->vBC = 100.00;
+            $std->pCOFINS = 7.60;
+            $std->vCOFINS = 7.60;
+            $this->make->tagCOFINS($std);
+        }
 
         $std = new \stdClass();
         $std->item = 1;
