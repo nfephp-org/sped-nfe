@@ -198,9 +198,14 @@ class ToolsTest extends NFeTestCase
         $this->assertSame($model, (int) $signedDom->getElementsByTagName('mod')->item(0)->nodeValue);
 
         if ($expectInfNFeSupl) {
+            $qrCodeNode = $signedDom->getElementsByTagName('qrCode')->item(0);
+            $urlChaveNode = $signedDom->getElementsByTagName('urlChave')->item(0);
+
             $this->assertSame(1, $signedDom->getElementsByTagName('infNFeSupl')->length);
-            $this->assertNotEmpty($signedDom->getElementsByTagName('qrCode')->item(0)?->nodeValue);
-            $this->assertNotEmpty($signedDom->getElementsByTagName('urlChave')->item(0)?->nodeValue);
+            $this->assertNotNull($qrCodeNode);
+            $this->assertNotNull($urlChaveNode);
+            $this->assertNotEmpty($qrCodeNode->nodeValue);
+            $this->assertNotEmpty($urlChaveNode->nodeValue);
             return;
         }
 
