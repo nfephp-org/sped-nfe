@@ -1,0 +1,178 @@
+<NFe xmlns="http://www.portalfiscal.inf.br/nfe">
+  <infNFe Id="NFe29181033657677000156650010001654399001654399" versao="4.00">
+    <ide>
+      <cUF>29</cUF>
+      <cNF>00165439</cNF>
+      <natOp>VENDA DE MERC. ADQ. E/OU REC. DE TERCEIROS C/ REG. SUB.TRIB.</natOp>
+      <mod>65</mod>
+      <serie>1</serie>
+      <nNF>165439</nNF>
+      <dhEmi>2018-10-01T07:28:14-04:00</dhEmi>
+      <tpNF>1</tpNF>
+      <idDest>1</idDest>
+      <cMunFG>5108402</cMunFG>
+      <tpImp>4</tpImp>
+      <tpEmis>9</tpEmis>
+      <cDV>9</cDV>
+      <tpAmb>2</tpAmb>
+      <finNFe>1</finNFe>
+      <indFinal>1</indFinal>
+      <indPres>1</indPres>
+      <procEmi>0</procEmi>
+      <verProc>PEMAWEB 2.11.0</verProc>
+      <dhCont>2018-10-01T14:54:34-04:00</dhCont>
+      <xJust>PROBLEMAS TECNICOS</xJust>
+    </ide>
+    <emit>
+      <CNPJ>33657677000156</CNPJ>
+      <xNome>PMZ CENTRO NORTE S/A</xNome>
+      <xFant>PMZ CENTRO NORTE S/A</xFant>
+      <enderEmit>
+        <xLgr>AV. DA FEB (LOT.PONTE NOVA)</xLgr>
+        <nro>1150</nro>
+        <xBairro>PONTE NOVA</xBairro>
+        <cMun>2908402</cMun>
+        <xMun>VARZEA GRANDE</xMun>
+        <UF>BA</UF>
+        <CEP>29115005</CEP>
+        <cPais>1058</cPais>
+        <xPais>BRASIL</xPais>
+        <fone>02936882500</fone>
+      </enderEmit>
+      <IE>130796832</IE>
+      <IM>8216</IM>
+      <CNAE>4530703</CNAE>
+      <CRT>3</CRT>
+    </emit>
+    <det nItem="1">
+      <prod>
+        <cProd>10015300336</cProd>
+        <cEAN>7893049207584</cEAN>
+        <xProd>(153 - C2075) -CILINDRO MESTRE DUPLO UN</xProd>
+        <NCM>87083090</NCM>
+        <CFOP>5405</CFOP>
+        <uCom>UN</uCom>
+        <qCom>1.0000</qCom>
+        <vUnCom>96.2200</vUnCom>
+        <vProd>96.22</vProd>
+        <cEANTrib>7893049207584</cEANTrib>
+        <uTrib>UN</uTrib>
+        <qTrib>1.0000</qTrib>
+        <vUnTrib>96.2200</vUnTrib>
+        <indTot>1</indTot>
+      </prod>
+      <imposto>
+        <vTotTrib>17.32</vTotTrib>
+        <ICMS>
+          <ICMS60>
+            <orig>0</orig>
+            <CST>60</CST>
+            <vBCSTRet>0.00</vBCSTRet>
+            <pST>0.00</pST>
+            <vICMSSTRet>0.00</vICMSSTRet>
+            <vBCFCPSTRet>0.00</vBCFCPSTRet>
+            <pFCPSTRet>0.00</pFCPSTRet>
+            <vFCPSTRet>0.00</vFCPSTRet>
+          </ICMS60>
+        </ICMS>
+        <PIS>
+          <PISNT>
+            <CST>04</CST>
+          </PISNT>
+        </PIS>
+        <COFINS>
+          <COFINSNT>
+            <CST>04</CST>
+          </COFINSNT>
+        </COFINS>
+      </imposto>
+      <infAdProd>Valor Aprox. dos Tributos : R$ 17.32</infAdProd>
+    </det>
+    <det nItem="2">
+      <prod>
+        <cProd>10029200332</cProd>
+        <cEAN/>
+        <xProd>(292 - BAH0031D) -ROLAMENTO RODA DIANTEIRO SEM ABS UN</xProd>
+        <NCM>84821090</NCM>
+        <CFOP>5405</CFOP>
+        <uCom>UN</uCom>
+        <qCom>1.0000</qCom>
+        <vUnCom>53.7800</vUnCom>
+        <vProd>53.78</vProd>
+        <cEANTrib/>
+        <uTrib>UN</uTrib>
+        <qTrib>1.0000</qTrib>
+        <vUnTrib>53.7800</vUnTrib>
+        <indTot>1</indTot>
+      </prod>
+      <imposto>
+        <vTotTrib>18.43</vTotTrib>
+        <ICMS>
+          <ICMS60>
+            <orig>0</orig>
+            <CST>60</CST>
+            <vBCSTRet>0.00</vBCSTRet>
+            <pST>0.00</pST>
+            <vICMSSTRet>0.00</vICMSSTRet>
+            <vBCFCPSTRet>0.00</vBCFCPSTRet>
+            <pFCPSTRet>0.00</pFCPSTRet>
+            <vFCPSTRet>0.00</vFCPSTRet>
+          </ICMS60>
+        </ICMS>
+        <PIS>
+          <PISAliq>
+            <CST>01</CST>
+            <vBC>53.78</vBC>
+            <pPIS>1.65</pPIS>
+            <vPIS>0.89</vPIS>
+          </PISAliq>
+        </PIS>
+        <COFINS>
+          <COFINSAliq>
+            <CST>01</CST>
+            <vBC>53.78</vBC>
+            <pCOFINS>7.60</pCOFINS>
+            <vCOFINS>4.09</vCOFINS>
+          </COFINSAliq>
+        </COFINS>
+      </imposto>
+      <infAdProd>Valor Aprox. dos Tributos : R$ 18.43</infAdProd>
+    </det>
+    <total>
+      <ICMSTot>
+        <vBC>0.00</vBC>
+        <vICMS>0.00</vICMS>
+        <vICMSDeson>0.00</vICMSDeson>
+        <vFCP>0.00</vFCP>
+        <vBCST>0.00</vBCST>
+        <vST>0.00</vST>
+        <vFCPST>0.00</vFCPST>
+        <vFCPSTRet>0.00</vFCPSTRet>
+        <vProd>150.00</vProd>
+        <vFrete>0.00</vFrete>
+        <vSeg>0.00</vSeg>
+        <vDesc>0.00</vDesc>
+        <vII>0.00</vII>
+        <vIPI>0.00</vIPI>
+        <vIPIDevol>0.00</vIPIDevol>
+        <vPIS>0.89</vPIS>
+        <vCOFINS>4.09</vCOFINS>
+        <vOutro>0.00</vOutro>
+        <vNF>150.00</vNF>
+        <vTotTrib>35.75</vTotTrib>
+      </ICMSTot>
+    </total>
+    <transp>
+      <modFrete>9</modFrete>
+    </transp>
+    <pag>
+      <detPag>
+        <tPag>04</tPag>
+        <vPag>150.00</vPag>
+      </detPag>
+    </pag>
+    <infAdic>
+      <infCpl>11899318;422-JERK DIONNY;CLIENTE RECUSOU INFORMAR CPF/CNPJ NO CUPOM</infCpl>
+    </infAdic>
+  </infNFe>
+</NFe>

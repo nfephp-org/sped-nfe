@@ -6,6 +6,7 @@ namespace NFePHP\NFe\Tests;
 
 use NFePHP\Common\Certificate;
 use NFePHP\Common\Strings;
+use NFePHP\NFe\Factories\Contingency;
 use NFePHP\NFe\Common\Standardize;
 use NFePHP\NFe\Tests\Common\ToolsFake;
 use NFePHP\NFe\Tools;
@@ -175,6 +176,43 @@ class ToolsTest extends NFeTestCase
         $this->assertEquals($request, $tools->getRequest());
     }
 
+    /**
+     * @dataProvider signNFeXmlProvider
+     */
+    public function test_sign_nfe_with_fixture_xmls(string $fixture, int $model, bool $expectInfNFeSupl): void
+    {
+        $xml = file_get_contents(__DIR__ . '/fixtures/xml/' . $fixture);
+        $this->assertNotFalse($xml);
+
+        $inputDom = new \DOMDocument();
+        $inputDom->loadXML($xml);
+        $this->assertSame(0, $inputDom->getElementsByTagName('Signature')->length);
+        $this->assertSame($model, (int) $inputDom->getElementsByTagName('mod')->item(0)->nodeValue);
+
+        $this->tools->model($model);
+        $signed = $this->tools->signNFe($xml);
+
+        $signedDom = new \DOMDocument();
+        $signedDom->loadXML($signed);
+
+        $this->assertSame(1, $signedDom->getElementsByTagName('Signature')->length);
+        $this->assertSame($model, (int) $signedDom->getElementsByTagName('mod')->item(0)->nodeValue);
+
+        if ($expectInfNFeSupl) {
+            $qrCodeNode = $signedDom->getElementsByTagName('qrCode')->item(0);
+            $urlChaveNode = $signedDom->getElementsByTagName('urlChave')->item(0);
+
+            $this->assertSame(1, $signedDom->getElementsByTagName('infNFeSupl')->length);
+            $this->assertNotNull($qrCodeNode);
+            $this->assertNotNull($urlChaveNode);
+            $this->assertNotEmpty($qrCodeNode->nodeValue);
+            $this->assertNotEmpty($urlChaveNode->nodeValue);
+            return;
+        }
+
+        $this->assertSame(0, $signedDom->getElementsByTagName('infNFeSupl')->length);
+    }
+
     public function test_sefaz_inutiliza(): void
     {
         $this->tools->sefazInutiliza(1, 1, 10, 'Testando Inutilização', 1, '22');
@@ -221,6 +259,141 @@ class ToolsTest extends NFeTestCase
         $request = $this->tools->getRequest();
         $esperado = $this->getCleanXml(__DIR__ . '/fixtures/xml/exemplo_xml_dist_dfe.xml');
         $this->assertSame($esperado, $request);
+    }
+
+    public function test_sefaz_epec_throws_when_xml_is_empty(): void
+    {
+        $tools = $this->buildToolsForEpec('RS');
+        $xml = '';
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('EPEC: parâmetro xml esta vazio!');
+
+        $tools->sefazEPEC($xml);
+    }
+
+    public function test_sefaz_epec_throws_when_contingency_is_not_epec(): void
+    {
+        $xml = file_get_contents(__DIR__ . '/fixtures/xml/signNFe_modelo_55.xml');
+        $tools = $this->tools;
+        $tools->model(55);
+
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('A contingencia EPEC deve estar ativada!');
+
+        $tools->sefazEPEC($xml);
+    }
+
+    public function test_sefaz_epec_throws_when_author_uf_differs_from_key_uf(): void
+    {
+        $xml = file_get_contents(__DIR__ . '/fixtures/xml/signNFe_modelo_55.xml');
+        $tools = $this->buildToolsForEpec('SP');
+        $tools->model(55);
+
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('não é da mesma UF');
+
+        $tools->sefazEPEC($xml);
+    }
+
+    public function test_sefaz_epec_builds_request_and_updates_xml_by_reference(): void
+    {
+        $xml = file_get_contents(__DIR__ . '/fixtures/xml/signNFe_modelo_55.xml');
+        $tools = $this->buildToolsForEpec('RS');
+        $tools->model(55);
+        $tools->getSoap()->setReturnValue('<retEnvEvento/>');
+
+        $response = $tools->sefazEPEC($xml);
+
+        $this->assertSame('<retEnvEvento/>', $response);
+        $this->assertStringContainsString('<Signature', $xml);
+        $this->assertStringContainsString('<tpEmis>4</tpEmis>', $xml);
+        $this->assertStringContainsString('<xJust>Falha tecnica para testes EPEC</xJust>', $xml);
+
+        $request = $tools->getRequest();
+        $this->assertStringContainsString('<tpEvento>110140</tpEvento>', $request);
+        $this->assertStringContainsString('<descEvento>EPEC</descEvento>', $request);
+        $this->assertStringContainsString('<cOrgaoAutor>43</cOrgaoAutor>', $request);
+        $this->assertStringContainsString('<CNPJ>58716523000119</CNPJ>', $request);
+        $this->assertStringContainsString('<IE>112006603110</IE>', $request);
+        $this->assertStringContainsString('<verAplic>fernando</verAplic>', $request);
+        $this->assertStringContainsString('<vNF>500.00</vNF>', $request);
+        $this->assertStringContainsString('<vICMS>0.00</vICMS>', $request);
+        $this->assertStringContainsString('<vST>0.00</vST>', $request);
+    }
+
+    public function test_sefaz_epec_accepts_custom_ver_aplic(): void
+    {
+        $xml = file_get_contents(__DIR__ . '/fixtures/xml/signNFe_modelo_55.xml');
+        $tools = $this->buildToolsForEpec('RS');
+        $tools->model(55);
+        $tools->getSoap()->setReturnValue('<retEnvEvento/>');
+
+        $tools->sefazEPEC($xml, 'CustomApp_9.9');
+
+        $request = $tools->getRequest();
+        $this->assertStringContainsString('<verAplic>CustomApp_9.9</verAplic>', $request);
+    }
+
+    public function test_sefaz_validate_returns_true_when_protocol_matches(): void
+    {
+        $nfe = file_get_contents(__DIR__ . '/fixtures/xml/nfe_layout4_com_prot.xml');
+        $response = file_get_contents(__DIR__ . '/fixtures/xml/nfe_layout4_com_prot.xml');
+
+        $tools = $this->tools;
+        $tools->model(55);
+        $tools->getSoap()->setReturnValue($response);
+
+        $this->assertTrue($tools->sefazValidate($nfe));
+    }
+
+    public function test_sefaz_validate_returns_false_when_protocol_data_differs(): void
+    {
+        $nfe = file_get_contents(__DIR__ . '/fixtures/xml/nfe_layout4_com_prot.xml');
+        $response = '<?xml version="1.0" encoding="UTF-8"?>'
+            . '<retConsSitNFe xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00">'
+            . '<protNFe versao="4.00"><infProt>'
+            . '<chNFe>43180906929383000163550010000000261000010301</chNFe>'
+            . '<nProt>143180006932433</nProt>'
+            . '<digVal>digest-diferente</digVal>'
+            . '</infProt></protNFe>'
+            . '</retConsSitNFe>';
+
+        $tools = $this->tools;
+        $tools->model(55);
+        $tools->getSoap()->setReturnValue($response);
+
+        $this->assertFalse($tools->sefazValidate($nfe));
+    }
+
+    public function test_sefaz_validate_throws_with_xmotivo_when_response_has_no_protocol(): void
+    {
+        $nfe = file_get_contents(__DIR__ . '/fixtures/xml/nfe_layout4_com_prot.xml');
+        $response = '<retConsSitNFe><xMotivo>Documento nao localizado</xMotivo></retConsSitNFe>';
+
+        $tools = $this->tools;
+        $tools->model(55);
+        $tools->getSoap()->setReturnValue($response);
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Validacao NF-e: Documento nao localizado');
+
+        $tools->sefazValidate($nfe);
+    }
+
+    public function test_sefaz_validate_throws_when_response_has_no_protocol_and_no_xmotivo(): void
+    {
+        $nfe = file_get_contents(__DIR__ . '/fixtures/xml/nfe_layout4_com_prot.xml');
+        $response = '<retConsSitNFe/>';
+
+        $tools = $this->tools;
+        $tools->model(55);
+        $tools->getSoap()->setReturnValue($response);
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('O documento de resposta nao contem o node "protNFe".');
+
+        $tools->sefazValidate($nfe);
     }
 
     public function test_sefazCCe(): void
@@ -812,6 +985,46 @@ class ToolsTest extends NFeTestCase
         return $dom->ownerDocument->saveXML($dom->ownerDocument->documentElement);
     }
 
+    protected function buildToolsForUfAndContingency(string $uf, ?string $contingencyJson = null): ToolsFake
+    {
+        $config = json_decode($this->configJson, true);
+        $config['siglaUF'] = $uf;
+
+        return new ToolsFake(
+            json_encode($config),
+            Certificate::readPfx($this->contentpfx, $this->passwordpfx),
+            $contingencyJson ? new Contingency($contingencyJson) : null
+        );
+    }
+
+    protected function buildEpecContingencyJson(): string
+    {
+        return json_encode([
+            'motive' => 'Falha tecnica para testes EPEC',
+            'timestamp' => 1715600000,
+            'type' => 'EPEC',
+            'tpEmis' => 4,
+        ]);
+    }
+
+    protected function buildToolsForEpec(string $uf): ToolsFake
+    {
+        $config = json_decode($this->configJson, true);
+        $config['siglaUF'] = $uf;
+        $certificate = Certificate::readPfx($this->contentpfx, $this->passwordpfx);
+        $contingency = new Contingency($this->buildEpecContingencyJson());
+
+        return new class (json_encode($config), $certificate, $contingency) extends ToolsFake {
+            protected function checkContingencyForWebServices(string $service)
+            {
+                if (($this->contingency->type ?? '') === 'EPEC') {
+                    return;
+                }
+                parent::checkContingencyForWebServices($service);
+            }
+        };
+    }
+
     public function ufProvider(): array
     {
         return [
@@ -842,6 +1055,14 @@ class ToolsTest extends NFeTestCase
             ["SC"],
             ["SP"],
             ["TO"],
+        ];
+    }
+
+    public static function signNFeXmlProvider(): array
+    {
+        return [
+            'modelo 55' => ['signNFe_modelo_55.xml', 55, false],
+            'modelo 65' => ['signNFe_modelo_65.xml', 65, true],
         ];
     }
 }
