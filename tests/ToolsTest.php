@@ -175,6 +175,38 @@ class ToolsTest extends NFeTestCase
         $this->assertEquals($request, $tools->getRequest());
     }
 
+    /**
+     * @dataProvider signNFeXmlProvider
+     */
+    public function test_sign_nfe_with_fixture_xmls(string $fixture, int $model, bool $expectInfNFeSupl): void
+    {
+        $xml = file_get_contents(__DIR__ . '/fixtures/xml/' . $fixture);
+        $this->assertNotFalse($xml);
+
+        $inputDom = new \DOMDocument();
+        $inputDom->loadXML($xml);
+        $this->assertSame(0, $inputDom->getElementsByTagName('Signature')->length);
+        $this->assertSame($model, (int) $inputDom->getElementsByTagName('mod')->item(0)->nodeValue);
+
+        $this->tools->model($model);
+        $signed = $this->tools->signNFe($xml);
+
+        $signedDom = new \DOMDocument();
+        $signedDom->loadXML($signed);
+
+        $this->assertSame(1, $signedDom->getElementsByTagName('Signature')->length);
+        $this->assertSame($model, (int) $signedDom->getElementsByTagName('mod')->item(0)->nodeValue);
+
+        if ($expectInfNFeSupl) {
+            $this->assertSame(1, $signedDom->getElementsByTagName('infNFeSupl')->length);
+            $this->assertNotEmpty($signedDom->getElementsByTagName('qrCode')->item(0)?->nodeValue);
+            $this->assertNotEmpty($signedDom->getElementsByTagName('urlChave')->item(0)?->nodeValue);
+            return;
+        }
+
+        $this->assertSame(0, $signedDom->getElementsByTagName('infNFeSupl')->length);
+    }
+
     public function test_sefaz_inutiliza(): void
     {
         $this->tools->sefazInutiliza(1, 1, 10, 'Testando Inutilização', 1, '22');
@@ -842,6 +874,14 @@ class ToolsTest extends NFeTestCase
             ["SC"],
             ["SP"],
             ["TO"],
+        ];
+    }
+
+    public static function signNFeXmlProvider(): array
+    {
+        return [
+            'modelo 55' => ['signNFe_modelo_55.xml', 55, false],
+            'modelo 65' => ['signNFe_modelo_65.xml', 65, true],
         ];
     }
 }
