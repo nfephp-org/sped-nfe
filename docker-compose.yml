@@ -1,0 +1,20 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+      args:
+        USER_ID: ${UID:-1000}
+        GROUP_ID: ${GID:-1000}
+    container_name: sped-nfe-dev
+    working_dir: /var/www/sped-nfe
+    volumes:
+      - ./:/var/www/sped-nfe
+      - composer-cache:/tmp/composer/cache
+      - ./docker/php/conf.d/custom.ini:/usr/local/etc/php/conf.d/99-custom.ini:ro
+    tty: true
+    stdin_open: true
+    command: bash
+
+volumes:
+  composer-cache:
