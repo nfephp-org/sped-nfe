@@ -1329,26 +1329,6 @@ final class MakeDev
     }
 
     /**
-     * Adjust the text size to the maximum acceptable size
-     * @param string|null $string
-     * @param int $max
-     * @return string|null
-     */
-    protected function adjustingStrings($string, $max = 0): ?string
-    {
-        if (is_null($string)) {
-            return null;
-        }
-        if (empty($string)) {
-            return '';
-        }
-        if ($max === 0) {
-            return $string;
-        }
-        return substr($string, 0, $max);
-    }
-
-    /**
      * Formatação numerica condicional
      * @param string|float|int|null $value
      * @param int $decimal

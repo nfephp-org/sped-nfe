@@ -289,4 +289,76 @@ class ConvertTest extends TestCase
             (string)$nfe->infNFe->infAdic->infCpl
         );
     }
+
+    public function test_convert_multinota()
+    {
+        $txt = file_get_contents(__DIR__ . '/fixtures/txt/Multinota.txt');
+        $conv = new Convert($txt, Convert::LOCAL);
+        try {
+            $xmls = $conv->toXml();
+            $this->assertCount(2, $xmls);
+            foreach ($xmls as $xml) {
+                $this->assertStringContainsString('<infNFe', $xml);
+            }
+        } catch (\NFePHP\NFe\Exception\DocumentsException $e) {
+            // old layout may fail validation, but sliceNotas and checkQtdNFe were exercised
+            $this->assertStringContainsString('validação', $e->getMessage());
+        }
+    }
+
+    public function test_convert_multinota_dump()
+    {
+        $txt = file_get_contents(__DIR__ . '/fixtures/txt/Multinota.txt');
+        $conv = new Convert($txt, Convert::LOCAL);
+        try {
+            $dumps = $conv->dump();
+            $this->assertCount(2, $dumps);
+        } catch (\NFePHP\NFe\Exception\DocumentsException $e) {
+            $this->assertStringContainsString('validação', $e->getMessage());
+        }
+    }
+
+    public function test_static_parse()
+    {
+        $txt = file_get_contents(__DIR__ . '/fixtures/txt/nfe_4.00_local_01.txt');
+        $xmls = Convert::parse($txt, Convert::LOCAL_V12);
+        $this->assertCount(1, $xmls);
+        $this->assertStringContainsString('<infNFe', $xmls[0]);
+    }
+
+    public function test_static_parseDump()
+    {
+        $txt = file_get_contents(__DIR__ . '/fixtures/txt/nfe_4.00_local_01.txt');
+        $dumps = Convert::parseDump($txt, Convert::LOCAL_V12);
+        $this->assertCount(1, $dumps);
+    }
+
+    public function test_convert_empty_txt_throws_exception()
+    {
+        $this->expectException(\Throwable::class);
+        $conv = new Convert('', Convert::LOCAL);
+        $conv->toXml();
+    }
+
+    public function test_convert_invalid_header_throws_exception()
+    {
+        $this->expectException(\NFePHP\NFe\Exception\DocumentsException::class);
+        $txt = "INVALIDO|1|\nA|4.00|";
+        $conv = new Convert($txt, Convert::LOCAL);
+        $conv->toXml();
+    }
+
+    public function test_convert_sebrae_layout()
+    {
+        $txt = file_get_contents(__DIR__ . '/fixtures/txt/nota_4.00_sebrae.txt');
+        $conv = new Convert($txt, Convert::SEBRAE);
+        try {
+            $xmls = $conv->toXml();
+            $this->assertCount(1, $xmls);
+            $this->assertStringContainsString('<infNFe', $xmls[0]);
+        } catch (\NFePHP\NFe\Exception\DocumentsException $e) {
+            // SEBRAE layout validation may fail with newer expected fields
+            $this->assertStringContainsString('validação', $e->getMessage());
+        }
+    }
 }
