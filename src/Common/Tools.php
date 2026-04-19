@@ -364,7 +364,7 @@ class Tools
      * @return string signed NFe xml
      * @throws RuntimeException
      */
-    public function signNFe(string $xml): string
+    public function signNFe(string $xml, int $validXSD = 1): string
     {
         if (empty($xml)) {
             throw new InvalidArgumentException('O argumento xml passado para ser assinado está vazio.');
@@ -392,7 +392,10 @@ class Tools
             $signed = $this->addQRCode($dom);
         }
         //exception will be throw if NFe is not valid
-        $this->isValid($this->versao, $signed, 'nfe');
+        if ($validXSD == 1) {
+            $this->isValid($this->versao, $signed, 'nfe');
+        }
+
         return $signed;
     }
 
