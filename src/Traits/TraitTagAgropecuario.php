@@ -44,8 +44,8 @@ trait TraitTagAgropecuario
         $this->dom->addChild(
             $guia,
             "UFGuia",
-            !empty($std->UFGuia) ? $std->UFGuia : null,
-            false,
+            $std->UFGuia,
+            true,
             "$identificador UF de emissão"
         );
         $this->dom->addChild(

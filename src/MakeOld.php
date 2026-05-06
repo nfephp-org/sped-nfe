@@ -7858,8 +7858,8 @@ class MakeOld
         $this->dom->addChild(
             $guia,
             "UFGuia",
-            !empty($std->UFGuia) ? $std->UFGuia : null,
-            false,
+            $std->UFGuia,
+            true,
             "UF de emissão"
         );
         $this->dom->addChild(
