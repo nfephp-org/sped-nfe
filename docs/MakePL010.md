@@ -384,6 +384,7 @@ $ide = [
         //03 - Retorno por recusa total na entrega ou por não localização do destinatário na tentativa de entrega;
         //04 - Redução de valores;
         //05 - Transferência de crédito na sucessão;
+        //06 - Retorno por recusa parcial de entrega;
     'indFinal' => 0, // OBRIGATÓRIO 0 Normal; 1 Consumidor final;
     'indPres' => 9, // OBRIGATÓRIO
         //1 Operação presencial;
