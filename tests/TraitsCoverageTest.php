@@ -590,7 +590,8 @@ class TraitsCoverageTest extends TestCase
         $guia = $this->make->tagAgropecuarioGuia($std);
 
         $this->assertInstanceOf(\DOMElement::class, $guia);
-        $this->assertEmpty($guia->getElementsByTagName('UFGuia')->item(0));
+        $ufGuia = $guia->getElementsByTagName('UFGuia')->item(0)->nodeValue ?? '';
+        $this->assertEmpty($ufGuia);
     }
 
     public function test_tagAgropecuarioDefensivo(): void

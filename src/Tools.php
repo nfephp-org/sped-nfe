@@ -157,7 +157,7 @@ class Tools extends ToolsCommon
         if (empty($chave)) {
             throw new InvalidArgumentException('Consulta chave: a chave esta vazia!');
         }
-        if (strlen($chave) != 44 || !is_numeric($chave)) {
+        if (strlen($chave) != 44) {
             throw new InvalidArgumentException("Consulta chave: chave \"$chave\" invalida!");
         }
         $uf = UFList::getUFByCode((int)substr($chave, 0, 2));

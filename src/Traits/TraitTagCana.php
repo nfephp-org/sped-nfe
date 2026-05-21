@@ -129,6 +129,7 @@ trait TraitTagCana
     /**
      * Grupo Deduções – Taxas e Contribuições ZC10 pai ZC01
      * tag NFe/infNFe/cana/deduc (opcional)
+     * A partir de 06/06/2026 não será mais usado DEDUC
      * @param stdClass $std
      * @return DOMElement
      * @throws DOMException

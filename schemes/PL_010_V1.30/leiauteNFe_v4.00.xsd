@@ -209,7 +209,13 @@ Campo preenchido somente quando “indPres = 5 (Operação presencial, fora do e
 									</xs:element>
 									<xs:element name="tpNFDebito" type="TTpNFDebito" minOccurs="0">
 										<xs:annotation>
-											<xs:documentation>Tipo de Nota de Débito</xs:documentation>
+											<xs:documentation>Tipo de Nota de Débito:
+01=Transferência de créditos para Cooperativas; 
+02=Anulação de Crédito por Saídas Imunes/Isentas; 
+03=Débitos de notas fiscais não processadas na apuração; 
+04=Multa e juros; 
+05=Transferência de crédito de sucessão.
+											</xs:documentation>
 										</xs:annotation>
 									</xs:element>
 									<xs:element name="tpNFCredito" type="TTpNFCredito" minOccurs="0">
@@ -501,7 +507,7 @@ Preencher com &quot;2B&quot;, quando se tratar de Cupom Fiscal emitido por máqu
 										</xs:annotation>
 										<xs:complexType>
 											<xs:sequence>
-												<xs:element name="refNFe" type="TChNFe" minOccurs="1" maxOccurs="99">
+												<xs:element name="refNFe" type="TChNFe" maxOccurs="99">
 													<xs:annotation>
 														<xs:documentation>Chave de acesso da NF-e de antecipação de pagamento</xs:documentation>
 													</xs:annotation>
@@ -2555,13 +2561,15 @@ ambiente.</xs:documentation>
 																					</xs:element>
 																					<xs:element name="motDesICMS">
 																						<xs:annotation>
-																							<xs:documentation>Motivo da desoneração do ICMS:3-Uso na agropecuária;9-Outros;12-Fomento agropecuário</xs:documentation>
+																							<xs:documentation>Motivo da desoneração do ICMS:3-Uso na agropecuária;9-Outros; 10=Deficiente Condutor (Convênio ICMS 38/12); 11=Deficiente Não Condutor (Convênio ICMS 38/12);  12-Fomento agropecuário</xs:documentation>
 																						</xs:annotation>
 																						<xs:simpleType>
 																							<xs:restriction base="xs:string">
 																								<xs:whiteSpace value="preserve"/>
 																								<xs:enumeration value="3"/>
 																								<xs:enumeration value="9"/>
+																								<xs:enumeration value="10"/>
+																								<xs:enumeration value="11"/>
 																								<xs:enumeration value="12"/>
 																							</xs:restriction>
 																						</xs:simpleType>
@@ -3395,11 +3403,39 @@ Informar o motivo da desoneração:
 																							<xs:documentation>Percentual de redução da BC</xs:documentation>
 																						</xs:annotation>
 																					</xs:element>
+																					<xs:element name="cBenefRBC" minOccurs="0">
+																						<xs:annotation>
+																							<xs:documentation>Código de Benefício Fiscal na UF aplicado ao item quando houver RBC.</xs:documentation>
+																						</xs:annotation>
+																						<xs:simpleType>
+																							<xs:restriction base="xs:string">
+																								<xs:whiteSpace value="preserve"/>
+																								<xs:pattern value="[!-ÿ]{8}|[!-ÿ]{10}"/>
+																							</xs:restriction>
+																						</xs:simpleType>
+																					</xs:element>
 																					<xs:element name="pICMS" type="TDec_0302a04">
 																						<xs:annotation>
 																							<xs:documentation>Alíquota do ICMS</xs:documentation>
 																						</xs:annotation>
 																					</xs:element>
+																					<xs:sequence minOccurs="0">
+																						<xs:element name="vICMSOp" type="TDec_1302">
+																							<xs:annotation>
+																								<xs:documentation>Valor do ICMS da Operação</xs:documentation>
+																							</xs:annotation>
+																						</xs:element>
+																						<xs:element name="pDif" type="TDec_0302a04Max100">
+																							<xs:annotation>
+																								<xs:documentation>Percentual do diferemento</xs:documentation>
+																							</xs:annotation>
+																						</xs:element>
+																						<xs:element name="vICMSDif" type="TDec_1302">
+																							<xs:annotation>
+																								<xs:documentation>Valor do ICMS da diferido</xs:documentation>
+																							</xs:annotation>
+																						</xs:element>
+																					</xs:sequence>
 																					<xs:element name="vICMS" type="TDec_1302">
 																						<xs:annotation>
 																							<xs:documentation>Valor do ICMS</xs:documentation>
@@ -3419,6 +3455,23 @@ Informar o motivo da desoneração:
 																						<xs:element name="vFCP" type="TDec_1302">
 																							<xs:annotation>
 																								<xs:documentation>Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP).</xs:documentation>
+																							</xs:annotation>
+																						</xs:element>
+																					</xs:sequence>
+																					<xs:sequence minOccurs="0">
+																						<xs:element name="pFCPDif" type="TDec_0302a04Opc">
+																							<xs:annotation>
+																								<xs:documentation>Percentual do diferimento do ICMS relativo ao Fundo de Combate à Pobreza (FCP).</xs:documentation>
+																							</xs:annotation>
+																						</xs:element>
+																						<xs:element name="vFCPDif" type="TDec_1302">
+																							<xs:annotation>
+																								<xs:documentation>Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP) diferido.</xs:documentation>
+																							</xs:annotation>
+																						</xs:element>
+																						<xs:element name="vFCPEfet" type="TDec_1302" minOccurs="0">
+																							<xs:annotation>
+																								<xs:documentation>Valor efetivo do ICMS relativo ao Fundo de Combate à Pobreza (FCP).</xs:documentation>
 																							</xs:annotation>
 																						</xs:element>
 																					</xs:sequence>
@@ -3569,12 +3622,14 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 																					<xs:annotation>
 																						<xs:documentation>Tributação pelo ICMS 
 10 - Tributada e com cobrança do ICMS por substituição tributária;
+20 – Redução de base de cálculo
 90 – Outros.</xs:documentation>
 																					</xs:annotation>
 																					<xs:simpleType>
 																						<xs:restriction base="xs:string">
 																							<xs:whiteSpace value="preserve"/>
 																							<xs:enumeration value="10"/>
+																							<xs:enumeration value="20"/>
 																							<xs:enumeration value="90"/>
 																						</xs:restriction>
 																					</xs:simpleType>
@@ -3693,6 +3748,43 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 																						<xs:documentation>Sigla da UF para qual é devido o ICMS ST da operação.</xs:documentation>
 																					</xs:annotation>
 																				</xs:element>
+																				<xs:sequence minOccurs="0">
+																					<xs:annotation>
+																						<xs:documentation>Grupo desoneração</xs:documentation>
+																					</xs:annotation>
+																					<xs:element name="vICMSDeson" type="TDec_1302">
+																						<xs:annotation>
+																							<xs:documentation>Valor do ICMS de desoneração</xs:documentation>
+																						</xs:annotation>
+																					</xs:element>
+																					<xs:element name="motDesICMS">
+																						<xs:annotation>
+																							<xs:documentation>Motivo da desoneração do ICMS:9-Outros;10=Deficiente Condutor (Convênio ICMS 38/12) 11=Deficiente Não Condutor (Convênio ICMS 38/12)</xs:documentation>
+																						</xs:annotation>
+																						<xs:simpleType>
+																							<xs:restriction base="xs:string">
+																								<xs:whiteSpace value="preserve"/>
+																								<xs:enumeration value="9"/>
+																								<xs:enumeration value="10"/>
+																								<xs:enumeration value="11"/>
+																							</xs:restriction>
+																						</xs:simpleType>
+																					</xs:element>
+																					<xs:element name="indDeduzDeson" minOccurs="0">
+																						<xs:annotation>
+																							<xs:documentation>Indica se o valor do ICMS desonerado (vICMSDeson) deduz do valor do item (vProd):
+0=Valor do ICMS desonerado (vICMSDeson) não deduz do valor do item (vProd) / total da NF-e;
+1=Valor do ICMS desonerado (vICMSDeson) deduz do valor do item (vProd) / total da NF-e.</xs:documentation>
+																						</xs:annotation>
+																						<xs:simpleType>
+																							<xs:restriction base="xs:string">
+																								<xs:whiteSpace value="preserve"/>
+																								<xs:enumeration value="0"/>
+																								<xs:enumeration value="1"/>
+																							</xs:restriction>
+																						</xs:simpleType>
+																					</xs:element>
+																				</xs:sequence>
 																			</xs:sequence>
 																		</xs:complexType>
 																	</xs:element>
@@ -6518,16 +6610,16 @@ tipo de ato concessório:
 									<xs:whiteSpace value="preserve"/>
 									<xs:minLength value="60"/>
 									<xs:maxLength value="1000"/>
-									<!--QRCODE V1-->
 									<xs:pattern value="((HTTPS?|https?)://.*\?chNFe=[0-9]{44}&amp;nVersao=100&amp;tpAmb=[1-2](&amp;cDest=([A-Za-z0-9.:+-/)(]{0}|[A-Za-z0-9.:+-/)(]{5,20})?)?&amp;dhEmi=[A-Fa-f0-9]{50}&amp;vNF=(0|0\.[0-9]{2}|[1-9]{1}[0-9]{0,12}(\.[0-9]{2})?)&amp;vICMS=(0|0\.[0-9]{2}|[1-9]{1}[0-9]{0,12}(\.[0-9]{2})?)&amp;digVal=[A-Fa-f0-9]{56}&amp;cIdToken=[0-9]{6}&amp;cHashQRCode=[A-Fa-f0-9]{40})"/>
-									<!--QRCODE V2 ONLINE-->
 									<xs:pattern value="((HTTPS?|https?)://.*\?p=([0-9]{34}(1|3|4)[0-9]{9})\|[2]\|[1-2]\|(0|[1-9]{1}([0-9]{1,5})?)\|[A-Fa-f0-9]{40})"/>
-									<!--QRCODE V2 OFFLINE-->
 									<xs:pattern value="((HTTPS?|https?)://.*\?p=([0-9]{34}9[0-9]{9})\|[2]\|[1-2]\|([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-1]{1})\|(0|0\.[0-9]{2}|[1-9]{1}[0-9]{0,12}(\.[0-9]{2})?)\|[A-Fa-f0-9]{56}\|(0|[1-9]{1}([0-9]{1,5})?)\|[A-Fa-f0-9]{40})"/>
-									<!--QRCODE V3 ONLINE-->
 									<xs:pattern value="((HTTPS?|https?)://.*\?p=([0-9]{34}(1|3|4)[0-9]{9})\|[3]\|[1-2])"/>
-									<!--QRCODE V3 OFFLINE-->
 									<xs:pattern value="((HTTPS?|https?)://.*\?p=([0-9]{34}(9)[0-9]{9})\|[3]\|[1-2]\|([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-1]{1})\|(0|0\.[0-9]{2}|[1-9]{1}[0-9]{0,12}(\.[0-9]{2})?)\|((1|2|3)?)\|(([0-9]{3,14})?)\|([a-zA-Z0-9+/]+[=]{0,2}))"/>
+									<!--QRCODE V1-->
+									<!--QRCODE V2 ONLINE-->
+									<!--QRCODE V2 OFFLINE-->
+									<!--QRCODE V3 ONLINE-->
+									<!--QRCODE V3 OFFLINE-->
 								</xs:restriction>
 							</xs:simpleType>
 						</xs:element>
