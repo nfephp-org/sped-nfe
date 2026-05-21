@@ -16,6 +16,7 @@ Biblioteca para geração e comunicação das NFe com as SEFAZ autorizadoras, e 
 - Schema PL_010v1.10b de 09/06/2025
 - Nota Técnica 2025.002-RTC v.1.20 Reforma Tributária do Consumo – Adequações NF-e / NFC-e
 - Schema PL_010v1.20b de 30/07/2025
+- Schema PL_010C v1.30 
 
 
 ![PHP Supported Version][ico-php]
