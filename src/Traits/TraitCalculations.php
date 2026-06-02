@@ -306,7 +306,7 @@ trait TraitCalculations
             $nNF = $ide->getElementsByTagName('nNF')->item(0)->nodeValue;
             $tpEmis = $ide->getElementsByTagName('tpEmis')->item(0)->nodeValue;
             $cNF = $ide->getElementsByTagName('cNF')->item(0)->nodeValue;
-            $chave = str_replace('NFe', '', $infNFe->getAttribute("Id"));
+            $chave = Keys::extractAccessKey($infNFe->getAttribute("Id"));
             $dt = new \DateTime($dhEmi);
             $infRespTec = $dom->getElementsByTagName("infRespTec")->item(0);
             $chaveMontada = Keys::build(
