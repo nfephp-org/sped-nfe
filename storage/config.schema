@@ -19,7 +19,7 @@
         "cnpj": {
             "required": true,
             "type": "string",
-            "pattern": "^[0-9]{11,14}"
+            "pattern": "^[A-Z0-9]{11,14}"
         },
         "siglaUF": {
             "required": true,
