@@ -128,15 +128,15 @@ class SAE
      * Downloads the complete XML of a NFC-e (including its events) given an access key.
      * The CNPJ in the access key must match the CNPJ in the digital certificate.
      *
-     * @param string $chNFCe 44-digit NFC-e access key
+     * @param string $chNFCe 44-character alphanumeric NFC-e access key
      * @return string SOAP response XML
      * @throws InvalidArgumentException
      */
     public function downloadXML(string $chNFCe): string
     {
-        if (strlen($chNFCe) !== 44 || !ctype_digit($chNFCe)) {
+        if (strlen($chNFCe) !== 44 || !ctype_alnum($chNFCe)) {
             throw new InvalidArgumentException(
-                'Chave de acesso inválida. Deve conter exatamente 44 dígitos numéricos.'
+                'Chave de acesso inválida. Deve conter exatamente 44 caracteres alfanuméricos.'
             );
         }
 

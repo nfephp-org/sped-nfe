@@ -99,7 +99,7 @@ Baixa o XML completo de uma NFC-e (dados da nota e eventos associados, como canc
 
 | Parâmetro | Tipo | Descrição |
 |-----------|------|-----------|
-| `$chNFCe` | `string` | Chave de acesso com 44 dígitos numéricos |
+| `$chNFCe` | `string` | Chave de acesso com 44 caracteres alfanuméricos |
 
 **Retorno:** XML de resposta da SEFAZ (`retNfceDownloadXML`). Quando bem-sucedido (`cStat=200`), o elemento `<proc>` contém:
 - `<nfeProc>` — XML da NFC-e autorizada com protocolo
@@ -116,7 +116,7 @@ Baixa o XML completo de uma NFC-e (dados da nota e eventos associados, como canc
 | `207` | Data de emissão anterior ao limite máximo de dias |
 | `656` | Consumo indevido — limite de requisições excedido |
 
-> Lança `InvalidArgumentException` se a chave não tiver exatamente 44 dígitos numéricos.
+> Lança `InvalidArgumentException` se a chave não tiver exatamente 44 caracteres alfanuméricos.
 
 ---
 

@@ -121,10 +121,18 @@ class SAETest extends NFeTestCase
         $this->sae->downloadXML('3524019362305700012865001000000240171726812099'); // 46 digits
     }
 
-    public function testDownloadXMLThrowsOnAlphanumericKey(): void
+    public function testDownloadXMLAcceptsAlphanumericKey(): void
+    {
+        $this->soapFake->setReturnValue('<retNfceDownloadXML/>');
+        $chave = '3524019362305700012865001000000240171726812A'; // alphanumeric (CNPJ alfanumérico)
+        $this->sae->downloadXML($chave);
+        $this->assertStringContainsString("<chNFCe>$chave</chNFCe>", $this->sae->lastRequest);
+    }
+
+    public function testDownloadXMLThrowsOnSpecialCharKey(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->sae->downloadXML('3524019362305700012865001000000240171726812X'); // non-numeric
+        $this->sae->downloadXML('3524019362305700012865001000000240171726812!'); // caractere especial
     }
 
     public function testCheckSoapCreatesSoapCurlWhenNotInjected(): void
