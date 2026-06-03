@@ -161,8 +161,7 @@ class SAE
     {
         $namespace = "{$this->config->namespace}/wsdl/{$serv->operation}";
         $action = "\"$namespace/{$serv->method}\"";
-        $request = "<nfceDadosMsg xmlns=\"$namespace\">$content</nfceDadosMsg>";
-        $body = "<{$serv->method} xmlns=\"$namespace\">$request</{$serv->method}>";
+        $body = "<nfeDadosMsg xmlns=\"$namespace\">$content</nfeDadosMsg>";
 
         $this->checkSoap();
         $namespaces = [
