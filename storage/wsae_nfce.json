@@ -1,0 +1,18 @@
+{
+    "SP": {
+        "versao": "1.00",
+        "namespace": "http://www.portalfiscal.inf.br/nfe",
+        "NFCeListagemChaves": {
+            "method": "nfceListagemChaves",
+            "operation": "NFCeListagemChaves",
+            "homologacao": "https://homologacao.nfce.fazenda.sp.gov.br/ws/NFCeListagemChaves.asmx",
+            "producao": "https://nfce.fazenda.sp.gov.br/ws/NFCeListagemChaves.asmx"
+        },
+        "NFCeDownloadXML": {
+            "method": "nfceDownloadXML",
+            "operation": "NFCeDownloadXML",
+            "homologacao": "https://homologacao.nfce.fazenda.sp.gov.br/ws/NFCeDownloadXML.asmx",
+            "producao": "https://nfce.fazenda.sp.gov.br/ws/NFCeDownloadXML.asmx"
+        }
+    }
+}
