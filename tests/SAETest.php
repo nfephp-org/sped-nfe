@@ -126,4 +126,44 @@ class SAETest extends NFeTestCase
         $this->expectException(InvalidArgumentException::class);
         $this->sae->downloadXML('3524019362305700012865001000000240171726812X'); // non-numeric
     }
+
+    public function testCheckSoapCreatesSoapCurlWhenNotInjected(): void
+    {
+        $sae = new SAE($this->certificate, 'SP', SAE::TPAMB_HOMOLOGACAO);
+
+        $ref = new \ReflectionClass($sae);
+        $method = $ref->getMethod('checkSoap');
+        $method->setAccessible(true);
+        $method->invoke($sae);
+
+        $prop = $ref->getProperty('soap');
+        $prop->setAccessible(true);
+        $this->assertInstanceOf(\NFePHP\Common\Soap\SoapCurl::class, $prop->getValue($sae));
+    }
+
+    public function testLoadConfigThrowsWhenFileNotFound(): void
+    {
+        $sae = new SAE($this->certificate, 'SP', SAE::TPAMB_HOMOLOGACAO);
+
+        $ref = new \ReflectionClass($sae);
+        $prop = $ref->getProperty('pathwsfiles');
+        $prop->setAccessible(true);
+        $prop->setValue($sae, '/nonexistent/path/');
+
+        $method = $ref->getMethod('loadConfig');
+        $method->setAccessible(true);
+
+        $this->expectException(\RuntimeException::class);
+        $method->invoke($sae);
+    }
+
+    public function testServicioThrowsForUnknownService(): void
+    {
+        $ref = new \ReflectionClass($this->sae);
+        $method = $ref->getMethod('servico');
+        $method->setAccessible(true);
+
+        $this->expectException(InvalidArgumentException::class);
+        $method->invoke($this->sae, 'ServicoInexistente');
+    }
 }
