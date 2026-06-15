@@ -76,7 +76,7 @@
 					<xs:attribute name="Id" use="required">
 						<xs:simpleType>
 							<xs:restriction base="xs:ID">
-								<xs:pattern value="ID[0-9]{41}"/>
+								<xs:pattern value="ID[0-9]{4}[0-9A-Z]{12}[0-9]{25}"/>
 							</xs:restriction>
 						</xs:simpleType>
 					</xs:attribute>
