@@ -315,7 +315,7 @@
 						</xs:annotation>
 						<xs:simpleType>
 							<xs:restriction base="xs:ID">
-								<xs:pattern value="ID[0-9]{52}"/>
+								<xs:pattern value="ID[0-9]{12}[0-9A-Z]{12}[0-9]{28}"/>
 							</xs:restriction>
 						</xs:simpleType>
 					</xs:attribute>
