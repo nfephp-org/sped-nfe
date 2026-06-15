@@ -344,27 +344,27 @@
 	</xs:simpleType>
 	<xs:simpleType name="Tpais">
 		<xs:annotation>
-			<xs:documentation>Tipo Código do Pais 
+			<xs:documentation>Tipo Código do Pais
 // PL_005d - 11/08/09
 eliminado:
- 4235-LEBUAN, ILHAS - 
+ 4235-LEBUAN, ILHAS -
 acrescentado:
 7200 SAO TOME E PRINCIPE, ILHAS,
-8958 ZONA DO CANAL DO PANAMA               
-9903 PROVISAO DE NAVIOS E AERONAVES        
-9946 A DESIGNAR                            
-9950 BANCOS CENTRAIS                       
+8958 ZONA DO CANAL DO PANAMA
+9903 PROVISAO DE NAVIOS E AERONAVES
+9946 A DESIGNAR
+9950 BANCOS CENTRAIS
 9970 ORGANIZACOES INTERNACIONAIS
  // PL_005b - 24/10/08
  // Acrescentado:
  4235 - LEBUAN,ILHAS
- 4885 - MAYOTTE (ILHAS FRANCESAS)  
+ 4885 - MAYOTTE (ILHAS FRANCESAS)
 // NT2011/004
  acrescentado a tabela de paises
 //PL_006t - 21/03/2014
 acrescentado:
 5780 - Palestina
-7600 - Sudão do Sul 
+7600 - Sudão do Sul
  </xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
@@ -786,7 +786,7 @@ acrescentado:
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
-			<xs:pattern value="[!-ÿ]{1}[ -ÿ]{0,}[!-ÿ]{1}|[!-ÿ]{1}"/>
+			<xs:pattern value="[!-ÿ]{1}[ -ÿ]*[!-ÿ]{1}|[!-ÿ]{1}"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TData">
