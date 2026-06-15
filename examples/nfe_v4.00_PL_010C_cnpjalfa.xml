@@ -1490,7 +1490,37 @@
       <vLiqFor>string</vLiqFor>
     </cana>
     <!--Optional:-->
+    <infRespTec>
+       <CNPJ>string</CNPJ>
+       <xContato>string</xContato>
+       <email>string</email>
+       <fone>string</fone>
+    </infRespTec>
     <!--Optional:-->
+    <agropecuario>
+        <!--You have a CHOICE of the next 2 items at this level-->
+        <!--1 to 20 repetitions:-->
+        <defensivo>
+            <nReceituario>string</nReceituario>
+            <CPFRespTec>string</CPFRespTec>
+        </defensivo>
+        <guiaTransito>
+            <tpGuia>6</tpGuia>
+            <UFGuia>CE</UFGuia>
+            <!--Optional:-->
+            <nGuia>string</nGuia>
+        </guiaTransito>
+    </agropecuario>
     <!--Optional:-->
+    <infPAA>
+       <CNPJPAA>string</CNPJPAA>
+       <PAASignature>
+           <SignatureValue>YXJpcw==</SignatureValue>
+           <RSAKeyValue>
+               <Modulus>aW5zdXBlcg==</Modulus>
+               <Exponent>bW9sZW1xdWU=</Exponent>
+           </RSAKeyValue>
+       </PAASignature>
+    </infPAA>
   </infNFe>
 </NFe>
