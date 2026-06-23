@@ -57,6 +57,8 @@ Choice entre refNFe ou refNFeSig ou refNF ou refNFP ou refCTe ou refECF
 
 [tag gCompraGov](#tag-gCompraGov) - Cria a tag gCompraGov, grupo de compra Governamental $${\color{red}(RTC)}$$ (opcional)
 
+[tag gPagAntecipado](#tag-gPagAntecipado) - Cria a tag gPagAntecipado. $${\color{red}(RTC)}$$ (opcional)
+
 [tag dest](#tag-dest) - Cria a tag dest, dados do destinatário (opcional)
 
 [tag enderDest](#tag-dest) - Cria a tag enderDest, endereçõ do destinatário (opcional)
@@ -606,6 +608,29 @@ $gcg = [
 ];
 $mk->taggCompraGov((object)$gcg);
 ```
+
+# tag gPagAntecipado 
+[Volta](#Métodos)
+
+### function taggPagAntecipado(object $std): DOMElement       (NOVO MÉTODO)
+Node PL_010 - Reforma Tributária - Grupo de Pagamento Antecipado - OPCIONAL
+
+> Esta tag somente será inserida quando schema usado for o PL_010
+
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$std = ['refNFe' => [
+            '12345678901234567890123456789012345678901234',
+            '23456789012345678901234567890123456789012345',
+            '34567890123456789012345678901234567890123456'
+       ]
+    ];
+$mk->taggPagAntecipado((object)$std);
+```
+
 
 # tag dest
 [Volta](#Métodos)
