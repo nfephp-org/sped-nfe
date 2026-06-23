@@ -788,7 +788,7 @@ try {
         'vICMSEfet',
         'vICMSSubstituto'
     ];
-    $mk->tagICMSSN((object)$ic);
+    //$mk->tagICMSSN((object)$ic);
 
     //ICMSST
     //Grupo de informação do ICMSST devido para a UF de destino, nas operações interestaduais de produtos que
@@ -1078,7 +1078,7 @@ try {
         'vCredPres' => 22.30, //OBRIGATÓRIO Valor do Crédito Presumido 13v2
         'vCredPresCondSus' => 0, //OBRIGATÓRIO Valor do Crédito Presumido em condição suspensiva 13v2
     ];
-    $mk->tagIBSCredPres((object) $cred);
+    //$mk->tagIBSCredPres((object) $cred);
 
     //############################## TAG <det/imposto/IBSCBS/gIBSCBS/gCBSCredPres> opcional ###########################
     $cred = [
@@ -1088,7 +1088,7 @@ try {
         'vCredPres' => 12.34, //OBRIGATÓRIO Valor do Crédito Presumido 13v2
         'vCredPresCondSus' => 9.00, //OBRIGATÓRIO Valor do Crédito Presumido em condição suspensiva 13v2
     ];
-    $mk->tagCBSCredPres((object) $cred);
+    //$mk->tagCBSCredPres((object) $cred);
 
     //############################## TAG <det/imposto/IBSCBS/gIBSCBSMono> opcional ####################################
     //Grupo de Informações do IBS e CBS em operações com imposto monofásico
@@ -1126,7 +1126,7 @@ try {
         'vIBS' => 200.00, //OBRIGATÓRIO Valor do IBS a ser transferido 13v2
         'vCBS' => 35.23, //OBRIGATÓRIO Valor do CBS a ser transferido 13v2
     ];
-    $mk->taggTranfCred((object) $transf);
+    //$mk->taggTranfCred((object) $transf);
 
     //############################## TAG <det/imposto/gCredPresIBSZFM> opcional ##########################################
     //Informações do crédito presumido de IBS para fornecimentos a partir da ZFM
