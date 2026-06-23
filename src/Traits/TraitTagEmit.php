@@ -32,7 +32,8 @@ trait TraitTagEmit
             'CNAE',
             'CRT',
             'CNPJ',
-            'CPF'
+            'CPF',
+            'ISUFEmit'
         ];
         $std = $this->equilizeParameters($std, $possible);
         $this->crt = $std->CRT;
@@ -109,6 +110,15 @@ trait TraitTagEmit
             true,
             $identificador . "Código de Regime Tributário do emitente"
         );
+        //@todo NT 2005.002 v1.50 esperar liberar no xsd
+        /*
+        $this->dom->addChild(
+            $this->emit,
+            "ISUFEmit",
+            $std->ISUFEmit,
+            false,
+            $identificador . "Inscrição do emitente da Suframa"
+        );*/
         return $this->emit;
     }
 
