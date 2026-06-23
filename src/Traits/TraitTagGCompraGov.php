@@ -11,6 +11,7 @@ use DOMException;
 /**
  * @property  Dom $dom
  * @property DOMElement $gCompraGov
+ * @property array $aRefDFeAnt
  * @method equilizeParameters($std, $possible)
  * @method conditionalNumberFormatting($value, $decimal = 2)
  */
@@ -26,7 +27,7 @@ trait TraitTagGCompraGov
      */
     public function taggCompraGov(stdClass $std): DOMElement
     {
-        $possible = ['tpEnteGov', 'pRedutor', 'tpOperGov'];
+        $possible = ['tpEnteGov', 'pRedutor', 'tpOperGov', 'refDFeAnt'];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = 'B31 gCompraGov -';
         $gc = $this->dom->createElement("gCompraGov");
@@ -53,5 +54,22 @@ trait TraitTagGCompraGov
         );
         $this->gCompraGov = $gc;
         return $gc;
+    }
+
+    /**
+     * Chave de acesso do documento fiscal anterior BB05 pai BB01
+     * tag NFe/infNFe/ide/gCompraGov/refDFeAnt (opcional) 0-99 repetições
+     * NT 2005.002 v1.50
+     * @param stdClass $std
+     * @return DOMElement
+     */
+    public function tagrefDFeAnt(stdClass $std): DOMElement
+    {
+        $possible = ['refDFeAnt'];
+        $std = $this->equilizeParameters($std, $possible);
+        $identificador = 'BB05 refDFeAnt -';
+        $refDFeAnt = $this->dom->createElement("refDFeAnt", $std->refDFeAnt);
+        $this->aRefDFeAnt[] = $refDFeAnt;
+        return $refDFeAnt;
     }
 }

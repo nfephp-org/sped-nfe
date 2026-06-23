@@ -38,6 +38,7 @@ use NFePHP\NFe\Traits\TraitTagDest;
 use NFePHP\NFe\Traits\TraitTagRetirada;
 use NFePHP\NFe\Traits\TraitTagTotal;
 use NFePHP\NFe\Traits\TraitTagTransp;
+use NFePHP\NFe\Traits\TraitTagGALCZFMCBS;
 use stdClass;
 use DOMElement;
 
@@ -78,6 +79,7 @@ final class Make
     use TraitTagAgropecuario;
     use TraitTagTotal;
     use TraitCalculations;
+    use TraitTagGALCZFMCBS;
 
     public const METHOD_CALCULATION_V1 = 1; //by values, calculate vItem and vNFTot
     public const METHOD_CALCULATION_V2 = 2; //by tags, calculate vItem and vNFTot
@@ -193,6 +195,9 @@ final class Make
     protected array $aEncerrante = [];
     protected array $aOrigComb = [];
     protected array $aAgropecuarioDefensivo = [];
+    protected array $aGPagAntecipado = [];
+    protected array $aRefDFeAnt = [];
+    protected array $aGALCZFMCBS = [];
 
     /**
      * Função construtora cria um objeto DOMDocument
@@ -427,7 +432,24 @@ final class Make
             $this->addTagRefToIde();
             //tag gCompraGov => tag ide Existe apenas a partir da PL_010
             if ($this->schema > 9) {
+                if (!empty($this->gCompraGov) && !empty($this->aRefDFeAnt)) {
+                    foreach ($this->aRefDFeAnt as $ref) {
+                        $this->gCompraGov->appendChild($ref);
+                    }
+                }
                 $this->addTag($this->ide, $this->gCompraGov ?? null, 'Falta a tag "ide"');
+                if (!empty($this->aGPagAntecipado)) {
+                    $this->gPagAntecipado = $this->dom->createElement("gPagAntecipado");
+                    foreach ($this->aGPagAntecipado as $pag) {
+                        $this->dom->addChild(
+                            $this->gPagAntecipado,
+                            "refNFe",
+                            $pag,
+                            true,
+                            "Chave de acesso da NF-e de antecipação de pagamento (gPagAentecipado)"
+                        );
+                    }
+                }
                 $this->addTag($this->ide, $this->gPagAntecipado ?? null, 'Falta a tag "ide"');
             }
             //tag ide => tag infNfe
@@ -760,6 +782,14 @@ final class Make
                     //CHOICE gIBSCBS, gIBSCBSMono, gTranfCred, gAjusteCompet
                     //existe o grupo gIBSCBS no node IBSCBS ?
                     if (!empty($gIBSCBS)) {
+                        if (!empty($this->aGALCZFMCBS[$item])) {
+                            $node = $this->aGALCZFMCBS[$item];
+                            $gCBS = $gIBSCBS->getElementsByTagName("gCBS")->item(0);
+                            $vCBS = $gCBS->getElementsByTagName("vCBS")->item(0);
+                            $gCBS->removeChild($vCBS);
+                            $this->addTag($gCBS, $node);
+                            $gCBS->appendChild($vCBS);
+                        }
                         //add gIBSCBS ao node imposto
                         $this->addTag($ibscbs, $gIBSCBS, 'Falta a tag IBSCBS!');
                     } elseif (!empty($this->aGIBSCBSMono[$item])) {

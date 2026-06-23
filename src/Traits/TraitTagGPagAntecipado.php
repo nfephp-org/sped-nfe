@@ -9,7 +9,7 @@ use DOMException;
 
 /**
  * @property  Dom $dom
- * @property DOMElement $gPagAntecipado
+ * @property array $aGPagAntecipado
  * @method equilizeParameters($std, $possible)
  */
 trait TraitTagGPagAntecipado
@@ -28,18 +28,15 @@ trait TraitTagGPagAntecipado
         $possible = ['refNFe'];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = 'BC01 gPagAntecipado -';
-        $gc = $this->dom->createElement("gPagAntecipado");
-        $arr = (array) $std->refNFe;
-        foreach ($arr as $key => $value) {
-            $this->dom->addChild(
-                $gc,
-                "refNFe",
-                $value,
-                true,
-                $identificador . "Chave de acesso da NF-e de antecipação de pagamento (refNFe)"
-            );
-        }
-        $this->gPagAntecipado = $gc;
+        $gc = $this->dom->createElement("gPagAntecipado", $std->refNFe);
+        $this->dom->addChild(
+            $gc,
+            "refNFe",
+            $std->refNFe,
+            true,
+            $identificador . "Chave de acesso da NF-e de antecipação de pagamento (gPagAntecipado)"
+        );
+        $this->aGPagAntecipado[] = $std->refNFe;
         return $gc;
     }
 }

@@ -698,15 +698,13 @@ class TraitsCoverageTest extends TestCase
         $make = new Make('PL_010_V1.30');
         $this->setupBaseTags($make);
 
-        $std = new stdClass();
-        $std->refNFe = [
-            '35170358716523000119550010000000301000000300',
-            '35170358716523000119550010000000301000000301',
+        $std = [
+            'refNFe' => '34567890123456789012345678901234567890123456'
         ];
-        $gc = $make->taggPagAntecipado($std);
+        $gc = $make->taggPagAntecipado((object) $std);
 
         $this->assertInstanceOf(\DOMElement::class, $gc);
-        $this->assertEquals(2, $gc->getElementsByTagName('refNFe')->length);
+        $this->assertEquals(1, $gc->getElementsByTagName('refNFe')->length);
     }
 
     // ──────────────────────────────────────────────────────────────────────

@@ -61,6 +61,7 @@ trait TraitTagDetIBSCBS
             'gIBSUF_pIBSUF', //opcional Alíquota do IBS de competência das UF 3v2-4, OBRIGATÓRIO se vBC for informado
             'gIBSUF_pDif', //opcional Percentual do diferimento 3v2-4
             'gIBSUF_vDif', //opcional Valor do Diferimento 13v2
+            'gIBSUF_pDevTrib', //opcional Percentual de devolução do IBS da UF 3v2-4
             'gIBSUF_vDevTrib', //opcional Valor do tributo devolvido 13v2
             'gIBSUF_pRedAliq', //opcional Percentual da redução de alíquota 3v2-4
             'gIBSUF_pAliqEfet', //opcional Alíquota Efetiva do IBS de competência das UF que será aplicada a BC 3v2-4
@@ -70,6 +71,7 @@ trait TraitTagDetIBSCBS
             //OBRIGATÓRIO se vBC for informado
             'gIBSMun_pDif', //opcional Percentual do diferimento 3v2-4
             'gIBSMun_vDif', //opcional Valor do Diferimento 13v2
+            'gIBSMum_pDevTrib', //opcional Percentual de devolução do IBS do Município 3v2-4
             'gIBSMun_vDevTrib', //opcional Valor do tributo devolvido 13v2
             'gIBSMun_pRedAliq', //opcional Percentual da redução de alíquota 3v2-4
             'gIBSMun_pAliqEfet', //opcional Alíquota Efetiva do IBS de competência do Município
@@ -80,6 +82,7 @@ trait TraitTagDetIBSCBS
             // OBRIGATÓRIO se vBC for informado
             'gCBS_pDif', //opcional Percentual do diferimento 3v2-4
             'gCBS_vDif', //opcional Valor do Diferimento 13v2
+            'gCBS_pDevTrib', //opcional Percentual de devolução da CBS 3v2-4
             'gCBS_vDevTrib', //opcional Valor do tributo devolvido 13v2
             'gCBS_pRedAliq', //opcional Percentual da redução de alíquota 3v2-4
             'gCBS_pAliqEfet', //opcional Alíquota Efetiva da CBS que será aplicada a Base de Cálculo 3v2-4
@@ -179,6 +182,15 @@ trait TraitTagDetIBSCBS
             if (isset($std->gIBSUF_vDevTrib)) {
                 //Grupo de Informações da devolução de tributos IBSUF
                 $gDevTrib = $this->dom->createElement("gDevTrib");
+                //@todo NT 2025.002 v1.50 aguardar liberar no xsd
+                /*
+                $this->dom->addChild(
+                    $gDevTrib,
+                    "pDevTrib",
+                    $this->conditionalNumberFormatting($std->gIBSUF_pDevTrib),
+                    false,
+                    "$identificador Percentual de devolução do IBS da UF (pDevTrib)"
+                );*/
                 $this->dom->addChild(
                     $gDevTrib,
                     "vDevTrib",
@@ -248,6 +260,15 @@ trait TraitTagDetIBSCBS
             if (isset($std->gIBSMun_vDevTrib)) {
                 //Grupo de Informações da devolução de tributos
                 $gDevTrib = $this->dom->createElement("gDevTrib");
+                //@todo NT 2025.002 v1.50 aguardar liberar no xsd
+                /*
+                $this->dom->addChild(
+                    $gDevTrib,
+                    "pDevTrib",
+                    $this->conditionalNumberFormatting($std->gIBSMun_pDevTrib),
+                    false,
+                    "$identificador Percentual de devolução do IBS do Município (pDevTrib)"
+                );*/
                 $this->dom->addChild(
                     $gDevTrib,
                     "vDevTrib",
@@ -324,6 +345,15 @@ trait TraitTagDetIBSCBS
             if (isset($std->gCBS_vDevTrib)) {
                 //Grupo de Informações da devolução de tributos
                 $gDevTrib = $this->dom->createElement("gDevTrib");
+                //@todo NT 2025.002 v1.50 aguardar liberar no xsd
+                /*
+                $this->dom->addChild(
+                    $gDevTrib,
+                    "pDevTrib",
+                    $this->conditionalNumberFormatting($std->gCBS_pDevTrib),
+                    false,
+                    "$identificador Percentual de devolução da CBS (pDevTrib)"
+                );*/
                 $this->dom->addChild(
                     $gDevTrib,
                     "vDevTrib",
