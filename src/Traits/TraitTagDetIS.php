@@ -31,7 +31,7 @@ trait TraitTagDetIS
             'cClassTribIS',
             'vBCIS',
             'pIS',
-            'pISEspec',
+            'pISEspec', //irá mudar para adRemIS
             'uTrib',
             'qTrib',
             'vIS'
@@ -71,6 +71,7 @@ trait TraitTagDetIS
                 true,
                 "$identificador Alíquota do Imposto Seletivo"
             );
+            //@todo NT 2005.002 v1.50 o campo pISEspec irá mudar para adRemIS
             $this->dom->addChild(
                 $is,
                 "pISEspec",
