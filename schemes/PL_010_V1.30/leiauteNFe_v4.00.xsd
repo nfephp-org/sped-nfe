@@ -7507,6 +7507,7 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 			03=Retorno por recusa na entrega ou por não localização do destinatário na tentativa de entrega;
 			04=Redução de valores;
 			05=Transferência de crédito na sucessão;
+			06=Retorno por recusa parcial de entrega;
 			</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
@@ -7516,6 +7517,7 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 			<xs:enumeration value="03"/>
 			<xs:enumeration value="04"/>
 			<xs:enumeration value="05"/>
+			<xs:enumeration value="06"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TProcEmi">
