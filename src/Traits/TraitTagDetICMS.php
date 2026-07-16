@@ -1469,8 +1469,8 @@ trait TraitTagDetICMS
                     "$identificador Motivo da desoneração do ICMS-ST"
                 );
                 break;
-        default:
-            throw new InvalidArgumentException("O valor [{$std->CST}] não é "
+            default:
+                throw new InvalidArgumentException("O valor [{$std->CST}] não é "
                . "reconhecido para CST ICMS. Valores aceitos: 00, 10, 20, 30, 40, 41, 50, 51, 60, 70, 90");
         }
         $this->aICMS[$std->item] = $icms;
@@ -2338,9 +2338,9 @@ trait TraitTagDetICMS
                 );
                 break;
             default:
-            throw new InvalidArgumentException(
-               "CSOSN inválido: $std->CSOSN. "
-                  . "Valores aceitos: 101, 102, 103, 201, 202, 203, 300, 400, 500, 900"
+                throw new InvalidArgumentException(
+                "CSOSN inválido: $std->CSOSN. "
+                . "Valores aceitos: 101, 102, 103, 201, 202, 203, 300, 400, 500, 900"
             );
         }
         $this->aICMSSN[$std->item] = $icmsSN;
