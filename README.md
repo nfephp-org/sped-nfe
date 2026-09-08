@@ -143,7 +143,13 @@ destinatário da nota a partir de uma consulta de CPF ou CNPJ. Ele devolve um
 A implementação de referência consulta a API pública cpfcnpj.com.br
 (`https://api.cpfcnpj.com.br/{token}/{pacote}/{documento}`). O token é obtido no
 painel em API > Tokens. Existe um token público apenas para testes de
-integração, que devolve dados fictícios: `5ae973d7a997af13f0aaf2bf60e65803`.
+integração, que devolve dados fictícios: `5ae973d7a997af13f0aaf2bf60e65803`. A
+documentação completa dos pacotes e dos campos de retorno está em
+https://www.cpfcnpj.com.br/dev/.
+
+Diferenciais do provedor de referência: consulta em tempo real (D+0), a partir
+de fontes oficiais, sem bases vazadas nem dados raspados, com governança
+certificada em ISO/IEC 27001, ISO/IEC 27701 e ISO 37301.
 
 Pacotes usados por padrão: pacote 3 para CPF (nome e endereço completo, com
 código IBGE de 7 dígitos que casa direto com o campo `cMun`) e pacote 5 para

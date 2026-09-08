@@ -275,6 +275,79 @@ class CpfCnpjComBrLookupTest extends TestCase
         $this->assertFalse(property_exists($porCnpj, 'CPF'));
     }
 
+    public function testCnpjSemMatrizEnderecoNaoQuebraEUsaIbgeParaCMun(): void
+    {
+        $corpo = json_encode([
+            'status' => 1,
+            'cnpj' => '11.222.333/0001-81',
+            'razao' => 'TOKEN TEST LTDA',
+            'ibge' => [
+                'cidade' => ['id' => 2745, 'nome' => 'Montes Claros', 'ibge_id' => 3143302],
+            ],
+        ], JSON_THROW_ON_ERROR);
+        $lookup = $this->lookup([['status' => 200, 'body' => $corpo]]);
+        $dados = $lookup->consultarCnpj('11222333000181');
+
+        $this->assertNull($dados->logradouro);
+        $this->assertNull($dados->numero);
+        $this->assertNull($dados->bairro);
+        $this->assertNull($dados->cep);
+        $this->assertNull($dados->uf);
+        $this->assertSame('3143302', $dados->codigoMunicipio);
+        $this->assertSame('Montes Claros', $dados->municipio);
+    }
+
+    public function testCnpjSemIbgeMantemCMunNulo(): void
+    {
+        $corpo = json_encode([
+            'status' => 1,
+            'cnpj' => '11.222.333/0001-81',
+            'razao' => 'TOKEN TEST LTDA',
+            'matrizEndereco' => [
+                'logradouro' => 'Rua A',
+                'cidade' => 'Montes Claros',
+                'uf' => 'MG',
+            ],
+        ], JSON_THROW_ON_ERROR);
+        $lookup = $this->lookup([['status' => 200, 'body' => $corpo]]);
+        $dados = $lookup->consultarCnpj('11222333000181');
+
+        $this->assertNull($dados->codigoMunicipio);
+        $this->assertSame('Montes Claros', $dados->municipio);
+        $this->assertSame('Rua A', $dados->logradouro);
+    }
+
+    public function testCpfSemEnderecoMantemCamposNulos(): void
+    {
+        $corpo = json_encode([
+            'status' => 1,
+            'cpf' => '000.000.000-00',
+            'nome' => 'Test Token',
+        ], JSON_THROW_ON_ERROR);
+        $lookup = $this->lookup([['status' => 200, 'body' => $corpo]]);
+        $dados = $lookup->consultarCpf('00000000000');
+
+        $this->assertSame('Test Token', $dados->nome);
+        $this->assertNull($dados->logradouro);
+        $this->assertNull($dados->cep);
+        $this->assertNull($dados->municipio);
+        $this->assertNull($dados->codigoMunicipio);
+        $this->assertNull($dados->uf);
+    }
+
+    public function testCnpjAlfanumericoENormalizadoNaUrl(): void
+    {
+        $transport = new FakeHttpTransport([['status' => 200, 'body' => $this->corpoCnpj()]]);
+        $lookup = new CpfCnpjComBrLookup(self::TOKEN, $transport, 3, 5);
+        $dados = $lookup->consultarCnpj('12.abc.345/01de-35');
+
+        $this->assertSame('12ABC34501DE35', $dados->documento);
+        $this->assertSame(
+            'https://api.cpfcnpj.com.br/' . self::TOKEN . '/5/12ABC34501DE35',
+            $transport->ultimaUrl
+        );
+    }
+
     public function testIntegracaoComMakeNaNfce(): void
     {
         $resolver = new Resolver($this->lookup([['status' => 200, 'body' => $this->corpoCpf()]]));

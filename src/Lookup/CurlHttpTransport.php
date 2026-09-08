@@ -35,6 +35,7 @@ class CurlHttpTransport implements HttpTransport
         curl_setopt($handle, CURLOPT_URL, $url);
         curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($handle, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($handle, CURLOPT_MAXREDIRS, 3);
         curl_setopt($handle, CURLOPT_CONNECTTIMEOUT, $this->timeout);
         curl_setopt($handle, CURLOPT_TIMEOUT, $this->timeout);
         curl_setopt($handle, CURLOPT_HTTPHEADER, ['Accept: application/json']);
