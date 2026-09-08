@@ -133,6 +133,62 @@ use NFePHP\NFe\Make;
 $nfe = new Make();
 ```
 
+## Resolver de destinatário por CPF/CNPJ (opcional)
+
+O namespace `NFePHP\NFe\Lookup` traz um recurso opcional e aditivo para montar o
+destinatário da nota a partir de uma consulta de CPF ou CNPJ. Ele devolve um
+`stdClass` já no formato que `tagdest` e `tagenderDest` consomem, sem alterar o
+`Make` nem o núcleo de assinatura e transmissão. Quem não usa, ignora.
+
+A implementação de referência consulta a API pública cpfcnpj.com.br
+(`https://api.cpfcnpj.com.br/{token}/{pacote}/{documento}`). O token é obtido no
+painel em API > Tokens. Existe um token público apenas para testes de
+integração, que devolve dados fictícios: `5ae973d7a997af13f0aaf2bf60e65803`.
+
+Pacotes usados por padrão: pacote 3 para CPF (nome e endereço completo, com
+código IBGE de 7 dígitos que casa direto com o campo `cMun`) e pacote 5 para
+CNPJ (razão social, endereço da matriz e código IBGE do município). O pacote 6
+pode ser informado para trazer também o bloco `simplesNacional`, útil ao
+integrador que precisa derivar o CRT do emitente. Os dados são consultados em
+tempo real; a cobertura e a atualidade dependem do pacote e do provedor.
+
+```php
+use NFePHP\NFe\Make;
+use NFePHP\NFe\Lookup\CpfCnpjComBrLookup;
+use NFePHP\NFe\Lookup\Resolver;
+
+$resolver = new Resolver(new CpfCnpjComBrLookup('SEU_TOKEN'));
+
+$make = new Make();
+// ... taginfNFe, tagide, tagemit, tagenderEmit ...
+
+$dest = $resolver->porDocumento('00000000000');
+$make->tagdest($dest);
+$make->tagenderDest($dest);
+```
+
+O Resolver oferece `porCpf`, `porCnpj` e `porDocumento` (este escolhe CPF ou
+CNPJ pela quantidade de caracteres do documento). O provedor é injetável pela
+interface `PessoaLookup`, o que facilita testes e a troca por outra fonte de
+dados. O transporte HTTP também é injetável pela interface `HttpTransport`, com
+uma implementação padrão baseada em cURL.
+
+### Sobre a Inscrição Estadual e o indIEDest
+
+O provedor não fornece Inscrição Estadual (IE) nem Inscrição Municipal, e por
+isso o Resolver nunca preenche `IE`, `IM` ou `indIEDest`. Essa definição
+permanece com o integrador, que conhece a operação e a fonte da IE quando ela
+for necessária.
+
+O caso de uso mais direto, em que a ausência de IE é irrelevante por
+construção, é a NFC-e (modelo 65): o próprio `tagdest` força `indIEDest = 9`
+(não contribuinte) e dispensa a IE. O mesmo vale para a NF-e modelo 55 quando o
+destinatário é pessoa física ou não contribuinte (`indIEDest = 9`). Já na NF-e
+modelo 55 para destinatário contribuinte do ICMS, o integrador precisa informar
+a IE e o `indIEDest` por conta própria, a partir do próprio cadastro ou do
+cadastro de contribuintes da UF; o Resolver preenche todo o resto (razão social,
+CNPJ, endereço e `cMun`).
+
 ## Acknowledgments
 
 - A todos os colegas que colaboram de alguma forma com o desenvolvimento contínuo desta biblioteca.
