@@ -179,21 +179,49 @@ interface `PessoaLookup`, o que facilita testes e a troca por outra fonte de
 dados. O transporte HTTP também é injetável pela interface `HttpTransport`, com
 uma implementação padrão baseada em cURL.
 
-### Sobre a Inscrição Estadual e o indIEDest
+### Inscrição Estadual do destinatário (B2B contribuinte, opcional)
 
-O provedor não fornece Inscrição Estadual (IE) nem Inscrição Municipal, e por
-isso o Resolver nunca preenche `IE`, `IM` ou `indIEDest`. Essa definição
-permanece com o integrador, que conhece a operação e a fonte da IE quando ela
-for necessária.
+Para a NF-e modelo 55 com destinatário contribuinte do ICMS, o Resolver
+consegue preencher a Inscrição Estadual (IE) automaticamente a partir do pacote
+CNPJ H (ID 16). É um recurso opcional, desligado por padrão: quem não liga a
+opção mantém exatamente o comportamento anterior, sem IE e sem consulta extra.
 
-O caso de uso mais direto, em que a ausência de IE é irrelevante por
-construção, é a NFC-e (modelo 65): o próprio `tagdest` força `indIEDest = 9`
-(não contribuinte) e dispensa a IE. O mesmo vale para a NF-e modelo 55 quando o
-destinatário é pessoa física ou não contribuinte (`indIEDest = 9`). Já na NF-e
-modelo 55 para destinatário contribuinte do ICMS, o integrador precisa informar
-a IE e o `indIEDest` por conta própria, a partir do próprio cadastro ou do
-cadastro de contribuintes da UF; o Resolver preenche todo o resto (razão social,
-CNPJ, endereço e `cMun`).
+A opção é ligada com `comInscricaoEstadual()` no Resolver. Ligada, cada
+resolução de CNPJ faz uma consulta extra ao pacote 16 (portanto uma consulta a
+mais no provedor), lê o bloco `inscricoesEstaduais` e seleciona a primeira
+inscrição ativa (`ativo:true`) cuja `estado.sigla` é igual à UF do endereço do
+destinatário (a UF vem do pacote 5 ou 6 já consultado). Inscrições inativas são
+ignoradas e nunca servem de fallback.
+
+```php
+use NFePHP\NFe\Lookup\CpfCnpjComBrLookup;
+use NFePHP\NFe\Lookup\Resolver;
+
+$resolver = (new Resolver(new CpfCnpjComBrLookup('SEU_TOKEN')))
+    ->comInscricaoEstadual();
+
+$dest = $resolver->porCnpj('11222333000181');
+$make->tagdest($dest);
+$make->tagenderDest($dest);
+```
+
+Heurística do `indIEDest`: havendo IE ativa para a UF do destinatário, o
+Resolver preenche o campo `IE` e marca `indIEDest = 1` (contribuinte). Não
+havendo IE para a UF (nenhuma inscrição, ou apenas inscrições inativas), nada é
+forçado: `IE` e `indIEDest` ficam como estão e a decisão permanece com o
+integrador, seguindo o default do fluxo. O Resolver nunca declara IE isenta por
+conta própria. Uma falha na consulta ao pacote 16 é propagada (fail loud): quem
+optou pela IE recebe o erro em vez de uma nota de contribuinte sem IE; para
+degradar em silêncio, basta o integrador envolver a chamada em um try/catch. O
+provedor de referência expõe as IEs por
+`consultarInscricoesEstaduais()`, contrato opcional `InscricaoEstadualLookup`;
+provedores que não o implementam simplesmente não têm o recurso, e a opção não
+tem efeito.
+
+Para NFC-e (modelo 65) a IE continua irrelevante por construção: o próprio
+`tagdest` força `indIEDest = 9` (não contribuinte) e dispensa a IE, assim como
+na NF-e modelo 55 para pessoa física ou não contribuinte. A Inscrição Municipal
+(`IM`) permanece fora do escopo do provedor.
 
 ## Acknowledgments
 

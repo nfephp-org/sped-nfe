@@ -18,11 +18,14 @@ use stdClass;
  *    simplesNacional, útil ao integrador que precisa derivar o CRT do
  *    emitente.
  *
- * Este provedor não fornece Inscrição Estadual nem Inscrição Municipal, e por
- * isso o Resolver nunca preenche IE, IM ou indIEDest. A definição desses
- * campos permanece com o integrador.
+ * A Inscrição Estadual (IE) é opcional e sai de uma consulta à parte, ao
+ * pacote CNPJ H (ID 16), exposta por consultarInscricoesEstaduais. Ela só é
+ * usada quando o integrador liga a opção no Resolver, e custa uma consulta
+ * extra. Sem ligar a opção, o Resolver mantém o comportamento padrão e nunca
+ * preenche IE, IM ou indIEDest. A Inscrição Municipal continua fora do escopo
+ * do provedor.
  */
-class CpfCnpjComBrLookup implements PessoaLookup
+class CpfCnpjComBrLookup implements PessoaLookup, InscricaoEstadualLookup
 {
     /**
      * URL base da API, sem a barra final.
@@ -59,18 +62,27 @@ class CpfCnpjComBrLookup implements PessoaLookup
      */
     private $pacoteCnpj;
 
+    /**
+     * Pacote usado nas consultas de Inscrição Estadual (CNPJ H, ID 16).
+     *
+     * @var int
+     */
+    private $pacoteIe;
+
     public function __construct(
         string $token,
         ?HttpTransport $transport = null,
         int $pacoteCpf = 3,
         int $pacoteCnpj = 5,
-        string $baseUrl = 'https://api.cpfcnpj.com.br'
+        string $baseUrl = 'https://api.cpfcnpj.com.br',
+        int $pacoteIe = 16
     ) {
         $this->token = $token;
         $this->transport = $transport ?? new CurlHttpTransport();
         $this->pacoteCpf = $pacoteCpf;
         $this->pacoteCnpj = $pacoteCnpj;
         $this->baseUrl = rtrim($baseUrl, '/');
+        $this->pacoteIe = $pacoteIe;
     }
 
     public function consultarCpf(string $cpf): stdClass
@@ -85,12 +97,23 @@ class CpfCnpjComBrLookup implements PessoaLookup
 
     public function consultarCnpj(string $cnpj): stdClass
     {
-        $documento = $this->somenteAlfanumerico($cnpj);
-        if (strlen($documento) !== 14) {
-            throw new LookupException('CNPJ inválido: são esperados 14 caracteres.');
-        }
+        $documento = $this->normalizarCnpjDocumento($cnpj);
         $resposta = $this->consultar($this->pacoteCnpj, $documento);
         return $this->normalizarCnpj($resposta, $documento);
+    }
+
+    /**
+     * Consulta as inscrições estaduais de um CNPJ no pacote CNPJ H (ID 16) e
+     * devolve a lista já normalizada. É uma consulta à parte das de dados
+     * cadastrais, e portanto cobra uma consulta extra no provedor.
+     *
+     * @return array<int, stdClass>
+     */
+    public function consultarInscricoesEstaduais(string $cnpj): array
+    {
+        $documento = $this->normalizarCnpjDocumento($cnpj);
+        $resposta = $this->consultar($this->pacoteIe, $documento);
+        return $this->normalizarInscricoesEstaduais($resposta);
     }
 
     /**
@@ -188,6 +211,77 @@ class CpfCnpjComBrLookup implements PessoaLookup
         $n->pacote = $this->pacoteCnpj;
         $n->bruto = $data;
         return $n;
+    }
+
+    /**
+     * Converte o bloco inscricoesEstaduais do pacote 16 em uma lista de
+     * stdClass com uf (sigla), inscricao e ativo. Entradas sem número de
+     * inscrição são descartadas.
+     *
+     * @return array<int, stdClass>
+     */
+    private function normalizarInscricoesEstaduais(stdClass $data): array
+    {
+        $lista = [];
+        $inscricoes = $data->inscricoesEstaduais ?? null;
+        if (!is_array($inscricoes)) {
+            return $lista;
+        }
+        foreach ($inscricoes as $item) {
+            if (!$item instanceof stdClass) {
+                continue;
+            }
+            $inscricao = isset($item->inscricao_estadual)
+                ? trim((string) $item->inscricao_estadual)
+                : '';
+            if ($inscricao === '') {
+                continue;
+            }
+            $uf = null;
+            if (
+                ($item->estado ?? null) instanceof stdClass
+                && isset($item->estado->sigla)
+            ) {
+                $uf = strtoupper(trim((string) $item->estado->sigla));
+            }
+            $ie = new stdClass();
+            $ie->uf = $uf;
+            $ie->inscricao = $inscricao;
+            $ie->ativo = $this->ehAtivo($item->ativo ?? false);
+            $lista[] = $ie;
+        }
+        return $lista;
+    }
+
+    /**
+     * Normaliza e valida um CNPJ, devolvendo apenas os 14 caracteres úteis.
+     */
+    private function normalizarCnpjDocumento(string $cnpj): string
+    {
+        $documento = $this->somenteAlfanumerico($cnpj);
+        if (strlen($documento) !== 14) {
+            throw new LookupException('CNPJ inválido: são esperados 14 caracteres.');
+        }
+        return $documento;
+    }
+
+    /**
+     * Converte o campo ativo em bool de forma defensiva. O provedor envia um
+     * booleano, mas strings como "0", "false" ou "não" são tratadas como
+     * inativas para não declarar uma IE inativa por engano.
+     *
+     * @param mixed $valor
+     */
+    private function ehAtivo($valor): bool
+    {
+        if (is_bool($valor)) {
+            return $valor;
+        }
+        if (is_int($valor)) {
+            return $valor === 1;
+        }
+        $texto = strtolower(trim((string) $valor));
+        return in_array($texto, ['1', 'true', 't', 'sim', 's'], true);
     }
 
     private function somenteDigitos(string $valor): string
