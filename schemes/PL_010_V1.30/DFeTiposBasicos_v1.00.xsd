@@ -340,7 +340,7 @@
 				<xs:element name="gIBSCBS" type="TCIBS_NFe"/>
 				<xs:element name="gIBSCBSMono" type="TMonofasia">
 					<xs:annotation>
-						<xs:documentation>Informar essa opção da Choice para Monofasia (CST 620)</xs:documentation>
+						<xs:documentation>Grupo de Informações do IBS e CBS em operações com imposto monofásico (CST 620)</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 				<xs:element name="gTransfCred" type="TTransfCred">
@@ -729,157 +729,6 @@
 						</xs:element>
 					</xs:sequence>
 				</xs:complexType>
-			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="TMonofasia">
-		<xs:annotation>
-			<xs:documentation>Tipo Monofasia</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:annotation>
-				<xs:documentation>Monofasia</xs:documentation>
-			</xs:annotation>
-			<xs:element name="gMonoPadrao" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Grupo de informações da Tributação Monofásica padrão</xs:documentation>
-				</xs:annotation>
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="qBCMono" type="TDec1104RTC">
-							<xs:annotation>
-								<xs:documentation>Quantidade tributada na monofasia</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="adRemIBS" type="TDec_0302_04RTC">
-							<xs:annotation>
-								<xs:documentation>Alíquota ad rem do IBS</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="adRemCBS" type="TDec_0302_04RTC">
-							<xs:annotation>
-								<xs:documentation>Alíquota ad rem da CBS</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="vIBSMono" type="TDec1302RTC">
-							<xs:annotation>
-								<xs:documentation>Valor do IBS monofásico</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="vCBSMono" type="TDec1302RTC">
-							<xs:annotation>
-								<xs:documentation>Valor da CBS monofásica</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="gMonoReten" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Grupo de informações da Tributação Monofásica sujeita a retenção</xs:documentation>
-				</xs:annotation>
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="qBCMonoReten" type="TDec1104RTC">
-							<xs:annotation>
-								<xs:documentation>Quantidade tributada sujeita a retenção.</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="adRemIBSReten" type="TDec_0302_04RTC">
-							<xs:annotation>
-								<xs:documentation>Alíquota ad rem do IBS sujeito a retenção</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="vIBSMonoReten" type="TDec1302RTC">
-							<xs:annotation>
-								<xs:documentation>Valor do IBS monofásico sujeito a retenção</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="adRemCBSReten" type="TDec_0302_04RTC">
-							<xs:annotation>
-								<xs:documentation>Alíquota ad rem da CBS sujeita a retenção</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="vCBSMonoReten" type="TDec1302RTC">
-							<xs:annotation>
-								<xs:documentation>Valor da CBS monofásica sujeita a retenção</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="gMonoRet" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Grupo de informações da Tributação Monofásica retida anteriormente</xs:documentation>
-				</xs:annotation>
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="qBCMonoRet" type="TDec1104RTC">
-							<xs:annotation>
-								<xs:documentation>Quantidade tributada retida anteriormente</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="adRemIBSRet" type="TDec_0302_04RTC">
-							<xs:annotation>
-								<xs:documentation>Alíquota ad rem do IBS retido anteriormente</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="vIBSMonoRet" type="TDec1302RTC">
-							<xs:annotation>
-								<xs:documentation>Valor do IBS retido anteriormente</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="adRemCBSRet" type="TDec_0302_04RTC">
-							<xs:annotation>
-								<xs:documentation>Alíquota ad rem da CBS retida anteriormente</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="vCBSMonoRet" type="TDec1302RTC">
-							<xs:annotation>
-								<xs:documentation>Valor da CBS retida anteriormente</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="gMonoDif" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Grupo de informações do diferimento da Tributação Monofásica</xs:documentation>
-				</xs:annotation>
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="pDifIBS" type="TDec_0302_04RTC">
-							<xs:annotation>
-								<xs:documentation>Percentual do diferimento do imposto monofásico</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="vIBSMonoDif" type="TDec1302RTC">
-							<xs:annotation>
-								<xs:documentation>Valor do IBS monofásico diferido</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="pDifCBS" type="TDec_0302_04RTC">
-							<xs:annotation>
-								<xs:documentation>Percentual do diferimento do imposto monofásico</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="vCBSMonoDif" type="TDec1302RTC">
-							<xs:annotation>
-								<xs:documentation>Valor da CBS monofásica diferida</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="vTotIBSMonoItem" type="TDec1302RTC">
-				<xs:annotation>
-					<xs:documentation>Total de IBS monofásico do item</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="vTotCBSMonoItem" type="TDec1302RTC">
-				<xs:annotation>
-					<xs:documentation>Total da CBS monofásica do item</xs:documentation>
-				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
@@ -1351,7 +1200,7 @@
 4 – Recebimento do pagamento com fornecimento posterior;</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="refDFeAnt" minOccurs="0" maxOccurs="99" type="TChDFeRTC">
+			<xs:element name="refDFeAnt" type="TChDFeRTC" minOccurs="0" maxOccurs="99">
 				<xs:annotation>
 					<xs:documentation>Chave de acesso do documento fiscal anterior.
 
@@ -1395,7 +1244,7 @@ Obs: a chave de acesso deverá ser de um emitente com o mesmo CNPJ base</xs:docu
 4 – Recebimento do pagamento com fornecimento posterior;</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="refDFeAnt" minOccurs="0" maxOccurs="99" type="TChDFeRTC">
+			<xs:element name="refDFeAnt" type="TChDFeRTC" minOccurs="0" maxOccurs="99">
 				<xs:annotation>
 					<xs:documentation>Chave de acesso do documento fiscal anterior.
 
@@ -1414,7 +1263,7 @@ Obs: a chave de acesso deverá ser de um emitente com o mesmo CNPJ base</xs:docu
 			<xs:documentation>Informado para abater as parcelas de antecipação de pagamento, conforme art. 10 §4</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="refDFe" maxOccurs="99" type="TChDFeRTC">
+			<xs:element name="refDFe" type="TChDFeRTC" maxOccurs="99">
 				<xs:annotation>
 					<xs:documentation>Chave de acesso do documento fiscal de antecipação de pagamento
 
@@ -1474,7 +1323,7 @@ Obs: esse DFe deverá ter o indAntecipacaoPgto marcado no grupo ide</xs:document
 						<xs:enumeration value="1"/>
 						<xs:enumeration value="2"/>
 					</xs:restriction>
-				</xs:simpleType>				
+				</xs:simpleType>
 			</xs:element>
 			<xs:element name="nProcSuframa" minOccurs="0">
 				<xs:annotation>
@@ -1486,7 +1335,7 @@ comercializado.</xs:documentation>
 						<xs:minLength value="8"/>
 						<xs:maxLength value="12"/>
 					</xs:restriction>
-				</xs:simpleType>				
+				</xs:simpleType>
 			</xs:element>
 			<xs:element name="pAliqEfetRegCBS" type="TDec_0302_04RTC">
 				<xs:annotation>
@@ -1593,6 +1442,397 @@ OBS: Percentuais definidos no art. 450, § 1º, da LC 214/25 para o cálculo do 
 			<xs:element name="vCredPresIBSZFM" type="TDec1302RTC">
 				<xs:annotation>
 					<xs:documentation>Valor do crédito presumido calculado sobre o saldo devedor apurado</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TMonofasia">
+		<xs:annotation>
+			<xs:documentation>Grupo de Informações do IBS e CBS em operações com imposto monofásico  (CST 620)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<!-- ================= IBS ================= -->
+			<xs:sequence minOccurs="0">
+				<xs:choice>
+					<!-- IBS Ad Rem -->
+					<xs:element name="gIBSMonoAdRem" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Grupo de informações da Tributação Monofásica Ad Rem do IBS</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="gMonoPadrao" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation>Grupo de informações da Tributação Monofásica Padrão</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="qBCMono" type="TDec1104RTC">
+												<xs:annotation>
+													<xs:documentation>Quantidade tributada na monofasia</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="adRemIBS" type="TDec_0302_04RTC">
+												<xs:annotation>
+													<xs:documentation>Alíquota ad rem do IBS</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="vIBSMono" type="TDec1302RTC">
+												<xs:annotation>
+													<xs:documentation>Valor do IBS monofásico</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="gMonoReten" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation>Grupo de informações da Tributação Monofásica Sujeita à Retenção</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="qBCMonoReten" type="TDec1104RTC">
+												<xs:annotation>
+													<xs:documentation>Quantidade tributada sujeita à retenção na monofasia</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="adRemIBSReten" type="TDec_0302_04RTC">
+												<xs:annotation>
+													<xs:documentation>Alíquota ad rem do IBS sujeito à retenção</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="vIBSMonoReten" type="TDec1302RTC">
+												<xs:annotation>
+													<xs:documentation>Valor do IBS monofásico sujeito à retenção</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="gMonoRet" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation>Grupo de informações da Tributação Monofásica Retida Anteriormente</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="vIBSMonoRet" type="TDec1302RTC">
+												<xs:annotation>
+													<xs:documentation>Valor do IBS retido anteriormente</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="gpBioDiferenca" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation>Grupo de informações sobre mistura de EAC com gasolina A em percentual inferior ou superior ao obrigatório</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="qBCBioComb" type="TDec1104RTC">
+												<xs:annotation>
+													<xs:documentation>Quantidade de Biocombustível (EAC) a recolher ou a ressarcir</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="vIBSDiferenca" type="TDec1302RTC">
+												<xs:annotation>
+													<xs:documentation>Valor do IBS correspondente a diferença em relação ao pBioObrigatorio</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<!-- IBS Ad Valorem -->
+					<xs:element name="gIBSMonoAdValorem" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Grupo de informações da Tributação Monofásica Ad Valorem do IBS</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="gMonoPadrao" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation>Grupo de informações da Tributação Monofásica Padrão</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="vBCMono" type="TDec1302RTC">
+												<xs:annotation>
+													<xs:documentation>Valor tributado na monofasia</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="pAliqMonoUF" type="TDec_0302_04RTC">
+												<xs:annotation>
+													<xs:documentation>Alíquota ad valorem do IBS Estadual</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="vIBSMonoUF" type="TDec1302RTC">
+												<xs:annotation>
+													<xs:documentation>Valor do IBS monofásico Estadual</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="pAliqMonoMun" type="TDec_0302_04RTC">
+												<xs:annotation>
+													<xs:documentation>Alíquota ad valorem do IBS Municipal</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="vIBSMonoMun" type="TDec1302RTC">
+												<xs:annotation>
+													<xs:documentation>Valor do IBS monofásico do Municipal</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="vIBSMono" type="TDec1302RTC">
+												<xs:annotation>
+													<xs:documentation>Valor do IBS monofásico</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="gMonoReten" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation>Grupo de informações da Tributação Monofásica Sujeita à Retenção</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="vBCMonoReten" type="TDec1302RTC">
+												<xs:annotation>
+													<xs:documentation>Valor tributado sujeito à retenção na monofasia</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="pAliqMonoReten" type="TDec_0302_04RTC">
+												<xs:annotation>
+													<xs:documentation>Alíquota ad valorem do IBS sujeito à retenção</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="vIBSMonoReten" type="TDec1302RTC">
+												<xs:annotation>
+													<xs:documentation>Valor do IBS monofásico sujeito à retenção</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="gMonoRet" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation>Grupo de informações da Tributação Monofásica Retida Anteriormente</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="vIBSMonoRet" type="TDec1302RTC">
+												<xs:annotation>
+													<xs:documentation>Valor do IBS retido anteriormente</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="gpBioDiferenca" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation>Grupo de informações sobre mistura de EAC com gasolina A em percentual inferior ou superior ao obrigatório</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="qBCBioComb" type="TDec1104RTC"/>
+											<xs:element name="vIBSDiferenca" type="TDec1302RTC"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:choice>
+			</xs:sequence>
+			<!-- ================= CBS ================= -->
+			<xs:sequence minOccurs="0">
+				<xs:choice>
+					<!-- CBS Ad Rem -->
+					<xs:element name="gCBSMonoAdRem" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Grupo de informações da Tributação Monofásica Ad Rem da CBS</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="gMonoPadrao" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation>Grupo de informações da Tributação Monofásica Padrão</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="qBCMono" type="TDec1104RTC">
+												<xs:annotation>
+													<xs:documentation>Quantidade tributada na monofasia</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="adRemCBS" type="TDec_0302_04RTC">
+												<xs:annotation>
+													<xs:documentation>Alíquota ad rem da CBS</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="vCBSMono" type="TDec1302RTC">
+												<xs:annotation>
+													<xs:documentation>Valor da CBS monofásica</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="gMonoReten" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation>Grupo de informações da Tributação Monofásica Sujeita à Retenção</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="qBCMonoReten" type="TDec1104RTC">
+												<xs:annotation>
+													<xs:documentation>Quantidade tributada sujeita à retenção na monofasia</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="adRemCBSReten" type="TDec_0302_04RTC">
+												<xs:annotation>
+													<xs:documentation>Alíquota ad rem da CBS sujeita à retenção</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="vCBSMonoReten" type="TDec1302RTC">
+												<xs:annotation>
+													<xs:documentation>Valor da CBS monofásica sujeita à retenção</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="gMonoRet" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation>Grupo de informações da Tributação Monofásica Retida Anteriormente</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="vCBSMonoRet" type="TDec1302RTC">
+												<xs:annotation>
+													<xs:documentation>Valor da CBS retida anteriormente</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="gpBioDiferenca" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation>Grupo de informações sobre mistura de EAC com gasolina A em percentual inferior ou superior ao obrigatório</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="qBCBioComb" type="TDec1104RTC">
+												<xs:annotation>
+													<xs:documentation>Quantidade de Biocombustível (EAC) a recolher ou a ressarcir</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="vCBSDiferenca" type="TDec1302RTC">
+												<xs:annotation>
+													<xs:documentation>Valor da CBS correspondente a diferença em relação ao pBioObrigatorio</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<!-- CBS Ad Valorem -->
+					<xs:element name="gCBSMonoAdValorem" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Grupo de informações da Tributação Monofásica Ad Valorem da CBS</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="gMonoPadrao" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation>Grupo de informações da Tributação Monofásica Padrão</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="vBCMono" type="TDec1302RTC">
+												<xs:annotation>
+													<xs:documentation>Valor tributado na monofasia</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="pAliqMonoCBS" type="TDec_0302_04RTC">
+												<xs:annotation>
+													<xs:documentation>Alíquota ad valorem da CBS</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="vCBSMono" type="TDec1302RTC">
+												<xs:annotation>
+													<xs:documentation>Valor da CBS monofásica</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="gMonoReten" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation>Grupo de informações da Tributação Monofásica Sujeita à Retenção</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="vBCMonoReten" type="TDec1302RTC">
+												<xs:annotation>
+													<xs:documentation>Valor tributado sujeito à retenção na monofasia</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="pAliqMonoReten" type="TDec_0302_04RTC">
+												<xs:annotation>
+													<xs:documentation>Alíquota ad valorem da CBS sujeita à retenção</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="vCBSMonoReten" type="TDec1302RTC">
+												<xs:annotation>
+													<xs:documentation>Valor da CBS monofásica sujeita à retenção</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="gMonoRet" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation>Grupo de informações da Tributação Monofásica Retida Anteriormente</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="vCBSMonoRet" type="TDec1302RTC">
+												<xs:annotation>
+													<xs:documentation>Valor da CBS retida anteriormente</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="gpBioDiferenca" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation>Grupo de informações sobre mistura de EAC com gasolina A em percentual inferior ou superior ao obrigatório</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="qBCBioComb" type="TDec1104RTC"/>
+											<xs:element name="vCBSDiferenca" type="TDec1302RTC"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:choice>
+			</xs:sequence>
+			<!-- Totais -->
+			<xs:element name="vTotIBSMonoItem" type="TDec1302RTC">
+				<xs:annotation>
+					<xs:documentation>Total de IBS Monofásico.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="vTotCBSMonoItem" type="TDec1302RTC">
+				<xs:annotation>
+					<xs:documentation>Total da CBS Monofásica.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>

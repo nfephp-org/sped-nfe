@@ -116,8 +116,14 @@ Campo preenchido somente quando "indPres = 5 (Operação presencial, fora do est
 									</xs:element>
 									<xs:element name="tpImp">
 										<xs:annotation>
-											<xs:documentation>Formato de impressão do DANFE (0-sem DANFE;1-DANFe Retrato; 2-DANFe Paisagem;3-DANFe Simplificado;
-											4-DANFe NFC-e;5-DANFe NFC-e em mensagem eletrônica;6-DANFe Simplificado Tipo 2 (NT 2026.002, Ajuste SINIEF 13/26))</xs:documentation>
+											<xs:documentation>Formato de impressão do DANFE:
+0 - Sem DANFE;
+1 - DANFE Retrato;
+2 - DANFE Paisagem;
+3 - DANFE Simplificado;
+4 - DANFE NFC-e;
+5 - DANFE NFC-e em mensagem eletrônica;
+6 - DANFE Simplificado Tipo 2 (nas condições do Ajuste SINIEF 13/26).</xs:documentation>
 										</xs:annotation>
 										<xs:simpleType>
 											<xs:restriction base="xs:string">
@@ -555,7 +561,7 @@ Preencher com &quot;2B&quot;, quando se tratar de Cupom Fiscal emitido por máqu
 											<xs:documentation>Endereço do emitente</xs:documentation>
 										</xs:annotation>
 									</xs:element>
-									<xs:element name="IE" type="TIe">
+									<xs:element name="IE" type="TIe" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Inscrição Estadual do Emitente</xs:documentation>
 										</xs:annotation>
@@ -5618,7 +5624,7 @@ Substituição Tributaria;</xs:documentation>
 											<xs:documentation>Valores totais da NF com IBS / CBS</xs:documentation>
 										</xs:annotation>
 									</xs:element>
-									<xs:element name="vNFTot" type="TDec_1302Opc" minOccurs="0">
+									<xs:element name="vNFTot" type="TDec_1302" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Valor Total da NF considerando os impostos por fora IBS, CBS e IS</xs:documentation>
 										</xs:annotation>
