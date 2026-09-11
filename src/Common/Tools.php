@@ -388,7 +388,8 @@ class Tools
         $dom->loadXML($signed);
         $modelo = $dom->getElementsByTagName('mod')->item(0)->nodeValue;
         $isInfNFeSupl = !empty($dom->getElementsByTagName('infNFeSupl')->item(0));
-        if ($modelo == 65 && !$isInfNFeSupl) {
+        $tpImp = $dom->getElementsByTagName('tpImp')->item(0)->nodeValue;
+        if (($modelo == 65 && !$isInfNFeSupl) || ($modelo == 55 && $tpImp == 6)) {
             $signed = $this->addQRCode($dom);
         }
         //exception will be throw if NFe is not valid

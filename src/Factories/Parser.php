@@ -1636,7 +1636,7 @@ class Parser
      */
     protected function x04Entity(stdClass $std): void
     {
-        $this->stdTransporta->CNPJ = $std->CNPJ;
+        $this->stdTransporta->CNPJ = $std->CNPJ ?? null;
         $this->stdTransporta->CPF = null;
         $this->make->tagtransporta($this->stdTransporta);
         $this->stdTransporta = null;
@@ -1648,7 +1648,7 @@ class Parser
      */
     protected function x05Entity(stdClass $std): void
     {
-        $this->stdTransporta->CPF = $std->CPF;
+        $this->stdTransporta->CPF = $std->CPF ?? null;
         $this->stdTransporta->CNPJ = null;
         $this->make->tagtransporta($this->stdTransporta);
         $this->stdTransporta = null;
