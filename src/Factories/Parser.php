@@ -1465,7 +1465,19 @@ class Parser
 
 
     /**
-     * Create tag IBSCBS gIBSCBSMono UB84|qBCMono|adRemIBS|adRemCBS|vIBSMono|vCBSMono|qBCMonoReten|adRemIBSReten|vIBSMonoReten|adRemCBSReten|vCBSMonoReten|qBCMonoRet|adRemIBSRet|vIBSMonoRet|adRemCBSRet|vCBSMonoRet|pDifIBS|vIBSMonoDif|pDifCBS|vCBSMonoDif|vTotIBSMonoItem|vTotCBSMonoItem|
+     * Create tag IBSCBS gIBSCBSMono — NT 2025.002 v1.50 (Ad Rem / Ad Valorem separados; gMonoDif removido)
+     * UB84|gIBSMonoAdRem_qBCMono|gIBSMonoAdRem_adRemIBS|gIBSMonoAdRem_vIBSMono|gIBSMonoAdRem_qBCMonoReten|
+     * gIBSMonoAdRem_adRemIBSReten|gIBSMonoAdRem_vIBSMonoReten|gIBSMonoAdRem_vIBSMonoRet|gIBSMonoAdRem_qBCBioComb|
+     * gIBSMonoAdRem_vIBSDiferenca|gIBSMonoAdValorem_vBCMono|gIBSMonoAdValorem_pAliqMonoUF|gIBSMonoAdValorem_vIBSMonoUF|
+     * gIBSMonoAdValorem_pAliqMonoMun|gIBSMonoAdValorem_vIBSMonoMun|gIBSMonoAdValorem_vIBSMono|
+     * gIBSMonoAdValorem_vBCMonoReten|gIBSMonoAdValorem_pAliqMonoReten|gIBSMonoAdValorem_vIBSMonoReten|
+     * gIBSMonoAdValorem_vIBSMonoRet|gIBSMonoAdValorem_qBCBioComb|gIBSMonoAdValorem_vIBSDiferenca|
+     * gCBSMonoAdRem_qBCMono|gCBSMonoAdRem_adRemCBS|gCBSMonoAdRem_vCBSMono|gCBSMonoAdRem_qBCMonoReten|
+     * gCBSMonoAdRem_adRemCBSReten|gCBSMonoAdRem_vCBSMonoReten|gCBSMonoAdRem_vCBSMonoRet|gCBSMonoAdRem_qBCBioComb|
+     * gCBSMonoAdRem_vCBSDiferenca|gCBSMonoAdValorem_vBCMono|gCBSMonoAdValorem_pAliqMonoCBS|gCBSMonoAdValorem_vCBSMono|
+     * gCBSMonoAdValorem_vBCMonoReten|gCBSMonoAdValorem_pAliqMonoReten|gCBSMonoAdValorem_vCBSMonoReten|
+     * gCBSMonoAdValorem_vCBSMonoRet|gCBSMonoAdValorem_qBCBioComb|gCBSMonoAdValorem_vCBSDiferenca|
+     * vTotIBSMonoItem|vTotCBSMonoItem|
      */
     protected function ub84Entity(stdClass $std): void
     {

@@ -462,17 +462,21 @@ class MakeDevTest extends TestCase
         // Add monofasico
         $std = new \stdClass();
         $std->item = 1;
-        $std->qBCMono = 500.0000;
-        $std->adRemIBS = 1.2000;
-        $std->adRemCBS = 0.8000;
-        $std->vIBSMono = 600.00;
-        $std->vCBSMono = 400.00;
+        $std->gIBSMonoAdRem_qBCMono = 500.0000;
+        $std->gIBSMonoAdRem_adRemIBS = 1.2000;
+        $std->gIBSMonoAdRem_vIBSMono = 600.00;
+        $std->gCBSMonoAdRem_qBCMono = 500.0000;
+        $std->gCBSMonoAdRem_adRemCBS = 0.8000;
+        $std->gCBSMonoAdRem_vCBSMono = 400.00;
         $this->make->tagIBSCBSMono($std);
 
         $xml = $this->make->render();
 
         $this->assertNotEmpty($xml);
         $this->assertStringContainsString('<gIBSCBSMono>', $xml);
+        $this->assertStringContainsString('<gIBSMonoAdRem>', $xml);
+        $this->assertStringContainsString('<gCBSMonoAdRem>', $xml);
+        $this->assertStringNotContainsString('<gMonoDif>', $xml);
     }
 
     public function testRenderWithAdditionalPublicTags()

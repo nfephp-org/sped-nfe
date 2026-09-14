@@ -480,6 +480,35 @@ class ParserTest extends TestCase
         $this->assertContains('W34', $tags);
     }
 
+    public function test_dump_local_v13_ub84_mono_v150_fields(): void
+    {
+        $txt = file_get_contents($this->fixturesPath . 'nfe_4.00_local_v13_ibscbs.txt');
+        $notas = $this->parseTxt($txt);
+
+        $parser = new Parser('4.00', Parser::LOCAL_V13);
+        $result = $parser->dump($notas[0]);
+
+        $ub84 = null;
+        foreach ($result as $item) {
+            if ($item->tag === 'UB84') {
+                $ub84 = $item;
+                break;
+            }
+        }
+
+        $this->assertNotNull($ub84);
+        $this->assertEquals('1', $ub84->gIBSMonoAdRem_qBCMono);
+        $this->assertEquals('1.00', $ub84->gIBSMonoAdRem_adRemIBS);
+        $this->assertEquals('1.00', $ub84->gIBSMonoAdRem_vIBSMono);
+        $this->assertEquals('1', $ub84->gCBSMonoAdRem_qBCMono);
+        $this->assertEquals('1.00', $ub84->gCBSMonoAdRem_adRemCBS);
+        $this->assertEquals('1.00', $ub84->gCBSMonoAdRem_vCBSMono);
+        $this->assertEquals('1.00', $ub84->vTotIBSMonoItem);
+        $this->assertEquals('1.00', $ub84->vTotCBSMonoItem);
+        $this->assertObjectNotHasProperty('qBCMono', $ub84);
+        $this->assertObjectNotHasProperty('pDifIBS', $ub84);
+    }
+
     public function test_dump_local_v12_extras_fixture_tags(): void
     {
         $txt = file_get_contents($this->fixturesPath . 'nfe_4.00_local_v12_extras.txt');
