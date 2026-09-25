@@ -44,12 +44,12 @@ trait TraitCalculations
                 $value -= ($data['indDeduzDeson'] == 1) ? ($data['vDescDeson'] ?? 0) : 0;
                 $value += ($data['indSomaPISST'] == 1) ? ($data['vPISST'] ?? 0) : 0;
                 $value += ($data['indSomaCOFINSST'] == 1) ? ($data['vCOFINSST'] ?? 0) : 0;
-                if ($year >= 2026) {
-                    $value = ($data['vIBS'] ?? 0)
+                if ($year > 2026) {
+                    $value += ($data['vIBS'] ?? 0)
                         + ($data['vCBS'] ?? 0)
                         + ($data['vIS'] ?? 0)
-                        + ($data['vTotIBSMoniItem'] ?? 0)
-                        + ($data['vTotCBSMoniItem'] ?? 0);
+                        + ($data['vTotIBSMonoItem'] ?? 0)
+                        + ($data['vTotCBSMonoItem'] ?? 0);
                 }
                 $this->aVItem[$nItem]['vItemCalculated'] = $value;
             } elseif ($data->tpOp == 2) {
@@ -65,14 +65,14 @@ trait TraitCalculations
                 $value -= ($data['indDeduzDeson'] == 1) ? ($data['vDescDeson'] ?? 0) : 0;
                 $value += ($data['indSomaPISST'] == 1) ? ($data['vPISST'] ?? 0) : 0;
                 $value += ($data['indSomaCOFINSST'] == 1) ? ($data['vCOFINSST'] ?? 0) : 0;
-                if ($year >= 2026) {
-                    $value = ($data['vIBS'] ?? 0)
+                if ($year > 2026) {
+                    $value += ($data['vIBS'] ?? 0)
                         + ($data['vCBS'] ?? 0)
                         + ($data['vIS'] ?? 0);
                 }
                 $this->aVItem[$nItem]['vItemCalculated'] = $value;
             }
-            if ($data->indTot == 0) {
+            if (($data['indTot'] ?? 0) == 0) {
                 $this->stdTot->vNFTotCalculated += $value;
             }
         }
