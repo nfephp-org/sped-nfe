@@ -1550,6 +1550,17 @@ class Parser
     }
 
     /**
+     * Grupo VC. Referenciamento de item de outro Documento Fiscal Eletrônico - DF-e
+     * VC|chaveAcesso|nItem|
+     */
+    protected function vcEntity(stdClass $std): void
+    {
+        $std->item = $this->item;
+
+        $this->make->tagDFeReferenciado($std);
+    }
+
+    /**
      * Linha W [W]
      * W|
      */
