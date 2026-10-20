@@ -288,6 +288,7 @@ final class Make
         $this->stdTot->vIS = 0;
         $this->stdTot->vNFTot = null;
         $this->stdTot->vNFTotCalculated = null;
+        $this->stdTot->vProdLiqTot = null;
         //ISSQN
         $this->stdISSQNTot = new stdClass();
         $this->stdISSQNTot->vServ = 0;
@@ -895,6 +896,9 @@ final class Make
         $this->stdTot->vOutro = round($this->stdTot->vOutro, 2, PHP_ROUND_HALF_UP);
         $this->stdTot->vNF = round($this->stdTot->vNF, 2, PHP_ROUND_HALF_UP);
         $this->stdTot->vTotTrib = round($this->stdTot->vTotTrib, 2, PHP_ROUND_HALF_UP);
+        if ($this->stdTot->vProdLiqTot !== null) {
+            $this->stdTot->vProdLiqTot = round($this->stdTot->vProdLiqTot, 2, PHP_ROUND_HALF_UP);
+        }
 
         $this->stdTot->vNF = $this->stdTot->vProd
             - $this->stdTot->vDesc
@@ -1207,6 +1211,15 @@ final class Make
         }
         $this->buildTagICMSTot((object)$icms);
 
+        if ($this->stdTot->vProdLiqTot !== null) {
+            $this->dom->addChild(
+                $total,
+                "vProdLiqTot",
+                $this->conditionalNumberFormatting($this->stdTot->vProdLiqTot, 2),
+                true,
+                "$identificador Valor Total Líquido dos Produtos ou Serviços (sem tributos)"
+            );
+        }
         //Até 2036 esta tag deverá existir segundo a documentação atual da SEFAZ
         $this->addTag($total, $this->ICMSTot);
         //Grupo Totais referentes ao ISSQN
