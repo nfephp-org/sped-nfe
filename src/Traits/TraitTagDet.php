@@ -58,6 +58,8 @@ trait TraitTagDet
             'qCom',
             'vUnCom',
             'vProd',
+            'vUnComLiq',
+            'vProdLiq',
             'cEANTrib',
             'cBarraTrib',
             'uTrib',
@@ -98,6 +100,11 @@ trait TraitTagDet
         $this->stdTot->vSeg += (float) $this->conditionalNumberFormatting($std->vSeg);
         $this->stdTot->vDesc += (float) $this->conditionalNumberFormatting($std->vDesc);
         $this->stdTot->vOutro += (float) $this->conditionalNumberFormatting($std->vOutro);
+        $hasValorLiquido = $std->vUnComLiq !== null || $std->vProdLiq !== null;
+        if ($hasValorLiquido) {
+            $this->stdTot->vProdLiqTot = (float) $this->stdTot->vProdLiqTot
+                + (float) $this->conditionalNumberFormatting($std->vProdLiq);
+        }
         $cean = !empty($std->cEAN) ? trim(strtoupper($std->cEAN)) : '';
         $ceantrib = !empty($std->cEANTrib) ? trim(strtoupper($std->cEANTrib)) : '';
         if ($this->checkgtin) {
@@ -239,6 +246,22 @@ trait TraitTagDet
             true,
             "$identificador Valor Total Bruto dos Produtos ou Serviços"
         );
+        if ($hasValorLiquido) {
+            $this->dom->addChild(
+                $prod,
+                "vUnComLiq",
+                $this->conditionalNumberFormatting($std->vUnComLiq, 10),
+                true,
+                "$identificador Valor Líquido Unitário do Produto ou Serviço (sem tributos)"
+            );
+            $this->dom->addChild(
+                $prod,
+                "vProdLiq",
+                $this->conditionalNumberFormatting($std->vProdLiq),
+                true,
+                "$identificador Valor Líquido do Produto ou Serviço (sem tributos)"
+            );
+        }
         $this->dom->addChild(
             $prod,
             "cEANTrib",
