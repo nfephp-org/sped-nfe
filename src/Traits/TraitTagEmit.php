@@ -223,6 +223,19 @@ trait TraitTagEmit
         );
         if (!empty($this->emit)) {
             $node = $this->emit->getElementsByTagName("IE")->item(0);
+
+            if ($node === null) {
+                $node = $this->emit->getElementsByTagName("IEST")->item(0);
+            }
+
+            if ($node === null) {
+                $node = $this->emit->getElementsByTagName("IM")->item(0);
+            }
+
+            if ($node === null) {
+                $node = $this->emit->getElementsByTagName("CRT")->item(0);
+            }
+
             $this->emit->insertBefore($this->enderEmit, $node);
         }
         return $this->enderEmit;
