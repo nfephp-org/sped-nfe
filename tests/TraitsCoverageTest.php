@@ -1836,6 +1836,47 @@ class TraitsCoverageTest extends TestCase
         $this->assertStringContainsString('<det nItem="2"', $xml);
     }
 
+    public function test_getXML_calculated_vItem_deducts_vICMSDeson_when_indDeduzDeson(): void
+    {
+        $make = new Make('PL_010_V1.30');
+        $this->setupBaseTags($make);
+        $this->addProduct(1, $make);
+
+        $std = new stdClass();
+        $std->item = 1;
+        $std->orig = '0';
+        $std->CST = '40';
+        $std->vICMSDeson = '10.00';
+        $std->motDesICMS = '9';
+        $std->indDeduzDeson = '1';
+        $make->tagICMS($std);
+
+        $std = new stdClass();
+        $std->item = 1;
+        $std->CST = '000';
+        $std->cClassTrib = '000001';
+        $std->vBC = '100.00';
+        $std->gIBSUF_pIBSUF = '0.1000';
+        $std->gIBSUF_vIBSUF = '0.10';
+        $std->gIBSMun_pIBSMun = '0.0000';
+        $std->gIBSMun_vIBSMun = '0.00';
+        $std->gCBS_pCBS = '0.9000';
+        $std->gCBS_vCBS = '0.90';
+        $make->tagIBSCBS($std);
+
+        $std = new stdClass();
+        $std->item = 1;
+        $make->tagimposto($std);
+
+        $this->addPayment($make);
+
+        $xml = $make->getXML();
+        $this->assertStringContainsString('<indDeduzDeson>1</indDeduzDeson>', $xml);
+        $this->assertStringContainsString('<vItem>90.00</vItem>', $xml);
+        $this->assertStringContainsString('<vNF>90.00</vNF>', $xml);
+        $this->assertStringContainsString('<vNFTot>90.00</vNFTot>', $xml);
+    }
+
     // ──────────────────────────────────────────────────────────────────────
     //  Full XML integration: all covered traits in a single NFe
     // ──────────────────────────────────────────────────────────────────────
