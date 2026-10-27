@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/nfe" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" targetNamespace="http://www.portalfiscal.inf.br/nfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="tiposBasico_v1.03.xsd"/>
+	<xs:element name="detEvento">
+		<xs:annotation>
+			<xs:documentation>Schema XML de validação do Evento de Vinculação da Transação de Pagamento no DF-e (110300)</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="descEvento">
+					<xs:annotation>
+						<xs:documentation>Informar "Vinculação Pagamento"</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:whiteSpace value="preserve"/>
+							<xs:enumeration value="Vinculação Pagamento"/>
+							<xs:enumeration value="Vinculacao Pagamento"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="cOrgaoAutor" type="TCodUfIBGE">
+					<xs:annotation>
+						<xs:documentation>Código do Órgão Autor do Evento</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="tpAutor">
+					<xs:annotation>
+						<xs:documentation>Informar: 1=Empresa Emitente.
+Valores: 1=Empresa Emitente, 2=Empresa destinatária; 3=Empresa; 5=Fisco; 6=RFB; 9=Outros Órgãos;
+						</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="1"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="verAplic" type="TVerAplic">
+					<xs:annotation>
+						<xs:documentation>Versão do Aplicativo que recebeu o Evento</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="nProt" type="TProt">
+					<xs:annotation>
+						<xs:documentation>Número do protocolo de autorização do DF-e</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="gPgto" type="TEventoPgto">
+					<xs:annotation>
+						<xs:documentation>Dados do Pagamento</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="versao" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:whiteSpace value="preserve"/>
+						<xs:enumeration value="1.00"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+		<!-- Valida a unicidade de idTransacao -->
+		<xs:unique name="pk_Evento_gPgto_idTransacao">
+			<xs:selector xpath="gPgto"/>
+			<xs:field xpath="@idTransacao"/>
+		</xs:unique>
+	</xs:element>
+	<xs:complexType name="TEventoPgto">
+		<xs:annotation>
+			<xs:documentation>Tipo Dados do Pagamento</xs:documentation>
+		</xs:annotation>
+			<xs:sequence>
+				<xs:element name="tpMeioPgto">
+					<xs:annotation>
+						<xs:documentation>Código do meio de pagamento (ver IT DFe 2026.001)</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:whiteSpace value="preserve"/>
+							<xs:pattern value="[0-9]{2}"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="CNPJReceb" type="TCnpj">
+					<xs:annotation>
+						<xs:documentation>CNPJ do recebedor do pagamento</xs:documentation>
+						<xs:documentation>Informar zeros não significativos</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="CNPJBasePSP" type="TCnpjBase">
+					<xs:annotation>
+						<xs:documentation>CNPJ base da instituição financeira ou de pagamento</xs:documentation>
+						<xs:documentation>Informar zeros não significativos</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="idTransacao" use="required">
+				<xs:annotation>
+					<xs:documentation>Identificador da transação financeira, de acordo com a transação de pagamento</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="TString">
+						<xs:minLength value="2"/>
+						<xs:maxLength value="35"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+</xs:schema>

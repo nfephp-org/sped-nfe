@@ -17,7 +17,7 @@
       <cMunFG>string</cMunFG>
       <!--Optional:-->
       <cMunFGIBS>string</cMunFGIBS>
-      <tpImp>2</tpImp>
+      <tpImp>6</tpImp>
       <tpEmis>1</tpEmis>
       <cDV>string</cDV>
       <tpAmb>1</tpAmb>
@@ -25,7 +25,7 @@
       <!--Optional:-->
       <tpNFDebito>08</tpNFDebito>
       <!--Optional:-->
-      <tpNFCredito>04</tpNFCredito>
+      <tpNFCredito>05</tpNFCredito>
       <indFinal>0</indFinal>
       <indPres>5</indPres>
       <!--Optional:-->
