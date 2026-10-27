@@ -21,8 +21,6 @@ class ValidTXT
     public const LOCAL_V12 = "LOCAL_V12";
     public const LOCAL_V13 = "LOCAL_V13";
     public const SEBRAE = "SEBRAE";
-    public const RTC = "RTC";
-
     /**
      * Loads structure of txt from json file in storage folder
      * @throws \InvalidArgumentException
