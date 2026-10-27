@@ -70,7 +70,8 @@ trait TraitTagEmit
             false,
             $identificador . "Nome fantasia do emitente"
         );
-        if ($std->IE !== 'ISENTO') {
+        //NT2026.007-Emissão por Contribuinte exclusivo do IBS/CBS
+        if (!empty($std->IE) && $std->IE !== 'ISENTO') {
             $std->IE = Strings::onlyNumbers($std->IE);
         }
         $this->dom->addChild(
@@ -118,6 +119,7 @@ trait TraitTagEmit
             false,
             $identificador . "Inscrição do emitente da Suframa"
         );
+        $this->buildEmit();
         return $this->emit;
     }
 
@@ -221,10 +223,27 @@ trait TraitTagEmit
             false,
             $identificador . "Telefone do Endereço do emitente"
         );
-        if (!empty($this->emit)) {
+        $this->buildEmit();
+        return $this->enderEmit;
+    }
+
+    /**
+     * Complementa a TAG emit
+     */
+    protected function buildEmit()
+    {
+        if (!empty($this->emit) && !empty($this->enderEmit)) {
             $node = $this->emit->getElementsByTagName("IE")->item(0);
+            if ($node === null) {
+                $node = $this->emit->getElementsByTagName("IEST")->item(0);
+            }
+            if ($node === null) {
+                $node = $this->emit->getElementsByTagName("IM")->item(0);
+            }
+            if ($node === null) {
+                $node = $this->emit->getElementsByTagName("CRT")->item(0);
+            }
             $this->emit->insertBefore($this->enderEmit, $node);
         }
-        return $this->enderEmit;
     }
 }
