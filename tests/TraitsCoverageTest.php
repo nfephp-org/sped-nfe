@@ -1836,11 +1836,55 @@ class TraitsCoverageTest extends TestCase
         $this->assertStringContainsString('<det nItem="2"', $xml);
     }
 
-    public function test_getXML_calculated_vItem_deducts_vICMSDeson_when_indDeduzDeson(): void
+    /**
+     * @return array<string, array{0: ?string}>
+     */
+    public static function tpOpVeicProdProvider(): array
+    {
+        return [
+            'sem veicProd' => [null],
+            'venda de veiculo novo' => ['2'],
+        ];
+    }
+
+    /**
+     * @dataProvider tpOpVeicProdProvider
+     */
+    public function test_getXML_calculated_vItem_deducts_vICMSDeson_when_indDeduzDeson(?string $tpOp): void
     {
         $make = new Make('PL_010_V1.30');
         $this->setupBaseTags($make);
         $this->addProduct(1, $make);
+
+        if ($tpOp !== null) {
+            $std = new stdClass();
+            $std->item = 1;
+            $std->tpOp = $tpOp;
+            $std->chassi = '9BWSU19F08B302158';
+            $std->cCor = '1';
+            $std->xCor = 'BRANCA';
+            $std->pot = '150';
+            $std->cilin = '1600';
+            $std->pesoL = '1200';
+            $std->pesoB = '1350';
+            $std->nSerie = 'AAA111222';
+            $std->tpComb = '16';
+            $std->nMotor = 'MOT12345';
+            $std->CMT = '1800.0000';
+            $std->dist = '2600';
+            $std->anoMod = '2025';
+            $std->anoFab = '2024';
+            $std->tpPint = 'M';
+            $std->tpVeic = '06';
+            $std->espVeic = '1';
+            $std->VIN = 'R';
+            $std->condVeic = '1';
+            $std->cMod = '123456';
+            $std->cCorDENATRAN = '01';
+            $std->lota = '5';
+            $std->tpRest = '0';
+            $make->tagveicProd($std);
+        }
 
         $std = new stdClass();
         $std->item = 1;
