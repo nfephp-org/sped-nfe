@@ -39,6 +39,7 @@ use NFePHP\NFe\Traits\TraitTagRetirada;
 use NFePHP\NFe\Traits\TraitTagTotal;
 use NFePHP\NFe\Traits\TraitTagTransp;
 use NFePHP\NFe\Traits\TraitTagGALCZFMCBS;
+use NFePHP\NFe\Traits\TraitTagPgtoVinc;
 use stdClass;
 use DOMElement;
 
@@ -80,6 +81,7 @@ final class MakeDev
     use TraitTagTotal;
     use TraitCalculations;
     use TraitTagGALCZFMCBS;
+    use TraitTagPgtoVinc;
 
     public const METHOD_CALCULATION_V1 = 1; //by values, calculate vItem and vNFTot
     public const METHOD_CALCULATION_V2 = 2; //by tags, calculate vItem and vNFTot

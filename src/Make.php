@@ -39,6 +39,7 @@ use NFePHP\NFe\Traits\TraitTagRetirada;
 use NFePHP\NFe\Traits\TraitTagTotal;
 use NFePHP\NFe\Traits\TraitTagTransp;
 use NFePHP\NFe\Traits\TraitTagGALCZFMCBS;
+use NFePHP\NFe\Traits\TraitTagPgtoVinc;
 use stdClass;
 use DOMElement;
 
@@ -80,6 +81,7 @@ final class Make
     use TraitTagTotal;
     use TraitCalculations;
     use TraitTagGALCZFMCBS;
+    use TraitTagPgtoVinc;
 
     public const METHOD_CALCULATION_V1 = 1; //by values, calculate vItem and vNFTot
     public const METHOD_CALCULATION_V2 = 2; //by tags, calculate vItem and vNFTot
@@ -163,6 +165,7 @@ final class Make
     protected array $aICMS = [];
     protected array $aICMSPart = [];
     protected array $aICMSUFDest = [];
+    protected array $aICMSPgtoAnt = [];
     protected array $aICMSSN = [];
     protected array $aICMSST = [];
     protected array $aIPI = [];
@@ -186,6 +189,7 @@ final class Make
     protected array $aVItem = [];
     protected array $aVItemStruct = [];
     protected array $aDetPag = [];
+    protected array $aPgtoVinc = [];
     protected array $aObsCont = [];
     protected array $aObsFisco = [];
     protected array $aProcRef = [];
@@ -217,6 +221,7 @@ final class Make
         $this->aVItemStruct = [
             'indTot' => 0,
             'vProd' => 0,
+            'vProdLiq' => 0,
             'vDesc' => 0,
             'vICMSST' => 0,
             'vICMSMonoReten' => 0,
@@ -478,6 +483,14 @@ final class Make
             $this->addTagPag();
             //tag infIntermed => tag infNFe
             $this->addTag($this->infNFe, $this->infIntermed ?? null, 'Falta a tag "infNFe"');
+            //tag YC01 gPgtoVinc => tag infNFe
+            if (!empty($this->aPgtoVinc)) {
+                $gPgtoVinc = $this->dom->createElement("gPgtoVinc");
+                foreach ($this->aPgtoVinc as $pgto) {
+                    $this->addTag($gPgtoVinc, $pgto, 'Falta a tag "gPgtoVinc"');
+                }
+                $this->addTag($this->infNFe, $gPgtoVinc ?? null, 'Falta a tag "infNFe"');
+            }
             //tag infAdic => tag infNFe
             $this->buildInfoTags();
             $this->addTag($this->infNFe, $this->infAdic ?? null, 'Falta a tag "infNFe"');
@@ -755,13 +768,17 @@ final class Make
                 $this->addTag($imposto, $this->aCOFINS[$item], 'Falta a tag det/imposto!');
             }
             //COFINSST => imposto
-            if (!empty($this->aCOFINSST[$item]) && empty($this->aCOFINS[$item])) {
+            if (!empty($this->aCOFINSST[$item])) {
                 //ou o COFINS normal ou CONFINSST não pode haver os dois no mesmo item
                 $this->addTag($imposto, $this->aCOFINSST[$item], 'Falta a tag det/imposto!');
             }
             //ICMSUFDest => imposto
             if (!empty($this->aICMSUFDest[$item])) {
                 $this->addTag($imposto, $this->aICMSUFDest[$item], 'Falta a tag det/imposto!');
+            }
+            //ICMSPrevisaoPagtoAntecip => imposto
+            if (!empty($this->aICMSPgtoAnt[$item])) {
+                $this->addTag($imposto, $this->aICMSPgtoAnt[$item], 'Falta a tag det/imposto!');
             }
             if ($this->schema > 9) {
                 //IS => imposto - somente para PL_010 em diante
@@ -912,13 +929,13 @@ final class Make
             + $this->stdISSQNTot->vServ
             + $this->stdTot->vPISST
             + $this->stdTot->vCOFINSST;
-            /*
-            - $this->stdTot->vRetPIS //subtrai as retenções
-            - $this->stdTot->vRetCOFINS  //subtrai as retenções
-            - $this->stdTot->vRetCSLL //subtrai as retenções
-            - $this->stdTot->vRetIRRF //subtrai as retenções
-            - $this->stdTot->vRetPrev; //subtrai as retenções
-            */
+        /*
+        - $this->stdTot->vRetPIS //subtrai as retenções
+        - $this->stdTot->vRetCOFINS  //subtrai as retenções
+        - $this->stdTot->vRetCSLL //subtrai as retenções
+        - $this->stdTot->vRetIRRF //subtrai as retenções
+        - $this->stdTot->vRetPrev; //subtrai as retenções
+        */
     }
 
     /**
@@ -1188,6 +1205,7 @@ final class Make
                 'vBCST' => null,
                 'vST' => null,
                 'vProd' => null,
+                'vProdLiq' => null,
                 'vFrete' => null,
                 'vSeg' => null,
                 'vDesc' => null,
