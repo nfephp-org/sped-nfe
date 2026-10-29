@@ -163,6 +163,7 @@ final class MakeDev
     protected array $aICMS = [];
     protected array $aICMSPart = [];
     protected array $aICMSUFDest = [];
+    protected array $aICMSPgtoAnt = [];
     protected array $aICMSSN = [];
     protected array $aICMSST = [];
     protected array $aIPI = [];
@@ -186,6 +187,7 @@ final class MakeDev
     protected array $aVItem = [];
     protected array $aVItemStruct = [];
     protected array $aDetPag = [];
+    protected array $aPgtoVinc = [];
     protected array $aObsCont = [];
     protected array $aObsFisco = [];
     protected array $aProcRef = [];
@@ -217,6 +219,7 @@ final class MakeDev
         $this->aVItemStruct = [
             'indTot' => 0,
             'vProd' => 0,
+            'vProdLiq' => 0,
             'vDesc' => 0,
             'vICMSST' => 0,
             'vICMSMonoReten' => 0,
@@ -264,6 +267,7 @@ final class MakeDev
         $this->stdTot->qBCMonoRet = 0;
         $this->stdTot->vICMSMonoRet = 0;
         $this->stdTot->vProd = 0;
+        $this->stdTot->vProdLiq = 0;
         $this->stdTot->vFrete = 0;
         $this->stdTot->vSeg = 0;
         $this->stdTot->vDesc = 0;
@@ -477,6 +481,14 @@ final class MakeDev
             $this->addTagPag();
             //tag infIntermed => tag infNFe
             $this->addTag($this->infNFe, $this->infIntermed ?? null, 'Falta a tag "infNFe"');
+            //tag YC01 gPgtoVinc => tag infNFe
+            if (!empty($this->aPgtoVinc)) {
+                $gPgtoVinc = $this->dom->createElement("gPgtoVinc");
+                foreach ($this->aPgtoVinc as $pgto) {
+                    $this->addTag($gPgtoVinc, $pgto, 'Falta a tag "gPgtoVinc"');
+                }
+                $this->addTag($this->infNFe, $gPgtoVinc ?? null, 'Falta a tag "infNFe"');
+            }
             //tag infAdic => tag infNFe
             $this->buildInfoTags();
             $this->addTag($this->infNFe, $this->infAdic ?? null, 'Falta a tag "infNFe"');
@@ -761,6 +773,10 @@ final class MakeDev
             //ICMSUFDest => imposto
             if (!empty($this->aICMSUFDest[$item])) {
                 $this->addTag($imposto, $this->aICMSUFDest[$item], 'Falta a tag det/imposto!');
+            }
+            //ICMSPrevisaoPagtoAntecip => imposto
+            if (!empty($this->aICMSPgtoAnt[$item])) {
+                $this->addTag($imposto, $this->aICMSPgtoAnt[$item], 'Falta a tag det/imposto!');
             }
             if ($this->schema > 9) {
                 //IS => imposto - somente para PL_010 em diante
@@ -1169,6 +1185,15 @@ final class MakeDev
         $vNFTot = null;
         $identificador = 'W01 <total> -';
         $total = $this->dom->createElement('total');
+        if (!empty($this->stdTot->vProdLiq)) {
+            $this->dom->addChild(
+                $total,
+                "vProdLiqTot",
+                $this->conditionalNumberFormatting($this->stdTot->vProdLiq),
+                true,
+                "W01a vProdLiqTot - Valor Total Líquido dos Produtos ou Serviços (sem tributos)"
+            );
+        }
         //Grupo Totais referentes ao ICMS
         if (empty($this->dataICMSTot)) {
             $icms = [
@@ -1178,6 +1203,7 @@ final class MakeDev
                 'vBCST' => null,
                 'vST' => null,
                 'vProd' => null,
+                'vProdLiq' => null,
                 'vFrete' => null,
                 'vSeg' => null,
                 'vDesc' => null,

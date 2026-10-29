@@ -113,21 +113,6 @@
 			<xs:enumeration value="4"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="TRBSN">
-		<xs:annotation>
-			<xs:documentation>Tipo de Receita Bruta do SN</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:string">
-			<xs:whiteSpace value="preserve"/>
-			<xs:enumeration value="0"/>
-			<xs:enumeration value="1"/>
-			<xs:enumeration value="2"/>
-			<xs:enumeration value="3"/>
-			<xs:enumeration value="4"/>
-			<xs:enumeration value="5"/>
-			<xs:enumeration value="9"/>
-		</xs:restriction>
-	</xs:simpleType>
 	<xs:simpleType name="TEnteGov">
 		<xs:annotation>
 			<xs:documentation>Tipo de Ente Governamental</xs:documentation>
@@ -314,10 +299,7 @@
 					<xs:documentation>Indica se a operação é de doação</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:choice minOccurs="0">
-				<xs:element name="gIBSCBS" type="TCIBS_NFe"/>
-				<xs:element name="gIBSCBSMono" type="TMonofasia"/>
-			</xs:choice>
+			<xs:element name="gIBSCBS" type="TCIBS_NFe" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="TTribNFe">
@@ -1834,6 +1816,64 @@ OBS: Percentuais definidos no art. 450, § 1º, da LC 214/25 para o cálculo do 
 				<xs:annotation>
 					<xs:documentation>Total da CBS Monofásica.</xs:documentation>
 				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TPgtoVinc">
+		<xs:annotation>
+			<xs:documentation>Tipo Informações da Vinculação com a Transação de Pagamento</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="gPgto" maxOccurs="99">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="tpMeioPgto">
+							<xs:annotation>
+								<xs:documentation>Código do meio de pagamento (ver IT DFe 2026.001)</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:whiteSpace value="preserve"/>
+									<xs:pattern value="[0-9]{2}"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="CNPJReceb" type="TCnpjRTC">
+							<xs:annotation>
+								<xs:documentation>CNPJ do recebedor do pagamento</xs:documentation>
+								<xs:documentation>Informar zeros não significativos</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="CNPJBasePSP" type="TCnpjBaseRTC">
+							<xs:annotation>
+								<xs:documentation>CNPJ base da instituição financeira ou de pagamento</xs:documentation>
+								<xs:documentation>Informar zeros não significativos</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="nPag" use="required">
+						<xs:annotation>
+							<xs:documentation>Número sequencial do pagamento</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:whiteSpace value="preserve"/>
+								<xs:pattern value="[1-9]{1}[0-9]{0,1}|[1-8]{1}[0-9]{2}|[9]{1}[0-8]{1}[0-9]{1}|[9]{1}[9]{1}[0]{1}"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+					<xs:attribute name="idTransacao" use="required">
+						<xs:annotation>
+							<xs:documentation>Identificador da transação financeira, de acordo com a transação de pagamento</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="TStringRTC">
+								<xs:minLength value="2"/>
+								<xs:maxLength value="35"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:complexType>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>

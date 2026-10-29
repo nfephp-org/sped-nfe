@@ -34,6 +34,7 @@
 					</xs:annotation>
 					<xs:simpleType>
 						<xs:restriction base="xs:string">
+							<xs:enumeration value="110300"/>
 							<xs:enumeration value="112110"/>
 							<xs:enumeration value="112120"/>
 							<xs:enumeration value="112130"/>
@@ -50,6 +51,14 @@
 							<xs:enumeration value="212120"/>
 							<xs:enumeration value="412120"/>
 							<xs:enumeration value="412130"/>
+							<xs:enumeration value="412140"/>
+							<xs:enumeration value="420110"/>
+							<xs:enumeration value="420120"/>
+							<xs:enumeration value="420130"/>
+							<xs:enumeration value="420140"/>
+							<xs:enumeration value="420150"/>
+							<xs:enumeration value="420160"/>
+							<xs:enumeration value="420170"/>
 						</xs:restriction>
 					</xs:simpleType>
 				</xs:element>
@@ -59,7 +68,7 @@
 					</xs:annotation>
 				</xs:element>
 			</xs:sequence>
-			<xs:attribute name="versao">
+			<xs:attribute name="versao" use="required">
 				<xs:annotation>
 					<xs:documentation>Versão do leiaute do evento </xs:documentation>
 				</xs:annotation>

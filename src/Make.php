@@ -264,6 +264,7 @@ final class Make
         $this->stdTot->qBCMonoRet = 0;
         $this->stdTot->vICMSMonoRet = 0;
         $this->stdTot->vProd = 0;
+        $this->stdTot->vProdLiq = 0;
         $this->stdTot->vFrete = 0;
         $this->stdTot->vSeg = 0;
         $this->stdTot->vDesc = 0;
@@ -1169,6 +1170,15 @@ final class Make
         $vNFTot = null;
         $identificador = 'W01 <total> -';
         $total = $this->dom->createElement('total');
+        if (!empty($this->stdTot->vProdLiq)) {
+            $this->dom->addChild(
+                $total,
+                "vProdLiqTot",
+                $this->conditionalNumberFormatting($this->stdTot->vProdLiq),
+                true,
+                "W01a vProdLiqTot - Valor Total Líquido dos Produtos ou Serviços (sem tributos)"
+            );
+        }
         //Grupo Totais referentes ao ICMS
         if (empty($this->dataICMSTot)) {
             $icms = [

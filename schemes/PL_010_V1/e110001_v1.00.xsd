@@ -23,18 +23,6 @@
 						<xs:documentation>Código do Órgão Autor do Evento. Informar o Código da UF para este Evento.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
-				<xs:element name="tpAutor">
-					<xs:annotation>
-						<xs:documentation>Informar 1=Empresa emitente
-													Valores: 1=Empresa Emitente, 2=Empresa destinatária; 3=Empresa; 5=Fisco;6=RFB; 9=Outros Órgãos;
-						</xs:documentation>
-					</xs:annotation>
-					<xs:simpleType>
-						<xs:restriction base="xs:string">
-							<xs:enumeration value="1"/>
-						</xs:restriction>
-					</xs:simpleType>
-				</xs:element>
 				<xs:element name="verAplic" type="TVerAplic">
 					<xs:annotation>
 						<xs:documentation>Versão do Aplicativo que recebeu o Evento</xs:documentation>
@@ -46,8 +34,31 @@
 					</xs:annotation>
 					<xs:simpleType>
 						<xs:restriction base="xs:string">
-							<xs:whiteSpace value="preserve"/>
-							<xs:pattern value="[0-9]{6}"/>
+							<xs:enumeration value="110300"/>
+							<xs:enumeration value="112110"/>
+							<xs:enumeration value="112120"/>
+							<xs:enumeration value="112130"/>
+							<xs:enumeration value="112140"/>
+							<xs:enumeration value="112150"/>
+							<xs:enumeration value="211110"/>
+							<xs:enumeration value="211120"/>
+							<xs:enumeration value="211124"/>
+							<xs:enumeration value="211128"/>
+							<xs:enumeration value="211130"/>
+							<xs:enumeration value="211140"/>
+							<xs:enumeration value="211150"/>
+							<xs:enumeration value="212110"/>
+							<xs:enumeration value="212120"/>
+							<xs:enumeration value="412120"/>
+							<xs:enumeration value="412130"/>
+							<xs:enumeration value="412140"/>
+							<xs:enumeration value="420110"/>
+							<xs:enumeration value="420120"/>
+							<xs:enumeration value="420130"/>
+							<xs:enumeration value="420140"/>
+							<xs:enumeration value="420150"/>
+							<xs:enumeration value="420160"/>
+							<xs:enumeration value="420170"/>
 						</xs:restriction>
 					</xs:simpleType>
 				</xs:element>
@@ -57,7 +68,7 @@
 					</xs:annotation>
 				</xs:element>
 			</xs:sequence>
-			<xs:attribute name="versao">
+			<xs:attribute name="versao" use="required">
 				<xs:annotation>
 					<xs:documentation>Versão do leiaute do evento </xs:documentation>
 				</xs:annotation>

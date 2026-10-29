@@ -63,6 +63,8 @@ trait TraitTagDet
             'uTrib',
             'qTrib',
             'vUnTrib',
+            'vUnComLiq',
+            'vProdLiq',
             'vFrete',
             'vSeg',
             'vDesc',
@@ -85,6 +87,7 @@ trait TraitTagDet
         }
         $this->aVItem[$std->item]['indTot'] = ($std->indTot ?? 0);
         $this->aVItem[$std->item]['vProd'] = ($std->vProd ?? 0);
+        $this->aVItem[$std->item]['vProdLiq'] = ($std->vProd ?? 0);
         $this->aVItem[$std->item]['vDesc'] = ($std->vDesc ?? 0);
         $this->aVItem[$std->item]['vSeg'] = ($std->vSeg ?? 0);
         $this->aVItem[$std->item]['vFrete'] = ($std->vFrete ?? 0);
@@ -94,6 +97,7 @@ trait TraitTagDet
         if ($std->indTot == 1) {
             $this->stdTot->vProd += (float) $this->conditionalNumberFormatting($std->vProd);
         }
+        $this->stdTot->vProdLiq += (float) $this->conditionalNumberFormatting($std->vProdLiq);
         $this->stdTot->vFrete += (float) $this->conditionalNumberFormatting($std->vFrete);
         $this->stdTot->vSeg += (float) $this->conditionalNumberFormatting($std->vSeg);
         $this->stdTot->vDesc += (float) $this->conditionalNumberFormatting($std->vDesc);
@@ -239,6 +243,23 @@ trait TraitTagDet
             true,
             "$identificador Valor Total Bruto dos Produtos ou Serviços"
         );
+        //NT2026.008 - caso sejam declarados incluir os valores abaixo
+        if (!empty($std->vUnComLiq) && !empty($std->vProdLiq)) {
+            $this->dom->addChild(
+                $prod,
+                "vUnComLiq",
+                $this->conditionalNumberFormatting($std->vUnComLiq ?? null),
+                false,
+                "$identificador Valor Líquido Unitário do Produto ou Serviço (sem tributos)"
+            );
+            $this->dom->addChild(
+                $prod,
+                "vProdLiq",
+                $this->conditionalNumberFormatting($std->vProdLiq ?? null),
+                false,
+                "$identificador Valor Líquido do Produto ou Serviço (sem tributos)"
+            );
+        }
         $this->dom->addChild(
             $prod,
             "cEANTrib",
