@@ -98,6 +98,7 @@ trait TraitTagTotal
             'vBCST',
             'vST',
             'vProd',
+            'vProdLiq',
             'vFrete',
             'vSeg',
             'vDesc',
@@ -132,6 +133,9 @@ trait TraitTagTotal
         $vBCST = !empty($std->vBCST) ? $std->vBCST : $this->stdTot->vBCST;
         $vST = !empty($std->vST) ? $std->vST : $this->stdTot->vST;
         $vProd = !empty($std->vProd) ? $std->vProd : $this->stdTot->vProd;
+        if (!empty($std->vProdLiq)) {
+            $this->stdTot->vProdLiq = $std->vProdLiq;
+        }
         $vFrete = !empty($std->vFrete) ? $std->vFrete : $this->stdTot->vFrete;
         $vSeg = !empty($std->vSeg) ? $std->vSeg : $this->stdTot->vSeg;
         $vDesc = !empty($std->vDesc) ? $std->vDesc : $this->stdTot->vDesc;

@@ -16,6 +16,47 @@ use stdClass;
 trait TraitEventsRTC
 {
     /**
+     * Evento: Evento de Vinculação da Transação de Pagamento no DF-e
+     * Este Evento deverá ser gerado pelo emitente do DF-e sempre que se desejar vincular uma ou mais transações
+     * financeiras a um documento fiscal previamente autorizado. Obs.: É possível que a transação financeira vinculada
+     * esteja em situação iniciada, ainda pendente de pagamento e/ou liquidação (ex. boleto emitido
+     * ou QR code Pix gerado)
+     * Modelo: NF-e modelo 55/65, Autor: Emitente da NFe/NFCe, Código do Tipo de Evento:110300
+     * $std = (object) [
+     *     'chNFe' => '12345678901234567890123456789012345678901234', //OBRIGATÓRIO
+     *     'nProt' => '135260832643924' numero do protocolo de autorização
+     *     'idTransacao' => 'ACBS222000', OBRIGATÓRIO de 2 a 35 caracteres
+     *     'toMeioPgto' => '15' Lista do informe técnico  IT2026.001_
+     * ]
+     */
+    public function sefazVinculoPagamento(stdClass $std, ?string $verAplic = null): string
+    {
+        $this->checkModel($std);
+        $verAplic = $this->resolveVerAplic($verAplic);
+        $tpEvento = '110300';
+        $tagAdic = "<cOrgaoAutor>{$this->cUF}</cOrgaoAutor>"
+            . "<tpAutor>1</tpAutor>"  //1=Empresa Emitente
+            . "<verAplic>{$verAplic}</verAplic>"
+            . "<nProt>{$std->nProt}</nProt>"
+            . "<gPgto>"
+            . "<idTransacao>{$std->idTransacao}</idTransacao>"
+            . "<tpMeioPgto>{$std->tpMeioPgto}</tpMeioPgto>"
+            . "<CNPJReceb>{$std->cnpjRecebedor}</CNPJReceb>"
+            . "<CNPJBasePSP>{$std->cnpjBasePSP}</CNPJBasePSP>"
+            . "</gPgto>";
+
+        return $this->sefazEvento(
+            'SVRS',
+            $std->chNFe,
+            $tpEvento,
+            $std->nSeqEvento ?? 1,
+            $tagAdic,
+            null,
+            null
+        );
+    }
+
+    /**
      * Evento: Informação de efetivo pagamento integral para liberar crédito presumido do adquirente
      * Permitir que o emitente da NFe informe o efetivo pagamento integral a fim de liberar crédito presumido
      * do adquirente

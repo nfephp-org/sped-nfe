@@ -51,6 +51,7 @@ class Tools extends ToolsCommon
     public const EVT_CANCELA_INSUCESSO_ENTREGA = 110193;
     public const EVT_CONCILIACAO = 110750;
     public const EVT_CANCELA_CONCILIACAO = 110751;
+    public const EVT_VINCULACAO_PAGAMENTO = 110300;
 
     /**
      * Request authorization to issue NFe in batch with one or more documents
@@ -1130,6 +1131,7 @@ class Tools extends ToolsCommon
             self::EVT_CONCILIACAO => ['versao' => '1.00', 'nome' => 'envEventoEConf'],
             self::EVT_CANCELA_CONCILIACAO => ['versao' => '1.00', 'nome' => 'envEventoCancEConf'],
             110001 => ['versao' => '1.00', 'nome' => 'envEvento'],
+            110300 => ['versao' => '1.00', 'nome' => 'envEvento'],
             112110 => ['versao' => '1.00', 'nome' => 'envEvento'],
             112120 => ['versao' => '1.00', 'nome' => 'envEvento'],
             112130 => ['versao' => '1.00', 'nome' => 'envEvento'],
@@ -1173,6 +1175,7 @@ class Tools extends ToolsCommon
                 [
                     self::EVT_CONCILIACAO,
                     self::EVT_CANCELA_CONCILIACAO,
+                    110300,
                     112110,
                     211110,
                     211120,
@@ -1482,6 +1485,10 @@ class Tools extends ToolsCommon
             case 110001:
                 $std->alias = 'envEvento';
                 $std->desc = 'Cancelamento de Evento';
+                break;
+            case 110300:
+                $std->alias = 'envEvento';
+                $std->desc = 'Vinculação Pagamento';
                 break;
             case 112110:
                 $std->alias = 'envEvento';
