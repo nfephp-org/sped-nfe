@@ -248,7 +248,7 @@ trait TraitTagDet
             $this->dom->addChild(
                 $prod,
                 "vUnComLiq",
-                $this->conditionalNumberFormatting($std->vUnComLiq ?? null),
+                $this->conditionalNumberFormatting($std->vUnComLiq ?? null, 10),
                 false,
                 "$identificador Valor Líquido Unitário do Produto ou Serviço (sem tributos)"
             );
