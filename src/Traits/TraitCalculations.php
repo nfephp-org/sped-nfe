@@ -44,7 +44,7 @@ trait TraitCalculations
                 $value -= ($data['indDeduzDeson'] == 1) ? ($data['vDescDeson'] ?? 0) : 0;
                 $value += ($data['indSomaPISST'] == 1) ? ($data['vPISST'] ?? 0) : 0;
                 $value += ($data['indSomaCOFINSST'] == 1) ? ($data['vCOFINSST'] ?? 0) : 0;
-                if ($year >= 2026) {
+                if ($year >= 2027) {
                     $value = ($data['vIBS'] ?? 0)
                         + ($data['vCBS'] ?? 0)
                         + ($data['vIS'] ?? 0)
@@ -65,6 +65,11 @@ trait TraitCalculations
                 $value -= ($data['indDeduzDeson'] == 1) ? ($data['vDescDeson'] ?? 0) : 0;
                 $value += ($data['indSomaPISST'] == 1) ? ($data['vPISST'] ?? 0) : 0;
                 $value += ($data['indSomaCOFINSST'] == 1) ? ($data['vCOFINSST'] ?? 0) : 0;
+                if ($year >= 2027) {
+                    $value = ($data['vIBS'] ?? 0)
+                        + ($data['vCBS'] ?? 0)
+                        + ($data['vIS'] ?? 0);
+                }
                 $this->aVItem[$nItem]['vItemCalculated'] = $value;
             }
             if ($data->indTot == 1) {
@@ -217,6 +222,11 @@ trait TraitCalculations
                 + $vServ  //não reconheço esse campo no xml
                 + $vPISST
                 + $vCOFINSST;
+            if ($year >= 2027) {
+                $vitem += $vIBS
+                    + $vCBS
+                    + $vIS;
+            }
         } else {
             //venda de veiculos novos
             $vitem =
@@ -231,7 +241,7 @@ trait TraitCalculations
                 + $vServ
                 + $vPISST
                 + $vCOFINSST;
-            if ($year > 2026) {
+            if ($year >= 2027) {
                 $vitem += $vIBS
                     + $vCBS
                     + $vIS;
