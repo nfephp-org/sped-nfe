@@ -2614,4 +2614,39 @@ class TraitsCoverageTest extends TestCase
 
         $this->assertInstanceOf(\DOMElement::class, $result);
     }
+
+    /**
+     * TraitCalculations::calculateTtensValues2 precisa ler o vIPIDevol em
+     * det/impostoDevol para que o vItem inclua o IPI devolvido (PL_010).
+     */
+    public function test_vitem_calculado_inclui_vipi_devolvido(): void
+    {
+        $make = new Make('PL_010_V1.30');
+        $this->setupBaseTags($make);
+        $this->addProduct(1, $make);
+        $this->addICMS(1, $make);
+
+        //IPI devolvido de R$ 10,00 sobre o item de R$ 100,00
+        $std = new stdClass();
+        $std->item = 1;
+        $std->pDevol = 100.00;
+        $std->vIPIDevol = 10.00;
+        $make->tagimpostoDevol($std);
+
+        //IBSCBS sem valores de imposto (vIBS/vCBS = 0), habilita o calculo do vItem
+        $std = new stdClass();
+        $std->item = 1;
+        $std->CST = '02';
+        $std->cClassTrib = '12345678';
+        $make->tagIBSCBS($std);
+
+        $this->addPayment($make);
+
+        $xml = $make->getXML();
+        //vItem = vProd (100.00) + vIPIDevol (10.00)
+        $this->assertStringContainsString('<vItem>110.00</vItem>', $xml);
+        //a soma dos vItem deve corresponder ao total da nota (vNFTot)
+        $this->assertStringContainsString('<vNFTot>110.00</vNFTot>', $xml);
+    }
+
 }

@@ -89,7 +89,7 @@ trait TraitCalculations
         $indTot = $det->getElementsByTagName("indTot")->item(0)->nodeValue;
         $veicProd = $det->getElementsByTagName("veicProd")->item(0) ?? null;
         $imposto = $det->getElementsByTagName("imposto")->item(0);
-        $impostoDevol = $det->getElementsByTagName("imposto")->item(0) ?? null;
+        $impostoDevol = $det->getElementsByTagName("impostoDevol")->item(0) ?? null;
         $icms = $imposto->getElementsByTagName("ICMS")->item(0) ?? null;
         $ipi = $imposto->getElementsByTagName("IPI")->item(0) ?? null;
         $ii = $imposto->getElementsByTagName("II")->item(0) ?? null;
