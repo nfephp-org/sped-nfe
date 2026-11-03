@@ -240,7 +240,10 @@ class Complements
         $cStat = $ret->getElementsByTagName('cStat')->item(0)->nodeValue;
         $xMotivo = $ret->getElementsByTagName('xMotivo')->item(0)->nodeValue;
         //retorno pode vir sem o protNFe
-        $retProt = $ret->getElementsByTagName('protNFe')->length > 0 ? $ret->getElementsByTagName('protNFe') : null;
+        $retProt = $ret->getElementsByTagName('protNFe');
+        if ($retProt->length === 0) {
+            throw DocumentsException::wrongDocument(18, "[{$cStat}] {$xMotivo}");
+        }
         $digProt = null;
         foreach ($retProt as $rp) {
             $infProt = $rp->getElementsByTagName('infProt')->item(0);
