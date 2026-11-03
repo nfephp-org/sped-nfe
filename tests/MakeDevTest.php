@@ -596,6 +596,19 @@ class MakeDevTest extends TestCase
         $this->assertStringContainsString('<nRECOPI>123456789</nRECOPI>', $xml);
     }
 
+    public function testRenderICMSPrevistoPagtoAntecipInsideICMS(): void
+    {
+        $this->buildMinimalNFe55WithoutICMSPisCofins();
+
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->vICMSPrevisto = 10.50;
+        $this->make->tagICMSPrevistoAntecipado($std);
+
+        $xml = $this->make->render();
+        $this->assertICMSPrevistoPagtoAntecipInsideICMS($xml);
+    }
+
     public function testRenderWithAdditionalRefsAndImportDeclaration()
     {
         $this->buildMinimalNFe55();
@@ -890,6 +903,41 @@ class MakeDevTest extends TestCase
     // =========================================================================
     // Helpers to build minimal NFe documents
     // =========================================================================
+
+    private function assertICMSPrevistoPagtoAntecipInsideICMS(string $xml): void
+    {
+        $dom = new \DOMDocument();
+        $dom->loadXML($xml);
+        $imposto = $dom->getElementsByTagName('imposto')->item(0);
+        $this->assertNotNull($imposto);
+
+        $direct = [];
+        foreach ($imposto->childNodes as $child) {
+            if ($child->nodeType === XML_ELEMENT_NODE) {
+                $direct[] = $child->nodeName;
+            }
+        }
+        $this->assertContains('ICMS', $direct);
+        $this->assertNotContains('ICMSPrevistoPagtoAntecip', $direct);
+
+        $icms = null;
+        foreach ($imposto->childNodes as $child) {
+            if ($child->nodeType === XML_ELEMENT_NODE && $child->nodeName === 'ICMS') {
+                $icms = $child;
+                break;
+            }
+        }
+        $this->assertNotNull($icms);
+
+        $icmsChildren = [];
+        foreach ($icms->childNodes as $child) {
+            if ($child->nodeType === XML_ELEMENT_NODE) {
+                $icmsChildren[] = $child->nodeName;
+            }
+        }
+        $this->assertSame(['ICMSPrevistoPagtoAntecip'], $icmsChildren);
+        $this->assertSame('10.50', $icms->getElementsByTagName('vICMSPrevisto')->item(0)->nodeValue);
+    }
 
     private function buildMinimalNFe55(): void
     {
