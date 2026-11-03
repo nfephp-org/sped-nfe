@@ -2436,9 +2436,10 @@ trait TraitTagDetICMS
     }
 
     /**
-     * Grupo ICMSUFDest NB01 pai M01
-     * tag NFe/infNFe/det[]/imposto/ICMSPrevistoPagtoAntecip (opcional)
-     * Grupo utilizado exclusivamente em cenários específicos de pagamento antecipado para auxiliar na correta
+     * Grupo ICMSPrevistoPagtoAntecip NB01 pai N01
+     * tag NFe/infNFe/det[]/imposto/ICMS/ICMSPrevistoPagtoAntecip (opcional)
+     * Grupo do ICMS Previsto no Pagamento Antecipado.
+     * Utilizado exclusivamente em cenários específicos de pagamento antecipado para auxiliar na correta
      * tributação do IBS e da CBS:
      *   - tpNFDebito = 06-Pagamento antecipado;
      *   - tpOperGov = 4-Recebimento do pagamento com fornecimento posterior
@@ -2450,7 +2451,7 @@ trait TraitTagDetICMS
     {
         $possible = [
             'item',
-            'vICMSAntecipado'
+            'vICMSPrevisto'
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = "NB01 ICMSPrevistoPagtoAntecip Item: $std->item -";
@@ -2458,9 +2459,9 @@ trait TraitTagDetICMS
         $this->dom->addChild(
             $icmspa,
             "vICMSPrevisto",
-            $this->conditionalNumberFormatting(($std->vICMSPrevisto ?? 0)),
+            $this->conditionalNumberFormatting($std->vICMSPrevisto),
             true,
-            "$identificador Valor do ICMS Previsto, apenas caso tpNFDebito = 6 e tpOperGov = 4"
+            "$identificador Valor do ICMS que incidirá no momento do fornecimento futuro"
         );
         $this->aICMSPgtoAnt[$std->item] = $icmspa;
         return $icmspa;

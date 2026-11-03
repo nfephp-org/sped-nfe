@@ -737,6 +737,9 @@ final class MakeDev
             } elseif (!empty($this->aICMSSN[$item])) {
                 $flagICMS = true;
                 $this->addTag($icms, $this->aICMSSN[$item]);
+            } elseif (!empty($this->aICMSPgtoAnt[$item])) {
+                $flagICMS = true;
+                $this->addTag($icms, $this->aICMSPgtoAnt[$item]);
             }
             if ($flagICMS) {
                 $this->addTag($imposto, $icms, 'Falta a tag det/imposto!');
@@ -775,10 +778,6 @@ final class MakeDev
             //ICMSUFDest => imposto
             if (!empty($this->aICMSUFDest[$item])) {
                 $this->addTag($imposto, $this->aICMSUFDest[$item], 'Falta a tag det/imposto!');
-            }
-            //ICMSPrevisaoPagtoAntecip => imposto
-            if (!empty($this->aICMSPgtoAnt[$item])) {
-                $this->addTag($imposto, $this->aICMSPgtoAnt[$item], 'Falta a tag det/imposto!');
             }
             if ($this->schema > 9) {
                 //IS => imposto - somente para PL_010 em diante
