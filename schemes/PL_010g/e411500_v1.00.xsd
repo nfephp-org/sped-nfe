@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/nfe" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" targetNamespace="http://www.portalfiscal.inf.br/nfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:include schemaLocation="tiposBasico_v1.03.xsd"/>
+  <xs:element name="detEvento">
+    <xs:annotation>
+            <xs:documentation>Informações do Fisco</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="descEvento">
+                <xs:annotation>
+                    <xs:documentation>Fisco Prorrogação ICMS remessa para industrialização</xs:documentation>
+                </xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Fisco - Prorrogação ICMS remessa para industrialização" />
+						<xs:enumeration value="Fisco - Prorrogacao ICMS remessa para industrializacao" />
+					</xs:restriction>
+				</xs:simpleType>
+            </xs:element>
+            <xs:element name="idPedido">
+                <xs:annotation>
+                    <xs:documentation>Identificador do Pedido de Prorrogação ou Cancelamento de Pedido de Prorrogação que deu origem ao evento do Fisco, a regra de formação do Id é:
+                        ID + tpEvento + chave da NF-e + nSeqEvento
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:ID">
+                        <xs:pattern value="ID[0-9]{52}"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="respPedido" type="TRespPedido"/>
+	    </xs:sequence>
+		<xs:attribute name="versao" use="required">
+            <xs:annotation>
+                <xs:documentation>Versão do Fisco</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:whiteSpace value="preserve"/>
+                    <xs:enumeration value="1.00"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+	<xs:unique name="pk_numItem">
+		<xs:selector xpath=".//*"/>
+		<xs:field xpath="@numItem"/>
+	</xs:unique>
+  </xs:element>
+  <xs:complexType name="TRespPedido">
+    <xs:annotation>
+        <xs:documentation>Resposta a um tpEvento 111500 ou 111501 </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+        <xs:element name="statPrazo">
+            <xs:annotation>
+                <xs:documentation>Identificador do cumprimento do prazo para solicitação do pedido de prorrogação: 0  Após o prazo, 1  Dentro do prazo</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:whiteSpace value="preserve" /> 
+                    <xs:enumeration value="0" /> 
+                    <xs:enumeration value="1" />
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:element>
+        <xs:element name="itemPedido" maxOccurs="990" minOccurs="1">
+            <xs:annotation>
+                <xs:documentation>Item do Pedido de Prorrogação</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+                <xs:sequence>
+                    <xs:element name="statPedido">
+                        <xs:annotation>
+                            <xs:documentation>Resposta do Fisco ao item do Pedido de Prorrogação: 1 - Deferido,    2 - Indeferido</xs:documentation>
+                        </xs:annotation>
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:whiteSpace value="preserve" /> 
+                                <xs:enumeration value="1" /> 
+                                <xs:enumeration value="2" />
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="justStatus">
+                        <xs:annotation>
+                            <xs:documentation>Justificativa da resposta do Fisco ao item do Pedido de Prorrogação</xs:documentation>
+                        </xs:annotation>
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:whiteSpace value="preserve" /> 
+                                <xs:enumeration value="1" /> 
+                                <xs:enumeration value="2" />
+                                <xs:enumeration value="3" /> 
+                                <xs:enumeration value="4" />
+                                <xs:enumeration value="5" /> 
+                                <xs:enumeration value="6" />
+                                <xs:enumeration value="7" /> 
+                                <xs:enumeration value="8" />
+                                <xs:enumeration value="9" /> 
+                                <xs:enumeration value="10" /> 
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="justStaOutra" maxOccurs="1" minOccurs="0" >
+                        <xs:annotation>
+                            <xs:documentation>Justificativa diferente das opções disponíveis no campo P25</xs:documentation>
+                        </xs:annotation>
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:minLength value="0"/>
+                                <xs:maxLength value="1000"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="numItem">
+                    <xs:annotation>
+                      <xs:documentation>Número do item da NF-e. O número do item deverá ser o mesmo número do item na NF-e</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:whiteSpace value="preserve"/>
+                            <xs:pattern value="[0-9]{1,3}"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:attribute>
+            </xs:complexType>
+	    </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

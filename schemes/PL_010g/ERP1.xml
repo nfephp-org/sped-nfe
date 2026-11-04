@@ -1,0 +1,19 @@
+      <detEvento versao="1.00" xmlns="http://www.portalfiscal.inf.br/nfe">
+        <descEvento>Fisco - Prorrogacao ICMS remessa para industrializacao</descEvento>
+		<idPedido>ID1115003513120000006599990855001000027356196432417001</idPedido>
+		<respPedido>
+			<statPrazo>0</statPrazo>
+			<itemPedido numItem="1">
+				<statPedido>1</statPedido>
+				<justStatus>1</justStatus>
+			</itemPedido> 
+			<itemPedido numItem="2">
+				<statPedido>1</statPedido> 
+				<justStatus>1</justStatus> 
+			</itemPedido>
+			<itemPedido numItem="1">
+				<statPedido>1</statPedido> 
+				<justStatus>1</justStatus> 
+			</itemPedido> 
+		</respPedido>  
+      </detEvento>

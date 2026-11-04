@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns="http://www.portalfiscal.inf.br/nfe" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.portalfiscal.inf.br/nfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="leiauteConsNFeDest_v1.01.xsd"/>
+	<xs:element name="retConsNFeDest" type="TRetConsNFeDest">
+		<xs:annotation>
+			<xs:documentation>Schema XML de validação do retorno de resumo das NF-e encontradas </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>
