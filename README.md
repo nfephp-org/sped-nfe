@@ -4,20 +4,15 @@ Biblioteca para geração e comunicação das NFe com as SEFAZ autorizadoras, e 
 
 ## Atualizado 
 
-- Nota Técnica 2025.001 v.1.00 Divulga Simplificação Operacional: NFC-e: Leiaute do QR-Code versão 3 NF-e
-- Nota Técnica 2025.002 v.1.01 Nota técnica de adequação dos leiautes da NF-e e da NFC-e Reforma Tributária do Consumo - RTC.
-- Nota Técnica Conjunta 2025.001 Divulga orientações sobre implementação do CNPJ alfanumérico nos documentos fiscais eletrônicos
-- Nota Técnica 2024.003 v.1.04 Alteração nas regras de validação 
-- Nota Técnica 2021.003 v.1.40 Validação GTIN
-- Nota Técnica 2024.003 v.1.05 Informações de Produtos da Agricultura, Pecuária e Produção Florestal e Alteração de regra de validação
-- Nota Técnica 2023.001 v.1.60 Tributação Monofásica sobre Combustíveis
-- Nota Técnica 2025.001 v.1.00 Simplificação Operacional: NFC-e (QR-Code versão 3) (Envio sincrono NFe)
-- Nota Técnica 2025.002-RTC v.1.10 Reforma Tributária do Consumo – Adequações NF-e / NFC-e
-- Schema PL_010v1.10b de 09/06/2025
-- Nota Técnica 2025.002-RTC v.1.20 Reforma Tributária do Consumo – Adequações NF-e / NFC-e
-- Schema PL_010v1.20b de 30/07/2025
-- Schema PL_010C v1.30 
-- Schema XSD CNPJ Alfa
+- Nota Técnica 2026.002 v1.11 - Publicada em 01/10/2026
+- Nota Técnica 2026.010 v1.00 - Publicada em 01/10/2026
+- Nota Técnica 2023.002 v1.02 - Publicada em 27/10/2026
+- Nota Técnica 2026.008 v1.01 - Publicada em 30/10/2026
+- Nota Técnica 2026.007 v1.11 - Publicada em 30/10/2026
+- Nota Técnica 2026.006 v1.01 - Publicada em 30/10/2026
+- Nota Técnica 2026.005 v1.00 - Publicada em 30/10/2026
+- Nota Técnica 2025.002 v1.53 - Publicada em 30/10/2026
+- Schema XSD PL_010g (26/10/2026)
 
 
 ![PHP Supported Version][ico-php]
