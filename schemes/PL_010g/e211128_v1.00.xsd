@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by sas-software@procergs.rs.gov.br (PROCERGS) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/nfe" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" targetNamespace="http://www.portalfiscal.inf.br/nfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="tiposBasico_v1.03.xsd"/>
+	<xs:element name="detEvento">
+		<xs:annotation>
+			<xs:documentation>Informações do Evento de Aceite de débito na apuração por emissão de nota de crédito</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="descEvento">
+					<xs:annotation>
+						<xs:documentation>Descrição do evento:  "Aceite de débito na apuração por emissão de nota de crédito"</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="Aceite de débito na apuração por emissão de nota de crédito"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="cOrgaoAutor" type="TCodUfIBGE">
+					<xs:annotation>
+						<xs:documentation>Código do Órgão Autor do Evento. Informar o Código da UF para este Evento.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="tpAutor">
+					<xs:annotation>
+						<xs:documentation>Informar 2=Empresa destinataria
+													Valores: 1=Empresa Emitente, 2=Empresa destinatária; 3=Empresa; 5=Fisco;6=RFB; 9=Outros Órgãos;
+						</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="2"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="verAplic" type="TVerAplic">
+					<xs:annotation>
+						<xs:documentation>Versão do Aplicativo que recebeu o Evento</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="indAceitacao">
+					<xs:annotation>
+						<xs:documentation>Indicador de concordância com o valor da nota de crédito que lançaram IBS e CBS na apuração assistida. Valores: 0 = não aceite; 1 = aceite.
+						</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="0"/>
+							<xs:enumeration value="1"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="versao">
+				<xs:annotation>
+					<xs:documentation>Versão do leiaute do evento</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:whiteSpace value="preserve"/>
+						<xs:enumeration value="1.00"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

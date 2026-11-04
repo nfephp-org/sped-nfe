@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns="http://www.portalfiscal.inf.br/nfe" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.portalfiscal.inf.br/nfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="tiposBasicosCcgConsGTIN_v1.00.xsd"/>
+	<xs:complexType name="TConsGTIN">
+		<xs:annotation>
+			<xs:documentation>Tipo Consulta pública Cadastro Centralizado de GTIN</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GTIN" type="TCodGTIN">
+				<xs:annotation>
+					<xs:documentation>Informar o código GTIN a ser consultado.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="versao" type="TVerConsGTIN" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="TRetConsGTIN">
+		<xs:annotation>
+			<xs:documentation>Tipo Retorno da Consulta pública Cadastro Centralizado de GTIN</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="verAplic" type="TVerAplic">
+				<xs:annotation>
+					<xs:documentation>Versão da aplicação da SVRS.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="cStat" type="TStat">
+				<xs:annotation>
+					<xs:documentation>Código do Status da resposta (resultado do processamento do lote).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="xMotivo" type="TMotivo">
+				<xs:annotation>
+					<xs:documentation>Descrição literal do Status da resposta (resultado do processamento do lote).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="dhResp" type="TDateTimeUTC">
+				<xs:annotation>
+					<xs:documentation>Data e hora da resposta, no formato AAAA-MM-DDThh:mm:ssTZD (UTC - Universal Coordinated Time).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GTIN" type="TCodGTIN" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>(idem mensagem de entrada) Código GTIN.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="tpGTIN" type="TTpGTIN" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Tipo do GTIN, quantidade de dígitos (8, 12, 13 ou 14).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="xProd" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Descrição do produto.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="TString">
+						<xs:minLength value="2"/>
+						<xs:maxLength value="500"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="NCM" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Código do NCM (8 posições).</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="TString">
+						<xs:pattern value="[0-9]{8}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="CEST" minOccurs="0" maxOccurs="3">
+				<xs:annotation>
+					<xs:documentation>Código Especificador da Substituição Tributária - CEST, que identifica a mercadoria sujeita aos regimes de  substituição tributária e de antecipação do recolhimento  do imposto.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="TString">
+						<xs:pattern value="[0-9]{7}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="versao" type="TVerConsGTIN" use="required"/>
+	</xs:complexType>
+	<xs:simpleType name="TVerConsGTIN">
+		<xs:annotation>
+			<xs:documentation>Tipo Versão do Leiaute para Consulta Pública GTIN</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:pattern value="1\.00"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
