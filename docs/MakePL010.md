@@ -168,6 +168,8 @@ Choice entre refNFe ou refNFeSig ou refNF ou refNFP ou refCTe ou refECF
 
 [tag gEstornoCred](#tag-gEstornoCred) - Cria a tag Grupo de Estorno de Crédito (opcional) $${\color{red}(PL_010_v1.30)}$$
 
+[tag gTribSN](#tag-gTribSN) - Cria a tag Grupo de Tributação do IBS e da CBS do Simples Nacional (opcional) $${\color{red}(NT2026.005)}$$
+
 [tag gCredPresOper](#tag-gCredPresOper) - Cria a tag Grupo de Crédito Presumido da Operação (opcional) $${\color{red}(PL_010_v1.30)}$$
 
 [tag gCredPresIBSZFM](#tag-gCredPresIBSZFM) - Cria tag Grupo de informações de Crédito Presumido em operações com a Zona Franca de Manaus  (opcional) $${\color{red}(RTC)}$$
@@ -435,6 +437,8 @@ $emi = [
         //2 – Simples Nacional – excesso de sublimite de receita bruta;
         //3 – Regime Normal.
         //4 - Simples Nacional - Microempreendedor individual - MEI
+    'tpRegimeIBSCBS' => null, //opcional NT2026.005 Tipo de Regime de Apuração do IBS e da CBS
+        //1 - Simples Nacional optante pela apuração do IBS e da CBS pelo regime regular (Híbrido)
     'CNPJ' => '12345678901234', //opcional [0-9]{14} ##### NOTA: a partir de 2026 ALFA [A-Z0-9]{12}[0-9]{2} #####
     'CPF' => '12345678901', //opcional [0-9]{11} - se os dois campos forem inclusos o CNPJ tem prioridade
 ];
@@ -826,6 +830,7 @@ $std->vDesc = 10.00;
 $std->vOutro = 15.00;
 $std->indTot = 1;
 $std->indBemMovelUsado = null; //opcional 1-Bem Móvel Usado ou null
+$std->cAtivSN = null; //opcional NT2026.005 Código de atividade do Simples Nacional (01, 02, 03, 04 ou 90)
 $std->xPed = '12345';
 $std->nItemPed = 1;
 $std->nFCI = '12345678-1234-1234-1234-123456789012';
@@ -2253,6 +2258,31 @@ $std->vCBSEstCred = 87.41; //OBRIGATÓRIO Valor da CBS a ser estornada
 $mk->taggEstornoCred($std);
 ``` 
 
+# tag gTribSN
+[Volta](#Métodos)
+
+## function taggTribSN(object $std): DOMElement    (NOVO MÉTODO Reforma Tributária NT2026.005_v1.00)
+Node det/imposto/IBSCBS/gTribSN
+
+> Grupo com a composição do IBS e da CBS do emitente do Simples Nacional que recolhe pelo DAS.
+> - O grupo gIBSSN só é criado quando pIBSSN for informado.
+> - Os valores são somados no total IBSCBSTot/gTribSN.
+
+| Parâmetro |   Tipo   | Descrição                                            |
+|:----------|:--------:|:-----------------------------------------------------|
+| $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
+
+```php
+$std = new stdClass();
+$std->item = 1; //OBRIGATÓRIO referencia ao item da NFe
+$std->pIBSSN = 0.1; //opcional Alíquota do IBS do Simples Nacional
+$std->vIBSSN = 0.10; //opcional Valor do IBS do Simples Nacional
+$std->pCBSSN = 0.9; //OBRIGATÓRIO Alíquota da CBS do Simples Nacional
+$std->vCBSSN = 0.90; //OBRIGATÓRIO Valor da CBS do Simples Nacional
+
+$mk->taggTribSN($std);
+```
+
 # tag gCredPresOper
 [Volta](#Métodos)
 
@@ -2536,6 +2566,8 @@ $std = (object) [
     'gMono_vCBSMonoRet',
     'gEstonoCred_vIBSEstCred',
     'gEstonoCred_vCBSEstCred',
+    'gTribSN_vIBSSN', //opcional NT2026.005 se não informado usa a soma dos itens (taggTribSN)
+    'gTribSN_vCBSSN', //opcional NT2026.005 se não informado usa a soma dos itens (taggTribSN)
 ];
 $mk->tagIBSCBSTot($std);
 ```
