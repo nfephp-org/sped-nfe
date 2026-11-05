@@ -97,7 +97,10 @@ trait TraitTagDet
         if ($std->indTot == 1) {
             $this->stdTot->vProd += (float) $this->conditionalNumberFormatting($std->vProd);
         }
-        $this->stdTot->vProdLiq += (float) $this->conditionalNumberFormatting($std->vProdLiq);
+        //NT2026.008 - soma em vProdLiqTot apenas o vProdLiq que vai para o XML do item (ver abaixo)
+        if (!empty($std->vUnComLiq) && !empty($std->vProdLiq)) {
+            $this->stdTot->vProdLiq += (float) $this->conditionalNumberFormatting($std->vProdLiq);
+        }
         $this->stdTot->vFrete += (float) $this->conditionalNumberFormatting($std->vFrete);
         $this->stdTot->vSeg += (float) $this->conditionalNumberFormatting($std->vSeg);
         $this->stdTot->vDesc += (float) $this->conditionalNumberFormatting($std->vDesc);

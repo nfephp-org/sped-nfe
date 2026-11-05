@@ -1837,6 +1837,85 @@ class TraitsCoverageTest extends TestCase
         $this->assertStringContainsString('<det nItem="2"', $xml);
     }
 
+    // ──────────────────────────────────────────────────────────────────────
+    //  NT2026.008 - vUnComLiq / vProdLiq (prod) e vProdLiqTot (total)
+    // ──────────────────────────────────────────────────────────────────────
+
+    public function test_getXML_vProdLiqTot_is_sum_of_items_vProdLiq(): void
+    {
+        $dom = $this->renderWithLiqValues([
+            1 => ['vUnComLiq' => '90.00', 'vProdLiq' => '90.00'],
+            2 => ['vUnComLiq' => '80.00', 'vProdLiq' => '80.00'],
+        ]);
+
+        $this->assertSame(2, $dom->getElementsByTagName('vUnComLiq')->length);
+        $this->assertSame(2, $dom->getElementsByTagName('vProdLiq')->length);
+        $this->assertSame('170.00', $dom->getElementsByTagName('vProdLiqTot')->item(0)->nodeValue);
+    }
+
+    public function test_getXML_vProdLiqTot_ignores_item_without_vUnComLiq(): void
+    {
+        $dom = $this->renderWithLiqValues([
+            1 => ['vUnComLiq' => '90.00', 'vProdLiq' => '90.00'],
+            2 => ['vUnComLiq' => null, 'vProdLiq' => '80.00'],
+        ]);
+
+        //o item 2 não leva vProdLiq no XML, então não pode entrar no total
+        $this->assertSame(1, $dom->getElementsByTagName('vProdLiq')->length);
+        $this->assertSame('90.00', $dom->getElementsByTagName('vProdLiqTot')->item(0)->nodeValue);
+    }
+
+    public function test_getXML_without_vUnComLiq_does_not_create_vProdLiqTot(): void
+    {
+        $dom = $this->renderWithLiqValues([
+            1 => ['vUnComLiq' => null, 'vProdLiq' => '90.00'],
+        ]);
+
+        $this->assertSame(0, $dom->getElementsByTagName('vProdLiq')->length);
+        $this->assertSame(0, $dom->getElementsByTagName('vProdLiqTot')->length);
+    }
+
+    /**
+     * Helper: render a NFe whose items receive vUnComLiq / vProdLiq
+     * @param array<int, array<string, ?string>> $items item => valores líquidos
+     */
+    private function renderWithLiqValues(array $items): \DOMDocument
+    {
+        $this->setupBaseTags();
+        foreach ($items as $item => $liq) {
+            $std = new stdClass();
+            $std->item = $item;
+            $std->cProd = '00' . $item;
+            $std->cEAN = 'SEM GTIN';
+            $std->xProd = 'PRODUTO TESTE';
+            $std->NCM = '84719012';
+            $std->CFOP = '5102';
+            $std->uCom = 'UN';
+            $std->qCom = '1.0000';
+            $std->vUnCom = '100.00';
+            $std->vProd = '100.00';
+            $std->vUnComLiq = $liq['vUnComLiq'];
+            $std->vProdLiq = $liq['vProdLiq'];
+            $std->cEANTrib = 'SEM GTIN';
+            $std->uTrib = 'UN';
+            $std->qTrib = '1.0000';
+            $std->vUnTrib = '100.00';
+            $std->indTot = 1;
+            $this->make->tagprod($std);
+            $this->addICMS($item);
+
+            $std = new stdClass();
+            $std->item = $item;
+            $std->vTotTrib = '18.00';
+            $this->make->tagimposto($std);
+        }
+        $this->addPayment();
+
+        $dom = new \DOMDocument();
+        $dom->loadXML($this->make->getXML());
+        return $dom;
+    }
+
     public function test_getXML_places_icms_previsto_pagto_antecip_inside_icms(): void
     {
         $this->setupBaseTags();
