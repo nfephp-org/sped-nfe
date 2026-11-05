@@ -24,6 +24,18 @@ class ComplementsTest extends NFeTestCase
         Complements::toAuthorize($request, $response);
     }
 
+    public function test_to_authorize_nfe_response_without_protnfe()
+    {
+        $this->expectException(DocumentsException::class);
+        $this->expectExceptionMessage('[225] Rejeicao: Falha no Schema XML do lote de NFe');
+        $request = file_get_contents(__DIR__ . '/fixtures/xml/exemplo_xml_envia_lote_modelo_55.xml');
+        $response = '<retEnviNFe xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00">'
+            . '<tpAmb>2</tpAmb><verAplic>SVRS202401011200</verAplic><cStat>225</cStat>'
+            . '<xMotivo>Rejeicao: Falha no Schema XML do lote de NFe</xMotivo><cUF>43</cUF>'
+            . '<dhRecbto>2026-11-03T10:00:00-03:00</dhRecbto></retEnviNFe>';
+        Complements::toAuthorize($request, $response);
+    }
+
     public function test_to_authorize_inut_cpf(): void
     {
         $request = file_get_contents(__DIR__ . '/fixtures/xml/request_inut_cpf.xml');
