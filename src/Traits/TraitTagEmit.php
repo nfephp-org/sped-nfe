@@ -31,6 +31,7 @@ trait TraitTagEmit
             'IM',
             'CNAE',
             'CRT',
+            'tpRegimeIBSCBS',
             'CNPJ',
             'CPF',
             'ISUFEmit'
@@ -110,6 +111,14 @@ trait TraitTagEmit
             $std->CRT,
             true,
             $identificador . "Código de Regime Tributário do emitente"
+        );
+        //NT 2026.005 v1.00
+        $this->dom->addChild(
+            $this->emit,
+            "tpRegimeIBSCBS",
+            $std->tpRegimeIBSCBS,
+            false,
+            $identificador . "Tipo de Regime de Apuração do IBS e da CBS"
         );
         //NT 2005.002 v1.50
         $this->dom->addChild(

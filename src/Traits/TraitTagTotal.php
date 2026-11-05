@@ -17,6 +17,7 @@ use DOMException;
  * @property stdclass $stdTot Totalizador
  * @property stdclass $stdISSQNTot Totalizador
  * @property stdclass $stdIBSCBSTot Totalizador
+ * @property array $aGTribSN
  * @property bool $flagMono
  * @method equilizeParameters($std, $possible)
  * @method conditionalNumberFormatting($value, $decimal = 2)
@@ -597,6 +598,8 @@ trait TraitTagTotal
             'gMono_vCBSMonoRet',
             'gEstonoCred_vIBSEstCred',
             'gEstonoCred_vCBSEstCred',
+            'gTribSN_vIBSSN',
+            'gTribSN_vCBSSN',
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = "W34 IBSCBSTot -";
@@ -624,6 +627,8 @@ trait TraitTagTotal
         $gMono_vCBSMonoRet = $std->gMono_vCBSMonoRet ?? $this->stdIBSCBSTot->gMono->vCBSMonoRet;
         $gEstornoCred_vIBSEstCred = $std->gEstonoCred_vIBSEstCred ?? $this->stdIBSCBSTot->gEstornoCred->vIBSEstCred;
         $gEstornoCred_vCBSEstCred = $std->gEstonoCred_vCBSEstCred ?? $this->stdIBSCBSTot->gEstornoCred->vCBSEstCred;
+        $gTribSN_vIBSSN = $std->gTribSN_vIBSSN ?? $this->stdIBSCBSTot->gTribSN->vIBSSN;
+        $gTribSN_vCBSSN = $std->gTribSN_vCBSSN ?? $this->stdIBSCBSTot->gTribSN->vCBSSN;
 
         //totalizador final
         $this->stdTot->vIBS = $gIBS_vIBS;
@@ -792,6 +797,25 @@ trait TraitTagTotal
                 "$identificador Total da CBS monofásica retida anteriormente"
             );
             $ibstot->appendChild($gMono);
+        }
+        //NT 2026.005 v1.00
+        if (!empty($this->aGTribSN) || isset($std->gTribSN_vIBSSN) || isset($std->gTribSN_vCBSSN)) {
+            $gTribSN = $this->dom->createElement('gTribSN');
+            $this->dom->addChild(
+                $gTribSN,
+                "vIBSSN",
+                $this->conditionalNumberFormatting($gTribSN_vIBSSN),
+                true,
+                "$identificador Valor total do IBS do Simples Nacional (vIBSSN)"
+            );
+            $this->dom->addChild(
+                $gTribSN,
+                "vCBSSN",
+                $this->conditionalNumberFormatting($gTribSN_vCBSSN),
+                true,
+                "$identificador Valor total da CBS do Simples Nacional (vCBSSN)"
+            );
+            $ibstot->appendChild($gTribSN);
         }
         //NT 2025.002_v1.30 - PL_010_V1.30
         if (!empty($gEstornoCred_vIBSEstCred) || !empty($gEstornoCred_vCBSEstCred)) {

@@ -183,6 +183,7 @@ final class MakeDev
     protected array $aGCredPresIBSZFM = [];
     protected array $aGAjusteCompet = [];
     protected array $aGEstornoCred = [];
+    protected array $aGTribSN = [];
     protected array $aIS = [];
     protected array $aII = [];
     protected array $aObsItem = [];
@@ -348,6 +349,10 @@ final class MakeDev
         $this->stdIBSCBSTot->gEstornoCred = new stdClass();
         $this->stdIBSCBSTot->gEstornoCred->vIBSEstCred = 0;
         $this->stdIBSCBSTot->gEstornoCred->vCBSEstCred = 0;
+
+        $this->stdIBSCBSTot->gTribSN = new stdClass();
+        $this->stdIBSCBSTot->gTribSN->vIBSSN = 0;
+        $this->stdIBSCBSTot->gTribSN->vCBSSN = 0;
     }
 
     /**
@@ -604,7 +609,8 @@ final class MakeDev
             }
             //DI => prod
             if (!empty($this->aDI[$item])) {
-                $ind = $prod->getElementsByTagName("indBemMovelUsado")->item(0) ?? null;
+                $ind = $prod->getElementsByTagName("cAtivSN")->item(0)
+                    ?? $prod->getElementsByTagName("indBemMovelUsado")->item(0);
                 if (empty($ind)) {
                     $ind = $prod->getElementsByTagName("indTot")->item(0);
                 }
@@ -818,6 +824,10 @@ final class MakeDev
                     } elseif (!empty($this->aGAjusteCompet[$item])) {
                         //não existe gIBSCBS, nem gIBSCBSMono, nem gTransfCred entao add gAjusteCompet
                         $this->addTag($ibscbs, $this->aGAjusteCompet[$item], 'Falta a tag IBSCBS!');
+                    }
+                    //gTribSN NT 2026.005
+                    if (!empty($this->aGTribSN[$item])) {
+                        $this->addTag($ibscbs, $this->aGTribSN[$item], 'Falta a tag IBSCBS!');
                     }
                     //gEstornoCred
                     if (!empty($this->aGEstornoCred[$item])) {
