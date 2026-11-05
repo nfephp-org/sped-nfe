@@ -184,7 +184,7 @@ Choice entre refNFe ou refNFeSig ou refNF ou refNFP ou refCTe ou refECF
 
 **Dados de Totais da NFe**
 
-[tag total](#tag-total) - Cria vNFTot (opcional) $${\color{red}(RTC)}$$
+[tag total](#tag-total) - Cria vNFTot e vProdLiqTot (opcional) $${\color{red}(RTC)}$$
 
 [tag ICMSTot](#tag-ICMSTot) - Cria tag com totais de ICMS, IPI, PIS, COFINS (opcional)
 
@@ -788,6 +788,12 @@ Node det/prod - Produtos - OBRIGATÓRIO
 > Nota: NT2025.002_v1.30 - PL_010_V1.30, novo campo usar apenas com PL_010_V1.30, deixar null nos demais casos
 > - tpCredPresIBSZFM
  
+> Nota: NT2026.008 - novos campos opcionais, usar apenas com esquemas que já os contêm (PL_010_V1, PL_010_V1.30 ou PL_010g), deixar null nos demais casos
+> - vUnComLiq - Valor Líquido Unitário do Produto ou Serviço (sem tributos), até 10 casas decimais
+> - vProdLiq - Valor Líquido do Produto ou Serviço (sem tributos), com duas casas decimais
+> - os dois campos só são incluídos no XML quando AMBOS forem informados
+> - o vProdLiq de cada item é somado automaticamente para gerar total/vProdLiqTot (ver [tag total](#tag-total))
+ 
 | Parâmetro |   Tipo   | Descrição                                            |
 |:----------|:--------:|:-----------------------------------------------------|
 | $std      | stdClass | contêm os dados dos campos, nomeados conforme manual |
@@ -816,6 +822,8 @@ $std->uCom = 'UN';
 $std->qCom = 10;
 $std->vUnCom = 100.00;
 $std->vProd = 1000.00;
+$std->vUnComLiq = null; //opcional NT2026.008 Valor Líquido Unitário (sem tributos) até 10 decimais, informar junto com vProdLiq
+$std->vProdLiq = null; //opcional NT2026.008 Valor Líquido do Produto (sem tributos) 2 decimais, informar junto com vUnComLiq
 $std->cEANTrib = "SEM GTIN";//'6361425485451';
 $std->uTrib = 'UN';
 $std->qTrib = 10;
@@ -2404,6 +2412,11 @@ Node infNFe/total
  
 > NOTA: Esse valor NÃO SERÁ nem calculado, nem inserido automaticamente na NFe, enquanto for opcional. 
  
+> NOTA: NT2026.008 - vProdLiqTot (Valor Total Líquido dos Produtos ou Serviços, sem tributos), ao contrário do vNFTot,
+> é calculado automaticamente pela soma dos vProdLiq informados em [tagprod](#tag-prod) e só é incluído na NF-e quando
+> essa soma for diferente de zero. Informe vProdLiqTot aqui apenas para substituir o valor calculado, chamando
+> tagTotal depois de todos os itens.
+ 
 > Dados dos totais da NF-e
 
 | Parâmetro |   Tipo   | Descrição                                            |
@@ -2412,9 +2425,10 @@ Node infNFe/total
 
 ```php
 $total = [
-    'vNFtot' => 1000, //opcional, popula a tag total/vNFTot 
+    'vNFTot' => 1000, //opcional, popula a tag total/vNFTot 
+    'vProdLiqTot' => null, //opcional NT2026.008, substitui a soma automática dos vProdLiq dos itens em total/vProdLiqTot
 ];
-$mk->tagTotal((object) $idev);
+$mk->tagTotal((object) $total);
 ```
 
 # tag ICMSTot
