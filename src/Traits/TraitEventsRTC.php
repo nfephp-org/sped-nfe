@@ -25,7 +25,7 @@ trait TraitEventsRTC
      * $std = (object) [
      *     'chNFe' => '12345678901234567890123456789012345678901234', //OBRIGATÓRIO
      *     'nProt' => '135260832643924' numero do protocolo de autorização
-     *     'idTransacao' => 'ACBS222000', OBRIGATÓRIO de 2 a 35 caracteres
+     *     'idTransacao' => 'ACBS222000', //OBRIGATÓRIO atributo de gPgto, de 2 a 35 caracteres
      *     'toMeioPgto' => '15' Lista do informe técnico  IT2026.001_
      * ]
      */
@@ -38,8 +38,7 @@ trait TraitEventsRTC
             . "<tpAutor>1</tpAutor>"  //1=Empresa Emitente
             . "<verAplic>{$verAplic}</verAplic>"
             . "<nProt>{$std->nProt}</nProt>"
-            . "<gPgto>"
-            . "<idTransacao>{$std->idTransacao}</idTransacao>"
+            . "<gPgto idTransacao=\"{$std->idTransacao}\">"
             . "<tpMeioPgto>{$std->tpMeioPgto}</tpMeioPgto>"
             . "<CNPJReceb>{$std->cnpjRecebedor}</CNPJReceb>"
             . "<CNPJBasePSP>{$std->cnpjBasePSP}</CNPJBasePSP>"
