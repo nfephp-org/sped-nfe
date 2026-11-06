@@ -1093,6 +1093,27 @@ class TraitsCoverageTest extends TestCase
         return '35220605730928000145550010000048661583302923';
     }
 
+    public function test_sefazVinculoPagamento_idTransacao_is_attribute(): void
+    {
+        $tools = $this->getTools();
+
+        $std = new stdClass();
+        $std->chNFe = $this->makeChaveNFe55();
+        $std->nSeqEvento = 1;
+        $std->nProt = '135260832643924';
+        $std->idTransacao = 'ACBS222000';
+        $std->tpMeioPgto = '15';
+        $std->cnpjRecebedor = '05730928000145';
+        $std->cnpjBasePSP = '00000000';
+        $tools->sefazVinculoPagamento($std);
+        $request = $tools->getRequest();
+
+        $this->assertStringContainsString('<tpEvento>110300</tpEvento>', $request);
+        $this->assertStringContainsString('<gPgto idTransacao="ACBS222000">', $request);
+        $this->assertStringNotContainsString('<idTransacao>', $request);
+        $this->assertStringContainsString('<tpMeioPgto>15</tpMeioPgto>', $request);
+    }
+
     public function test_sefazSolApropCredPresumido(): void
     {
         $tools = $this->getTools();
