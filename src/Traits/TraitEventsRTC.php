@@ -525,7 +525,7 @@ trait TraitEventsRTC
     /**
      * Evento: Cancelamento de Evento
      * Permitir que o autor de um Evento já autorizado possa proceder o seu cancelamento.
-     * Modelo: NF-e modelo 55, Autor do Evento: O mesmo Autor do Evento que está sendo cancelado.
+     * Modelo: NF-e modelo 55/65, Autor do Evento: O mesmo Autor do Evento que está sendo cancelado.
      * Tipo de Evento (Código - Descrição): 110001 - Cancelamento de Evento
      * @param stdClass $std
      * @param string|null $verAplic
@@ -533,8 +533,7 @@ trait TraitEventsRTC
      */
     public function sefazCancelaEvento(stdClass $std, ?string $verAplic = null): string
     {
-        //apenas 55
-        $this->checkModel($std);
+        $this->checkModel($std, [55, 65]);
         $verAplic = $this->resolveVerAplic($verAplic);
         $tpEvento = '110001';
         $tagAdic = "<cOrgaoAutor>{$this->cUF}</cOrgaoAutor>"
