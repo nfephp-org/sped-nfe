@@ -1093,6 +1093,63 @@ class TraitsCoverageTest extends TestCase
         return '35220605730928000145550010000048661583302923';
     }
 
+    protected function makeChaveNFe65(): string
+    {
+        // Valid key with mod=65 at position 20-21
+        return '35220605730928000145650010000048661583302923';
+    }
+
+    public function test_sefazVinculoPagamento(): void
+    {
+        $tools = $this->getTools();
+
+        $std = new stdClass();
+        $std->chNFe = $this->makeChaveNFe55();
+        $std->nSeqEvento = 1;
+        $std->nProt = '135260832643924';
+        $std->idTransacao = 'ACBS222000';
+        $std->tpMeioPgto = '15';
+        $std->cnpjRecebedor = '05730928000145';
+        $std->cnpjBasePSP = '00000000';
+        $tools->sefazVinculoPagamento($std);
+        $request = $tools->getRequest();
+
+        $this->assertStringContainsString('<tpEvento>110300</tpEvento>', $request);
+        $this->assertStringContainsString('<tpAutor>1</tpAutor>', $request);
+        $this->assertStringContainsString('<verAplic>TestApp_1.0</verAplic>', $request);
+        $this->assertStringContainsString('<nProt>135260832643924</nProt>', $request);
+        $this->assertStringContainsString('<idTransacao>ACBS222000</idTransacao>', $request);
+        $this->assertStringContainsString('<tpMeioPgto>15</tpMeioPgto>', $request);
+        $this->assertStringContainsString('<CNPJReceb>05730928000145</CNPJReceb>', $request);
+        $this->assertStringContainsString('<CNPJBasePSP>00000000</CNPJBasePSP>', $request);
+    }
+
+    public function test_sefazVinculoPagamento_modelo_65(): void
+    {
+        $tools = $this->getTools();
+        $tools->model(65);
+
+        try {
+            $std = new stdClass();
+            $std->chNFe = $this->makeChaveNFe65();
+            $std->nSeqEvento = 1;
+            $std->nProt = '135260832643924';
+            $std->idTransacao = 'ACBS222000';
+            $std->tpMeioPgto = '17';
+            $std->cnpjRecebedor = '05730928000145';
+            $std->cnpjBasePSP = '00000000';
+            $tools->sefazVinculoPagamento($std, 'NfceApp_1.0');
+            $request = $tools->getRequest();
+
+            $this->assertStringContainsString('<tpEvento>110300</tpEvento>', $request);
+            $this->assertStringContainsString('<verAplic>NfceApp_1.0</verAplic>', $request);
+            $this->assertStringContainsString('<idTransacao>ACBS222000</idTransacao>', $request);
+            $this->assertStringContainsString('<tpMeioPgto>17</tpMeioPgto>', $request);
+        } finally {
+            $tools->model(55);
+        }
+    }
+
     public function test_sefazSolApropCredPresumido(): void
     {
         $tools = $this->getTools();
