@@ -31,7 +31,7 @@ trait TraitEventsRTC
      */
     public function sefazVinculoPagamento(stdClass $std, ?string $verAplic = null): string
     {
-        $this->checkModel($std);
+        $this->checkModel($std, [55, 65]);
         $verAplic = $this->resolveVerAplic($verAplic);
         $tpEvento = '110300';
         $tagAdic = "<cOrgaoAutor>{$this->cUF}</cOrgaoAutor>"
@@ -772,21 +772,25 @@ trait TraitEventsRTC
     }
 
     /**
-     * Somente aceitar modelo 55
+     * Somente aceitar modelos permitidos, por padrão apenas 55
      * @param stdClass $std
+     * @param array $allowedModels
      * @return void
      */
-    protected function checkModel(stdClass $std): void
+    protected function checkModel(stdClass $std, array $allowedModels = [55]): void
     {
-        //apenas 55
-        if ($this->modelo !== 55) {
+        if (!in_array($this->modelo, $allowedModels)) {
             throw new InvalidArgumentException(
-                'O ambiente está ajustado para modelo 65 (NFCe) e esse evento atende apenas o modelo 55 (NFe)'
+                'O ambiente está ajustado para o modelo ' . $this->modelo
+                . ' e esse evento atende apenas o modelo ' . implode(' e ', $allowedModels)
             );
         }
         if (!empty($std->chNFe)) {
-            if (substr($std->chNFe, 20, 2) !== '55') {
-                throw new InvalidArgumentException('A chave da NFe informada não é uma NFe modelo 55');
+            $modeloChave = substr($std->chNFe, 20, 2);
+            if (!in_array($modeloChave, $allowedModels)) {
+                throw new InvalidArgumentException(
+                    'A chave da NFe informada não é uma NFe modelo ' . implode(' e ', $allowedModels)
+                );
             }
         }
     }
