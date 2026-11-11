@@ -509,6 +509,77 @@ class ParserTest extends TestCase
         $this->assertObjectNotHasProperty('pDifIBS', $ub84);
     }
 
+    public function test_toXml_local_v13_novos_campos(): void
+    {
+        $txt = file_get_contents($this->fixturesPath . 'nfe_4.00_local_v13_ibscbs.txt');
+        $this->assertSame([], \NFePHP\NFe\Common\ValidTXT::isValid($txt, \NFePHP\NFe\Common\ValidTXT::LOCAL_V13));
+        $notas = $this->parseTxt($txt);
+
+        $parser = new Parser('4.00', Parser::LOCAL_V13);
+        $xml = $parser->toXml($notas[0]);
+        $this->assertNotNull($xml);
+        $nfe = new \SimpleXMLElement($xml);
+        $prod = $nfe->infNFe->det[0]->prod;
+        $this->assertEquals('100.0000000000', (string) $prod->vUnComLiq);
+        $this->assertEquals('100.00', (string) $prod->vProdLiq);
+        $this->assertEquals('100.00', (string) $nfe->infNFe->total->vNFTot);
+    }
+
+    public function test_toXml_local_v13_grupos_novos(): void
+    {
+        $txt = file_get_contents($this->fixturesPath . 'nfe_4.00_local_v13_ibscbs.txt');
+        $insert = [
+            'B31' => [
+                'BB02|35180825028332000105550010000005081000005061|',
+                'BB02|35180825028332000105550010000005091000005062|',
+                'BB05|35180825028332000105550010000005081000005061|',
+            ],
+            'I' => ['LA|210203001|GLP|60.0000|20.0000|20.0000|0.00|||SP|', 'LA18|0|35|100.0000|'],
+            'UB12' => ['UB66a|1|123|0.0000|0.00|'],
+            'UB131' => ['VA01|campo1|texto1|campo2|texto2|'],
+            'Y' => ['YC01|1|abc123|01|25028332000105|12345678|'],
+            'Z' => ['ZF02|REC001|12345678909|'],
+        ];
+        $lines = [];
+        foreach (explode("\n", trim($txt)) as $line) {
+            $key = explode('|', $line)[0];
+            if ($key === 'N02') {
+                $line = 'NB01|10.00|';
+            }
+            $lines[] = $line;
+            foreach ($insert[$key] ?? [] as $new) {
+                $lines[] = $new;
+            }
+        }
+        $txt = implode("\n", $lines);
+        $this->assertSame([], \NFePHP\NFe\Common\ValidTXT::isValid($txt, \NFePHP\NFe\Common\ValidTXT::LOCAL_V13));
+        $notas = $this->parseTxt($txt);
+
+        $parser = new Parser('4.00', Parser::LOCAL_V13);
+        $xml = $parser->toXml($notas[0]);
+        $this->assertNotNull($xml);
+        foreach (
+            [
+                'refDFeAnt',
+                'origComb',
+                'ICMSPrevistoPagtoAntecip',
+                'gALCZFMCBS',
+                'obsItem',
+                'gPgto',
+                'defensivo',
+            ] as $tag
+        ) {
+            $this->assertStringContainsString("<$tag", $xml, "Tag $tag ausente no XML");
+        }
+        $nfe = new \SimpleXMLElement($xml);
+        $this->assertCount(2, $nfe->infNFe->ide->gPagAntecipado->refNFe);
+        // UB120 gera gCredPresOper (antes chamava taggEstornoCred por engano)
+        $this->assertMatchesRegularExpression(
+            '#<gCredPresOper><vBCCredPres>100.00</vBCCredPres><cCredPres>1</cCredPres>#',
+            $xml
+        );
+    }
+
     public function test_dump_local_v12_extras_fixture_tags(): void
     {
         $txt = file_get_contents($this->fixturesPath . 'nfe_4.00_local_v12_extras.txt');
