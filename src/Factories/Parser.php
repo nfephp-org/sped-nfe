@@ -245,7 +245,7 @@ class Parser
      * Create tag ide [B]
      * B|cUF|cNF|natOp|mod|serie|nNF|dhEmi|dhSaiEnt|tpNF|idDest|cMunFG|tpImp
      *  |tpEmis|cDV|tpAmb|finNFe|indFinal|indPres|procEmi|verProc|dhCont|xJust
-     *  |indPag|dPrevEntrega|tpNFDebito|tpNFCredito|cMunFGIBS|cMunFGIBS|
+     *  |indPag|dPrevEntrega|tpNFDebito|tpNFCredito|cMunFGIBS|cIndOp|
      */
     protected function bEntity(stdClass $std): void
     {
@@ -254,11 +254,20 @@ class Parser
 
     /**
      * Create tag taggCompraGov [B31]
-     * B31|tpEnteGov|pRedutor|tpOperGov|
+     * B31|tpEnteGov|pRedutor|tpOperGov|refDFeAnt|
      */
     protected function b31Entity(stdClass $std): void
     {
         $this->make->taggCompraGov($std);
+    }
+
+    /**
+     * Create tag refDFeAnt [BB05], belongs to [B31]
+     * BB05|refDFeAnt|
+     */
+    protected function bb05Entity(stdClass $std): void
+    {
+        $this->make->tagrefDFeAnt($std);
     }
 
     /**
@@ -273,7 +282,7 @@ class Parser
 
     /**
      * Create tag refNFe [BA02]
-     * BA02|refNFe|
+     * BA02|refNFe|refNFeSig|
      */
     protected function ba02Entity(stdClass $std): void
     {
@@ -349,6 +358,7 @@ class Parser
     }
 
     /**
+     * Grupo gPagAntecipado, NF-e de pagamento antecipado referenciada [BB02]
      * BB02|refNFe|
      */
     protected function bb02Entity(stdClass $std): void
@@ -362,13 +372,10 @@ class Parser
      */
     protected function cEntity(stdClass $std): void
     {
-        if (count($this->BB02RefNFe) > 0) {
-            $ref = [
-                'refNfe' => $this->BB02RefNFe,
-            ];
-            $this->make->taggPagAntecipado((object) $ref);
-            $this->BB02RefNFe = [];
+        foreach ($this->BB02RefNFe as $refNFe) {
+            $this->make->taggPagAntecipado((object) ['refNFe' => $refNFe]);
         }
+        $this->BB02RefNFe = [];
         $this->stdEmit = $std;
         $this->stdEmit->CNPJ = null;
         $this->stdEmit->CPF = null;
@@ -633,7 +640,7 @@ class Parser
      * LOCAL
      * I|cProd|cEAN|xProd|NCM|cBenef|EXTIPI|CFOP|uCom|qCom|vUnCom|vProd|cEANTrib
      *  |uTrib|qTrib|vUnTrib|vFrete|vSeg|vDesc|vOutro|indTot|xPed|nItemPed|nFCI
-     *  |vItem|tpCredPresIBSZFM|indBemMovelUsado|
+     *  |vItem|tpCredPresIBSZFM|indBemMovelUsado|cBarra|cBarraTrib|vUnComLiq|vProdLiq|
      * SEBRAE
      * I|cProd|cEAN|xProd|NCM|EXTIPI|CFOP|uCom|qCom|vUnCom|vProd|cEANTrib|uTrib
      *  |qTrib|vUnTrib|vFrete|vSeg|vDesc|vOutro|indTot|xPed|nItemPed|nFCI|
@@ -656,7 +663,7 @@ class Parser
 
     /**
      * Create tag gCred [I05G]
-     * I05C|cCredPresumido|pCredPresumido|vCredPresumido|
+     * I05G|cCredPresumido|pCredPresumido|vCredPresumido|
      */
     protected function i05gEntity(stdClass $std): void
     {
@@ -678,7 +685,7 @@ class Parser
 
     /**
      * Create tag DI [I18]
-     * I18|nDI|dDI|xLocDesemb|UFDesemb|dDesemb|tpViaTransp|vAFRMM|tpIntermedio|CNPJ|UFTerceiro|cExportador|
+     * I18|nDI|dDI|xLocDesemb|UFDesemb|dDesemb|tpViaTransp|vAFRMM|tpIntermedio|CNPJ|UFTerceiro|cExportador|CPF|
      */
     protected function i18Entity(stdClass $std): void
     {
@@ -783,6 +790,16 @@ class Parser
     {
         $std->item = $this->item;
         $this->make->tagencerrante($std);
+    }
+
+    /**
+     * Load fields for tag origComb [LA18]
+     * LA18|indImport|cUFOrig|pOrig|
+     */
+    protected function la18Entity(stdClass $std): void
+    {
+        $std->item = $this->item;
+        $this->make->tagorigComb($std);
     }
 
     /**
@@ -922,7 +939,7 @@ class Parser
 
     /**
      * Create tag ICMSPart [N10a]
-     * N10a|orig|CST|modBC|vBC|pRedBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|pBCOp|UFST|
+     * N10a|orig|CST|modBC|vBC|pRedBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST|vICMSST|pBCOp|UFST|vBCFCPST|pFCPST|vFCPST|vICMSDeson|motDesICMS|indDeduzDeson|
      */
     protected function n10aEntity(stdClass $std): void
     {
@@ -1023,6 +1040,16 @@ class Parser
     {
         $std->item = $this->item;
         $this->make->tagICMSUFDest($std);
+    }
+
+    /**
+     * Create tag ICMSPrevistoPagtoAntecip [NB01]
+     * NB01|vICMSPrevisto|
+     */
+    protected function nb01Entity(stdClass $std): void
+    {
+        $std->item = $this->item;
+        $this->make->tagICMSPrevistoAntecipado($std);
     }
 
     /**
@@ -1415,7 +1442,7 @@ class Parser
     }
 
     /**
-     * Create tag IS [UB01|CSTIS|cClassTribIS|vBCIS|pIS|pISEspec|uTrib|qTrib|vIS|]
+     * Create tag IS [UB01|CSTIS|cClassTribIS|vBCIS|pIS|adRemIS|uTrib|qTrib|vIS|]
      */
     protected function ub01Entity(stdClass $std): void
     {
@@ -1424,12 +1451,22 @@ class Parser
     }
 
     /**
-     * Create tag IBSCBS UB12|CST|cClassTrib|indDoacao|vBC|gIBSUF_pIBSUF|gIBSUF_pDif|gIBSUF_vDif|gIBSUF_vDevTrib|gIBSUF_pRedAliq|gIBSUF_pAliqEfet|gIBSUF_vIBSUF|gIBSMun_pIBSMun|gIBSMun_pDif|gIBSMun_vDif|gIBSMun_vDevTrib|gIBSMun_pRedAliq|gIBSMun_pAliqEfet|gIBSMun_vIBSMun|gCBS_pCBS|gCBS_pDif|gCBS_vDif|gCBS_vDevTrib|gCBS_pRedAliq|gCBS_pAliqEfet|gCBS_vCBS|
+     * Create tag IBSCBS UB12|CST|cClassTrib|indDoacao|vBC|gIBSUF_pIBSUF|gIBSUF_pDif|gIBSUF_vDif|gIBSUF_vDevTrib|gIBSUF_pRedAliq|gIBSUF_pAliqEfet|gIBSUF_vIBSUF|gIBSMun_pIBSMun|gIBSMun_pDif|gIBSMun_vDif|gIBSMun_vDevTrib|gIBSMun_pRedAliq|gIBSMun_pAliqEfet|gIBSMun_vIBSMun|gCBS_pCBS|gCBS_pDif|gCBS_vDif|gCBS_vDevTrib|gCBS_pRedAliq|gCBS_pAliqEfet|gCBS_vCBS|vIBS|gIBSUF_pDevTrib|gIBSMun_pDevTrib|gCBS_pDevTrib|
      */
     protected function ub12Entity(stdClass $std): void
     {
         $std->item = $this->item;
         $this->make->tagIBSCBS($std);
+    }
+
+    /**
+     * Create tag gALCZFMCBS [UB66a]
+     * UB66a|tpALCZFMCBS|nProcSuframa|pAliqEfetRegCBS|vTribRegCBS|
+     */
+    protected function ub66aEntity(stdClass $std): void
+    {
+        $std->item = $this->item;
+        $this->make->taggALCZFMCBS($std);
     }
 
     /**
@@ -1528,13 +1565,13 @@ class Parser
     /**
      * Crédito Presumido da Operação - Pai UB119
      * UB120|vBCCredPres|ibs_pCredPres|ibs_vCredPres|ibs_vCredPresCondSus|cbs_pCredPres
-     *      |cbs_vCredPres|cbs_vCredPresCondSus|
+     *      |cbs_vCredPres|cbs_vCredPresCondSus|cCredPres|
      */
     protected function ub120Entity(stdClass $std): void
     {
         $std->item = $this->item;
 
-        $this->make->taggEstornoCred($std);
+        $this->make->taggCredPresOper($std);
     }
 
     /**
@@ -1550,6 +1587,16 @@ class Parser
     }
 
     /**
+     * Create tag obsItem [VA01]
+     * VA01|obsCont_xCampo|obsCont_xTexto|obsFisco_xCampo|obsFisco_xTexto|
+     */
+    protected function va01Entity(stdClass $std): void
+    {
+        $std->item = $this->item;
+        $this->make->tagObsItem($std);
+    }
+
+    /**
      * Grupo VC. Referenciamento de item de outro Documento Fiscal Eletrônico - DF-e
      * VC|chaveAcesso|nItem|
      */
@@ -1561,19 +1608,21 @@ class Parser
     }
 
     /**
-     * Linha W [W]
-     * W|
+     * Create tag total [W]
+     * W|vNFTot|vProdLiqTot|
      */
     protected function wEntity(stdClass $std): void
     {
-        //fake não faz nada
-        $field = null;
+        if (isset($std->vNFTot) || isset($std->vProdLiqTot)) {
+            $this->make->tagTotal($std);
+        }
     }
 
     /**
      * Cria tag ICMSTot [W02], belongs to [W]
      * W02|vBC|vICMS|vICMSDeson|vFCP|vBCST|vST|vFCPST|vFCPSTRet|vProd|vFrete|vSeg|vDesc|vII|vIPI
-     *    |vIPIDevol|vPIS|vCOFINS|vOutro|vNF|vTotTrib|vFCPUFDest|vICMSUFDest|vICMSUFRemet|
+     *    |vIPIDevol|vPIS|vCOFINS|vOutro|vNF|vTotTrib|vFCPUFDest|vICMSUFDest|vICMSUFRemet|qBCMono
+     *    |vICMSMono|qBCMonoReten|vICMSMonoReten|qBCMonoRet|vICMSMonoRet|
      */
     protected function w02Entity(stdClass $std): void
     {
@@ -1784,7 +1833,7 @@ class Parser
 
     /**
      * Creates tag detPag and card [YA]
-     * YA|tPag|vPag|CNPJ|tBand|cAut|tpIntegra|xPag|
+     * YA|indPag|tPag|vPag|CNPJ|tBand|cAut|tpIntegra|xPag|dPag|CNPJPag|UFPag|CNPJReceb|idTermPag|
      * SEBRAE
      * YA|troco|
      */
@@ -1817,6 +1866,15 @@ class Parser
     }
 
     /**
+     * Create tag gPgto (gPgtoVinc) [YC01]
+     * YC01|nPag|idTransacao|tpMeioPgto|CNPJReceb|CNPJBasePSP|
+     */
+    protected function yc01Entity(stdClass $std): void
+    {
+        $this->make->tagPgtoVinc($std);
+    }
+
+    /**
      * Create a tag infAdic [Z]
      * Z|infAdFisco|infCpl|
      */
@@ -1845,7 +1903,7 @@ class Parser
 
     /**
      * Create tag procRef [Z10]
-     * Z10|nProc|indProc|
+     * Z10|nProc|indProc|tpAto|
      */
     protected function z10Entity(stdClass $std): void
     {
@@ -1904,6 +1962,24 @@ class Parser
     protected function zdEntity(stdClass $std): void
     {
         $this->make->taginfRespTec($std);
+    }
+
+    /**
+     * Create tag defensivo do grupo agropecuario [ZF02]
+     * ZF02|nReceituario|CPFRespTec|
+     */
+    protected function zf02Entity(stdClass $std): void
+    {
+        $this->make->tagAgropecuarioDefensivo($std);
+    }
+
+    /**
+     * Create tag guiaTransito do grupo agropecuario [ZF04]
+     * ZF04|tpGuia|UFGuia|serieGuia|nGuia|
+     */
+    protected function zf04Entity(stdClass $std): void
+    {
+        $this->make->tagAgropecuarioGuia($std);
     }
 
     /**
