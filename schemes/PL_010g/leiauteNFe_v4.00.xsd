@@ -617,6 +617,24 @@ Este campo será obrigatoriamente preenchido com:
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
+									<xs:element name="tpRegimeIBSCBS" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Tipo de Regime de Apuração do IBS e da CBS:
+1 - Contribuinte do Simples Nacional (CRT=1 ou 2) com opção pelo regime regular do IBS e da CBS;
+2 - Contribuinte do Regime Normal (CRT=3) com opção pendente pelo CRT="1-Simples Nacional" sem regime regular do IBS e da CBS;
+3 - Contribuinte do Regime Normal (CRT=3) com opção pendente pelo CRT="2-Simples Nacional, excesso sublimite de receita bruta" sem regime regular do IBS e da CBS;
+4 - Contribuinte do Regime Normal (CRT=3) com opção pendente pelo Simples Nacional (CRT=1 ou 2), com regime regular do IBS e da CBS.</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:whiteSpace value="preserve"/>
+												<xs:enumeration value="1"/>
+												<xs:enumeration value="2"/>
+												<xs:enumeration value="3"/>
+												<xs:enumeration value="4"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
 									<xs:element name="ISUFEmit" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Inscrição do emitente na Suframa</xs:documentation>
@@ -1157,6 +1175,27 @@ Formato ”CFOP9999”.</xs:documentation>
 														<xs:restriction base="xs:string">
 															<xs:whiteSpace value="preserve"/>
 															<xs:enumeration value="1"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+												<xs:element name="cAtivSN" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Código de atividade do Simples Nacional:
+01 - Revenda de mercadorias, venda de mercadorias industrializadas pelo contribuinte - Anexo I.
+02 - Operações com os demais bens materiais, sem incidência de ICMS – Anexo I.
+03 - Venda de mercadorias industrializadas pelo contribuinte, com industrialização incentivada na Zona Franca de Manaus - Anexo II.
+04 - Operações com os demais bens materiais, com industrialização incentivada na Zona Franca de Manaus, sem incidência de ICMS - Anexo II.
+90 - Operações não Tributáveis.
+Observação: informar somente quando o emitente for optante do Simples Nacional ou estiver com opção pendente.</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:whiteSpace value="preserve"/>
+															<xs:enumeration value="01"/>
+															<xs:enumeration value="02"/>
+															<xs:enumeration value="03"/>
+															<xs:enumeration value="04"/>
+															<xs:enumeration value="90"/>
 														</xs:restriction>
 													</xs:simpleType>
 												</xs:element>
@@ -2150,7 +2189,7 @@ ambiente.</xs:documentation>
 																				</xs:element>
 																				<xs:element name="CST">
 																					<xs:annotation>
-																						<xs:documentation>Tributção pelo ICMS
+																						<xs:documentation>Tributação pelo ICMS
 00 - Tributada integralmente</xs:documentation>
 																					</xs:annotation>
 																					<xs:simpleType>
@@ -2221,7 +2260,7 @@ ambiente.</xs:documentation>
 																				</xs:element>
 																				<xs:element name="CST">
 																					<xs:annotation>
-																						<xs:documentation>Tributção pelo ICMS
+																						<xs:documentation>Tributação pelo ICMS
 02= Tributação monofásica própria sobre combustíveis;</xs:documentation>
 																					</xs:annotation>
 																					<xs:simpleType>
@@ -2426,7 +2465,7 @@ ambiente.</xs:documentation>
 																				</xs:element>
 																				<xs:element name="CST">
 																					<xs:annotation>
-																						<xs:documentation>Tributção pelo ICMS
+																						<xs:documentation>Tributação pelo ICMS
 15= Tributação monofásica própria e com responsabilidade pela retenção sobre combustíveis;</xs:documentation>
 																					</xs:annotation>
 																					<xs:simpleType>
@@ -2492,7 +2531,7 @@ ambiente.</xs:documentation>
 																	</xs:element>
 																	<xs:element name="ICMS20">
 																		<xs:annotation>
-																			<xs:documentation>Tributção pelo ICMS
+																			<xs:documentation>Tributação pelo ICMS
 20 - Com redução de base de cálculo</xs:documentation>
 																		</xs:annotation>
 																		<xs:complexType>
@@ -2506,7 +2545,7 @@ ambiente.</xs:documentation>
 																				</xs:element>
 																				<xs:element name="CST">
 																					<xs:annotation>
-																						<xs:documentation>Tributção pelo ICMS
+																						<xs:documentation>Tributação pelo ICMS
 20 - Com redução de base de cálculo</xs:documentation>
 																					</xs:annotation>
 																					<xs:simpleType>
@@ -2629,7 +2668,7 @@ ambiente.</xs:documentation>
 																				</xs:element>
 																				<xs:element name="CST">
 																					<xs:annotation>
-																						<xs:documentation>Tributção pelo ICMS
+																						<xs:documentation>Tributação pelo ICMS
 30 - Isenta ou não tributada e com cobrança do ICMS por substituição tributária</xs:documentation>
 																					</xs:annotation>
 																					<xs:simpleType>
@@ -2839,7 +2878,7 @@ Informar o motivo da desoneração:
 																	</xs:element>
 																	<xs:element name="ICMS51">
 																		<xs:annotation>
-																			<xs:documentation>Tributção pelo ICMS 51 - Diferimento. A exigência do preenchimento das informações do ICMS diferido fica à critério de cada UF.</xs:documentation>
+																			<xs:documentation>Tributação pelo ICMS 51 - Diferimento. A exigência do preenchimento das informações do ICMS diferido fica à critério de cada UF.</xs:documentation>
 																		</xs:annotation>
 																		<xs:complexType>
 																			<xs:sequence>
@@ -2975,7 +3014,7 @@ Informar o motivo da desoneração:
 																				</xs:element>
 																				<xs:element name="CST">
 																					<xs:annotation>
-																						<xs:documentation>Tributção pelo ICMS
+																						<xs:documentation>Tributação pelo ICMS
 53= Tributação monofásica sobre combustíveis com recolhimento diferido;</xs:documentation>
 																					</xs:annotation>
 																					<xs:simpleType>
@@ -3134,7 +3173,7 @@ Informar o motivo da desoneração:
 																				</xs:element>
 																				<xs:element name="CST">
 																					<xs:annotation>
-																						<xs:documentation>Tributção pelo ICMS
+																						<xs:documentation>Tributação pelo ICMS
 61= Tributação monofásica sobre combustíveis cobrada anteriormente</xs:documentation>
 																					</xs:annotation>
 																					<xs:simpleType>
@@ -3178,7 +3217,7 @@ Informar o motivo da desoneração:
 																				</xs:element>
 																				<xs:element name="CST">
 																					<xs:annotation>
-																						<xs:documentation>Tributção pelo ICMS
+																						<xs:documentation>Tributação pelo ICMS
 70 - Com redução de base de cálculo e cobrança do ICMS por substituição tributária</xs:documentation>
 																					</xs:annotation>
 																					<xs:simpleType>
@@ -3385,7 +3424,7 @@ Informar o motivo da desoneração:
 																				</xs:element>
 																				<xs:element name="CST">
 																					<xs:annotation>
-																						<xs:documentation>Tributção pelo ICMS
+																						<xs:documentation>Tributação pelo ICMS
 90 - Outras</xs:documentation>
 																					</xs:annotation>
 																					<xs:simpleType>
@@ -3824,7 +3863,7 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 																				</xs:element>
 																				<xs:element name="CST">
 																					<xs:annotation>
-																						<xs:documentation>Tributção pelo ICMS
+																						<xs:documentation>Tributação pelo ICMS
 41-Não Tributado.
 60-Cobrado anteriormente por substituição tributária.</xs:documentation>
 																					</xs:annotation>
@@ -6165,16 +6204,16 @@ Substituição Tributaria;</xs:documentation>
 						</xs:element>
 						<xs:element name="gPgtoVinc" type="TPgtoVinc" minOccurs="0">
 							<xs:annotation>
-								<xs:documentation>Informações da Vinculação com a Transação de Pagamento </xs:documentation>
+								<xs:documentation>Informações da Vinculação com a Transação de Pagamento</xs:documentation>
 							</xs:annotation>
 							<!-- Valida a unicidade de nPag -->
 							<xs:unique name="pk_gPgto_nPag">
-								<xs:selector xpath="gPgto"/>
+								<xs:selector xpath="./*"/>
 								<xs:field xpath="@nPag"/>
 							</xs:unique>
 							<!-- Valida a unicidade de idTransacao -->
 							<xs:unique name="pk_gPgto_idTransacao">
-								<xs:selector xpath="gPgto"/>
+								<xs:selector xpath="./*"/>
 								<xs:field xpath="@idTransacao"/>
 							</xs:unique>
 						</xs:element>

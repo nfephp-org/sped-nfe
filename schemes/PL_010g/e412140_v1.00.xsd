@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/nfe" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" targetNamespace="http://www.portalfiscal.inf.br/nfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="tiposBasico_v1.03.xsd"/>
+	<xs:element name="detEvento">
+		<xs:annotation>
+			<xs:documentation>Schema XML de validação do Evento de Tributação do Simples Nacional (412140)</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="descEvento">
+					<xs:annotation>
+						<xs:documentation>Descrição do Evento - "Tributação do Simples Nacional"</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:whiteSpace value="preserve"/>
+							<xs:enumeration value="Tributação do Simples Nacional"/>
+							<xs:enumeration value="Tributacao do Simples Nacional"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="cOrgaoAutor" type="TCodUfIBGE">
+					<xs:annotation>
+						<xs:documentation>Código do Órgão Autor do Evento</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="tpAutor">
+					<xs:annotation>
+						<xs:documentation>Informar: 5=Fisco.
+Valores: 1=Empresa Emitente, 2=Empresa destinatária; 3=Empresa; 5=Fisco; 6=RFB; 9=Outros Órgãos;
+						</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="5"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="verAplic" type="TVerAplic">
+					<xs:annotation>
+						<xs:documentation>Versão do Aplicativo que recebeu o Evento</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="gTribItemSN" type="TTribItemSN" maxOccurs="990">
+					<xs:annotation>
+						<xs:documentation>Detalhamento dos tributos por item</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="gTotalSN" type="TTotalSN">
+					<xs:annotation>
+						<xs:documentation>Totais da NF-e / NFC-e</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="versao" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:whiteSpace value="preserve"/>
+						<xs:enumeration value="1.00"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="TRBSN">
+		<xs:annotation>
+			<xs:documentation>Tipo de Receita Bruta do SN</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:enumeration value="0"/>
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+			<xs:enumeration value="4"/>
+			<xs:enumeration value="5"/>
+			<xs:enumeration value="9"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="TTribItemSN">
+		<xs:annotation>
+			<xs:documentation>Tipo Detalhamento dos Tributos por Item</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="vRBSNitem" type="TDec1302">
+				<xs:annotation>
+					<xs:documentation>Valor da receita bruta do Simples Nacional atribuída ao item</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="tpRBSN" type="TRBSN">
+				<xs:annotation>
+					<xs:documentation>Tipo de Receita Bruta do Simples Nacional referente ao cClassTrib do item:
+0 - Não é receita bruta;
+1 - Receita bruta - interna;
+2 - Receita bruta - interna sem cálculo de IBS e CBS;
+3 - Receita bruta – exportação direta;
+4 - Receita bruta - exportação indireta;
+5 - Receita bruta - mercado interno e exportação;
+9 - Fornecimento incompatível com SN.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="pIBSSN" type="TDec_0302_04" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Alíquota aplicável de cálculo do IBS referente ao item</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="vIBSSN" type="TDec1302" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Valor do IBS devido pelo Simples Nacional</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="pCBSSN" type="TDec_0302_04" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Alíquota aplicável de cálculo da CBS referente ao item</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="vCBSSN" type="TDec1302" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Valor da CBS devido pelo Simples Nacional</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="vIBSPendSusp" type="TDec1302" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Valor do IBS pendente ou suspenso referente ao item</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="vCBSPendSusp" type="TDec1302" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Valor da CBS pendente ou suspenso referente ao item</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="nItem" use="required">
+			<xs:annotation>
+				<xs:documentation>Número do item</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:whiteSpace value="preserve"/>
+					<xs:pattern value="[1-9][0-9]?|[1-8][0-9]{2}|9[0-8][0-9]|990"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="TTotalSN">
+		<xs:annotation>
+			<xs:documentation>Tipo Dados de Totais do SN</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="vRBSNtot" type="TDec1302">
+				<xs:annotation>
+					<xs:documentation>Valor total da receita bruta do Simples Nacional, correspondente ao somatório dos valores atribuídos aos itens do DFe</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="vIBSSNtot" type="TDec1302" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Valor total do IBS devido pelo Simples Nacional apurado no documento</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="vIBSSNtotPendSusp" type="TDec1302" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Valor total do IBS devido pelo Simples Nacional cuja apropriação encontra-se pendente ou com exigibilidade suspensa</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="vCBSSNtot" type="TDec1302" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Valor total da CBS devido pelo Simples Nacional apurado no documento</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="vCBSSNtotPendSusp" type="TDec1302" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Valor total da CBS devido pelo Simples Nacional cuja apropriação encontra-se pendente ou com exigibilidade suspensa</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
