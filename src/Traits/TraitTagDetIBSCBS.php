@@ -19,6 +19,7 @@ use DOMException;
  * @property array $aGAjusteCompet
  * @property array $aGEstornoCred
  * @property array $aGCredPresOper
+ * @property array $aGTribSN
  * @property string $cst_ibscbs
  * @property stdClass $stdIBSCBSTot
  * @property stdClass $stdIBSCredPresTot
@@ -1196,6 +1197,71 @@ trait TraitTagDetIBSCBS
         );
         $this->aGEstornoCred[$std->item] = $estorno;
         return $estorno;
+    }
+
+    /**
+     * Grupo de Tributação do IBS e da CBS para o Simples Nacional
+     * det/imposto/IBSCBS/gTribSN
+     * $this->aIBSCBS[item] append $this->aGTribSN[item]
+     * NT 2026.005 v1.00
+     * O grupo gIBSSN só é gerado quando pIBSSN for informado
+     * @param stdClass $std
+     * @return DOMElement
+     * @throws DOMException
+     */
+    public function taggTribSN(stdClass $std): DOMElement
+    {
+        $possible = [
+            'item',
+            'pIBSSN',
+            'vIBSSN',
+            'pCBSSN',
+            'vCBSSN',
+        ];
+        $std = $this->equilizeParameters($std, $possible);
+        $identificador = "UB115a gTribSN Item: $std->item -";
+
+        //totalizador
+        $this->stdIBSCBSTot->gTribSN->vIBSSN += $std->vIBSSN ?? 0;
+        $this->stdIBSCBSTot->gTribSN->vCBSSN += $std->vCBSSN ?? 0;
+
+        $gTribSN = $this->dom->createElement("gTribSN");
+        if (isset($std->pIBSSN)) {
+            $gIBSSN = $this->dom->createElement("gIBSSN");
+            $this->dom->addChild(
+                $gIBSSN,
+                "pIBSSN",
+                $this->conditionalNumberFormatting($std->pIBSSN, 4),
+                true,
+                "$identificador Alíquota do IBS do Simples Nacional (pIBSSN)"
+            );
+            $this->dom->addChild(
+                $gIBSSN,
+                "vIBSSN",
+                $this->conditionalNumberFormatting($std->vIBSSN ?? 0),
+                true,
+                "$identificador Valor do IBS do Simples Nacional (vIBSSN)"
+            );
+            $gTribSN->appendChild($gIBSSN);
+        }
+        $gCBSSN = $this->dom->createElement("gCBSSN");
+        $this->dom->addChild(
+            $gCBSSN,
+            "pCBSSN",
+            $this->conditionalNumberFormatting($std->pCBSSN ?? 0, 4),
+            true,
+            "$identificador Alíquota da CBS do Simples Nacional (pCBSSN)"
+        );
+        $this->dom->addChild(
+            $gCBSSN,
+            "vCBSSN",
+            $this->conditionalNumberFormatting($std->vCBSSN ?? 0),
+            true,
+            "$identificador Valor da CBS do Simples Nacional (vCBSSN)"
+        );
+        $gTribSN->appendChild($gCBSSN);
+        $this->aGTribSN[$std->item] = $gTribSN;
+        return $gTribSN;
     }
 
     /**

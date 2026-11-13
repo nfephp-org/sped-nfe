@@ -71,6 +71,7 @@ trait TraitTagDet
             'vOutro',
             'indTot',
             'indBemMovelUsado',
+            'cAtivSN',
             'xPed',
             'nItemPed',
             'nFCI',
@@ -342,6 +343,14 @@ trait TraitTagDet
             !empty($std->indBemMovelUsado) ? 1 : null,
             false,
             "$identificador Indicador de fornecimento de bem móvel usado (indBemMovelUsado)"
+        );
+        //NT 2026.005 v1.00
+        $this->dom->addChild(
+            $prod,
+            "cAtivSN",
+            $std->cAtivSN,
+            false,
+            "$identificador Código de atividade do Simples Nacional (cAtivSN)"
         );
         $this->dom->addChild(
             $prod,
