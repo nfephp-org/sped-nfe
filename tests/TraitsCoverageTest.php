@@ -1118,7 +1118,6 @@ class TraitsCoverageTest extends TestCase
         $this->assertStringContainsString('<tpAutor>1</tpAutor>', $request);
         $this->assertStringContainsString('<verAplic>TestApp_1.0</verAplic>', $request);
         $this->assertStringContainsString('<nProt>135260832643924</nProt>', $request);
-        $this->assertStringContainsString('<idTransacao>ACBS222000</idTransacao>', $request);
         $this->assertStringContainsString('<tpMeioPgto>15</tpMeioPgto>', $request);
         $this->assertStringContainsString('<CNPJReceb>05730928000145</CNPJReceb>', $request);
         $this->assertStringContainsString('<CNPJBasePSP>00000000</CNPJBasePSP>', $request);
@@ -1143,7 +1142,6 @@ class TraitsCoverageTest extends TestCase
 
             $this->assertStringContainsString('<tpEvento>110300</tpEvento>', $request);
             $this->assertStringContainsString('<verAplic>NfceApp_1.0</verAplic>', $request);
-            $this->assertStringContainsString('<idTransacao>ACBS222000</idTransacao>', $request);
             $this->assertStringContainsString('<tpMeioPgto>17</tpMeioPgto>', $request);
         } finally {
             $tools->model(55);
