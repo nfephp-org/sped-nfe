@@ -300,6 +300,11 @@
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="gIBSCBS" type="TCIBS_NFe" minOccurs="0"/>
+			<xs:element name="gTribSN" type="TTribSN" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Grupo de informações da composição do valor do IBS e da CBS para o Simples Nacional</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="TTribNFe">
@@ -336,6 +341,11 @@
 					</xs:annotation>
 				</xs:element>
 			</xs:choice>
+			<xs:element name="gTribSN" type="TTribSN" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Grupo de informações da composição do valor do IBS e da CBS para o Simples Nacional</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="gEstornoCred" type="TEstornoCred" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Informado conforme indicador no cClassTrib</xs:documentation>
@@ -707,6 +717,25 @@
 						<xs:element name="vCBSEstCred" type="TDec1302RTC">
 							<xs:annotation>
 								<xs:documentation>Valor total da CBS estornada</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="gTribSN" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Grupo de totais da composição do valor do IBS e da CBS para o Simples Nacional</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="vIBSSN" type="TDec1302RTC">
+							<xs:annotation>
+								<xs:documentation>Valor Total do IBS para os Optantes do Simples Nacional</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="vCBSSN" type="TDec1302RTC">
+							<xs:annotation>
+								<xs:documentation>Valor Total da CBS para os Optantes do Simples Nacional</xs:documentation>
 							</xs:annotation>
 						</xs:element>
 					</xs:sequence>
@@ -1873,6 +1902,51 @@ OBS: Percentuais definidos no art. 450, § 1º, da LC 214/25 para o cálculo do 
 							</xs:restriction>
 						</xs:simpleType>
 					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TTribSN">
+		<xs:annotation>
+			<xs:documentation>Tipo Detalhamento dos Tributos por Item</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="gIBSSN" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Grupo de informações da composição do valor do IBS para o Simples Nacional</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="pIBSSN" type="TDec_0302_04RTC">
+							<xs:annotation>
+								<xs:documentation>Alíquota efetiva do IBS para os Optantes do Simples </xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="vIBSSN" type="TDec1302RTC">
+							<xs:annotation>
+								<xs:documentation>Valor do IBS para os Optantes do Simples Nacional</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="gCBSSN">
+				<xs:annotation>
+					<xs:documentation>Grupo de informações da composição do valor da CBS para o Simples Nacional</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="pCBSSN" type="TDec_0302_04RTC">
+							<xs:annotation>
+								<xs:documentation>Alíquota efetiva da CBS para os Optantes do Simples </xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="vCBSSN" type="TDec1302RTC">
+							<xs:annotation>
+								<xs:documentation>Valor da CBS para os Optantes do Simples Nacional</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
 		</xs:sequence>
