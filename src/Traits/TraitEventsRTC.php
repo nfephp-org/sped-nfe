@@ -38,8 +38,7 @@ trait TraitEventsRTC
             . "<tpAutor>1</tpAutor>"  //1=Empresa Emitente
             . "<verAplic>{$verAplic}</verAplic>"
             . "<nProt>{$std->nProt}</nProt>"
-            . "<gPgto>"
-            . "<idTransacao>{$std->idTransacao}</idTransacao>"
+            . '<gPgto idTransacao="' . $std->idTransacao . '">'
             . "<tpMeioPgto>{$std->tpMeioPgto}</tpMeioPgto>"
             . "<CNPJReceb>{$std->cnpjRecebedor}</CNPJReceb>"
             . "<CNPJBasePSP>{$std->cnpjBasePSP}</CNPJBasePSP>"
