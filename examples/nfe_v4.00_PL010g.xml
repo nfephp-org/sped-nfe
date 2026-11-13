@@ -1479,25 +1479,110 @@
     <pag>
       <!--1 to 100 repetitions:-->
       <detPag>
-        <!--Optional:-->
-        <tPag>string</tPag>
-        <!--Optional:-->
-        <vPag>string</vPag>
-        <!--Optional:-->
-        <!--Optional:-->
+          <!--Optional:-->
+          <indPag>0</indPag>
+          <tPag>string</tPag>
+          <!--Optional:-->
+          <xPag>string</xPag>
+          <vPag>string</vPag>
+          <!--Optional:-->
+          <dPag>string</dPag>
+          <CNPJPag>string</CNPJPag>
+          <UFPag>RO</UFPag>
+          <!--Optional:-->
+          <card>
+              <tpIntegra>2</tpIntegra>
+              <!--Optional:-->
+              <CNPJ>string</CNPJ>
+              <!--Optional:-->
+              <tBand>string</tBand>
+              <!--Optional:-->
+              <cAut>string</cAut>
+              <!--Optional:-->
+              <CNPJReceb>string</CNPJReceb>
+              <!--Optional:-->
+              <idTermPag>string</idTermPag>
+          </card>
       </detPag>
-      <!--Optional:-->
+        <!--Optional:-->
+        <vTroco>string</vTroco>
     </pag>
     <!--Optional:-->
-    <!--Optional:-->
-    <!--Optional:-->
-    <!--Optional:-->
-    <!--Optional:-->
-    <!--Optional:-->
-    <!--Optional:-->
-    <!--Optional:-->
-    <!--Optional:-->
-    <!--Optional:-->
+    <infIntermed>
+       <CNPJ>string</CNPJ>
+       <idCadIntTran>string</idCadIntTran>
+    </infIntermed>
+      <!--Optional:-->
+      <infAdic>
+          <!--Optional:-->
+          <infAdFisco>string</infAdFisco>
+          <!--Optional:-->
+          <infCpl>string</infCpl>
+          <!--0 to 10 repetitions:-->
+          <obsCont xCampo="string">
+              <xTexto>string</xTexto>
+          </obsCont>
+          <!--0 to 10 repetitions:-->
+          <obsFisco xCampo="string">
+              <xTexto>string</xTexto>
+          </obsFisco>
+          <!--0 to 100 repetitions:-->
+          <procRef>
+              <nProc>string</nProc>
+              <indProc>0</indProc>
+              <!--Optional:-->
+              <tpAto>10</tpAto>
+          </procRef>
+      </infAdic>
+      <!--Optional:-->
+      <exporta>
+          <UFSaidaPais>BA</UFSaidaPais>
+          <xLocExporta>string</xLocExporta>
+          <!--Optional:-->
+          <xLocDespacho>string</xLocDespacho>
+      </exporta>
+      <!--Optional:-->
+      <compra>
+          <!--Optional:-->
+          <xNEmp>string</xNEmp>
+          <!--Optional:-->
+          <xPed>string</xPed>
+          <!--Optional:-->
+          <xCont>string</xCont>
+      </compra>
+      <!--Optional:-->
+      <cana>
+          <safra>string</safra>
+          <ref>string</ref>
+          <!--1 to 31 repetitions:-->
+          <forDia dia="string">
+              <qtde>string</qtde>
+          </forDia>
+          <qTotMes>string</qTotMes>
+          <qTotAnt>string</qTotAnt>
+          <qTotGer>string</qTotGer>
+          <!--0 to 10 repetitions:-->
+          <deduc>
+              <xDed>string</xDed>
+              <vDed>string</vDed>
+          </deduc>
+          <vFor>string</vFor>
+          <vTotDed>string</vTotDed>
+          <vLiqFor>string</vLiqFor>
+      </cana>
+      <!--Optional:-->
+      <infRespTec>
+          <CNPJ>string</CNPJ>
+          <xContato>string</xContato>
+          <email>string</email>
+          <fone>string</fone>
+          <idCSRT>string</idCSRT>
+          <hashCSRT>dHVyYmluZXR1cmJpbmV0dXJiaW4=</hashCSRT>
+      </infRespTec>
+      <!--Optional:-->
+      <infSolicNFF>
+          <xSolic>string</xSolic>
+      </infSolicNFF>
   </infNFe>
   <!--Optional:-->
   <xd:Signature Id="string">
