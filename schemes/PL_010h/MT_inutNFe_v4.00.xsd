@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/nfe" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" targetNamespace="http://www.portalfiscal.inf.br/nfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="leiauteInutNFe_v4.00_MT.xsd"/>
+	<xs:element name="inutNFe" type="TInutNFe">
+		<xs:annotation>
+			<xs:documentation>Schema XML de validação do Pedido de Inutilização de Numeração da Nota Fiscal Eletrônica</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

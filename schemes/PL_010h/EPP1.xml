@@ -1,0 +1,13 @@
+      <detEvento versao="1.00" xmlns="http://www.portalfiscal.inf.br/nfe">
+        <descEvento>Pedido de Prorrogacao</descEvento>
+        <nProt>000000000000001</nProt>
+        <itemPedido numItem="1">
+          <qtdeItem>1</qtdeItem>
+        </itemPedido>
+        <itemPedido numItem="2">
+          <qtdeItem>1</qtdeItem>
+        </itemPedido>
+        <itemPedido numItem="3">
+          <qtdeItem>1</qtdeItem>
+        </itemPedido>  
+      </detEvento>
