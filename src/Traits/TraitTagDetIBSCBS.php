@@ -1328,6 +1328,7 @@ trait TraitTagDetIBSCBS
             $gIBSSN,
             "vIBSSN",
             $this->conditionalNumberFormatting($std->vIBSSN),
+            true,
             "$identificador Valor do IBS do SN (vIBSSN)"
         );
         $tribSN->appendChild($gIBSSN);
@@ -1343,6 +1344,7 @@ trait TraitTagDetIBSCBS
             $gCBSSN,
             "vCBSSN",
             $this->conditionalNumberFormatting($std->vCBSSN),
+            true,
             "$identificador Valor do CBS do SN (vIBSSN)"
         );
         $tribSN->appendChild($gCBSSN);
