@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  13-05-2011 - correcao do pattern da data para aceitar -4:00 -->
+<!--  03-03-2011 - alteracoes na enumeracao das versoes e no detalhamento do evento -->
+<!--  PL_006eventos versao alterada para consultar eventos 30/08/2010 -->
+<!--  PL_006f versao com correcoes no xServ para tornar a literal CONSULTAR obrigatoria 21/05/2010 -->
+<!--  PL_006c versao com correcoes 24/12/2009 -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/nfe" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" targetNamespace="http://www.portalfiscal.inf.br/nfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="tiposBasico_v3.10.xsd"/>
+	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v1.01.xsd"/>
+	<xs:complexType name="TConsSitNFe">
+		<xs:annotation>
+			<xs:documentation>Tipo Pedido de Consulta da Situação Atual da Nota Fiscal Eletrônica</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="tpAmb" type="TAmb">
+				<xs:annotation>
+					<xs:documentation>Identificação do Ambiente:
+1 - Produção
+2 - Homologação</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="xServ">
+				<xs:annotation>
+					<xs:documentation>Serviço Solicitado</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="TServ">
+						<xs:enumeration value="CONSULTAR"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="chNFe" type="TChNFe">
+				<xs:annotation>
+					<xs:documentation>Chaves de acesso da NF-e, compostas por: UF do emitente, AAMM da emissão da NFe, CNPJ do emitente, modelo, série e número da NF-e e código numérico + DV.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="versao" type="TVerConsSitNFe" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="TRetConsSitNFe">
+		<xs:annotation>
+			<xs:documentation>Tipo Retorno de Pedido de Consulta da Situação Atual da Nota Fiscal Eletrônica </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="tpAmb" type="TAmb">
+				<xs:annotation>
+					<xs:documentation>Identificação do Ambiente:
+1 - Produção
+2 - Homologação</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="verAplic" type="TVerAplic">
+				<xs:annotation>
+					<xs:documentation>Versão do Aplicativo que processou a NF-e</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="cStat" type="TStat">
+				<xs:annotation>
+					<xs:documentation>Código do status da mensagem enviada.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="xMotivo" type="TMotivo">
+				<xs:annotation>
+					<xs:documentation>Descrição literal do status do serviço solicitado.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="cUF" type="TCodUfIBGE">
+				<xs:annotation>
+					<xs:documentation>código da UF de atendimento</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="dhRecbto" type="TDateTimeUTC">
+				<xs:annotation>
+					<xs:documentation>AAAA-MM-DDTHH:MM:SSTZD</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="chNFe" type="TChNFe">
+				<xs:annotation>
+					<xs:documentation>Chaves de acesso da NF-e consultada</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="protNFe" type="TProtNFe" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Protocolo de autorização de uso da NF-e</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="retCancNFe" type="TRetCancNFe" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Protocolo de homologação de cancelamento de uso da NF-e</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="procEventoNFe" type="TProcEvento" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Protocolo de registro de evento da NF-e</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="versao" type="TVerConsSitNFe" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="TProtNFe">
+		<xs:annotation>
+			<xs:documentation>Tipo Protocolo de status resultado do processamento da NF-e</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="infProt">
+				<xs:annotation>
+					<xs:documentation>Dados do protocolo de status</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="tpAmb" type="TAmb">
+							<xs:annotation>
+								<xs:documentation>Identificação do Ambiente:
+1 - Produção
+2 - Homologação</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="verAplic" type="TVerAplic">
+							<xs:annotation>
+								<xs:documentation>Versão do Aplicativo que processou a NF-e</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="chNFe" type="TChNFe">
+							<xs:annotation>
+								<xs:documentation>Chaves de acesso da NF-e, compostas por: UF do emitente, AAMM da emissão da NFe, CNPJ do emitente, modelo, série e número da NF-e e código numérico+DV.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dhRecbto" type="xs:dateTime">
+							<xs:annotation>
+								<xs:documentation>Data e hora de processamento, no formato AAAA-MM-DDTHH:MM:SS (ou AAAA-MM-DDTHH:MM:SSTZD, de acordo com versão). Deve ser preenchida com data e hora da gravação no Banco em caso de Confirmação. Em caso de Rejeição, com data e hora do recebimento do Lote de NF-e enviado.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="nProt" type="TProt" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Número do Protocolo de Status da NF-e. 1 posição (1 – Secretaria de Fazenda Estadual 2 – Receita Federal); 2 - códiga da UF - 2 posições ano; 10 seqüencial no ano.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="digVal" type="ds:DigestValueType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Digest Value da NF-e processada. Utilizado para conferir a integridade da NF-e original.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="cStat" type="TStat">
+							<xs:annotation>
+								<xs:documentation>Código do status da mensagem enviada.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="xMotivo" type="TMotivo">
+							<xs:annotation>
+								<xs:documentation>Descrição literal do status do serviço solicitado.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="Id" type="xs:ID" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="ds:Signature" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="versao" type="TVerNFe" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="TRetCancNFe">
+		<xs:annotation>
+			<xs:documentation>Tipo retorno Pedido de Cancelamento da Nota Fiscal Eletrônica</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="infCanc">
+				<xs:annotation>
+					<xs:documentation>Dados do Resultado do Pedido de Cancelamento da Nota Fiscal Eletrônica</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="tpAmb" type="TAmb">
+							<xs:annotation>
+								<xs:documentation>Identificação do Ambiente:
+1 - Produção
+2 - Homologação</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="verAplic" type="TVerAplic">
+							<xs:annotation>
+								<xs:documentation>Versão do Aplicativo que processou o pedido de cancelamento</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="cStat" type="TStat">
+							<xs:annotation>
+								<xs:documentation>Código do status da mensagem enviada.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="xMotivo" type="TMotivo">
+							<xs:annotation>
+								<xs:documentation>Descrição literal do status do serviço solicitado.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="cUF" type="TCodUfIBGE">
+							<xs:annotation>
+								<xs:documentation>código da UF de atendimento</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="chNFe" type="TChNFe" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Chaves de acesso da NF-e, compostas por: UF do emitente, AAMM da emissão da NFe, CNPJ do emitente, modelo, série e número da NF-e e código numérico + DV.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dhRecbto" type="xs:dateTime" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Data e hora de recebimento, no formato AAAA-MM-DDTHH:MM:SS. Deve ser preenchida com data e hora da gravação no Banco em caso de Confirmação.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="nProt" type="TProt" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Número do Protocolo de Status da NF-e. 1 posição (1 – Secretaria de Fazenda Estadual 2 – Receita Federal); 2 - código da UF - 2 posições ano; 10 seqüencial no ano.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="Id" type="xs:ID" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="ds:Signature" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="versao" type="TVerCancNFe" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="TEvento">
+		<xs:annotation>
+			<xs:documentation>Tipo Evento</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="infEvento">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="cOrgao" type="TCOrgaoIBGE">
+							<xs:annotation>
+								<xs:documentation>Código do órgão de recepção do Evento. Utilizar a Tabela do IBGE extendida, utilizar 90 para identificar o Ambiente Nacional</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="tpAmb" type="TAmb">
+							<xs:annotation>
+								<xs:documentation>Identificação do Ambiente:
+1 - Produção
+2 - Homologação</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:choice>
+							<xs:annotation>
+								<xs:documentation>Identificação do  autor do evento</xs:documentation>
+							</xs:annotation>
+							<xs:element name="CNPJ" type="TCnpjOpc">
+								<xs:annotation>
+									<xs:documentation>CNPJ</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="CPF" type="TCpf">
+								<xs:annotation>
+									<xs:documentation>CPF</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:choice>
+						<xs:element name="chNFe" type="TChNFe">
+							<xs:annotation>
+								<xs:documentation>Chave de Acesso da NF-e vinculada ao evento</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dhEvento" type="TDateTimeUTC">
+							<xs:annotation>
+								<xs:documentation>Data e Hora do Evento, formato UTC (AAAA-MM-DDThh:mm:ssTZD, onde TZD = +hh:mm ou -hh:mm)</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="tpEvento">
+							<xs:annotation>
+								<xs:documentation>Tipo do Evento</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:whiteSpace value="preserve"/>
+									<xs:pattern value="[0-9]{6}"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="nSeqEvento">
+							<xs:annotation>
+								<xs:documentation>Seqüencial do evento para o mesmo tipo de evento.  Para maioria dos eventos será 1, nos casos em que possa existir mais de um evento, como é o caso da carta de correção, o autor do evento deve numerar de forma seqüencial.</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:whiteSpace value="preserve"/>
+									<xs:pattern value="[1-9][0-9]{0,1}"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="verEvento">
+							<xs:annotation>
+								<xs:documentation>Versão do Tipo do Evento</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:whiteSpace value="preserve"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="detEvento">
+							<xs:annotation>
+								<xs:documentation>Detalhe Específico do Evento</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:any processContents="skip" maxOccurs="unbounded"/>
+								</xs:sequence>
+								<xs:anyAttribute processContents="skip"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="Id" use="required">
+						<xs:annotation>
+							<xs:documentation>Identificador da TAG a ser assinada, a regra de formação do Id é:
+“ID” + tpEvento +  chave da NF-e + nSeqEvento</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:ID">
+								<xs:pattern value="ID[0-9]{52}"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="ds:Signature"/>
+		</xs:sequence>
+		<xs:attribute name="versao" type="TVerEvento" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="TRetEvento">
+		<xs:annotation>
+			<xs:documentation>Tipo retorno do Evento</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="infEvento">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="tpAmb" type="TAmb">
+							<xs:annotation>
+								<xs:documentation>Identificação do Ambiente:
+1 - Produção
+2 - Homologação</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="verAplic" type="TVerAplic">
+							<xs:annotation>
+								<xs:documentation>Versão do Aplicativo que recebeu o Evento</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="cOrgao" type="TCOrgaoIBGE">
+							<xs:annotation>
+								<xs:documentation>Código do órgão de recepção do Evento. Utilizar a Tabela do IBGE extendida, utilizar 90 para identificar o Ambiente Nacional</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="cStat" type="TStat">
+							<xs:annotation>
+								<xs:documentation>Código do status da registro do Evento</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="xMotivo" type="TMotivo">
+							<xs:annotation>
+								<xs:documentation>Descrição literal do status do registro do Evento</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="chNFe" type="TChNFe" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Chave de Acesso NF-e vinculada</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="tpEvento" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Tipo do Evento vinculado</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:whiteSpace value="preserve"/>
+									<xs:pattern value="[0-9]{6}"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="xEvento" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Descrição do Evento</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="TString">
+									<xs:minLength value="5"/>
+									<xs:maxLength value="60"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="nSeqEvento" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Seqüencial do evento</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:whiteSpace value="preserve"/>
+									<xs:pattern value="[1-9][0-9]{0,1}"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:choice minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Identificação do  destinatpario da NF-e</xs:documentation>
+							</xs:annotation>
+							<xs:element name="CNPJDest" type="TCnpjOpc">
+								<xs:annotation>
+									<xs:documentation>CNPJ Destinatário</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="CPFDest" type="TCpf">
+								<xs:annotation>
+									<xs:documentation>CPF Destiantário</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:choice>
+						<xs:element name="emailDest" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>email do destinatário</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="TString">
+									<xs:minLength value="1"/>
+									<xs:maxLength value="60"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="dhRegEvento" type="TDateTimeUTC">
+							<xs:annotation>
+								<xs:documentation>Data e Hora de registro do evento formato UTC AAAA-MM-DDTHH:MM:SSTZD</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="nProt" type="TProt" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Número do protocolo de registro do evento</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="Id" use="optional">
+						<xs:simpleType>
+							<xs:restriction base="xs:ID">
+								<xs:pattern value="ID[0-9]{15}"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="ds:Signature" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="versao" type="TRetVerEvento" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="TProcEvento">
+		<xs:annotation>
+			<xs:documentation>Tipo procEvento</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="evento" type="TEvento"/>
+			<xs:element name="retEvento" type="TRetEvento"/>
+		</xs:sequence>
+		<xs:attribute name="versao" type="TVerEvento" use="required"/>
+	</xs:complexType>
+	<xs:simpleType name="TVerNFe">
+		<xs:annotation>
+			<xs:documentation> Tipo Versão da NF-e</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="TString">
+			<xs:pattern value="[1-9]{1}\.[0-9]{2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TVerCancNFe">
+		<xs:annotation>
+			<xs:documentation>Tipo Versão do leiaute de Cancelamento de NF-e - 2.00/1.07</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="TString">
+			<xs:pattern value="[1-9]{1}\.[0-9]{2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TVerEvento">
+		<xs:annotation>
+			<xs:documentation>Tipo Versão do Evento 1.00</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="TString">
+			<xs:pattern value="[1-9]{1}\.[0-9]{2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TRetVerEvento">
+		<xs:annotation>
+			<xs:documentation>Tipo Versão do Evento</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="TString">
+			<xs:pattern value="[1-9]{1}\.[0-9]{2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TVerConsSitNFe">
+		<xs:annotation>
+			<xs:documentation>Tipo Versão do Leiaute da Cosulta situação NF-e - 3.10</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:enumeration value="3.10"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

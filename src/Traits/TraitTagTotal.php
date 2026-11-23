@@ -162,7 +162,6 @@ trait TraitTagTotal
         $vICMSMonoReten = !empty($std->vICMSMonoReten) ? $std->vICMSMonoReten : $this->stdTot->vICMSMonoReten;
         $qBCMonoRet = !empty($std->qBCMonoRet) ? $std->qBCMonoRet : $this->stdTot->qBCMonoRet;
         $vICMSMonoRet = !empty($std->vICMSMonoRet) ? $std->vICMSMonoRet : $this->stdTot->vICMSMonoRet;
-
         //campos opcionais incluir se maior que zero
         $vFCPUFDest = ($vFCPUFDest > 0) ? number_format($vFCPUFDest, 2, '.', '') : null;
         $vICMSUFDest = ($vICMSUFDest > 0) ? number_format($vICMSUFDest, 2, '.', '') : null;
@@ -597,6 +596,8 @@ trait TraitTagTotal
             'gMono_vCBSMonoRet',
             'gEstonoCred_vIBSEstCred',
             'gEstonoCred_vCBSEstCred',
+            'gTribSN_vIBSSN',
+            'gTribSN_vCBSSN',
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = "W34 IBSCBSTot -";
@@ -624,6 +625,8 @@ trait TraitTagTotal
         $gMono_vCBSMonoRet = $std->gMono_vCBSMonoRet ?? $this->stdIBSCBSTot->gMono->vCBSMonoRet;
         $gEstornoCred_vIBSEstCred = $std->gEstonoCred_vIBSEstCred ?? $this->stdIBSCBSTot->gEstornoCred->vIBSEstCred;
         $gEstornoCred_vCBSEstCred = $std->gEstonoCred_vCBSEstCred ?? $this->stdIBSCBSTot->gEstornoCred->vCBSEstCred;
+        $gTribSN_vIBSSN = $std->gTribSN_vIBSSN ?? $this->stdIBSCBSTot->gTribSN->vIBSSN;
+        $gTribSN_vCBSSN = $std->gTribSN_vCBSSN ?? $this->stdIBSCBSTot->gTribSN->vCBSSN;
 
         //totalizador final
         $this->stdTot->vIBS = $gIBS_vIBS;
@@ -811,6 +814,24 @@ trait TraitTagTotal
                 "$identificador Valor total do CBS estornado (vCBSEstCred)"
             );
             $ibstot->appendChild($gEst);
+        }
+        if (!empty($gTribSN_vIBSSN) && !empty($gTribSN_vCBSSN)) {
+            $gTribSN = $this->dom->createElement('gTribSN');
+            $this->dom->addChild(
+                $gTribSN,
+                "vIBSSN",
+                $this->conditionalNumberFormatting($gTribSN_vIBSSN),
+                true,
+                "$identificador Valor total do IBS do SN (vIBSSN)"
+            );
+            $this->dom->addChild(
+                $gTribSN,
+                "vCBSSN",
+                $this->conditionalNumberFormatting($gTribSN_vCBSSN),
+                true,
+                "$identificador Valor total do CBS do SN (vCBSSN)"
+            );
+            $ibstot->appendChild($gTribSN);
         }
         $this->IBSCBSTot = $ibstot;
         return $ibstot;

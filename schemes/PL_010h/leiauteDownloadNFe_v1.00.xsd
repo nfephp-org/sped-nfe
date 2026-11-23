@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by sas-softwares@procergs.rs.gov.br (PROCERGS) -->
+<!-- 15-07-2011 - versao preliminar  -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/nfe" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" targetNamespace="http://www.portalfiscal.inf.br/nfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="tiposBasico_v1.03.xsd"/>
+	<xs:complexType name="TDownloadNFe">
+		<xs:annotation>
+			<xs:documentation>Tipo Pedido de Download de NF-e</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="tpAmb" type="TAmb">
+				<xs:annotation>
+					<xs:documentation>Identificação do Ambiente:
+1 - Produção
+2 - Homologação</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="xServ">
+				<xs:annotation>
+					<xs:documentation>Serviço Solicitado</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:whiteSpace value="preserve"/>
+						<xs:enumeration value="DOWNLOAD NFE"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="CNPJ" type="TCnpj">
+				<xs:annotation>
+					<xs:documentation>CNPJ do destinatário da NF-e</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="chNFe" type="TChNFe" maxOccurs="10">
+				<xs:annotation>
+					<xs:documentation>Chave de Acesso da NF-e objeto de download</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="versao" type="TVerDownloadNFe" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="TRetDownloadNFe">
+		<xs:annotation>
+			<xs:documentation>Tipo Retorno do pedido de Download de NF-e</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="tpAmb" type="TAmb">
+				<xs:annotation>
+					<xs:documentation>Identificação do Ambiente:
+1 - Produção
+2 - Homologação</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="verAplic" type="TVerAplic">
+				<xs:annotation>
+					<xs:documentation>Versão do Aplicativo que processou a NF-e</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="cStat" type="TStat">
+				<xs:annotation>
+					<xs:documentation>Código do status da mensagem enviada.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="xMotivo" type="TMotivo">
+				<xs:annotation>
+					<xs:documentation>Descrição literal do status do serviço solicitado.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="dhResp" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Data e hora da resposta à solicitação, no formato AAAA-MM-DDTHH:MM:SS</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="retNFe" minOccurs="0" maxOccurs="10">
+				<xs:annotation>
+					<xs:documentation>Conjunto de informação das  NF-e localizadas</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="chNFe" type="TChNFe">
+							<xs:annotation>
+								<xs:documentation>Chaves de acesso da NF-e consultada</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="cStat" type="TStat">
+							<xs:annotation>
+								<xs:documentation>Código do status da mensagem enviada.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="xMotivo" type="TMotivo">
+							<xs:annotation>
+								<xs:documentation>Descrição literal do status do serviço solicitado.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:choice minOccurs="0">
+							<xs:element name="procNFeGrupoZip">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="NFeZip" type="xs:base64Binary">
+											<xs:annotation>
+												<xs:documentation>XML NFe compactado no padrão gZIP</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="protNFeZip" type="xs:base64Binary">
+											<xs:annotation>
+												<xs:documentation>XML protNFe compactado no padrão gZIP</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="procNFeZip" type="xs:base64Binary">
+								<xs:annotation>
+									<xs:documentation>XML do procNFe compactado no padrão gZIP</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="procNFe">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:any processContents="skip">
+											<xs:annotation>
+												<xs:documentation>XML do procNFe</xs:documentation>
+											</xs:annotation>
+										</xs:any>
+									</xs:sequence>
+									<xs:attribute name="schema" type="xs:string" use="required">
+										<xs:annotation>
+											<xs:documentation>Identificação do Schema XML de validação do proc, Ex. procNFe_v2.00.xsd.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:choice>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="versao" type="TVerDownloadNFe" use="required"/>
+	</xs:complexType>
+	<xs:simpleType name="TVerDownloadNFe">
+		<xs:annotation>
+			<xs:documentation> Tipo Versão da consultaNFeDest</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:enumeration value="1.00"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

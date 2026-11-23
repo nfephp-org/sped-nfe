@@ -177,6 +177,7 @@ final class MakeDev
     protected array $aIBSCBS = [];
     protected array $aGTribRegular = [];
     protected array $aGCredPresOper = [];
+    protected array $aGTribSN = [];
     protected array $aGTribCompraGov = [];
     protected array $aGIBSCBSMono = [];
     protected array $aGTransfCred = [];
@@ -241,8 +242,6 @@ final class MakeDev
             'vPISST' => 0,
             'indSomaCOFINSST' => 0,
             'vCOFINSST' => 0,
-            'vIBS' => 0,
-            'vCBS' => 0,
             'vIS' => 0,
             'vTotIBSMonoItem' => 0,
             'vTotCBSMonoItem' => 0,
@@ -348,6 +347,11 @@ final class MakeDev
         $this->stdIBSCBSTot->gEstornoCred = new stdClass();
         $this->stdIBSCBSTot->gEstornoCred->vIBSEstCred = 0;
         $this->stdIBSCBSTot->gEstornoCred->vCBSEstCred = 0;
+
+        //PL_010h
+        $this->stdIBSCBSTot->gTribSN = new stdClass();
+        $this->stdIBSCBSTot->gTribSN->vIBSSN = 0;
+        $this->stdIBSCBSTot->gTribSN->vCBSSN = 0;
     }
 
     /**
@@ -822,6 +826,10 @@ final class MakeDev
                     //gEstornoCred
                     if (!empty($this->aGEstornoCred[$item])) {
                         $this->addTag($ibscbs, $this->aGEstornoCred[$item], 'Falta a tag IBSCBS!');
+                    }
+                    //PL_010h
+                    if (!empty($this->aGTribSN[$item])) {
+                        $this->addTag($ibscbs, $this->aGTribSN[$item], 'Falta a tag IBSCBS!');
                     }
                     //gCredPresOper
                     if (!empty($this->aGCredPresOper[$item])) {

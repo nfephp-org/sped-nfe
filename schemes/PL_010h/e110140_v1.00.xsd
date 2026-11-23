@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/nfe" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" targetNamespace="http://www.portalfiscal.inf.br/nfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="tiposBasico_v1.03.xsd"/>
+	<xs:element name="detEvento">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="descEvento"/>
+				<xs:element ref="cOrgaoAutor"/>
+				<xs:element ref="tpAutor"/>
+				<xs:element ref="verAplic"/>
+				<xs:element ref="dhEmi"/>
+				<xs:element ref="tpNF"/>
+				<xs:element ref="IE"/>
+				<xs:element name="dest">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="UF"/>
+							<xs:choice>
+								<xs:element name="CNPJ" type="TCnpj"/>
+								<xs:element name="CPF" type="TCpf"/>
+								<xs:element name="idEstrangeiro">
+									<xs:annotation>
+										<xs:documentation>Identificador do destinatário, em caso de comprador estrangeiro</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="xs:string">
+											<xs:whiteSpace value="preserve"/>
+											<xs:pattern value="([!-ÿ]{0}|[!-ÿ]{5,20})?"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+							</xs:choice>
+							<xs:element ref="IE" minOccurs="0"/>
+							<xs:element ref="vNF"/>
+							<xs:element ref="vICMS"/>
+							<xs:element ref="vST"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="versao" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:whiteSpace value="preserve"/>
+						<xs:enumeration value="1.00"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="descEvento">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:whiteSpace value="preserve"/>
+				<xs:enumeration value="EPEC"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="tpAutor">
+		<xs:annotation>
+			<xs:documentation>Neste evento, aceitar apenas 1. 1=Empresa Emitente; 2=Empresa Destinatária; 3=Empresa; 5=Fisco; 6=RFB; 9=Outros Órgãos</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:whiteSpace value="preserve"/>
+				<xs:enumeration value="1"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="verAplic" type="TVerAplic">
+		<xs:annotation>
+			<xs:documentation>Versão do Aplicativo do Autor do Evento</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="dhEmi" type="TDateTimeUTC">
+		<xs:annotation>
+			<xs:documentation>Data de emissão no formato UTC.  AAAA-MM-DDThh:mm:ssTZD</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="tpNF">
+		<xs:annotation>
+			<xs:documentation>Tipo do Documento Fiscal (0 - entrada; 1 - saída)</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:whiteSpace value="preserve"/>
+				<xs:enumeration value="0"/>
+				<xs:enumeration value="1"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="cOrgaoAutor" type="TCodUfIBGE"/>
+	<xs:element name="IE">
+		<xs:annotation>
+			<xs:documentation>Informar a IE. Para IE do destinatário somente quando o contribuinte possuir uma inscrição estadual</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:whiteSpace value="preserve"/>
+				<xs:pattern value="[0-9]{2,14}"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="UF" type="TUf">
+		<xs:annotation>
+			<xs:documentation>Sigla UF do destinatário. Informar "EX" no caso de operação com o exterior</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="vNF" type="TDec_1302">
+		<xs:annotation>
+			<xs:documentation>Valor total da NF-e</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="vICMS" type="TDec_1302">
+		<xs:annotation>
+			<xs:documentation>Valor total do ICMS</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="vST" type="TDec_1302">
+		<xs:annotation>
+			<xs:documentation>Valor total do ICMS de Substituição Tributária</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

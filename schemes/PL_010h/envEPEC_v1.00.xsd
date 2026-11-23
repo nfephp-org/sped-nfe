@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/nfe" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" targetNamespace="http://www.portalfiscal.inf.br/nfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="leiauteEPEC_v1.00.xsd"/>
+	<xs:element name="envEvento" type="TEnvEvento">
+		<xs:annotation>
+			<xs:documentation>Schema XML de validação do lote de envio do Evento Prévio de Emissão em Contingência</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>
