@@ -1317,21 +1317,23 @@ trait TraitTagDetIBSCBS
         $identificador = "UB124 gTribSN Item: $std->item -";
         $tribSN = $this->dom->createElement("gTribSN");
         $gIBSSN = $this->dom->createElement("gIBSSN");
-        $this->dom->addChild(
-            $gIBSSN,
-            "pIBSSN",
-            $this->conditionalNumberFormatting($std->pIBSSN, 4),
-            true,
-            "$identificador Percentual do IBS do SN (pIBSSN)"
-        );
-        $this->dom->addChild(
-            $gIBSSN,
-            "vIBSSN",
-            $this->conditionalNumberFormatting($std->vIBSSN),
-            true,
-            "$identificador Valor do IBS do SN (vIBSSN)"
-        );
-        $tribSN->appendChild($gIBSSN);
+        if (!empty($std->pIBSSN) && !empty($std->vIBSSN)) {
+            $this->dom->addChild(
+                $gIBSSN,
+                "pIBSSN",
+                $this->conditionalNumberFormatting($std->pIBSSN, 4),
+                true,
+                "$identificador Percentual do IBS do SN (pIBSSN)"
+            );
+            $this->dom->addChild(
+                $gIBSSN,
+                "vIBSSN",
+                $this->conditionalNumberFormatting($std->vIBSSN),
+                true,
+                "$identificador Valor do IBS do SN (vIBSSN)"
+            );
+            $tribSN->appendChild($gIBSSN);
+        }
         $gCBSSN = $this->dom->createElement("gCBSSN");
         $this->dom->addChild(
             $gCBSSN,
