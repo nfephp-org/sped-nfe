@@ -33,7 +33,8 @@ trait TraitTagEmit
             'CRT',
             'CNPJ',
             'CPF',
-            'ISUFEmit'
+            'ISUFEmit',
+            'tpRegimeIBSCBS'
         ];
         $std = $this->equilizeParameters($std, $possible);
         $this->crt = $std->CRT;
@@ -110,6 +111,14 @@ trait TraitTagEmit
             $std->CRT,
             true,
             $identificador . "Código de Regime Tributário do emitente"
+        );
+        //PL_010h
+        $this->dom->addChild(
+            $this->emit,
+            "tpRegimeIBSCBS",
+            $std->tpRegimeIBSCBS,
+            false,
+            $identificador . "ipo de Regime de Apuração do IBS e da CBS (tpRegimeIBSCBS)"
         );
         //NT 2005.002 v1.50
         $this->dom->addChild(
