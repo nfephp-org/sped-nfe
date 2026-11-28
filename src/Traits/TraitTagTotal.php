@@ -815,19 +815,21 @@ trait TraitTagTotal
             );
             $ibstot->appendChild($gEst);
         }
-        if (!empty($gTribSN_vIBSSN) && !empty($gTribSN_vCBSSN)) {
+        //W59h-10 (rejeição 1275): o grupo de totais é obrigatório se algum item tiver gTribSN,
+        //mesmo com vIBSSN zero (CRT 2 sem regime regular informa só o gCBSSN no item, NT 2026.005)
+        if (!empty($this->aGTribSN) || !empty($gTribSN_vIBSSN) || !empty($gTribSN_vCBSSN)) {
             $gTribSN = $this->dom->createElement('gTribSN');
             $this->dom->addChild(
                 $gTribSN,
                 "vIBSSN",
-                $this->conditionalNumberFormatting($gTribSN_vIBSSN),
+                $this->conditionalNumberFormatting($gTribSN_vIBSSN ?? 0),
                 true,
                 "$identificador Valor total do IBS do SN (vIBSSN)"
             );
             $this->dom->addChild(
                 $gTribSN,
                 "vCBSSN",
-                $this->conditionalNumberFormatting($gTribSN_vCBSSN),
+                $this->conditionalNumberFormatting($gTribSN_vCBSSN ?? 0),
                 true,
                 "$identificador Valor total do CBS do SN (vCBSSN)"
             );

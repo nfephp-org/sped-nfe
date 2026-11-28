@@ -1120,4 +1120,30 @@ class IBSCBSCoverageTest extends NFeTestCase
         $this->assertStringContainsString('<gIBSCredPres>', $xml);
         $this->assertStringNotContainsString('<gCBSCredPres>', $xml);
     }
+
+    // =========================================================================
+    // gTribSN (NT 2026.005): total obrigatório se algum item tiver gTribSN
+    // =========================================================================
+
+    public function test_tagIBSCBSTot_gTribSN_with_vIBSSN_zero(): void
+    {
+        //CRT 2 sem regime regular: o item leva só o gCBSSN (sem gIBSSN)
+        $std = new \stdClass();
+        $std->item = 1;
+        $std->CST = '000';
+        $std->cClassTrib = '000001';
+        $this->make->tagIBSCBS($std);
+
+        $sn = new \stdClass();
+        $sn->item = 1;
+        $sn->pCBSSN = 0.9000;
+        $sn->vCBSSN = 0.90;
+        $this->make->taggTribSN($sn);
+
+        $result = $this->make->tagIBSCBSTot(new \stdClass());
+        $xml = $result->ownerDocument->saveXML($result);
+
+        //sem o grupo de totais a SEFAZ recusa com 1275 (W59h-10)
+        $this->assertStringContainsString('<gTribSN><vIBSSN>0.00</vIBSSN><vCBSSN>0.90</vCBSSN></gTribSN>', $xml);
+    }
 }
